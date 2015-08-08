@@ -1,0 +1,3473 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Go - Responsive Pricing & Compare Tables v3.0.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2015-06-22 19:40:43+0000\n"
+"Last-Translator: Granth <granthweb@gmail.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: CSL v1.x\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-Country: UNITED STATES\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;\n"
+"X-Poedit-Basepath: ../\n"
+"X-Poedit-Bookmarks: \n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Textdomain-Support: yes"
+
+#: includes/admin/class_admin.php:135
+#: includes/admin/class_admin.php:136
+#: includes/admin/class_admin.php:365
+#: includes/admin/views/page/db_update.php:39
+#@ go_pricing_textdomain
+msgid "Database Update"
+msgstr ""
+
+#: includes/admin/class_admin.php:287
+#: includes/admin/class_admin.php:288
+#: includes/admin/class_admin.php:336
+#: includes/admin/views/editor_popup/header_general.php:85
+#: includes/admin/views/popup/header_general.php:85
+#@ go_pricing_textdomain
+msgid "General Settings"
+msgstr ""
+
+#: includes/admin/class_admin.php:296
+#: includes/admin/class_admin.php:297
+#: includes/admin/class_admin.php:351
+#: includes/admin/views/page/impex.php:39
+#: includes/admin/views/page/table_manager.php:31
+#: includes/admin/views/page/table_manager.php:174
+#@ go_pricing_textdomain
+msgid "Import & Export"
+msgstr ""
+
+#: includes/admin/class_admin.php:477
+#@ go_pricing_textdomain
+msgid "No AJAX action has been found!"
+msgstr ""
+
+#: includes/admin/class_admin.php:487
+#@ go_pricing_textdomain
+msgid "Invalid AJAX callback has been detected! Please, refresh the page!"
+msgstr ""
+
+#: includes/admin/class_admin.php:499
+#@ go_pricing_textdomain
+msgid "No AJAX callback has been registered for this action! Please, refresh the page!"
+msgstr ""
+
+#: includes/admin/class_admin_page_db_update.php:53
+#: includes/admin/class_admin_page_general_settings.php:100
+#: includes/admin/class_admin_page_general_settings.php:110
+#: includes/admin/class_admin_page_impex.php:252
+#: includes/admin/class_admin_page_impex.php:284
+#: includes/admin/class_admin_page_main.php:395
+#: includes/admin/class_admin_page_main.php:400
+#: includes/admin/class_admin_page_main.php:452
+#: includes/admin/class_admin_page_main.php:514
+#@ go_pricing_textdomain
+msgid "Oops, something went wrong!"
+msgstr ""
+
+#: includes/admin/class_admin_page_db_update.php:57
+#, php-format
+#@ go_pricing_textdomain
+msgid "%1$s pricing table(s) has been successfully updated."
+msgstr ""
+
+#: includes/admin/class_admin_page_general_settings.php:102
+#: includes/admin/class_admin_page_general_settings.php:106
+#@ go_pricing_textdomain
+msgid "General Settings has been successfully updated!"
+msgstr ""
+
+#: includes/admin/class_admin_page_impex.php:181
+#@ go_pricing_textdomain
+msgid "Please select tables to import!"
+msgstr ""
+
+#: includes/admin/class_admin_page_impex.php:242
+#@ go_pricing_textdomain
+msgid "There is nothing to export!"
+msgstr ""
+
+#: includes/admin/class_admin_page_impex.php:275
+#@ go_pricing_textdomain
+msgid "Import data is missing!"
+msgstr ""
+
+#: includes/admin/class_admin_page_impex.php:286
+#, php-format
+#@ go_pricing_textdomain
+msgid "%1$s pricing table(s) has been successfully imported."
+msgstr ""
+
+#: includes/admin/class_admin_page_impex.php:302
+#@ go_pricing_textdomain
+msgid "There is nothing to import!"
+msgstr ""
+
+#: includes/admin/class_admin_page_impex.php:311
+#@ go_pricing_textdomain
+msgid "Invalid import data!"
+msgstr ""
+
+#: includes/admin/class_admin_page_main.php:335
+#: includes/admin/class_admin_page_main.php:364
+#: includes/admin/class_admin_page_main.php:429
+#@ go_pricing_textdomain
+msgid "Please select a table!"
+msgstr ""
+
+#: includes/admin/class_admin_page_main.php:343
+#@ go_pricing_textdomain
+msgid "Table doesn't exist!"
+msgstr ""
+
+#: includes/admin/class_admin_page_main.php:388
+#: includes/class_data.php:417
+#@ go_pricing_textdomain
+msgid "copy"
+msgstr ""
+
+#: includes/admin/class_admin_page_main.php:408
+#, php-format
+#@ go_pricing_textdomain
+msgid "%1$s pricing table(s) has been successfully cloned."
+msgstr ""
+
+#: includes/admin/class_admin_page_main.php:459
+#, php-format
+#@ go_pricing_textdomain
+msgid "%1$s pricing table(s) has been successfully deleted."
+msgstr ""
+
+#: includes/admin/class_admin_page_main.php:490
+#, php-format
+#@ go_pricing_textdomain
+msgid "Pricing table with an ID of \"%s\" already exists! It must be uniqe."
+msgstr ""
+
+#: includes/admin/class_admin_page_main.php:508
+#, php-format
+#@ go_pricing_textdomain
+msgid "Pricing table has been successfully created!<br>Shortcode: </strong>[go_pricing id=\"%s\"]<strong>"
+msgstr ""
+
+#: includes/admin/class_admin_page_main.php:510
+#, php-format
+#@ go_pricing_textdomain
+msgid "Pricing table has been successfully updated!<br>Shortcode: </strong>[go_pricing id=\"%s\"]<strong>"
+msgstr ""
+
+#: includes/admin/views/column/body.php:29
+#: includes/admin/views/column/footer.php:29
+#: includes/admin/views/editor_popup/body_row.php:19
+#: includes/admin/views/editor_popup/footer_row.php:20
+#: includes/admin/views/editor_popup/header_general.php:54
+#: includes/admin/views/editor_popup/header_general.php:115
+#: includes/admin/views/editor_popup/header_price.php:21
+#: includes/admin/views/popup/header_general.php:54
+#: includes/admin/views/popup/header_general.php:115
+#@ go_pricing_textdomain
+msgid "HTML Content"
+msgstr ""
+
+#: includes/admin/views/column/body.php:33
+#: includes/admin/views/column/footer.php:33
+#: includes/admin/views/editor_popup/body_row.php:20
+#: includes/admin/views/editor_popup/footer_row.php:19
+#@ go_pricing_textdomain
+msgid "Button"
+msgstr ""
+
+#: includes/admin/views/column/body.php:39
+#: includes/admin/views/column/body.php:44
+#: includes/admin/views/column/footer.php:39
+#: includes/admin/views/column/footer.php:44
+#: includes/admin/views/editor_popup/body_row.php:32
+#@ go_pricing_textdomain
+msgid "Row"
+msgstr ""
+
+#: includes/admin/views/column/body.php:40
+#: includes/admin/views/column/footer.php:40
+#: includes/admin/views/column/general.php:116
+#: includes/admin/views/column/header.php:24
+#: includes/admin/views/column/header.php:62
+#: includes/admin/views/column/header.php:83
+#: includes/admin/views/column/header.php:124
+#: includes/admin/views/page/table_manager.php:152
+#: includes/admin/views/popup/live_preview.php:36
+#@ go_pricing_textdomain
+msgid "Edit"
+msgstr ""
+
+#: includes/admin/views/column/body.php:40
+#: includes/admin/views/column/column.php:85
+#: includes/admin/views/column/footer.php:40
+#: includes/admin/views/page/table_manager.php:103
+#: includes/admin/views/page/table_manager.php:152
+#: includes/admin/views/view_editor_popup.php:40
+#@ go_pricing_textdomain
+msgid "Clone"
+msgstr ""
+
+#: includes/admin/views/column/body.php:40
+#: includes/admin/views/column/footer.php:40
+#@ go_pricing_textdomain
+msgid "Are you sure you want to delete the selected row?"
+msgstr ""
+
+#: includes/admin/views/column/body.php:40
+#: includes/admin/views/column/column.php:85
+#: includes/admin/views/column/footer.php:40
+#: includes/admin/views/page/table_manager.php:103
+#: includes/admin/views/page/table_manager.php:152
+#: includes/admin/views/view_editor_popup.php:40
+#@ go_pricing_textdomain
+msgid "Delete"
+msgstr ""
+
+#: includes/admin/views/column/body.php:52
+#: includes/admin/views/column/footer.php:52
+#: includes/admin/views/column/header.php:69
+#: includes/admin/views/editor_popup/body_row.php:40
+#: includes/admin/views/editor_popup/footer_row.php:38
+#: includes/admin/views/editor_popup/header_title.php:17
+#: includes/vendors/vc/class_vc_extend.php:63
+#@ go_pricing_textdomain
+msgid "Content"
+msgstr ""
+
+#: includes/admin/views/column/body.php:58
+#: includes/admin/views/column/footer.php:58
+#: includes/admin/views/editor_popup/part/button.php:66
+#: includes/admin/views/editor_popup/part/button.php:67
+#@ go_pricing_textdomain
+msgid "Text"
+msgstr ""
+
+#: includes/admin/views/column/body.php:59
+#: includes/admin/views/column/footer.php:59
+#: includes/admin/views/editor_popup/part/button.php:71
+#: includes/admin/views/editor_popup/part/button.php:72
+#@ go_pricing_textdomain
+msgid "Link / Code"
+msgstr ""
+
+#: includes/admin/views/column/body.php:74
+#: includes/admin/views/column/footer.php:71
+#: includes/admin/views/view_editor_popup.php:40
+#@ go_pricing_textdomain
+msgid "Add Row"
+msgstr ""
+
+#: includes/admin/views/column/column.php:21
+#@ go_pricing_textdomain
+msgid "General Options"
+msgstr ""
+
+#: includes/admin/views/column/column.php:21
+#@ go_pricing_textdomain
+msgid "Global Column Settings"
+msgstr ""
+
+#: includes/admin/views/column/column.php:37
+#@ go_pricing_textdomain
+msgid "Header Options"
+msgstr ""
+
+#: includes/admin/views/column/column.php:37
+#@ go_pricing_textdomain
+msgid "Header Content & Style"
+msgstr ""
+
+#: includes/admin/views/column/column.php:53
+#@ go_pricing_textdomain
+msgid "Body Options"
+msgstr ""
+
+#: includes/admin/views/column/column.php:53
+#@ go_pricing_textdomain
+msgid "Body Content & Style"
+msgstr ""
+
+#: includes/admin/views/column/column.php:69
+#@ go_pricing_textdomain
+msgid "Footer Options"
+msgstr ""
+
+#: includes/admin/views/column/column.php:69
+#@ go_pricing_textdomain
+msgid "Footer Content & Style"
+msgstr ""
+
+#: includes/admin/views/column/column.php:85
+#@ go_pricing_textdomain
+msgid "Are you sure you want to delete the column?"
+msgstr ""
+
+#: includes/admin/views/column/column.php:85
+#@ go_pricing_textdomain
+msgid "Are you sure you wanto clone the column?"
+msgstr ""
+
+#: includes/admin/views/column/general.php:19
+#@ go_pricing_textdomain
+msgid "Style & Layout"
+msgstr ""
+
+#: includes/admin/views/column/general.php:32
+#@ go_pricing_textdomain
+msgid "Column Style"
+msgstr ""
+
+#: includes/admin/views/column/general.php:69
+#@ go_pricing_textdomain
+msgid "Style of the column."
+msgstr ""
+
+#: includes/admin/views/column/general.php:78
+#@ go_pricing_textdomain
+msgid "Main Color"
+msgstr ""
+
+#: includes/admin/views/column/general.php:79
+#: includes/admin/views/page/table_editor.php:160
+#: includes/admin/views/page/table_editor.php:165
+#: includes/admin/views/popup/parts/part_fa.php:4
+#: includes/admin/views/popup/parts/part_icomoon.php:7
+#: includes/admin/views/popup/parts/part_linecon.php:7
+#: includes/admin/views/popup/parts/part_material.php:7
+#: includes/admin/views/popup/sc_media.php:89
+#@ go_pricing_textdomain
+msgid "Add To Favourites"
+msgstr ""
+
+#: includes/admin/views/column/general.php:80
+#@ go_pricing_textdomain
+msgid "Main color of the pricing table."
+msgstr ""
+
+#: includes/admin/views/column/general.php:87
+#@ go_pricing_textdomain
+msgid "Highlight Column?"
+msgstr ""
+
+#: includes/admin/views/column/general.php:88
+#: includes/admin/views/column/general.php:93
+#: includes/admin/views/column/general.php:98
+#: includes/admin/views/editor_popup/general_decoration.php:154
+#: includes/admin/views/editor_popup/general_decoration.php:159
+#: includes/admin/views/editor_popup/header_general.php:107
+#: includes/admin/views/editor_popup/part/button.php:77
+#: includes/admin/views/editor_popup/part/button.php:82
+#: includes/admin/views/page/general_settings.php:42
+#: includes/admin/views/page/general_settings.php:67
+#: includes/admin/views/page/import.php:71
+#: includes/admin/views/page/table_editor.php:132
+#: includes/admin/views/page/table_editor.php:142
+#: includes/admin/views/page/table_editor.php:147
+#: includes/admin/views/page/table_editor.php:188
+#: includes/admin/views/page/table_editor.php:193
+#: includes/admin/views/page/table_editor.php:201
+#: includes/admin/views/page/table_editor.php:206
+#: includes/admin/views/page/table_editor.php:211
+#: includes/admin/views/page/table_editor.php:221
+#: includes/admin/views/popup/header_general.php:107
+#: includes/admin/views/popup/sc_media.php:72
+#: includes/admin/views/popup/sc_media.php:94
+#: includes/admin/views/popup/sc_media.php:125
+#: includes/admin/views/popup/sc_media.php:145
+#: includes/admin/views/popup/sc_media.php:182
+#: includes/admin/views/popup/sc_media.php:187
+#: includes/admin/views/popup/sc_media.php:207
+#: includes/admin/views/popup/sc_media.php:242
+#: includes/admin/views/popup/sc_media.php:359
+#: includes/admin/views/popup/sc_media.php:384
+#: includes/admin/views/popup/sc_media.php:389
+#@ go_pricing_textdomain
+msgid "Yes"
+msgstr ""
+
+#: includes/admin/views/column/general.php:89
+#@ go_pricing_textdomain
+msgid "Whether to enable hover / active state of the column."
+msgstr ""
+
+#: includes/admin/views/column/general.php:92
+#@ go_pricing_textdomain
+msgid "Disable Hover?"
+msgstr ""
+
+#: includes/admin/views/column/general.php:94
+#@ go_pricing_textdomain
+msgid "Whether to disable hover / active state of the column."
+msgstr ""
+
+#: includes/admin/views/column/general.php:97
+#@ go_pricing_textdomain
+msgid "Disable Enlarge?"
+msgstr ""
+
+#: includes/admin/views/column/general.php:99
+#@ go_pricing_textdomain
+msgid "Whether to disable enlarge effect on column hover / highlight."
+msgstr ""
+
+#: includes/admin/views/column/general.php:115
+#: includes/admin/views/column/general.php:120
+#@ go_pricing_textdomain
+msgid "Decoration"
+msgstr ""
+
+#: includes/admin/views/column/general.php:116
+#@ go_pricing_textdomain
+msgid "Shadow & Sign Settings"
+msgstr ""
+
+#: includes/admin/views/column/general.php:142
+#: includes/admin/views/editor_popup/general_decoration.php:16
+#: includes/admin/views/editor_popup/general_decoration.php:18
+#@ go_pricing_textdomain
+msgid "Shadow Style"
+msgstr ""
+
+#: includes/admin/views/column/general.php:143
+#: includes/admin/views/editor_popup/general_decoration.php:44
+#: includes/admin/views/editor_popup/general_decoration.php:46
+#@ go_pricing_textdomain
+msgid "Sign Type"
+msgstr ""
+
+#: includes/admin/views/column/header.php:23
+#: includes/admin/views/column/header.php:28
+#: includes/admin/views/column/header.php:48
+#: includes/admin/views/editor_popup/header_style.php:17
+#: includes/admin/views/page/table_editor.php:109
+#: includes/globals/styles.php:1515
+#: includes/globals/styles.php:1521
+#: includes/globals/styles.php:1527
+#: includes/globals/styles.php:1533
+#: includes/globals/styles.php:1539
+#: includes/globals/styles.php:1545
+#: includes/globals/styles.php:1551
+#: includes/globals/styles.php:1557
+#: includes/globals/styles.php:1563
+#: includes/globals/styles.php:1569
+#: includes/globals/styles.php:1575
+#: includes/globals/styles.php:1581
+#: includes/globals/styles.php:1587
+#: includes/globals/styles.php:1593
+#@ go_pricing_textdomain
+msgid "Style"
+msgstr ""
+
+#: includes/admin/views/column/header.php:38
+#: includes/admin/views/editor_popup/header_style.php:19
+#@ go_pricing_textdomain
+msgid "Standard (new)"
+msgstr ""
+
+#: includes/admin/views/column/header.php:42
+#: includes/admin/views/editor_popup/header_style.php:18
+#@ go_pricing_textdomain
+msgid "Circle"
+msgstr ""
+
+#: includes/admin/views/column/header.php:61
+#: includes/admin/views/column/header.php:66
+#: includes/admin/views/column/header.php:82
+#: includes/admin/views/editor_popup/header_title.php:16
+#: includes/admin/views/page/table_manager.php:89
+#@ go_pricing_textdomain
+msgid "Title"
+msgstr ""
+
+#: includes/admin/views/column/header.php:87
+#: includes/admin/views/column/header.php:107
+#: includes/admin/views/editor_popup/header_price.php:20
+#: includes/admin/views/editor_popup/header_price.php:38
+#: includes/admin/views/editor_popup/header_price.php:58
+#@ go_pricing_textdomain
+msgid "Price"
+msgstr ""
+
+#: includes/admin/views/column/header.php:100
+#, php-format
+#@ go_pricing_textdomain
+msgid "Price %s"
+msgstr ""
+
+#: includes/admin/views/column/header.php:101
+#: includes/admin/views/column/header.php:108
+#: includes/admin/views/editor_popup/header_price.php:48
+#: includes/admin/views/editor_popup/header_price.php:63
+#@ go_pricing_textdomain
+msgid "Payment"
+msgstr ""
+
+#: includes/admin/views/column/header.php:123
+#: includes/admin/views/column/header.php:128
+#@ go_pricing_textdomain
+msgid "General"
+msgstr ""
+
+#: includes/admin/views/column/header.php:131
+#@ go_pricing_textdomain
+msgid "Header colum type specific and general settings"
+msgstr ""
+
+#: includes/admin/views/editor_popup/body_row.php:16
+#: includes/admin/views/editor_popup/footer_row.php:16
+#@ go_pricing_textdomain
+msgid "Row Type"
+msgstr ""
+
+#: includes/admin/views/editor_popup/body_row.php:23
+#@ go_pricing_textdomain
+msgid "Type of the row."
+msgstr ""
+
+#: includes/admin/views/editor_popup/body_row.php:32
+#: includes/admin/views/page/db_update.php:25
+#: includes/admin/views/page/export.php:31
+#: includes/admin/views/page/general_settings.php:20
+#: includes/admin/views/page/impex.php:25
+#: includes/admin/views/page/import.php:29
+#: includes/admin/views/page/table_editor.php:35
+#@ go_pricing_textdomain
+msgid "Tooltip"
+msgstr ""
+
+#: includes/admin/views/editor_popup/body_row.php:40
+#: includes/admin/views/editor_popup/footer_row.php:38
+#: includes/admin/views/editor_popup/general_decoration.php:136
+#: includes/admin/views/popup/sc_button_icon.php:60
+#: includes/admin/views/popup/sc_row_icon.php:50
+#@ go_pricing_textdomain
+msgid "Align Left"
+msgstr ""
+
+#: includes/admin/views/editor_popup/body_row.php:40
+#: includes/admin/views/editor_popup/footer_row.php:38
+#: includes/admin/views/popup/sc_button_icon.php:60
+#: includes/admin/views/popup/sc_row_icon.php:50
+#@ go_pricing_textdomain
+msgid "Align Center"
+msgstr ""
+
+#: includes/admin/views/editor_popup/body_row.php:40
+#: includes/admin/views/editor_popup/footer_row.php:38
+#: includes/admin/views/editor_popup/general_decoration.php:137
+#: includes/admin/views/popup/sc_button_icon.php:60
+#: includes/admin/views/popup/sc_row_icon.php:50
+#@ go_pricing_textdomain
+msgid "Align Right"
+msgstr ""
+
+#: includes/admin/views/editor_popup/body_row.php:40
+#: includes/admin/views/editor_popup/footer_row.php:38
+#: includes/admin/views/editor_popup/header_general.php:55
+#: includes/admin/views/editor_popup/header_general.php:116
+#: includes/admin/views/editor_popup/header_price.php:58
+#: includes/admin/views/editor_popup/header_price.php:63
+#: includes/admin/views/editor_popup/header_title.php:17
+#: includes/admin/views/editor_popup/header_title.php:57
+#: includes/admin/views/editor_popup/part/button.php:67
+#: includes/admin/views/popup/header_general.php:55
+#: includes/admin/views/popup/header_general.php:116
+#@ go_pricing_textdomain
+msgid "Add Shortcode"
+msgstr ""
+
+#: includes/admin/views/editor_popup/body_row.php:41
+#@ go_pricing_textdomain
+msgid "Row content."
+msgstr ""
+
+#: includes/admin/views/editor_popup/body_row.php:44
+#: includes/admin/views/editor_popup/body_row.php:87
+#: includes/admin/views/editor_popup/footer_row.php:42
+#: includes/admin/views/editor_popup/header_price.php:72
+#: includes/admin/views/editor_popup/header_price.php:106
+#: includes/admin/views/editor_popup/header_title.php:21
+#: includes/admin/views/editor_popup/header_title.php:61
+#: includes/admin/views/editor_popup/part/button.php:36
+#@ go_pricing_textdomain
+msgid "Font Family"
+msgstr ""
+
+#: includes/admin/views/editor_popup/body_row.php:66
+#: includes/admin/views/editor_popup/footer_row.php:64
+#@ go_pricing_textdomain
+msgid "Font family of the row content."
+msgstr ""
+
+#: includes/admin/views/editor_popup/body_row.php:69
+#: includes/admin/views/editor_popup/body_row.php:112
+#: includes/admin/views/editor_popup/footer_row.php:67
+#: includes/admin/views/editor_popup/header_price.php:97
+#: includes/admin/views/editor_popup/header_price.php:131
+#: includes/admin/views/editor_popup/header_title.php:46
+#: includes/admin/views/editor_popup/header_title.php:86
+#: includes/admin/views/editor_popup/part/button.php:61
+#@ go_pricing_textdomain
+msgid "Font Size / Line H."
+msgstr ""
+
+#: includes/admin/views/editor_popup/body_row.php:70
+#: includes/admin/views/editor_popup/body_row.php:113
+#: includes/admin/views/editor_popup/footer_row.php:68
+#: includes/admin/views/editor_popup/header_price.php:98
+#: includes/admin/views/editor_popup/header_price.php:132
+#: includes/admin/views/editor_popup/header_title.php:47
+#: includes/admin/views/editor_popup/header_title.php:87
+#: includes/admin/views/editor_popup/part/button.php:62
+#@ go_pricing_textdomain
+msgid "Bold"
+msgstr ""
+
+#: includes/admin/views/editor_popup/body_row.php:70
+#: includes/admin/views/editor_popup/body_row.php:113
+#: includes/admin/views/editor_popup/footer_row.php:68
+#: includes/admin/views/editor_popup/header_price.php:98
+#: includes/admin/views/editor_popup/header_price.php:132
+#: includes/admin/views/editor_popup/header_title.php:47
+#: includes/admin/views/editor_popup/header_title.php:87
+#: includes/admin/views/editor_popup/part/button.php:62
+#@ go_pricing_textdomain
+msgid "Italic"
+msgstr ""
+
+#: includes/admin/views/editor_popup/body_row.php:70
+#: includes/admin/views/editor_popup/body_row.php:113
+#: includes/admin/views/editor_popup/footer_row.php:68
+#: includes/admin/views/editor_popup/header_price.php:98
+#: includes/admin/views/editor_popup/header_price.php:132
+#: includes/admin/views/editor_popup/header_title.php:47
+#: includes/admin/views/editor_popup/header_title.php:87
+#: includes/admin/views/editor_popup/part/button.php:62
+#@ go_pricing_textdomain
+msgid "Strikethrough"
+msgstr ""
+
+#: includes/admin/views/editor_popup/body_row.php:71
+#: includes/admin/views/editor_popup/footer_row.php:69
+#@ go_pricing_textdomain
+msgid "Font size and line height of the row content in pixels."
+msgstr ""
+
+#: includes/admin/views/editor_popup/body_row.php:84
+#@ go_pricing_textdomain
+msgid "Tooltip content."
+msgstr ""
+
+#: includes/admin/views/editor_popup/body_row.php:109
+#@ go_pricing_textdomain
+msgid "Font family of the tooltip content."
+msgstr ""
+
+#: includes/admin/views/editor_popup/footer_row.php:23
+#@ go_pricing_textdomain
+msgid "Type of the footer row."
+msgstr ""
+
+#: includes/admin/views/editor_popup/footer_row.php:39
+#@ go_pricing_textdomain
+msgid "Content of the row."
+msgstr ""
+
+#: includes/admin/views/editor_popup/general_decoration.php:13
+#@ go_pricing_textdomain
+msgid "Shadow Settings"
+msgstr ""
+
+#: includes/admin/views/editor_popup/general_decoration.php:37
+#@ go_pricing_textdomain
+msgid "Bottom shadow of the column."
+msgstr ""
+
+#: includes/admin/views/editor_popup/general_decoration.php:41
+#@ go_pricing_textdomain
+msgid "Sign Settings"
+msgstr ""
+
+#: includes/admin/views/editor_popup/general_decoration.php:73
+#@ go_pricing_textdomain
+msgid "Type of the sign."
+msgstr ""
+
+#: includes/admin/views/editor_popup/general_decoration.php:76
+#: includes/admin/views/popup/sc_media.php:22
+#: includes/admin/views/popup/sc_media.php:46
+#@ go_pricing_textdomain
+msgid "Image"
+msgstr ""
+
+#: includes/admin/views/editor_popup/general_decoration.php:81
+#: includes/admin/views/editor_popup/general_decoration.php:83
+#: includes/admin/views/editor_popup/header_general.php:32
+#: includes/admin/views/editor_popup/header_general.php:35
+#: includes/admin/views/editor_popup/header_style.php:32
+#: includes/admin/views/editor_popup/header_style.php:34
+#: includes/admin/views/page/table_editor.php:90
+#: includes/admin/views/page/table_editor.php:92
+#: includes/admin/views/popup/header_general.php:32
+#: includes/admin/views/popup/header_general.php:35
+#: includes/admin/views/popup/sc_button_icon.php:78
+#: includes/admin/views/popup/sc_media.php:50
+#: includes/admin/views/popup/sc_media.php:173
+#: includes/admin/views/popup/sc_media.php:339
+#: includes/admin/views/popup/sc_row_icon.php:109
+#@ go_pricing_textdomain
+msgid "Remove"
+msgstr ""
+
+#: includes/admin/views/editor_popup/general_decoration.php:81
+#: includes/admin/views/editor_popup/header_general.php:32
+#: includes/admin/views/editor_popup/header_style.php:32
+#: includes/admin/views/page/table_editor.php:35
+#: includes/admin/views/page/table_editor.php:90
+#: includes/admin/views/page/table_editor.php:249
+#: includes/admin/views/page/table_editor.php:282
+#: includes/admin/views/page/table_manager.php:152
+#: includes/admin/views/popup/header_general.php:32
+#@ go_pricing_textdomain
+msgid "Preview"
+msgstr ""
+
+#: includes/admin/views/editor_popup/general_decoration.php:86
+#: includes/admin/views/editor_popup/header_general.php:39
+#: includes/admin/views/editor_popup/header_style.php:37
+#: includes/admin/views/page/table_editor.php:95
+#: includes/admin/views/popup/header_general.php:39
+#: includes/admin/views/popup/sc_button_icon.php:68
+#: includes/admin/views/popup/sc_button_icon.php:80
+#: includes/admin/views/popup/sc_media.php:53
+#: includes/admin/views/popup/sc_media.php:155
+#: includes/admin/views/popup/sc_media.php:160
+#: includes/admin/views/popup/sc_media.php:165
+#: includes/admin/views/popup/sc_media.php:175
+#: includes/admin/views/popup/sc_media.php:329
+#: includes/admin/views/popup/sc_media.php:341
+#: includes/admin/views/popup/sc_media.php:369
+#: includes/admin/views/popup/sc_media.php:374
+#: includes/admin/views/popup/sc_media.php:379
+#: includes/admin/views/popup/sc_row_icon.php:99
+#: includes/admin/views/popup/sc_row_icon.php:111
+#@ go_pricing_textdomain
+msgid "Add"
+msgstr ""
+
+#: includes/admin/views/editor_popup/general_decoration.php:89
+#: includes/admin/views/popup/sc_media.php:56
+#@ go_pricing_textdomain
+msgid "Enter an URL or select an image from the Media Library."
+msgstr ""
+
+#: includes/admin/views/editor_popup/general_decoration.php:95
+#@ go_pricing_textdomain
+msgid "Sign"
+msgstr ""
+
+#: includes/admin/views/editor_popup/general_decoration.php:129
+#@ go_pricing_textdomain
+msgid "Sign."
+msgstr ""
+
+#: includes/admin/views/editor_popup/general_decoration.php:133
+#@ go_pricing_textdomain
+msgid "Alignment"
+msgstr ""
+
+#: includes/admin/views/editor_popup/general_decoration.php:140
+#@ go_pricing_textdomain
+msgid "Horizontal alignment of the sign."
+msgstr ""
+
+#: includes/admin/views/editor_popup/general_decoration.php:148
+#@ go_pricing_textdomain
+msgid "Link"
+msgstr ""
+
+#: includes/admin/views/editor_popup/general_decoration.php:150
+#@ go_pricing_textdomain
+msgid "URL of the sign link. Leave blank if you don't want the sign to be linkable."
+msgstr ""
+
+#: includes/admin/views/editor_popup/general_decoration.php:153
+#: includes/admin/views/editor_popup/part/button.php:76
+#@ go_pricing_textdomain
+msgid "Open In New Window?"
+msgstr ""
+
+#: includes/admin/views/editor_popup/general_decoration.php:155
+#@ go_pricing_textdomain
+msgid "Whether to open the link in a new page."
+msgstr ""
+
+#: includes/admin/views/editor_popup/general_decoration.php:158
+#: includes/admin/views/editor_popup/part/button.php:81
+#@ go_pricing_textdomain
+msgid "Nofollow Link?"
+msgstr ""
+
+#: includes/admin/views/editor_popup/general_decoration.php:160
+#: includes/admin/views/editor_popup/part/button.php:83
+#@ go_pricing_textdomain
+msgid "Whether to tell the search engines \"Don't follow the link\"."
+msgstr ""
+
+#: includes/admin/views/editor_popup/header_general.php:27
+#: includes/admin/views/popup/header_general.php:27
+#@ go_pricing_textdomain
+msgid "Background Image"
+msgstr ""
+
+#: includes/admin/views/editor_popup/header_general.php:33
+#: includes/admin/views/editor_popup/header_general.php:36
+#: includes/admin/views/popup/header_general.php:33
+#: includes/admin/views/popup/header_general.php:36
+#: includes/admin/views/popup/sc_media.php:51
+#@ go_pricing_textdomain
+msgid "Responsive image?"
+msgstr ""
+
+#: includes/admin/views/editor_popup/header_general.php:42
+#: includes/admin/views/editor_popup/header_style.php:40
+#: includes/admin/views/popup/header_general.php:42
+#@ go_pricing_textdomain
+msgid "Background image of the header."
+msgstr ""
+
+#: includes/admin/views/editor_popup/header_general.php:56
+#: includes/admin/views/editor_popup/header_general.php:117
+#: includes/admin/views/popup/header_general.php:56
+#: includes/admin/views/popup/header_general.php:117
+#@ go_pricing_textdomain
+msgid "HTML content of the header."
+msgstr ""
+
+#: includes/admin/views/editor_popup/header_general.php:71
+#: includes/admin/views/editor_popup/header_general.php:120
+#: includes/admin/views/popup/header_general.php:71
+#: includes/admin/views/popup/header_general.php:120
+#@ go_pricing_textdomain
+msgid "CSS Code"
+msgstr ""
+
+#: includes/admin/views/editor_popup/header_general.php:73
+#: includes/admin/views/editor_popup/header_general.php:122
+#: includes/admin/views/popup/header_general.php:73
+#: includes/admin/views/popup/header_general.php:122
+#@ go_pricing_textdomain
+msgid "CSS code of the header."
+msgstr ""
+
+#: includes/admin/views/editor_popup/header_general.php:80
+#: includes/admin/views/popup/header_general.php:80
+#@ go_pricing_textdomain
+msgid "Type Specific Settings"
+msgstr ""
+
+#: includes/admin/views/editor_popup/header_general.php:106
+#: includes/admin/views/popup/header_general.php:106
+#@ go_pricing_textdomain
+msgid "Replace Header?"
+msgstr ""
+
+#: includes/admin/views/editor_popup/header_general.php:108
+#: includes/admin/views/popup/header_general.php:108
+#@ go_pricing_textdomain
+msgid "Whether to replace to origianal header with custom HTML & CSS code."
+msgstr ""
+
+#: includes/admin/views/editor_popup/header_price.php:14
+#@ go_pricing_textdomain
+msgid "Content Settings"
+msgstr ""
+
+#: includes/admin/views/editor_popup/header_price.php:17
+#@ go_pricing_textdomain
+msgid "Price Type"
+msgstr ""
+
+#: includes/admin/views/editor_popup/header_price.php:24
+#@ go_pricing_textdomain
+msgid "Type of the price."
+msgstr ""
+
+#: includes/admin/views/editor_popup/header_price.php:40
+#@ go_pricing_textdomain
+msgid "Amount of the price."
+msgstr ""
+
+#: includes/admin/views/editor_popup/header_price.php:47
+#@ go_pricing_textdomain
+msgid "Payment Name"
+msgstr ""
+
+#: includes/admin/views/editor_popup/header_price.php:49
+#@ go_pricing_textdomain
+msgid "Name of the payment e.g. \"per month\", \"annual\"."
+msgstr ""
+
+#: includes/admin/views/editor_popup/header_price.php:57
+#@ go_pricing_textdomain
+msgid "Price Content"
+msgstr ""
+
+#: includes/admin/views/editor_popup/header_price.php:59
+#@ go_pricing_textdomain
+msgid "Price content."
+msgstr ""
+
+#: includes/admin/views/editor_popup/header_price.php:62
+#@ go_pricing_textdomain
+msgid "Payment Content"
+msgstr ""
+
+#: includes/admin/views/editor_popup/header_price.php:64
+#@ go_pricing_textdomain
+msgid "Payment content."
+msgstr ""
+
+#: includes/admin/views/editor_popup/header_price.php:69
+#@ go_pricing_textdomain
+msgid "Price Style Settings"
+msgstr ""
+
+#: includes/admin/views/editor_popup/header_price.php:94
+#@ go_pricing_textdomain
+msgid "Font family of the price."
+msgstr ""
+
+#: includes/admin/views/editor_popup/header_price.php:99
+#@ go_pricing_textdomain
+msgid "Font size and line height of the price in pixels."
+msgstr ""
+
+#: includes/admin/views/editor_popup/header_price.php:103
+#@ go_pricing_textdomain
+msgid "Payment Style Settings"
+msgstr ""
+
+#: includes/admin/views/editor_popup/header_price.php:128
+#@ go_pricing_textdomain
+msgid "Font family of the payment."
+msgstr ""
+
+#: includes/admin/views/editor_popup/header_price.php:133
+#@ go_pricing_textdomain
+msgid "Font size and line height of the payment in pixels."
+msgstr ""
+
+#: includes/admin/views/editor_popup/header_style.php:15
+#@ go_pricing_textdomain
+msgid "Header Style"
+msgstr ""
+
+#: includes/admin/views/editor_popup/header_style.php:21
+#@ go_pricing_textdomain
+msgid "Style of the header."
+msgstr ""
+
+#: includes/admin/views/editor_popup/header_style.php:24
+#@ go_pricing_textdomain
+msgid "Set background image only if want to replace the style default colors with an image."
+msgstr ""
+
+#: includes/admin/views/editor_popup/header_style.php:27
+#@ go_pricing_textdomain
+msgid "Header background"
+msgstr ""
+
+#: includes/admin/views/editor_popup/header_style.php:43
+#@ go_pricing_textdomain
+msgid "Bg position"
+msgstr ""
+
+#: includes/admin/views/editor_popup/header_style.php:45
+#@ go_pricing_textdomain
+msgid "Background position of the header image."
+msgstr ""
+
+#: includes/admin/views/editor_popup/header_title.php:18
+#@ go_pricing_textdomain
+msgid "Title of the pricing table."
+msgstr ""
+
+#: includes/admin/views/editor_popup/header_title.php:43
+#@ go_pricing_textdomain
+msgid "Font family of the title."
+msgstr ""
+
+#: includes/admin/views/editor_popup/header_title.php:48
+#@ go_pricing_textdomain
+msgid "Font size and line height of the title in pixels."
+msgstr ""
+
+#: includes/admin/views/editor_popup/header_title.php:56
+#@ go_pricing_textdomain
+msgid "Subtitle"
+msgstr ""
+
+#: includes/admin/views/editor_popup/header_title.php:58
+#@ go_pricing_textdomain
+msgid "Subtitle of the pricing table."
+msgstr ""
+
+#: includes/admin/views/editor_popup/header_title.php:83
+#@ go_pricing_textdomain
+msgid "Font family of the subtitle."
+msgstr ""
+
+#: includes/admin/views/editor_popup/header_title.php:88
+#@ go_pricing_textdomain
+msgid "Font size and line height of the subtitle in pixels."
+msgstr ""
+
+#: includes/admin/views/editor_popup/part/button.php:14
+#@ go_pricing_textdomain
+msgid "Type"
+msgstr ""
+
+#: includes/admin/views/editor_popup/part/button.php:17
+#@ go_pricing_textdomain
+msgid "Regular Button"
+msgstr ""
+
+#: includes/admin/views/editor_popup/part/button.php:18
+#@ go_pricing_textdomain
+msgid "Form Submit Button (e.g. Paypal)"
+msgstr ""
+
+#: includes/admin/views/editor_popup/part/button.php:19
+#@ go_pricing_textdomain
+msgid "Custom Button"
+msgstr ""
+
+#: includes/admin/views/editor_popup/part/button.php:22
+#@ go_pricing_textdomain
+msgid "Type of the button."
+msgstr ""
+
+#: includes/admin/views/editor_popup/part/button.php:25
+#: includes/admin/views/popup/parts/part_fa.php:8
+#: includes/admin/views/popup/parts/part_icomoon.php:11
+#: includes/admin/views/popup/parts/part_linecon.php:11
+#: includes/admin/views/popup/parts/part_material.php:11
+#@ go_pricing_textdomain
+msgid "Size"
+msgstr ""
+
+#: includes/admin/views/editor_popup/part/button.php:28
+#@ go_pricing_textdomain
+msgid "Small"
+msgstr ""
+
+#: includes/admin/views/editor_popup/part/button.php:29
+#@ go_pricing_textdomain
+msgid "Medium"
+msgstr ""
+
+#: includes/admin/views/editor_popup/part/button.php:30
+#: includes/admin/views/popup/sc_button_icon.php:44
+#@ go_pricing_textdomain
+msgid "Large"
+msgstr ""
+
+#: includes/admin/views/editor_popup/part/button.php:33
+#@ go_pricing_textdomain
+msgid "Size of the button."
+msgstr ""
+
+#: includes/admin/views/editor_popup/part/button.php:58
+#@ go_pricing_textdomain
+msgid "Font family of the button."
+msgstr ""
+
+#: includes/admin/views/editor_popup/part/button.php:63
+#@ go_pricing_textdomain
+msgid "Font size and line height of the button in pixels."
+msgstr ""
+
+#: includes/admin/views/editor_popup/part/button.php:68
+#@ go_pricing_textdomain
+msgid "Text of the \"Regular\" and \"Paypal\" buttons. Leave blank for \"Custom\" buttons."
+msgstr ""
+
+#: includes/admin/views/editor_popup/part/button.php:73
+#@ go_pricing_textdomain
+msgid "URL of the \"Regular\" button or code of the \"Paypal\" and \"Custom\" buttons."
+msgstr ""
+
+#: includes/admin/views/editor_popup/part/button.php:78
+#@ go_pricing_textdomain
+msgid "Whether to open the link in a new window."
+msgstr ""
+
+#: includes/admin/views/page/db_update.php:25
+#: includes/admin/views/page/export.php:31
+#: includes/admin/views/page/general_settings.php:20
+#: includes/admin/views/page/impex.php:25
+#: includes/admin/views/page/import.php:29
+#: includes/admin/views/page/table_editor.php:35
+#@ go_pricing_textdomain
+msgid "Help"
+msgstr ""
+
+#: includes/admin/views/page/db_update.php:25
+#: includes/admin/views/page/export.php:31
+#: includes/admin/views/page/general_settings.php:20
+#: includes/admin/views/page/impex.php:25
+#: includes/admin/views/page/import.php:29
+#: includes/admin/views/page/table_editor.php:35
+#@ go_pricing_textdomain
+msgid "Show"
+msgstr ""
+
+#: includes/admin/views/page/db_update.php:25
+#: includes/admin/views/page/export.php:31
+#: includes/admin/views/page/general_settings.php:20
+#: includes/admin/views/page/impex.php:25
+#: includes/admin/views/page/import.php:29
+#: includes/admin/views/page/table_editor.php:35
+#: includes/admin/views/popup/parts/part_fa.php:26
+#: includes/admin/views/popup/parts/part_icomoon.php:29
+#: includes/admin/views/popup/parts/part_linecon.php:29
+#: includes/admin/views/popup/parts/part_material.php:29
+#: includes/admin/views/popup/sc_button_icon.php:64
+#: includes/admin/views/popup/sc_media.php:299
+#: includes/admin/views/popup/sc_row_icon.php:54
+#: includes/globals/shadows.php:18
+#: includes/globals/signs.php:18
+#@ go_pricing_textdomain
+msgid "None"
+msgstr ""
+
+#: includes/admin/views/page/db_update.php:25
+#: includes/admin/views/page/impex.php:25
+#: includes/admin/views/page/impex.php:89
+#: includes/admin/views/page/import.php:29
+#: includes/admin/views/page/import.php:81
+#: includes/admin/views/view_editor_popup.php:42
+#@ go_pricing_textdomain
+msgid "Next"
+msgstr ""
+
+#: includes/admin/views/page/db_update.php:25
+#: includes/admin/views/page/db_update.php:62
+#@ go_pricing_textdomain
+msgid "Update"
+msgstr ""
+
+#: includes/admin/views/page/db_update.php:47
+#@ go_pricing_textdomain
+msgid "<strong>Your plugin database update is required.</strong> Create a backup of your existing table data first, then click to the \"Update\" button."
+msgstr ""
+
+#: includes/admin/views/page/db_update.php:51
+#: includes/admin/views/page/export.php:49
+#: includes/admin/views/popup/export.php:21
+#: includes/admin/views/popup/live_preview.php:21
+#@ go_pricing_textdomain
+msgid "Export Data"
+msgstr ""
+
+#: includes/admin/views/page/db_update.php:53
+#: includes/admin/views/page/export.php:51
+#: includes/admin/views/popup/export.php:23
+#: includes/admin/views/popup/live_preview.php:23
+#@ go_pricing_textdomain
+msgid "Copy the content of the textarea and save into a file on your hard drive."
+msgstr ""
+
+#: includes/admin/views/page/export.php:31
+#: includes/admin/views/page/export.php:60
+#: includes/admin/views/page/table_editor.php:249
+#: includes/admin/views/page/table_editor.php:282
+#@ go_pricing_textdomain
+msgid "Go to Dashboard"
+msgstr ""
+
+#: includes/admin/views/page/export.php:42
+#: includes/admin/views/page/impex.php:50
+#: includes/admin/views/page/table_manager.php:103
+#: includes/admin/views/popup/export.php:11
+#: includes/admin/views/popup/live_preview.php:36
+#@ go_pricing_textdomain
+msgid "Export"
+msgstr ""
+
+#: includes/admin/views/page/general_settings.php:20
+#: includes/admin/views/page/general_settings.php:77
+#: includes/admin/views/page/general_settings.php:147
+#: includes/admin/views/page/general_settings.php:172
+#: includes/admin/views/page/table_editor.php:35
+#: includes/admin/views/page/table_editor.php:249
+#: includes/admin/views/page/table_editor.php:282
+#@ go_pricing_textdomain
+msgid "Save"
+msgstr ""
+
+#: includes/admin/views/page/general_settings.php:25
+#@ go_pricing_textdomain
+msgid "Are you sure you want to leave without saving?"
+msgstr ""
+
+#: includes/admin/views/page/general_settings.php:34
+#@ go_pricing_textdomain
+msgid "Admin & General"
+msgstr ""
+
+#: includes/admin/views/page/general_settings.php:41
+#@ go_pricing_textdomain
+msgid "Enable AJAX"
+msgstr ""
+
+#: includes/admin/views/page/general_settings.php:43
+#@ go_pricing_textdomain
+msgid "Whether to enable AJAX request mode in admin area."
+msgstr ""
+
+#: includes/admin/views/page/general_settings.php:53
+#@ go_pricing_textdomain
+msgid "Administrator"
+msgstr ""
+
+#: includes/admin/views/page/general_settings.php:54
+#@ go_pricing_textdomain
+msgid "Editor"
+msgstr ""
+
+#: includes/admin/views/page/general_settings.php:55
+#@ go_pricing_textdomain
+msgid "Author"
+msgstr ""
+
+#: includes/admin/views/page/general_settings.php:56
+#@ go_pricing_textdomain
+msgid "Contributor"
+msgstr ""
+
+#: includes/admin/views/page/general_settings.php:59
+#@ go_pricing_textdomain
+msgid "Set user access to the plugin."
+msgstr ""
+
+#: includes/admin/views/page/general_settings.php:68
+#@ go_pricing_textdomain
+msgid "Whether to enable CSS transitions."
+msgstr ""
+
+#: includes/admin/views/page/general_settings.php:84
+#: includes/admin/views/page/general_settings.php:99
+#@ go_pricing_textdomain
+msgid "Currency"
+msgstr ""
+
+#: includes/admin/views/page/general_settings.php:110
+#@ go_pricing_textdomain
+msgid "Currency of the price."
+msgstr ""
+
+#: includes/admin/views/page/general_settings.php:113
+#@ go_pricing_textdomain
+msgid "Currency Position"
+msgstr ""
+
+#: includes/admin/views/page/general_settings.php:116
+#@ go_pricing_textdomain
+msgid "Left (e.g. $100)"
+msgstr ""
+
+#: includes/admin/views/page/general_settings.php:117
+#@ go_pricing_textdomain
+msgid "Right (e.g. 100$)"
+msgstr ""
+
+#: includes/admin/views/page/general_settings.php:119
+#@ go_pricing_textdomain
+msgid "Currency position of the price."
+msgstr ""
+
+#: includes/admin/views/page/general_settings.php:122
+#@ go_pricing_textdomain
+msgid "Thousand Separator"
+msgstr ""
+
+#: includes/admin/views/page/general_settings.php:124
+#@ go_pricing_textdomain
+msgid "Thuousand separator of the price."
+msgstr ""
+
+#: includes/admin/views/page/general_settings.php:127
+#@ go_pricing_textdomain
+msgid "Decimal Separator"
+msgstr ""
+
+#: includes/admin/views/page/general_settings.php:129
+#@ go_pricing_textdomain
+msgid "Decimal separator of the price."
+msgstr ""
+
+#: includes/admin/views/page/general_settings.php:132
+#@ go_pricing_textdomain
+msgid "Number of Decimals"
+msgstr ""
+
+#: includes/admin/views/page/general_settings.php:134
+#@ go_pricing_textdomain
+msgid "Maximum number of decimals to show in price."
+msgstr ""
+
+#: includes/admin/views/page/general_settings.php:154
+#@ go_pricing_textdomain
+msgid "Custom CSS Code"
+msgstr ""
+
+#: includes/admin/views/page/general_settings.php:161
+#@ go_pricing_textdomain
+msgid "Code"
+msgstr ""
+
+#: includes/admin/views/page/general_settings.php:163
+#@ go_pricing_textdomain
+msgid "The code will be added to the plugin frontend style."
+msgstr ""
+
+#: includes/admin/views/page/impex.php:46
+#@ go_pricing_textdomain
+msgid "Select Action"
+msgstr ""
+
+#: includes/admin/views/page/impex.php:49
+#: includes/admin/views/page/import.php:44
+#@ go_pricing_textdomain
+msgid "Import"
+msgstr ""
+
+#: includes/admin/views/page/impex.php:53
+#@ go_pricing_textdomain
+msgid "Import or Export table database data."
+msgstr ""
+
+#: includes/admin/views/page/impex.php:57
+#@ go_pricing_textdomain
+msgid "Import Data"
+msgstr ""
+
+#: includes/admin/views/page/impex.php:59
+#@ go_pricing_textdomain
+msgid "Open the file that contains demodata and copy its content to the textarea above, then click to the \"Next\" button."
+msgstr ""
+
+#: includes/admin/views/page/impex.php:62
+#, php-format
+#@ go_pricing_textdomain
+msgid "Select Tables%s"
+msgstr ""
+
+#: includes/admin/views/page/impex.php:66
+#: includes/admin/views/page/import.php:55
+#@ go_pricing_textdomain
+msgid "All tables"
+msgstr ""
+
+#: includes/admin/views/page/impex.php:66
+#@ go_pricing_textdomain
+msgid "Show / Hide"
+msgstr ""
+
+#: includes/admin/views/page/impex.php:77
+#: includes/admin/views/page/import.php:64
+#@ go_pricing_textdomain
+msgid "No tables found."
+msgstr ""
+
+#: includes/admin/views/page/impex.php:80
+#@ go_pricing_textdomain
+msgid "Select the pricing tables you would like to export."
+msgstr ""
+
+#: includes/admin/views/page/import.php:51
+#@ go_pricing_textdomain
+msgid "Select Tables"
+msgstr ""
+
+#: includes/admin/views/page/import.php:67
+#@ go_pricing_textdomain
+msgid "Select the pricing tables you would like to import."
+msgstr ""
+
+#: includes/admin/views/page/import.php:70
+#@ go_pricing_textdomain
+msgid "Replace existing items?"
+msgstr ""
+
+#: includes/admin/views/page/import.php:72
+#@ go_pricing_textdomain
+msgid "Whether to replace existing items with same ids or create new copy of them."
+msgstr ""
+
+#: includes/admin/views/page/table_editor.php:35
+#: includes/admin/views/page/table_editor.php:249
+#: includes/admin/views/page/table_editor.php:282
+#@ go_pricing_textdomain
+msgid "Please save the table first!"
+msgstr ""
+
+#: includes/admin/views/page/table_editor.php:40
+#@ go_pricing_textdomain
+msgid "Settings has been changed. Don't forget to save!"
+msgstr ""
+
+#: includes/admin/views/page/table_editor.php:54
+#@ go_pricing_textdomain
+msgid "Name & ID"
+msgstr ""
+
+#: includes/admin/views/page/table_editor.php:58
+#@ go_pricing_textdomain
+msgid "Style & Skin"
+msgstr ""
+
+#: includes/admin/views/page/table_editor.php:62
+#@ go_pricing_textdomain
+msgid "Layout"
+msgstr ""
+
+#: includes/admin/views/page/table_editor.php:66
+#@ go_pricing_textdomain
+msgid "Responsivity"
+msgstr ""
+
+#: includes/admin/views/page/table_editor.php:74
+#: includes/vendors/vc/class_vc_extend.php:70
+#@ go_pricing_textdomain
+msgid "Table Name"
+msgstr ""
+
+#: includes/admin/views/page/table_editor.php:76
+#@ go_pricing_textdomain
+msgid "Pricing table name, used only in admin area."
+msgstr ""
+
+#: includes/admin/views/page/table_editor.php:79
+#@ go_pricing_textdomain
+msgid "Table ID"
+msgstr ""
+
+#: includes/admin/views/page/table_editor.php:106
+#@ go_pricing_textdomain
+msgid "Please note that unsaved column data will be lost on style change!"
+msgstr ""
+
+#: includes/admin/views/page/table_editor.php:125
+#@ go_pricing_textdomain
+msgid "Style of the pricing table."
+msgstr ""
+
+#: includes/admin/views/page/table_editor.php:131
+#@ go_pricing_textdomain
+msgid "Enable Column Borders?"
+msgstr ""
+
+#: includes/admin/views/page/table_editor.php:133
+#@ go_pricing_textdomain
+msgid "Whether to enable or disable borders of the columns."
+msgstr ""
+
+#: includes/admin/views/page/table_editor.php:136
+#@ go_pricing_textdomain
+msgid "Column Border Radius"
+msgstr ""
+
+#: includes/admin/views/page/table_editor.php:138
+#@ go_pricing_textdomain
+msgid "Top, Right, Bottom and Left border radius of the columns in pixels."
+msgstr ""
+
+#: includes/admin/views/page/table_editor.php:141
+#@ go_pricing_textdomain
+msgid "Enable Row Borders?"
+msgstr ""
+
+#: includes/admin/views/page/table_editor.php:143
+#@ go_pricing_textdomain
+msgid "Whether to enable or disable row separator borders."
+msgstr ""
+
+#: includes/admin/views/page/table_editor.php:146
+#@ go_pricing_textdomain
+msgid "Enable Box Shadow?"
+msgstr ""
+
+#: includes/admin/views/page/table_editor.php:148
+#@ go_pricing_textdomain
+msgid "Whether to enable or disable shadow of the columns on hover/highlighted state."
+msgstr ""
+
+#: includes/admin/views/page/table_editor.php:154
+#@ go_pricing_textdomain
+msgid "Tooltip Width"
+msgstr ""
+
+#: includes/admin/views/page/table_editor.php:156
+#@ go_pricing_textdomain
+msgid "Width of the tooltip in pixels."
+msgstr ""
+
+#: includes/admin/views/page/table_editor.php:159
+#@ go_pricing_textdomain
+msgid "Tooltip Bg Color"
+msgstr ""
+
+#: includes/admin/views/page/table_editor.php:161
+#@ go_pricing_textdomain
+msgid "Background color of the tooltip."
+msgstr ""
+
+#: includes/admin/views/page/table_editor.php:164
+#@ go_pricing_textdomain
+msgid "Tooltip Text Color"
+msgstr ""
+
+#: includes/admin/views/page/table_editor.php:166
+#@ go_pricing_textdomain
+msgid "Text color of the tooltip."
+msgstr ""
+
+#: includes/admin/views/page/table_editor.php:174
+#@ go_pricing_textdomain
+msgid "Column Space"
+msgstr ""
+
+#: includes/admin/views/page/table_editor.php:176
+#@ go_pricing_textdomain
+msgid "Horizontal space between columns in pixels."
+msgstr ""
+
+#: includes/admin/views/page/table_editor.php:179
+#@ go_pricing_textdomain
+msgid "Column Min/Max Width"
+msgstr ""
+
+#: includes/admin/views/page/table_editor.php:181
+#@ go_pricing_textdomain
+msgid "Minimum width of the colums in pixels."
+msgstr ""
+
+#: includes/admin/views/page/table_editor.php:187
+#@ go_pricing_textdomain
+msgid "Hide Footer?"
+msgstr ""
+
+#: includes/admin/views/page/table_editor.php:189
+#@ go_pricing_textdomain
+msgid "Whether to hide the table footer."
+msgstr ""
+
+#: includes/admin/views/page/table_editor.php:192
+#@ go_pricing_textdomain
+msgid "Enlarge Current Column?"
+msgstr ""
+
+#: includes/admin/views/page/table_editor.php:194
+#@ go_pricing_textdomain
+msgid "Whether to increase the size of the columns on hover/highlighted state."
+msgstr ""
+
+#: includes/admin/views/page/table_editor.php:200
+#@ go_pricing_textdomain
+msgid "Equalize Columns?"
+msgstr ""
+
+#: includes/admin/views/page/table_editor.php:202
+#@ go_pricing_textdomain
+msgid "Whether to equalize the height of the columns (recommended)."
+msgstr ""
+
+#: includes/admin/views/page/table_editor.php:205
+#@ go_pricing_textdomain
+msgid "Equalize Rows in Body?"
+msgstr ""
+
+#: includes/admin/views/page/table_editor.php:207
+#@ go_pricing_textdomain
+msgid "Whether to equalize the height of the rows in body (recommended)."
+msgstr ""
+
+#: includes/admin/views/page/table_editor.php:210
+#@ go_pricing_textdomain
+msgid "Equalize Rows in Footer?"
+msgstr ""
+
+#: includes/admin/views/page/table_editor.php:212
+#@ go_pricing_textdomain
+msgid "Whether to equalize the height of the rows in footer (recommended)."
+msgstr ""
+
+#: includes/admin/views/page/table_editor.php:222
+#@ go_pricing_textdomain
+msgid "Whether to enable or disable responsiveness."
+msgstr ""
+
+#: includes/admin/views/page/table_editor.php:226
+#@ go_pricing_textdomain
+msgid "Tablet Portrait View"
+msgstr ""
+
+#: includes/admin/views/page/table_editor.php:227
+#: includes/admin/views/page/table_editor.php:232
+#: includes/admin/views/page/table_editor.php:237
+#@ go_pricing_textdomain
+msgid "Min."
+msgstr ""
+
+#: includes/admin/views/page/table_editor.php:227
+#: includes/admin/views/page/table_editor.php:232
+#: includes/admin/views/page/table_editor.php:237
+#@ go_pricing_textdomain
+msgid "Max."
+msgstr ""
+
+#: includes/admin/views/page/table_editor.php:227
+#: includes/admin/views/page/table_editor.php:232
+#: includes/admin/views/page/table_editor.php:237
+#@ go_pricing_textdomain
+msgid "Columns"
+msgstr ""
+
+#: includes/admin/views/page/table_editor.php:227
+#: includes/admin/views/page/table_editor.php:232
+#: includes/admin/views/page/table_editor.php:237
+#: includes/admin/views/page/table_manager.php:74
+#@ go_pricing_textdomain
+msgid "All"
+msgstr ""
+
+#: includes/admin/views/page/table_editor.php:231
+#@ go_pricing_textdomain
+msgid "Mobile Landscape View"
+msgstr ""
+
+#: includes/admin/views/page/table_editor.php:236
+#@ go_pricing_textdomain
+msgid "Mobile Portrait View"
+msgstr ""
+
+#: includes/admin/views/page/table_editor.php:257
+#@ go_pricing_textdomain
+msgid "Column Editor"
+msgstr ""
+
+#: includes/admin/views/page/table_editor.php:270
+#@ go_pricing_textdomain
+msgid "Add New Column"
+msgstr ""
+
+#: includes/admin/views/page/table_manager.php:31
+#@ go_pricing_textdomain
+msgid "Rows"
+msgstr ""
+
+#: includes/admin/views/page/table_manager.php:31
+#: includes/admin/views/page/table_manager.php:174
+#@ go_pricing_textdomain
+msgid "Create New"
+msgstr ""
+
+#: includes/admin/views/page/table_manager.php:63
+#@ go_pricing_textdomain
+msgid "Table Dashboard"
+msgstr ""
+
+#: includes/admin/views/page/table_manager.php:69
+#: includes/admin/views/popup/parts/part_fa.php:22
+#: includes/admin/views/popup/parts/part_icomoon.php:25
+#: includes/admin/views/popup/parts/part_linecon.php:25
+#: includes/admin/views/popup/parts/part_material.php:25
+#@ go_pricing_textdomain
+msgid "Search"
+msgstr ""
+
+#: includes/admin/views/page/table_manager.php:85
+#@ go_pricing_textdomain
+msgid "Sort"
+msgstr ""
+
+#: includes/admin/views/page/table_manager.php:88
+#@ go_pricing_textdomain
+msgid "Date"
+msgstr ""
+
+#: includes/admin/views/page/table_manager.php:95
+#@ go_pricing_textdomain
+msgid "ASC"
+msgstr ""
+
+#: includes/admin/views/page/table_manager.php:96
+#@ go_pricing_textdomain
+msgid "DESC"
+msgstr ""
+
+#: includes/admin/views/page/table_manager.php:103
+#@ go_pricing_textdomain
+msgid "Select / Deselect All"
+msgstr ""
+
+#: includes/admin/views/page/table_manager.php:103
+#: includes/admin/views/page/table_manager.php:152
+#@ go_pricing_textdomain
+msgid "Are you sure you wanto clone the selected table(s)?"
+msgstr ""
+
+#: includes/admin/views/page/table_manager.php:103
+#: includes/admin/views/page/table_manager.php:152
+#@ go_pricing_textdomain
+msgid "Are you sure you want to delete the selected table(s)?"
+msgstr ""
+
+#: includes/admin/views/page/table_manager.php:162
+#: includes/admin/views/page/table_manager.php:164
+#@ go_pricing_textdomain
+msgid "Create New Table"
+msgstr ""
+
+#: includes/admin/views/popup/export.php:11
+#, php-format
+#@ go_pricing_textdomain
+msgid "Selected pricing table data (%d)"
+msgstr ""
+
+#: includes/admin/views/popup/export.php:12
+#: includes/admin/views/popup/image_preview.php:9
+#: includes/admin/views/popup/live_preview.php:11
+#: includes/admin/views/popup/sc_button_icon.php:10
+#: includes/admin/views/popup/sc_font_icon.php:10
+#: includes/admin/views/popup/sc_media.php:10
+#: includes/admin/views/popup/sc_row_icon.php:10
+#@ go_pricing_textdomain
+msgid "Close"
+msgstr ""
+
+#: includes/admin/views/popup/image_preview.php:8
+#@ go_pricing_textdomain
+msgid "Image Preview"
+msgstr ""
+
+#: includes/admin/views/popup/live_preview.php:10
+#@ go_pricing_textdomain
+msgid "Live Preview"
+msgstr ""
+
+#: includes/admin/views/popup/live_preview.php:33
+#@ go_pricing_textdomain
+msgid "Desktop View"
+msgstr ""
+
+#: includes/admin/views/popup/live_preview.php:33
+#@ go_pricing_textdomain
+msgid "Tablet View"
+msgstr ""
+
+#: includes/admin/views/popup/live_preview.php:33
+#@ go_pricing_textdomain
+msgid "Mobile View"
+msgstr ""
+
+#: includes/admin/views/popup/parts/part_fa.php:3
+#: includes/admin/views/popup/parts/part_icomoon.php:6
+#: includes/admin/views/popup/parts/part_linecon.php:6
+#: includes/admin/views/popup/parts/part_material.php:6
+#@ go_pricing_textdomain
+msgid "Color"
+msgstr ""
+
+#: includes/admin/views/popup/parts/part_fa.php:5
+#: includes/admin/views/popup/parts/part_icomoon.php:8
+#: includes/admin/views/popup/parts/part_linecon.php:8
+#: includes/admin/views/popup/parts/part_material.php:8
+#@ go_pricing_textdomain
+msgid "Color of icon (optional)."
+msgstr ""
+
+#: includes/admin/views/popup/parts/part_fa.php:10
+#: includes/admin/views/popup/parts/part_icomoon.php:13
+#: includes/admin/views/popup/parts/part_linecon.php:13
+#: includes/admin/views/popup/parts/part_material.php:13
+#@ go_pricing_textdomain
+msgid "Font size of the icon. (optional)."
+msgstr ""
+
+#: includes/admin/views/popup/parts/part_fa.php:13
+#: includes/admin/views/popup/parts/part_icomoon.php:16
+#: includes/admin/views/popup/parts/part_linecon.php:16
+#: includes/admin/views/popup/parts/part_material.php:16
+#: includes/admin/views/popup/sc_button_icon.php:50
+#: includes/admin/views/popup/sc_row_icon.php:39
+#@ go_pricing_textdomain
+msgid "Icon"
+msgstr ""
+
+#: includes/admin/views/popup/parts/part_fa.php:22
+#: includes/admin/views/popup/parts/part_icomoon.php:25
+#: includes/admin/views/popup/parts/part_linecon.php:25
+#: includes/admin/views/popup/parts/part_material.php:25
+#@ go_pricing_textdomain
+msgid "e.g. 'Icon Name'"
+msgstr ""
+
+#: includes/admin/views/popup/sc_button_icon.php:9
+#: includes/admin/views/popup/sc_font_icon.php:9
+#: includes/admin/views/popup/sc_media.php:9
+#: includes/admin/views/popup/sc_row_icon.php:9
+#@ go_pricing_textdomain
+msgid "Shortcode Editor"
+msgstr ""
+
+#: includes/admin/views/popup/sc_button_icon.php:9
+#: includes/admin/views/popup/sc_font_icon.php:9
+#: includes/admin/views/popup/sc_media.php:9
+#: includes/admin/views/popup/sc_row_icon.php:9
+#@ go_pricing_textdomain
+msgid "Insert Custom Shortcode"
+msgstr ""
+
+#: includes/admin/views/popup/sc_button_icon.php:19
+#: includes/admin/views/popup/sc_font_icon.php:19
+#: includes/admin/views/popup/sc_row_icon.php:19
+#@ go_pricing_textdomain
+msgid "Iconset"
+msgstr ""
+
+#: includes/admin/views/popup/sc_button_icon.php:22
+#: includes/admin/views/popup/sc_font_icon.php:22
+#: includes/admin/views/popup/sc_row_icon.php:22
+#@ go_pricing_textdomain
+msgid "Font Awesome 4.3 (593)"
+msgstr ""
+
+#: includes/admin/views/popup/sc_button_icon.php:23
+#: includes/admin/views/popup/sc_font_icon.php:23
+#: includes/admin/views/popup/sc_row_icon.php:23
+#@ go_pricing_textdomain
+msgid "Linecon (48)"
+msgstr ""
+
+#: includes/admin/views/popup/sc_button_icon.php:24
+#: includes/admin/views/popup/sc_font_icon.php:24
+#: includes/admin/views/popup/sc_row_icon.php:24
+#@ go_pricing_textdomain
+msgid "Icomoon (491)"
+msgstr ""
+
+#: includes/admin/views/popup/sc_button_icon.php:26
+#: includes/admin/views/popup/sc_row_icon.php:26
+#@ go_pricing_textdomain
+msgid "Image icons"
+msgstr ""
+
+#: includes/admin/views/popup/sc_button_icon.php:29
+#: includes/admin/views/popup/sc_font_icon.php:28
+#: includes/admin/views/popup/sc_row_icon.php:29
+#@ go_pricing_textdomain
+msgid "Set of the icons."
+msgstr ""
+
+#: includes/admin/views/popup/sc_button_icon.php:39
+#@ go_pricing_textdomain
+msgid "Icon Size"
+msgstr ""
+
+#: includes/admin/views/popup/sc_button_icon.php:43
+#@ go_pricing_textdomain
+msgid "Medium (default)"
+msgstr ""
+
+#: includes/admin/views/popup/sc_button_icon.php:47
+#@ go_pricing_textdomain
+msgid "Size of image. Medium size is 20x20 pixels, large is 24x24. (optional)."
+msgstr ""
+
+#: includes/admin/views/popup/sc_button_icon.php:59
+#: includes/admin/views/popup/sc_row_icon.php:49
+#@ go_pricing_textdomain
+msgid "Icon Alignment"
+msgstr ""
+
+#: includes/admin/views/popup/sc_button_icon.php:74
+#: includes/admin/views/popup/sc_media.php:335
+#: includes/admin/views/popup/sc_row_icon.php:105
+#@ go_pricing_textdomain
+msgid "Custom Icon"
+msgstr ""
+
+#: includes/admin/views/popup/sc_button_icon.php:83
+#: includes/admin/views/popup/sc_row_icon.php:114
+#@ go_pricing_textdomain
+msgid "Custom icon."
+msgstr ""
+
+#: includes/admin/views/popup/sc_button_icon.php:94
+#: includes/admin/views/popup/sc_font_icon.php:43
+#: includes/admin/views/popup/sc_media.php:417
+#: includes/admin/views/popup/sc_row_icon.php:125
+#@ go_pricing_textdomain
+msgid "Insert Shortcode"
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:19
+#@ go_pricing_textdomain
+msgid "Shortcode"
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:23
+#@ go_pricing_textdomain
+msgid "Video"
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:24
+#@ go_pricing_textdomain
+msgid "Youtube Video"
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:25
+#@ go_pricing_textdomain
+msgid "Vimeo Video"
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:26
+#@ go_pricing_textdomain
+msgid "Screenr Video"
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:27
+#@ go_pricing_textdomain
+msgid "Dailymotion Video"
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:28
+#@ go_pricing_textdomain
+msgid "Metacafe Video"
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:29
+#@ go_pricing_textdomain
+msgid "HTML5 Video"
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:30
+#@ go_pricing_textdomain
+msgid "Audio"
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:31
+#@ go_pricing_textdomain
+msgid "Soundcloud Audio"
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:32
+#@ go_pricing_textdomain
+msgid "Mixcloud Audio"
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:33
+#@ go_pricing_textdomain
+msgid "Beatport Audio"
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:34
+#@ go_pricing_textdomain
+msgid "HTML5 Audio"
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:35
+#@ go_pricing_textdomain
+msgid "Other"
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:36
+#@ go_pricing_textdomain
+msgid "Google Map"
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:37
+#@ go_pricing_textdomain
+msgid "Custom Iframe"
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:40
+#@ go_pricing_textdomain
+msgid "Type of the shortcode to edit."
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:61
+#: includes/admin/views/popup/sc_media.php:78
+#: includes/admin/views/popup/sc_media.php:100
+#: includes/admin/views/popup/sc_media.php:114
+#: includes/admin/views/popup/sc_media.php:134
+#@ go_pricing_textdomain
+msgid "Video ID"
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:63
+#: includes/admin/views/popup/sc_media.php:80
+#: includes/admin/views/popup/sc_media.php:102
+#: includes/admin/views/popup/sc_media.php:116
+#: includes/admin/views/popup/sc_media.php:136
+#@ go_pricing_textdomain
+msgid "ID of the video."
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:66
+#: includes/admin/views/popup/sc_media.php:83
+#: includes/admin/views/popup/sc_media.php:105
+#: includes/admin/views/popup/sc_media.php:119
+#: includes/admin/views/popup/sc_media.php:139
+#: includes/admin/views/popup/sc_media.php:201
+#: includes/admin/views/popup/sc_media.php:221
+#: includes/admin/views/popup/sc_media.php:236
+#: includes/admin/views/popup/sc_media.php:256
+#: includes/admin/views/popup/sc_media.php:403
+#@ go_pricing_textdomain
+msgid "Height"
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:68
+#: includes/admin/views/popup/sc_media.php:85
+#: includes/admin/views/popup/sc_media.php:107
+#: includes/admin/views/popup/sc_media.php:121
+#: includes/admin/views/popup/sc_media.php:141
+#@ go_pricing_textdomain
+msgid "Height of the video in pixels (optional)."
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:71
+#: includes/admin/views/popup/sc_media.php:93
+#: includes/admin/views/popup/sc_media.php:124
+#: includes/admin/views/popup/sc_media.php:144
+#: includes/admin/views/popup/sc_media.php:181
+#: includes/admin/views/popup/sc_media.php:206
+#: includes/admin/views/popup/sc_media.php:241
+#: includes/admin/views/popup/sc_media.php:383
+#@ go_pricing_textdomain
+msgid "Autoplay?"
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:73
+#: includes/admin/views/popup/sc_media.php:95
+#: includes/admin/views/popup/sc_media.php:126
+#: includes/admin/views/popup/sc_media.php:146
+#: includes/admin/views/popup/sc_media.php:183
+#@ go_pricing_textdomain
+msgid "Whether to play the video automatically (optional)."
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:88
+#@ go_pricing_textdomain
+msgid "Player Color"
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:90
+#@ go_pricing_textdomain
+msgid "Color of the player (optional)."
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:154
+#@ go_pricing_textdomain
+msgid "MP4 Source"
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:156
+#@ go_pricing_textdomain
+msgid "MP4 source for Safari, IE9+, iPhone, iPad, Android, and WP7."
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:159
+#@ go_pricing_textdomain
+msgid "WebM Source"
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:161
+#@ go_pricing_textdomain
+msgid "WebM/VP8 file for Firefox4, Opera, and Chrome (optional)."
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:164
+#: includes/admin/views/popup/sc_media.php:373
+#@ go_pricing_textdomain
+msgid "OGG Source"
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:166
+#@ go_pricing_textdomain
+msgid "Ogg/Vorbis for older Firefox and Opera versions (optional)."
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:169
+#@ go_pricing_textdomain
+msgid "Poster Image URL"
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:178
+#@ go_pricing_textdomain
+msgid "URL of the poster image (optional)."
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:186
+#: includes/admin/views/popup/sc_media.php:388
+#@ go_pricing_textdomain
+msgid "Loop?"
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:188
+#@ go_pricing_textdomain
+msgid "Whether to play the video infinitely (optional)."
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:196
+#: includes/admin/views/popup/sc_media.php:231
+#@ go_pricing_textdomain
+msgid "Track ID"
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:198
+#: includes/admin/views/popup/sc_media.php:218
+#: includes/admin/views/popup/sc_media.php:233
+#@ go_pricing_textdomain
+msgid "ID of the audio track."
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:203
+#: includes/admin/views/popup/sc_media.php:223
+#: includes/admin/views/popup/sc_media.php:238
+#@ go_pricing_textdomain
+msgid "Height of the audio in pixels (optional)."
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:208
+#: includes/admin/views/popup/sc_media.php:243
+#: includes/admin/views/popup/sc_media.php:385
+#@ go_pricing_textdomain
+msgid "Whether to play the audio track automatically (optional)."
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:216
+#@ go_pricing_textdomain
+msgid "Track URL"
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:251
+#@ go_pricing_textdomain
+msgid "Address"
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:253
+#@ go_pricing_textdomain
+msgid "Address to be shown on map e.g. \"New York, USA\"."
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:258
+#: includes/admin/views/popup/sc_media.php:405
+#@ go_pricing_textdomain
+msgid "Height of the iframe in pixels."
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:261
+#@ go_pricing_textdomain
+msgid "Zoom Level"
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:289
+#@ go_pricing_textdomain
+msgid "Marker Icon"
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:344
+#@ go_pricing_textdomain
+msgid "Address marker icon."
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:348
+#@ go_pricing_textdomain
+msgid "Market Title"
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:350
+#@ go_pricing_textdomain
+msgid "Title attribute for marker on map (optional)."
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:353
+#@ go_pricing_textdomain
+msgid "Info Window Content"
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:355
+#@ go_pricing_textdomain
+msgid "Content of the info window/popup (optional)."
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:358
+#@ go_pricing_textdomain
+msgid "Info Window by Default?"
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:360
+#@ go_pricing_textdomain
+msgid "Whether to show info then info window on page load (optional)."
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:368
+#@ go_pricing_textdomain
+msgid "MP3 Source"
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:370
+#@ go_pricing_textdomain
+msgid "MP3 source."
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:375
+#@ go_pricing_textdomain
+msgid "Ogg source (optional)."
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:378
+#@ go_pricing_textdomain
+msgid "WAV Source"
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:380
+#@ go_pricing_textdomain
+msgid "Wav source (optional)."
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:390
+#@ go_pricing_textdomain
+msgid "Whether to play the audio track infinitely (optional)."
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:398
+#@ go_pricing_textdomain
+msgid "URL"
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:400
+#@ go_pricing_textdomain
+msgid "URL of the iframe."
+msgstr ""
+
+#: includes/admin/views/view_editor_popup.php:21
+#@ go_pricing_textdomain
+msgid "Content & Style Settings"
+msgstr ""
+
+#: includes/admin/views/view_editor_popup.php:37
+#@ go_pricing_textdomain
+msgid "Insert"
+msgstr ""
+
+#: includes/admin/views/view_editor_popup.php:42
+#@ go_pricing_textdomain
+msgid "Previous"
+msgstr ""
+
+#: includes/admin/views/view_page.php:13
+#, php-format
+#@ go_pricing_textdomain
+msgid "Oops, AJAX error! Keep getting this message? Please disable AJAX request <a href=\"%s\" target=\"_blank\">here</a> and try again."
+msgstr ""
+
+#: includes/admin/views/view_page.php:19
+#@ go_pricing_textdomain
+msgid "Hey, just a sec!"
+msgstr ""
+
+#: includes/globals/styles.php:18
+#@ go_pricing_textdomain
+msgid "Clean (new)"
+msgstr ""
+
+#: includes/globals/styles.php:22
+#@ go_pricing_textdomain
+msgid "Classic"
+msgstr ""
+
+#: includes/globals/signs.php:90
+#: includes/globals/signs.php:368
+#: includes/globals/signs.php:646
+#: includes/globals/signs.php:834
+#: includes/globals/signs.php:962
+#: includes/globals/signs.php:1128
+#: includes/globals/styles.php:38
+#: includes/globals/styles.php:41
+#: includes/globals/styles.php:51
+#: includes/globals/styles.php:61
+#: includes/globals/styles.php:71
+#: includes/globals/styles.php:81
+#: includes/globals/styles.php:91
+#: includes/globals/styles.php:101
+#: includes/globals/styles.php:111
+#: includes/globals/styles.php:122
+#: includes/globals/styles.php:132
+#: includes/globals/styles.php:142
+#: includes/globals/styles.php:152
+#: includes/globals/styles.php:162
+#: includes/globals/styles.php:172
+#: includes/globals/styles.php:182
+#: includes/globals/styles.php:192
+#: includes/globals/styles.php:202
+#: includes/globals/styles.php:212
+#: includes/globals/styles.php:222
+#: includes/globals/styles.php:232
+#: includes/globals/styles.php:242
+#: includes/globals/styles.php:252
+#: includes/globals/styles.php:262
+#: includes/globals/styles.php:272
+#@ go_pricing_textdomain
+msgid "Blue"
+msgstr ""
+
+#: includes/globals/styles.php:41
+#: includes/globals/styles.php:287
+#: includes/globals/styles.php:532
+#: includes/globals/styles.php:778
+#: includes/globals/styles.php:1023
+#: includes/globals/styles.php:1269
+#: includes/globals/styles.php:1515
+#, php-format
+#@ go_pricing_textdomain
+msgid "%1$s 1 (%2$s)"
+msgstr ""
+
+#: includes/globals/styles.php:41
+#: includes/globals/styles.php:51
+#: includes/globals/styles.php:61
+#: includes/globals/styles.php:71
+#: includes/globals/styles.php:81
+#: includes/globals/styles.php:91
+#: includes/globals/styles.php:101
+#: includes/globals/styles.php:111
+#: includes/globals/styles.php:122
+#: includes/globals/styles.php:132
+#: includes/globals/styles.php:142
+#: includes/globals/styles.php:152
+#: includes/globals/styles.php:202
+#: includes/globals/styles.php:212
+#: includes/globals/styles.php:222
+#: includes/globals/styles.php:232
+#: includes/globals/styles.php:262
+#: includes/globals/styles.php:287
+#: includes/globals/styles.php:297
+#: includes/globals/styles.php:307
+#: includes/globals/styles.php:317
+#: includes/globals/styles.php:327
+#: includes/globals/styles.php:337
+#: includes/globals/styles.php:347
+#: includes/globals/styles.php:357
+#: includes/globals/styles.php:367
+#: includes/globals/styles.php:377
+#: includes/globals/styles.php:387
+#: includes/globals/styles.php:397
+#: includes/globals/styles.php:447
+#: includes/globals/styles.php:457
+#: includes/globals/styles.php:467
+#: includes/globals/styles.php:477
+#: includes/globals/styles.php:507
+#: includes/globals/styles.php:532
+#: includes/globals/styles.php:542
+#: includes/globals/styles.php:552
+#: includes/globals/styles.php:562
+#: includes/globals/styles.php:572
+#: includes/globals/styles.php:582
+#: includes/globals/styles.php:593
+#: includes/globals/styles.php:603
+#: includes/globals/styles.php:613
+#: includes/globals/styles.php:623
+#: includes/globals/styles.php:633
+#: includes/globals/styles.php:643
+#: includes/globals/styles.php:693
+#: includes/globals/styles.php:703
+#: includes/globals/styles.php:713
+#: includes/globals/styles.php:723
+#: includes/globals/styles.php:753
+#: includes/globals/styles.php:778
+#: includes/globals/styles.php:788
+#: includes/globals/styles.php:798
+#: includes/globals/styles.php:808
+#: includes/globals/styles.php:818
+#: includes/globals/styles.php:828
+#: includes/globals/styles.php:838
+#: includes/globals/styles.php:848
+#: includes/globals/styles.php:858
+#: includes/globals/styles.php:868
+#: includes/globals/styles.php:878
+#: includes/globals/styles.php:888
+#: includes/globals/styles.php:938
+#: includes/globals/styles.php:948
+#: includes/globals/styles.php:958
+#: includes/globals/styles.php:968
+#: includes/globals/styles.php:998
+#: includes/globals/styles.php:1023
+#: includes/globals/styles.php:1033
+#: includes/globals/styles.php:1043
+#: includes/globals/styles.php:1053
+#: includes/globals/styles.php:1063
+#: includes/globals/styles.php:1073
+#: includes/globals/styles.php:1083
+#: includes/globals/styles.php:1093
+#: includes/globals/styles.php:1103
+#: includes/globals/styles.php:1113
+#: includes/globals/styles.php:1123
+#: includes/globals/styles.php:1133
+#: includes/globals/styles.php:1184
+#: includes/globals/styles.php:1194
+#: includes/globals/styles.php:1204
+#: includes/globals/styles.php:1214
+#: includes/globals/styles.php:1244
+#: includes/globals/styles.php:1269
+#: includes/globals/styles.php:1279
+#: includes/globals/styles.php:1289
+#: includes/globals/styles.php:1299
+#: includes/globals/styles.php:1309
+#: includes/globals/styles.php:1319
+#: includes/globals/styles.php:1329
+#: includes/globals/styles.php:1339
+#: includes/globals/styles.php:1349
+#: includes/globals/styles.php:1359
+#: includes/globals/styles.php:1369
+#: includes/globals/styles.php:1379
+#: includes/globals/styles.php:1429
+#: includes/globals/styles.php:1439
+#: includes/globals/styles.php:1449
+#: includes/globals/styles.php:1459
+#: includes/globals/styles.php:1489
+#: includes/globals/styles.php:1515
+#: includes/globals/styles.php:1521
+#: includes/globals/styles.php:1527
+#: includes/globals/styles.php:1533
+#: includes/globals/styles.php:1539
+#: includes/globals/styles.php:1545
+#: includes/globals/styles.php:1587
+#@ go_pricing_textdomain
+msgid "pricing header"
+msgstr ""
+
+#: includes/globals/styles.php:51
+#: includes/globals/styles.php:297
+#: includes/globals/styles.php:542
+#: includes/globals/styles.php:788
+#: includes/globals/styles.php:1033
+#: includes/globals/styles.php:1279
+#: includes/globals/styles.php:1521
+#, php-format
+#@ go_pricing_textdomain
+msgid "%1$s 2 (%2$s)"
+msgstr ""
+
+#: includes/globals/styles.php:61
+#: includes/globals/styles.php:307
+#: includes/globals/styles.php:552
+#: includes/globals/styles.php:798
+#: includes/globals/styles.php:1043
+#: includes/globals/styles.php:1289
+#, php-format
+#@ go_pricing_textdomain
+msgid "%1$s 3a (%2$s)"
+msgstr ""
+
+#: includes/globals/styles.php:71
+#: includes/globals/styles.php:317
+#: includes/globals/styles.php:562
+#: includes/globals/styles.php:808
+#: includes/globals/styles.php:1053
+#: includes/globals/styles.php:1299
+#, php-format
+#@ go_pricing_textdomain
+msgid "%1$s 3b (%2$s)"
+msgstr ""
+
+#: includes/globals/styles.php:81
+#: includes/globals/styles.php:327
+#: includes/globals/styles.php:572
+#: includes/globals/styles.php:818
+#: includes/globals/styles.php:1063
+#: includes/globals/styles.php:1309
+#, php-format
+#@ go_pricing_textdomain
+msgid "%1$s 3c (%2$s)"
+msgstr ""
+
+#: includes/globals/styles.php:91
+#: includes/globals/styles.php:337
+#: includes/globals/styles.php:582
+#: includes/globals/styles.php:828
+#: includes/globals/styles.php:1073
+#: includes/globals/styles.php:1319
+#, php-format
+#@ go_pricing_textdomain
+msgid "%1$s 3d (%2$s)"
+msgstr ""
+
+#: includes/globals/styles.php:101
+#: includes/globals/styles.php:347
+#: includes/globals/styles.php:593
+#: includes/globals/styles.php:838
+#: includes/globals/styles.php:1083
+#: includes/globals/styles.php:1329
+#, php-format
+#@ go_pricing_textdomain
+msgid "%1$s 4a (%2$s)"
+msgstr ""
+
+#: includes/globals/styles.php:111
+#: includes/globals/styles.php:357
+#: includes/globals/styles.php:603
+#: includes/globals/styles.php:848
+#: includes/globals/styles.php:1093
+#: includes/globals/styles.php:1339
+#, php-format
+#@ go_pricing_textdomain
+msgid "%1$s 4b (%2$s)"
+msgstr ""
+
+#: includes/globals/styles.php:122
+#: includes/globals/styles.php:367
+#: includes/globals/styles.php:613
+#: includes/globals/styles.php:858
+#: includes/globals/styles.php:1103
+#: includes/globals/styles.php:1349
+#, php-format
+#@ go_pricing_textdomain
+msgid "%1$s 4c (%2$s)"
+msgstr ""
+
+#: includes/globals/styles.php:132
+#: includes/globals/styles.php:377
+#: includes/globals/styles.php:623
+#: includes/globals/styles.php:868
+#: includes/globals/styles.php:1113
+#: includes/globals/styles.php:1359
+#, php-format
+#@ go_pricing_textdomain
+msgid "%1$s 4d (%2$s)"
+msgstr ""
+
+#: includes/globals/styles.php:142
+#: includes/globals/styles.php:387
+#: includes/globals/styles.php:633
+#: includes/globals/styles.php:878
+#: includes/globals/styles.php:1123
+#: includes/globals/styles.php:1369
+#: includes/globals/styles.php:1539
+#, php-format
+#@ go_pricing_textdomain
+msgid "%1$s 5 (%2$s)"
+msgstr ""
+
+#: includes/globals/styles.php:152
+#: includes/globals/styles.php:397
+#: includes/globals/styles.php:643
+#: includes/globals/styles.php:888
+#: includes/globals/styles.php:1133
+#: includes/globals/styles.php:1379
+#: includes/globals/styles.php:1545
+#, php-format
+#@ go_pricing_textdomain
+msgid "%1$s 6 (%2$s)"
+msgstr ""
+
+#: includes/globals/styles.php:162
+#: includes/globals/styles.php:407
+#: includes/globals/styles.php:653
+#: includes/globals/styles.php:898
+#: includes/globals/styles.php:1143
+#: includes/globals/styles.php:1389
+#: includes/globals/styles.php:1551
+#, php-format
+#@ go_pricing_textdomain
+msgid "%1$s 7 (%2$s)"
+msgstr ""
+
+#: includes/globals/styles.php:162
+#: includes/globals/styles.php:172
+#: includes/globals/styles.php:272
+#: includes/globals/styles.php:407
+#: includes/globals/styles.php:417
+#: includes/globals/styles.php:517
+#: includes/globals/styles.php:653
+#: includes/globals/styles.php:663
+#: includes/globals/styles.php:763
+#: includes/globals/styles.php:898
+#: includes/globals/styles.php:908
+#: includes/globals/styles.php:1008
+#: includes/globals/styles.php:1143
+#: includes/globals/styles.php:1154
+#: includes/globals/styles.php:1254
+#: includes/globals/styles.php:1389
+#: includes/globals/styles.php:1399
+#: includes/globals/styles.php:1499
+#: includes/globals/styles.php:1551
+#: includes/globals/styles.php:1557
+#: includes/globals/styles.php:1593
+#@ go_pricing_textdomain
+msgid "HTML header"
+msgstr ""
+
+#: includes/globals/styles.php:172
+#: includes/globals/styles.php:417
+#: includes/globals/styles.php:663
+#: includes/globals/styles.php:908
+#: includes/globals/styles.php:1154
+#: includes/globals/styles.php:1399
+#: includes/globals/styles.php:1557
+#, php-format
+#@ go_pricing_textdomain
+msgid "%1$s 8 (%2$s)"
+msgstr ""
+
+#: includes/globals/styles.php:182
+#: includes/globals/styles.php:427
+#: includes/globals/styles.php:673
+#: includes/globals/styles.php:918
+#: includes/globals/styles.php:1164
+#: includes/globals/styles.php:1409
+#: includes/globals/styles.php:1563
+#, php-format
+#@ go_pricing_textdomain
+msgid "%1$s 9 (%2$s)"
+msgstr ""
+
+#: includes/globals/styles.php:182
+#: includes/globals/styles.php:427
+#: includes/globals/styles.php:673
+#: includes/globals/styles.php:918
+#: includes/globals/styles.php:1164
+#: includes/globals/styles.php:1409
+#: includes/globals/styles.php:1563
+#@ go_pricing_textdomain
+msgid "pricing & HTML header"
+msgstr ""
+
+#: includes/globals/styles.php:192
+#: includes/globals/styles.php:437
+#: includes/globals/styles.php:683
+#: includes/globals/styles.php:928
+#: includes/globals/styles.php:1174
+#: includes/globals/styles.php:1419
+#: includes/globals/styles.php:1569
+#, php-format
+#@ go_pricing_textdomain
+msgid "%1$s 10 (%2$s)"
+msgstr ""
+
+#: includes/globals/styles.php:192
+#: includes/globals/styles.php:437
+#: includes/globals/styles.php:683
+#: includes/globals/styles.php:928
+#: includes/globals/styles.php:1174
+#: includes/globals/styles.php:1419
+#: includes/globals/styles.php:1569
+#@ go_pricing_textdomain
+msgid "pricing & image header"
+msgstr ""
+
+#: includes/globals/styles.php:202
+#: includes/globals/styles.php:447
+#: includes/globals/styles.php:693
+#: includes/globals/styles.php:938
+#: includes/globals/styles.php:1184
+#: includes/globals/styles.php:1429
+#, php-format
+#@ go_pricing_textdomain
+msgid "%1$s 11a (%2$s)"
+msgstr ""
+
+#: includes/globals/styles.php:212
+#: includes/globals/styles.php:457
+#: includes/globals/styles.php:703
+#: includes/globals/styles.php:948
+#: includes/globals/styles.php:1194
+#: includes/globals/styles.php:1439
+#, php-format
+#@ go_pricing_textdomain
+msgid "%1$s 11b (%2$s)"
+msgstr ""
+
+#: includes/globals/styles.php:222
+#: includes/globals/styles.php:467
+#: includes/globals/styles.php:713
+#: includes/globals/styles.php:958
+#: includes/globals/styles.php:1204
+#: includes/globals/styles.php:1449
+#, php-format
+#@ go_pricing_textdomain
+msgid "%1$s 11c (%2$s)"
+msgstr ""
+
+#: includes/globals/styles.php:232
+#: includes/globals/styles.php:477
+#: includes/globals/styles.php:723
+#: includes/globals/styles.php:968
+#: includes/globals/styles.php:1214
+#: includes/globals/styles.php:1459
+#, php-format
+#@ go_pricing_textdomain
+msgid "%1$s 11d (%2$s)"
+msgstr ""
+
+#: includes/globals/styles.php:242
+#: includes/globals/styles.php:487
+#: includes/globals/styles.php:733
+#: includes/globals/styles.php:978
+#: includes/globals/styles.php:1224
+#: includes/globals/styles.php:1469
+#: includes/globals/styles.php:1575
+#, php-format
+#@ go_pricing_textdomain
+msgid "%1$s 12 (%2$s)"
+msgstr ""
+
+#: includes/globals/styles.php:242
+#: includes/globals/styles.php:487
+#: includes/globals/styles.php:733
+#: includes/globals/styles.php:978
+#: includes/globals/styles.php:1224
+#: includes/globals/styles.php:1469
+#: includes/globals/styles.php:1575
+#@ go_pricing_textdomain
+msgid "team header"
+msgstr ""
+
+#: includes/globals/styles.php:252
+#: includes/globals/styles.php:497
+#: includes/globals/styles.php:743
+#: includes/globals/styles.php:988
+#: includes/globals/styles.php:1234
+#: includes/globals/styles.php:1479
+#: includes/globals/styles.php:1581
+#, php-format
+#@ go_pricing_textdomain
+msgid "%1$s 13 (%2$s)"
+msgstr ""
+
+#: includes/globals/styles.php:252
+#: includes/globals/styles.php:497
+#: includes/globals/styles.php:743
+#: includes/globals/styles.php:988
+#: includes/globals/styles.php:1234
+#: includes/globals/styles.php:1479
+#: includes/globals/styles.php:1581
+#@ go_pricing_textdomain
+msgid "product header"
+msgstr ""
+
+#: includes/globals/styles.php:262
+#: includes/globals/styles.php:507
+#: includes/globals/styles.php:753
+#: includes/globals/styles.php:998
+#: includes/globals/styles.php:1244
+#: includes/globals/styles.php:1489
+#: includes/globals/styles.php:1587
+#, php-format
+#@ go_pricing_textdomain
+msgid "%1$s 14 (%2$s)"
+msgstr ""
+
+#: includes/globals/styles.php:272
+#: includes/globals/styles.php:517
+#: includes/globals/styles.php:763
+#: includes/globals/styles.php:1008
+#: includes/globals/styles.php:1254
+#: includes/globals/styles.php:1499
+#: includes/globals/styles.php:1593
+#, php-format
+#@ go_pricing_textdomain
+msgid "%1$s 15 (%2$s)"
+msgstr ""
+
+#: includes/globals/signs.php:135
+#: includes/globals/signs.php:413
+#: includes/globals/signs.php:691
+#: includes/globals/signs.php:854
+#: includes/globals/signs.php:982
+#: includes/globals/signs.php:1148
+#: includes/globals/styles.php:284
+#: includes/globals/styles.php:287
+#: includes/globals/styles.php:297
+#: includes/globals/styles.php:307
+#: includes/globals/styles.php:317
+#: includes/globals/styles.php:327
+#: includes/globals/styles.php:337
+#: includes/globals/styles.php:347
+#: includes/globals/styles.php:357
+#: includes/globals/styles.php:367
+#: includes/globals/styles.php:377
+#: includes/globals/styles.php:387
+#: includes/globals/styles.php:397
+#: includes/globals/styles.php:407
+#: includes/globals/styles.php:417
+#: includes/globals/styles.php:427
+#: includes/globals/styles.php:437
+#: includes/globals/styles.php:447
+#: includes/globals/styles.php:457
+#: includes/globals/styles.php:467
+#: includes/globals/styles.php:477
+#: includes/globals/styles.php:487
+#: includes/globals/styles.php:497
+#: includes/globals/styles.php:507
+#: includes/globals/styles.php:517
+#@ go_pricing_textdomain
+msgid "Green"
+msgstr ""
+
+#: includes/globals/signs.php:270
+#: includes/globals/signs.php:548
+#: includes/globals/signs.php:736
+#: includes/globals/signs.php:914
+#: includes/globals/signs.php:1042
+#: includes/globals/signs.php:1208
+#: includes/globals/styles.php:529
+#: includes/globals/styles.php:532
+#: includes/globals/styles.php:542
+#: includes/globals/styles.php:552
+#: includes/globals/styles.php:562
+#: includes/globals/styles.php:572
+#: includes/globals/styles.php:582
+#: includes/globals/styles.php:593
+#: includes/globals/styles.php:603
+#: includes/globals/styles.php:613
+#: includes/globals/styles.php:623
+#: includes/globals/styles.php:633
+#: includes/globals/styles.php:643
+#: includes/globals/styles.php:653
+#: includes/globals/styles.php:663
+#: includes/globals/styles.php:673
+#: includes/globals/styles.php:683
+#: includes/globals/styles.php:693
+#: includes/globals/styles.php:703
+#: includes/globals/styles.php:713
+#: includes/globals/styles.php:723
+#: includes/globals/styles.php:733
+#: includes/globals/styles.php:743
+#: includes/globals/styles.php:753
+#: includes/globals/styles.php:763
+#@ go_pricing_textdomain
+msgid "Red"
+msgstr ""
+
+#: includes/globals/signs.php:225
+#: includes/globals/signs.php:503
+#: includes/globals/signs.php:894
+#: includes/globals/signs.php:1022
+#: includes/globals/signs.php:1188
+#: includes/globals/styles.php:775
+#: includes/globals/styles.php:778
+#: includes/globals/styles.php:788
+#: includes/globals/styles.php:798
+#: includes/globals/styles.php:808
+#: includes/globals/styles.php:818
+#: includes/globals/styles.php:828
+#: includes/globals/styles.php:838
+#: includes/globals/styles.php:848
+#: includes/globals/styles.php:858
+#: includes/globals/styles.php:868
+#: includes/globals/styles.php:878
+#: includes/globals/styles.php:888
+#: includes/globals/styles.php:898
+#: includes/globals/styles.php:908
+#: includes/globals/styles.php:918
+#: includes/globals/styles.php:928
+#: includes/globals/styles.php:938
+#: includes/globals/styles.php:948
+#: includes/globals/styles.php:958
+#: includes/globals/styles.php:968
+#: includes/globals/styles.php:978
+#: includes/globals/styles.php:988
+#: includes/globals/styles.php:998
+#: includes/globals/styles.php:1008
+#@ go_pricing_textdomain
+msgid "Purple"
+msgstr ""
+
+#: includes/globals/signs.php:315
+#: includes/globals/signs.php:593
+#: includes/globals/signs.php:781
+#: includes/globals/signs.php:934
+#: includes/globals/signs.php:1062
+#: includes/globals/signs.php:1228
+#: includes/globals/styles.php:1020
+#: includes/globals/styles.php:1023
+#: includes/globals/styles.php:1033
+#: includes/globals/styles.php:1043
+#: includes/globals/styles.php:1053
+#: includes/globals/styles.php:1063
+#: includes/globals/styles.php:1073
+#: includes/globals/styles.php:1083
+#: includes/globals/styles.php:1093
+#: includes/globals/styles.php:1103
+#: includes/globals/styles.php:1113
+#: includes/globals/styles.php:1123
+#: includes/globals/styles.php:1133
+#: includes/globals/styles.php:1143
+#: includes/globals/styles.php:1154
+#: includes/globals/styles.php:1164
+#: includes/globals/styles.php:1174
+#: includes/globals/styles.php:1184
+#: includes/globals/styles.php:1194
+#: includes/globals/styles.php:1204
+#: includes/globals/styles.php:1214
+#: includes/globals/styles.php:1224
+#: includes/globals/styles.php:1234
+#: includes/globals/styles.php:1244
+#: includes/globals/styles.php:1254
+#@ go_pricing_textdomain
+msgid "Yellow"
+msgstr ""
+
+#: includes/globals/styles.php:1266
+#: includes/globals/styles.php:1269
+#: includes/globals/styles.php:1279
+#: includes/globals/styles.php:1289
+#: includes/globals/styles.php:1299
+#: includes/globals/styles.php:1309
+#: includes/globals/styles.php:1319
+#: includes/globals/styles.php:1329
+#: includes/globals/styles.php:1339
+#: includes/globals/styles.php:1349
+#: includes/globals/styles.php:1359
+#: includes/globals/styles.php:1369
+#: includes/globals/styles.php:1379
+#: includes/globals/styles.php:1389
+#: includes/globals/styles.php:1399
+#: includes/globals/styles.php:1409
+#: includes/globals/styles.php:1419
+#: includes/globals/styles.php:1429
+#: includes/globals/styles.php:1439
+#: includes/globals/styles.php:1449
+#: includes/globals/styles.php:1459
+#: includes/globals/styles.php:1469
+#: includes/globals/styles.php:1479
+#: includes/globals/styles.php:1489
+#: includes/globals/styles.php:1499
+#@ go_pricing_textdomain
+msgid "Earth"
+msgstr ""
+
+#: includes/globals/styles.php:1527
+#, php-format
+#@ go_pricing_textdomain
+msgid "%1$s 3 (%2$s)"
+msgstr ""
+
+#: includes/globals/styles.php:1533
+#, php-format
+#@ go_pricing_textdomain
+msgid "%1$s 4 (%2$s)"
+msgstr ""
+
+#: includes/globals/signs.php:22
+#@ go_pricing_textdomain
+msgid "Custom (upload)"
+msgstr ""
+
+#: includes/globals/signs.php:26
+#@ go_pricing_textdomain
+msgid "Ribbons"
+msgstr ""
+
+#: includes/globals/signs.php:29
+#@ go_pricing_textdomain
+msgid "Clean Ribbon"
+msgstr ""
+
+#: includes/globals/signs.php:33
+#@ go_pricing_textdomain
+msgid "Clean Wavy Ribbon"
+msgstr ""
+
+#: includes/globals/signs.php:37
+#@ go_pricing_textdomain
+msgid "Classic Ribbon"
+msgstr ""
+
+#: includes/globals/signs.php:43
+#@ go_pricing_textdomain
+msgid "Badges"
+msgstr ""
+
+#: includes/globals/signs.php:56
+#@ go_pricing_textdomain
+msgid "Tags"
+msgstr ""
+
+#: includes/globals/signs.php:65
+#@ go_pricing_textdomain
+msgid "Objects"
+msgstr ""
+
+#: includes/globals/signs.php:68
+#@ go_pricing_textdomain
+msgid "Paperclip"
+msgstr ""
+
+#: includes/globals/signs.php:72
+#@ go_pricing_textdomain
+msgid "Tape"
+msgstr ""
+
+#: includes/globals/signs.php:93
+#: includes/globals/signs.php:98
+#: includes/globals/signs.php:103
+#: includes/globals/signs.php:108
+#: includes/globals/signs.php:113
+#: includes/globals/signs.php:118
+#: includes/globals/signs.php:123
+#: includes/globals/signs.php:128
+#: includes/globals/signs.php:138
+#: includes/globals/signs.php:143
+#: includes/globals/signs.php:148
+#: includes/globals/signs.php:153
+#: includes/globals/signs.php:158
+#: includes/globals/signs.php:163
+#: includes/globals/signs.php:168
+#: includes/globals/signs.php:173
+#: includes/globals/signs.php:183
+#: includes/globals/signs.php:188
+#: includes/globals/signs.php:193
+#: includes/globals/signs.php:198
+#: includes/globals/signs.php:203
+#: includes/globals/signs.php:208
+#: includes/globals/signs.php:213
+#: includes/globals/signs.php:218
+#: includes/globals/signs.php:228
+#: includes/globals/signs.php:233
+#: includes/globals/signs.php:238
+#: includes/globals/signs.php:243
+#: includes/globals/signs.php:248
+#: includes/globals/signs.php:253
+#: includes/globals/signs.php:258
+#: includes/globals/signs.php:263
+#: includes/globals/signs.php:273
+#: includes/globals/signs.php:278
+#: includes/globals/signs.php:283
+#: includes/globals/signs.php:288
+#: includes/globals/signs.php:293
+#: includes/globals/signs.php:298
+#: includes/globals/signs.php:303
+#: includes/globals/signs.php:308
+#: includes/globals/signs.php:318
+#: includes/globals/signs.php:323
+#: includes/globals/signs.php:328
+#: includes/globals/signs.php:333
+#: includes/globals/signs.php:338
+#: includes/globals/signs.php:343
+#: includes/globals/signs.php:348
+#: includes/globals/signs.php:353
+#: includes/globals/signs.php:371
+#: includes/globals/signs.php:376
+#: includes/globals/signs.php:381
+#: includes/globals/signs.php:386
+#: includes/globals/signs.php:391
+#: includes/globals/signs.php:396
+#: includes/globals/signs.php:401
+#: includes/globals/signs.php:406
+#: includes/globals/signs.php:416
+#: includes/globals/signs.php:421
+#: includes/globals/signs.php:426
+#: includes/globals/signs.php:431
+#: includes/globals/signs.php:436
+#: includes/globals/signs.php:441
+#: includes/globals/signs.php:446
+#: includes/globals/signs.php:451
+#: includes/globals/signs.php:461
+#: includes/globals/signs.php:466
+#: includes/globals/signs.php:471
+#: includes/globals/signs.php:476
+#: includes/globals/signs.php:481
+#: includes/globals/signs.php:486
+#: includes/globals/signs.php:491
+#: includes/globals/signs.php:496
+#: includes/globals/signs.php:506
+#: includes/globals/signs.php:511
+#: includes/globals/signs.php:516
+#: includes/globals/signs.php:521
+#: includes/globals/signs.php:526
+#: includes/globals/signs.php:531
+#: includes/globals/signs.php:536
+#: includes/globals/signs.php:541
+#: includes/globals/signs.php:551
+#: includes/globals/signs.php:556
+#: includes/globals/signs.php:561
+#: includes/globals/signs.php:566
+#: includes/globals/signs.php:571
+#: includes/globals/signs.php:576
+#: includes/globals/signs.php:581
+#: includes/globals/signs.php:586
+#: includes/globals/signs.php:596
+#: includes/globals/signs.php:601
+#: includes/globals/signs.php:606
+#: includes/globals/signs.php:611
+#: includes/globals/signs.php:616
+#: includes/globals/signs.php:621
+#: includes/globals/signs.php:626
+#: includes/globals/signs.php:631
+#: includes/globals/signs.php:649
+#: includes/globals/signs.php:654
+#: includes/globals/signs.php:659
+#: includes/globals/signs.php:664
+#: includes/globals/signs.php:669
+#: includes/globals/signs.php:674
+#: includes/globals/signs.php:679
+#: includes/globals/signs.php:684
+#: includes/globals/signs.php:694
+#: includes/globals/signs.php:699
+#: includes/globals/signs.php:704
+#: includes/globals/signs.php:709
+#: includes/globals/signs.php:714
+#: includes/globals/signs.php:719
+#: includes/globals/signs.php:724
+#: includes/globals/signs.php:729
+#: includes/globals/signs.php:739
+#: includes/globals/signs.php:744
+#: includes/globals/signs.php:749
+#: includes/globals/signs.php:754
+#: includes/globals/signs.php:759
+#: includes/globals/signs.php:764
+#: includes/globals/signs.php:769
+#: includes/globals/signs.php:774
+#: includes/globals/signs.php:784
+#: includes/globals/signs.php:789
+#: includes/globals/signs.php:794
+#: includes/globals/signs.php:799
+#: includes/globals/signs.php:804
+#: includes/globals/signs.php:809
+#: includes/globals/signs.php:814
+#: includes/globals/signs.php:819
+#, php-format
+#@ go_pricing_textdomain
+msgid "%s side"
+msgstr ""
+
+#: includes/globals/signs.php:180
+#: includes/globals/signs.php:458
+#: includes/globals/signs.php:874
+#: includes/globals/signs.php:1002
+#: includes/globals/signs.php:1168
+#@ go_pricing_textdomain
+msgid "Grey"
+msgstr ""
+
+#: includes/globals/signs.php:842
+#: includes/globals/signs.php:847
+#: includes/globals/signs.php:862
+#: includes/globals/signs.php:867
+#: includes/globals/signs.php:882
+#: includes/globals/signs.php:887
+#: includes/globals/signs.php:902
+#: includes/globals/signs.php:907
+#: includes/globals/signs.php:922
+#: includes/globals/signs.php:927
+#: includes/globals/signs.php:942
+#: includes/globals/signs.php:947
+#: includes/globals/signs.php:970
+#: includes/globals/signs.php:975
+#: includes/globals/signs.php:990
+#: includes/globals/signs.php:995
+#: includes/globals/signs.php:1010
+#: includes/globals/signs.php:1015
+#: includes/globals/signs.php:1030
+#: includes/globals/signs.php:1035
+#: includes/globals/signs.php:1050
+#: includes/globals/signs.php:1055
+#: includes/globals/signs.php:1070
+#: includes/globals/signs.php:1075
+#, php-format
+#@ go_pricing_textdomain
+msgid "15%% %s"
+msgstr ""
+
+#: includes/globals/signs.php:1131
+#: includes/globals/signs.php:1151
+#: includes/globals/signs.php:1171
+#: includes/globals/signs.php:1191
+#: includes/globals/signs.php:1211
+#: includes/globals/signs.php:1231
+#@ go_pricing_textdomain
+msgid "Straight"
+msgstr ""
+
+#: includes/globals/signs.php:1136
+#: includes/globals/signs.php:1141
+#: includes/globals/signs.php:1156
+#: includes/globals/signs.php:1161
+#: includes/globals/signs.php:1176
+#: includes/globals/signs.php:1181
+#: includes/globals/signs.php:1196
+#: includes/globals/signs.php:1201
+#: includes/globals/signs.php:1216
+#: includes/globals/signs.php:1221
+#: includes/globals/signs.php:1236
+#: includes/globals/signs.php:1241
+#, php-format
+#@ go_pricing_textdomain
+msgid "%s rotated"
+msgstr ""
+
+#: includes/globals/fonts.php:20
+#@ go_pricing_textdomain
+msgid "Theme Default"
+msgstr ""
+
+#: includes/globals/fonts.php:24
+#@ go_pricing_textdomain
+msgid "Standard Fonts"
+msgstr ""
+
+#: includes/globals/fonts.php:110
+#@ go_pricing_textdomain
+msgid "Google Fonts"
+msgstr ""
+
+#: includes/globals/signs.php:46
+#@ go_pricing_textdomain
+msgid "Clean Badge"
+msgstr ""
+
+#: includes/globals/signs.php:50
+#@ go_pricing_textdomain
+msgid "Clean Wavy Badge"
+msgstr ""
+
+#: includes/globals/signs.php:59
+#@ go_pricing_textdomain
+msgid "Clean Tag"
+msgstr ""
+
+#: includes/preview.php:51
+#@ go_pricing_textdomain
+msgid "Oops, Forbidden!"
+msgstr ""
+
+#: includes/vendors/vc/class_vc_extend.php:60
+#@ go_pricing_textdomain
+msgid "Go Pricing"
+msgstr ""
+
+#: includes/vendors/vc/class_vc_extend.php:61
+#@ go_pricing_textdomain
+msgid "Awesome responsive pricing tables"
+msgstr ""
+
+#: includes/vendors/vc/class_vc_extend.php:73
+#@ go_pricing_textdomain
+msgid "Select Pricing Table"
+msgstr ""
+
+#. translators: plugin header field 'Description'
+#: go_pricing.php:0
+#@ go_pricing_textdomain
+msgid "The New Generation Pricing Tables. If you like traditional Pricing Tables, but you would like get much more out of it, then this rodded product is a useful tool for you."
+msgstr ""
+
+#. translators: plugin header field 'Author'
+#: go_pricing.php:0
+#@ go_pricing_textdomain
+msgid "Granth"
+msgstr ""
+
+#: go_pricing.php:18
+#@ go_pricing_textdomain
+msgid "GW_GoPricing class has been declared!"
+msgstr ""
+
+#. translators: plugin header field 'Name'
+#: go_pricing.php:0
+#@ go_pricing_textdomain
+msgid "Go - Responsive Pricing & Compare Tables"
+msgstr ""
+
+#. translators: plugin header field 'PluginURI'
+#: go_pricing.php:0
+#@ go_pricing_textdomain
+msgid "http://granthweb.com/go-pricing"
+msgstr ""
+
+#. translators: plugin header field 'AuthorURI'
+#: go_pricing.php:0
+#@ go_pricing_textdomain
+msgid "http://granthweb.com/"
+msgstr ""
+
+#: includes/admin/views/popup/sc_media.php:285
+#@ go_pricing_textdomain
+msgid "Zoom level of the map (optional)."
+msgstr ""
+
+#: includes/admin/views/column/column.php:85
+#@ go_pricing_textdomain
+msgid "Expand / Collapse"
+msgstr ""
+
+#: includes/class_shortcodes.php:105
+#@ go_pricing_textdomain
+msgid "You must set a Table ID or Post ID."
+msgstr ""
+
+#: includes/class_shortcodes.php:120
+#, php-format
+#@ go_pricing_textdomain
+msgid "Pricing table with an Table ID / Post ID of \"%s\" is not defined."
+msgstr ""
+
+#: includes/vendors/vc/class_vc_extend.php:54
+#@ go_pricing_textdomain
+msgid "No tables found!"
+msgstr ""
+
+#: includes/admin/class_admin_page_impex.php:318
+#@ go_pricing_textdomain
+msgid "Import data is not compatible with the current version!"
+msgstr ""
+
+#: includes/admin/class_admin_page_main.php:477
+#@ go_pricing_textdomain
+msgid "Pricing \"Table Name\" is empty!"
+msgstr ""
+
+#: includes/admin/class_admin_page_main.php:480
+#@ go_pricing_textdomain
+msgid "Pricing \"Table ID\" is empty!"
+msgstr ""
+
+#: includes/admin/class_admin_page_main.php:483
+#@ go_pricing_textdomain
+msgid "Pricing \"Table ID\" can contain only lowercase letters, numbers, hyphens and underscores!"
+msgstr ""
+
+#: includes/admin/views/editor_popup/general_decoration.php:143
+#@ go_pricing_textdomain
+msgid "Left/Right & Top Pos."
+msgstr ""
+
+#: includes/admin/views/editor_popup/general_decoration.php:145
+#@ go_pricing_textdomain
+msgid "Left or Right - depending on the alignment - and the Top position of the sign."
+msgstr ""
+
+#: includes/admin/views/page/general_settings.php:50
+#@ go_pricing_textdomain
+msgid "Select User Role"
+msgstr ""
+
+#: includes/admin/views/page/general_settings.php:66
+#@ go_pricing_textdomain
+msgid "Enable CSS Transitions"
+msgstr ""
+
+#: includes/admin/views/page/table_editor.php:81
+#@ go_pricing_textdomain
+msgid "Unique ID, used in shortcodes. (e.g. If your table ID is \"my_table\", your shortcode will be: [go_pricing id=\"my_table\"]).<br>Only lowercase letters, numbers, hyphens and underscores are allowed."
+msgstr ""
+
+#: includes/admin/views/page/table_editor.php:220
+#@ go_pricing_textdomain
+msgid "Enable Responsivity"
+msgstr ""
+
+#: includes/admin/views/page/table_editor.php:228
+#@ go_pricing_textdomain
+msgid "Minimum and maximum screen width breakpoints in pixels and the number of columns to show in a row for Tablet Portrait View."
+msgstr ""
+
+#: includes/admin/views/page/table_editor.php:233
+#: includes/admin/views/page/table_editor.php:238
+#@ go_pricing_textdomain
+msgid "Minimum and maximum screen width breakpoints in pixels and the number of columns to show in a row for Mobile Landscape View."
+msgstr ""
+
+#: includes/admin/views/page/table_manager.php:69
+#@ go_pricing_textdomain
+msgid "e.g. 'Name' or 'Post ID'"
+msgstr ""
+
+#: includes/admin/views/page/table_manager.php:87
+#@ go_pricing_textdomain
+msgid "Post ID"
+msgstr ""
+
+#: includes/admin/views/page/table_manager.php:90
+#@ go_pricing_textdomain
+msgid "Last Modified Date"
+msgstr ""
+
+#: includes/class_shortcodes.php:122
+#@ go_pricing_textdomain
+msgid "There is nothing to see here, yet. Please, first create columns!"
+msgstr ""
+
+#: includes/globals/shadows.php:22
+#: includes/globals/shadows.php:27
+#: includes/globals/shadows.php:32
+#: includes/globals/shadows.php:37
+#: includes/globals/shadows.php:42
+#, php-format
+#@ go_pricing_textdomain
+msgid "Shadow Style %s"
+msgstr ""
+
+#: includes/admin/views/page/table_editor.php:85
+#@ go_pricing_textdomain
+msgid "Thumbnail"
+msgstr ""
+
+#: includes/admin/views/page/table_editor.php:85
+#@ go_pricing_textdomain
+msgid "optional"
+msgstr ""
+
+#: includes/admin/views/page/table_editor.php:98
+#@ go_pricing_textdomain
+msgid "Unique thumbnail image. It helps you identify you table in admin area. Enter an URL or select an image from the Media Library.<br><strong>Recommended size 400x196px.</strong>"
+msgstr ""
+
+#: includes/admin/views/page/table_manager.php:72
+#@ go_pricing_textdomain
+msgid "Skin"
+msgstr ""
+
+#: includes/admin/views/page/table_manager.php:81
+#@ go_pricing_textdomain
+msgid "Rest"
+msgstr ""
+
+#: includes/admin/views/page/table_manager.php:81
+#@ go_pricing_textdomain
+msgid "Reset"
+msgstr ""
+
+#. translators: plugin header field 'Version'
+#: go_pricing.php:0
+#@ go_pricing_textdomain
+msgid "3.0.2"
+msgstr ""
+
+#: includes/admin/views/popup/sc_button_icon.php:25
+#: includes/admin/views/popup/sc_font_icon.php:25
+#: includes/admin/views/popup/sc_row_icon.php:25
+#@ go_pricing_textdomain
+msgid "Material Icons (795)"
+msgstr ""
+

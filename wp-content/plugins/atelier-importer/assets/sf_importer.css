@@ -1,0 +1,270 @@
+/**
+* /Start of Demo Importer style
+*/
+
+.note-wrap {
+	padding: 20px;
+	background: #fff;
+	margin: 20px 10px;
+	border: 1px solid #e3e3e3;
+}
+.note-wrap h3 {
+	margin-top: 0;
+}
+.message-wrap {
+	margin: 20px 0 0 20px;
+	padding: 30px 0;
+	border-top: 1px solid #e3e3e3;
+	display: inline-block;
+	min-width: 40%;
+}
+.message-wrap h3 {
+	margin-top: 0;
+}
+.import-success-msg {
+	display: none;	
+}
+.post-filter-tabs {
+	text-align: center;
+}
+.post-filter-tabs li {
+	display: inline-block;
+	margin-left: 10px;
+	line-height: 48px;
+}
+.post-filter-tabs li:first-child {
+	margin-left: 0;
+}
+.post-filter-tabs li a {
+	text-decoration: none;
+	color: #666;
+}
+.post-filter-tabs li a:hover {
+	color: #222;
+}
+.post-filter-tabs li.selected a {
+	color: #222;
+	font-weight: bold
+}
+.swift-demo {
+	width: 100%;
+	height: auto;
+	overflow: hidden;
+	text-align: center;
+}
+.swift-demo li img {		
+	width: 100%;
+	height: auto;
+}
+.swift-demo li.hidden {
+	display: none;
+}
+.swift-demo span {
+	display: block;
+	margin-bottom: 10px;
+	font-weight: bold;
+	color: #666;
+}		
+.swift-demo .dinput {				
+	width: 50%;
+	float: left;
+	margin-bottom: 8px;
+}			
+.swift-demo li {
+	width: 300px;
+	height: auto;
+	padding: 0 0 15px;
+	margin: 0 10px 20px;
+	display: inline-block; 	
+	background-color: #FFF;
+	border: 1px solid #dedede;
+	color: #222;
+	text-align: left;
+	box-sizing: border-box;
+	-webkit-box-shadow: 0px 5px 6px -7px rgba(0,0,0,0.2);
+	-moz-box-shadow: 0px 5px 6px -7px rgba(0,0,0,0.2);
+	box-shadow: 0px 5px 6px -7px rgba(0,0,0,0.2);
+}
+.swift-demo li .item-wrap {
+	padding: 20px 15px 0;
+}
+.swift-demo li h3 {
+	text-align: center;
+	margin: 0 0 20px;
+}
+
+.product {
+	background: #222 url('images/demos-switcher-imgs.png') no-repeat 0 0;
+	cursor: pointer;
+	display: block;
+	height: auto;
+	overflow: hidden;
+	position: relative;
+	text-decoration: none !important;
+	width: 299px;
+	height: 225px;
+	float: none!important;
+	-webkit-transition: all .2s ease-out;
+	-moz-transition: all .2s ease-out;
+	transition: all .2s ease-out;
+}
+.product:hover {
+	opacity: 0.6;
+}
+.product.demosite {
+	background-position: 0 0;
+}
+.product.form {
+	background-position: -300px 0;
+}
+.product.union {
+	background-position: -600px 0;
+}
+.product.convoy {
+	background-position: -900px 0;
+}
+.product.tilt {
+	background-position: -1200px 0;
+}
+.product.lab_wines {
+	background-position: -1500px 0;
+}
+.product.selby {
+	background-position: -1800px 0;
+}
+.product.emigre {
+	background-position: -2100px 0;
+}
+.product.bryant {
+	background-position: -2700px 0;
+}
+.product.arad {
+	background-position: -2400px 0;
+}
+.product.porter {
+	background-position: -3300px 0;
+}
+.product.flock {
+	background-position: -3600px 0;
+}
+.product.vario {
+	background-position: -3000px 0;
+}
+.importoptions {	
+	margin-top: 10px;
+	margin-left: 10px;		
+}				
+.demoimp-button:hover, #sf_import_close:hover {		
+	cursor: pointer;
+	background: #fe504f;
+	color: #fff;
+}		
+.demoimp-button, #sf_import_close {
+	width: 100%;
+	margin-left:0px;
+	margin-top:10px;
+	background-color: #ECEBEB;
+	padding: 15px 20px;
+	text-align: center;
+	font-weight: bold;
+	clear: both;
+	float: left;
+	box-sizing: border-box;
+	-webkit-transition: all .3s ease-out;
+	-moz-transition: all .3s ease-out;
+	transition: all .3s ease-out;
+}
+#sf_import_close{
+	display: none;
+}
+.sf-black-overlay {
+	display: none;
+	position: fixed;
+	top: 0%;
+	left: 0%;  
+	width: 100%;
+	height: 100%;
+	background-color: black;
+	z-index: 1001;
+	-moz-opacity: 0.5;
+	opacity: 0.5;
+	filter: alpha(opacity=50);
+}
+.sf-modal-notice {
+	width: 380px;
+	display: none;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	margin-top: -100px;
+	margin-left: -190px;
+	padding: 20px;
+	border: 6px solid white;
+	background-color: white;
+	z-index: 1002;
+	overflow: hidden;
+	height: auto;
+}
+.sf-modal-notice h3 {
+	margin-top: 0;
+}
+.sf-modal-notice p span {
+	font-weight: bold;
+}
+#progressbar{
+	width: 100%;
+	height: 20px;
+}
+.sf-progress-bar-wrapper{
+	display: none;
+}
+.sf-progress-bar-wrapper .progress-value{
+	margin-bottom: 10px;
+}
+/**
+* /Start of Bounce annimation
+*/
+	
+.importspinner {     
+    width: 100%;
+    text-align: left;
+	margin-top:20px;
+}
+.importspinner > div {	
+    width: 20px;
+	height: 20px;
+	background-color: #666;
+	border-radius: 100%;
+    display: inline-block;
+    -webkit-animation: bouncedelay 1.4s infinite ease-in-out;
+    animation: bouncedelay 1.4s infinite ease-in-out;
+    /* Prevent first frame from flickering when animation starts */
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+ .importspinner .bounce1 {	
+    -webkit-animation-delay: -0.32s;
+    animation-delay: -0.32s;	
+}
+.importspinner .bounce2 {		
+     -webkit-animation-delay: -0.16s;
+     animation-delay: -0.16s; 
+}
+@-webkit-keyframes bouncedelay {	
+     	0%, 80%, 100% { -webkit-transform: scale(0.0) }
+      	40% { -webkit-transform: scale(1.0) }
+}
+@keyframes bouncedelay {
+      	
+		0%, 80%, 100% {
+        	transform: scale(0.0);
+        	-webkit-transform: scale(0.0);
+      	} 40% {
+        	transform: scale(1.0);
+        	-webkit-transform: scale(1.0);
+      	}
+}
+	
+/**
+* /End of Bounce annimation
+*/

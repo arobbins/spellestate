@@ -1,0 +1,20 @@
+[06/23/2015 3:14 PM] - NOTICE : The following IP address range has been locked out for exceeding the maximum login attempts: 50.253.84
+[06/23/2015 3:27 PM] - NOTICE : Login attempt from blocked IP range - 50.253.84.*
+[06/23/2015 3:29 PM] - NOTICE : Login attempt from blocked IP range - 50.253.84.*
+[06/23/2015 3:30 PM] - NOTICE : Login attempt from blocked IP range - 50.253.84.*
+[08/06/2015 4:32 PM] - FAILURE : DB Security Feature - Unable to change prefix of table wp_aiowps_events
+[08/06/2015 4:32 PM] - FAILURE : DB Security Feature - Unable to change prefix of table wp_aiowps_failed_logins
+[08/06/2015 4:32 PM] - FAILURE : DB Security Feature - Unable to change prefix of table wp_aiowps_global_meta
+[08/06/2015 4:32 PM] - FAILURE : DB Security Feature - Unable to change prefix of table wp_aiowps_login_activity
+[08/06/2015 4:32 PM] - FAILURE : DB Security Feature - Unable to change prefix of table wp_aiowps_login_lockdown
+[08/06/2015 4:32 PM] - FAILURE : DB Security Feature - Unable to change prefix of table wp_commentmeta
+[08/06/2015 4:32 PM] - FAILURE : DB Security Feature - Unable to change prefix of table wp_comments
+[08/06/2015 4:32 PM] - FAILURE : DB Security Feature - Unable to change prefix of table wp_links
+[08/06/2015 4:32 PM] - FAILURE : DB Security Feature - Unable to change prefix of table wp_options
+[08/06/2015 4:32 PM] - FAILURE : DB Security Feature - Unable to change prefix of table wp_postmeta
+[08/06/2015 4:32 PM] - FAILURE : DB Security Feature - Unable to change prefix of table wp_posts
+[08/06/2015 4:32 PM] - FAILURE : DB Security Feature - Unable to change prefix of table wp_term_relationships
+[08/06/2015 4:32 PM] - FAILURE : DB Security Feature - Unable to change prefix of table wp_term_taxonomy
+[08/06/2015 4:32 PM] - FAILURE : DB Security Feature - Unable to change prefix of table wp_terms
+[08/06/2015 4:32 PM] - FAILURE : DB Security Feature - Unable to change prefix of table wp_usermeta
+[08/06/2015 4:32 PM] - FAILURE : DB Security Feature - Unable to change prefix of table wp_users

@@ -1,0 +1,5512 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Swift Framework\n"
+"POT-Creation-Date: 2015-07-03 17:38-0000\n"
+"PO-Revision-Date: 2015-07-03 17:39-0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.1\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-WPHeader: swift-framework.php\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: includes/custom-post-types/clients-type.php:15
+msgid "Client Categories"
+msgstr ""
+
+#: includes/custom-post-types/clients-type.php:16
+msgid "Client Category"
+msgstr ""
+
+#: includes/custom-post-types/clients-type.php:38
+#: includes/page-builder/shortcodes/clients.php:169
+msgid "Clients"
+msgstr ""
+
+#: includes/custom-post-types/clients-type.php:39
+#: includes/custom-post-types/clients-type.php:77
+msgid "Client"
+msgstr ""
+
+#: includes/custom-post-types/clients-type.php:40
+#: includes/custom-post-types/faqs-type.php:48
+#: includes/custom-post-types/galleries-type.php:49
+#: includes/custom-post-types/portfolio-type.php:49
+#: includes/custom-post-types/team-type.php:49
+#: includes/custom-post-types/testimonials-type.php:40
+msgid "Add New"
+msgstr ""
+
+#: includes/custom-post-types/clients-type.php:41
+msgid "Add New Client"
+msgstr ""
+
+#: includes/custom-post-types/clients-type.php:42
+msgid "Edit Client"
+msgstr ""
+
+#: includes/custom-post-types/clients-type.php:43
+msgid "New Client"
+msgstr ""
+
+#: includes/custom-post-types/clients-type.php:44
+msgid "View Client"
+msgstr ""
+
+#: includes/custom-post-types/clients-type.php:45
+msgid "Search Clients"
+msgstr ""
+
+#: includes/custom-post-types/clients-type.php:46
+msgid "No clients have been added yet"
+msgstr ""
+
+#: includes/custom-post-types/clients-type.php:47
+#: includes/custom-post-types/directory-type.php:87
+#: includes/custom-post-types/faqs-type.php:55
+#: includes/custom-post-types/galleries-type.php:56
+#: includes/custom-post-types/portfolio-type.php:56
+#: includes/custom-post-types/spb-section-type.php:51
+#: includes/custom-post-types/team-type.php:56
+#: includes/custom-post-types/testimonials-type.php:47
+#: includes/swift-slider/inc/ss-post-type.php:48
+msgid "Nothing found in Trash"
+msgstr ""
+
+#: includes/custom-post-types/clients-type.php:78
+#: includes/custom-post-types/directory-type.php:18
+#: includes/custom-post-types/directory-type.php:127
+#: includes/custom-post-types/galleries-type.php:93
+#: includes/custom-post-types/portfolio-type.php:95
+#: includes/custom-post-types/spb-section-type.php:15
+#: includes/custom-post-types/spb-section-type.php:84
+#: includes/custom-post-types/team-type.php:93
+#: includes/custom-post-types/testimonials-type.php:77
+#: includes/page-builder/shortcodes/products.php:253
+#: includes/shortcodes/sf-shortcodes.php:1047
+msgid "Categories"
+msgstr ""
+
+#: includes/custom-post-types/directory-type.php:19
+#: includes/custom-post-types/spb-section-type.php:16
+msgid "Category"
+msgstr ""
+
+#: includes/custom-post-types/directory-type.php:26
+#: includes/custom-post-types/sf-post-type-permalinks.php:130
+msgid "directory-category"
+msgstr ""
+
+#: includes/custom-post-types/directory-type.php:44
+#: includes/custom-post-types/sf-post-type-permalinks.php:140
+msgid "directory-location"
+msgstr ""
+
+#: includes/custom-post-types/directory-type.php:47
+msgid "Locations"
+msgstr ""
+
+#: includes/custom-post-types/directory-type.php:48
+msgid "Location"
+msgstr ""
+
+#: includes/custom-post-types/directory-type.php:75
+#: includes/custom-post-types/sf-post-type-permalinks.php:376
+#: includes/custom-post-types/sf-post-type-permalinks.php:377
+msgid "directory"
+msgstr ""
+
+#: includes/custom-post-types/directory-type.php:78
+msgctxt "post type general name"
+msgid "Directory"
+msgstr ""
+
+#: includes/custom-post-types/directory-type.php:79
+msgctxt "post type singular name"
+msgid "Directory Item"
+msgstr ""
+
+#: includes/custom-post-types/directory-type.php:80
+msgctxt "directory item"
+msgid "Add New"
+msgstr ""
+
+#: includes/custom-post-types/directory-type.php:81
+msgid "Add New Directory Item"
+msgstr ""
+
+#: includes/custom-post-types/directory-type.php:82
+msgid "Edit Directory Item"
+msgstr ""
+
+#: includes/custom-post-types/directory-type.php:83
+msgid "New Directory Item"
+msgstr ""
+
+#: includes/custom-post-types/directory-type.php:84
+msgid "View Diretory Item"
+msgstr ""
+
+#: includes/custom-post-types/directory-type.php:85
+msgid "Search Directory Items"
+msgstr ""
+
+#: includes/custom-post-types/directory-type.php:86
+msgid "No directory items have been added yet"
+msgstr ""
+
+#: includes/custom-post-types/directory-type.php:124
+msgid "Directory Item"
+msgstr ""
+
+#: includes/custom-post-types/directory-type.php:125
+#: includes/custom-post-types/portfolio-type.php:94
+#: includes/custom-post-types/team-type.php:92
+msgid "Description"
+msgstr ""
+
+#: includes/custom-post-types/directory-type.php:126
+#: includes/page-builder/shortcodes/media.php:837
+msgid "Address"
+msgstr ""
+
+#: includes/custom-post-types/faqs-type.php:17
+#: includes/custom-post-types/faqs-type.php:91
+msgid "Topics"
+msgstr ""
+
+#: includes/custom-post-types/faqs-type.php:18
+msgid "Topic"
+msgstr ""
+
+#: includes/custom-post-types/faqs-type.php:25
+#: includes/custom-post-types/sf-post-type-permalinks.php:150
+msgid "faqs-category"
+msgstr ""
+
+#: includes/custom-post-types/faqs-type.php:43
+#: includes/custom-post-types/sf-post-type-permalinks.php:442
+#: includes/custom-post-types/sf-post-type-permalinks.php:443
+msgid "faqs"
+msgstr ""
+
+#: includes/custom-post-types/faqs-type.php:46
+#: includes/custom-post-types/sf-post-type-permalinks.php:462
+#: includes/page-builder/shortcodes/faqs.php:126
+msgid "FAQs"
+msgstr ""
+
+#: includes/custom-post-types/faqs-type.php:47
+#: includes/custom-post-types/faqs-type.php:89
+msgid "Question"
+msgstr ""
+
+#: includes/custom-post-types/faqs-type.php:49
+msgid "Add New Question"
+msgstr ""
+
+#: includes/custom-post-types/faqs-type.php:50
+msgid "Edit Question"
+msgstr ""
+
+#: includes/custom-post-types/faqs-type.php:51
+msgid "New Question"
+msgstr ""
+
+#: includes/custom-post-types/faqs-type.php:52
+msgid "View Question"
+msgstr ""
+
+#: includes/custom-post-types/faqs-type.php:53
+msgid "Search Questions"
+msgstr ""
+
+#: includes/custom-post-types/faqs-type.php:54
+msgid "No questions have been added yet"
+msgstr ""
+
+#: includes/custom-post-types/faqs-type.php:90
+msgid "Answer"
+msgstr ""
+
+#: includes/custom-post-types/galleries-type.php:18
+msgid "Gallery Categories"
+msgstr ""
+
+#: includes/custom-post-types/galleries-type.php:19
+msgid "Gallery Category"
+msgstr ""
+
+#: includes/custom-post-types/galleries-type.php:26
+msgid "gallery-category"
+msgstr ""
+
+#: includes/custom-post-types/galleries-type.php:44
+#: includes/custom-post-types/sf-post-type-permalinks.php:245
+#: includes/custom-post-types/sf-post-type-permalinks.php:246
+msgid "galleries"
+msgstr ""
+
+#: includes/custom-post-types/galleries-type.php:47
+#: includes/custom-post-types/sf-post-type-permalinks.php:265
+#: includes/page-builder/shortcodes/galleries.php:267
+msgid "Galleries"
+msgstr ""
+
+#: includes/custom-post-types/galleries-type.php:48
+#: includes/custom-post-types/galleries-type.php:92
+#: includes/page-builder/shortcodes/galleries.php:120
+#: includes/page-builder/shortcodes/gallery.php:266
+#: includes/page-builder/shortcodes/gallery.php:274
+#: includes/page-builder/shortcodes/gallery.php:411
+#: includes/page-builder/shortcodes/portfolio.php:137
+#: includes/page-builder/shortcodes/products.php:281
+#: includes/page-builder/shortcodes/products.php:293
+#: includes/page-builder/shortcodes/team.php:323
+msgid "Gallery"
+msgstr ""
+
+#: includes/custom-post-types/galleries-type.php:50
+msgid "Add New Gallery"
+msgstr ""
+
+#: includes/custom-post-types/galleries-type.php:51
+msgid "Edit Gallery"
+msgstr ""
+
+#: includes/custom-post-types/galleries-type.php:52
+msgid "New Gallery"
+msgstr ""
+
+#: includes/custom-post-types/galleries-type.php:53
+msgid "View Gallery"
+msgstr ""
+
+#: includes/custom-post-types/galleries-type.php:54
+msgid "Search Galleries"
+msgstr ""
+
+#: includes/custom-post-types/galleries-type.php:55
+msgid "No galleries have been added yet"
+msgstr ""
+
+#: includes/custom-post-types/portfolio-type.php:18
+msgid "Portfolio Categories"
+msgstr ""
+
+#: includes/custom-post-types/portfolio-type.php:19
+msgid "Portfolio Category"
+msgstr ""
+
+#: includes/custom-post-types/portfolio-type.php:26
+#: includes/custom-post-types/sf-post-type-permalinks.php:100
+msgid "portfolio-category"
+msgstr ""
+
+#: includes/custom-post-types/portfolio-type.php:44
+#: includes/custom-post-types/sf-post-type-permalinks.php:164
+#: includes/custom-post-types/sf-post-type-permalinks.php:165
+msgid "portfolio"
+msgstr ""
+
+#: includes/custom-post-types/portfolio-type.php:47
+#: includes/custom-post-types/sf-post-type-permalinks.php:184
+#: includes/page-builder/shortcodes/portfolio.php:344
+msgid "Portfolio"
+msgstr ""
+
+#: includes/custom-post-types/portfolio-type.php:48
+#: includes/custom-post-types/portfolio-type.php:93
+msgid "Portfolio Item"
+msgstr ""
+
+#: includes/custom-post-types/portfolio-type.php:50
+msgid "Add New Portfolio Item"
+msgstr ""
+
+#: includes/custom-post-types/portfolio-type.php:51
+msgid "Edit Portfolio Item"
+msgstr ""
+
+#: includes/custom-post-types/portfolio-type.php:52
+msgid "New Portfolio Item"
+msgstr ""
+
+#: includes/custom-post-types/portfolio-type.php:53
+msgid "View Portfolio Item"
+msgstr ""
+
+#: includes/custom-post-types/portfolio-type.php:54
+msgid "Search Portfolio"
+msgstr ""
+
+#: includes/custom-post-types/portfolio-type.php:55
+msgid "No portfolio items have been added yet"
+msgstr ""
+
+#: includes/custom-post-types/sf-post-type-permalinks.php:28
+msgid "Portfolio permalink base"
+msgstr ""
+
+#: includes/custom-post-types/sf-post-type-permalinks.php:34
+msgid "Portfolio category base"
+msgstr ""
+
+#: includes/custom-post-types/sf-post-type-permalinks.php:40
+msgid "Galleries permalink base"
+msgstr ""
+
+#: includes/custom-post-types/sf-post-type-permalinks.php:46
+msgid "Galleries category base"
+msgstr ""
+
+#: includes/custom-post-types/sf-post-type-permalinks.php:52
+msgid "Team permalink base"
+msgstr ""
+
+#: includes/custom-post-types/sf-post-type-permalinks.php:58
+msgid "Team category base"
+msgstr ""
+
+#: includes/custom-post-types/sf-post-type-permalinks.php:64
+msgid "Directory permalink base"
+msgstr ""
+
+#: includes/custom-post-types/sf-post-type-permalinks.php:70
+msgid "Directory category base"
+msgstr ""
+
+#: includes/custom-post-types/sf-post-type-permalinks.php:76
+msgid "Directory location base"
+msgstr ""
+
+#: includes/custom-post-types/sf-post-type-permalinks.php:82
+msgid "FAQs permalink base"
+msgstr ""
+
+#: includes/custom-post-types/sf-post-type-permalinks.php:88
+msgid "FAQ category base"
+msgstr ""
+
+#: includes/custom-post-types/sf-post-type-permalinks.php:110
+msgid "galleries-category"
+msgstr ""
+
+#: includes/custom-post-types/sf-post-type-permalinks.php:120
+#: includes/custom-post-types/team-type.php:26
+msgid "team-category"
+msgstr ""
+
+#: includes/custom-post-types/sf-post-type-permalinks.php:155
+msgid ""
+"These settings control the permalinks used for portfolio items. These "
+"settings only apply when <strong>not using \"default\" permalinks above</"
+"strong>."
+msgstr ""
+
+#: includes/custom-post-types/sf-post-type-permalinks.php:178
+#: includes/custom-post-types/sf-post-type-permalinks.php:259
+#: includes/custom-post-types/sf-post-type-permalinks.php:325
+#: includes/custom-post-types/sf-post-type-permalinks.php:390
+#: includes/custom-post-types/sf-post-type-permalinks.php:456
+#: includes/page-builder/shortcodes/blog.php:393
+#: includes/page-builder/shortcodes/galleries.php:247
+#: includes/page-builder/shortcodes/gallery.php:390
+#: includes/page-builder/shortcodes/portfolio-carousel.php:270
+#: includes/page-builder/shortcodes/portfolio.php:309
+#: includes/page-builder/shortcodes/products.php:351
+msgid "Default"
+msgstr ""
+
+#: includes/custom-post-types/sf-post-type-permalinks.php:193
+msgid "Portfolio base"
+msgstr ""
+
+#: includes/custom-post-types/sf-post-type-permalinks.php:199
+msgid "Portfolio base with category"
+msgstr ""
+
+#: includes/custom-post-types/sf-post-type-permalinks.php:207
+#: includes/custom-post-types/sf-post-type-permalinks.php:273
+#: includes/custom-post-types/sf-post-type-permalinks.php:339
+#: includes/custom-post-types/sf-post-type-permalinks.php:404
+#: includes/custom-post-types/sf-post-type-permalinks.php:471
+msgid "Custom Base"
+msgstr ""
+
+#: includes/custom-post-types/sf-post-type-permalinks.php:212
+#: includes/custom-post-types/sf-post-type-permalinks.php:278
+#: includes/custom-post-types/sf-post-type-permalinks.php:343
+#: includes/custom-post-types/sf-post-type-permalinks.php:409
+#: includes/custom-post-types/sf-post-type-permalinks.php:476
+msgid ""
+"Enter a custom base to use. A base <strong>must</strong> be set or WordPress "
+"will use default instead."
+msgstr ""
+
+#: includes/custom-post-types/sf-post-type-permalinks.php:238
+msgid ""
+"These settings control the permalinks used for galleries. These settings "
+"only apply when <strong>not using \"default\" permalinks above</strong>."
+msgstr ""
+
+#: includes/custom-post-types/sf-post-type-permalinks.php:304
+msgid ""
+"These settings control the permalinks used for team members. These settings "
+"only apply when <strong>not using \"default\" permalinks above</strong>."
+msgstr ""
+
+#: includes/custom-post-types/sf-post-type-permalinks.php:311
+#: includes/custom-post-types/sf-post-type-permalinks.php:312
+#: includes/custom-post-types/team-type.php:44
+msgid "team"
+msgstr ""
+
+#: includes/custom-post-types/sf-post-type-permalinks.php:331
+#: includes/custom-post-types/team-type.php:47
+#: includes/page-builder/shortcodes/team.php:304
+msgid "Team"
+msgstr ""
+
+#: includes/custom-post-types/sf-post-type-permalinks.php:369
+msgid ""
+"These settings control the permalinks used for directory items. These "
+"settings only apply when <strong>not using \"default\" permalinks above</"
+"strong>."
+msgstr ""
+
+#: includes/custom-post-types/sf-post-type-permalinks.php:396
+msgid "Directory"
+msgstr ""
+
+#: includes/custom-post-types/sf-post-type-permalinks.php:435
+msgid ""
+"These settings control the permalinks used for FAQs. These settings only "
+"apply when <strong>not using \"default\" permalinks above</strong>."
+msgstr ""
+
+#: includes/custom-post-types/spb-section-type.php:23
+msgid "spb-section-category"
+msgstr ""
+
+#: includes/custom-post-types/spb-section-type.php:42
+msgctxt "post type general name"
+msgid "SPB Sections"
+msgstr ""
+
+#: includes/custom-post-types/spb-section-type.php:43
+msgctxt "post type singular name"
+msgid "SPB Section"
+msgstr ""
+
+#: includes/custom-post-types/spb-section-type.php:44
+msgctxt "SPB Section"
+msgid "Add New"
+msgstr ""
+
+#: includes/custom-post-types/spb-section-type.php:45
+msgid "Add New SPB Section"
+msgstr ""
+
+#: includes/custom-post-types/spb-section-type.php:46
+msgid "Edit SPB Section"
+msgstr ""
+
+#: includes/custom-post-types/spb-section-type.php:47
+msgid "New SPB Section"
+msgstr ""
+
+#: includes/custom-post-types/spb-section-type.php:48
+msgid "View SPB Section"
+msgstr ""
+
+#: includes/custom-post-types/spb-section-type.php:49
+msgid "Search SPB Sections"
+msgstr ""
+
+#: includes/custom-post-types/spb-section-type.php:50
+msgid "No SPB Sections have been added yet"
+msgstr ""
+
+#: includes/custom-post-types/spb-section-type.php:83
+#: includes/page-builder/shortcodes/spb-section.php:107
+#: includes/page-builder/shortcodes/spb-section.php:116
+msgid "SPB Section"
+msgstr ""
+
+#: includes/custom-post-types/team-type.php:18
+msgid "Team Categories"
+msgstr ""
+
+#: includes/custom-post-types/team-type.php:19
+msgid "Team Category"
+msgstr ""
+
+#: includes/custom-post-types/team-type.php:48
+#: includes/custom-post-types/team-type.php:91
+msgid "Team Member"
+msgstr ""
+
+#: includes/custom-post-types/team-type.php:50
+msgid "Add New Team Member"
+msgstr ""
+
+#: includes/custom-post-types/team-type.php:51
+msgid "Edit Team Member"
+msgstr ""
+
+#: includes/custom-post-types/team-type.php:52
+msgid "New Team Member"
+msgstr ""
+
+#: includes/custom-post-types/team-type.php:53
+msgid "View Team Member"
+msgstr ""
+
+#: includes/custom-post-types/team-type.php:54
+msgid "Search Team Members"
+msgstr ""
+
+#: includes/custom-post-types/team-type.php:55
+msgid "No team members have been added yet"
+msgstr ""
+
+#: includes/custom-post-types/testimonials-type.php:15
+msgid "Testimonial Categories"
+msgstr ""
+
+#: includes/custom-post-types/testimonials-type.php:16
+msgid "Testimonial Category"
+msgstr ""
+
+#: includes/custom-post-types/testimonials-type.php:38
+#: includes/page-builder/shortcodes/testimonial.php:145
+msgid "Testimonials"
+msgstr ""
+
+#: includes/custom-post-types/testimonials-type.php:39
+#: includes/custom-post-types/testimonials-type.php:76
+msgid "Testimonial"
+msgstr ""
+
+#: includes/custom-post-types/testimonials-type.php:41
+msgid "Add New Testimonial"
+msgstr ""
+
+#: includes/custom-post-types/testimonials-type.php:42
+msgid "Edit Testimonial"
+msgstr ""
+
+#: includes/custom-post-types/testimonials-type.php:43
+msgid "New Testimonial"
+msgstr ""
+
+#: includes/custom-post-types/testimonials-type.php:44
+msgid "View Testimonial"
+msgstr ""
+
+#: includes/custom-post-types/testimonials-type.php:45
+msgid "Search Testimonials"
+msgstr ""
+
+#: includes/custom-post-types/testimonials-type.php:46
+msgid "No testimonials have been added yet"
+msgstr ""
+
+#: includes/page-builder/inc/build.php:168
+msgid "Swift Page Builder"
+msgstr ""
+
+#: includes/page-builder/inc/builder.php:126
+msgid "<p>This is a text block. Click the edit button to change this text.</p>"
+msgstr ""
+
+#: includes/page-builder/inc/builder.php:168
+#: includes/page-builder/shortcodes/tabs.php:17
+#: includes/page-builder/shortcodes/tabs.php:38
+msgid "Tab"
+msgstr ""
+
+#: includes/page-builder/inc/builder.php:170
+#: includes/page-builder/shortcodes/accordion.php:25
+#: includes/page-builder/shortcodes/accordion.php:53
+msgid "Section"
+msgstr ""
+
+#: includes/page-builder/inc/helpers.php:503
+#: includes/page-builder/shortcodes/blog.php:215
+#: includes/page-builder/shortcodes/blog.php:358
+#: includes/page-builder/shortcodes/campaigns.php:191
+#: includes/page-builder/shortcodes/parallax.php:202
+#: includes/page-builder/shortcodes/portfolio.php:252
+#: includes/page-builder/shortcodes/row.php:405
+#: includes/page-builder/shortcodes/row.php:416
+#: includes/page-builder/shortcodes/row.php:429
+#: includes/swift-slider/inc/ss-meta.php:216
+msgid "None"
+msgstr ""
+
+#: includes/page-builder/inc/helpers.php:504
+msgid "Bounce"
+msgstr ""
+
+#: includes/page-builder/inc/helpers.php:505
+msgid "Flash"
+msgstr ""
+
+#: includes/page-builder/inc/helpers.php:506
+msgid "Pulse"
+msgstr ""
+
+#: includes/page-builder/inc/helpers.php:507
+msgid "Rubberband"
+msgstr ""
+
+#: includes/page-builder/inc/helpers.php:508
+msgid "Shake"
+msgstr ""
+
+#: includes/page-builder/inc/helpers.php:509
+msgid "Swing"
+msgstr ""
+
+#: includes/page-builder/inc/helpers.php:510
+msgid "TaDa"
+msgstr ""
+
+#: includes/page-builder/inc/helpers.php:511
+msgid "Wobble"
+msgstr ""
+
+#: includes/page-builder/inc/helpers.php:512
+msgid "Bounce In"
+msgstr ""
+
+#: includes/page-builder/inc/helpers.php:513
+msgid "Bounce In Down"
+msgstr ""
+
+#: includes/page-builder/inc/helpers.php:514
+msgid "Bounce In Left"
+msgstr ""
+
+#: includes/page-builder/inc/helpers.php:515
+msgid "Bounce In Right"
+msgstr ""
+
+#: includes/page-builder/inc/helpers.php:516
+msgid "Bounce In Up"
+msgstr ""
+
+#: includes/page-builder/inc/helpers.php:517
+msgid "Fade In"
+msgstr ""
+
+#: includes/page-builder/inc/helpers.php:518
+msgid "Fade In Down"
+msgstr ""
+
+#: includes/page-builder/inc/helpers.php:519
+msgid "Fade In Down Big"
+msgstr ""
+
+#: includes/page-builder/inc/helpers.php:520
+msgid "Fade In Left"
+msgstr ""
+
+#: includes/page-builder/inc/helpers.php:521
+msgid "Fade In Left Big"
+msgstr ""
+
+#: includes/page-builder/inc/helpers.php:522
+msgid "Fade In Right"
+msgstr ""
+
+#: includes/page-builder/inc/helpers.php:523
+msgid "Fade In Right Big"
+msgstr ""
+
+#: includes/page-builder/inc/helpers.php:524
+msgid "Fade In Up"
+msgstr ""
+
+#: includes/page-builder/inc/helpers.php:525
+msgid "Fade In Up Big"
+msgstr ""
+
+#: includes/page-builder/inc/helpers.php:526
+msgid "Flip"
+msgstr ""
+
+#: includes/page-builder/inc/helpers.php:527
+msgid "Flip In X"
+msgstr ""
+
+#: includes/page-builder/inc/helpers.php:528
+msgid "Flip In Y"
+msgstr ""
+
+#: includes/page-builder/inc/helpers.php:529
+msgid "Lightspeed In"
+msgstr ""
+
+#: includes/page-builder/inc/helpers.php:530
+msgid "Rotate In"
+msgstr ""
+
+#: includes/page-builder/inc/helpers.php:531
+msgid "Rotate In Down Left"
+msgstr ""
+
+#: includes/page-builder/inc/helpers.php:532
+msgid "Rotate In Down Right"
+msgstr ""
+
+#: includes/page-builder/inc/helpers.php:533
+msgid "Rotate In Up Left"
+msgstr ""
+
+#: includes/page-builder/inc/helpers.php:534
+msgid "Rotate In Up Right"
+msgstr ""
+
+#: includes/page-builder/inc/helpers.php:535
+msgid "Roll In"
+msgstr ""
+
+#: includes/page-builder/inc/helpers.php:536
+msgid "Zoom In"
+msgstr ""
+
+#: includes/page-builder/inc/helpers.php:537
+msgid "Zoom In Down"
+msgstr ""
+
+#: includes/page-builder/inc/helpers.php:538
+msgid "Zoom In Left"
+msgstr ""
+
+#: includes/page-builder/inc/helpers.php:539
+msgid "Zoom In Right"
+msgstr ""
+
+#: includes/page-builder/inc/helpers.php:540
+msgid "Zoom In Up"
+msgstr ""
+
+#: includes/page-builder/inc/helpers.php:541
+msgid "Slide In Down"
+msgstr ""
+
+#: includes/page-builder/inc/helpers.php:542
+msgid "Slide In Left"
+msgstr ""
+
+#: includes/page-builder/inc/helpers.php:543
+msgid "Slide In Right"
+msgstr ""
+
+#: includes/page-builder/inc/helpers.php:544
+msgid "Slide In Up"
+msgstr ""
+
+#: includes/page-builder/inc/helpers.php:556
+msgid "Visible Globally"
+msgstr ""
+
+#: includes/page-builder/inc/helpers.php:557
+#: includes/page-builder/inc/helpers.php:558
+msgid "Hidden on Desktop"
+msgstr ""
+
+#: includes/page-builder/inc/helpers.php:559
+msgid "Hidden on Tablet"
+msgstr ""
+
+#: includes/page-builder/inc/helpers.php:560
+msgid "Hidden on Desktop + Tablet"
+msgstr ""
+
+#: includes/page-builder/inc/helpers.php:561
+msgid "Hidden on Desktop + Phone"
+msgstr ""
+
+#: includes/page-builder/inc/helpers.php:562
+msgid "Hidden on Tablet + Phone"
+msgstr ""
+
+#: includes/page-builder/inc/helpers.php:563
+msgid "Hidden on Phone"
+msgstr ""
+
+#: includes/page-builder/inc/helpers.php:700
+#: includes/shortcodes/sf-shortcodes.php:58
+msgid "Added"
+msgstr ""
+
+#: includes/page-builder/inc/layouts.php:145
+msgid "Save Template"
+msgstr ""
+
+#: includes/page-builder/inc/layouts.php:146
+msgid "Save current page as a Template"
+msgstr ""
+
+#: includes/page-builder/inc/layouts.php:148
+msgid "Load Template"
+msgstr ""
+
+#: includes/page-builder/inc/layouts.php:158
+msgid "You have not saved any templates yet."
+msgstr ""
+
+#: includes/page-builder/inc/layouts.php:178
+msgid "Load Element"
+msgstr ""
+
+#: includes/page-builder/inc/layouts.php:188
+msgid "You have not saved any elements yet."
+msgstr ""
+
+#: includes/page-builder/inc/layouts.php:289
+msgid "Elements"
+msgstr ""
+
+#: includes/page-builder/inc/layouts.php:299
+msgid "Layout"
+msgstr ""
+
+#: includes/page-builder/inc/layouts.php:309
+msgid "Pre-Built Pages"
+msgstr ""
+
+#: includes/page-builder/inc/layouts.php:321
+msgid "Saved Templates"
+msgstr ""
+
+#: includes/page-builder/inc/layouts.php:330
+msgid "Saved Elements"
+msgstr ""
+
+#: includes/page-builder/inc/layouts.php:345
+#: includes/page-builder/shortcodes/multilayer-parallax.php:114
+#: includes/page-builder/shortcodes/swift-slider.php:66
+msgid "Fullscreen"
+msgstr ""
+
+#: includes/page-builder/inc/layouts.php:400
+msgid "- or -"
+msgstr ""
+
+#: includes/page-builder/inc/layouts.php:416
+#: includes/page-builder/inc/layouts.php:443
+msgid "Loading, please wait..."
+msgstr ""
+
+#: includes/page-builder/inc/layouts.php:419
+msgid ""
+"Welcome to your visual preview area...<br> You don't have any content at the "
+"moment."
+msgstr ""
+
+#: includes/page-builder/inc/layouts.php:423
+#: includes/page-builder/inc/layouts.php:427
+msgid "Step 1:"
+msgstr ""
+
+#: includes/page-builder/inc/layouts.php:431
+msgid "Step 2:"
+msgstr ""
+
+#: includes/page-builder/inc/mapper.php:28
+#: includes/page-builder/inc/mapper.php:74
+msgid "Wrong name for shortcode:"
+msgstr ""
+
+#: includes/page-builder/inc/mapper.php:30
+msgid "Wrong base for shortcode:"
+msgstr ""
+
+#: includes/page-builder/inc/mapper.php:76
+msgid "Wrong attribute for '"
+msgstr ""
+
+#: includes/page-builder/inc/shortcodes.php:261
+msgid "Decrease width"
+msgstr ""
+
+#: includes/page-builder/inc/shortcodes.php:261
+msgid "Increase width"
+msgstr ""
+
+#: includes/page-builder/inc/shortcodes.php:263
+#: includes/page-builder/inc/shortcodes.php:419
+#: includes/page-builder/inc/shortcodes.php:732
+msgid "Save"
+msgstr ""
+
+#: includes/page-builder/inc/shortcodes.php:264
+#: includes/page-builder/inc/shortcodes.php:418
+#: includes/page-builder/inc/shortcodes.php:731
+msgid "Edit"
+msgstr ""
+
+#: includes/page-builder/inc/shortcodes.php:265
+msgid "Pop up"
+msgstr ""
+
+#: includes/page-builder/inc/shortcodes.php:266
+msgid "Clone"
+msgstr ""
+
+#: includes/page-builder/inc/shortcodes.php:266
+#: includes/page-builder/inc/shortcodes.php:267
+msgid "Delete"
+msgstr ""
+
+#: includes/page-builder/inc/shortcodes.php:271
+#: includes/page-builder/shortcodes/column.php:177
+msgid "Column"
+msgstr ""
+
+#: includes/page-builder/inc/shortcodes.php:366
+msgid "All"
+msgstr ""
+
+#: includes/page-builder/inc/shortcodes.php:370
+msgid "Visibility:"
+msgstr ""
+
+#: includes/page-builder/inc/shortcodes.php:486
+#: includes/page-builder/inc/shortcodes.php:487
+#: includes/page-builder/shortcodes/media.php:839
+msgid "Click the edit button to change the map pin details."
+msgstr ""
+
+#: includes/page-builder/inc/shortcodes.php:637
+msgid "Add images"
+msgstr ""
+
+#: includes/page-builder/inc/shortcodes.php:648
+msgid "Add image"
+msgstr ""
+
+#: includes/page-builder/inc/shortcodes.php:732
+#: includes/swift-slider/inc/ss-shortcodes.php:113
+msgid "Cancel"
+msgstr ""
+
+#: includes/page-builder/shortcodes/accordion.php:156
+msgid "Accordion"
+msgstr ""
+
+#: includes/page-builder/shortcodes/accordion.php:164
+#: includes/page-builder/shortcodes/blog-grid.php:154
+#: includes/page-builder/shortcodes/blog.php:144
+#: includes/page-builder/shortcodes/campaigns.php:146
+#: includes/page-builder/shortcodes/clients.php:176
+#: includes/page-builder/shortcodes/code-snippet.php:53
+#: includes/page-builder/shortcodes/default.php:86
+#: includes/page-builder/shortcodes/default.php:414
+#: includes/page-builder/shortcodes/faqs.php:135
+#: includes/page-builder/shortcodes/galleries.php:109
+#: includes/page-builder/shortcodes/gallery.php:284
+#: includes/page-builder/shortcodes/googlechart.php:105
+#: includes/page-builder/shortcodes/gopricing.php:53
+#: includes/page-builder/shortcodes/media.php:71
+#: includes/page-builder/shortcodes/media.php:304
+#: includes/page-builder/shortcodes/media.php:564
+#: includes/page-builder/shortcodes/media.php:1058
+#: includes/page-builder/shortcodes/parallax.php:121
+#: includes/page-builder/shortcodes/portfolio-carousel.php:230
+#: includes/page-builder/shortcodes/portfolio-showcase.php:189
+#: includes/page-builder/shortcodes/portfolio.php:126
+#: includes/page-builder/shortcodes/products.php:78
+#: includes/page-builder/shortcodes/products.php:238
+#: includes/page-builder/shortcodes/recent-posts.php:252
+#: includes/page-builder/shortcodes/sitemap.php:52
+#: includes/page-builder/shortcodes/tabs.php:277
+#: includes/page-builder/shortcodes/team.php:311
+#: includes/page-builder/shortcodes/testimonial-carousel.php:165
+#: includes/page-builder/shortcodes/testimonial-slider.php:145
+#: includes/page-builder/shortcodes/testimonial.php:154
+#: includes/page-builder/shortcodes/tour.php:198
+#: includes/page-builder/shortcodes/tweets-slider.php:91
+msgid "Widget title"
+msgstr ""
+
+#: includes/page-builder/shortcodes/accordion.php:167
+#: includes/page-builder/shortcodes/tabs.php:280
+#: includes/page-builder/shortcodes/tour.php:201
+msgid "What text use as widget title. Leave blank if no title is needed."
+msgstr ""
+
+#: includes/page-builder/shortcodes/accordion.php:171
+msgid "Active Section"
+msgstr ""
+
+#: includes/page-builder/shortcodes/accordion.php:174
+msgid ""
+"You can set the section that is active here by entering the number of the "
+"section here. NOTE: The first section would be 0, second would be 1, and so "
+"on. Leave blank for all sections to be closed by default."
+msgstr ""
+
+#: includes/page-builder/shortcodes/accordion.php:178
+msgid "Extra class name"
+msgstr ""
+
+#: includes/page-builder/shortcodes/accordion.php:181
+#: includes/page-builder/shortcodes/blog-grid.php:203
+#: includes/page-builder/shortcodes/blog.php:420
+#: includes/page-builder/shortcodes/campaigns.php:200
+#: includes/page-builder/shortcodes/clients.php:233
+#: includes/page-builder/shortcodes/code-snippet.php:83
+#: includes/page-builder/shortcodes/column.php:286
+#: includes/page-builder/shortcodes/counter.php:140
+#: includes/page-builder/shortcodes/default.php:157
+#: includes/page-builder/shortcodes/default.php:334
+#: includes/page-builder/shortcodes/default.php:477
+#: includes/page-builder/shortcodes/default.php:606
+#: includes/page-builder/shortcodes/default.php:668
+#: includes/page-builder/shortcodes/default.php:734
+#: includes/page-builder/shortcodes/default.php:810
+#: includes/page-builder/shortcodes/galleries.php:261
+#: includes/page-builder/shortcodes/gallery.php:404
+#: includes/page-builder/shortcodes/googlechart.php:163
+#: includes/page-builder/shortcodes/gopricing.php:70
+#: includes/page-builder/shortcodes/gravityforms.php:94
+#: includes/page-builder/shortcodes/icon-boxes.php:244
+#: includes/page-builder/shortcodes/image-banner.php:187
+#: includes/page-builder/shortcodes/latest-tweets.php:82
+#: includes/page-builder/shortcodes/media.php:105
+#: includes/page-builder/shortcodes/media.php:424
+#: includes/page-builder/shortcodes/media.php:695
+#: includes/page-builder/shortcodes/media.php:1206
+#: includes/page-builder/shortcodes/multilayer-parallax.php:148
+#: includes/page-builder/shortcodes/ninjaforms.php:61
+#: includes/page-builder/shortcodes/parallax.php:263
+#: includes/page-builder/shortcodes/portfolio-carousel.php:284
+#: includes/page-builder/shortcodes/portfolio-showcase.php:216
+#: includes/page-builder/shortcodes/portfolio.php:337
+#: includes/page-builder/shortcodes/products.php:117
+#: includes/page-builder/shortcodes/products.php:383
+#: includes/page-builder/shortcodes/promo-bar.php:251
+#: includes/page-builder/shortcodes/recent-posts.php:364
+#: includes/page-builder/shortcodes/revslider.php:96
+#: includes/page-builder/shortcodes/row.php:592
+#: includes/page-builder/shortcodes/search.php:81
+#: includes/page-builder/shortcodes/sitemap.php:62
+#: includes/page-builder/shortcodes/spb-section.php:126
+#: includes/page-builder/shortcodes/supersearch.php:76
+#: includes/page-builder/shortcodes/swift-slider.php:167
+#: includes/page-builder/shortcodes/tabs.php:304
+#: includes/page-builder/shortcodes/team.php:417
+#: includes/page-builder/shortcodes/testimonial-carousel.php:210
+#: includes/page-builder/shortcodes/testimonial-slider.php:200
+#: includes/page-builder/shortcodes/testimonial.php:219
+#: includes/page-builder/shortcodes/tour.php:215
+#: includes/page-builder/shortcodes/tweets-slider.php:126
+#: includes/page-builder/shortcodes/widget-area.php:74
+msgid ""
+"If you wish to style this particular content element differently, then use "
+"this field to add a class name and then refer to it in your css file."
+msgstr ""
+
+#: includes/page-builder/shortcodes/accordion.php:186
+msgid "Add section"
+msgstr ""
+
+#: includes/page-builder/shortcodes/accordion.php:194
+msgid "Section 1"
+msgstr ""
+
+#: includes/page-builder/shortcodes/accordion.php:197
+#: includes/page-builder/shortcodes/accordion.php:205
+#: includes/page-builder/shortcodes/tabs.php:322
+#: includes/page-builder/shortcodes/tabs.php:331
+#: includes/page-builder/shortcodes/tour.php:233
+#: includes/page-builder/shortcodes/tour.php:237
+msgid "This is a text block. Click the edit button to change this text."
+msgstr ""
+
+#: includes/page-builder/shortcodes/accordion.php:202
+msgid "Section 2"
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog-grid.php:108
+msgid "Instagram"
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog-grid.php:147
+msgid "Social Grid"
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog-grid.php:157
+#: includes/page-builder/shortcodes/blog.php:147
+#: includes/page-builder/shortcodes/campaigns.php:149
+#: includes/page-builder/shortcodes/clients.php:179
+#: includes/page-builder/shortcodes/code-snippet.php:56
+#: includes/page-builder/shortcodes/default.php:89
+#: includes/page-builder/shortcodes/default.php:417
+#: includes/page-builder/shortcodes/faqs.php:138
+#: includes/page-builder/shortcodes/galleries.php:112
+#: includes/page-builder/shortcodes/gallery.php:287
+#: includes/page-builder/shortcodes/googlechart.php:108
+#: includes/page-builder/shortcodes/gopricing.php:56
+#: includes/page-builder/shortcodes/media.php:74
+#: includes/page-builder/shortcodes/media.php:307
+#: includes/page-builder/shortcodes/media.php:567
+#: includes/page-builder/shortcodes/media.php:832
+#: includes/page-builder/shortcodes/media.php:1061
+#: includes/page-builder/shortcodes/parallax.php:124
+#: includes/page-builder/shortcodes/portfolio-carousel.php:233
+#: includes/page-builder/shortcodes/portfolio-showcase.php:192
+#: includes/page-builder/shortcodes/portfolio.php:129
+#: includes/page-builder/shortcodes/products.php:81
+#: includes/page-builder/shortcodes/recent-posts.php:255
+#: includes/page-builder/shortcodes/sitemap.php:55
+#: includes/page-builder/shortcodes/team.php:314
+#: includes/page-builder/shortcodes/testimonial-carousel.php:168
+#: includes/page-builder/shortcodes/testimonial-slider.php:148
+#: includes/page-builder/shortcodes/testimonial.php:157
+#: includes/page-builder/shortcodes/tweets-slider.php:94
+msgid "Heading text. Leave it empty if not needed."
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog-grid.php:162
+#: includes/page-builder/shortcodes/blog.php:190
+#: includes/page-builder/shortcodes/campaigns.php:171
+#: includes/page-builder/shortcodes/clients.php:184
+#: includes/page-builder/shortcodes/media.php:1119
+#: includes/page-builder/shortcodes/portfolio-carousel.php:238
+#: includes/page-builder/shortcodes/portfolio-showcase.php:203
+#: includes/page-builder/shortcodes/portfolio.php:235
+#: includes/page-builder/shortcodes/products.php:107
+#: includes/page-builder/shortcodes/products.php:341
+#: includes/page-builder/shortcodes/recent-posts.php:293
+#: includes/page-builder/shortcodes/team.php:352
+#: includes/page-builder/shortcodes/testimonial-carousel.php:173
+#: includes/page-builder/shortcodes/testimonial-slider.php:163
+#: includes/page-builder/shortcodes/testimonial.php:172
+msgid "Number of items"
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog-grid.php:165
+#: includes/page-builder/shortcodes/blog.php:193
+#: includes/page-builder/shortcodes/recent-posts.php:296
+msgid "The number of blog items to show per page."
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog-grid.php:169
+#: includes/page-builder/shortcodes/blog.php:315
+msgid "Twitter Username"
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog-grid.php:172
+#: includes/page-builder/shortcodes/blog.php:318
+msgid ""
+"Enter your twitter username here to include tweets in the blog grid. Ensure "
+"you have the Twitter oAuth plugin installed and your details added."
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog-grid.php:176
+#: includes/page-builder/shortcodes/blog.php:322
+msgid "Instagram ID"
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog-grid.php:179
+#: includes/page-builder/shortcodes/blog.php:325
+msgid ""
+"Enter your Instagram ID here to include your instagrams in the blog grid. "
+"You can find your instagram ID here - <a href='http://jelled.com/instagram/"
+"lookup-user-id' target='_blank'>http://jelled.com/instagram/lookup-user-id</"
+"a> You will also need to enter your token below."
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog-grid.php:183
+#: includes/page-builder/shortcodes/blog.php:329
+msgid "Instagram Token"
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog-grid.php:186
+#: includes/page-builder/shortcodes/blog.php:332
+msgid ""
+"Enter your Instagram Token here to include your instagrams in the blog grid. "
+"You can generate your instagram access token here - <a href='http://www."
+"pinceladasdaweb.com.br/instagram/access-token/' target='_blank'>http://www."
+"pinceladasdaweb.com.br/instagram/access-token/</a>. NOTE: This is REQUIRED."
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog-grid.php:190
+#: includes/page-builder/shortcodes/blog.php:178
+#: includes/page-builder/shortcodes/campaigns.php:153
+#: includes/page-builder/shortcodes/galleries.php:138
+#: includes/page-builder/shortcodes/gallery.php:310
+#: includes/page-builder/shortcodes/portfolio.php:154
+#: includes/page-builder/shortcodes/products.php:324
+#: includes/page-builder/shortcodes/promo-bar.php:238
+#: includes/page-builder/shortcodes/recent-posts.php:331
+#: includes/page-builder/shortcodes/revslider.php:83
+#: includes/page-builder/shortcodes/swift-slider.php:154
+#: includes/page-builder/shortcodes/team.php:394
+msgid "Full Width"
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog-grid.php:193
+#: includes/page-builder/shortcodes/blog.php:161
+#: includes/page-builder/shortcodes/blog.php:182
+#: includes/page-builder/shortcodes/blog.php:240
+#: includes/page-builder/shortcodes/blog.php:251
+#: includes/page-builder/shortcodes/blog.php:263
+#: includes/page-builder/shortcodes/blog.php:292
+#: includes/page-builder/shortcodes/blog.php:308
+#: includes/page-builder/shortcodes/blog.php:346
+#: includes/page-builder/shortcodes/blog.php:376
+#: includes/page-builder/shortcodes/campaigns.php:157
+#: includes/page-builder/shortcodes/clients.php:213
+#: includes/page-builder/shortcodes/clients.php:224
+#: includes/page-builder/shortcodes/default.php:302
+#: includes/page-builder/shortcodes/default.php:597
+#: includes/page-builder/shortcodes/galleries.php:141
+#: includes/page-builder/shortcodes/galleries.php:151
+#: includes/page-builder/shortcodes/galleries.php:168
+#: includes/page-builder/shortcodes/galleries.php:179
+#: includes/page-builder/shortcodes/galleries.php:191
+#: includes/page-builder/shortcodes/galleries.php:224
+#: includes/page-builder/shortcodes/galleries.php:234
+#: includes/page-builder/shortcodes/gallery.php:313
+#: includes/page-builder/shortcodes/gallery.php:323
+#: includes/page-builder/shortcodes/gallery.php:345
+#: includes/page-builder/shortcodes/gallery.php:356
+#: includes/page-builder/shortcodes/gallery.php:367
+#: includes/page-builder/shortcodes/gallery.php:377
+#: includes/page-builder/shortcodes/gravityforms.php:64
+#: includes/page-builder/shortcodes/gravityforms.php:74
+#: includes/page-builder/shortcodes/gravityforms.php:84
+#: includes/page-builder/shortcodes/media.php:96
+#: includes/page-builder/shortcodes/media.php:371
+#: includes/page-builder/shortcodes/media.php:380
+#: includes/page-builder/shortcodes/media.php:637
+#: includes/page-builder/shortcodes/media.php:648
+#: includes/page-builder/shortcodes/media.php:686
+#: includes/page-builder/shortcodes/media.php:1083
+#: includes/page-builder/shortcodes/media.php:1129
+#: includes/page-builder/shortcodes/media.php:1197
+#: includes/page-builder/shortcodes/multilayer-parallax.php:117
+#: includes/page-builder/shortcodes/multilayer-parallax.php:421
+#: includes/page-builder/shortcodes/portfolio.php:157
+#: includes/page-builder/shortcodes/portfolio.php:167
+#: includes/page-builder/shortcodes/portfolio.php:185
+#: includes/page-builder/shortcodes/portfolio.php:196
+#: includes/page-builder/shortcodes/portfolio.php:207
+#: includes/page-builder/shortcodes/portfolio.php:218
+#: includes/page-builder/shortcodes/portfolio.php:275
+#: includes/page-builder/shortcodes/portfolio.php:285
+#: includes/page-builder/shortcodes/portfolio.php:296
+#: includes/page-builder/shortcodes/products.php:306
+#: includes/page-builder/shortcodes/products.php:318
+#: includes/page-builder/shortcodes/products.php:328
+#: includes/page-builder/shortcodes/products.php:374
+#: includes/page-builder/shortcodes/promo-bar.php:241
+#: includes/page-builder/shortcodes/recent-posts.php:270
+#: includes/page-builder/shortcodes/recent-posts.php:335
+#: includes/page-builder/shortcodes/recent-posts.php:344
+#: includes/page-builder/shortcodes/recent-posts.php:355
+#: includes/page-builder/shortcodes/revslider.php:86
+#: includes/page-builder/shortcodes/row.php:488
+#: includes/page-builder/shortcodes/row.php:498
+#: includes/page-builder/shortcodes/row.php:523
+#: includes/page-builder/shortcodes/supersearch.php:67
+#: includes/page-builder/shortcodes/swift-slider.php:69
+#: includes/page-builder/shortcodes/swift-slider.php:117
+#: includes/page-builder/shortcodes/swift-slider.php:127
+#: includes/page-builder/shortcodes/swift-slider.php:137
+#: includes/page-builder/shortcodes/swift-slider.php:147
+#: includes/page-builder/shortcodes/swift-slider.php:157
+#: includes/page-builder/shortcodes/tabs.php:295
+#: includes/page-builder/shortcodes/team.php:333
+#: includes/page-builder/shortcodes/team.php:377
+#: includes/page-builder/shortcodes/team.php:388
+#: includes/page-builder/shortcodes/team.php:398
+#: includes/page-builder/shortcodes/team.php:407
+#: includes/page-builder/shortcodes/testimonial-carousel.php:201
+#: includes/page-builder/shortcodes/testimonial-slider.php:190
+#: includes/page-builder/shortcodes/testimonial.php:200
+#: includes/page-builder/shortcodes/testimonial.php:210
+#: includes/page-builder/shortcodes/tweets-slider.php:116
+msgid "Yes"
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog-grid.php:194
+#: includes/page-builder/shortcodes/blog.php:162
+#: includes/page-builder/shortcodes/blog.php:183
+#: includes/page-builder/shortcodes/blog.php:241
+#: includes/page-builder/shortcodes/blog.php:252
+#: includes/page-builder/shortcodes/blog.php:264
+#: includes/page-builder/shortcodes/blog.php:293
+#: includes/page-builder/shortcodes/blog.php:309
+#: includes/page-builder/shortcodes/blog.php:345
+#: includes/page-builder/shortcodes/blog.php:375
+#: includes/page-builder/shortcodes/campaigns.php:156
+#: includes/page-builder/shortcodes/clients.php:214
+#: includes/page-builder/shortcodes/clients.php:223
+#: includes/page-builder/shortcodes/default.php:301
+#: includes/page-builder/shortcodes/default.php:596
+#: includes/page-builder/shortcodes/galleries.php:142
+#: includes/page-builder/shortcodes/galleries.php:152
+#: includes/page-builder/shortcodes/galleries.php:169
+#: includes/page-builder/shortcodes/galleries.php:180
+#: includes/page-builder/shortcodes/galleries.php:190
+#: includes/page-builder/shortcodes/galleries.php:225
+#: includes/page-builder/shortcodes/galleries.php:235
+#: includes/page-builder/shortcodes/gallery.php:314
+#: includes/page-builder/shortcodes/gallery.php:324
+#: includes/page-builder/shortcodes/gallery.php:346
+#: includes/page-builder/shortcodes/gallery.php:357
+#: includes/page-builder/shortcodes/gallery.php:368
+#: includes/page-builder/shortcodes/gallery.php:378
+#: includes/page-builder/shortcodes/gravityforms.php:65
+#: includes/page-builder/shortcodes/gravityforms.php:75
+#: includes/page-builder/shortcodes/gravityforms.php:85
+#: includes/page-builder/shortcodes/media.php:95
+#: includes/page-builder/shortcodes/media.php:370
+#: includes/page-builder/shortcodes/media.php:381
+#: includes/page-builder/shortcodes/media.php:638
+#: includes/page-builder/shortcodes/media.php:647
+#: includes/page-builder/shortcodes/media.php:685
+#: includes/page-builder/shortcodes/media.php:1082
+#: includes/page-builder/shortcodes/media.php:1130
+#: includes/page-builder/shortcodes/media.php:1196
+#: includes/page-builder/shortcodes/multilayer-parallax.php:118
+#: includes/page-builder/shortcodes/multilayer-parallax.php:420
+#: includes/page-builder/shortcodes/portfolio.php:158
+#: includes/page-builder/shortcodes/portfolio.php:168
+#: includes/page-builder/shortcodes/portfolio.php:186
+#: includes/page-builder/shortcodes/portfolio.php:197
+#: includes/page-builder/shortcodes/portfolio.php:208
+#: includes/page-builder/shortcodes/portfolio.php:219
+#: includes/page-builder/shortcodes/portfolio.php:276
+#: includes/page-builder/shortcodes/portfolio.php:286
+#: includes/page-builder/shortcodes/portfolio.php:295
+#: includes/page-builder/shortcodes/products.php:305
+#: includes/page-builder/shortcodes/products.php:317
+#: includes/page-builder/shortcodes/products.php:327
+#: includes/page-builder/shortcodes/products.php:373
+#: includes/page-builder/shortcodes/promo-bar.php:242
+#: includes/page-builder/shortcodes/recent-posts.php:269
+#: includes/page-builder/shortcodes/recent-posts.php:334
+#: includes/page-builder/shortcodes/recent-posts.php:345
+#: includes/page-builder/shortcodes/recent-posts.php:354
+#: includes/page-builder/shortcodes/revslider.php:87
+#: includes/page-builder/shortcodes/row.php:487
+#: includes/page-builder/shortcodes/row.php:497
+#: includes/page-builder/shortcodes/row.php:522
+#: includes/page-builder/shortcodes/supersearch.php:66
+#: includes/page-builder/shortcodes/swift-slider.php:70
+#: includes/page-builder/shortcodes/swift-slider.php:118
+#: includes/page-builder/shortcodes/swift-slider.php:128
+#: includes/page-builder/shortcodes/swift-slider.php:138
+#: includes/page-builder/shortcodes/swift-slider.php:148
+#: includes/page-builder/shortcodes/swift-slider.php:158
+#: includes/page-builder/shortcodes/tabs.php:294
+#: includes/page-builder/shortcodes/team.php:332
+#: includes/page-builder/shortcodes/team.php:378
+#: includes/page-builder/shortcodes/team.php:387
+#: includes/page-builder/shortcodes/team.php:397
+#: includes/page-builder/shortcodes/team.php:408
+#: includes/page-builder/shortcodes/testimonial-carousel.php:200
+#: includes/page-builder/shortcodes/testimonial-slider.php:191
+#: includes/page-builder/shortcodes/testimonial.php:199
+#: includes/page-builder/shortcodes/testimonial.php:209
+#: includes/page-builder/shortcodes/tweets-slider.php:117
+msgid "No"
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog-grid.php:196
+#: includes/page-builder/shortcodes/blog.php:185
+#: includes/page-builder/shortcodes/campaigns.php:159
+#: includes/page-builder/shortcodes/galleries.php:144
+#: includes/page-builder/shortcodes/gallery.php:316
+#: includes/page-builder/shortcodes/portfolio.php:160
+#: includes/page-builder/shortcodes/promo-bar.php:244
+#: includes/page-builder/shortcodes/recent-posts.php:337
+#: includes/page-builder/shortcodes/team.php:400
+msgid ""
+"Select if you'd like the asset to be full width (edge to edge). NOTE: only "
+"possible on pages without sidebars."
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog-grid.php:200
+#: includes/page-builder/shortcodes/blog.php:417
+#: includes/page-builder/shortcodes/campaigns.php:197
+#: includes/page-builder/shortcodes/clients.php:230
+#: includes/page-builder/shortcodes/code-snippet.php:80
+#: includes/page-builder/shortcodes/column.php:283
+#: includes/page-builder/shortcodes/counter.php:137
+#: includes/page-builder/shortcodes/default.php:154
+#: includes/page-builder/shortcodes/default.php:331
+#: includes/page-builder/shortcodes/default.php:474
+#: includes/page-builder/shortcodes/default.php:603
+#: includes/page-builder/shortcodes/default.php:665
+#: includes/page-builder/shortcodes/default.php:731
+#: includes/page-builder/shortcodes/default.php:807
+#: includes/page-builder/shortcodes/faqs.php:149
+#: includes/page-builder/shortcodes/galleries.php:258
+#: includes/page-builder/shortcodes/gallery.php:401
+#: includes/page-builder/shortcodes/googlechart.php:160
+#: includes/page-builder/shortcodes/gopricing.php:67
+#: includes/page-builder/shortcodes/gravityforms.php:91
+#: includes/page-builder/shortcodes/icon-boxes.php:241
+#: includes/page-builder/shortcodes/image-banner.php:184
+#: includes/page-builder/shortcodes/latest-tweets.php:79
+#: includes/page-builder/shortcodes/media.php:102
+#: includes/page-builder/shortcodes/media.php:421
+#: includes/page-builder/shortcodes/media.php:692
+#: includes/page-builder/shortcodes/media.php:1203
+#: includes/page-builder/shortcodes/multilayer-parallax.php:145
+#: includes/page-builder/shortcodes/ninjaforms.php:58
+#: includes/page-builder/shortcodes/parallax.php:260
+#: includes/page-builder/shortcodes/portfolio-carousel.php:281
+#: includes/page-builder/shortcodes/portfolio-showcase.php:213
+#: includes/page-builder/shortcodes/portfolio.php:334
+#: includes/page-builder/shortcodes/products.php:114
+#: includes/page-builder/shortcodes/products.php:380
+#: includes/page-builder/shortcodes/promo-bar.php:248
+#: includes/page-builder/shortcodes/recent-posts.php:361
+#: includes/page-builder/shortcodes/revslider.php:93
+#: includes/page-builder/shortcodes/row.php:589
+#: includes/page-builder/shortcodes/search.php:78
+#: includes/page-builder/shortcodes/sitemap.php:59
+#: includes/page-builder/shortcodes/spb-section.php:123
+#: includes/page-builder/shortcodes/supersearch.php:73
+#: includes/page-builder/shortcodes/swift-slider.php:164
+#: includes/page-builder/shortcodes/tabs.php:301
+#: includes/page-builder/shortcodes/team.php:414
+#: includes/page-builder/shortcodes/testimonial-carousel.php:207
+#: includes/page-builder/shortcodes/testimonial-slider.php:197
+#: includes/page-builder/shortcodes/testimonial.php:216
+#: includes/page-builder/shortcodes/tour.php:212
+#: includes/page-builder/shortcodes/tweets-slider.php:123
+#: includes/page-builder/shortcodes/widget-area.php:71
+msgid "Extra class"
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:123
+#: includes/page-builder/shortcodes/blog.php:132
+#: includes/page-builder/shortcodes/blog.php:357
+#: includes/page-builder/shortcodes/blog.php:394
+#: includes/page-builder/shortcodes/campaigns.php:190
+#: includes/page-builder/shortcodes/default.php:205
+#: includes/page-builder/shortcodes/default.php:212
+#: includes/page-builder/shortcodes/default.php:239
+#: includes/page-builder/shortcodes/default.php:552
+#: includes/page-builder/shortcodes/galleries.php:119
+#: includes/page-builder/shortcodes/galleries.php:248
+#: includes/page-builder/shortcodes/gallery.php:391
+#: includes/page-builder/shortcodes/icon-boxes.php:73
+#: includes/page-builder/shortcodes/icon-boxes.php:88
+#: includes/page-builder/shortcodes/portfolio-carousel.php:271
+#: includes/page-builder/shortcodes/portfolio.php:136
+#: includes/page-builder/shortcodes/portfolio.php:310
+#: includes/page-builder/shortcodes/products.php:280
+#: includes/page-builder/shortcodes/products.php:292
+#: includes/page-builder/shortcodes/promo-bar.php:113
+#: includes/page-builder/shortcodes/promo-bar.php:126
+#: includes/page-builder/shortcodes/recent-posts.php:229
+#: includes/page-builder/shortcodes/recent-posts.php:238
+#: includes/page-builder/shortcodes/search.php:71
+#: includes/page-builder/shortcodes/tabs.php:258
+#: includes/page-builder/shortcodes/tabs.php:264
+#: includes/page-builder/shortcodes/team.php:321
+#: includes/page-builder/shortcodes/testimonial-slider.php:156
+#: includes/swift-slider/inc/ss-meta.php:296
+#: includes/swift-slider/inc/ss-shortcodes.php:51
+#: includes/swift-slider/inc/ss-shortcodes.php:80
+msgid "Standard"
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:124
+msgid "Timeline"
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:125
+#: includes/page-builder/shortcodes/blog.php:133
+#: includes/page-builder/shortcodes/icon-boxes.php:75
+#: includes/page-builder/shortcodes/recent-posts.php:231
+msgid "Bold"
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:126
+#: includes/page-builder/shortcodes/blog.php:134
+msgid "Mini"
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:127
+#: includes/page-builder/shortcodes/blog.php:135
+#: includes/page-builder/shortcodes/galleries.php:121
+#: includes/page-builder/shortcodes/gallery.php:296
+#: includes/page-builder/shortcodes/portfolio.php:138
+msgid "Masonry"
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:151
+msgid "Blog type"
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:154
+msgid "Select the display type for the blog."
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:158
+msgid "Masonry gutters"
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:165
+msgid ""
+"Select if you'd like spacing between the items, or not (Masonry type only)."
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:169
+msgid "Masonry Columns"
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:174
+msgid ""
+"How many blog masonry columns to display. NOTE: Only for the masonry blog "
+"type, and not when fullwidth mode is selected, as this is adaptive."
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:197
+#: includes/page-builder/shortcodes/recent-posts.php:300
+msgid "Blog category"
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:200
+#: includes/page-builder/shortcodes/recent-posts.php:303
+msgid "Choose the category for the blog items."
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:204
+#: includes/page-builder/shortcodes/recent-posts.php:307
+msgid "Posts offset"
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:207
+#: includes/page-builder/shortcodes/recent-posts.php:310
+msgid ""
+"The offset for the start of the posts that are displayed, e.g. enter 5 here "
+"to start from the 5th post."
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:211
+#: includes/page-builder/shortcodes/portfolio.php:249
+#: includes/page-builder/shortcodes/products.php:348
+msgid "Order by"
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:216
+#: includes/page-builder/shortcodes/portfolio.php:253
+#: includes/page-builder/shortcodes/products.php:352
+msgid "ID"
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:217
+#: includes/page-builder/shortcodes/media.php:829
+#: includes/page-builder/shortcodes/multilayer-parallax.php:339
+#: includes/page-builder/shortcodes/portfolio.php:254
+#: includes/page-builder/shortcodes/products.php:353
+msgid "Title"
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:218
+#: includes/page-builder/shortcodes/portfolio.php:255
+#: includes/page-builder/shortcodes/products.php:354
+msgid "Date"
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:219
+#: includes/page-builder/shortcodes/portfolio.php:256
+#: includes/page-builder/shortcodes/products.php:355
+#: includes/page-builder/shortcodes/testimonial-carousel.php:183
+#: includes/page-builder/shortcodes/testimonial-slider.php:173
+#: includes/page-builder/shortcodes/testimonial.php:182
+msgid "Random"
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:221
+#: includes/page-builder/shortcodes/portfolio.php:258
+msgid "Select how you'd like the items to be ordered."
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:225
+#: includes/page-builder/shortcodes/portfolio.php:262
+#: includes/page-builder/shortcodes/products.php:361
+msgid "Order"
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:229
+#: includes/page-builder/shortcodes/portfolio.php:266
+#: includes/page-builder/shortcodes/products.php:365
+#: includes/page-builder/shortcodes/recent-posts.php:318
+msgid "Ascending"
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:230
+#: includes/page-builder/shortcodes/portfolio.php:265
+#: includes/page-builder/shortcodes/products.php:364
+#: includes/page-builder/shortcodes/recent-posts.php:317
+msgid "Descending"
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:232
+#: includes/page-builder/shortcodes/portfolio.php:268
+msgid ""
+"Select if you'd like the items to be ordered in ascending or descending "
+"order."
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:236
+#: includes/page-builder/shortcodes/galleries.php:165
+#: includes/page-builder/shortcodes/portfolio.php:182
+msgid "Show title text"
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:243
+#: includes/page-builder/shortcodes/galleries.php:172
+#: includes/page-builder/shortcodes/portfolio.php:189
+msgid "Show the item title text."
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:247
+#: includes/page-builder/shortcodes/portfolio.php:204
+msgid "Show item excerpt"
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:255
+#: includes/page-builder/shortcodes/portfolio.php:211
+msgid "Show the item excerpt text."
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:259
+msgid "Show item details"
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:266
+msgid "Show the item details."
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:270
+#: includes/page-builder/shortcodes/galleries.php:198
+#: includes/page-builder/shortcodes/media.php:1111
+#: includes/page-builder/shortcodes/portfolio.php:227
+#: includes/page-builder/shortcodes/recent-posts.php:324
+msgid "Excerpt Length"
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:274
+#: includes/page-builder/shortcodes/galleries.php:202
+#: includes/page-builder/shortcodes/portfolio.php:230
+#: includes/page-builder/shortcodes/recent-posts.php:327
+msgid "The length of the excerpt for the posts."
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:278
+msgid "Content Output"
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:281
+msgid "Excerpt"
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:282
+msgid "Full Content"
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:285
+msgid ""
+"Choose whether to display the excerpt or the full content for the post. Full "
+"content is not available for the masonry or bold view types."
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:289
+msgid "Show read more link"
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:295
+msgid ""
+"Show a read more link below the excerpt. NOTE: Not used in Bold or Masonry "
+"types."
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:300
+msgid "Social Integration Options"
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:304
+msgid "Social Integration"
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:311
+msgid ""
+"Enable social integration within the blog posts (only on Masonry blog "
+"types). NOTE: This will only integrate Twitter/Instagram posts to the first "
+"page of your blog, and won't be included in any further pages, or content "
+"loaded via infinite scroll or AJAX. It therefore works best when you show a "
+"high number of blog posts on a single page, and pagination MUST be set to "
+"none."
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:337
+msgid "Aux Options"
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:341
+#: includes/page-builder/shortcodes/galleries.php:221
+#: includes/page-builder/shortcodes/portfolio.php:272
+msgid "Filter"
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:348
+msgid "Show the blog category filter above the items."
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:352
+#: includes/page-builder/shortcodes/campaigns.php:185
+#: includes/page-builder/shortcodes/clients.php:220
+#: includes/page-builder/shortcodes/galleries.php:231
+#: includes/page-builder/shortcodes/media.php:1126
+#: includes/page-builder/shortcodes/portfolio.php:282
+#: includes/page-builder/shortcodes/swift-slider.php:134
+#: includes/page-builder/shortcodes/team.php:384
+#: includes/page-builder/shortcodes/testimonial.php:196
+msgid "Pagination"
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:355
+#: includes/page-builder/shortcodes/campaigns.php:188
+msgid "Infinite scroll"
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:356
+#: includes/page-builder/shortcodes/campaigns.php:189
+msgid "Load more (AJAX)"
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:360
+#: includes/page-builder/shortcodes/campaigns.php:193
+#: includes/page-builder/shortcodes/galleries.php:237
+msgid "Show pagination."
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:368
+#: includes/page-builder/shortcodes/blog.php:386
+#: includes/page-builder/shortcodes/default.php:130
+msgid "Styling Options"
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:372
+msgid "Alt Styling"
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:378
+msgid "Select 'Yes' if you'd like the standard blog item content to be boxed."
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:390
+#: includes/page-builder/shortcodes/galleries.php:244
+#: includes/page-builder/shortcodes/gallery.php:387
+#: includes/page-builder/shortcodes/portfolio-carousel.php:267
+#: includes/page-builder/shortcodes/portfolio.php:306
+msgid "Thumbnail Hover Style"
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:395
+#: includes/page-builder/shortcodes/galleries.php:249
+#: includes/page-builder/shortcodes/gallery.php:392
+#: includes/page-builder/shortcodes/portfolio-carousel.php:272
+#: includes/page-builder/shortcodes/portfolio.php:311
+msgid "Gallery Alt"
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:397
+#: includes/page-builder/shortcodes/galleries.php:252
+#: includes/page-builder/shortcodes/gallery.php:395
+#: includes/page-builder/shortcodes/portfolio-carousel.php:275
+#: includes/page-builder/shortcodes/portfolio.php:314
+msgid ""
+"Choose the thumbnail hover style for the asset. If set to 'Default', then "
+"this uses the thumbnail type set in the theme options."
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:404
+#: includes/page-builder/shortcodes/portfolio.php:321
+msgid "Advanced Options"
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:409
+#: includes/page-builder/shortcodes/portfolio.php:326
+msgid "Post Type Override"
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:412
+#: includes/page-builder/shortcodes/portfolio.php:329
+msgid ""
+"If you'd like to override the post type for which the content is of this "
+"asset is made up of, then you can select it here."
+msgstr ""
+
+#: includes/page-builder/shortcodes/blog.php:427
+msgid "Blog"
+msgstr ""
+
+#: includes/page-builder/shortcodes/campaigns.php:139
+msgid "Campaigns"
+msgstr ""
+
+#: includes/page-builder/shortcodes/campaigns.php:163
+#: includes/page-builder/shortcodes/galleries.php:158
+#: includes/page-builder/shortcodes/portfolio.php:174
+#: includes/page-builder/shortcodes/products.php:333
+msgid "Column count"
+msgstr ""
+
+#: includes/page-builder/shortcodes/campaigns.php:166
+#: includes/page-builder/shortcodes/gallery.php:306
+msgid "How many columns to display.'"
+msgstr ""
+
+#: includes/page-builder/shortcodes/campaigns.php:174
+msgid "The number of campaigns to show per page."
+msgstr ""
+
+#: includes/page-builder/shortcodes/campaigns.php:178
+msgid "Campaigns category"
+msgstr ""
+
+#: includes/page-builder/shortcodes/campaigns.php:181
+msgid "Choose the category for the campaigns."
+msgstr ""
+
+#: includes/page-builder/shortcodes/clients.php:187
+msgid ""
+"The number of clients to show per page. Leave blank to show ALL clients."
+msgstr ""
+
+#: includes/page-builder/shortcodes/clients.php:191
+#: includes/page-builder/shortcodes/portfolio-carousel.php:245
+#: includes/page-builder/shortcodes/recent-posts.php:277
+#: includes/page-builder/shortcodes/team.php:339
+msgid "Columns"
+msgstr ""
+
+#: includes/page-builder/shortcodes/clients.php:194
+#: includes/page-builder/shortcodes/portfolio-carousel.php:248
+#: includes/page-builder/shortcodes/recent-posts.php:284
+#: includes/page-builder/shortcodes/team.php:342
+msgid "2"
+msgstr ""
+
+#: includes/page-builder/shortcodes/clients.php:195
+#: includes/page-builder/shortcodes/portfolio-carousel.php:249
+#: includes/page-builder/shortcodes/recent-posts.php:283
+#: includes/page-builder/shortcodes/team.php:343
+msgid "3"
+msgstr ""
+
+#: includes/page-builder/shortcodes/clients.php:196
+#: includes/page-builder/shortcodes/portfolio-carousel.php:250
+#: includes/page-builder/shortcodes/portfolio-showcase.php:206
+#: includes/page-builder/shortcodes/recent-posts.php:282
+#: includes/page-builder/shortcodes/team.php:344
+msgid "4"
+msgstr ""
+
+#: includes/page-builder/shortcodes/clients.php:197
+#: includes/page-builder/shortcodes/portfolio-carousel.php:251
+#: includes/page-builder/shortcodes/portfolio-showcase.php:207
+#: includes/page-builder/shortcodes/recent-posts.php:281
+#: includes/page-builder/shortcodes/team.php:345
+msgid "5"
+msgstr ""
+
+#: includes/page-builder/shortcodes/clients.php:199
+msgid "Choose the amount of columns you would like for the clients asset."
+msgstr ""
+
+#: includes/page-builder/shortcodes/clients.php:203
+msgid "Clients category"
+msgstr ""
+
+#: includes/page-builder/shortcodes/clients.php:206
+msgid "Choose the category for the client items."
+msgstr ""
+
+#: includes/page-builder/shortcodes/clients.php:210
+msgid "Enable Carousel"
+msgstr ""
+
+#: includes/page-builder/shortcodes/clients.php:216
+msgid "Enable carousel functionality."
+msgstr ""
+
+#: includes/page-builder/shortcodes/clients.php:226
+msgid "Show clients pagination (non-carousel only)."
+msgstr ""
+
+#: includes/page-builder/shortcodes/code-snippet.php:46
+msgid "Code Snippet"
+msgstr ""
+
+#: includes/page-builder/shortcodes/code-snippet.php:62
+#: includes/page-builder/shortcodes/default.php:102
+#: includes/page-builder/shortcodes/default.php:423
+#: includes/page-builder/shortcodes/icon-boxes.php:148
+#: includes/page-builder/shortcodes/image-banner.php:123
+#: includes/page-builder/shortcodes/media.php:881
+msgid "Text"
+msgstr ""
+
+#: includes/page-builder/shortcodes/code-snippet.php:64
+msgid "<p>Add your code snippet here.</p>"
+msgstr ""
+
+#: includes/page-builder/shortcodes/code-snippet.php:65
+msgid "Enter your code snippet."
+msgstr ""
+
+#: includes/page-builder/shortcodes/code-snippet.php:69
+msgid "Language"
+msgstr ""
+
+#: includes/page-builder/shortcodes/column.php:185
+msgid "Column Background Options"
+msgstr ""
+
+#: includes/page-builder/shortcodes/column.php:189
+#: includes/page-builder/shortcodes/default.php:440
+#: includes/page-builder/shortcodes/icon-boxes.php:213
+#: includes/page-builder/shortcodes/promo-bar.php:224
+#: includes/page-builder/shortcodes/row.php:279
+msgid "Background color"
+msgstr ""
+
+#: includes/page-builder/shortcodes/column.php:192
+#: includes/page-builder/shortcodes/row.php:282
+msgid "Select a background colour for the row here."
+msgstr ""
+
+#: includes/page-builder/shortcodes/column.php:197
+msgid "Column Background Image Options"
+msgstr ""
+
+#: includes/page-builder/shortcodes/column.php:201
+#: includes/page-builder/shortcodes/parallax.php:138
+#: includes/page-builder/shortcodes/row.php:309
+msgid "Background Image"
+msgstr ""
+
+#: includes/page-builder/shortcodes/column.php:208
+#: includes/page-builder/shortcodes/row.php:317
+msgid "Background Image Type"
+msgstr ""
+
+#: includes/page-builder/shortcodes/column.php:211
+#: includes/page-builder/shortcodes/multilayer-parallax.php:357
+#: includes/page-builder/shortcodes/parallax.php:148
+#: includes/page-builder/shortcodes/row.php:320
+msgid "Cover"
+msgstr ""
+
+#: includes/page-builder/shortcodes/column.php:212
+#: includes/page-builder/shortcodes/parallax.php:149
+#: includes/page-builder/shortcodes/row.php:321
+msgid "Pattern"
+msgstr ""
+
+#: includes/page-builder/shortcodes/column.php:214
+#: includes/page-builder/shortcodes/parallax.php:151
+#: includes/page-builder/shortcodes/row.php:324
+msgid ""
+"If you're uploading an image that you want to spread across the whole asset, "
+"then choose cover. Else choose pattern for an image you want to repeat."
+msgstr ""
+
+#: includes/page-builder/shortcodes/column.php:218
+#: includes/page-builder/shortcodes/row.php:339
+msgid "Background Image Movement"
+msgstr ""
+
+#: includes/page-builder/shortcodes/column.php:221
+#: includes/page-builder/shortcodes/parallax.php:233
+#: includes/page-builder/shortcodes/row.php:342
+msgid "Fixed"
+msgstr ""
+
+#: includes/page-builder/shortcodes/column.php:222
+#: includes/page-builder/shortcodes/parallax.php:234
+#: includes/page-builder/shortcodes/row.php:343
+msgid "Scroll"
+msgstr ""
+
+#: includes/page-builder/shortcodes/column.php:223
+#: includes/page-builder/shortcodes/parallax.php:235
+#: includes/page-builder/shortcodes/row.php:344
+msgid "Stellar (dynamic)"
+msgstr ""
+
+#: includes/page-builder/shortcodes/column.php:225
+#: includes/page-builder/shortcodes/parallax.php:238
+#: includes/page-builder/shortcodes/row.php:347
+msgid ""
+"Choose the type of movement you would like the parallax image to have. Fixed "
+"means the background image is fixed on the page, Scroll means the image will "
+"scroll will the page, and stellar makes the image move at a seperate speed "
+"to the page, providing a layered effect."
+msgstr ""
+
+#: includes/page-builder/shortcodes/column.php:229
+#: includes/page-builder/shortcodes/parallax.php:242
+#: includes/page-builder/shortcodes/row.php:351
+msgid "Parallax Image Speed (Stellar Only)"
+msgstr ""
+
+#: includes/page-builder/shortcodes/column.php:237
+msgid "Column Display Options"
+msgstr ""
+
+#: includes/page-builder/shortcodes/column.php:241
+msgid "Padding"
+msgstr ""
+
+#: includes/page-builder/shortcodes/column.php:247
+msgid "Adjust the padding for the column. (%)"
+msgstr ""
+
+#: includes/page-builder/shortcodes/column.php:252
+#: includes/page-builder/shortcodes/default.php:111
+#: includes/page-builder/shortcodes/default.php:308
+#: includes/page-builder/shortcodes/icon-boxes.php:169
+#: includes/page-builder/shortcodes/row.php:544
+msgid "Animation Options"
+msgstr ""
+
+#: includes/page-builder/shortcodes/column.php:256
+#: includes/page-builder/shortcodes/default.php:115
+#: includes/page-builder/shortcodes/default.php:312
+#: includes/page-builder/shortcodes/icon-boxes.php:173
+#: includes/page-builder/shortcodes/media.php:353
+#: includes/page-builder/shortcodes/row.php:548
+msgid "Intro Animation"
+msgstr ""
+
+#: includes/page-builder/shortcodes/column.php:259
+msgid ""
+"Select an intro animation for the column which will show it when it appears "
+"within the viewport."
+msgstr ""
+
+#: includes/page-builder/shortcodes/column.php:263
+#: includes/page-builder/shortcodes/default.php:122
+#: includes/page-builder/shortcodes/default.php:319
+#: includes/page-builder/shortcodes/icon-boxes.php:180
+#: includes/page-builder/shortcodes/image-banner.php:160
+#: includes/page-builder/shortcodes/media.php:360
+#: includes/page-builder/shortcodes/row.php:555
+msgid "Animation Delay"
+msgstr ""
+
+#: includes/page-builder/shortcodes/column.php:266
+#: includes/page-builder/shortcodes/default.php:125
+#: includes/page-builder/shortcodes/default.php:322
+#: includes/page-builder/shortcodes/icon-boxes.php:183
+#: includes/page-builder/shortcodes/row.php:558
+msgid ""
+"If you wish to add a delay to the animation, then you can set it here (ms)."
+msgstr ""
+
+#: includes/page-builder/shortcodes/column.php:271
+msgid "Column Misc Options"
+msgstr ""
+
+#: includes/page-builder/shortcodes/column.php:275
+#: includes/page-builder/shortcodes/default.php:657
+#: includes/page-builder/shortcodes/row.php:567
+msgid "Responsive Visiblity"
+msgstr ""
+
+#: includes/page-builder/shortcodes/column.php:279
+#: includes/page-builder/shortcodes/default.php:661
+#: includes/page-builder/shortcodes/row.php:571
+msgid ""
+"Set the responsive visiblity for the row, if you would only like it to "
+"display on certain display sizes."
+msgstr ""
+
+#: includes/page-builder/shortcodes/counter.php:51
+msgid "Counter"
+msgstr ""
+
+#: includes/page-builder/shortcodes/counter.php:59
+msgid "Counter Subject"
+msgstr ""
+
+#: includes/page-builder/shortcodes/counter.php:62
+msgid "The text which you would like to show below the counter."
+msgstr ""
+
+#: includes/page-builder/shortcodes/counter.php:66
+msgid "Counter From"
+msgstr ""
+
+#: includes/page-builder/shortcodes/counter.php:69
+msgid "The number from which the counter starts at."
+msgstr ""
+
+#: includes/page-builder/shortcodes/counter.php:74
+msgid "Counter To"
+msgstr ""
+
+#: includes/page-builder/shortcodes/counter.php:77
+msgid "The number from which the counter counts up to."
+msgstr ""
+
+#: includes/page-builder/shortcodes/counter.php:81
+msgid "Counter Speed"
+msgstr ""
+
+#: includes/page-builder/shortcodes/counter.php:84
+msgid ""
+"The time you want for the counter to take to complete, this is in "
+"milliseconds and the default is 2000."
+msgstr ""
+
+#: includes/page-builder/shortcodes/counter.php:88
+msgid "Counter Refresh"
+msgstr ""
+
+#: includes/page-builder/shortcodes/counter.php:91
+msgid ""
+"The time to wait between refreshing the counter. This is in milliseconds and "
+"the default is 25."
+msgstr ""
+
+#: includes/page-builder/shortcodes/counter.php:95
+msgid "Counter Prefix"
+msgstr ""
+
+#: includes/page-builder/shortcodes/counter.php:98
+msgid ""
+"Enter the text which you would like to show before the count number "
+"(optional)."
+msgstr ""
+
+#: includes/page-builder/shortcodes/counter.php:102
+msgid "Counter Suffix"
+msgstr ""
+
+#: includes/page-builder/shortcodes/counter.php:105
+msgid ""
+"Enter the text which you would like to show after the count number "
+"(optional)."
+msgstr ""
+
+#: includes/page-builder/shortcodes/counter.php:109
+msgid "Counter Commas"
+msgstr ""
+
+#: includes/page-builder/shortcodes/counter.php:115
+msgid "Include comma separators in the numbers after every 3rd digit."
+msgstr ""
+
+#: includes/page-builder/shortcodes/counter.php:119
+msgid "Counter Text Style"
+msgstr ""
+
+#: includes/page-builder/shortcodes/counter.php:126
+msgid "Chose the subject text style for the counter."
+msgstr ""
+
+#: includes/page-builder/shortcodes/counter.php:130
+msgid "Counter Text Color"
+msgstr ""
+
+#: includes/page-builder/shortcodes/counter.php:133
+msgid "Select a colour for the counter text here."
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:76
+msgid "Text Block"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:93
+msgid "Title icon"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:96
+#: includes/page-builder/shortcodes/default.php:275
+msgid ""
+"Icon to the left of the title text. You can get the code from <a "
+"href='http://fortawesome.github.com/Font-Awesome/' target='_blank'>here</a>. "
+"E.g. fa-cloud"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:106
+#: includes/page-builder/shortcodes/default.php:426
+#: includes/page-builder/shortcodes/icon-boxes.php:151
+#: includes/page-builder/shortcodes/image-banner.php:127
+#: includes/page-builder/shortcodes/media.php:884
+#: includes/page-builder/shortcodes/parallax.php:184
+msgid "Enter your content."
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:118
+#: includes/page-builder/shortcodes/default.php:315
+msgid ""
+"Select an intro animation for the text block that will show it when it "
+"appears within the viewport."
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:134
+#: includes/page-builder/shortcodes/default.php:454
+#: includes/page-builder/shortcodes/row.php:456
+msgid "Padding - Vertical"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:140
+#: includes/page-builder/shortcodes/default.php:460
+msgid "Adjust the vertical padding for the text block (percentage)."
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:144
+#: includes/page-builder/shortcodes/default.php:464
+#: includes/page-builder/shortcodes/parallax.php:250
+#: includes/page-builder/shortcodes/row.php:465
+msgid "Padding - Horizontal"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:150
+#: includes/page-builder/shortcodes/default.php:470
+msgid "Adjust the horizontal padding for the text block (percentage)."
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:206
+#: includes/page-builder/shortcodes/default.php:215
+msgid "Stroke to Fill"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:207
+#: includes/page-builder/shortcodes/default.php:216
+msgid "Icon Reveal"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:208
+#: includes/page-builder/shortcodes/default.php:217
+msgid "Icon Stroke"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:213
+#: includes/page-builder/shortcodes/promo-bar.php:115
+msgid "Bordered"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:214
+msgid "Rotate 3D"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:221
+#: includes/page-builder/shortcodes/icon-boxes.php:68
+#: includes/page-builder/shortcodes/promo-bar.php:121
+msgid "Same window"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:222
+#: includes/page-builder/shortcodes/icon-boxes.php:69
+#: includes/page-builder/shortcodes/promo-bar.php:122
+msgid "New window"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:227
+msgid "Button"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:236
+msgid "Button Size"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:240
+#: includes/page-builder/shortcodes/image-banner.php:109
+#: includes/page-builder/shortcodes/media.php:322
+#: includes/page-builder/shortcodes/search.php:72
+#: includes/page-builder/shortcodes/testimonial-slider.php:155
+#: includes/page-builder/shortcodes/testimonial.php:165
+#: includes/swift-slider/inc/ss-shortcodes.php:52
+msgid "Large"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:245
+msgid "Button Colour"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:248
+#: includes/swift-slider/inc/ss-shortcodes.php:59
+msgid "Accent"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:249
+#: includes/swift-slider/inc/ss-shortcodes.php:60
+msgid "Black"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:250
+#: includes/swift-slider/inc/ss-shortcodes.php:61
+msgid "White"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:251
+#: includes/swift-slider/inc/ss-shortcodes.php:62
+msgid "Blue"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:252
+#: includes/swift-slider/inc/ss-shortcodes.php:63
+msgid "Grey"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:253
+#: includes/swift-slider/inc/ss-shortcodes.php:64
+msgid "Light Grey"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:254
+#: includes/swift-slider/inc/ss-shortcodes.php:65
+msgid "Orange"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:255
+#: includes/swift-slider/inc/ss-shortcodes.php:66
+msgid "Turquoise"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:256
+#: includes/swift-slider/inc/ss-shortcodes.php:67
+msgid "Green"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:257
+#: includes/swift-slider/inc/ss-shortcodes.php:68
+msgid "Pink"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:258
+#: includes/swift-slider/inc/ss-shortcodes.php:69
+msgid "Gold"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:259
+#: includes/swift-slider/inc/ss-shortcodes.php:71
+msgid "Transparent - Light"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:260
+#: includes/swift-slider/inc/ss-shortcodes.php:73
+msgid "Transparent - Dark"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:265
+#: includes/page-builder/shortcodes/promo-bar.php:203
+msgid "Button Type"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:271
+#: includes/page-builder/shortcodes/promo-bar.php:187
+#: includes/page-builder/shortcodes/promo-bar.php:189
+msgid "Button Text"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:279
+msgid "Button Icon"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:286
+msgid "Button Link"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:292
+msgid "Button Target"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:298
+msgid "Button Dropshadow"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:327
+#: includes/page-builder/shortcodes/icon-boxes.php:237
+msgid "Misc Options"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:404
+msgid "Boxed Content"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:425
+msgid ""
+"<p>This is a boxed content block. Click the edit button to edit this text.</"
+"p>"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:430
+msgid "Box type"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:433
+msgid "Coloured"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:434
+msgid "White with stroke"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:436
+msgid "Choose the surrounding box type for this content"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:443
+msgid ""
+"Provide a background colour here. If blank, your colour customisaer settings "
+"will be used."
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:447
+msgid "Text colour"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:450
+msgid ""
+"Provide a text colour here. If blank, your colour customisaer settings will "
+"be used."
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:541
+msgid "Divider"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:549
+msgid "Divider type"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:553
+msgid "Thin"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:554
+msgid "Dotted"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:555
+msgid "Heading"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:556
+msgid "Go to top (text)"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:557
+msgid "Go to top (Icon 1)"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:558
+msgid "Go to top (Icon 2)"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:560
+msgid "Select divider type."
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:564
+msgid "Divider Heading Text"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:567
+msgid "The text for the the 'Heading' divider type."
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:571
+msgid "Go to top text"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:573
+msgid "Go to top"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:575
+msgid "The text for the 'Go to top (text)' divider type."
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:579
+msgid "Top Margin"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:581
+msgid "0px"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:582
+msgid "Set the margin above the divider (include px)."
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:586
+msgid "Bottom Margin"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:588
+#: includes/page-builder/shortcodes/default.php:652
+msgid "30px"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:589
+msgid "Set the margin below the divider (include px)."
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:593
+#: includes/page-builder/shortcodes/media.php:92
+#: includes/page-builder/shortcodes/media.php:367
+#: includes/page-builder/shortcodes/supersearch.php:63
+msgid "Full width"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:599
+#: includes/page-builder/shortcodes/supersearch.php:69
+msgid ""
+"Select yes if you'd like the divider to be full width (only to be used with "
+"no sidebars, and with Standard/Thin/Dotted divider types)."
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:643
+msgid "Blank Spacer"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:650
+msgid "Height"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:653
+msgid "The height of the spacer, in px (required)."
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:701
+msgid "Message Box"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:710
+msgid "Message box type"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:713
+msgid "Informational"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:714
+msgid "Warning"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:715
+msgid "Success"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:716
+msgid "Error"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:718
+msgid "Select message type."
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:724
+msgid "Message text"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:726
+msgid "<p>This is a message box. Click the edit button to edit this text.</p>"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:727
+msgid "Message text."
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:749
+msgid "Click to toggle"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:772
+msgid "Toggle"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:781
+#: includes/page-builder/shortcodes/default.php:783
+msgid "Toggle title"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:784
+msgid "Toggle block title."
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:790
+msgid "Toggle content"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:792
+msgid ""
+"<p>The toggle content goes here, click the edit button to change this text.</"
+"p>"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:793
+msgid "Toggle block content."
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:797
+msgid "Default state"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:800
+msgid "Closed"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:801
+msgid "Open"
+msgstr ""
+
+#: includes/page-builder/shortcodes/default.php:803
+msgid "Select this if you want toggle to be open by default."
+msgstr ""
+
+#: includes/page-builder/shortcodes/faqs.php:58
+msgid "Please ensure you have child categories for the selected category."
+msgstr ""
+
+#: includes/page-builder/shortcodes/faqs.php:142
+msgid "FAQ category"
+msgstr ""
+
+#: includes/page-builder/shortcodes/faqs.php:145
+msgid "Choose the category for the FAQ."
+msgstr ""
+
+#: includes/page-builder/shortcodes/faqs.php:152
+msgid ""
+"If you wish to style particular content element differently, then use this "
+"field to add a class name and then refer to it in your css file."
+msgstr ""
+
+#: includes/page-builder/shortcodes/galleries.php:116
+#: includes/page-builder/shortcodes/portfolio.php:133
+msgid "Display type"
+msgstr ""
+
+#: includes/page-builder/shortcodes/galleries.php:122
+#: includes/page-builder/shortcodes/portfolio.php:139
+msgid "Masonry Gallery"
+msgstr ""
+
+#: includes/page-builder/shortcodes/galleries.php:124
+msgid "Select the type of galleries layout you'd like to show."
+msgstr ""
+
+#: includes/page-builder/shortcodes/galleries.php:128
+msgid "Item Link"
+msgstr ""
+
+#: includes/page-builder/shortcodes/galleries.php:131
+msgid "Lightbox Gallery"
+msgstr ""
+
+#: includes/page-builder/shortcodes/galleries.php:132
+msgid "Gallery Page"
+msgstr ""
+
+#: includes/page-builder/shortcodes/galleries.php:134
+msgid ""
+"Select if you'd like the gallery thumbnail link to link through to the "
+"gallery page, or to open up the gallery in a lighbox."
+msgstr ""
+
+#: includes/page-builder/shortcodes/galleries.php:148
+#: includes/page-builder/shortcodes/gallery.php:320
+#: includes/page-builder/shortcodes/portfolio.php:164
+#: includes/page-builder/shortcodes/recent-posts.php:341
+#: includes/page-builder/shortcodes/team.php:404
+msgid "Gutters"
+msgstr ""
+
+#: includes/page-builder/shortcodes/galleries.php:154
+#: includes/page-builder/shortcodes/portfolio.php:170
+#: includes/page-builder/shortcodes/recent-posts.php:347
+#: includes/page-builder/shortcodes/team.php:410
+msgid "Select if you'd like spacing between the items, or not."
+msgstr ""
+
+#: includes/page-builder/shortcodes/galleries.php:161
+msgid "How many gallery columns to display."
+msgstr ""
+
+#: includes/page-builder/shortcodes/galleries.php:176
+#: includes/page-builder/shortcodes/portfolio.php:193
+msgid "Show subtitle text"
+msgstr ""
+
+#: includes/page-builder/shortcodes/galleries.php:183
+#: includes/page-builder/shortcodes/portfolio.php:200
+msgid "Show the item subtitle text."
+msgstr ""
+
+#: includes/page-builder/shortcodes/galleries.php:187
+msgid "Show excerpt"
+msgstr ""
+
+#: includes/page-builder/shortcodes/galleries.php:194
+msgid "Show the excerpt text."
+msgstr ""
+
+#: includes/page-builder/shortcodes/galleries.php:207
+msgid "Number of galleries"
+msgstr ""
+
+#: includes/page-builder/shortcodes/galleries.php:210
+msgid "The number of galleries to show per page. Leave blank to show ALL."
+msgstr ""
+
+#: includes/page-builder/shortcodes/galleries.php:214
+msgid "Gallery category"
+msgstr ""
+
+#: includes/page-builder/shortcodes/galleries.php:217
+msgid "Choose the category from which you'd like to show galleries."
+msgstr ""
+
+#: includes/page-builder/shortcodes/galleries.php:227
+msgid "Show the gallery category filter above the items."
+msgstr ""
+
+#: includes/page-builder/shortcodes/gallery.php:269
+#: includes/page-builder/shortcodes/gallery.php:277
+msgid ""
+"Choose the gallery which you'd like to display. You can add galleries in the "
+"left admin area."
+msgstr ""
+
+#: includes/page-builder/shortcodes/gallery.php:292
+#: includes/page-builder/shortcodes/promo-bar.php:155
+#: includes/page-builder/shortcodes/recent-posts.php:259
+#: includes/page-builder/shortcodes/team.php:318
+msgid "Display Type"
+msgstr ""
+
+#: includes/page-builder/shortcodes/gallery.php:295
+msgid "Slider"
+msgstr ""
+
+#: includes/page-builder/shortcodes/gallery.php:298
+msgid "Choose the display type for the gallery asset."
+msgstr ""
+
+#: includes/page-builder/shortcodes/gallery.php:302
+msgid "Columns (Masonry only)"
+msgstr ""
+
+#: includes/page-builder/shortcodes/gallery.php:327
+msgid "Select if you'd like spacing between the gallery items, or not."
+msgstr ""
+
+#: includes/page-builder/shortcodes/gallery.php:331
+msgid "Slider transition"
+msgstr ""
+
+#: includes/page-builder/shortcodes/gallery.php:334
+#: includes/page-builder/shortcodes/swift-slider.php:107
+#: includes/swift-slider/inc/ss-post-type.php:40
+#: includes/swift-slider/inc/ss-post-type.php:79
+msgid "Slide"
+msgstr ""
+
+#: includes/page-builder/shortcodes/gallery.php:335
+#: includes/page-builder/shortcodes/swift-slider.php:108
+msgid "Fade"
+msgstr ""
+
+#: includes/page-builder/shortcodes/gallery.php:338
+msgid "Choose the transition type for the slider."
+msgstr ""
+
+#: includes/page-builder/shortcodes/gallery.php:342
+msgid "Show thumbnail navigation"
+msgstr ""
+
+#: includes/page-builder/shortcodes/gallery.php:349
+msgid "Show a thumbnail navigation display below the slider."
+msgstr ""
+
+#: includes/page-builder/shortcodes/gallery.php:353
+msgid "Enable Autoplay"
+msgstr ""
+
+#: includes/page-builder/shortcodes/gallery.php:360
+msgid "Choose whether to autoplay the slider or not."
+msgstr ""
+
+#: includes/page-builder/shortcodes/gallery.php:364
+msgid "Show captions"
+msgstr ""
+
+#: includes/page-builder/shortcodes/gallery.php:370
+msgid "Choose whether to show captions."
+msgstr ""
+
+#: includes/page-builder/shortcodes/gallery.php:374
+msgid "Enable gallery lightbox"
+msgstr ""
+
+#: includes/page-builder/shortcodes/gallery.php:380
+msgid "Enable lightbox functionality from the gallery."
+msgstr ""
+
+#: includes/page-builder/shortcodes/googlechart.php:98
+msgid "Google Chart"
+msgstr ""
+
+#: includes/page-builder/shortcodes/googlechart.php:112
+msgid "Chart title"
+msgstr ""
+
+#: includes/page-builder/shortcodes/googlechart.php:115
+msgid "Chart title text. Leave it empty if not needed."
+msgstr ""
+
+#: includes/page-builder/shortcodes/googlechart.php:119
+msgid "Chart type"
+msgstr ""
+
+#: includes/page-builder/shortcodes/googlechart.php:122
+msgid "Line"
+msgstr ""
+
+#: includes/page-builder/shortcodes/googlechart.php:123
+msgid "Pie"
+msgstr ""
+
+#: includes/page-builder/shortcodes/googlechart.php:124
+msgid "Pie 2D"
+msgstr ""
+
+#: includes/page-builder/shortcodes/googlechart.php:125
+msgid "XY Line"
+msgstr ""
+
+#: includes/page-builder/shortcodes/googlechart.php:126
+msgid "Scatter"
+msgstr ""
+
+#: includes/page-builder/shortcodes/googlechart.php:128
+msgid "Choose the type of chart you'd like to display."
+msgstr ""
+
+#: includes/page-builder/shortcodes/googlechart.php:132
+msgid "Chart labels"
+msgstr ""
+
+#: includes/page-builder/shortcodes/googlechart.php:135
+msgid ""
+"Enter the chart labels here, e.g. First+Label|Second+Label|Third+Label|Fourth"
+"+Label"
+msgstr ""
+
+#: includes/page-builder/shortcodes/googlechart.php:139
+msgid "Chart data"
+msgstr ""
+
+#: includes/page-builder/shortcodes/googlechart.php:142
+msgid "Enter the chart data here, e.g. 41.12,32.35,21.52,5.01"
+msgstr ""
+
+#: includes/page-builder/shortcodes/googlechart.php:146
+msgid "Chart data colours"
+msgstr ""
+
+#: includes/page-builder/shortcodes/googlechart.php:149
+msgid ""
+"Enter the chart data colours here (hex without the #), e.g. "
+"D73030,329E4A,415FB4,DFD32F"
+msgstr ""
+
+#: includes/page-builder/shortcodes/googlechart.php:153
+msgid "Advanced chart data"
+msgstr ""
+
+#: includes/page-builder/shortcodes/googlechart.php:156
+msgid "Enter the any advanced chart data here"
+msgstr ""
+
+#: includes/page-builder/shortcodes/gopricing.php:46
+#: includes/page-builder/shortcodes/gopricing.php:60
+msgid "Go Pricing Table"
+msgstr ""
+
+#: includes/page-builder/shortcodes/gopricing.php:63
+msgid ""
+"Select the Pricing Table that you wish to show. These can be added in the Go "
+"Pricing admin area."
+msgstr ""
+
+#: includes/page-builder/shortcodes/gravityforms.php:47
+msgid "Gravity Forms"
+msgstr ""
+
+#: includes/page-builder/shortcodes/gravityforms.php:54
+msgid "Gravity Form"
+msgstr ""
+
+#: includes/page-builder/shortcodes/gravityforms.php:57
+#: includes/page-builder/shortcodes/ninjaforms.php:54
+msgid "Select the Gravity Form instance that you wish to show."
+msgstr ""
+
+#: includes/page-builder/shortcodes/gravityforms.php:61
+msgid "Show form title"
+msgstr ""
+
+#: includes/page-builder/shortcodes/gravityforms.php:67
+msgid "Show the form's title"
+msgstr ""
+
+#: includes/page-builder/shortcodes/gravityforms.php:71
+msgid "Show form description"
+msgstr ""
+
+#: includes/page-builder/shortcodes/gravityforms.php:77
+msgid "Show the form's description"
+msgstr ""
+
+#: includes/page-builder/shortcodes/gravityforms.php:81
+msgid "Enable AJAX"
+msgstr ""
+
+#: includes/page-builder/shortcodes/gravityforms.php:87
+msgid "Enable AJAX functionality for the form."
+msgstr ""
+
+#: includes/page-builder/shortcodes/icon-boxes.php:74
+#: includes/page-builder/shortcodes/icon-boxes.php:89
+msgid "Standard with Title Icon"
+msgstr ""
+
+#: includes/page-builder/shortcodes/icon-boxes.php:76
+#: includes/page-builder/shortcodes/icon-boxes.php:90
+msgid "Left Icon"
+msgstr ""
+
+#: includes/page-builder/shortcodes/icon-boxes.php:77
+#: includes/page-builder/shortcodes/icon-boxes.php:91
+msgid "Left Icon Alt"
+msgstr ""
+
+#: includes/page-builder/shortcodes/icon-boxes.php:78
+#: includes/page-builder/shortcodes/icon-boxes.php:92
+msgid "Boxed One"
+msgstr ""
+
+#: includes/page-builder/shortcodes/icon-boxes.php:79
+#: includes/page-builder/shortcodes/icon-boxes.php:93
+msgid "Boxed Two"
+msgstr ""
+
+#: includes/page-builder/shortcodes/icon-boxes.php:80
+#: includes/page-builder/shortcodes/icon-boxes.php:94
+msgid "Boxed Three"
+msgstr ""
+
+#: includes/page-builder/shortcodes/icon-boxes.php:81
+#: includes/page-builder/shortcodes/icon-boxes.php:95
+msgid "Boxed Four"
+msgstr ""
+
+#: includes/page-builder/shortcodes/icon-boxes.php:82
+#: includes/page-builder/shortcodes/icon-boxes.php:96
+msgid "Animated"
+msgstr ""
+
+#: includes/page-builder/shortcodes/icon-boxes.php:102
+msgid "Icon Box"
+msgstr ""
+
+#: includes/page-builder/shortcodes/icon-boxes.php:110
+msgid "Icon Box title"
+msgstr ""
+
+#: includes/page-builder/shortcodes/icon-boxes.php:114
+msgid "Icon Box title text."
+msgstr ""
+
+#: includes/page-builder/shortcodes/icon-boxes.php:118
+msgid "Icon Box Type"
+msgstr ""
+
+#: includes/page-builder/shortcodes/icon-boxes.php:121
+msgid "Choose the type of icon box."
+msgstr ""
+
+#: includes/page-builder/shortcodes/icon-boxes.php:125
+msgid "Icon Box Icon"
+msgstr ""
+
+#: includes/page-builder/shortcodes/icon-boxes.php:132
+msgid "Icon Box Character"
+msgstr ""
+
+#: includes/page-builder/shortcodes/icon-boxes.php:135
+msgid ""
+"Instead of an icon, you can optionally provide a single letter/digit here. "
+"NOTE: This will override the icon selection."
+msgstr ""
+
+#: includes/page-builder/shortcodes/icon-boxes.php:139
+msgid "Icon Box Image"
+msgstr ""
+
+#: includes/page-builder/shortcodes/icon-boxes.php:142
+msgid ""
+"Instead of an icon, you can optionally upload an image here. This will be "
+"resized to 70px x 70px. NOTE: This will override the icon selection."
+msgstr ""
+
+#: includes/page-builder/shortcodes/icon-boxes.php:150
+msgid "click the edit button to change this text."
+msgstr ""
+
+#: includes/page-builder/shortcodes/icon-boxes.php:155
+msgid "Icon Box Link"
+msgstr ""
+
+#: includes/page-builder/shortcodes/icon-boxes.php:158
+msgid ""
+"If you would like, you can set a link here for the icon and title to link "
+"through to."
+msgstr ""
+
+#: includes/page-builder/shortcodes/icon-boxes.php:162
+#: includes/page-builder/shortcodes/promo-bar.php:218
+msgid "Link Target"
+msgstr ""
+
+#: includes/page-builder/shortcodes/icon-boxes.php:176
+msgid ""
+"Select an intro animation for the icon box that will show it when it appears "
+"within the viewport."
+msgstr ""
+
+#: includes/page-builder/shortcodes/icon-boxes.php:188
+msgid "Colour Options"
+msgstr ""
+
+#: includes/page-builder/shortcodes/icon-boxes.php:192
+msgid "Icon color"
+msgstr ""
+
+#: includes/page-builder/shortcodes/icon-boxes.php:195
+msgid ""
+"Set the icon colour for the icon box, or leave blank to use the default "
+"colours."
+msgstr ""
+
+#: includes/page-builder/shortcodes/icon-boxes.php:199
+msgid "Icon Background color"
+msgstr ""
+
+#: includes/page-builder/shortcodes/icon-boxes.php:202
+msgid ""
+"Set the icon background colour for the icon box, or leave blank to use the "
+"default colours."
+msgstr ""
+
+#: includes/page-builder/shortcodes/icon-boxes.php:206
+#: includes/page-builder/shortcodes/promo-bar.php:231
+msgid "Text color"
+msgstr ""
+
+#: includes/page-builder/shortcodes/icon-boxes.php:209
+msgid ""
+"Set the text colour for the icon box, or leave blank to use the default "
+"colours."
+msgstr ""
+
+#: includes/page-builder/shortcodes/icon-boxes.php:216
+msgid ""
+"Set the background colour for the icon box, or leave blank to use the "
+"default colours."
+msgstr ""
+
+#: includes/page-builder/shortcodes/icon-boxes.php:220
+msgid "Flip Background color"
+msgstr ""
+
+#: includes/page-builder/shortcodes/icon-boxes.php:224
+msgid ""
+"Set the background colour for the back of the animated icon box, or leave "
+"blank to use the default colours."
+msgstr ""
+
+#: includes/page-builder/shortcodes/icon-boxes.php:228
+msgid "Flip Text color"
+msgstr ""
+
+#: includes/page-builder/shortcodes/icon-boxes.php:232
+msgid ""
+"Set the text colour for the back of the animated icon box, or leave blank to "
+"use the default colours."
+msgstr ""
+
+#: includes/page-builder/shortcodes/image-banner.php:80
+#: includes/page-builder/shortcodes/media.php:286
+#: includes/page-builder/shortcodes/multilayer-parallax.php:253
+#: includes/page-builder/shortcodes/multilayer-parallax.php:279
+msgid "No image yet! Click here to select it now."
+msgstr ""
+
+#: includes/page-builder/shortcodes/image-banner.php:91
+msgid "Image Banner"
+msgstr ""
+
+#: includes/page-builder/shortcodes/image-banner.php:98
+#: includes/page-builder/shortcodes/media.php:297
+#: includes/page-builder/shortcodes/media.php:311
+#: includes/page-builder/shortcodes/parallax.php:131
+#: includes/page-builder/shortcodes/row.php:272
+msgid "Image"
+msgstr ""
+
+#: includes/page-builder/shortcodes/image-banner.php:105
+#: includes/page-builder/shortcodes/media.php:318
+msgid "Image Size"
+msgstr ""
+
+#: includes/page-builder/shortcodes/image-banner.php:108
+#: includes/page-builder/shortcodes/media.php:321
+msgid "Full"
+msgstr ""
+
+#: includes/page-builder/shortcodes/image-banner.php:110
+#: includes/page-builder/shortcodes/media.php:323
+msgid "Medium"
+msgstr ""
+
+#: includes/page-builder/shortcodes/image-banner.php:111
+#: includes/page-builder/shortcodes/media.php:324
+msgid "Thumbnail"
+msgstr ""
+
+#: includes/page-builder/shortcodes/image-banner.php:112
+#: includes/page-builder/shortcodes/media.php:325
+msgid "Small 4/3 Cropped"
+msgstr ""
+
+#: includes/page-builder/shortcodes/image-banner.php:113
+#: includes/page-builder/shortcodes/media.php:326
+msgid "Medium 4/3 Cropped"
+msgstr ""
+
+#: includes/page-builder/shortcodes/image-banner.php:114
+#: includes/page-builder/shortcodes/media.php:327
+msgid "Large 4/3 Cropped"
+msgstr ""
+
+#: includes/page-builder/shortcodes/image-banner.php:115
+#: includes/page-builder/shortcodes/media.php:328
+msgid "Large 1/1 Cropped"
+msgstr ""
+
+#: includes/page-builder/shortcodes/image-banner.php:117
+#: includes/page-builder/shortcodes/media.php:330
+msgid ""
+"Select the source size for the image (NOTE: this doesn't affect it's size on "
+"the front-end, only the quality)."
+msgstr ""
+
+#: includes/page-builder/shortcodes/image-banner.php:131
+msgid "Content Position"
+msgstr ""
+
+#: includes/page-builder/shortcodes/image-banner.php:134
+#: includes/page-builder/shortcodes/image-banner.php:145
+#: includes/swift-slider/inc/ss-meta.php:268
+msgid "Left"
+msgstr ""
+
+#: includes/page-builder/shortcodes/image-banner.php:135
+#: includes/page-builder/shortcodes/image-banner.php:146
+#: includes/page-builder/shortcodes/multilayer-parallax.php:366
+#: includes/swift-slider/inc/ss-meta.php:80
+#: includes/swift-slider/inc/ss-meta.php:269
+msgid "Center"
+msgstr ""
+
+#: includes/page-builder/shortcodes/image-banner.php:136
+#: includes/page-builder/shortcodes/image-banner.php:147
+#: includes/swift-slider/inc/ss-meta.php:270
+msgid "Right"
+msgstr ""
+
+#: includes/page-builder/shortcodes/image-banner.php:138
+msgid "Choose the alignment for the content."
+msgstr ""
+
+#: includes/page-builder/shortcodes/image-banner.php:142
+msgid "Content Text Align"
+msgstr ""
+
+#: includes/page-builder/shortcodes/image-banner.php:149
+msgid "Choose the alignment for the text within the content."
+msgstr ""
+
+#: includes/page-builder/shortcodes/image-banner.php:153
+msgid "Animation"
+msgstr ""
+
+#: includes/page-builder/shortcodes/image-banner.php:156
+msgid ""
+"Select an intro animation for the content that will show it when it appears "
+"within the viewport."
+msgstr ""
+
+#: includes/page-builder/shortcodes/image-banner.php:163
+#: includes/page-builder/shortcodes/media.php:363
+msgid ""
+"If you wish to add a delay to the animation, then you can set it here "
+"(default 200) (ms)."
+msgstr ""
+
+#: includes/page-builder/shortcodes/image-banner.php:167
+#: includes/page-builder/shortcodes/media.php:387
+msgid "Add link to image"
+msgstr ""
+
+#: includes/page-builder/shortcodes/image-banner.php:170
+#: includes/page-builder/shortcodes/media.php:390
+msgid ""
+"If you would like the image to link to a URL, then enter it here. NOTE: this "
+"will override the lightbox functionality if you have enabled it."
+msgstr ""
+
+#: includes/page-builder/shortcodes/image-banner.php:174
+#: includes/page-builder/shortcodes/media.php:394
+msgid "Link opens in new window?"
+msgstr ""
+
+#: includes/page-builder/shortcodes/image-banner.php:177
+#: includes/page-builder/shortcodes/media.php:397
+msgid "Self"
+msgstr ""
+
+#: includes/page-builder/shortcodes/image-banner.php:178
+#: includes/page-builder/shortcodes/media.php:398
+msgid "New Window"
+msgstr ""
+
+#: includes/page-builder/shortcodes/image-banner.php:180
+#: includes/page-builder/shortcodes/media.php:400
+msgid "Select if you want the link to open in a new window"
+msgstr ""
+
+#: includes/page-builder/shortcodes/latest-tweets.php:58
+msgid "Tweets"
+msgstr ""
+
+#: includes/page-builder/shortcodes/latest-tweets.php:65
+#: includes/page-builder/shortcodes/tweets-slider.php:98
+msgid "Twitter username"
+msgstr ""
+
+#: includes/page-builder/shortcodes/latest-tweets.php:68
+#: includes/page-builder/shortcodes/tweets-slider.php:101
+msgid ""
+"The twitter username you'd like to show the latest tweet for. Make sure to "
+"not include the @."
+msgstr ""
+
+#: includes/page-builder/shortcodes/latest-tweets.php:72
+msgid "Number of Tweets"
+msgstr ""
+
+#: includes/page-builder/shortcodes/latest-tweets.php:75
+msgid "The number of tweets you'd like to show."
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:64
+msgid "Video Player"
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:78
+msgid "Video link"
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:81
+msgid ""
+"Link to the video. More about supported formats at <a href=\"http://codex."
+"wordpress.org/Embeds#Okay.2C_So_What_Sites_Can_I_Embed_From.3F\" target="
+"\"_blank\">WordPress codex page</a>."
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:85
+msgid "Video size"
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:88
+msgid ""
+"Enter video size in pixels. Example: 200x100 (Width x Height). NOTE: This "
+"does not affect the size of the video which is shown on the page, this is "
+"purely used for aspect ration purposes."
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:98
+msgid ""
+"Select this if you want the video to be the full width of the page container "
+"(leave the above size blank)."
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:334
+msgid "Image width"
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:337
+#, php-format
+msgid ""
+"If you would like to override the width that the image is displayed at, then "
+"please provide the value here (no px). NOTE: The image can only be max "
+"100% of it's container, this is generally for use if you would like to make "
+"the image smaller, and it will be centralised."
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:341
+msgid "Image Frame"
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:344
+msgid "No Frame"
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:345
+msgid "Border Frame"
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:346
+msgid "Glow Frame"
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:347
+msgid "Shadow Frame"
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:349
+msgid "Select a frame for the image."
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:356
+msgid ""
+"Select an intro animation for the image that will show it when it appears "
+"within the viewport."
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:373
+msgid ""
+"Select if you want the image to be the full width of the page. (Make sure "
+"the element width is 1/1 too)."
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:377
+msgid "Enable lightbox link"
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:383
+msgid "Select if you want the image to open in a lightbox on click"
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:404
+msgid "Image Caption"
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:407
+msgid "If you would like a caption to be shown below the image, add it here."
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:411
+msgid "Caption Position"
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:414
+msgid "Hover"
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:415
+#: includes/page-builder/shortcodes/media.php:1093
+msgid "Below"
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:417
+msgid ""
+"Choose if you would like the caption to appear on the hover, or below the "
+"image. If you leave the caption field above blank then no caption will be "
+"shown."
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:571
+#: includes/page-builder/shortcodes/media.php:1065
+msgid "Map Height"
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:574
+#: includes/page-builder/shortcodes/media.php:1068
+msgid "Enter map height in pixels. Example: 300."
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:578
+#: includes/page-builder/shortcodes/media.php:1136
+msgid "Map Type"
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:581
+#: includes/page-builder/shortcodes/media.php:1103
+#: includes/page-builder/shortcodes/media.php:1139
+msgid "Map"
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:582
+#: includes/page-builder/shortcodes/media.php:1140
+msgid "Satellite"
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:583
+#: includes/page-builder/shortcodes/media.php:1141
+msgid "Hybrid"
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:584
+#: includes/page-builder/shortcodes/media.php:1142
+msgid "Terrain"
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:586
+#: includes/page-builder/shortcodes/media.php:1144
+msgid ""
+"Select map display type. NOTE, if you set a color below, then only the "
+"standard Map type will show."
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:590
+msgid "Map Center Latitude Coordinate"
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:593
+msgid "Enter the Latitude coordinate of the center of the map."
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:597
+msgid "Map Center Longitude Coordinate"
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:600
+msgid "Enter the Longitude coordinate of the center of the map."
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:604
+#: includes/page-builder/shortcodes/media.php:1148
+msgid "Map Zoom"
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:607
+#: includes/page-builder/shortcodes/media.php:1151
+msgid "14 - Default"
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:634
+msgid "Show Controls"
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:640
+msgid "Set whether you would like to show the default Google Maps controls UI."
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:644
+msgid "Advanced Styling"
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:650
+msgid "Set whether you would like to use the advanced map styling option."
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:654
+msgid "Google Map Style Array"
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:658
+msgid ""
+"Enter the style array for the google map here. You can find examples of "
+"these <a href='https://snazzymaps.com' target='_blank'>here</a>."
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:664
+#: includes/page-builder/shortcodes/media.php:1175
+msgid "Map Color"
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:667
+#: includes/page-builder/shortcodes/media.php:1178
+msgid ""
+"If you would like, you can enter a hex color here to style the map by "
+"changing the hue."
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:671
+#: includes/page-builder/shortcodes/media.php:1182
+msgid "Map Saturation"
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:674
+#: includes/page-builder/shortcodes/media.php:1185
+#: includes/page-builder/shortcodes/row.php:271
+#: includes/page-builder/shortcodes/row.php:430
+msgid "Color"
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:675
+#: includes/page-builder/shortcodes/media.php:1186
+msgid "Mono (Light)"
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:676
+#: includes/page-builder/shortcodes/media.php:1187
+msgid "Mono (Dark)"
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:678
+#: includes/page-builder/shortcodes/media.php:1189
+msgid ""
+"Set whether you would like the map to be in color or mono (black/white)."
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:682
+#: includes/page-builder/shortcodes/media.php:1193
+msgid "Fullscreen Display"
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:688
+#: includes/page-builder/shortcodes/media.php:1199
+msgid "If yes, the map will be displayed from screen edge to edge."
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:702
+msgid "Google Map"
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:711
+msgid "Add New Pin"
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:719
+msgid "First Pin"
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:719
+msgid "This is a map pin. Click the edit button to change it."
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:820
+msgid "Map Pin"
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:840
+msgid ""
+"Enter the address that you would like to show on the map here, i.e. "
+"\"Cupertino\"."
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:844
+msgid "Latitude Coordinate"
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:847
+msgid "Enter the Latitude coordinate of the location marker."
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:851
+msgid "Longitude Coordinate"
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:854
+msgid "Enter the Longitude coordinate of the location marker."
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:858
+msgid "Custom Map Pin"
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:865
+msgid "Pin Link"
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:868
+msgid "Enter the Link url of the location marker."
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:872
+msgid "Pin Button Text"
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:875
+msgid "Enter the text of the Pin Button."
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:883
+msgid "Click the edit button to change the map pin detail text."
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:953
+#: includes/page-builder/shortcodes/media.php:989
+msgid "What are you looking for?"
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:976
+#: includes/page-builder/shortcodes/media.php:1012
+#: includes/page-builder/shortcodes/search.php:54
+msgid "Search"
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:1050
+msgid "Directory Map"
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:1072
+msgid "Directory category"
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:1075
+msgid "Choose the category from which you'd like to show the directory items."
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:1079
+msgid "Map Filter"
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:1085
+msgid "If yes, will be added a filter to refine the results."
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:1089
+msgid "Map Filter Position"
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:1092
+msgid "Above"
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:1096
+msgid "Choose the position of the Map Filter(above or below)."
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:1100
+msgid "Display Results"
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:1104
+msgid "List"
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:1105
+msgid "Map & List"
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:1107
+msgid "Choose how the results will be displayed."
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:1114
+msgid ""
+"The length of the excerpt for the list results text(leave empty for full "
+"description."
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:1122
+msgid ""
+"The number of directory items to show per page. Leave blank to show ALL "
+"directory items."
+msgstr ""
+
+#: includes/page-builder/shortcodes/media.php:1132
+msgid "Show directory pagination."
+msgstr ""
+
+#: includes/page-builder/shortcodes/multilayer-parallax.php:106
+msgid "Multilayer Parallax"
+msgstr ""
+
+#: includes/page-builder/shortcodes/multilayer-parallax.php:120
+#: includes/page-builder/shortcodes/swift-slider.php:72
+msgid "Choose if you would like the slider to be window height."
+msgstr ""
+
+#: includes/page-builder/shortcodes/multilayer-parallax.php:124
+#: includes/page-builder/shortcodes/swift-slider.php:76
+msgid "Slider Max Height"
+msgstr ""
+
+#: includes/page-builder/shortcodes/multilayer-parallax.php:127
+#: includes/page-builder/shortcodes/swift-slider.php:79
+msgid ""
+"Set the maximum height that the Swift Slider should display at (optional) "
+"(no px)."
+msgstr ""
+
+#: includes/page-builder/shortcodes/multilayer-parallax.php:131
+msgid "Horizontal scale movement"
+msgstr ""
+
+#: includes/page-builder/shortcodes/multilayer-parallax.php:134
+msgid ""
+"Multiplies the X-axis input motion by this value, increasing or decreasing "
+"the sensitivity of the layer motion."
+msgstr ""
+
+#: includes/page-builder/shortcodes/multilayer-parallax.php:138
+msgid "Vertical scale movement"
+msgstr ""
+
+#: includes/page-builder/shortcodes/multilayer-parallax.php:141
+msgid ""
+"Multiplies the Y-axis input motion by this value, increasing or decreasing "
+"the sensitivity of the layer motion."
+msgstr ""
+
+#: includes/page-builder/shortcodes/multilayer-parallax.php:153
+msgid "Add New Layer"
+msgstr ""
+
+#: includes/page-builder/shortcodes/multilayer-parallax.php:161
+msgid "Layer 1"
+msgstr ""
+
+#: includes/page-builder/shortcodes/multilayer-parallax.php:161
+msgid "This is a Parallax Layer text. Click the edit button to change it."
+msgstr ""
+
+#: includes/page-builder/shortcodes/multilayer-parallax.php:330
+msgid "Multilayer Parallax Layer"
+msgstr ""
+
+#: includes/page-builder/shortcodes/multilayer-parallax.php:342
+msgid ""
+"It's only showed in Swift Page Builder to identify the Layers. Leave it "
+"empty if not needed."
+msgstr ""
+
+#: includes/page-builder/shortcodes/multilayer-parallax.php:346
+msgid "Layer Image"
+msgstr ""
+
+#: includes/page-builder/shortcodes/multilayer-parallax.php:353
+msgid "Layer Type"
+msgstr ""
+
+#: includes/page-builder/shortcodes/multilayer-parallax.php:356
+msgid "Original"
+msgstr ""
+
+#: includes/page-builder/shortcodes/multilayer-parallax.php:359
+msgid ""
+"If you would like the image to cover the height/width of the asset, then "
+"please select the 'Cover' option - this is ideal for the background layers "
+"of the asset."
+msgstr ""
+
+#: includes/page-builder/shortcodes/multilayer-parallax.php:363
+msgid "Background Position"
+msgstr ""
+
+#: includes/page-builder/shortcodes/multilayer-parallax.php:367
+msgid "Center Left"
+msgstr ""
+
+#: includes/page-builder/shortcodes/multilayer-parallax.php:368
+msgid "Center Right"
+msgstr ""
+
+#: includes/page-builder/shortcodes/multilayer-parallax.php:369
+msgid "Top Left"
+msgstr ""
+
+#: includes/page-builder/shortcodes/multilayer-parallax.php:370
+msgid "Top Right"
+msgstr ""
+
+#: includes/page-builder/shortcodes/multilayer-parallax.php:371
+msgid "Top Center"
+msgstr ""
+
+#: includes/page-builder/shortcodes/multilayer-parallax.php:372
+msgid "Bottom Left"
+msgstr ""
+
+#: includes/page-builder/shortcodes/multilayer-parallax.php:373
+msgid "Bottom Right"
+msgstr ""
+
+#: includes/page-builder/shortcodes/multilayer-parallax.php:374
+msgid "Bottom Center"
+msgstr ""
+
+#: includes/page-builder/shortcodes/multilayer-parallax.php:376
+msgid ""
+"Select the alignment for the background image within the asset - this is "
+"ideal for placement of images that aren't cover layers."
+msgstr ""
+
+#: includes/page-builder/shortcodes/multilayer-parallax.php:380
+msgid "Background Repeat"
+msgstr ""
+
+#: includes/page-builder/shortcodes/multilayer-parallax.php:383
+msgid "No Repeat"
+msgstr ""
+
+#: includes/page-builder/shortcodes/multilayer-parallax.php:384
+msgid "Repeat X + Y"
+msgstr ""
+
+#: includes/page-builder/shortcodes/multilayer-parallax.php:385
+msgid "Repeat X"
+msgstr ""
+
+#: includes/page-builder/shortcodes/multilayer-parallax.php:386
+msgid "Repeat Y"
+msgstr ""
+
+#: includes/page-builder/shortcodes/multilayer-parallax.php:388
+msgid ""
+"Select if you would like the background image to repeat, and if so on which "
+"axis."
+msgstr ""
+
+#: includes/page-builder/shortcodes/multilayer-parallax.php:392
+msgid "Layer Depth"
+msgstr ""
+
+#: includes/page-builder/shortcodes/multilayer-parallax.php:407
+msgid ""
+"Choose the depth for the layer, where a depth of 0 will cause the layer to "
+"remain stationary, and a depth of 1 will cause the layer to move by the "
+"total effect of the calculated motion. Values inbetween 0 and 1 will cause "
+"the layer to move by an amount relative to the supplied ratio."
+msgstr ""
+
+#: includes/page-builder/shortcodes/multilayer-parallax.php:412
+msgid "Optional Text"
+msgstr ""
+
+#: includes/page-builder/shortcodes/multilayer-parallax.php:417
+msgid "Text Layer Enable"
+msgstr ""
+
+#: includes/page-builder/shortcodes/multilayer-parallax.php:423
+msgid "Select if you would like this layer to be a text layer."
+msgstr ""
+
+#: includes/page-builder/shortcodes/multilayer-parallax.php:429
+msgid "Text Layer Content"
+msgstr ""
+
+#: includes/page-builder/shortcodes/multilayer-parallax.php:433
+msgid "Enter your content if you have set this to be a text layer."
+msgstr ""
+
+#: includes/page-builder/shortcodes/ninjaforms.php:44
+msgid "Ninja Forms"
+msgstr ""
+
+#: includes/page-builder/shortcodes/ninjaforms.php:51
+msgid "Nina Form"
+msgstr ""
+
+#: includes/page-builder/shortcodes/parallax.php:112
+msgid "Parallax"
+msgstr ""
+
+#: includes/page-builder/shortcodes/parallax.php:128
+msgid "Parallax Type"
+msgstr ""
+
+#: includes/page-builder/shortcodes/parallax.php:132
+#: includes/page-builder/shortcodes/row.php:273
+msgid "Video"
+msgstr ""
+
+#: includes/page-builder/shortcodes/parallax.php:134
+#: includes/page-builder/shortcodes/row.php:275
+msgid ""
+"Choose whether you want to use an image or video for the background of the "
+"parallax. This will decide what is used from the options below."
+msgstr ""
+
+#: includes/page-builder/shortcodes/parallax.php:145
+msgid "Background Type"
+msgstr ""
+
+#: includes/page-builder/shortcodes/parallax.php:155
+#: includes/page-builder/shortcodes/row.php:359
+msgid "Background Video (MP4)"
+msgstr ""
+
+#: includes/page-builder/shortcodes/parallax.php:163
+#: includes/page-builder/shortcodes/row.php:367
+msgid "Background Video (WebM)"
+msgstr ""
+
+#: includes/page-builder/shortcodes/parallax.php:171
+#: includes/page-builder/shortcodes/row.php:375
+msgid "Background Video (Ogg)"
+msgstr ""
+
+#: includes/page-builder/shortcodes/parallax.php:181
+msgid "Parallax Content"
+msgstr ""
+
+#: includes/page-builder/shortcodes/parallax.php:183
+msgid ""
+"<p>This is a parallax text block. Click the edit button to change this text."
+"</p>"
+msgstr ""
+
+#: includes/page-builder/shortcodes/parallax.php:188
+#: includes/page-builder/shortcodes/row.php:383
+msgid "Parallax Video Height"
+msgstr ""
+
+#: includes/page-builder/shortcodes/parallax.php:191
+#: includes/page-builder/shortcodes/parallax.php:222
+#: includes/page-builder/shortcodes/row.php:289
+#: includes/page-builder/shortcodes/row.php:331
+#: includes/page-builder/shortcodes/row.php:387
+msgid "Content Height"
+msgstr ""
+
+#: includes/page-builder/shortcodes/parallax.php:192
+#: includes/page-builder/shortcodes/parallax.php:223
+#: includes/page-builder/shortcodes/row.php:290
+#: includes/page-builder/shortcodes/row.php:332
+#: includes/page-builder/shortcodes/row.php:386
+#: includes/page-builder/shortcodes/row.php:508
+msgid "Window Height"
+msgstr ""
+
+#: includes/page-builder/shortcodes/parallax.php:195
+msgid ""
+"If you are using this as a video parallax asset, then please choose whether "
+"you'd like asset to sized based on the content height or the window height."
+msgstr ""
+
+#: includes/page-builder/shortcodes/parallax.php:199
+msgid "Parallax Video Overlay"
+msgstr ""
+
+#: includes/page-builder/shortcodes/parallax.php:203
+#: includes/page-builder/shortcodes/row.php:431
+#: includes/swift-slider/inc/ss-meta.php:217
+msgid "Light Grid"
+msgstr ""
+
+#: includes/page-builder/shortcodes/parallax.php:204
+#: includes/page-builder/shortcodes/row.php:432
+#: includes/swift-slider/inc/ss-meta.php:218
+msgid "Dark Grid"
+msgstr ""
+
+#: includes/page-builder/shortcodes/parallax.php:205
+#: includes/page-builder/shortcodes/row.php:433
+#: includes/swift-slider/inc/ss-meta.php:219
+msgid "Light Grid (Fat)"
+msgstr ""
+
+#: includes/page-builder/shortcodes/parallax.php:206
+#: includes/page-builder/shortcodes/row.php:434
+#: includes/swift-slider/inc/ss-meta.php:220
+msgid "Dark Grid (Fat)"
+msgstr ""
+
+#: includes/page-builder/shortcodes/parallax.php:207
+#: includes/page-builder/shortcodes/row.php:435
+#: includes/swift-slider/inc/ss-meta.php:221
+msgid "Light Diagonal"
+msgstr ""
+
+#: includes/page-builder/shortcodes/parallax.php:208
+#: includes/page-builder/shortcodes/row.php:436
+#: includes/swift-slider/inc/ss-meta.php:222
+msgid "Dark Diagonal"
+msgstr ""
+
+#: includes/page-builder/shortcodes/parallax.php:209
+#: includes/page-builder/shortcodes/row.php:437
+#: includes/swift-slider/inc/ss-meta.php:225
+msgid "Light Vertical"
+msgstr ""
+
+#: includes/page-builder/shortcodes/parallax.php:210
+#: includes/page-builder/shortcodes/row.php:438
+#: includes/swift-slider/inc/ss-meta.php:226
+msgid "Dark Vertical"
+msgstr ""
+
+#: includes/page-builder/shortcodes/parallax.php:211
+#: includes/page-builder/shortcodes/row.php:439
+#: includes/swift-slider/inc/ss-meta.php:223
+msgid "Light Horizontal"
+msgstr ""
+
+#: includes/page-builder/shortcodes/parallax.php:212
+#: includes/page-builder/shortcodes/row.php:440
+#: includes/swift-slider/inc/ss-meta.php:224
+msgid "Dark Horizontal"
+msgstr ""
+
+#: includes/page-builder/shortcodes/parallax.php:215
+msgid ""
+"If you would like an overlay to appear on top of the video, then you can "
+"select it here."
+msgstr ""
+
+#: includes/page-builder/shortcodes/parallax.php:219
+#: includes/page-builder/shortcodes/row.php:328
+msgid "Parallax Image Height"
+msgstr ""
+
+#: includes/page-builder/shortcodes/parallax.php:226
+#: includes/page-builder/shortcodes/row.php:335
+msgid ""
+"If you are using this as an image parallax asset, then please choose whether "
+"you'd like asset to sized based on the content height or the height of the "
+"viewport window."
+msgstr ""
+
+#: includes/page-builder/shortcodes/parallax.php:230
+msgid "Parallax Image Movement"
+msgstr ""
+
+#: includes/page-builder/shortcodes/parallax.php:256
+msgid "Adjust the horizontal padding for the content (percentage)."
+msgstr ""
+
+#: includes/page-builder/shortcodes/portfolio-carousel.php:241
+msgid "The number of portfolio items to show in the carousel."
+msgstr ""
+
+#: includes/page-builder/shortcodes/portfolio-carousel.php:253
+#: includes/page-builder/shortcodes/recent-posts.php:288
+msgid "Choose the amount of columns you would like for the asset."
+msgstr ""
+
+#: includes/page-builder/shortcodes/portfolio-carousel.php:257
+#: includes/page-builder/shortcodes/portfolio-showcase.php:196
+#: includes/page-builder/shortcodes/portfolio.php:242
+msgid "Portfolio category"
+msgstr ""
+
+#: includes/page-builder/shortcodes/portfolio-carousel.php:260
+#: includes/page-builder/shortcodes/portfolio-showcase.php:199
+msgid "Choose the category for the portfolio items."
+msgstr ""
+
+#: includes/page-builder/shortcodes/portfolio-carousel.php:291
+msgid "Portfolio Carousel"
+msgstr ""
+
+#: includes/page-builder/shortcodes/portfolio-showcase.php:182
+msgid "Portfolio Showcase"
+msgstr ""
+
+#: includes/page-builder/shortcodes/portfolio-showcase.php:209
+msgid "Choose the display type for the asset."
+msgstr ""
+
+#: includes/page-builder/shortcodes/portfolio.php:76
+msgid "VIEW ALL PROJECTS"
+msgstr ""
+
+#: includes/page-builder/shortcodes/portfolio.php:140
+msgid "Multi Size Masonry"
+msgstr ""
+
+#: includes/page-builder/shortcodes/portfolio.php:142
+msgid "Select the type of portfolio you'd like to show."
+msgstr ""
+
+#: includes/page-builder/shortcodes/portfolio.php:146
+msgid "Multi Size Masonry Ratio"
+msgstr ""
+
+#: includes/page-builder/shortcodes/portfolio.php:150
+msgid "Choose whether to display 4/3, or 1/1 ratio thumbnails."
+msgstr ""
+
+#: includes/page-builder/shortcodes/portfolio.php:178
+msgid "How many portfolio columns to display."
+msgstr ""
+
+#: includes/page-builder/shortcodes/portfolio.php:215
+msgid "Excerpt Hover"
+msgstr ""
+
+#: includes/page-builder/shortcodes/portfolio.php:223
+msgid "Show the item excerpt on hover, instead of the arrow button."
+msgstr ""
+
+#: includes/page-builder/shortcodes/portfolio.php:238
+msgid ""
+"The number of portfolio items to show per page. Leave blank to show ALL "
+"portfolio items."
+msgstr ""
+
+#: includes/page-builder/shortcodes/portfolio.php:245
+msgid "Choose the category from which you'd like to show the portfolio items."
+msgstr ""
+
+#: includes/page-builder/shortcodes/portfolio.php:278
+msgid "Show the portfolio category filter above the items."
+msgstr ""
+
+#: includes/page-builder/shortcodes/portfolio.php:288
+msgid "Show portfolio pagination."
+msgstr ""
+
+#: includes/page-builder/shortcodes/portfolio.php:292
+msgid "Portfolio Page Button"
+msgstr ""
+
+#: includes/page-builder/shortcodes/portfolio.php:299
+msgid ""
+"Select if you'd like to include a button in the title bar to link through to "
+"all portfolio items. The page is set in Theme Options > Custom Post Type "
+"Options."
+msgstr ""
+
+#: includes/page-builder/shortcodes/products.php:47
+#: includes/page-builder/shortcodes/products.php:171
+msgid "Please install/activate WooCommerce."
+msgstr ""
+
+#: includes/page-builder/shortcodes/products.php:71
+msgid "Products (Mini)"
+msgstr ""
+
+#: includes/page-builder/shortcodes/products.php:85
+#: includes/page-builder/shortcodes/products.php:244
+msgid "Asset type"
+msgstr ""
+
+#: includes/page-builder/shortcodes/products.php:88
+#: includes/page-builder/shortcodes/products.php:247
+msgid "Best Sellers"
+msgstr ""
+
+#: includes/page-builder/shortcodes/products.php:89
+#: includes/page-builder/shortcodes/products.php:248
+msgid "Latest Products"
+msgstr ""
+
+#: includes/page-builder/shortcodes/products.php:90
+#: includes/page-builder/shortcodes/products.php:249
+msgid "Top Rated"
+msgstr ""
+
+#: includes/page-builder/shortcodes/products.php:91
+#: includes/page-builder/shortcodes/products.php:250
+msgid "Sale Products"
+msgstr ""
+
+#: includes/page-builder/shortcodes/products.php:92
+#: includes/page-builder/shortcodes/products.php:251
+msgid "Recently Viewed"
+msgstr ""
+
+#: includes/page-builder/shortcodes/products.php:93
+#: includes/page-builder/shortcodes/products.php:252
+msgid "Featured Products"
+msgstr ""
+
+#: includes/page-builder/shortcodes/products.php:95
+msgid "Select the order of the products you'd like to show."
+msgstr ""
+
+#: includes/page-builder/shortcodes/products.php:99
+#: includes/page-builder/shortcodes/products.php:259
+msgid "Product category"
+msgstr ""
+
+#: includes/page-builder/shortcodes/products.php:102
+msgid ""
+"Optionally, provide the category slugs for the products you want to show "
+"(comma seperated). i.e. trainer,dress,bag."
+msgstr ""
+
+#: includes/page-builder/shortcodes/products.php:110
+msgid "The number of products to show."
+msgstr ""
+
+#: includes/page-builder/shortcodes/products.php:182
+msgid "VIEW ALL PRODUCTS"
+msgstr ""
+
+#: includes/page-builder/shortcodes/products.php:254
+msgid "Selected Products"
+msgstr ""
+
+#: includes/page-builder/shortcodes/products.php:266
+#: includes/page-builder/shortcodes/products.php:390
+msgid "Products"
+msgstr ""
+
+#: includes/page-builder/shortcodes/products.php:270
+msgid ""
+"Select specific products to show here, providing the Product ID in comma "
+"delimited format."
+msgstr ""
+
+#: includes/page-builder/shortcodes/products.php:277
+#: includes/page-builder/shortcodes/products.php:289
+msgid "Product display type"
+msgstr ""
+
+#: includes/page-builder/shortcodes/products.php:282
+#: includes/page-builder/shortcodes/products.php:294
+msgid "Gallery Bordered"
+msgstr ""
+
+#: includes/page-builder/shortcodes/products.php:283
+msgid "Preview Slider"
+msgstr ""
+
+#: includes/page-builder/shortcodes/products.php:302
+msgid "Multi-Masonry display"
+msgstr ""
+
+#: includes/page-builder/shortcodes/products.php:308
+msgid ""
+"Select if you'd like the asset to show products in a Multi-Masonry layout. "
+"NOTE: Not supported with Preview Slider display type."
+msgstr ""
+
+#: includes/page-builder/shortcodes/products.php:314
+#: includes/page-builder/shortcodes/recent-posts.php:266
+#: includes/page-builder/shortcodes/team.php:329
+msgid "Carousel"
+msgstr ""
+
+#: includes/page-builder/shortcodes/products.php:370
+msgid "Shop Page Button"
+msgstr ""
+
+#: includes/page-builder/shortcodes/products.php:376
+msgid ""
+"Select if you'd like to include a button in the title bar to link through to "
+"all shop items."
+msgstr ""
+
+#: includes/page-builder/shortcodes/promo-bar.php:114
+msgid "Drop Shadow"
+msgstr ""
+
+#: includes/page-builder/shortcodes/promo-bar.php:116
+msgid "Rounded"
+msgstr ""
+
+#: includes/page-builder/shortcodes/promo-bar.php:117
+msgid "Rounded Bordered"
+msgstr ""
+
+#: includes/page-builder/shortcodes/promo-bar.php:127
+msgid "Impact"
+msgstr ""
+
+#: includes/page-builder/shortcodes/promo-bar.php:128
+msgid "Impact (Large)"
+msgstr ""
+
+#: includes/page-builder/shortcodes/promo-bar.php:132
+#: includes/page-builder/shortcodes/promo-bar.php:140
+msgid "Text + Button"
+msgstr ""
+
+#: includes/page-builder/shortcodes/promo-bar.php:133
+msgid "Text + Arrow (Full Bar Link)"
+msgstr ""
+
+#: includes/page-builder/shortcodes/promo-bar.php:134
+#: includes/page-builder/shortcodes/promo-bar.php:141
+msgid "Text Only (Full Bar Link)"
+msgstr ""
+
+#: includes/page-builder/shortcodes/promo-bar.php:135
+#: includes/page-builder/shortcodes/promo-bar.php:142
+msgid "Custom Content"
+msgstr ""
+
+#: includes/page-builder/shortcodes/promo-bar.php:147
+msgid "Promo Bar"
+msgstr ""
+
+#: includes/page-builder/shortcodes/promo-bar.php:158
+msgid "Choose the display type for the promo bar."
+msgstr ""
+
+#: includes/page-builder/shortcodes/promo-bar.php:162
+msgid "Promo Text"
+msgstr ""
+
+#: includes/page-builder/shortcodes/promo-bar.php:166
+#: includes/page-builder/shortcodes/promo-bar.php:175
+msgid "Enter your text here"
+msgstr ""
+
+#: includes/page-builder/shortcodes/promo-bar.php:167
+#: includes/page-builder/shortcodes/promo-bar.php:176
+msgid ""
+"Enter the text for the promo bar here, this is also where you can set the "
+"custom content if the option is selected above."
+msgstr ""
+
+#: includes/page-builder/shortcodes/promo-bar.php:171
+msgid "Promo Content Text"
+msgstr ""
+
+#: includes/page-builder/shortcodes/promo-bar.php:180
+msgid "Promo Text Size"
+msgstr ""
+
+#: includes/page-builder/shortcodes/promo-bar.php:183
+msgid "Select the text size"
+msgstr ""
+
+#: includes/page-builder/shortcodes/promo-bar.php:191
+msgid "The text that appears on the button."
+msgstr ""
+
+#: includes/page-builder/shortcodes/promo-bar.php:195
+msgid "Button Color"
+msgstr ""
+
+#: includes/page-builder/shortcodes/promo-bar.php:199
+#: includes/page-builder/shortcodes/promo-bar.php:207
+msgid "Button color."
+msgstr ""
+
+#: includes/page-builder/shortcodes/promo-bar.php:211
+msgid "Link URL"
+msgstr ""
+
+#: includes/page-builder/shortcodes/promo-bar.php:214
+msgid "The link for the promo bar."
+msgstr ""
+
+#: includes/page-builder/shortcodes/promo-bar.php:227
+msgid "Select a background colour for the asset here."
+msgstr ""
+
+#: includes/page-builder/shortcodes/promo-bar.php:234
+msgid "Select a text colour for the asset here."
+msgstr ""
+
+#: includes/page-builder/shortcodes/raw_content.php:88
+#: includes/page-builder/shortcodes/raw_content.php:99
+msgid "Raw HTML"
+msgstr ""
+
+#: includes/page-builder/shortcodes/raw_content.php:102
+msgid "Enter your HTML content."
+msgstr ""
+
+#: includes/page-builder/shortcodes/raw_content.php:140
+msgid "Raw JS"
+msgstr ""
+
+#: includes/page-builder/shortcodes/raw_content.php:151
+msgid "Raw js"
+msgstr ""
+
+#: includes/page-builder/shortcodes/raw_content.php:154
+msgid "Enter your JavaScript or jQuery code here."
+msgstr ""
+
+#: includes/page-builder/shortcodes/recent-posts.php:166
+#: includes/page-builder/shortcodes/recent-posts.php:169
+msgid "VIEW ALL ARTICLES"
+msgstr ""
+
+#: includes/page-builder/shortcodes/recent-posts.php:230
+#: includes/page-builder/shortcodes/recent-posts.php:239
+msgid "Standard Row"
+msgstr ""
+
+#: includes/page-builder/shortcodes/recent-posts.php:232
+msgid "Bold (Alt)"
+msgstr ""
+
+#: includes/page-builder/shortcodes/recent-posts.php:233
+#: includes/page-builder/shortcodes/recent-posts.php:240
+msgid "Post List"
+msgstr ""
+
+#: includes/page-builder/shortcodes/recent-posts.php:245
+msgid "Recent Posts"
+msgstr ""
+
+#: includes/page-builder/shortcodes/recent-posts.php:262
+msgid "Choose the display type for the posts."
+msgstr ""
+
+#: includes/page-builder/shortcodes/recent-posts.php:273
+#: includes/page-builder/shortcodes/team.php:335
+msgid "Enables carousel funcitonality in the asset."
+msgstr ""
+
+#: includes/page-builder/shortcodes/recent-posts.php:285
+msgid "1"
+msgstr ""
+
+#: includes/page-builder/shortcodes/recent-posts.php:314
+msgid "Posts order"
+msgstr ""
+
+#: includes/page-builder/shortcodes/recent-posts.php:320
+msgid "The order of the posts."
+msgstr ""
+
+#: includes/page-builder/shortcodes/recent-posts.php:351
+msgid "Blog Page Button"
+msgstr ""
+
+#: includes/page-builder/shortcodes/recent-posts.php:357
+msgid ""
+"Select if you'd like to include a button in the title bar to link through to "
+"all blog posts. The page is set in Theme Options > Custom Post Type Options, "
+"unless you have selected a category above, in which case it will link to "
+"that category."
+msgstr ""
+
+#: includes/page-builder/shortcodes/revslider.php:55
+msgid "Rev/Layer/Master Slider"
+msgstr ""
+
+#: includes/page-builder/shortcodes/revslider.php:62
+msgid "Revolution Slider Alias"
+msgstr ""
+
+#: includes/page-builder/shortcodes/revslider.php:65
+msgid ""
+"Enter the Revolution Slider alias here for the one that you wish to show. "
+"This can be found within the Revolution Slider Admin Panel."
+msgstr ""
+
+#: includes/page-builder/shortcodes/revslider.php:69
+msgid "LayerSlider ID"
+msgstr ""
+
+#: includes/page-builder/shortcodes/revslider.php:72
+msgid ""
+"Enter the LayerSlider ID here for the one that you wish to show. This can be "
+"found within the LayerSlider Admin Panel."
+msgstr ""
+
+#: includes/page-builder/shortcodes/revslider.php:76
+msgid "Master Slider ID"
+msgstr ""
+
+#: includes/page-builder/shortcodes/revslider.php:79
+msgid ""
+"Enter the Master Slider ID here for the one that you wish to show. This can "
+"be found within the Master Slider Admin Panel."
+msgstr ""
+
+#: includes/page-builder/shortcodes/revslider.php:89
+msgid ""
+"Select if you'd like the slide to be full width (edge to edge). NOTE: only "
+"possible on pages without sidebars."
+msgstr ""
+
+#: includes/page-builder/shortcodes/row.php:220
+#: includes/page-builder/shortcodes/row.php:599
+msgid "Row"
+msgstr ""
+
+#: includes/page-builder/shortcodes/row.php:254
+msgid "Row Type Options"
+msgstr ""
+
+#: includes/page-builder/shortcodes/row.php:258
+msgid "Wrap type"
+msgstr ""
+
+#: includes/page-builder/shortcodes/row.php:261
+msgid "Standard Width Content"
+msgstr ""
+
+#: includes/page-builder/shortcodes/row.php:262
+msgid "Full Width Content"
+msgstr ""
+
+#: includes/page-builder/shortcodes/row.php:264
+msgid ""
+"Select if you want to row to wrap the content to the grid, or if you want "
+"the content to be edge to edge."
+msgstr ""
+
+#: includes/page-builder/shortcodes/row.php:268
+msgid "Row Background Type"
+msgstr ""
+
+#: includes/page-builder/shortcodes/row.php:286
+msgid "Color Row Height"
+msgstr ""
+
+#: includes/page-builder/shortcodes/row.php:293
+msgid ""
+"If you are using this as a coloured row asset, then please choose whether "
+"you'd like asset to sized based on the content height or the window height."
+msgstr ""
+
+#: includes/page-builder/shortcodes/row.php:298
+msgid "Row Background Image Options"
+msgstr ""
+
+#: includes/page-builder/shortcodes/row.php:304
+msgid "Row Background Video Options"
+msgstr ""
+
+#: includes/page-builder/shortcodes/row.php:390
+msgid ""
+"If you are using this as a video parallax asset, then please choose whether "
+"you'd like asset to sized based on the content height or the video height."
+msgstr ""
+
+#: includes/page-builder/shortcodes/row.php:395
+msgid "Row Display Options"
+msgstr ""
+
+#: includes/page-builder/shortcodes/row.php:402
+msgid "Row top style"
+msgstr ""
+
+#: includes/page-builder/shortcodes/row.php:406
+#: includes/page-builder/shortcodes/row.php:417
+msgid "Slant Left-to-right"
+msgstr ""
+
+#: includes/page-builder/shortcodes/row.php:407
+#: includes/page-builder/shortcodes/row.php:418
+msgid "Slant Right-to-left"
+msgstr ""
+
+#: includes/page-builder/shortcodes/row.php:409
+msgid "Choose the top style for the row, or none."
+msgstr ""
+
+#: includes/page-builder/shortcodes/row.php:413
+msgid "Row bottom style"
+msgstr ""
+
+#: includes/page-builder/shortcodes/row.php:420
+msgid "Choose the bottom style for the row, or none."
+msgstr ""
+
+#: includes/page-builder/shortcodes/row.php:426
+msgid "Row Overlay style"
+msgstr ""
+
+#: includes/page-builder/shortcodes/row.php:442
+msgid ""
+"If you would like an overlay to appear on top of the image/video, then you "
+"can select it here."
+msgstr ""
+
+#: includes/page-builder/shortcodes/row.php:446
+msgid "Row Overlay Opacity"
+msgstr ""
+
+#: includes/page-builder/shortcodes/row.php:452
+msgid ""
+"Adjust the overlay capacity if using an image or video option. This only has "
+"effect for the color overlay style option, and shows an overlay over the "
+"image/video at the desired opacity. Percentage."
+msgstr ""
+
+#: includes/page-builder/shortcodes/row.php:459
+msgid "Adjust the vertical padding for the row. (px)"
+msgstr ""
+
+#: includes/page-builder/shortcodes/row.php:471
+msgid "Adjust the horizontal padding for the row. (%)"
+msgstr ""
+
+#: includes/page-builder/shortcodes/row.php:477
+msgid "Margin - Vertical"
+msgstr ""
+
+#: includes/page-builder/shortcodes/row.php:480
+msgid "Adjust the margin above and below the row. (px)"
+msgstr ""
+
+#: includes/page-builder/shortcodes/row.php:484
+msgid "Remove Element Spacing"
+msgstr ""
+
+#: includes/page-builder/shortcodes/row.php:490
+msgid ""
+"Enable this option if you wish to remove all spacing from the elements "
+"within the row."
+msgstr ""
+
+#: includes/page-builder/shortcodes/row.php:494
+msgid "Vertically Center Elements Within"
+msgstr ""
+
+#: includes/page-builder/shortcodes/row.php:500
+msgid "Enable this option if you wish to center the elements within the row."
+msgstr ""
+
+#: includes/page-builder/shortcodes/row.php:504
+msgid "Inner Column Height"
+msgstr ""
+
+#: includes/page-builder/shortcodes/row.php:507
+msgid "Natural"
+msgstr ""
+
+#: includes/page-builder/shortcodes/row.php:510
+msgid ""
+"If you have the Window Height option selected for the row, and would like "
+"inner column assets to be 100% height, then please select the Window Height "
+"option here."
+msgstr ""
+
+#: includes/page-builder/shortcodes/row.php:515
+msgid "Row Content Expand Options"
+msgstr ""
+
+#: includes/page-builder/shortcodes/row.php:519
+msgid "Expanding Row"
+msgstr ""
+
+#: includes/page-builder/shortcodes/row.php:525
+msgid ""
+"If you would like the content to be hidden on load, and have a text link to "
+"expand the content, then select Yes."
+msgstr ""
+
+#: includes/page-builder/shortcodes/row.php:529
+msgid "Expanding Link Text (Content Closed)"
+msgstr ""
+
+#: includes/page-builder/shortcodes/row.php:532
+msgid "This is the text that is shown when the expanding row is closed."
+msgstr ""
+
+#: includes/page-builder/shortcodes/row.php:536
+msgid "Expanding Link Text (Content Open)"
+msgstr ""
+
+#: includes/page-builder/shortcodes/row.php:539
+msgid "This is the text that is shown when the expanding row is open."
+msgstr ""
+
+#: includes/page-builder/shortcodes/row.php:551
+msgid ""
+"Select an intro animation for the row which will show it when it appears "
+"within the viewport."
+msgstr ""
+
+#: includes/page-builder/shortcodes/row.php:563
+msgid "Row Misc/ID Options"
+msgstr ""
+
+#: includes/page-builder/shortcodes/row.php:575
+msgid "Row ID"
+msgstr ""
+
+#: includes/page-builder/shortcodes/row.php:578
+msgid ""
+"If you wish to add an ID to the row, then add it here. You can then use the "
+"id to deep link to this section of the page. This is also used for one page "
+"navigation. NOTE: Make sure this is unique to the page!!"
+msgstr ""
+
+#: includes/page-builder/shortcodes/row.php:582
+msgid "Row Section Name"
+msgstr ""
+
+#: includes/page-builder/shortcodes/row.php:585
+msgid ""
+"This is used for the one page navigation, to identify the row. If this is "
+"left blank, then the row will be left off of the one page navigation."
+msgstr ""
+
+#: includes/page-builder/shortcodes/search.php:61
+msgid "Input placeholder text"
+msgstr ""
+
+#: includes/page-builder/shortcodes/search.php:64
+msgid "Enter the text that appearas as default in the search input."
+msgstr ""
+
+#: includes/page-builder/shortcodes/search.php:68
+msgid "Search box size"
+msgstr ""
+
+#: includes/page-builder/shortcodes/search.php:74
+msgid "Set the size for the search input box."
+msgstr ""
+
+#: includes/page-builder/shortcodes/sitemap.php:43
+msgid "Sitemap"
+msgstr ""
+
+#: includes/page-builder/shortcodes/spb-section.php:119
+msgid "Choose the SPB Section to display."
+msgstr ""
+
+#: includes/page-builder/shortcodes/supersearch.php:56
+msgid "Super Search"
+msgstr ""
+
+#: includes/page-builder/shortcodes/swift-slider.php:59
+#: includes/swift-slider/inc/ss-post-type.php:39
+msgid "Swift Slider"
+msgstr ""
+
+#: includes/page-builder/shortcodes/swift-slider.php:83
+msgid "Slide Count"
+msgstr ""
+
+#: includes/page-builder/shortcodes/swift-slider.php:86
+msgid "Set the number of slides to show. If blank then all will show."
+msgstr ""
+
+#: includes/page-builder/shortcodes/swift-slider.php:90
+msgid "Slide category"
+msgstr ""
+
+#: includes/page-builder/shortcodes/swift-slider.php:93
+msgid "Choose the category of slide that you would like to show, or all."
+msgstr ""
+
+#: includes/page-builder/shortcodes/swift-slider.php:97
+msgid "Autoplay"
+msgstr ""
+
+#: includes/page-builder/shortcodes/swift-slider.php:100
+msgid ""
+"If you would like the slider to auto-rotate, then set the autoplay rotate "
+"time in ms here. I.e. you would enter '5000' for the slider to rotate every "
+"5 seconds."
+msgstr ""
+
+#: includes/page-builder/shortcodes/swift-slider.php:104
+msgid "Transition"
+msgstr ""
+
+#: includes/page-builder/shortcodes/swift-slider.php:110
+msgid "Select the transition between slides."
+msgstr ""
+
+#: includes/page-builder/shortcodes/swift-slider.php:114
+#: includes/swift-slider/inc/ss-meta.php:190
+msgid "Loop"
+msgstr ""
+
+#: includes/page-builder/shortcodes/swift-slider.php:120
+msgid "Select if you'd like the slider to loop."
+msgstr ""
+
+#: includes/page-builder/shortcodes/swift-slider.php:124
+msgid "Navigation"
+msgstr ""
+
+#: includes/page-builder/shortcodes/swift-slider.php:130
+msgid ""
+"Choose if you would like to display the left/right arrows on the slider."
+msgstr ""
+
+#: includes/page-builder/shortcodes/swift-slider.php:140
+msgid "Choose if you would like to display the slider pagination."
+msgstr ""
+
+#: includes/page-builder/shortcodes/swift-slider.php:144
+msgid "Continue"
+msgstr ""
+
+#: includes/page-builder/shortcodes/swift-slider.php:150
+msgid ""
+"Choose if you would like to display the continue button on the slider to "
+"progress to the content. If you want to only display the slider on the page, "
+"and no content, then make sure you set this to NO."
+msgstr ""
+
+#: includes/page-builder/shortcodes/swift-slider.php:160
+msgid ""
+"Select if you'd like the slider to be full width (edge to edge). NOTE: only "
+"possible on pages without sidebars."
+msgstr ""
+
+#: includes/page-builder/shortcodes/tabs.php:246
+msgid "Previous slide"
+msgstr ""
+
+#: includes/page-builder/shortcodes/tabs.php:246
+msgid "Next slide"
+msgstr ""
+
+#: includes/page-builder/shortcodes/tabs.php:259
+msgid "Dynamic Icon/Text Menu"
+msgstr ""
+
+#: includes/page-builder/shortcodes/tabs.php:269
+msgid "Tabs"
+msgstr ""
+
+#: includes/page-builder/shortcodes/tabs.php:284
+msgid "Tabs type"
+msgstr ""
+
+#: includes/page-builder/shortcodes/tabs.php:287
+msgid "Choose the tabs type."
+msgstr ""
+
+#: includes/page-builder/shortcodes/tabs.php:291
+msgid "Center tabs"
+msgstr ""
+
+#: includes/page-builder/shortcodes/tabs.php:297
+msgid "Choose if you'd like to center the tabs."
+msgstr ""
+
+#: includes/page-builder/shortcodes/tabs.php:309
+msgid "Add New Tab"
+msgstr ""
+
+#: includes/page-builder/shortcodes/tabs.php:317
+msgid "Tab 1"
+msgstr ""
+
+#: includes/page-builder/shortcodes/tabs.php:318
+msgid "Tab 2"
+msgstr ""
+
+#: includes/page-builder/shortcodes/team.php:151
+msgid "View Profile"
+msgstr ""
+
+#: includes/page-builder/shortcodes/team.php:322
+msgid "Standard (No Excerpt)"
+msgstr ""
+
+#: includes/page-builder/shortcodes/team.php:325
+msgid "Choose the display type for the team members."
+msgstr ""
+
+#: includes/page-builder/shortcodes/team.php:347
+msgid "Choose the amount of columns you would like for the team asset."
+msgstr ""
+
+#: includes/page-builder/shortcodes/team.php:355
+msgid "The number of team members to show per page."
+msgstr ""
+
+#: includes/page-builder/shortcodes/team.php:360
+msgid "Custom Image Height"
+msgstr ""
+
+#: includes/page-builder/shortcodes/team.php:363
+msgid ""
+"Enter a value here if you would like to override the image height of the "
+"team member images. Numerical value (no px)."
+msgstr ""
+
+#: includes/page-builder/shortcodes/team.php:367
+msgid "Team category"
+msgstr ""
+
+#: includes/page-builder/shortcodes/team.php:370
+msgid "Choose the category for the team items."
+msgstr ""
+
+#: includes/page-builder/shortcodes/team.php:374
+msgid "Profile Link"
+msgstr ""
+
+#: includes/page-builder/shortcodes/team.php:380
+msgid ""
+"Select if you'd like the team members to link through to the profile page."
+msgstr ""
+
+#: includes/page-builder/shortcodes/team.php:390
+msgid "Show team pagination."
+msgstr ""
+
+#: includes/page-builder/shortcodes/testimonial-carousel.php:124
+#: includes/page-builder/shortcodes/testimonial.php:113
+msgid "More"
+msgstr ""
+
+#: includes/page-builder/shortcodes/testimonial-carousel.php:157
+msgid "Testimonials Carousel"
+msgstr ""
+
+#: includes/page-builder/shortcodes/testimonial-carousel.php:176
+#: includes/page-builder/shortcodes/testimonial.php:175
+msgid ""
+"The number of testimonials to show per page. Leave blank to show ALL "
+"testimonials."
+msgstr ""
+
+#: includes/page-builder/shortcodes/testimonial-carousel.php:180
+#: includes/page-builder/shortcodes/testimonial-slider.php:170
+#: includes/page-builder/shortcodes/testimonial.php:179
+msgid "Testimonials Order"
+msgstr ""
+
+#: includes/page-builder/shortcodes/testimonial-carousel.php:184
+#: includes/page-builder/shortcodes/testimonial-slider.php:174
+#: includes/page-builder/shortcodes/testimonial.php:183
+msgid "Latest"
+msgstr ""
+
+#: includes/page-builder/shortcodes/testimonial-carousel.php:186
+#: includes/page-builder/shortcodes/testimonial-slider.php:176
+#: includes/page-builder/shortcodes/testimonial.php:185
+msgid "Choose the order of the testimonials."
+msgstr ""
+
+#: includes/page-builder/shortcodes/testimonial-carousel.php:190
+#: includes/page-builder/shortcodes/testimonial-slider.php:180
+#: includes/page-builder/shortcodes/testimonial.php:189
+msgid "Testimonials category"
+msgstr ""
+
+#: includes/page-builder/shortcodes/testimonial-carousel.php:193
+#: includes/page-builder/shortcodes/testimonial-slider.php:183
+#: includes/page-builder/shortcodes/testimonial.php:192
+msgid "Choose the category for the testimonials."
+msgstr ""
+
+#: includes/page-builder/shortcodes/testimonial-carousel.php:197
+#: includes/page-builder/shortcodes/testimonial.php:206
+msgid "Testimonials page link"
+msgstr ""
+
+#: includes/page-builder/shortcodes/testimonial-carousel.php:203
+#: includes/page-builder/shortcodes/testimonial.php:212
+msgid ""
+"Include a link to the testimonials page (which you must choose in the theme "
+"options)."
+msgstr ""
+
+#: includes/page-builder/shortcodes/testimonial-slider.php:137
+msgid "Testimonials Slider"
+msgstr ""
+
+#: includes/page-builder/shortcodes/testimonial-slider.php:152
+#: includes/page-builder/shortcodes/testimonial.php:161
+msgid "Text size"
+msgstr ""
+
+#: includes/page-builder/shortcodes/testimonial-slider.php:158
+#: includes/page-builder/shortcodes/testimonial.php:167
+msgid "Choose the size of the text."
+msgstr ""
+
+#: includes/page-builder/shortcodes/testimonial-slider.php:166
+msgid ""
+"The number of testimonials to show. Leave blank to show ALL testimonials."
+msgstr ""
+
+#: includes/page-builder/shortcodes/testimonial-slider.php:187
+#: includes/page-builder/shortcodes/tweets-slider.php:113
+msgid "Slider autoplay"
+msgstr ""
+
+#: includes/page-builder/shortcodes/testimonial-slider.php:193
+#: includes/page-builder/shortcodes/tweets-slider.php:119
+msgid "Select if you want the slider to autoplay or not."
+msgstr ""
+
+#: includes/page-builder/shortcodes/testimonial.php:164
+msgid "Normal"
+msgstr ""
+
+#: includes/page-builder/shortcodes/testimonial.php:202
+msgid "Show testimonial pagination (1/1 width element only)."
+msgstr ""
+
+#: includes/page-builder/shortcodes/tour.php:189
+msgid "Tour Section"
+msgstr ""
+
+#: includes/page-builder/shortcodes/tour.php:205
+msgid "Auto rotate slides"
+msgstr ""
+
+#: includes/page-builder/shortcodes/tour.php:208
+msgid "Auto rotate slides each X seconds. Select 0 to disable."
+msgstr ""
+
+#: includes/page-builder/shortcodes/tour.php:220
+msgid "Add slide"
+msgstr ""
+
+#: includes/page-builder/shortcodes/tour.php:228
+msgid "Slide 1"
+msgstr ""
+
+#: includes/page-builder/shortcodes/tour.php:229
+msgid "Slide 2"
+msgstr ""
+
+#: includes/page-builder/shortcodes/tweets-slider.php:83
+msgid "Tweets Slider"
+msgstr ""
+
+#: includes/page-builder/shortcodes/tweets-slider.php:106
+msgid "Number of tweets"
+msgstr ""
+
+#: includes/page-builder/shortcodes/tweets-slider.php:109
+msgid "The number of tweets to show."
+msgstr ""
+
+#: includes/page-builder/shortcodes/widget-area.php:57
+msgid "Widget Area"
+msgstr ""
+
+#: includes/page-builder/shortcodes/widget-area.php:64
+msgid "Select Sidebar:"
+msgstr ""
+
+#: includes/page-builder/shortcodes/widget-area.php:67
+msgid "Select an existing sidebar to add to the page."
+msgstr ""
+
+#: includes/shortcodes/sf-shortcodes.php:58
+msgid "Adding..."
+msgstr ""
+
+#: includes/shortcodes/sf-shortcodes.php:58
+msgid "Item added"
+msgstr ""
+
+#: includes/shortcodes/sf-shortcodes.php:58
+msgid "Add to cart"
+msgstr ""
+
+#: includes/shortcodes/sf-shortcodes.php:1025
+msgid "Pages"
+msgstr ""
+
+#: includes/shortcodes/sf-shortcodes.php:1036
+msgid "Posts"
+msgstr ""
+
+#: includes/shortcodes/sf-shortcodes.php:1054
+msgid "Archives"
+msgstr ""
+
+#: includes/shortcodes/sf-shortcodes.php:1445
+msgid "Share"
+msgstr ""
+
+#: includes/shortcodes/sf-shortcodes.php:1457
+#: includes/shortcodes/sf-shortcodes.php:1459
+msgid "Share this"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-display.php:255
+msgid "Previous"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-display.php:256
+msgid "Next"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-display.php:298
+msgid "No slides found, please add some!"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:23
+msgid "Slide Background"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:31
+msgid "Background type"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:41
+msgid "Choose what the background for the slide will be."
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:45
+msgid "Background Color"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:47
+msgid ""
+"Set a background color for this slide. If an image is uploaded, this will "
+"serve as the overlay color as well."
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:53
+msgid "Overlay Opacity"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:55
+msgid ""
+"Set the opacity level of the overlay. This will lighten or darken the image "
+"depening on the color selected."
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:67
+msgid "Background image"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:68
+msgid ""
+"The image that will be used as the background image. On video slides, this "
+"will be shown as the fallback for browsers/devices where videos are not "
+"supported."
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:75
+msgid "Background image vertical align"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:79
+#: includes/swift-slider/inc/ss-meta.php:282
+msgid "Top"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:81
+#: includes/swift-slider/inc/ss-meta.php:284
+msgid "Bottom"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:85
+msgid "Choose the vertical align for the slide background image."
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:89
+msgid "Slide Styling"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:93
+msgid "Light"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:94
+msgid "Dark"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:98
+msgid "Choose light or dark styling for the caption, and controls."
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:102
+msgid "Slide link setup"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:106
+msgid "No Link"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:107
+msgid "Link (New Window)"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:108
+msgid "Link (Same Window)"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:112
+msgid "Add a link which makes the whole slide clickable."
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:116
+msgid "Slide link URL"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:120
+msgid "The URL for the slide link. NOTE: make sure to include http://"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:130
+msgid "Slide Background Video"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:138
+msgid "Background Video .mp4"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:140
+msgid "Upload/select the video mp4 file for the background."
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:145
+msgid "Background Video .mp4 URL"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:147
+msgid "If hosted elsewhere, provide the video mp4 url for the background."
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:154
+msgid "Background Video .webm"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:156
+msgid "Upload/select the video .webm file for the background."
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:161
+msgid "Background Video .webm URL"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:163
+msgid "If hosted elsewhere, provide the video .webm url for the background."
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:170
+msgid "Background Video .ogg"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:172
+msgid "Upload/select the video ogg file for the background."
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:177
+msgid "Background Video .ogg URL"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:179
+msgid "If hosted elsewhere, provide the video .ogg url for the background."
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:186
+msgid "Video Loop"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:191
+msgid "Single play"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:195
+msgid ""
+"Choose if you would like the slide background video to play once, or loop."
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:199
+msgid "Video Mute"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:203
+msgid "Mute"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:204
+msgid "Volume"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:208
+msgid ""
+"Choose if you would like the slide background video to be muted, or not."
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:212
+msgid "Video Overlay"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:230
+msgid "Choose if you would like to show an overlay style over the video."
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:239
+msgid "Slide Content"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:247
+msgid "Caption Title"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:249
+msgid "Enter the text to show as the caption title."
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:256
+msgid "Caption Text"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:258
+msgid "Enter the caption text that shows below the title."
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:264
+msgid "Caption Horizontal Align"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:274
+msgid "Choose the horizontal align for the caption."
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:278
+msgid "Caption Vertical Align"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:283
+msgid "Middle"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:288
+msgid "Choose the vertical align for the caption."
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:292
+msgid "Caption Title Size"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:297
+msgid "Smaller"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-meta.php:301
+msgid "Choose the size for the caption title."
+msgstr ""
+
+#: includes/swift-slider/inc/ss-post-type.php:16
+#: includes/swift-slider/inc/ss-post-type.php:80
+msgid "Slide Categories"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-post-type.php:17
+msgid "Slide Category"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-post-type.php:41
+#: includes/swift-slider/inc/ss-post-type.php:42
+msgid "Add New Slide"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-post-type.php:43
+msgid "Edit Slide"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-post-type.php:44
+msgid "New Slide"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-post-type.php:45
+msgid "View Slide"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-post-type.php:46
+msgid "Search Slides"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-post-type.php:47
+msgid "No slides have been added yet"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-shortcodes.php:15
+#: includes/swift-slider/inc/ss-shortcodes.php:110
+msgid "Add Button"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-shortcodes.php:42
+msgid "Insert Button"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-shortcodes.php:44
+msgid ""
+"Select the various button options below, then press add button to add a "
+"button to the caption"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-shortcodes.php:49
+msgid "Button size"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-shortcodes.php:57
+msgid "Button colour"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-shortcodes.php:78
+msgid "Button type"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-shortcodes.php:82
+msgid "Stroke To Fill"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-shortcodes.php:87
+msgid "Button drop shadow"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-shortcodes.php:93
+#: includes/swift-slider/inc/ss-shortcodes.php:95
+msgid "Button text"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-shortcodes.php:99
+msgid "Button URL"
+msgstr ""
+
+#: includes/swift-slider/inc/ss-shortcodes.php:104
+msgid "Open link in a new window?"
+msgstr ""
+
+#: includes/wp-updates-plugin.php:87
+msgid ""
+"An Unexpected HTTP Error occurred during the API request.</p> <p><a href=\"?"
+"\" onclick=\"document.location.reload(); return false;\">Try again</a>"
+msgstr ""
+
+#: includes/wp-updates-plugin.php:91
+msgid "An unknown error occurred"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "Swift Framework"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "http://www.swiftideas.com/swift-framework/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "The Swift Framework plugin, for Swift Ideas themes."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Swift Ideas"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://swiftideas.com"
+msgstr ""

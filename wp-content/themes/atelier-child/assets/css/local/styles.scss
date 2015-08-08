@@ -1,0 +1,110 @@
+/*! LICENSE & DETAILS
+   ==================================================
+
+  Theme Name: Atelier Child Theme
+  Theme URI: http://atelier.swiftideas.com
+  Description: An Incredible Responsive Multi-Purpose WordPress WooCommerce Theme - Designed & Developed by Swift Ideas ( www.swiftideas.com )
+  License: GNU General Public License version 3.0
+  License URI: http://www.gnu.org/licenses/gpl-3.0.html
+  Template: atelier
+  Version: 1.0
+  Author: Swift Ideas
+  Author URI: www.swiftideas.com
+
+  All files, unless otherwise stated, are released under the GNU General Public License
+  version 3.0 (http://www.gnu.org/licenses/gpl-3.0.html)
+
+   ==================================================
+*/
+
+@import "variables";
+
+html body, html .layout-fullwidth #container {
+  background-color: white;
+}
+
+nav .menu > li.menu-item > a, nav.std-menu .menu > li > a span,
+.full-center nav.float-alt-menu ul.menu > li > a,
+.full-center #header nav.std-menu ul.menu > li > a {
+  text-transform: uppercase;
+  color: $nav-main;
+}
+
+#footer-wrap {
+  box-shadow: none;
+}
+
+
+#copyright .container {
+  padding-bottom: 60px;
+}
+
+ul.social-icons li:not(.sf-love) a {
+  width: 46px;
+  height: 46px;
+  font-size: 26px;
+}
+
+ul.social-icons li:not(.sf-love) a i {
+  margin-bottom: 21px;
+}
+
+#copyright p,
+#copyright .text-left,
+#copyright .text-right {
+  font-size: $font-footer;
+}
+
+.footer-address {
+  display: block;
+}
+
+.footer-email {
+  margin-left: 15px;
+}
+
+.header-right .aux-item, .header-right .aux-item:only-child {
+  padding-left: 0;
+  border-left: 0;
+}
+
+.full-center nav#main-navigation {
+  max-width: 100%;
+}
+
+.swift-slider h1 {
+  font-size: 154px;
+  letter-spacing: 12px;
+  position: relative;
+  left: 20px;
+}
+
+.swift-slider-pagination .dot {
+  top: 24%;
+}
+
+.swiper-slide .caption-content {
+  top: 47%;
+}
+
+.swift-slider-pagination {
+  background-color: #250300;
+  opacity: 0.8;
+  height: 60px;
+  bottom: 0;
+}
+
+.swift-slider-pagination:hover {
+  opacity: 0.8 !important;
+}
+
+.swift-slider .swift-slider-pagination .dot {
+  width: 13px;
+  height: 13px;
+}
+
+.home .header-wrap,
+.home #header-section .is-sticky .sticky-header,
+.home #header-section.header-5 #header {
+  border-bottom: none;
+}

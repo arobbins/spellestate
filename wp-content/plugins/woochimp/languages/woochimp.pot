@@ -1,0 +1,976 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WooChimp\n"
+"POT-Creation-Date: 2015-02-25 02:45+0200\n"
+"PO-Revision-Date: 2015-02-25 02:46+0200\n"
+"Last-Translator: \n"
+"Language-Team: RightPress <info@rightpress.net>\n"
+"Language: en_EN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.7.4\n"
+"X-Poedit-KeywordsList: __;_e;_c;__ngettext:1,2;_n:1,2;_nc:1,2;"
+"__ngettext_noop:1,2;_n_noop:1,2;_x:1,2c;_nx:1,2,4c;_nx_noop:1,2,3c;_ex:1,2c;"
+"esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: /Users/paulius/Desktop/Repositories/woochimp\n"
+
+#: /Users/paulius/Desktop/Repositories/woochimp/classes/woochimp-mailchimp-subscription.class.php:21
+msgid "MailChimp Signup"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/classes/woochimp-mailchimp-subscription.class.php:23
+msgid ""
+"Widget displays newsletter signup form, if enabled under MailChimp settings."
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/classes/woochimp-mailchimp-subscription.class.php:153
+#, php-format
+msgid ""
+"Renders MailChimp signup form. You can edit settings <a href=\"%s\">here</a>."
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:12
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:13
+msgid "MailChimp"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:18
+msgid "Integration"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:22
+msgid "General"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:25
+msgid "Enable Integration"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:32
+msgid ""
+"<p>Enable or disable integration. If disabled, none of the features will be "
+"active.</p>"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:35
+msgid "MailChimp API key"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:42
+msgid ""
+"<p>API key is required for this plugin to communicate with MailChimp servers."
+"</p>"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:47
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:1578
+msgid "Settings"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:50
+msgid "Enable Ecommerce 360"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:57
+msgid ""
+"<p>If enabled, order data will be sent to MailChimp as soon as order is "
+"marked as completed.</p>"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:60
+msgid "Enable Webhooks"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:67
+msgid ""
+"<p>If enabled and configured, MailChimp will send this plugin instant "
+"updates about changes on your account.</p> <p>This is useful as it extends "
+"functionality of this plugin. For example, you can configure this plugin not "
+"to auto-subscribe user who has just manually unsubscribed from your list.</p>"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:70
+msgid "Your Webhook URL"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:77
+msgid ""
+"<p>Webhook must be set up on MailChimp side as well. Login to your MailChimp "
+"account, go to one of your lists, click on Settings / Webhooks and add this "
+"URL as a Callback URL for a new Webhook.</p> <p>You can repeat the same "
+"process for all lists that you are going to use.</p>"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:82
+msgid "Status"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:89
+msgid "Checkout"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:93
+msgid "Subscribe On Checkout"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:96
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:225
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:352
+msgid "Enable"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:104
+msgid "Disabled"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:105
+msgid "Subscribe automatically"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:106
+msgid "Ask for permission"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:108
+msgid ""
+"<p>Choose <strong>Subscribe automatically</strong>, if you wish to subscribe "
+"all customers to one of your lists without asking for their consent.</p> "
+"<p>Choose <strong>Ask for permission</strong>, if you wish to add a checkbox "
+"to your Checkout page so users can opt-in to receive your newsletters.</p>"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:111
+msgid "Subscribe on"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:119
+msgid "Order placed"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:120
+msgid "Order completed"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:122
+msgid ""
+"<p>Choose whether to subscribe user as soon as order is placed (better for "
+"marketing) or wait until order is marked as completed (better for providing "
+"access to premium content delivered by email).</p>"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:125
+msgid "Label"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:127
+msgid "Subscribe to our newsletter"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:132
+msgid "<p>Text to display to customers next to singup checkbox.</p>"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:135
+msgid "Checkbox position"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:143
+msgid "Above customer details"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:144
+msgid "Below customer details"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:145
+msgid "Order review above submit"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:146
+msgid "Order review below submit"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:147
+msgid "Order review above total"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:148
+msgid "Above billing details"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:149
+msgid "Above shipping details"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:150
+msgid "Below Checkout billing form"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:152
+msgid ""
+"<p>Select checkbox position. Not all positions may be available on all "
+"themes and some may perform badly with some themes.</p>"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:155
+msgid "Default state"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:163
+msgid "Checked"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:164
+msgid "Not checked"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:166
+msgid ""
+"<p>Select default state of the signup checkbox.</p> <p>If you select "
+"<strong>Checked</strong>, customers will have to unselect the checkbox in "
+"order not to be subscribed to the list.</p>"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:169
+msgid "Don't resubscribe unsubscribed"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:176
+msgid ""
+"<p>If selected, users who have unsubscribed from the selected list in the "
+"past, will not be automatically subscribed again.</p> <p>This requires "
+"MailChimp Webhook integration to be active.</p>"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:179
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:235
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:362
+msgid "Replace groups on MailChimp"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:186
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:242
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:369
+msgid ""
+"<p>If selected, interest groups provided above will replace any other "
+"interest groups for existing users.</p> <p>Otherwise, provided groups will "
+"be merged with existing interest groups on subscriber profile.</p>"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:189
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:245
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:372
+msgid "Double opt-in"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:196
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:252
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:379
+msgid ""
+"<p>Enable standard MailChimp double opt-in functionality. Customers will be "
+"sent an email and required to confirm subscription.</p>"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:199
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:255
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:382
+msgid "Send welcome email"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:206
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:262
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:389
+msgid ""
+"<p>If enabled, customers will receive welcome email as configured in "
+"MailChimp settings.</p>"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:211
+msgid "Lists, Groups And Fields"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:218
+msgid "Widget"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:222
+msgid "Signup Form Widget"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:232
+msgid ""
+"<p>If enabled, a signup form will be displayed in a widget.</p> <p>You still "
+"must insert <strong>MailChimp Signup</strong> widget to one of the sidebars."
+"</p>"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:267
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:394
+msgid "List & Groups"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:270
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:397
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:617
+msgid "Mailing list"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:278
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:405
+msgid ""
+"<p>Select a MailChimp list to subscribe users to. You must choose a valid "
+"list to enable this feature.</p>"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:281
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:408
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:618
+msgid "Groups"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:289
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:416
+msgid ""
+"<p>Select one or multiple MailChimp groups to add subscribers to. Mailing "
+"list must be chosen for a list of groups to appear.</p>"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:294
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:421
+msgid "Fields"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:299
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:426
+msgid "Style"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:302
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:429
+msgid "Show field labels inline"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:309
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:436
+msgid ""
+"<p>If enabled, field labels will be shown as placeholders for fields. "
+"Otherwise, they will be displayed separately before fields.</p>"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:312
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:439
+msgid "Signup form style"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:320
+msgid "Inherit theme style"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:321
+msgid "WooChimp General"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:323
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:450
+msgid ""
+"<p>Select a style to apply to your signup form. If you choose to inherit the "
+"style from your current theme, styling will completely depend on it - in "
+"some cases you may get undesired results.</p>"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:326
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:453
+msgid "Custom CSS"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:333
+msgid ""
+"<p>You can further customize the appearance of the signup form by adding "
+"custom CSS to this field.</p> <p>To make changes to the style, simply use "
+"CSS class <strong>woochimp_wg</strong> as a basis.</p>"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:338
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:465
+msgid "Usage"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:345
+msgid "Shortcode"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:349
+msgid "Signup Shortcode"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:359
+msgid ""
+"<p>If enabled, a signup form will be displayed wherever you place a "
+"shortcode.</p>"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:460
+msgid ""
+"You can further customize the appearance of the signup form by adding custom "
+"CSS to this field.</p> <p>To make changes to the style, simply use CSS class "
+"<strong>woochimp_sc</strong> as a basis.</p>"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:472
+msgid "Labels"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:476
+msgid "Frontend forms"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:479
+msgid "Widget form title"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:481
+msgid "Newsletter"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:488
+msgid "Shortcode form title"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:490
+msgid "Sign up for our newsletter!"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:497
+msgid "Button label"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:499
+msgid "Sign up"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:506
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:508
+msgid "Email"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:515
+msgid "Error"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:517
+msgid "Something went wrong. Please try again."
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:524
+msgid "Success"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/includes/woochimp-plugin-structure.inc.php:526
+msgid "Thank you for signing up!"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:123
+msgid "Billing First Name"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:124
+msgid "Billing Last Name"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:125
+msgid "Billing Company"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:126
+msgid "Billing Address 1"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:127
+msgid "Billing Address 2"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:128
+msgid "Billing City"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:129
+msgid "Billing State"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:130
+msgid "Billing Postcode"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:131
+msgid "Billing Country"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:132
+msgid "Billing Phone"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:133
+msgid "Shipping First Name"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:134
+msgid "Shipping Last Name"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:135
+msgid "Shipping Address 1"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:136
+msgid "Shipping Address 2"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:137
+msgid "Shipping City"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:138
+msgid "Shipping State"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:139
+msgid "Shipping Postcode"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:140
+msgid "Shipping Country"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:141
+msgid "Shipping Method Title"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:142
+msgid "Payment Method Title "
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:143
+msgid "User ID"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:144
+msgid "User First Name"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:145
+msgid "User Last Name"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:146
+msgid "User Nickname"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:147
+msgid "User Is Paying Customer"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:148
+msgid "User Completed Order Count"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:344
+#, php-format
+msgid ""
+"Warning: PHP cURL extension is not enabled on this server. cURL is required "
+"for this plugin to function correctly. You can read more about cURL <a href="
+"\"%s\">here</a>."
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:512
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:611
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:653
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:667
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:807
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:813
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:996
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:1000
+msgid "Connecting to MailChimp..."
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:517
+msgid "To activate a singup widget:"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:519
+#, php-format
+msgid "go to <a href=\"%s\">Widgets</a> page"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:520
+msgid "locate a widget named MailChimp Signup"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:521
+msgid "drag and drop it to the sidebar of your choise"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:525
+msgid ""
+"Widget will not be displayed to customers if it is not enabled here or if "
+"the are issues with configuration."
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:528
+msgid ""
+"To avoid potential conflicts, we recommend to use at most one MailChimp "
+"Signup widget per page."
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:536
+msgid ""
+"You can display a signup form anywhere in your pages, posts and WooCommerce "
+"product descriptions."
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:537
+msgid ""
+"To do this, simply insert the following shortcode to the desired location:"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:540
+msgid ""
+"Shorcode will not be displayed to customers if it is not enabled here or if "
+"there are issues with configuration."
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:543
+msgid ""
+"To avoid potential conflicts, we recommend to place at most one shortcode "
+"per page."
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:598
+msgid "No results match"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:599
+msgid "There are no lists named"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:600
+msgid "Selected list does not have tags named"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:601
+msgid "No such field"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:602
+msgid "Selected list does not have groups named"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:603
+msgid "There are no products named"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:604
+msgid "There are no product categories named"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:605
+msgid "Select a mailing list"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:606
+msgid "Select a tag"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:607
+msgid "Select a checkout field"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:608
+msgid "Select some groups (optional)"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:609
+msgid "Select some products"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:610
+msgid "Select some categories"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:612
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:925
+msgid "Still connecting to MailChimp..."
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:613
+msgid "Field Name"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:614
+msgid "MailChimp Tag"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:615
+msgid "Add Field"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:616
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:925
+msgid "Add Set"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:619
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:801
+msgid "Set #"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:621
+#, php-format
+msgid ""
+"%s Response received from your server is <a href=\"%s\" target=\"_blank"
+"\">malformed</a>."
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:652
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:666
+#, php-format
+msgid ""
+"Email address field is always displayed, however, you may wish to set up "
+"additional fields here and associate them with MailChimp's <a href=\"%s\" "
+"target=\"_blank\">merge tags</a>."
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:749
+msgid "No condition"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:750
+msgid "Products in cart"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:751
+msgid "Product categories in cart"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:752
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:885
+msgid "Order total"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:753
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:912
+msgid "Custom field value"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:795
+msgid ""
+"Select mailing list and groups that customers will be added to. Multiple "
+"sets of list and groups with conditional selection are supported.<br /"
+">Please note that if criteria of more than one set is matched, user will be "
+"subscribed multiple times to multiple lists/groups."
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:801
+msgid "Remove"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:819
+msgid "Condition"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:832
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:840
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:848
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:893
+msgid "Operator"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:835
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:843
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:899
+msgid "Contains"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:836
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:844
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:900
+msgid "Does not contain"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:851
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:903
+msgid "Less than"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:852
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:904
+msgid "Less than or equal to"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:853
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:905
+msgid "Equal to"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:854
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:906
+msgid "Greater than or equal to"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:855
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:907
+msgid "Greater than"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:859
+msgid "Products"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:872
+msgid "Product categories"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:889
+msgid "Custom field key"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:897
+msgid "Is"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:898
+msgid "Is not"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:1451
+msgid "Your settings have been saved."
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:1457
+msgid "must be numeric"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:1458
+msgid "must be either 0 or 1"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:1459
+msgid "is not allowed"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:1460
+msgid "is not a valid email address"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:1461
+msgid "is not a valid URL"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:1462
+msgid "is not a valid text string"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:1468
+msgid "Reverted to a previous state."
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:1473
+msgid "Value of"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:1576
+msgid "Support"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:1623
+msgid "Unable to load lists"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:1629
+msgid "No lists found"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:1659
+msgid "Unable to load groups"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:1667
+msgid "No groups found"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:1739
+msgid "Unable to load merge vars"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:1745
+msgid "No merge vars found"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:1781
+msgid "No API key provided"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:1786
+msgid "PHP Curl extension not loaded on your server"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:1798
+msgid "Unable to initialize MailChimp class"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:1815
+msgid "Something went wrong..."
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:1874
+msgid "Integration not enabled or API key not set"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:1889
+msgid "Successfully connected to MailChimp"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:1891
+msgid "Account name"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:1893
+msgid "Industry"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:1895
+msgid "Plan type"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:1897
+msgid "Is trial"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:1897
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:1899
+msgid "Yes"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:1897
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:1899
+msgid "No"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:1899
+msgid "Ecommerce360 enabled"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:1899
+msgid "Unknown"
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:1903
+msgid "Connection to MailChimp failed."
+msgstr ""
+
+#: /Users/paulius/Desktop/Repositories/woochimp/woochimp.php:1907
+msgid "Reason"
+msgstr ""
