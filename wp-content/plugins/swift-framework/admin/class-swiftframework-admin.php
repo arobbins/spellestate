@@ -54,6 +54,51 @@ class SwiftFramework_Admin {
 
 	}
 
+	public function add_swiftframework_menu() {
+		//add_menu_page( 'Swift Framework', 'Swift Framework', 'manage_options', 'swift-framework/admin/swift-framework-admin-page.php', '', plugin_dir_url(__FILE__).'/img/logo.png', 100 );
+		add_menu_page(
+		    'Swift Framework',
+		    'Swift Framework',
+		    'manage_options',
+		    'swift-framework',
+		    array($this, 'swift_framework_about_content'),
+		    plugin_dir_url(__FILE__).'/img/logo.png'
+		);
+	}
+
+	public function swift_framework_about_content() {
+	  ?>
+		<div class="sf-about-wrap">
+		<h1>Swift Framework</h1>
+
+		<h2 class="nav-tab-wrapper">
+			<a class="nav-tab nav-tab-active" href="<?php echo admin_url() ?>/index.php?page=swift-framework">About</a>
+			<a class="nav-tab" href="<?php echo admin_url() ?>/admin.php?page=swift_framework_opts_options">Options</a>
+		</h2>
+
+		<div class="about-content">
+			<h3>Latest Update (v1.51)</h3>
+			<p></p>
+			<ul>
+				<li>Disabled options developer mode</li>
+				<li>Multi-layer parallax display fixes</li>
+				<li>Updated language files</li>
+			</ul>
+			<p></p>
+			<h3>Previous Update (v1.50)</h3>
+			<p></p>
+			<ul>
+				<li>Added options panel for all framework related options.</li>
+				<li>Added background image horizontal alignment and size options to Swift Slider slides.</li>
+				<li>Fixed further issues with intro animations.</li>
+				<li>Fixed issue with campaign category display.</li>
+			</ul>
+		</div>
+
+		</div>
+	  <?php
+	}
+
 	/**
 	 * Register the stylesheets for the admin area.
 	 *

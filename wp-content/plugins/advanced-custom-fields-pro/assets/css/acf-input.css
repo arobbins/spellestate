@@ -201,9 +201,10 @@ html[dir="rtl"] input.acf-is-prepended.acf-is-appended {
 *---------------------------------------------------------------------------------------------*/
 .acf-url i {
   position: absolute;
-  top: 7px;
-  left: 7px;
+  top: 4px;
+  left: 4px;
   opacity: 0.5;
+  color: #A9A9A9;
 }
 .acf-url.valid i {
   opacity: 1;
@@ -568,6 +569,7 @@ html[dir="rtl"] .acf-relationship .values .acf-icon {
 }
 .acf-tab-wrap {
   margin: 20px 0 0;
+  clear: both;
 }
 .acf-tab-wrap:first-child {
   margin: 0;
@@ -681,6 +683,9 @@ html[dir="rtl"] .acf-fields.has-sidebar:before {
   border-right-width: 0;
   left: auto;
   right: 0;
+}
+.acf-tab-wrap.side {
+  margin: 0;
 }
 .acf-tab-wrap.side .acf-tab-group {
   position: absolute;
@@ -837,12 +842,16 @@ html[dir="rtl"] .acf-postbox.default .acf-tab-wrap.side .acf-tab-group li a {
   padding: 0;
   width: 100%;
 }
-.acf-oembed .canvas .acf-sprite-media {
+.acf-oembed .canvas .acf-icon-picture {
   position: absolute;
   top: 50%;
   left: 50%;
-  margin: -18px 0 0 -18px;
+  margin: -21px 0 0 -21px;
   z-index: 0;
+  height: 42px;
+  width: 42px;
+  font-size: 42px;
+  color: #999;
 }
 .acf-oembed .canvas-loading {
   position: absolute;
@@ -887,7 +896,7 @@ html[dir="rtl"] .acf-postbox.default .acf-tab-wrap.side .acf-tab-group li a {
 .acf-oembed.has-value .title-search {
   display: none;
 }
-.acf-oembed.has-value .canvas .acf-sprite-media {
+.acf-oembed.has-value .canvas .acf-icon {
   display: none;
 }
 .acf-oembed.is-editing .title-value {
@@ -905,7 +914,7 @@ html[dir="rtl"] .acf-postbox.default .acf-tab-wrap.side .acf-tab-group li a {
 .acf-oembed.has-error .canvas-error {
   display: block;
 }
-.acf-oembed.has-error .canvas .acf-sprite-media {
+.acf-oembed.has-error .canvas .acf-icon {
   display: none;
 }
 /*--------------------------------------------------------------------------------------------

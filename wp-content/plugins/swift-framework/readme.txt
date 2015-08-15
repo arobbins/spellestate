@@ -2,7 +2,7 @@
 Contributors: SwiftIdeas
 Tags: swift framework
 Requires at least: 3.6
-Tested up to: 4.2.3
+Tested up to: 4.2.4
 Stable tag: 4.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -16,6 +16,21 @@ The Swift Framework plugin provides the Custom Post Types, Swift Slider, and Swi
 Supported Themes: Atelier, Cardinal, JOYN
 
 == Changelog ==
+
+= 1.51 =
+* Disabled options developer mode
+* Multi-layer parallax display fixes
+* Updated language files
+
+
+= 1.50 =
+* Added options panel for all framework related options
+* Added background image horizontal alignment and size options to Swift Slider slides
+* Fixed further issues with intro animations
+* Fixed issue with campaign category display
+
+= 1.43 =
+* Fixed issues with certain animation issues
 
 = 1.42 =
 * Properly fixed missing css images

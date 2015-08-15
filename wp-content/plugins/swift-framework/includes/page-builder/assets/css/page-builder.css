@@ -2746,6 +2746,7 @@ li.spb_no_templates span {
 .container-helper span {
     color: #666;
     margin-left: 5px;
+    margin-right: 5px;
 }
 
 .container-helper a {

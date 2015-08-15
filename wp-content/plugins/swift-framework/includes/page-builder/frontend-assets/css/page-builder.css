@@ -167,7 +167,6 @@
 	margin: 0;
 	padding-left: 0;
 	padding-right: 0;
-	line-height: 0;
 }
 .spb-row-container.spb-row-full-width .spb_content_element > .container {
 	padding-left: 0;
@@ -2606,6 +2605,7 @@ ul.jobs {
 }
 .spb_multilayer_parallax .layer.container {
 	height: 100%;
+	max-width: 100%;
 }
 .spb_multilayer_parallax .layer-bg {
 	width: 120%;
@@ -2674,6 +2674,7 @@ ul.jobs {
 	width: 100%;
 	position: absolute;
 	margin-left: 0;
+	padding: 0 15px;
 }
 
 
@@ -3412,6 +3413,12 @@ ul.social-icons li.deviantart a:hover {
 }
 ul.social-icons li.behance a:hover {
 	background-color: #1769ff;
+}
+ul.social-icons li.vk a:hover {
+	background-color: #4e729a;
+}
+ul.social-icons li.twitch a:hover {
+	background-color: #6441a5;
 }
 ul.social-icons li.mail a:hover {
 	background-color: #666;
@@ -4228,15 +4235,15 @@ html.no-js .sf-animation.image-banner-content, .sf-animation[data-animation="non
 	-moz-transform: translateY(100px);
 	transform: translateY(100px);
 	opacity: 0;
+	-webkit-transition: all 0.65s cubic-bezier(0.725, 0.000, 0.000, 0.995);
+	-moz-transition: all 0.65s cubic-bezier(0.725, 0.000, 0.000, 0.995);
+	transition: all 0.65s cubic-bezier(0.725, 0.000, 0.000, 0.995);
 }
 .sf-animation[data-animation="move-up"].sf-animate {
 	-webkit-transform: translateY(0);
 	-moz-transform: translateY(0);
 	transform: translateY(0);
 	opacity: 1;
-	-webkit-animation: transform 0.65s cubic-bezier(0.725, 0.000, 0.000, 0.995) both, opacity 0.65s ease-out both;
-	-moz-animation: transform 0.65s cubic-bezier(0.725, 0.000, 0.000, 0.995) both, opacity 0.65s ease-out both;
-	transition: transform 0.65s cubic-bezier(0.725, 0.000, 0.000, 0.995) both, opacity 0.65s ease-out both;
 }
 .sf-animation[data-animation="spin"].sf-animate {
 	-webkit-animation: spin 0.65s ease forwards;
@@ -4263,12 +4270,24 @@ html.no-js .sf-animation.image-banner-content, .sf-animation[data-animation="non
 }
 .sf-animation[data-animation="fade-from-left"] {
 	left: -70px;
+	-webkit-transition: all 0.8s ease-out;
+	-moz-transition: all 0.8s ease-out;
+	-o-transition: all 0.8s ease-out;
+	transition: all 0.8s ease-out;
 }
 .sf-animation[data-animation="fade-from-right"] {
 	right: -70px;
+	-webkit-transition: all 0.8s ease-out;
+	-moz-transition: all 0.8s ease-out;
+	-o-transition: all 0.8s ease-out;
+	transition: all 0.8s ease-out;
 }
 .sf-animation[data-animation="fade-from-bottom"] {
 	bottom: -70px;
+	-webkit-transition: all 0.8s ease-out;
+	-moz-transition: all 0.8s ease-out;
+	-o-transition: all 0.8s ease-out;
+	transition: all 0.8s ease-out;
 }
 .sf-animation[data-animation="fade-from-left"], .sf-animation[data-animation="fade-from-right"] {
 	margin: 0 auto;

@@ -75,11 +75,11 @@
     ================================================== */
     function ss_frontend_css() {
 
-	    global $sf_options, $is_IE;
+	    global $sf_opts, $is_IE;
 	    $enable_min_styles = false;
 
-        if ( isset( $sf_options['enable_min_styles'] ) ) {
-        	$enable_min_styles = $sf_options['enable_min_styles'];
+        if ( isset( $sf_opts['enable_min_styles'] ) ) {
+        	$enable_min_styles = $sf_opts['enable_min_styles'];
 		}
 
         // Register Styles
@@ -102,8 +102,8 @@
     ================================================== */
     function ss_frontend_js() {
 
-        global $sf_options;
-        $enable_min_scripts = $sf_options['enable_min_scripts'];
+        global $sf_opts;
+        $enable_min_scripts = $sf_opts['enable_min_scripts'];
 
         // Register Scripts
         wp_register_script( 'swift-slider', SS_ASSET_URL . '/js/swift-slider.js', 'jquery', null, true );

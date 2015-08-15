@@ -702,6 +702,9 @@
 				if ( sf_theme_opts_name() == "sf_atelier_options" && $show_details == "yes" && $blog_type != "timeline" ) {
 					$post_item .= '</div>'; // close post-content-wrap
 				}
+				
+//				$post_item = sf_get_content_view( 'post', 'standard', true );
+//				return $post_item;
             }
 
             return $post_item;

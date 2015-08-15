@@ -18,6 +18,7 @@
 */
 
 @import "variables";
+@import "grid";
 
 html body, html .layout-fullwidth #container {
   background-color: white;
@@ -28,6 +29,23 @@ nav .menu > li.menu-item > a, nav.std-menu .menu > li > a span,
 .full-center #header nav.std-menu ul.menu > li > a {
   text-transform: uppercase;
   color: $nav-main;
+}
+
+.shopping-bag-item a > span.num-items,
+.shopping-bag-item > a > span.menu-item-title,
+.wishlist-item > a > span.menu-item-title,
+#header nav li {
+  font-size: 16px;
+}
+
+.shopping-bag-item a > span.num-items {
+  right: 0px;
+  top: 46%;
+}
+
+.shopping-bag-item > a > i,
+.wishlist-item > a > i {
+  font-size: 32px;
 }
 
 #footer-wrap {
@@ -79,32 +97,118 @@ ul.social-icons li:not(.sf-love) a i {
   left: 20px;
 }
 
-.swift-slider-pagination .dot {
-  top: 24%;
-}
-
 .swiper-slide .caption-content {
   top: 47%;
 }
 
 .swift-slider-pagination {
   background-color: #250300;
-  opacity: 0.8;
+  opacity: 0.85;
   height: 60px;
   bottom: 0;
 }
 
+.swift-slider:hover .swift-slider-pagination,
 .swift-slider-pagination:hover {
   opacity: 0.8 !important;
 }
 
 .swift-slider .swift-slider-pagination .dot {
+  top: 24%;
   width: 13px;
   height: 13px;
+  margin: 10px 20px;
 }
 
 .home .header-wrap,
 .home #header-section .is-sticky .sticky-header,
 .home #header-section.header-5 #header {
   border-bottom: none;
+}
+
+.home .inner-page-wrap {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.full-center #logo.has-img a > img {
+  max-height: 200px !important;
+}
+
+.content-intro-wrap {
+  width: 100%;
+  background-color: #4e1b17;
+  margin-top: 0;
+  margin-bottom: 0;
+
+  p {
+
+  }
+}
+
+.content-intro {
+  padding-top: 60px;
+  padding-bottom: 60px;
+  padding-left: 20%;
+  padding-right: 20%;
+  text-align: center;
+
+  p {
+    color: white;
+    font-size: 19px;
+    line-height: 1.7em;
+    font-style: italic;
+  }
+}
+
+.content-products-slider {
+  .carousel-arrows a {
+    font-size: 60px;
+  }
+
+  .carousel-prev {
+    position: absolute;
+    top: 43%;
+    left: -70px;
+  }
+
+  .carousel-next {
+    position: absolute;
+    right: -37px;
+    top: 43%;
+  }
+}
+
+.promo {
+  text-align: center;
+
+  &:nth-child(2) {
+    .promo-title {
+      margin-top: 17px;
+    }
+  }
+}
+
+.promo-title {
+  margin-bottom: 10px;
+  margin-top: 40px;
+  font-size: 40px;
+}
+
+.promo-img {
+  min-height: 157px;
+}
+
+.promo-copy {
+  font-style: italic;
+  max-width: 310px;
+  margin: 0 auto;
+}
+
+.promo-wrapper {
+  margin: 3em auto;
+}
+
+#header .header-right .aux-cart-wishlist .wishlist-item {
+  display: none;
 }

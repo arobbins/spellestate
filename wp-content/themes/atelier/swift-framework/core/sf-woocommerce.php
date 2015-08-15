@@ -262,8 +262,8 @@
 			<div id="product_cat_hero" style="float:left;margin-right:10px;"><img style="height: auto!important;margin: 10px 0;" src="<?php echo wc_placeholder_img_src(); ?>" width="300px" height="300px" /></div>
 			<div style="line-height:40px;">
 				<input type="hidden" id="product_cat_hero_id" name="product_cat_hero_id" />
-				<button type="button" class="upload_hero_button button"><?php _e( 'Upload/Add image', 'woocommerce' ); ?></button>
-				<button type="button" class="remove_hero_button button"><?php _e( 'Remove image', 'woocommerce' ); ?></button>
+				<button type="button" class="upload_hero_button button"><?php _e( 'Upload/Add image', 'swiftframework' ); ?></button>
+				<button type="button" class="remove_hero_button button"><?php _e( 'Remove image', 'swiftframework' ); ?></button>
 				<p><?php _e( 'This image is used for the hero image on product category pages.', 'swiftframework' ); ?></p>
 			</div>
 			<script type="text/javascript">
@@ -287,9 +287,9 @@
 
 					// Create the media frame.
 					file_frame = wp.media.frames.downloadable_file = wp.media({
-						title: '<?php _e( 'Choose an image', 'woocommerce' ); ?>',
+						title: '<?php _e( 'Choose an image', 'swiftframework' ); ?>',
 						button: {
-							text: '<?php _e( 'Use image', 'woocommerce' ); ?>',
+							text: '<?php _e( 'Use image', 'swiftframework' ); ?>',
 						},
 						multiple: false
 					});
@@ -332,13 +332,13 @@
 
     	?>
     	<tr class="form-field">
-			<th scope="row" valign="top"><label><?php _e( 'Hero Image', 'woocommerce' ); ?></label></th>
+			<th scope="row" valign="top"><label><?php _e( 'Hero Image', 'swiftframework' ); ?></label></th>
 			<td>
 				<div id="product_cat_hero" style="float:left;margin-right:10px;"><img style="height: auto!important;" src="<?php echo esc_url($image); ?>" width="300px" height="300px" /></div>
 				<div style="line-height:40px;">
 					<input type="hidden" id="product_cat_hero_id" name="product_cat_hero_id" value="<?php echo $hero_id; ?>" />
-					<button type="submit" class="upload_hero_button button"><?php _e( 'Upload/Add image', 'woocommerce' ); ?></button>
-					<button type="submit" class="remove_hero_button button"><?php _e( 'Remove image', 'woocommerce' ); ?></button>
+					<button type="submit" class="upload_hero_button button"><?php _e( 'Upload/Add image', 'swiftframework' ); ?></button>
+					<button type="submit" class="remove_hero_button button"><?php _e( 'Remove image', 'swiftframework' ); ?></button>
 					<p><?php _e( 'This image is used for the hero image on product category pages.', 'swiftframework' ); ?></p>
 				</div>
 				<script type="text/javascript">
@@ -358,9 +358,9 @@
 
 						// Create the media frame.
 						file_frame_hero = wp.media.frames.downloadable_file = wp.media({
-							title: '<?php _e( 'Choose an image', 'woocommerce' ); ?>',
+							title: '<?php _e( 'Choose an image', 'swiftframework' ); ?>',
 							button: {
-								text: '<?php _e( 'Use image', 'woocommerce' ); ?>',
+								text: '<?php _e( 'Use image', 'swiftframework' ); ?>',
 							},
 							multiple: false
 						});
@@ -1173,6 +1173,7 @@
 		add_action( 'wp_ajax_nopriv_sf_cart_product_remove', 'sf_cart_product_remove' );
 	}
 
+
 	/* WOO SHIPPING CALC BEFORE
 	================================================== */
 	if ( ! function_exists('sf_cart_shipping_calc_before')){
@@ -1183,6 +1184,7 @@
 		add_action( 'woocommerce_before_shipping_calculator', 'sf_cart_shipping_calc_before' );
 	}
 
+
 	/* WOO SHIPPING CALC AFTER
 	================================================== */
 	if ( ! function_exists('sf_cart_shipping_calc_after')){
@@ -1191,5 +1193,26 @@
 		}
 		add_action( 'woocommerce_after_shipping_calculator', 'sf_cart_shipping_calc_after' );
 	}
+	
+	
+	/* WOO VARIATION ADD TO CART BUTTON
+	================================================== */
+	remove_action( 'woocommerce_single_variation', 'woocommerce_single_variation_add_to_cart_button', 20 );
+	function sf_single_variation_add_to_cart_button() {
+		global $product;
+		$loading_text = __( 'Adding...', 'swiftframework' );
+		$added_text = __( 'Item added', 'swiftframework' );
+		?>
+		<div class="variations_button">
+			<?php woocommerce_quantity_input( array( 'input_value' => isset( $_POST['quantity'] ) ? wc_stock_amount( $_POST['quantity'] ) : 1 ) ); ?>
+			<button type="submit" data-product_id="<?php echo esc_attr($product->id); ?>" data-quantity="1" data-default_text="<?php echo esc_attr($product->single_add_to_cart_text()); ?>" data-default_icon="sf-icon-add-to-cart" data-loading_text="<?php echo esc_attr($loading_text); ?>" data-added_text="<?php echo esc_attr($added_text); ?>" class="single_add_to_cart_button button alt"><?php echo apply_filters('sf_add_to_cart_icon', '<i class="sf-icon-add-to-cart"></i>'); ?><span><?php echo esc_attr($product->single_add_to_cart_text()); ?></span></button>
+			<input type="hidden" name="add-to-cart" value="<?php echo absint( $product->id ); ?>" />
+			<input type="hidden" name="product_id" value="<?php echo absint( $product->id ); ?>" />
+			<input type="hidden" name="variation_id" class="variation_id" value="" />
+			<?php echo sf_wishlist_button(); ?>
+		</div>
+		<?php
+	}
+	add_action( 'woocommerce_single_variation', 'sf_single_variation_add_to_cart_button', 20 );
 
 ?>

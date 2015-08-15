@@ -326,6 +326,38 @@ class acf_field_radio extends acf_field {
 		return $value;
 	}
 	
+	
+	/*
+	*  load_value()
+	*
+	*  This filter is appied to the $value after it is loaded from the db
+	*
+	*  @type	filter
+	*  @since	5.2.9
+	*  @date	23/01/13
+	*
+	*  @param	$value - the value found in the database
+	*  @param	$post_id - the $post_id from which the value was loaded from
+	*  @param	$field - the field array holding all the field options
+	*
+	*  @return	$value - the value to be saved in te database
+	*/
+	
+	function load_value( $value, $post_id, $field ) {
+		
+		// must be single value
+		if( is_array($value) ) {
+			
+			$value = array_pop($value);
+			
+		}
+		
+		
+		// return
+		return $value;
+		
+	}
+	
 }
 
 new acf_field_radio();

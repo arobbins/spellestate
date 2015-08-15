@@ -97,6 +97,7 @@
     /* AUTHOR */
     if ( ! $show_related ) {
         remove_action( 'sf_post_after_article', 'sf_post_related_articles', 10 );
+        remove_action( 'sf_post_after_article', 'sf_post_related_articles', 30 );
     }
 
     /* SOCIAL */

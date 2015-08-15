@@ -1,52 +1,58 @@
 <?php
 
-/**
- * Replies Loop - Single Reply
- *
- * @package bbPress
- * @subpackage Atelier
- */
+    /**
+     * Replies Loop - Single Reply
+     *
+     * @package    bbPress
+     * @subpackage Cardinal
+     */
 ?>
 
 
 <div id="post-<?php bbp_reply_id(); ?>" <?php bbp_reply_class(); ?>>
-	
-	<div class="bbp-reply-author">
 
-		<?php do_action( 'bbp_theme_before_reply_author_details' ); ?>
+    <div class="bbp-reply-author">
 
-		<?php bbp_reply_author_avatar( bbp_get_reply_id(), 60 ); ?>
+        <?php do_action( 'bbp_theme_before_reply_author_details' ); ?>
 
-		<?php do_action( 'bbp_theme_after_reply_author_details' ); ?>
+        <?php bbp_reply_author_avatar( bbp_get_reply_id(), 60 ); ?>
 
-	</div><!-- .bbp-reply-author -->
+        <?php do_action( 'bbp_theme_after_reply_author_details' ); ?>
 
-	<div class="bbp-reply-content">
+    </div>
+    <!-- .bbp-reply-author -->
 
-		<?php do_action( 'bbp_theme_before_reply_content' ); ?>
+    <div class="bbp-reply-content">
 
-<!--		<div class="reply-author-displayname"><?php bbp_reply_author() ?></div>-->
-		
-		<div class="reply-author-displayname"><?php bbp_reply_author_link( array( 'type' => 'name', 'show_role' => false ) ); ?></div>
+        <?php do_action( 'bbp_theme_before_reply_content' ); ?>
 
-		<div class="bbp-meta">
+        <!--		<div class="reply-author-displayname"><?php bbp_reply_author() ?></div>-->
 
-			<?php printf( __( '%1$s at %2$s', 'bbpress' ), get_the_date(), esc_attr( get_the_time() ) ); ?>
+        <div class="reply-author-displayname"><?php bbp_reply_author_link( array( 'type'      => 'name',
+                                                                                  'show_role' => false
+                ) ); ?></div>
 
-			<a href="<?php bbp_reply_url(); ?>" title="<?php bbp_reply_title(); ?>" class="bbp-reply-permalink">#<?php bbp_reply_id(); ?></a>
+        <div class="bbp-meta">
 
-		</div><!-- .bbp-meta -->
+            <?php bbp_reply_post_date(); ?>
 
-		<?php bbp_reply_content(); ?>
+            <a href="<?php bbp_reply_url(); ?>" title="<?php bbp_reply_title(); ?>"
+               class="bbp-reply-permalink">#<?php bbp_reply_id(); ?></a>
 
-		<?php do_action( 'bbp_theme_before_reply_admin_links' ); ?>
+        </div>
+        <!-- .bbp-meta -->
 
-			<?php bbp_reply_admin_links(); ?>
+        <?php bbp_reply_content(); ?>
 
-		<?php do_action( 'bbp_theme_after_reply_admin_links' ); ?>
+        <?php do_action( 'bbp_theme_before_reply_admin_links' ); ?>
 
-		<?php do_action( 'bbp_theme_after_reply_content' ); ?>
+        <?php bbp_reply_admin_links(); ?>
 
-	</div><!-- .bbp-reply-content -->
+        <?php do_action( 'bbp_theme_after_reply_admin_links' ); ?>
+
+        <?php do_action( 'bbp_theme_after_reply_content' ); ?>
+
+    </div>
+    <!-- .bbp-reply-content -->
 
 </div><!-- #post-<?php bbp_reply_id(); ?> -->

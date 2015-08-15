@@ -110,7 +110,7 @@ class acf_field_repeater extends acf_field {
 		
 		foreach( $field['sub_fields'] as $f ) {
 			
-			$empty_row[ $f['key'] ] = isset( $f['default_value'] ) ? $f['default_value'] : false;
+			$empty_row[ $f['key'] ] = isset( $f['default_value'] ) ? $f['default_value'] : null;
 			
 		}
 				
@@ -298,8 +298,8 @@ class acf_field_repeater extends acf_field {
 				
 				<?php if( $show_remove ): ?>
 					<td class="remove">
-						<a class="acf-icon small acf-repeater-add-row" href="#" data-before="1" title="<?php _e('Add row','acf'); ?>"><i class="acf-sprite-add"></i></a>
-						<a class="acf-icon small acf-repeater-remove-row" href="#" title="<?php _e('Remove row','acf'); ?>"><i class="acf-sprite-remove"></i></a>
+						<a class="acf-icon acf-icon-plus small acf-repeater-add-row" href="#" data-before="1" title="<?php _e('Add row','acf'); ?>"></a>
+						<a class="acf-icon acf-icon-minus small acf-repeater-remove-row" href="#" title="<?php _e('Remove row','acf'); ?>"></a>
 					</td>
 				<?php endif; ?>
 				

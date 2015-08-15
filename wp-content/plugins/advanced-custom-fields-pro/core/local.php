@@ -62,12 +62,17 @@ class acf_local {
 		
 		foreach( $groups as $group ) {
 			
-			if( !in_array($group['key'], $ignore) ) {
+			// is ignore
+			if( in_array($group['key'], $ignore) ) {
 				
-				$field_groups[] = $group;
-				$added = true;
-				
+				continue;
+					
 			}
+			
+			
+			// append
+			$field_groups[] = $group;
+			$added = true;
 			
 		}
 		

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Bulgarian 1.0\n"
-"POT-Creation-Date: 2015-08-06 17:31+0100\n"
+"POT-Creation-Date: 2015-08-11 15:20+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Swift Ideas <ed@swiftideas.net>\n"
 "Language-Team: dinev.today\n"
@@ -311,7 +311,7 @@ msgstr "Търси"
 #: includes/overrides/sf-theme-functions.php:1333 searchform.php:3
 #: swift-framework/content/sf-blog.php:365
 #: swift-framework/core/sf-directory.php:144
-#: swift-framework/core/sf-header.php:1130 swift-framework/layout/404.php:10
+#: swift-framework/core/sf-header.php:939 swift-framework/layout/404.php:10
 #: swift-framework/layout/search.php:77
 msgid "Search"
 msgstr "Търси"
@@ -611,8 +611,7 @@ msgid "Username"
 msgstr "Потребител"
 
 #: bbpress/form-user-edit.php:103 bbpress/form-user-register.php:28
-#: comments.php:80 woocommerce/order/order-details.php:196
-#: woocommerce/single-product-reviews.php:70
+#: comments.php:80 woocommerce/single-product-reviews.php:70
 #: woocommerce/single-product-reviews.php:71
 msgid "Email"
 msgstr "Е-поща"
@@ -794,11 +793,6 @@ msgstr "Автор"
 #, fuzzy
 msgid "Search Results"
 msgstr "Не са намерени съвпадения, моля опитай с други ключови думи."
-
-#: bbpress/loop-single-reply.php:34
-#, fuzzy, php-format
-msgid "%1$s at %2$s"
-msgstr "%1$s - %2$s"
 
 #: bbpress/loop-single-topic.php:60
 #, fuzzy, php-format
@@ -1611,7 +1605,6 @@ msgid "Select File"
 msgstr "Свали файлове%s"
 
 #: includes/meta-box/inc/fields/file-input.php:40
-#: woocommerce/single-product/add-to-cart/variable.php:29
 #, fuzzy
 msgid "Select"
 msgstr "Избор на опции"
@@ -3427,12 +3420,12 @@ msgid "Create Widget Area"
 msgstr "Направи"
 
 #: includes/options/core/enqueue.php:451
-#: includes/options/inc/extensions/customizer/extension_customizer.php:681
+#: includes/options/inc/extensions/customizer/extension_customizer.php:685
 msgid "You have changes that are not saved. Would you like to save them now?"
 msgstr ""
 
 #: includes/options/core/enqueue.php:459
-#: includes/options/inc/extensions/customizer/extension_customizer.php:682
+#: includes/options/inc/extensions/customizer/extension_customizer.php:686
 msgid "Are you sure? Resetting will lose all custom values."
 msgstr ""
 
@@ -3441,7 +3434,7 @@ msgid "Are you sure? Resetting will lose all custom values in this section."
 msgstr ""
 
 #: includes/options/core/enqueue.php:475
-#: includes/options/inc/extensions/customizer/extension_customizer.php:683
+#: includes/options/inc/extensions/customizer/extension_customizer.php:687
 msgid ""
 "Your current options will be replaced with the values of this preset. Would "
 "you like to proceed?"
@@ -3554,7 +3547,7 @@ msgstr "Този адрес ще бъде използван при плащан
 msgid "Invalid security credential, please reload the page and try again."
 msgstr ""
 
-#: includes/options/framework.php:2827
+#: includes/options/framework.php:2838
 msgid "Your panel has no fields. Nothing to save."
 msgstr ""
 
@@ -3624,15 +3617,15 @@ msgid ""
 "date. The core version is %s"
 msgstr ""
 
-#: includes/options/inc/extensions/customizer/extension_customizer.php:716
+#: includes/options/inc/extensions/customizer/extension_customizer.php:720
 msgid "You have changes that are not saved.  Would you like to save them now?"
 msgstr ""
 
-#: includes/options/inc/extensions/customizer/extension_customizer.php:717
+#: includes/options/inc/extensions/customizer/extension_customizer.php:721
 msgid "Are you sure?  Resetting will lose all custom values."
 msgstr ""
 
-#: includes/options/inc/extensions/customizer/extension_customizer.php:718
+#: includes/options/inc/extensions/customizer/extension_customizer.php:722
 msgid ""
 "Your current options will be replaced with the values of this preset.  Would "
 "you like to proceed?"
@@ -3897,7 +3890,7 @@ msgstr "Заглавие"
 #: includes/options/inc/fields/slides/field_slides.php:204
 #: swift-framework/core/sf-functions.php:2166
 #: swift-framework/sf-megamenu/edit_custom_walker.php:193
-#: woocommerce/cart/cart.php:35 woocommerce/single-product/tabs/tabs.php:24
+#: woocommerce/cart/cart.php:35 woocommerce/single-product/tabs/tabs.php:26
 msgid "Description"
 msgstr "Описание"
 
@@ -4201,9 +4194,8 @@ msgstr ""
 msgid "Email address"
 msgstr "Е-поща"
 
-#: includes/options/inc/tracking.php:157
-#: swift-framework/core/sf-header.php:1074
-#: swift-framework/core/sf-header.php:1435
+#: includes/options/inc/tracking.php:157 swift-framework/core/sf-header.php:883
+#: swift-framework/core/sf-header.php:1244
 msgid "Subscribe"
 msgstr "Запиши се"
 
@@ -4521,8 +4513,8 @@ msgid "Displays whether or not WordPress is in Debug Mode."
 msgstr ""
 
 #: includes/options/inc/welcome/views/status_report.php:172
-#: swift-framework/core/sf-header.php:1083
-#: swift-framework/core/sf-header.php:1444
+#: swift-framework/core/sf-header.php:892
+#: swift-framework/core/sf-header.php:1253
 msgid "Language"
 msgstr "Език"
 
@@ -5285,7 +5277,7 @@ msgstr "Търси"
 
 #: includes/overrides/sf-theme-functions.php:477
 #: includes/overrides/sf-theme-functions.php:916
-#: swift-framework/core/sf-header.php:689
+#: swift-framework/core/sf-header.php:498
 msgid "Please assign a menu to the Main Menu in Appearance > Menus"
 msgstr "Моля те избери главно меню от Изглед > Навигация (Appearance > Menus)"
 
@@ -5297,37 +5289,37 @@ msgstr "Супер търсене"
 #: includes/overrides/sf-theme-functions.php:1054
 #: includes/overrides/sf-theme-functions.php:1056
 #: includes/overrides/sf-theme-functions.php:1058
-#: swift-framework/core/sf-header.php:397
-#: swift-framework/core/sf-header.php:418
+#: swift-framework/core/sf-header.php:206
+#: swift-framework/core/sf-header.php:227
 msgid "Menu"
 msgstr "Меню"
 
 #: includes/overrides/sf-theme-functions.php:1145
-#: swift-framework/core/sf-header.php:1519
+#: swift-framework/core/sf-header.php:1328
 msgid "Other"
 msgstr "Друго"
 
 #: includes/overrides/sf-theme-functions.php:1194
 #: includes/overrides/sf-theme-functions.php:1197
-#: swift-framework/core/sf-header.php:1600
+#: swift-framework/core/sf-header.php:1409
 #, php-format
 msgid "View all %d results"
 msgstr "Виж всички %d резултата"
 
 #: includes/overrides/sf-theme-functions.php:1204
-#: swift-framework/core/sf-header.php:1606
+#: swift-framework/core/sf-header.php:1415
 msgid "No results"
 msgstr "Няма резултати"
 
 #: includes/overrides/sf-theme-functions.php:1205
-#: swift-framework/core/sf-header.php:1607
+#: swift-framework/core/sf-header.php:1416
 msgid "No search results could be found, please try another query."
 msgstr "Няма съвпадения от търсенето, опитай с други ключови думи."
 
 #: includes/overrides/sf-theme-functions.php:1355
-#: swift-framework/core/sf-header.php:963
-#: swift-framework/core/sf-header.php:1068
-#: swift-framework/core/sf-header.php:1428 woocommerce/checkout/thankyou.php:39
+#: swift-framework/core/sf-header.php:772
+#: swift-framework/core/sf-header.php:877
+#: swift-framework/core/sf-header.php:1237 woocommerce/checkout/thankyou.php:39
 #: woocommerce/myaccount/form-edit-address.php:38
 #: woocommerce/myaccount/my-account.php:38
 #: woocommerce/order/order-details.php:32 woocommerce/wishlist.php:89
@@ -5339,15 +5331,15 @@ msgid "Logout"
 msgstr ""
 
 #: includes/overrides/sf-theme-functions.php:1358
-#: swift-framework/core/sf-header.php:966
-#: swift-framework/core/sf-header.php:1070
-#: swift-framework/core/sf-header.php:1431
+#: swift-framework/core/sf-header.php:775
+#: swift-framework/core/sf-header.php:879
+#: swift-framework/core/sf-header.php:1240
 #: woocommerce/myaccount/form-login.php:60
 msgid "Login"
 msgstr "Вход"
 
 #: includes/overrides/sf-theme-functions.php:1359
-#: swift-framework/core/sf-header.php:1432
+#: swift-framework/core/sf-header.php:1241
 #, fuzzy
 msgid "Sign Up"
 msgstr "Изход"
@@ -5371,7 +5363,7 @@ msgstr "1 коментар"
 
 #: includes/overrides/sf-theme-functions.php:1401
 #: includes/overrides/sf-theme-functions.php:1409
-#: swift-framework/content/sf-post-formats.php:1165
+#: swift-framework/content/sf-post-formats.php:1168
 #, php-format
 msgid "By <a href=\"%2$s\" rel=\"author\" itemprop=\"author\">%1$s</a>"
 msgstr "Автор: <a href=\"%2$s\" rel=\"author\" itemprop=\"author\">%1$s</a>"
@@ -6094,8 +6086,8 @@ msgstr ""
 msgid "http://codex.wordpress.org/Child_Themes"
 msgstr ""
 
-#: includes/sf-options.php:210 swift-framework/core/sf-header.php:1003
-#: swift-framework/core/sf-header.php:1005
+#: includes/sf-options.php:210 swift-framework/core/sf-header.php:812
+#: swift-framework/core/sf-header.php:814
 msgid "Welcome"
 msgstr "Здравей"
 
@@ -8329,7 +8321,7 @@ msgid "Pledged of %s Goal"
 msgstr "дарени от %s нужни"
 
 #: swift-framework/content/sf-campaign-detail.php:54
-#: swift-framework/content/sf-post-formats.php:1299
+#: swift-framework/content/sf-post-formats.php:1302
 msgid "Day to Go"
 msgid_plural "Days to Go"
 msgstr[0] ""
@@ -8499,6 +8491,7 @@ msgstr ""
 
 #: swift-framework/content/sf-post-detail.php:230
 #: swift-framework/content/sf-post-formats.php:365
+#: template-parts/content/post-standard.php:80
 msgid "Download"
 msgstr "Свали"
 
@@ -8525,6 +8518,8 @@ msgstr "В категория %1$s на дата <time datetime=\"%2$s\">%3$s</t
 #: swift-framework/content/sf-post-detail.php:518
 #: swift-framework/content/sf-post-formats.php:385
 #: swift-framework/content/sf-post-formats.php:648
+#: template-parts/content/post-standard.php:156
+#: template-parts/content/post-timeline.php:89
 #, php-format
 msgid ""
 "<span class=\"author\">By <a href=\"%2$s\" rel=\"author\" itemprop=\"author"
@@ -8597,25 +8592,27 @@ msgstr "Статия"
 #: swift-framework/content/sf-post-formats.php:470
 #: swift-framework/content/sf-post-formats.php:565
 #: swift-framework/content/sf-post-formats.php:678
-#: swift-framework/content/sf-post-formats.php:1133
+#: swift-framework/content/sf-post-formats.php:1136
+#: template-parts/content/post-standard.php:190
+#: template-parts/content/post-timeline.php:123
 msgid "Read more"
 msgstr "Прочети повече"
 
-#: swift-framework/content/sf-post-formats.php:1161
+#: swift-framework/content/sf-post-formats.php:1164
 #, php-format
 msgid "%1$s"
 msgstr "%1$s"
 
-#: swift-framework/content/sf-post-formats.php:1163
+#: swift-framework/content/sf-post-formats.php:1166
 #, fuzzy, php-format
 msgid "by <a href=\"%2$s\" rel=\"author\" itemprop=\"author\">%1$s</a>"
 msgstr "Автор: <a href=\"%2$s\" rel=\"author\" itemprop=\"author\">%1$s</a>"
 
-#: swift-framework/content/sf-post-formats.php:1290
+#: swift-framework/content/sf-post-formats.php:1293
 msgid "Funded"
 msgstr "Финансиран"
 
-#: swift-framework/content/sf-post-formats.php:1294
+#: swift-framework/content/sf-post-formats.php:1297
 msgid "Pledged"
 msgstr "Дарени"
 
@@ -8908,105 +8905,105 @@ msgstr "Основна снимка"
 msgid "Create"
 msgstr "Направи"
 
-#: swift-framework/core/sf-header.php:644
+#: swift-framework/core/sf-header.php:453
 msgid "Please assign a menu to the Top Bar Menu in Appearance > Menus"
 msgstr ""
 "Моля те избери меню за горната лента от Изглед > Навигация (Appearance > "
 "Menus)"
 
-#: swift-framework/core/sf-header.php:895
+#: swift-framework/core/sf-header.php:704
 msgid "Enter text to search"
 msgstr "Какво търсиш?"
 
-#: swift-framework/core/sf-header.php:964
-#: swift-framework/core/sf-header.php:1067
-#: swift-framework/core/sf-header.php:1429
+#: swift-framework/core/sf-header.php:773
+#: swift-framework/core/sf-header.php:876
+#: swift-framework/core/sf-header.php:1238
 msgid "Sign Out"
 msgstr "Изход"
 
-#: swift-framework/core/sf-header.php:1156
+#: swift-framework/core/sf-header.php:965
 #: swift-framework/core/sf-woocommerce.php:578
 #, fuzzy
 msgid "Cart"
 msgstr "в количката"
 
-#: swift-framework/core/sf-header.php:1169
-#: swift-framework/core/sf-header.php:1171
+#: swift-framework/core/sf-header.php:978
+#: swift-framework/core/sf-header.php:980
 #: swift-framework/core/sf-woocommerce.php:601
 #: swift-framework/core/sf-woocommerce.php:607
 msgid "View your shopping cart"
 msgstr "Виж твоята количка"
 
-#: swift-framework/core/sf-header.php:1182
+#: swift-framework/core/sf-header.php:991
 #: swift-framework/core/sf-woocommerce.php:621
 msgid "in the cart"
 msgstr "в количката"
 
-#: swift-framework/core/sf-header.php:1198
+#: swift-framework/core/sf-header.php:1007
 #: swift-framework/core/sf-woocommerce.php:654
 msgid "Unit Price:"
 msgstr "Еденична цена:"
 
-#: swift-framework/core/sf-header.php:1200
+#: swift-framework/core/sf-header.php:1009
 #: swift-framework/core/sf-woocommerce.php:656
 msgid "Quantity:"
 msgstr "Количество"
 
-#: swift-framework/core/sf-header.php:1202
+#: swift-framework/core/sf-header.php:1011
 #: swift-framework/core/sf-woocommerce.php:659 woocommerce/cart/cart.php:111
 msgid "Remove this item"
 msgstr "Изтрий записа"
 
-#: swift-framework/core/sf-header.php:1214
+#: swift-framework/core/sf-header.php:1023
 #: swift-framework/core/sf-woocommerce.php:673
 #, fuzzy
 msgid "Total incl. tax"
 msgstr "Общо"
 
-#: swift-framework/core/sf-header.php:1216
+#: swift-framework/core/sf-header.php:1025
 #: swift-framework/core/sf-woocommerce.php:675
 #: woocommerce/cart/cart-totals.php:69 woocommerce/order/order-details.php:46
 msgid "Total"
 msgstr "Общо"
 
-#: swift-framework/core/sf-header.php:1225
+#: swift-framework/core/sf-header.php:1034
 #: swift-framework/core/sf-woocommerce.php:686
 msgid "View cart"
 msgstr "Виж количката"
 
-#: swift-framework/core/sf-header.php:1227
+#: swift-framework/core/sf-header.php:1036
 #: swift-framework/core/sf-woocommerce.php:691
 msgid "Proceed to checkout"
 msgstr "Към плащане"
 
-#: swift-framework/core/sf-header.php:1233
+#: swift-framework/core/sf-header.php:1042
 #: swift-framework/core/sf-woocommerce.php:614
 #: swift-framework/core/sf-woocommerce.php:698
 #, fuzzy
 msgid "Your cart is empty."
 msgstr "Прегледай твоята количка"
 
-#: swift-framework/core/sf-header.php:1282
-#: swift-framework/core/sf-header.php:1284
+#: swift-framework/core/sf-header.php:1091
+#: swift-framework/core/sf-header.php:1093
 msgid "View your wishlist"
 msgstr "Виж списъка с желания"
 
-#: swift-framework/core/sf-header.php:1282
+#: swift-framework/core/sf-header.php:1091
 #, fuzzy
 msgid "Wishlist"
 msgstr "Твоя списък с желания"
 
-#: swift-framework/core/sf-header.php:1359
+#: swift-framework/core/sf-header.php:1168
 #, fuzzy
 msgid "Your wishlist is empty."
 msgstr "Твоя списък с желания е празен."
 
-#: swift-framework/core/sf-header.php:1369
+#: swift-framework/core/sf-header.php:1178
 #, fuzzy
 msgid "View Wishlist"
 msgstr "Прегледай твоя списък с желания"
 
-#: swift-framework/core/sf-header.php:1673
+#: swift-framework/core/sf-header.php:1482
 msgid ""
 "Please select a page for the Contact Slideout in Theme Options > Header "
 "Options"
@@ -9274,10 +9271,25 @@ msgstr "Рекламации и замяна"
 msgid "F.A.Q.'s"
 msgstr "Ч.З.В."
 
-#: swift-framework/core/sf-woocommerce.php:1181
+#: swift-framework/core/sf-woocommerce.php:1182
 #, fuzzy
 msgid "Shipping Calculator"
 msgstr "доставка_модален_прозорец"
+
+#: swift-framework/core/sf-woocommerce.php:1203
+#: woocommerce/loop/add-to-cart.php:70
+#: woocommerce/single-product/add-to-cart/grouped.php:16
+#: woocommerce/single-product/add-to-cart/simple.php:14
+msgid "Adding..."
+msgstr ""
+
+#: swift-framework/core/sf-woocommerce.php:1204
+#: woocommerce/loop/add-to-cart.php:71
+#: woocommerce/single-product/add-to-cart/grouped.php:17
+#: woocommerce/single-product/add-to-cart/simple.php:15
+#, fuzzy
+msgid "Item added"
+msgstr "Продукта добавени в количка"
 
 #: swift-framework/layout/archive.php:71 swift-framework/layout/author.php:44
 #: swift-framework/layout/campaigns.php:26
@@ -10637,7 +10649,7 @@ msgstr "Общо:"
 msgid "Payment method:"
 msgstr "Начин на плащане:"
 
-#: woocommerce/content-product_cat.php:92
+#: woocommerce/content-product_cat.php:96
 #, fuzzy
 msgid "Shop now"
 msgstr "Магазин"
@@ -10681,21 +10693,6 @@ msgstr "Виж опциите"
 msgid "Add to cart"
 msgstr "Купи"
 
-#: woocommerce/loop/add-to-cart.php:70
-#: woocommerce/single-product/add-to-cart/grouped.php:16
-#: woocommerce/single-product/add-to-cart/simple.php:14
-#: woocommerce/single-product/add-to-cart/variable.php:14
-msgid "Adding..."
-msgstr ""
-
-#: woocommerce/loop/add-to-cart.php:71
-#: woocommerce/single-product/add-to-cart/grouped.php:17
-#: woocommerce/single-product/add-to-cart/simple.php:15
-#: woocommerce/single-product/add-to-cart/variable.php:15
-#, fuzzy
-msgid "Item added"
-msgstr "Продукта добавени в количка"
-
 #: woocommerce/loop/add-to-cart.php:72
 msgid "Added"
 msgstr "Добавен"
@@ -10726,13 +10723,11 @@ msgstr "Виж"
 #: woocommerce/myaccount/form-edit-address.php:26
 #: woocommerce/myaccount/my-address.php:19
 #: woocommerce/myaccount/my-address.php:25
-#: woocommerce/order/order-details.php:217
 msgid "Billing Address"
 msgstr "Адрес за плащане"
 
 #: woocommerce/myaccount/form-edit-address.php:26
 #: woocommerce/myaccount/my-address.php:20
-#: woocommerce/order/order-details.php:236
 msgid "Shipping Address"
 msgstr "Адрес за доставка"
 
@@ -10836,47 +10831,6 @@ msgstr "Информация за поръчка"
 msgid "Product"
 msgstr "Продукт"
 
-#: woocommerce/order/order-details.php:84
-#, php-format
-msgid "Download file%s"
-msgstr "Свали файлове%s"
-
-#: woocommerce/order/order-details.php:150
-#: woocommerce/order/order-details.php:154
-#, fuzzy, php-format
-msgid "(Includes %s)"
-msgstr "%1$s - %2$s"
-
-#: woocommerce/order/order-details.php:172
-msgid "Refunded:"
-msgstr ""
-
-#: woocommerce/order/order-details.php:181
-msgid "Note:"
-msgstr ""
-
-#: woocommerce/order/order-details.php:191
-msgid "Customer details"
-msgstr "Информация за клиента"
-
-#: woocommerce/order/order-details.php:196
-msgid "Email:"
-msgstr "Е-поща:"
-
-#: woocommerce/order/order-details.php:200
-msgid "Telephone:"
-msgstr "Телефон:"
-
-#: woocommerce/order/order-details.php:200
-#, fuzzy
-msgid "Telephone"
-msgstr "Телефон:"
-
-#: woocommerce/order/order-details.php:222
-#: woocommerce/order/order-details.php:241
-msgid "N/A"
-msgstr "N/A"
-
 #: woocommerce/share.php:24
 #, fuzzy
 msgid "Share on:"
@@ -10951,14 +10905,6 @@ msgstr ""
 msgid ""
 "Only logged in customers who have purchased this product may leave a review."
 msgstr ""
-
-#: woocommerce/single-product/add-to-cart/variable.php:64
-msgid "Clear selection"
-msgstr "Изчисти"
-
-#: woocommerce/single-product/add-to-cart/variable.php:95
-msgid "This product is currently out of stock and unavailable."
-msgstr "Продукта не е наличен или не може да бъде доставен."
 
 #: woocommerce/single-product/review.php:27
 #, fuzzy, php-format
@@ -11045,6 +10991,39 @@ msgstr ""
 #, fuzzy
 #~ msgid "Feedback Modal Content"
 #~ msgstr "Сподели твоето мнение"
+
+#, fuzzy
+#~ msgid "%1$s at %2$s"
+#~ msgstr "%1$s - %2$s"
+
+#~ msgid "Download file%s"
+#~ msgstr "Свали файлове%s"
+
+#, fuzzy
+#~ msgid "(Includes %s)"
+#~ msgstr "%1$s - %2$s"
+
+#~ msgid "Customer details"
+#~ msgstr "Информация за клиента"
+
+#~ msgid "Email:"
+#~ msgstr "Е-поща:"
+
+#~ msgid "Telephone:"
+#~ msgstr "Телефон:"
+
+#, fuzzy
+#~ msgid "Telephone"
+#~ msgstr "Телефон:"
+
+#~ msgid "N/A"
+#~ msgstr "N/A"
+
+#~ msgid "Clear selection"
+#~ msgstr "Изчисти"
+
+#~ msgid "This product is currently out of stock and unavailable."
+#~ msgstr "Продукта не е наличен или не може да бъде доставен."
 
 #, fuzzy
 #~ msgid "Page Builder Options"

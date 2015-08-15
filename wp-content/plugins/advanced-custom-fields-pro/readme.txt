@@ -10,7 +10,7 @@ Customise WordPress with powerful, professional and intuitive fields
 
 == Description ==
 
-Advanced Custom Fields is the perfect solution for any wordpress website which needs more flexible data like other Content Management Systems. 
+Advanced Custom Fields is the perfect solution for any WordPress website which needs more flexible data like other Content Management Systems. 
 
 * Visually create your Fields
 * Select from multiple input types (text, textarea, wysiwyg, image, file, page link, post object, relationship, select, checkbox, radio buttons, date picker, true / false, repeater, flexible content, gallery and more to come!)
@@ -25,7 +25,7 @@ Advanced Custom Fields is the perfect solution for any wordpress website which n
 * Number (type number, api returns integer)
 * Email (type email, api returns text)
 * Password (type password, api returns text)
-* WYSIWYG (a wordpress wysiwyg editor, api returns html)
+* WYSIWYG (a WordPress wysiwyg editor, api returns html)
 * Image (upload an image, api returns the url)
 * File (upload a file, api returns the url)
 * Select (drop down list of choices, api returns chosen item)
@@ -106,6 +106,24 @@ http://support.advancedcustomfields.com/
 
 == Changelog ==
 
+= 5.2.9 =
+* Field group: Added new 'status' setting to enable/disable
+* Field group: Added new 'description' setting shown to developers when viewing the field group list
+* Field group: Moved 'Show field keys' Screen Option within existing 'Show on Screen' checkboxes
+* Tab field: Fixed missing min-height to left aligned tab wrapper
+* Relationship field: Added timeout to reduce AJAX requests whilst typing in search
+* Flexible Content field: Fixed minor JS bug where removing a layout would not update the order numbers
+* Core: Fixed bug validating uppercase file extensions
+* Core: Renamed menu items
+* Core: Replace sprite icons with font
+* Core: Added new setting 'export_textdomain' to add __() to generated export code
+* Core: Fixed conflict with Post Type Order plugin causing issues when querying posts
+* Core: Fixed conflict with WPML causing issues when querying posts
+* Core: Added compatibility for WP 4.3
+* Core: Minor fixes and improvements
+* Language: Updated German translation - thanks to Ralf Koller
+* Language: Updated Italian translation - thanks to Davide Pantè
+
 = 5.2.8 =
 * Image field: Added selection restrictions in media popup (width, height, size, type)
 * File field: Same as above
@@ -122,7 +140,7 @@ http://support.advancedcustomfields.com/
 * Core: Fixed bug hiding Select2 choices when multiple found with the same label
 * Core: Minor fixes and improvements
 * Language: Updated Italian translation - thanks to Davide Pantè & Francesco Mazzola
-* Language: Updated German translation - thanks to Ralk Koller
+* Language: Updated German translation - thanks to Ralf Koller
 * Language: Updating Finnish translation - thanks to Sauli Rajala
 
 = 5.2.7 =

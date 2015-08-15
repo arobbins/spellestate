@@ -7204,12 +7204,6 @@ nav ul.menu > li.menu-item.sf-menu-item-btn > a > span.menu-item-text > i {
 	VERTICAL HEADER
 -------------------------------------------- */
 
-.vertical-header #site-loading > .spinner {
-	margin-left: 150px;
-}
-.vertical-header-right #site-loading > .spinner {
-	margin-left: -150px;
-}
 .vertical-header .container {
 	max-width: 95%;
 }
@@ -7256,6 +7250,12 @@ nav ul.menu > li.menu-item.sf-menu-item-btn > a > span.menu-item-text > i {
 }
 .vertical-header .vertical-menu-bottom nav.std-menu {
 	margin-bottom: 10px;
+}
+.vertical-menu-bottom .aux-item {
+	text-align: center;
+}
+.vertical-menu-bottom .aux-item .contact-menu-link, .vertical-menu-bottom .aux-item .fs-supersearch-link {
+	margin: 12px 0;
 }
 .vertical-header #header-section #header {
 	padding: 40px 0 0;
@@ -7349,6 +7349,7 @@ nav ul.menu > li.menu-item.sf-menu-item-btn > a > span.menu-item-text > i {
 .vertical-menu nav#main-navigation ul.menu > li.sf-menu-item-new-badge > a:before {
 	right: 13px;
 	top: 10px;
+	display: none;
 }
 .vertical-menu nav#main-navigation ul.menu > li.sf-menu-item-new-badge > a:after {
 	top: -4px;
@@ -7504,6 +7505,9 @@ nav ul.menu > li.menu-item.sf-menu-item-btn > a > span.menu-item-text > i {
 }
 .vertical-header-right nav.std-menu ul.sub-menu > li.parent:after {
 	content: "\f104";
+}
+.vertical-header nav .menu li.parent > a:after {
+	display: none!important;
 }
 
 /* --------------------------------------------
@@ -13101,7 +13105,7 @@ ul.member-contact li a {
 }
 .comment-form-author, .comment-form-email, .comment-form-url {
 	margin-bottom: 0;
-	padding-right: 0;
+	padding-right: 15px;
 }
 .comment-form-url {
 	padding-right: 15px;
@@ -13978,8 +13982,11 @@ select {
 	background-size: 9px 6px;
 	border: 2px solid #e3e3e3;
 }
-.browser-ff select, .browser-ie select, .browser-ie10 select {
+.browser-ie select, .browser-ie10 select {
 	background-image: none;
+}
+.browser-ff select {
+	background-image: linear-gradient;
 }
 .gform_wrapper select {
 	padding: 5px 8px!important;

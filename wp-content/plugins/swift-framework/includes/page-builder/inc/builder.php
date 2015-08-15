@@ -33,13 +33,15 @@
         }
 
         public function getPostTypes() {
+
+            global $sf_opts;
+
             if ( is_array( $this->postTypes ) ) {
                 return $this->postTypes;
             }
 
-            $options = get_option( $this->get_theme_opts_name() );
-            if ( isset( $options['spb-post-types'] ) ) {
-                $pt_array = $options['spb-post-types'];
+            if ( isset( $sf_opts['spb-post-types'] ) ) {
+                $pt_array = $sf_opts['spb-post-types'];
             }
             $pt_array[] = 'spb-section';
 

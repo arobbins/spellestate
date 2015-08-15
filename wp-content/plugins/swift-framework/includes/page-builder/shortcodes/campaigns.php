@@ -72,7 +72,7 @@
                 'post_type'      => 'download',
                 'post_status'    => 'publish',
                 'paged'          => $paged,
-                'category_name'  => $category_slug,
+                'download_category'  => $category_slug,
                 'posts_per_page' => $item_count,
             );
 

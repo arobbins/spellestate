@@ -396,9 +396,9 @@
             $cont_help = "";
 
             $cont_help .= '<div class="container-helper">';
-            $cont_help .= '<a href="#" class="add-element-to-column"><i class="icon"></i> Add Content Element</a>
+            $cont_help .= '<a href="#" class="add-element-to-column">Add Content Element</a>
 			<span>' . __( "- or -", 'swift-framework-plugin' ) . '</span>
-			<a href="#" class="add-text-block-to-content" parent-container="#spb_content"><i class="icon"></i> Add Text block</a>';
+			<a href="#" class="add-text-block-to-content" parent-container="#spb_content">Add Text block</a>';
             $cont_help .= '</div>';
 
             return $cont_help;

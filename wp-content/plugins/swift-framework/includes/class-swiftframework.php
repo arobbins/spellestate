@@ -76,10 +76,17 @@ class SwiftFramework {
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
 
+		global $sf_opts;
+		$sf_opts = get_option('swift_framework_opts');
+
 		// DISABLE CHECK
 		$disable_spb = $disable_ss = $safety = true;
 		if ( $this->current_theme != "" ) {
-			$disable_spb = $disable_ss = $safety = false;
+
+			$disable_spb = $sf_opts['disable_spb'];
+			$disable_ss = $sf_opts['disable_ss'];
+			
+			$safety = false;
 		}
 
 		// CUSTOM POST TYPES
@@ -144,6 +151,11 @@ class SwiftFramework {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-swiftframework-public.php';
 
+		/**
+		 * Options framework
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/options/admin-init.php';
+
 		$this->loader = new SwiftFramework_Loader();
 
 	}
@@ -177,9 +189,11 @@ class SwiftFramework {
 
 		$plugin_admin = new SwiftFramework_Admin( $this->get_SwiftFramework(), $this->get_version() );
 
+		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_swiftframework_menu' );
+		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
-
+		$this->loader->add_action( 'init', $this, 'unregister_post_types' );
 	}
 
 	/**
@@ -277,5 +291,23 @@ class SwiftFramework {
 	public function include_shortcodes() {
 	    include_once( plugin_dir_path( dirname( __FILE__ ) ) . 'includes/shortcodes/sf-shortcodes.php' );
 	}
+
+	/**
+	 * Unregister Custom Post Types
+	 * @since    1.5.0
+	 */
+	public function unregister_post_types( $post_type, $slug = '' ) {
+        global $sf_opts, $wp_post_types;
+        if ( isset( $sf_opts['cpt-disable'] ) ) {
+            $cpt_disable = $sf_opts['cpt-disable'];
+            if ( ! empty( $cpt_disable ) ) {
+                foreach ( $cpt_disable as $post_type => $cpt ) {
+                    if ( $cpt == 1 && isset( $wp_post_types[ $post_type ] ) ) {
+                        unset( $wp_post_types[ $post_type ] );
+                    }
+                }
+            }
+        }
+    }
 
 }

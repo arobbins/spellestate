@@ -148,6 +148,8 @@ function acf_format_value( $value, $post_id, $field ) {
 	// apply filters
 	$value = apply_filters( "acf/format_value", $value, $post_id, $field );
 	$value = apply_filters( "acf/format_value/type={$field['type']}", $value, $post_id, $field );
+	$value = apply_filters( "acf/format_value/name={$field['name']}", $value, $post_id, $field );
+	$value = apply_filters( "acf/format_value/key={$field['key']}", $value, $post_id, $field );
 	
 	
 	// return

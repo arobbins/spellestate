@@ -99,7 +99,9 @@
                 $bg_color          = sf_get_post_meta( $post->ID, 'ss_bg_color', true );
                 $bg_opacity        = sf_get_post_meta( $post->ID, 'ss_bg_opacity', true );
                 $bg_image          = rwmb_meta( 'ss_background_image', 'type=image&size=full' );
+                $background_size   = sf_get_post_meta( $post->ID, 'ss_background_size', true );
                 $background_valign = sf_get_post_meta( $post->ID, 'ss_background_valign', true );
+                $background_halign = sf_get_post_meta( $post->ID, 'ss_background_halign', true );
                 $bg_mp4            = rwmb_meta( 'ss_background_video_mp4', 'type=file' );
                 $bg_webm           = rwmb_meta( 'ss_background_video_webm', 'type=file' );
                 $bg_ogg            = rwmb_meta( 'ss_background_video_ogg', 'type=file' );
@@ -171,9 +173,16 @@
                     $bg_video_size['height'] = 0;
                 }
 
+                if ( $background_size == "" ) {
+                    $background_size = "cover";
+                }
+                if ( $background_halign == "" ) {
+                    $background_halign = "center";
+                }
+
                 if ( $bg_image_url != "" ) {
 
-                    $swift_slider_output .= '<div class="swiper-slide ' . $bg_type . '-slide" data-slide-id="' . $slide_ID . '" data-slide-title="' . $slide_title . '" style="background-image: url(' . $bg_image_url . ');background-color: ' . $bg_color . '" data-bg-align="' . $background_valign . '" data-slide-img="' . $bg_image_url . '" data-style="' . $slide_style . '">';
+                    $swift_slider_output .= '<div class="swiper-slide ' . $bg_type . '-slide" data-slide-id="' . $slide_ID . '" data-slide-title="' . $slide_title . '" style="background-image: url(' . $bg_image_url . ');background-color: ' . $bg_color . '" data-bg-size="' . $background_size . '" data-bg-align="' . $background_valign . '" data-bg-horiz-align="' . $background_halign . '" data-slide-img="' . $bg_image_url . '" data-style="' . $slide_style . '">';
 
                     if ( ! empty( $bg_opacity ) && $bg_opacity > 0 ) {
                         $bg_opacity_d = $bg_opacity / 100; // Decimal value

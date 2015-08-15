@@ -645,6 +645,9 @@
 		padding-top: 0!important;
 		padding-bottom: 0!important;
 	}
+	.page-heading .heading-text, .post-type-archive-product .page-heading .heading-text {
+	    left: 30px;
+	}
 	.fancy-style .page-heading.fancy-heading {
 		height: auto!important;
 	}
@@ -1531,13 +1534,8 @@
 		width: 100%;
 	}
 	.post-pagination .prev-article {
-		float: none;
 		width: 100%;
 		margin-bottom: 30px;
-	}
-	.post-pagination .prev-article {
-		float: none;
-		width: 100%;
 	}
 
 	/* PORTFOLIO */

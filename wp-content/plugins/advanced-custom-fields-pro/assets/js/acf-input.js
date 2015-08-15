@@ -1206,7 +1206,7 @@ var acf;
 			var tmpl = [
 				'<div id="acf-popup">',
 					'<div class="acf-popup-box acf-box">',
-						'<div class="title"><h3></h3><a href="#" class="acf-icon acf-close-popup"><i class="acf-sprite-delete "></i></a></div>',
+						'<div class="title"><h3></h3><a href="#" class="acf-icon acf-icon-cancel grey acf-close-popup"></a></div>',
 						'<div class="inner"></div>',
 						'<div class="loading"><i class="acf-loading"></i></div>',
 					'</div>',
@@ -4237,6 +4237,30 @@ console.time("acf_test_ready");
 			    $el.find('.title h4').text( address );
 			    
 			    
+			    // is lat lng?
+			    var latLng = address.split(',');
+			    
+			    if( latLng.length == 2 ) {
+				    
+				    var lat = latLng[0],
+						lng = latLng[1];
+				    
+				   
+				    if( $.isNumeric(lat) && $.isNumeric(lng) ) {
+					    
+					    // parse
+					    lat = parseFloat(lat);
+					    lng = parseFloat(lng);
+					    
+					    self.doFocus( $field ).update( lat, lng ).center();
+					    
+					    return;
+					    
+				    }
+				    
+			    }
+			    
+			    
 			    // vars
 			    var place = this.getPlace();
 			    
@@ -5473,8 +5497,8 @@ console.time("acf_test_ready");
 					// create button
 					var $a = $([
 						'<a href="#" class="acf-expand-details">',
-							'<span class="is-closed"><span class="acf-icon small"><i class="acf-sprite-left"></i></span>' + acf._e('expand_details') +  '</span>',
-							'<span class="is-open"><span class="acf-icon small"><i class="acf-sprite-right"></i></span>' + acf._e('collapse_details') +  '</span>',
+							'<span class="is-closed"><span class="acf-icon acf-icon-left small grey"></span>' + acf._e('expand_details') +  '</span>',
+							'<span class="is-open"><span class="acf-icon acf-icon-right small grey"></span>' + acf._e('collapse_details') +  '</span>',
 						'</a>'
 					].join('')); 
 					
@@ -5886,18 +5910,15 @@ console.time("acf_test_ready");
 			
 			// right sortable
 			this.$values.children('.list').sortable({
-			
 				items:					'li',
 				forceHelperSize:		true,
 				forcePlaceholderSize:	true,
 				scroll:					true,
-				
 				update:	function(){
 					
 					$input.trigger('change');
 					
 				}
-				
 			});
 			
 			
@@ -5991,6 +6012,33 @@ console.time("acf_test_ready");
 			
 		},
 */
+		
+		maybe_fetch: function(){
+			
+			// reference
+			var self = this,
+				$field = this.$field;
+			
+			
+			// abort timeout
+			if( this.o.timeout ) {
+				
+				clearTimeout( this.o.timeout );
+				
+			}
+			
+			
+		    // fetch
+		    var timeout = setTimeout(function(){
+			    
+			    self.doFocus($field);
+			    self.fetch();
+			    
+		    }, 400);
+		    
+		    this.$el.data('timeout', timeout);
+		    
+		},
 		
 		fetch: function(){
 			
@@ -6220,11 +6268,20 @@ console.time("acf_test_ready");
 			
 			// reset paged
 			this.$el.data('paged', 1);
-		    
+			
 		    
 		    // fetch
-		    this.fetch();
+		    if( e.$el.is('select') ) {
+			    
+				this.fetch();
 			
+			// search must go through timeout
+		    } else {
+			    
+			    this.maybe_fetch();
+			     
+		    }
+		        
 		},
 		
 		add_item: function( e ){
@@ -6260,7 +6317,7 @@ console.time("acf_test_ready");
 				'<li>',
 					'<input type="hidden" name="' + this.$input.attr('name') + '[]" value="' + e.$el.data('id') + '" />',
 					'<span data-id="' + e.$el.data('id') + '" class="acf-rel-item">' + e.$el.html(),
-						'<a href="#" class="acf-icon small dark" data-name="remove_item"><i class="acf-sprite-remove"></i></a>',
+						'<a href="#" class="acf-icon acf-icon-minus small dark" data-name="remove_item"></a>',
 					'</span>',
 				'</li>'].join('');
 						
@@ -6489,14 +6546,13 @@ console.time("acf_test_ready");
 				data: function (term, page) {
 					
 					// vars
-					var data = {
+					var data = acf.prepare_for_ajax({
 						action: 	args.action,
 						field_key: 	args.key,
-						nonce: 		acf.get('nonce'),
 						post_id: 	acf.get('post_id'),
 						s: 			term,
 						paged: 		page
-					};
+					});
 
 					
 					// return
@@ -6841,13 +6897,21 @@ console.time("acf_test_ready");
 			
 			
 			// set min-height
-			var $wrap = this.$field.parent();
-			
-			if( $wrap.hasClass('acf-tpl') ) {
+			if( $group.hasClass('side') ) {
 				
-				// use 40 for height as some tabs may be hidden, and this would result in a 0 height
-				var attribute = $wrap.is('td') ? 'height' : 'min-height';
-				$wrap.css(attribute, $group.find('li').length * 40);
+				// vars
+				var $wrap = $group.parent(),
+					attribute = $wrap.is('td') ? 'height' : 'min-height';
+				
+				
+				// use 39 for height as some tabs may be hidden, and this would result in a 0 height
+				var height = $group.position().top + ($group.find('li').length * 39);
+				
+				
+				// add css
+				$wrap.css(attribute, height);
+				
+				//console.log('h = %o (%o %o %o)', height, $group.position().top, $group.find('li').length * 40, $li);
 				
 			}
 			
@@ -8186,7 +8250,7 @@ console.time("acf_test_ready");
 			
 			if( !$message.exists() ) {
 				
-				$message = $('<div class="acf-error-message"><p></p><a href="#" class="acf-icon small dark"><i class="acf-sprite-delete"></i></a></div>');
+				$message = $('<div class="acf-error-message"><p></p><a href="#" class="acf-icon acf-icon-cancel small"></a></div>');
 				
 				$form.prepend( $message );
 				

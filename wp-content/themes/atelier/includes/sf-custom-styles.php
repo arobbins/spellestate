@@ -911,6 +911,10 @@
 				if ( $logo_height == "" ) {
 				echo '#mobile-logo.has-img img {max-height:' . $logo_maxheight . 'px;}';
 				}
+				$header_height_num = str_replace( $header_height, 'px', '' );
+				if ( $logo_maxheight > $header_height_num) {
+					$logo_maxheight = $header_height_num;
+				}
 				echo '.full-center #logo.has-img a > img {max-height: '.$logo_maxheight.'px;padding: 0;}';
 			}
             if ( $header_height != "" ) {

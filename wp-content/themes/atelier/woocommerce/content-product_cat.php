@@ -5,7 +5,7 @@
      *
      * @author        WooThemes
      * @package       WooCommerce/Templates
-     * @version       1.6.4
+     * @version       2.4.0
      */
 
     if ( ! defined( 'ABSPATH' ) ) {
@@ -51,15 +51,19 @@
     $woocommerce_loop['loop'] ++;
 
     $category_link = get_term_link( $category->slug, 'product_cat' );
-?>
-<div class="product-category <?php echo esc_attr($width); ?> product<?php
+    
+    // Classes
+    $classes[] = 'product-category product';
+    $classes[] = esc_attr($width);
     if ( ( $woocommerce_loop['loop'] - 1 ) % $woocommerce_loop['columns'] == 0 || $woocommerce_loop['columns'] == 1 ) {
-        echo ' first';
+        $classes[] = 'first';
     }
     if ( $woocommerce_loop['loop'] % $woocommerce_loop['columns'] == 0 ) {
-        echo ' last';
+        $classes[] =  'last';
     }
-?>" data-width="<?php echo esc_attr($width); ?>">
+    
+?>
+<div <?php wc_product_cat_class($classes); ?> data-width="<?php echo esc_attr($width); ?>">
 
     <?php do_action( 'woocommerce_before_subcategory', $category ); ?>
 

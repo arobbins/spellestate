@@ -445,7 +445,7 @@
         "type"        => "uislider",
         "heading"     => __( "Row Overlay Opacity", 'swift-framework-plugin' ),
         "param_name"  => "row_overlay_opacity",
-        "value"       => "0",
+        "value"       => "30",
         "step"        => "5",
         "min"         => "0",
         "max"         => "100",

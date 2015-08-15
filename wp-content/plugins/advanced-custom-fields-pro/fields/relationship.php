@@ -110,19 +110,6 @@ class acf_field_relationship extends acf_field {
 		}
 		
 		
-		// WPML
-		if( $options['lang'] ) {
-			
-			global $sitepress;
-			
-			if( !empty($sitepress) ) {
-			
-				$sitepress->switch_lang( $options['lang'] );
-				
-			}
-		}
-		
-		
 		// update $args
 		if( !empty($options['post_type']) ) {
 			
@@ -277,7 +264,7 @@ class acf_field_relationship extends acf_field {
 	function ajax_query() {
 		
 		// validate
-		if( empty($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'acf_nonce') ) {
+		if( !acf_verify_ajax() ) {
 		
 			die();
 			
@@ -641,7 +628,7 @@ class acf_field_relationship extends acf_field {
 								<input type="hidden" name="<?php echo $field['name']; ?>[]" value="<?php echo $post->ID; ?>" />
 								<span data-id="<?php echo $post->ID; ?>" class="acf-rel-item">
 									<?php echo $this->get_post_title( $post, $field ); ?>
-									<a href="#" class="acf-icon small dark" data-name="remove_item"><i class="acf-sprite-remove"></i></a>
+									<a href="#" class="acf-icon acf-icon-minus small dark" data-name="remove_item"></a>
 								</span>
 							</li><?php
 							

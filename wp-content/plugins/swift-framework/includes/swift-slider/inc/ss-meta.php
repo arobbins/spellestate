@@ -70,7 +70,20 @@
                 'type'             => 'image_advanced',
                 'max_file_uploads' => 1
             ),
-            // BACKGROUND IMAGE
+            // BACKGROUND IMAGE Size
+            array(
+                'name'     => __( 'Background image size', 'swift-framework-plugin' ),
+                'id'       => "{$prefix}background_size",
+                'type'     => 'select',
+                'options'  => array(
+                    'cover'    => __( 'Cover', 'swift-framework-plugin' ),
+                    'auto' => __( 'Auto', 'swift-framework-plugin' ),
+                ),
+                'multiple' => false,
+                'std'      => 'cover',
+                'desc'     => __( 'Choose the background image size for the slide background image.', 'swift-framework-plugin' )
+            ),
+            // BACKGROUND IMAGE ALIGNMENT
             array(
                 'name'     => __( 'Background image vertical align', 'swift-framework-plugin' ),
                 'id'       => "{$prefix}background_valign",
@@ -83,6 +96,20 @@
                 'multiple' => false,
                 'std'      => 'center',
                 'desc'     => __( 'Choose the vertical align for the slide background image.', 'swift-framework-plugin' )
+            ),
+            // BACKGROUND IMAGE ALIGNMENT
+            array(
+                'name'     => __( 'Background image horizontal align', 'swift-framework-plugin' ),
+                'id'       => "{$prefix}background_halign",
+                'type'     => 'select',
+                'options'  => array(
+                    'left'    => __( 'Left', 'swift-framework-plugin' ),
+                    'center' => __( 'Center', 'swift-framework-plugin' ),
+                    'right' => __( 'Right', 'swift-framework-plugin' ),
+                ),
+                'multiple' => false,
+                'std'      => 'center',
+                'desc'     => __( 'Choose the horizontal align for the slide background image.', 'swift-framework-plugin' )
             ),
             // SLIDE STYLING
             array(

@@ -146,19 +146,35 @@
 .swiper-slide {
     position: relative;
     background-repeat: no-repeat;
-    -moz-background-size: cover!important;
-    -webkit-background-size: cover!important;
-    -o-background-size: cover!important;
-    background-size: cover!important;
-    background-position: center center;
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-position-x: center;
+    background-position-y: center;
+}
+
+.swiper-slide[data-bg-size="auto"] {
+    -moz-background-size: auto;
+    -webkit-background-size: auto;
+    -o-background-size: auto;
+    background-size: auto;
 }
 
 .swiper-slide[data-bg-align="top"] {
-    background-position: center top;
+    background-position-y: top;
 }
 
 .swiper-slide[data-bg-align="bottom"] {
-    background-position: center bottom;
+    background-position-y: bottom;
+}
+
+.swiper-slide[data-bg-horiz-align="left"] {
+    background-position-x: left;
+}
+
+.swiper-slide[data-bg-horiz-align="right"] {
+    background-position-x: right;
 }
 
 .swiper-slide.video-slide {

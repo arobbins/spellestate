@@ -15,7 +15,7 @@
 }
 
 /* --------------------------------------------
-	HIDE POST UPDATED VIEW PORT LINK
+	HIDE POST UPDATED VIEW PORT LINK
 -------------------------------------------- */
 .post-type-swift-slider #message.updated > p > a {
     display: none;

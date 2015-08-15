@@ -37,11 +37,11 @@
 
         public function spb_register_frontend_css() {
 
-            global $sf_options, $is_IE;
+            global $sf_opts, $is_IE;
             $enable_min_styles = false;
 
-            if ( isset( $sf_options['enable_min_styles'] ) ) {
-                $enable_min_styles = $sf_options['enable_min_styles'];
+            if ( isset( $sf_opts['enable_min_styles'] ) ) {
+                $enable_min_styles = $sf_opts['enable_min_styles'];
             }
 
             // Register Styles
