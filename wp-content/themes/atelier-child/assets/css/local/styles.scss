@@ -17,6 +17,7 @@
    ==================================================
 */
 
+@import "mixins";
 @import "variables";
 @import "grid";
 
@@ -24,11 +25,21 @@ html body, html .layout-fullwidth #container {
   background-color: white;
 }
 
+html body, body p {
+  line-height: 1.6;
+  font-size: 20px;
+}
+
+body h1, body h2, body h3, body h4, body h5, body h6 {
+  line-height: 1.6;
+}
+
 nav .menu > li.menu-item > a, nav.std-menu .menu > li > a span,
 .full-center nav.float-alt-menu ul.menu > li > a,
 .full-center #header nav.std-menu ul.menu > li > a {
   text-transform: uppercase;
   color: $nav-main;
+  font-weight: bold;
 }
 
 .shopping-bag-item a > span.num-items,
@@ -91,7 +102,7 @@ ul.social-icons li:not(.sf-love) a i {
 }
 
 .swift-slider h1 {
-  font-size: 154px;
+  font-size: 134px;
   letter-spacing: 12px;
   position: relative;
   left: 20px;
@@ -192,7 +203,7 @@ ul.social-icons li:not(.sf-love) a i {
 .promo-title {
   margin-bottom: 10px;
   margin-top: 40px;
-  font-size: 40px;
+  font-size: 34px;
 }
 
 .promo-img {
@@ -211,4 +222,82 @@ ul.social-icons li:not(.sf-love) a i {
 
 #header .header-right .aux-cart-wishlist .wishlist-item {
   display: none;
+}
+
+.team-member {
+  width: 100%;
+  min-height: auto !important;
+  border-bottom: 1px solid #5c5c5c;
+  padding-bottom: 30px;
+  margin-bottom: 50px;
+
+  &:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+}
+
+.team-member-bio p {
+  font-size: 21px;
+  color: #767778;
+  font-style: italic;
+}
+
+.team-member figure {
+  float: left;
+}
+
+.team-member .team-member-position,
+.team-member .team-member-name {
+  float: left;
+  line-height: 40px;
+  color: #767778;
+}
+
+.team-member .team-member-bio {
+  float: left;
+  width: 70%;
+
+  @include respond-to(1200) {
+    width: 60%;
+  }
+
+  @include respond-to(1000) {
+    width: 50%;
+  }
+
+  @include respond-to(900) {
+    width: 100%;
+  }
+}
+
+.team-member figure {
+  margin-right: 60px;
+}
+
+.team-member .team-member-name {
+  font-size: 40px;
+  font-style: italic;
+  margin-left: 15px;
+  font-family: Merriweather, times;
+  margin-bottom: 0;
+  margin-top: 0px;
+  font-weight: 100;
+  position: relative;
+  top: -1px;
+}
+
+.team-member-position {
+  font-size: 38px;
+  margin-right: 15px;
+
+  &:after {
+    content: ': ';
+  }
+}
+
+.caption-content h2 {
+  font-size: 70px;
+  letter-spacing: 2px;
 }
