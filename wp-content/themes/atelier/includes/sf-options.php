@@ -637,7 +637,7 @@ if ( !class_exists( "Redux_Framework_options_config" ) ) {
 							'id' => 'disable_social_meta',
 							'type' => 'button_set',
 							'title' => __('Disable Social Meta Tags', 'swiftframework'),
-							'subtitle' => __('Disable the social meta head tag output.', 'swiftframework'),
+							'subtitle' => __('Disable the social meta head tag output. NOTE: Social meta output is automatically disabled if WordPress SEO is detected.', 'swiftframework'),
 							'desc' => '',
 							'options' => array('1' => 'On','0' => 'Off'),
 							'default' => '0'
@@ -1191,6 +1191,7 @@ if ( !class_exists( "Redux_Framework_options_config" ) ) {
 								'account'	=> 'Account',
 								'social'  => 'Social Icons',
 								'menu'      => 'Top Bar Menu',
+								'cart-wishlist'      => 'Cart/Wishlist',
 								),
 							'desc' => '',
 							'default' => 'text'
@@ -1218,6 +1219,7 @@ if ( !class_exists( "Redux_Framework_options_config" ) ) {
 								'account'	=> 'Account',
 								'social'  => 'Social Icons',
 								'menu'      => 'Top Bar Menu',
+								'cart-wishlist'      => 'Cart/Wishlist',
 							),
 							'desc' => '',
 							'default' => 'text'
@@ -1297,7 +1299,8 @@ if ( !class_exists( "Redux_Framework_options_config" ) ) {
 						        	'search'	=> 'Search',
 						        	'cart-wishlist'	=> 'Cart / Wishlist',
 						        	'supersearch'	=> 'Super Search',
-						        	'account'	=> 'Account'
+						        	'account'	=> 'Account',
+						        	'language'	=> 'Language Switcher'
 						        ),
 						    ),
 //						    'limits' => array(
@@ -1331,7 +1334,8 @@ if ( !class_exists( "Redux_Framework_options_config" ) ) {
 						        	'search'	=> 'Search',
 						        	'cart-wishlist'	=> 'Cart / Wishlist',
 						        	'supersearch'	=> 'Super Search',
-						        	'account'	=> 'Account'
+						        	'account'	=> 'Account',
+						        	'language'	=> 'Language Switcher'
 						        ),
 						    ),
 //						    'limits' => array(
@@ -2468,7 +2472,7 @@ if ( !class_exists( "Redux_Framework_options_config" ) ) {
 							'4'		=> '4'
 							),
 						'desc' => '',
-						'default' => '4',
+						'default' => '2',
 						'required'  => array('archive_display_type', '=', 'masonry'),
 						),
 					array(
@@ -2896,6 +2900,15 @@ if ( !class_exists( "Redux_Framework_options_config" ) ) {
 				'subsection' => true,
 				'fields' => array(
 					array(
+						'id' => 'enable_woo_global_filters',
+						'type' => 'button_set',
+						'title' => __('Enable Mobile Filters Globally', 'swiftframework'),
+						'subtitle' => __('Enable the shop mobile filers globally, for all viewport sizes.', 'swiftframework'),
+						'desc' => '',
+						'options' => array('0' => 'Disabled','1' => 'Enabled'),
+						'default' => '0'
+						),
+					array(
 						'id' => 'product_display_type',
 						'type' => 'select',
 						'title' => __('Product Display Type', 'swiftframework'),
@@ -3147,7 +3160,7 @@ if ( !class_exists( "Redux_Framework_options_config" ) ) {
 						'title' => __('Disable product slider', 'swiftframework'),
 						'subtitle' => __('Disable the slider if you would like the images to show one after another on the product detail page.', 'swiftframework'),
 						'desc' => '',
-						'options' => array('1' => 'Disabled','0' => 'Enabled'),
+						'options' => array('1' => 'Disabled','0' => 'Enabled', '2' => 'Disabled (With Thumbs)'),
 						'default' => '0'
 						),
 					array(

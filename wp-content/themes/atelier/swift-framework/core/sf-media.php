@@ -22,8 +22,9 @@
     ================================================== */
     function sf_return_slider( $revslider_shortcode ) {
         ob_start();
-        putRevSlider( $revslider_shortcode );
-
+        if ( function_exists('putRevSlider') ) {
+        	putRevSlider( $revslider_shortcode );
+        }
         return ob_get_clean();
     }
 

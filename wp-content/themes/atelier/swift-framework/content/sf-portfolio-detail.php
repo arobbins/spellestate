@@ -267,7 +267,7 @@
                 ?>
                 <section class="related-projects <?php echo esc_attr($wrap_class); ?> clearfix">
 
-                    <h2 class="<?php echo esc_attr($heading_class); ?>"><?php apply_filters('sf_related_projects_heading', _e( "Related Projects", "swiftframework" )); ?></h2>
+                    <h2 class="<?php echo esc_attr($heading_class); ?>"><?php echo apply_filters('sf_related_projects_heading', __( "Related Projects", "swiftframework" )); ?></h2>
 
                     <div class="clearfix">
                         <?php while ( $related->have_posts() ): $related->the_post(); ?>

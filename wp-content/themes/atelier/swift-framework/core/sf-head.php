@@ -350,6 +350,8 @@
             	if ( $enable_sticky_header_hide ) {
             		$page_class .= "sh-show-hide ";
             	}
+            } else {
+            	$page_class .= "sticky-header-disabled ";
             }
 
             // Page Shadow
@@ -471,6 +473,15 @@
 
 	        if ( $sf_options['disable_mobile_animations'] ) {
 	            $page_class .= "disable-mobile-animations ";
+	        }
+	        
+	        $global_filters = false;
+	        if ( isset($sf_options['enable_woo_global_filters']) ) {
+	        	$global_filters = $sf_options['enable_woo_global_filters'];
+	        	
+	        	if ( $global_filters ) {
+	        		$page_class .= 'woo-global-filters-enabled ';
+	        	}
 	        }
 
             // Return array of classes

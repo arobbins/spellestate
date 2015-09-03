@@ -17,7 +17,7 @@
 
     class sf_infocus extends WP_Widget {
         function sf_infocus() {
-            parent::WP_Widget( 'sf_infocus_widget', $name = 'Swift Framework In Focus' );
+            parent::__construct( 'sf_infocus_widget', $name = 'Swift Framework In Focus' );
         }
 
         function widget( $args, $instance ) {

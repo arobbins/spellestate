@@ -1465,6 +1465,15 @@
 		'title' => __('Team Member Meta', 'swiftframework'),
 		'pages' => array( 'team' ),
 		'fields' => array(
+		
+			// THUMBNAIL IMAGE
+			array(
+				'name'  => __('Thumbnail image', 'swiftframework'),
+				'desc'  => __('The image that will be used as the thumbnail image.', 'swiftframework'),
+				'id'    => "{$prefix}thumbnail_image",
+				'type'  => 'image_advanced',
+				'max_file_uploads' => 1
+			),
 
 			// CUSTOM EXCERPT SECTION
 			array (

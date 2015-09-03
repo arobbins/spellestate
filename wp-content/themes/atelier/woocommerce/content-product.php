@@ -189,7 +189,7 @@
 		
 	}
 ?>
-<div <?php post_class( $classes ); ?> data-width="<?php echo esc_attr($width); ?>">
+<li <?php post_class( $classes ); ?> data-width="<?php echo esc_attr($width); ?>">
 
 	<?php do_action( 'woocommerce_before_shop_loop_item' ); ?>
 	
@@ -369,4 +369,4 @@
 	</div>
 	<?php } ?>
 
-</div>
+</li>

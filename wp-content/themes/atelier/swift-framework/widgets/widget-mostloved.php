@@ -7,7 +7,7 @@
 
         /** constructor */
         function lip_most_loved_widget() {
-            parent::WP_Widget( false, $name = __( 'Most Loved Items', 'swiftframework' ), array( 'description' => __( 'Show the most loved items', 'swiftframework' ) ) );
+            parent::__construct( false, $name = __( 'Most Loved Items', 'swiftframework' ), array( 'description' => __( 'Show the most loved items', 'swiftframework' ) ) );
         }
 
         /** @see WP_Widget::widget */

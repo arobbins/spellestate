@@ -17,6 +17,14 @@ Supported Themes: Atelier, Cardinal, JOYN
 
 == Changelog ==
 
+= 1.60 =
+* Added loop on/off option to Row background video
+* Videos set not to loop now won't restart when scrolled into view
+* Fixed row/column layout issues
+* Fixed issue with social output
+* Fixed issue with page builder not loading when on the s"Text" content tab
+* Fixed background position align of Swift Slider
+
 = 1.51 =
 * Disabled options developer mode
 * Multi-layer parallax display fixes

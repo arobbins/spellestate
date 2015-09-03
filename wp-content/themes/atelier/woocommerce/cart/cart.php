@@ -152,7 +152,7 @@ wc_print_notices();
 
 				<?php woocommerce_cart_totals(); ?>
 
-				<a class="continue-shopping accent" href="<?php echo get_permalink( wc_get_page_id( 'shop' ) ); ?>"><?php _e('Continue shopping', 'swiftframework'); ?></a>
+				<a class="continue-shopping accent" href="<?php echo apply_filters( 'woocommerce_continue_shopping_redirect', get_permalink( wc_get_page_id( 'shop' ) ) ); ?>"><?php _e('Continue shopping', 'swiftframework'); ?></a>
 
 			</div>
 

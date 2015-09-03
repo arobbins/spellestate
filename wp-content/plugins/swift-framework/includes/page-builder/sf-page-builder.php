@@ -40,7 +40,7 @@
             $path      = dirname( __FILE__ ) . '/shortcodes/';
             $folders   = scandir( $path, 1 );
             foreach ( $folders as $file ) {
-                if ( $file == '.' || $file == '..' || $file == '.DS_Store' || $file == "blog-grid-old.php" || strpos($file,'.php') != true ) {
+                if ( $file == '.' || $file == '..' || $file == '.DS_Store' || strpos($file,'.php') != true ) {
                     continue;
                 }
                 $file               = substr( $file, 0, - 4 );

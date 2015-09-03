@@ -875,7 +875,7 @@ jQuery( document ).ready(
                     if ( postdivrich.is( ":visible" ) ) {
 
                         if ( !isTinyMceActive() ) {
-                            if ( switchEditors != undefined ) switchEditors.switchto( $( '#content-tmce' ).get( 0 ) );
+                            if ( switchEditors != undefined )  $( '#content-tmce' ).get( 0 ).click();
                         }
                         postdivrich.hide();
                         swiftPageBuilder.show();

@@ -17,7 +17,7 @@
 
     class sf_recent_posts extends WP_Widget {
         function sf_recent_posts() {
-            parent::WP_Widget( 'sf_recent_custom_posts', $name = 'Swift Framework Recent Posts' );
+            parent::__construct( 'sf_recent_custom_posts', $name = 'Swift Framework Recent Posts' );
         }
 
         function widget( $args, $instance ) {
@@ -99,7 +99,9 @@
 
                                 <div class="comments-likes">
                                     <?php if ( comments_open() ) { ?>
-                                        <a href="<?php echo esc_url($post_permalink); ?>#comment-area"><?php echo apply_filters( 'sf_comments_icon', '<i class="ss-chat"></i>' ); ?><span><?php echo esc_attr($post_comments); ?></span></a>
+                                        <div class="comments-wrapper">
+                                            <a href="<?php echo esc_url($post_permalink); ?>#comment-area"><?php echo apply_filters( 'sf_comments_icon', '<i class="ss-chat"></i>' ); ?><span><?php echo esc_attr($post_comments); ?></span></a>
+                                        </div>
                                     <?php } ?>
                                     <?php if ( function_exists( 'lip_love_it_link' ) ) {
                                         echo lip_love_it_link( get_the_ID(), false );

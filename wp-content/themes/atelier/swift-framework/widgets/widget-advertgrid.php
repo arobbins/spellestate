@@ -20,7 +20,7 @@
                                   'height'  => 200,
                                   'id_base' => 'advert-grid-widget'
             ); //default width = 250
-            $this->WP_Widget( 'advert-grid-widget', 'Swift Framework Advert Grid Widget', $widget_ops, $control_ops );
+            parent::__construct( 'advert-grid-widget', 'Swift Framework Advert Grid Widget', $widget_ops, $control_ops );
         }
 
         function form( $instance ) {

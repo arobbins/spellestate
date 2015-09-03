@@ -32,7 +32,7 @@
 
 ?>
 <?php if (!$product_display_gutters && ($product_display_type == "gallery" || $product_display_type == "gallery-bordered")) { ?>
-	<div id="products" class="products <?php echo esc_attr($list_class); ?> no-gutters clearfix">
+	<ul id="products" class="products <?php echo esc_attr($list_class); ?> no-gutters clearfix">
 <?php } else { ?>
-	<div id="products" class="products <?php echo esc_attr($list_class); ?> gutters row clearfix">
+	<ul id="products" class="products <?php echo esc_attr($list_class); ?> gutters row clearfix">
 <?php } ?>

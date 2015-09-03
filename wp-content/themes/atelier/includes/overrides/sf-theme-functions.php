@@ -838,6 +838,11 @@
 		$tb_left_output .= sf_get_account(). "\n";
 		} else if ($tb_left_config == "menu") {
 		$tb_left_output .= sf_top_bar_menu(). "\n";
+		} else if ($tb_left_config == "cart-wishlist") {
+		$tb_left_output .= '<div class="aux-item aux-cart-wishlist"><nav class="std-menu cart-wishlist"><ul class="menu">'. "\n";
+		$tb_left_output .= sf_get_cart();
+		$tb_left_output .= sf_get_wishlist();
+		$tb_left_output .= '</ul></nav></div>'. "\n";
 		} else {
 		$tb_left_output .= '<div class="tb-text">'.do_shortcode($tb_left_text).'</div>'. "\n";
 		}
@@ -848,6 +853,11 @@
 		$tb_right_output .= sf_get_account(). "\n";
 		} else if ($tb_right_config == "menu") {
 		$tb_right_output .= sf_top_bar_menu(). "\n";
+		} else if ($tb_right_config == "cart-wishlist") {
+		$tb_right_output .= '<div class="aux-item aux-cart-wishlist"><nav class="std-menu cart-wishlist"><ul class="menu">'. "\n";
+		$tb_right_output .= sf_get_cart();
+		$tb_right_output .= sf_get_wishlist();
+		$tb_right_output .= '</ul></nav></div>'. "\n";
 		} else {
 		$tb_right_output .= '<div class="tb-text">'.do_shortcode($tb_right_text).'</div>'. "\n";
 		}
@@ -1068,6 +1078,20 @@
 						$aux_output .= '<div class="aux-item">'. "\n";
 						$aux_output .= sf_get_account('aux');
 						$aux_output .= '</div>'. "\n";
+					} else if ($item_id == "language") {
+						$aux_output .= '<div class="aux-item aux-language">'. "\n";
+						$aux_output .= '<nav class="std-menu">' . "\n";
+						$aux_output .= '<ul class="menu">' . "\n";
+						$aux_output .= '<li class="parent aux-languages"><a href="#">' . __( "Language", "swiftframework" ) . '</a>' . "\n";
+						$aux_output .= '<ul class="header-languages sub-menu">' . "\n";
+						if ( function_exists( 'sf_language_flags' ) ) {
+						$aux_output .= sf_language_flags();
+						}
+						$aux_output .= '</ul>' . "\n";
+						$aux_output .= '</li>' . "\n";
+						$aux_output .= '</ul>' . "\n";
+						$aux_output .= '</nav>' . "\n";
+						$aux_output .= '</div>'. "\n";
 					} else if ($item_id == "text" && $aux == "left") {
 						$aux_output .= '<div class="aux-item text">'.do_shortcode($header_left_text).'</div>'. "\n";
 					} else if ($item_id == "text" && $aux == "right") {
@@ -1189,11 +1213,16 @@
 			    }
 
 			    if ($count > 1) {
+			    	$search_link = get_search_link( $search_term );
+			    	
+			    	if (strpos($search_link,'?') !== false) {
+			    		$search_link .= '&post_type='. $header_search_pt;
+			    	} else {
+			    		$search_link .= '?post_type='. $header_search_pt;
+			    	}
 			    	if ($header_search_type == "fs-search-on") {
-			    		$search_link = get_home_url() . '?s='.$search_term . '&post_type='. $header_search_pt;
 				    	$search_results_ouput .= '<a href="'.$search_link.'" class="all-results">'.sprintf(__("View all %d results", "swiftframework"), $count).'</a>';
 			    	} else {
-			    		$search_link = get_home_url() . '?s='.$search_term . '&post_type='. $header_search_pt;
 			    		$search_results_ouput .= '<a href="'.$search_link.'" class="all-results sf-button black bordered">'.sprintf(__("View all %d results", "swiftframework"), $count).'</a>';
 			    	}
 			    }

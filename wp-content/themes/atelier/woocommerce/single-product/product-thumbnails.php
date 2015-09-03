@@ -42,10 +42,11 @@
 
             $image       = wp_get_attachment_image( $attachment_id, apply_filters( 'single_product_small_thumbnail_size', 'shop_thumbnail' ) );
             $image_class = esc_attr( implode( ' ', $classes ) );
+            $image_caption 	= get_post( get_post_thumbnail_id() )->post_excerpt;
             $image_title = esc_attr( get_the_title( $attachment_id ) );
-
-            echo apply_filters( 'woocommerce_single_product_image_thumbnail_html', sprintf( '<li>%s</li>', $image ), $attachment_id, $post->ID, $image_class );
-
+		
+			echo apply_filters( 'woocommerce_single_product_image_thumbnail_html', sprintf( '<a href="%s" class="%s" title="%s" data-rel="prettyPhoto[product-gallery]">%s</a>', $image_link, $image_class, $image_caption, $image ), $attachment_id, $post->ID, $image_class );
+			
             $loop ++;
         }
 

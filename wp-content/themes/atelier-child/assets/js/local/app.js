@@ -7,6 +7,10 @@
 
     /* Utils */
     Utils.addClasses();
+    Utils.addBorderOnScroll();
+    Utils.removeMailText();
+    Utils.toggleRows();
+    Utils.responsifyTables();
 
     /* Team */
     Team.reorderNameAndPosition();

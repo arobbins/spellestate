@@ -1,5 +1,32 @@
 <?php get_header(); ?>
 
+<!--
+  Showing custom header
+-->
+
+<?php
+
+  //
+  // Mobile Detect
+  //
+  require_once 'mobile-detect/Mobile_Detect.php';
+  $detect = new Mobile_Detect;
+
+  if ($detect->isMobile() && !$detect->isTablet()) {
+
+    if(get_field('show_custom_header')) { ?>
+      <img src="<?php the_field('global_header_image_mobile', 'options'); ?>" alt="Spellestate" />
+    <?php }
+
+  } else {
+
+    if(get_field('show_custom_header')) { ?>
+      <img src="<?php the_field('global_header_image', 'options'); ?>" alt="Spellestate" />
+    <?php }
+  }
+
+?>
+
 <?php
   $sidebar_config = sf_get_post_meta($post->ID, 'sf_sidebar_config', true);
   if (isset($_GET['sidebar'])) {

@@ -35,6 +35,7 @@
 	# MAP SHORTCODE
 	# MULTILAYER PARALLAX SHORTCODE
 	# PARALLAX SHORTCODE
+	# PORTFOLIO CAROUSEL SHORTCODE
 	# PROGRESS SHORTCODE
 	# PROMO BAR SHORTCODE
 	# RECENT POSTS SHORTCODE
@@ -282,19 +283,10 @@
 	display: inline-block;
 	width: 99%;
 }
-.spb-row-container .spb-column-container .row {
-	margin-left: 0;
-	margin-right: 0;
-	padding-left: 15px;
-}
 .spb-row-container.spb-row-full-width .spb-column-container .row {
 	margin-left: 0;
 	margin-right: 0;
 	padding-left: 15px;
-}
-.spb-row-container.spb-row-content-width .spb-column-container .row {
-	margin-left: 0;
-	margin-right: 0;
 }
 .spb-row-container.spb-row-full-width.remove-element-spacing .spb-column-container .row {
 	padding-left: 0px!important;
@@ -2800,6 +2792,61 @@ ul.jobs {
 
 
 /* --------------------------------------------
+	PORTFOLIO CAROUSEL SHORTCODE
+-------------------------------------------- */
+
+.spb_portfolio_carousel_widget {
+	padding-bottom: 50px;
+}
+.spb_portfolio_carousel_widget .caroufredsel_wrapper {
+	padding-bottom: 10px;
+}
+.spb_portfolio_carousel_widget .portfolio-item {
+	height: auto;
+}
+.spb_portfolio_carousel_widget .carousel-items .portfolio-item {
+	padding: 0 15px;
+}
+.spb_portfolio_carousel_widget .carousel-items.no-gutters .portfolio-item {
+	padding: 0;
+}
+.spb_portfolio_carousel_widget .portfolio-item figure {
+	margin-bottom: 0;
+}
+.spb_portfolio_carousel_widget .portfolio-item .item-details {
+	padding: 12px 15px 7px;
+}
+.spb_portfolio_carousel_widget .portfolio-item h4.portfolio-item-title {
+	margin: 0 0 5px;
+	text-align: left;
+}
+.spb_portfolio_carousel_widget .portfolio-item h4.portfolio-item-title a {
+	display: block;
+	height: auto;
+	overflow: hidden;
+}
+.spb_portfolio_carousel_widget .portfolio-item h4 span {
+	display: inline-block;
+	float: left;
+	max-width: 82%;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+.spb_portfolio_carousel_widget .portfolio-item h4.portfolio-item-title a:hover {
+	text-decoration: none;
+}
+.spb_portfolio_carousel_widget .portfolio-item h4.portfolio-item-title a > i {
+	float: right;
+	text-align: right;
+	line-height: 20px;
+	opacity: 0.6;
+	-moz-opacity: 0.6;
+	filter:alpha(opacity= 60);
+}
+
+
+/* --------------------------------------------
 	PROGRESS SHORTCODE
 -------------------------------------------- */
 
@@ -3523,10 +3570,10 @@ table.striped_bordered th, table.striped_bordered td {
 	border-bottom-width: 2px!important;
 	background: transparent;
 }
-.spb_tabs .nav-tabs li a > i {
+.spb_tabs .nav-tabs li a i {
 	margin-right: 5px;
 }
-.spb_tabs .nav-tabs li a > i[class*="ss-"] {
+.spb_tabs .nav-tabs li a i[class*="ss-"] {
 	display: inline-block;
 	line-height: 100%;
 	vertical-align: -3px;

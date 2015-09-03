@@ -77,7 +77,7 @@
             // Please update the build number with each push, no matter how small.
             // This will make for easier support when we ask users what version they are using.
 
-            public static $_version = '3.5.6.4';
+            public static $_version = '3.5.7.3';
             public static $_dir;
             public static $_url;
             public static $_upload_dir;
@@ -516,6 +516,7 @@
                     'network_sites'             => true,
                     // Enable sites as well as admin when using network database mode
                     'hide_reset'                => false,
+                    'hide_save'                 => false,
                     'hints'                     => array(
                         'icon'          => 'el el-question-sign',
                         'icon_position' => 'right',
@@ -2039,6 +2040,11 @@
                         $section['title'] = "";
                     }
 
+                    if ( isset ( $section['customizer_only'] ) && $section['customizer_only'] == true ) {
+                        $section['panel'] = false;
+                        $this->sections[ $k ] = $section;
+                    }
+
                     $heading = isset ( $section['heading'] ) ? $section['heading'] : $section['title'];
 
                     if ( isset ( $section['permissions'] ) ) {
@@ -2123,6 +2129,10 @@
                                 $display = false;
                             }
 
+                            if ( isset ( $section['customizer'] ) ) {
+                                $field['customizer']                       = $section['customizer'];
+                                $this->sections[ $k ]['fields'][ $fieldk ] = $field;
+                            }
 
                             if ( isset ( $field['permissions'] ) ) {
 
@@ -2744,15 +2754,24 @@
             }
 
             public function ajax_save() {
-
-
-                if ( ! wp_verify_nonce( $_REQUEST['nonce'], "redux_ajax_nonce" ) ) {
-                    json_encode( array(
-                        'status' => __( 'Invalid security credential, please reload the page and try again.', 'redux-framework' ),
-                        'action' => 'reload'
+                if ( ! wp_verify_nonce( $_REQUEST['nonce'], "redux_ajax_nonce" . $this->args['opt_name'] ) ) {
+                    echo json_encode( array(
+                        'status' => __( 'Invalid security credential.  Please reload the page and try again.', 'redux-framework' ),
+                        'action' => ''
                     ) );
+                    
                     die();
                 }
+                
+                if (!current_user_can ( $this->args['page_permissions'] )) {
+                    echo json_encode( array(
+                        'status' => __( 'Invalid user capability.  Please reload the page and try again.', 'redux-framework' ),
+                        'action' => ''
+                    ) );
+                    
+                    die();
+                }
+                
                 $redux = ReduxFrameworkInstances::get_instance( $_POST['opt_name'] );
 
                 if ( ! empty ( $_POST['data'] ) && ! empty ( $redux->args['opt_name'] ) ) {

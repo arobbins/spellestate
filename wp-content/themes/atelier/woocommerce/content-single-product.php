@@ -110,8 +110,9 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 			<div class="product-price-wrap clearfix">
 				<div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
 
-					<h3 itemprop="price" class="price"><?php echo $product->get_price_html(); ?></h3>
-
+					<h3 class="price"><?php echo $product->get_price_html(); ?></h3>
+					
+					<meta itemprop="price" content="<?php echo $product->get_price(); ?>" />
 					<meta itemprop="priceCurrency" content="<?php echo get_woocommerce_currency(); ?>" />
 
 					<?php if (!$sf_catalog_mode) { ?><link itemprop="availability" href="http://schema.org/<?php echo $product->is_in_stock() ? 'InStock' : 'OutOfStock'; ?>" /><?php } ?>

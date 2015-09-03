@@ -880,7 +880,7 @@
 		    }
 			echo '<a href="#" class="sf-mobile-shop-filters-link">' . __( "Filters" , "swiftframework" ) . '</a>';
 		}
-		add_action( 'woocommerce_before_shop_loop', 'sf_mobile_filters_link', 25 );
+		add_action( 'woocommerce_before_shop_loop', 'sf_mobile_filters_link', 0 );
 	}
     if ( ! function_exists( 'sf_mobile_shop_filters' ) ) {
 	    function sf_mobile_shop_filters() {
@@ -891,7 +891,7 @@
 
 			?>
 
-			<div class="sf-mobile-shop-filters">
+			<div class="sf-mobile-shop-filters row">
 				<?php if ( function_exists( 'dynamic_sidebar' ) ) { ?>
                     <?php dynamic_sidebar( 'mobile-woocommerce-filters' ); ?>
                 <?php } ?>

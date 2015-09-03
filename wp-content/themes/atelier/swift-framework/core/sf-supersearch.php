@@ -27,7 +27,7 @@
                 
                 $super_search = $search_text = $shop_url = "";
                 
-                $shop_url = get_permalink( woocommerce_get_page_id( 'shop' ) );
+                $shop_url = get_permalink( wc_get_page_id( 'shop' ) );
                 
                 if (sf_theme_supports('super-search-config')) {
                                 	

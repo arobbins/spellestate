@@ -5893,6 +5893,18 @@ body.header-below-slider .home-slider-wrap #slider-continue {
 #top-bar nav.std-menu ul.sub-menu > li.parent:after {
 	margin-top: -9px;
 }
+#top-bar .no-menu {
+	padding: 5px 0;
+}
+#top-bar .shopping-bag-item, #top-bar .wishlist-item {
+	padding: 0 10px;
+}
+#top-bar .shopping-bag-item > a, #top-bar .wishlist-item > a {
+	padding: 0!important;
+}
+#top-bar .shopping-bag-item:hover > a:after, #top-bar .wishlist-item:hover > a:after {
+	display: none;
+}
 
 /* --------------------------------------------
 	HEADER OVERLAY
@@ -6525,6 +6537,10 @@ nav .menu ul.sub-menu li > span {
 	right: auto;
 	top: 100%!important;
 }
+.header-left nav.std-menu ul.sub-menu ul.sub-menu {
+	left: 100%;
+	top: 0!important;
+}
 #header ul.social-icons {
 	margin-bottom: 0;
 	margin-top: 3px;
@@ -6717,6 +6733,12 @@ nav .menu ul.sub-menu li > span {
 }
 .header-2 .menu-right .aux-item .shopping-bag-item > a {
 	padding-right: 0!important;
+}
+.aux-item.aux-language ul.menu > li.aux-languages > a > img {
+	margin-right: 0;
+}
+.aux-item.aux-language ul.menu > li.aux-languages > a > span {
+	display: none;
 }
 
 
@@ -8713,25 +8735,25 @@ body[class*="header-naked"] #header-section #header {
 .page-header-naked-dark .sticky-wrapper:not(.is-sticky) #logo.has-dark-logo img.dark-logo, .page-header-naked-dark .header-2 #logo.has-dark-logo img.dark-logo, .page-header-naked-dark .header-6 #logo.has-dark-logo img.dark-logo {
 	display: inline-block;
 }
-.page-header-naked-light:not(.full-header-stick) .header-left, .page-header-naked-light:not(.full-header-stick) .header-left a, .page-header-naked-light:not(.full-header-stick) .header-right, .page-header-naked-light:not(.full-header-stick) .header-right a, .page-header-naked-light:not(.full-header-stick) #logo h1 {
+.page-header-naked-light:not(.full-header-stick) .header-left, .page-header-naked-light:not(.full-header-stick) .header-left a, .page-header-naked-light:not(.full-header-stick) .header-right, .page-header-naked-light:not(.full-header-stick) .header-right a, .page-header-naked-light:not(.full-header-stick) #logo h1, .sticky-header-disabled .page-header-naked-light.full-header-stick .header-left, .sticky-header-disabled .page-header-naked-light.full-header-stick .header-left a, .sticky-header-disabled .page-header-naked-light.full-header-stick .header-right, .sticky-header-disabled .page-header-naked-light.full-header-stick .header-right a, .sticky-header-disabled .page-header-naked-light.full-header-stick #logo h1 {
 	color: #fff;
 }
-.page-header-naked-light .sticky-wrapper:not(.is-sticky) #logo h1, .page-header-naked-light .sticky-wrapper:not(.is-sticky) #main-nav ul.menu > li > a, .page-header-naked-light .sticky-wrapper:not(.is-sticky) nav .menu > li.menu-item > a, .page-header-naked-light .sticky-wrapper:not(.is-sticky) nav.std-menu .menu > li > a, .page-header-naked-light .sticky-wrapper:not(.is-sticky) .header-left, .page-header-naked-light .sticky-wrapper:not(.is-sticky) .header-left ul.menu > li > a, .page-header-naked-light .sticky-wrapper:not(.is-sticky) .header-right, .page-header-naked-light .sticky-wrapper:not(.is-sticky) .header-right ul.menu > li > a, .page-header-naked-light .sticky-wrapper:not(.is-sticky) .shopping-bag-item a > span.num-items, .page-header-naked-light .sticky-wrapper:not(.is-sticky) #header .aux-item ul.menu > li > a.header-search-link, .page-header-naked-light .header-6 #header .aux-item ul.menu > li > a.header-search-link, .page-header-naked-light .header-6 .shopping-bag-item a > span.num-items, .page-header-naked-light .sticky-wrapper:not(.is-sticky) .fs-supersearch-link, .page-header-naked-light.full-header-stick .sticky-wrapper:not(.is-sticky) .aux-item a.contact-menu-link, .page-header-naked-light.full-header-stick .sticky-wrapper:not(.is-sticky) .aux-item ul.social-icons > li > a {
+.page-header-naked-light .sticky-wrapper:not(.is-sticky) #logo h1, .page-header-naked-light .sticky-wrapper:not(.is-sticky) #main-nav ul.menu > li > a, .page-header-naked-light .sticky-wrapper:not(.is-sticky) nav .menu > li.menu-item > a, .page-header-naked-light .sticky-wrapper:not(.is-sticky) nav.std-menu .menu > li > a, .page-header-naked-light .sticky-wrapper:not(.is-sticky) .header-left, .page-header-naked-light .sticky-wrapper:not(.is-sticky) .header-left ul.menu > li > a, .page-header-naked-light .sticky-wrapper:not(.is-sticky) .header-right, .page-header-naked-light .sticky-wrapper:not(.is-sticky) .header-right ul.menu > li > a, .page-header-naked-light .sticky-wrapper:not(.is-sticky) .shopping-bag-item a > span.num-items, .page-header-naked-light .sticky-wrapper:not(.is-sticky) #header .aux-item ul.menu > li > a.header-search-link, .page-header-naked-light .header-6 #header .aux-item ul.menu > li > a.header-search-link, .page-header-naked-light .header-6 .shopping-bag-item a > span.num-items, .page-header-naked-light .sticky-wrapper:not(.is-sticky) .fs-supersearch-link, .page-header-naked-light.full-header-stick .sticky-wrapper:not(.is-sticky) .aux-item a.contact-menu-link, .page-header-naked-light.full-header-stick .sticky-wrapper:not(.is-sticky) .aux-item ul.social-icons > li > a, .sticky-header-disabled .page-header-naked-light.full-header-stick #main-nav ul.menu > li > a, .sticky-header-disabled .page-header-naked-light.full-header-stick nav .menu > li.menu-item > a, .sticky-header-disabled .page-header-naked-light a.contact-menu-link {
 	color: #fff;
 }
-.page-header-naked-light .sticky-wrapper:not(.is-sticky) a.menu-bars-link span, .page-header-naked-light .sticky-wrapper:not(.is-sticky) a.menu-bars-link span:before, .page-header-naked-light .sticky-wrapper:not(.is-sticky) a.menu-bars-link span:after, .page-header-naked-light .header-6 a.menu-bars-link span, .page-header-naked-light .header-6 a.menu-bars-link span:before, .page-header-naked-light .header-6 a.menu-bars-link span:after {
+.page-header-naked-light .sticky-wrapper:not(.is-sticky) a.menu-bars-link span, .page-header-naked-light .sticky-wrapper:not(.is-sticky) a.menu-bars-link span:before, .page-header-naked-light .sticky-wrapper:not(.is-sticky) a.menu-bars-link span:after, .page-header-naked-light .header-6 a.menu-bars-link span, .page-header-naked-light .header-6 a.menu-bars-link span:before, .page-header-naked-light .header-6 a.menu-bars-link span:after, .sticky-header-disabled .page-header-naked-light a.menu-bars-link span, .sticky-header-disabled .page-header-naked-light a.menu-bars-link span:before, .sticky-header-disabled .page-header-naked-light a.menu-bars-link span:after {
 	background: #fff;
 }
 .page-header-naked-light .sticky-wrapper:not(.is-sticky) .shopping-bag-item a > span.num-items:after, .page-header-naked-light .header-6 .shopping-bag-item a > span.num-items:after {
 	border-color: #fff;
 }
-.page-header-naked-dark:not(.full-header-stick) .header-left, .page-header-naked-dark:not(.full-header-stick) .header-left a, .page-header-naked-dark:not(.full-header-stick) .header-right, .page-header-naked-dark:not(.full-header-stick) .header-right a, .page-header-naked-dark:not(.full-header-stick) #logo h1, .page-header-naked-dark .sticky-wrapper:not(.is-sticky) #main-nav ul.menu > li > a, .page-header-naked-dark .sticky-wrapper:not(.is-sticky) nav .menu > li.menu-item > a, .page-header-naked-dark .sticky-wrapper:not(.is-sticky) nav.std-menu .menu > li > a, .page-header-naked-dark .sticky-wrapper:not(.is-sticky) .header-left, .page-header-naked-dark .sticky-wrapper:not(.is-sticky) .header-left ul.menu > li > a, .page-header-naked-dark .sticky-wrapper:not(.is-sticky) .header-right, .page-header-naked-dark .sticky-wrapper:not(.is-sticky) .header-right ul.menu > li > a, .page-header-naked-dark .sticky-wrapper:not(.is-sticky) .shopping-bag-item a > span.num-items, .page-header-naked-dark .sticky-wrapper:not(.is-sticky) #header .aux-item ul.menu > li, .page-header-naked-dark .header-6 #header .aux-item ul.menu > li > a.header-search-link, .page-header-naked-dark .header-6 .shopping-bag-item a > span.num-items, .page-header-naked-dark .sticky-wrapper:not(.is-sticky) .fs-supersearch-link, .page-header-naked-dark.full-header-stick .sticky-wrapper:not(.is-sticky) .aux-item a.contact-menu-link, .page-header-naked-dark.full-header-stick .sticky-wrapper:not(.is-sticky) .aux-item ul.social-icons > li > a {
+.page-header-naked-dark:not(.full-header-stick) .header-left, .page-header-naked-dark:not(.full-header-stick) .header-left a, .page-header-naked-dark:not(.full-header-stick) .header-right, .page-header-naked-dark:not(.full-header-stick) .header-right a, .page-header-naked-dark:not(.full-header-stick) #logo h1, .page-header-naked-dark .sticky-wrapper:not(.is-sticky) #main-nav ul.menu > li > a, .page-header-naked-dark .sticky-wrapper:not(.is-sticky) nav .menu > li.menu-item > a, .page-header-naked-dark .sticky-wrapper:not(.is-sticky) nav.std-menu .menu > li > a, .page-header-naked-dark .sticky-wrapper:not(.is-sticky) .header-left, .page-header-naked-dark .sticky-wrapper:not(.is-sticky) .header-left ul.menu > li > a, .page-header-naked-dark .sticky-wrapper:not(.is-sticky) .header-right, .page-header-naked-dark .sticky-wrapper:not(.is-sticky) .header-right ul.menu > li > a, .page-header-naked-dark .sticky-wrapper:not(.is-sticky) .shopping-bag-item a > span.num-items, .page-header-naked-dark .sticky-wrapper:not(.is-sticky) #header .aux-item ul.menu > li, .page-header-naked-dark .header-6 #header .aux-item ul.menu > li > a.header-search-link, .page-header-naked-dark .header-6 .shopping-bag-item a > span.num-items, .page-header-naked-dark .sticky-wrapper:not(.is-sticky) .fs-supersearch-link, .page-header-naked-dark.full-header-stick .sticky-wrapper:not(.is-sticky) .aux-item a.contact-menu-link, .page-header-naked-dark.full-header-stick .sticky-wrapper:not(.is-sticky) .aux-item ul.social-icons > li > a, .sticky-header-disabled .page-header-naked-dark.full-header-stick .header-left, .sticky-header-disabled .page-header-naked-dark.full-header-stick .header-left a, .sticky-header-disabled .page-header-naked-dark.full-header-stick .header-right, .sticky-header-disabled .page-header-naked-dark.full-header-stick .header-right a, .sticky-header-disabled .page-header-naked-dark.full-header-stick #logo h1 {
 	color: #222;
 }
-.page-header-naked-dark .sticky-wrapper:not(.is-sticky) a.menu-bars-link span, .page-header-naked-dark .sticky-wrapper:not(.is-sticky) a.menu-bars-link span:before, .page-header-naked-dark .sticky-wrapper:not(.is-sticky) a.menu-bars-link span:after, .page-header-naked-dark .header-6 a.menu-bars-link span, .page-header-naked-dark .header-6 a.menu-bars-link span:before, .page-header-naked-dark .header-6 a.menu-bars-link span:after {
+.page-header-naked-dark .sticky-wrapper:not(.is-sticky) a.menu-bars-link span, .page-header-naked-dark .sticky-wrapper:not(.is-sticky) a.menu-bars-link span:before, .page-header-naked-dark .sticky-wrapper:not(.is-sticky) a.menu-bars-link span:after, .page-header-naked-dark .header-6 a.menu-bars-link span, .page-header-naked-dark .header-6 a.menu-bars-link span:before, .page-header-naked-dark .header-6 a.menu-bars-link span:after, .sticky-header-disabled .page-header-naked-dark a.menu-bars-link span, .sticky-header-disabled .page-header-naked-dark a.menu-bars-link span:before, .sticky-header-disabled .page-header-naked-dark a.menu-bars-link span:after {
 	background: #222;
 }
-.page-header-naked-dark .sticky-wrapper:not(.is-sticky) .shopping-bag-item a > span.num-items:after, .page-header-naked-dark .header-6 .shopping-bag-item a > span.num-item:after {
+.page-header-naked-dark .sticky-wrapper:not(.is-sticky) .shopping-bag-item a > span.num-items:after, .page-header-naked-dark .header-6 .shopping-bag-item a > span.num-item:after, .sticky-header-disabled .page-header-naked-dark.full-header-stick .shopping-bag-item a > span.num-items:after {
 	border-color: #222;
 }
 body[class*="header-naked"] .inner-page-wrap {
@@ -10264,7 +10286,7 @@ ul.mobile-language-select {
 	border-top-color: transparent!important;
 }
 .layout-boxed #sf-newsletter-bar > .container {
-	width: 1000%;
+	width: 100%;
 	margin: 0 auto;
 	border-top: 1px solid #e3e3e3;
 }
@@ -10440,52 +10462,6 @@ ul.portfolio-items.no-gutters {
 	transition: transform 0.4s;
 	z-index: 2;
 	position: relative;
-}
-.spb_portfolio_carousel_widget {
-	padding-bottom: 50px;
-}
-.spb_portfolio_carousel_widget .caroufredsel_wrapper {
-	padding-bottom: 10px;
-}
-.spb_portfolio_carousel_widget .portfolio-item {
-	height: auto;
-}
-.spb_portfolio_carousel_widget .carousel-items .portfolio-item {
-	padding: 0 15px;
-}
-.spb_portfolio_carousel_widget .portfolio-item figure {
-	margin-bottom: 0;
-}
-.spb_portfolio_carousel_widget .portfolio-item .item-details {
-	padding: 12px 15px 7px;
-}
-.spb_portfolio_carousel_widget .portfolio-item h4.portfolio-item-title {
-	margin: 0 0 5px;
-	text-align: left;
-}
-.spb_portfolio_carousel_widget .portfolio-item h4.portfolio-item-title a {
-	display: block;
-	height: auto;
-	overflow: hidden;
-}
-.spb_portfolio_carousel_widget .portfolio-item h4 span {
-	display: inline-block;
-	float: left;
-	max-width: 82%;
-	white-space: nowrap;
-	text-overflow: ellipsis;
-	overflow: hidden;
-}
-.spb_portfolio_carousel_widget .portfolio-item h4.portfolio-item-title a:hover {
-	text-decoration: none;
-}
-.spb_portfolio_carousel_widget .portfolio-item h4.portfolio-item-title a > i {
-	float: right;
-	text-align: right;
-	line-height: 20px;
-	opacity: 0.6;
-	-moz-opacity: 0.6;
-	filter:alpha(opacity= 60);
 }
 .portfolio-items.no-gutters .portfolio-item-details, .portfolio-full-width .portfolio-item-details {
 	padding: 0 15px 20px;
@@ -11860,7 +11836,7 @@ figure.media-wrap .mejs-video .mejs-overlay-button {
 	font-size: 17px;
 	vertical-align: -4px;
 }
-.comments-likes .love-it-wrapper {
+.comments-likes .comments-wrapper, .comments-likes .love-it-wrapper {
 	display: inline-block;
 }
 .comments-likes .love-it-wrapper a:hover {
@@ -14054,6 +14030,9 @@ input[type="file"] {
 .spb_accordion .spb_accordion_section > h4.ui-state-active a:after {
 	content: "\e603";
 }
+.spb_accordion .ui-accordion .ui-accordion-content .row {
+	margin-left: -15px!important;
+}
 .toggle-wrap .spb_toggle:after {
 	content: "\e600";
 	font-family: 'atelier'!important;
@@ -14325,6 +14304,10 @@ input[type="file"] {
 }
 .woocommerce ul.products li.product {
 	padding: 0 15px;
+	margin: 0;
+}
+.woocommerce ul.products li.product.product-display-standard {
+	margin-bottom: 30px;
 }
 .woocommerce ul.products.no-gutters li.product {
 	padding: 0;
@@ -14869,6 +14852,17 @@ select.hasCustomSelect {
 .mobile-woo-aux-details .woocommerce-result-count {
 	float: right!important;
 }
+.woo-global-filters-enabled .sf-mobile-shop-filters-link {
+	display: block;
+	margin-right: 20px;
+	line-height: 22px;
+}
+.woo-global-filters-enabled .mobile-woo-aux-options {
+	display: block;
+}
+.woo-global-filters-enabled .mobile-woo-aux-details {
+	display: none;
+}
 .inner-page-wrap.full-width-shop, .inner-page-wrap.full-width-shop > .row {
 	margin: 0;
 }
@@ -14961,6 +14955,7 @@ ul.cart_list li, ul.product_list_widget li {
 }
 .products .product {
 	text-align: left;
+	list-style: none;
 }
 .products .product .product-details {
 	text-align: left;
@@ -15023,6 +15018,12 @@ ul.cart_list li, ul.product_list_widget li {
 .products .product.buy-btn-visible > .product-actions .add-to-cart-wrap > a.added_to_cart {
 	display: none;
 }
+li.product .add-to-cart-wrap .variations_form {
+	margin: 10px 0 5px;
+}
+.cart-overlay .add-to-cart-wrap .variations_form {
+	display: none!important;
+}
 .woocommerce a.added_to_cart {
 	display: none!important;
 }
@@ -15044,6 +15045,7 @@ ul.cart_list li, ul.product_list_widget li {
 }
 .product-grid .product {
 	opacity: 0;
+	list-style: none;
 }
 .woocommerce .full-width-shop .product-type-standard .product-grid {
 	margin: 0 15px 40px;
@@ -15051,6 +15053,7 @@ ul.cart_list li, ul.product_list_widget li {
 .woocommerce .products .product {
 	height: auto;
 	margin-bottom: 30px;
+	list-style: none;
 }
 .woocommerce .products.no-gutters .product {
 	margin-bottom: 0;
@@ -15090,13 +15093,13 @@ ul.cart_list li, ul.product_list_widget li {
 .woocommerce .products.product-type-gallery .product figure, .woocommerce .products.product-type-gallery-bordered .product figure {
 	margin-bottom: 0;
 }
-.woocommerce .products .product h3 {
+.woocommerce .products .product h3, .woocommerce ul.products li.product h3 {
 	margin: 0!important;
 	padding: 0!important;
 	line-height: 150%;
 	font-size: 18px;
 }
-.woocommerce .products .product .price {
+.woocommerce .products .product .price, .woocommerce ul.products li.product .price {
 	float: none;
 	width: 100%;
 	text-align: inherit;
@@ -15120,7 +15123,7 @@ ul.cart_list li, ul.product_list_widget li {
 	margin-top: 8px;
 	margin-bottom: 0;
 }
-.woocommerce .products .product {
+.woocommerce ul.products li.product {
 	margin-bottom: 50px;
 }
 .woocommerce .products .product.product-display-gallery, .woocommerce .products .product.product-display-gallery-bordered, .woocommerce .products.product-type-gallery .product, .woocommerce .products.product-type-gallery-bordered .product {
@@ -15348,7 +15351,7 @@ ul.cart_list li, ul.product_list_widget li {
 }
 .products .product figure figcaption .thumb-info h6, .products .product figure figcaption .thumb-info .gm-hover-price-wrap {
 	text-align: left;
-	padding-left: 0;
+	padding-left: 10px;
 	white-space: normal!important;
 	max-width: 75%;
 }
@@ -15435,7 +15438,7 @@ ul.cart_list li, ul.product_list_widget li {
 .product .yith-wcwl-add-to-wishlist {
 	border-left: 0;
 }
-.add_to_cart_button > i.sf-icon-loader {
+.add_to_cart_button > i.sf-icon-loader, .single_add_to_cart_button > i.sf-icon-loader {
 	width: 24px;
 	height: 24px;
 	display: inline-block;
@@ -16492,6 +16495,19 @@ nav.woocommerce-pagination ul li:first-child {
 	left: 30px;
 	bottom: 30px;
 	opacity: 1;
+}
+#product-img-noslider ul.main-image {
+	list-style: none;
+}
+#product-img-noslider ul.thumbnails {
+	list-style: none;
+	margin: 0 -15px!important;
+}
+#product-img-noslider ul.thumbnails > li {
+	float: left;
+	width: 20%;
+	padding: 0 15px;
+	margin-bottom: 30px;
 }
 .summary-top {
 	border-bottom: 2px solid #e4e4e4;

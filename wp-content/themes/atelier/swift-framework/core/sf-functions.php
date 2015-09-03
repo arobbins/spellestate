@@ -1150,7 +1150,7 @@
             case "directory-category":
                 echo get_the_term_list( $post->ID, 'directory-category', '', ', ', '' );
                 break;
-            case "location":
+            case "directory-location":
                 echo get_the_term_list( $post->ID, 'directory-location', '', ', ', '' );
                 break;
             case "faqs-category":

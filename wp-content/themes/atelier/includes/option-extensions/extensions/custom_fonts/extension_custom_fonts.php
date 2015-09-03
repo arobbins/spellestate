@@ -1,29 +1,17 @@
 <?php
-
-
     /**
-     * Redux Framework is free software: you can redistribute it and/or modify
-     * it under the terms of the GNU General Public License as published by
-     * the Free Software Foundation, either version 2 of the License, or
-     * any later version.
-     * Redux Framework is distributed in the hope that it will be useful,
-     * but WITHOUT ANY WARRANTY; without even the implied warranty of
-     * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-     * GNU General Public License for more details.
-     * You should have received a copy of the GNU General Public License
-     * along with Redux Framework. If not, see <http://www.gnu.org/licenses/>.
-     *
      * @package     ReduxFramework
      * @author      Dovy Paukstys (dovy)
-     * @author      Kevin Provance (kprovance), who hacked at it a bit.
-     * @version     1.0.7
+     * @author      Kevin Provance (kprovance), who hacked at it a bit (and took over the project).
+     * @version     1.1.5
+     * 
      */
-
 
     // Exit if accessed directly
     if ( ! defined( 'ABSPATH' ) ) {
         exit;
     }
+    
     // Don't duplicate me!
     if ( ! class_exists( 'ReduxFramework_extension_custom_fonts' ) ) {
         /**
@@ -36,7 +24,7 @@
             /**
              * @var string
              */
-            static $version = "1.0.7";
+            static $version = "1.1.5";
             // Protected vars
             /**
              * @var
@@ -64,11 +52,6 @@
             public $custom_fonts = array();
 
             /**
-             * @var array
-             */
-            private $filesystem = array();
-
-            /**
              * Class Constructor. Defines the args for the extions class
              *
              * @since       1.0.0
@@ -83,21 +66,25 @@
             public function __construct( $parent ) {
                 $this->parent = $parent;
 
-                $this->filesystem = $this->parent->filesystem->execute( 'object' );
+                $this->upload_dir = ReduxFramework::$_upload_dir . 'custom-fonts/';
+                $this->upload_url = ReduxFramework::$_upload_url . 'custom-fonts/';
 
-                $this->upload_dir = ReduxFramework::$_upload_dir . 'custom-fonts/'; // $upload['basedir'] . '/redux_custom_fonts/';
-                $this->upload_url = ReduxFramework::$_upload_url . 'custom-fonts/'; // $upload['baseurl'] . '/redux_custom_fonts/';
-
-                //echo substr(sprintf('%o', fileperms($this->upload_dir )), -4);
+                if ( ! is_dir( $this->upload_dir ) ) {
+                    $this->parent->filesystem->execute( 'mkdir', $this->upload_dir );
+                }
+                
+                if ( ! is_dir( $this->upload_dir . '/custom' ) ) {
+                    $this->parent->filesystem->execute( 'mkdir', $this->upload_dir . '/custom' );
+                }
+                
+                
                 $this->getFonts();
 
                 if ( file_exists( $this->upload_dir . 'fonts.css' ) ) {
                     if ( filemtime( $this->upload_dir . 'custom' ) > ( filemtime( $this->upload_dir . 'fonts.css' ) + 10 ) ) {
-                        //echo "regen existing file";
                         $this->generateCSS();
                     }
                 } else {
-                    //echo "create non existing file";
                     $this->generateCSS();
                 }
 
@@ -110,50 +97,37 @@
                 self::$theInstance = $this;
 
                 // Adds the local field
-                add_filter( 'redux/' . $this->parent->args['opt_name'] . '/field/class/' . $this->field_name, array(
-                    &$this,
-                    'overload_field_path'
-                ) );
+                add_filter( 'redux/' . $this->parent->args['opt_name'] . '/field/class/' . $this->field_name, array( &$this, 'overload_field_path' ) );
 
-                add_action( 'wp_ajax_redux_custom_fonts', array(
-                    $this,
-                    'ajax'
-                ) );
+                add_action( 'wp_ajax_redux_custom_fonts', array( $this, 'ajax' ) );
+                add_action( 'wp_ajax_redux_custom_font_timer', array( $this, 'timer' ) );
 
-                //$this->ajax();
-
-                //add_action( 'wp_ajax_nopriv_redux_custom_fonts', array(
-                //    $this,
-                //    'ajax'
-                //) );
-
-                add_filter( "redux/{$this->parent->args['opt_name']}/field/typography/custom_fonts", array(
-                    $this,
-                    'addCustomFonts'
-                ) );
+                add_filter( "redux/{$this->parent->args['opt_name']}/field/typography/custom_fonts", array( $this, 'addCustomFonts' ) );
 
                 $this->is_field = Redux_Helpers::isFieldInUse( $parent, 'custom_fonts' );
 
                 if ( ! $this->is_field ) {
                     $this->add_section();
                 }
+                
+                //$this->dynamic_section();
 
-                //require_once 'System.php'; // Wordpress core file
-                //if ( class_exists('System') === true ) {
-                add_filter( 'upload_mimes', array(
-                    $this,
-                    'custom_upload_mimes'
-                ) );
-                //}
-
+                add_filter( "redux/options/{$this->parent->args['opt_name']}/section/redux_dynamic_font_control", array( $this, 'remove_dynamic_section' ) );
+                add_filter( 'upload_mimes', array( $this, 'custom_upload_mimes' ) );
                 add_action( 'wp_head', array( $this, '_enqueue_output' ), 150 );
-
                 add_filter( 'tiny_mce_before_init', array( $this, 'extend_tinymce_dropdown' ) );
-
-
             }
 
-
+            public function timer() {
+                $name = get_option('redux_custom_font_current');
+                
+                if(!empty($name)) {
+                    echo $name;
+                }
+                
+                die();
+            }
+            
             /**
              * Remove the dynamically added section if the field was used elsewhere
              *
@@ -183,32 +157,30 @@
                     return $opt;
                 }
 
-                //print_r($this->custom_fonts);
-                //return $opts;
+                if (file_exists($this->upload_dir . 'fonts.css')) {
+                    $theme_advanced_fonts   = isset($opt['font_formats']) ? isset($opt['font_formats']) : "Andale Mono=andale mono,times;Arial=arial,helvetica,sans-serif;Arial Black=arial black,avant garde;Book Antiqua=book antiqua,palatino;Comic Sans MS=comic sans ms,sans-serif;Courier New=courier new,courier;Georgia=georgia,palatino;Helvetica=helvetica;Impact=impact,chicago;Symbol=symbol;Tahoma=tahoma,arial,helvetica,sans-serif;Terminal=terminal,monaco;Times New Roman=times new roman,times;Trebuchet MS=trebuchet ms,geneva;Verdana=verdana,geneva;Webdings=webdings;Wingdings=wingdings,zapf dingbats";
+                    $custom_fonts           = '';
 
-                $theme_advanced_fonts = "Andale Mono=andale mono,times;Arial=arial,helvetica,sans-serif;Arial Black=arial black,avant garde;Book Antiqua=book antiqua,palatino;Comic Sans MS=comic sans ms,sans-serif;Courier New=courier new,courier;Georgia=georgia,palatino;Helvetica=helvetica;Impact=impact,chicago;Symbol=symbol;Tahoma=tahoma,arial,helvetica,sans-serif;Terminal=terminal,monaco;Times New Roman=times new roman,times;Trebuchet MS=trebuchet ms,geneva;Verdana=verdana,geneva;Webdings=webdings;Wingdings=wingdings,zapf dingbats";
-                $mce_fonts            = array();
-                $google_font_counter  = 0;
-                $content_css          = array();
-                $fontdeck_included    = false;
+                    $stylesheet = $this->upload_url . 'fonts.css';
+                    
+                    if(empty($opt['content_css'])) {
+                        $opt['content_css'] = $stylesheet;
+                    } else {
+                        $opt['content_css'] = $opt['content_css'].',' . $stylesheet;
+                    }                    
 
-                foreach ( $this->custom_fonts as $font => $pieces ) {
-                    $mce_fonts[] = $font;
-                }
-                $mce_fonts   = implode( ',', $mce_fonts );
-                $content_css = implode( ',', $content_css );
-                if ( trim( $mce_fonts ) != '' ) {
-                    $theme_advanced_fonts .= $mce_fonts;
-                }
-                $opt['theme_advanced_fonts'] = $theme_advanced_fonts;
-                if ( isset( $opt['content_css'] ) ) {
-                    $opt['content_css'] .= $content_css;
-                } else {
-                    $opt['content_css'] = $content_css;
-                }
+                    foreach ( $this->custom_fonts as $title => $arr ) {
+                        foreach($arr as $font => $pieces) {
+                            $custom_fonts .= ';' . $font . '=' . $font;
+                        }
 
+                        continue;
+                    }
+
+                    $opt['font_formats'] = $theme_advanced_fonts . $custom_fonts;
+                }
+                
                 return $opt;
-
             }
 
 
@@ -220,8 +192,8 @@
                     wp_register_style(
                         'redux-custom-fonts-css',
                         $this->upload_url . 'fonts.css',
-                        '',
-                        filemtime( $this->upload_dir . 'fonts.css' ),
+                        array(),
+                        time(),
                         'all'
                     );
 
@@ -237,10 +209,9 @@
              * @return array
              */
             function custom_upload_mimes( $existing_mimes = array() ) {
-                $existing_mimes['ttf']   = 'font/ttf';
-                $existing_mimes['otf']   = 'font/otf';
-                $existing_mimes['woff']  = 'application/font-woff';
-                $existing_mimes['woff2'] = 'application/font-woff2';
+                $existing_mimes['ttf']  = 'font/ttf';
+                $existing_mimes['otf']  = 'font/otf';
+                $existing_mimes['woff'] = 'application/font-woff';
 
                 return $existing_mimes;
             }
@@ -253,26 +224,13 @@
                     return $this->custom_fonts;
                 }
 
-                $fonts = $this->filesystem->dirlist( $this->upload_dir, false, true );
-                /*
-                if (!empty($fonts)) {
-                    foreach ($fonts as $font) {
-                        if ($font['type'] == "d") {
-                            if (!empty($font['name'])) {
-                                $kinds = array();
-                                foreach($font['files'] as $f) {
-                                    $valid = $this->checkFontFileName($f);
-                                    if ($valid) {
-                                        array_push($kinds, $valid);
-                                    }
-                                }
-                                $this->custom_fonts[$font['name']] = $kinds;
-                                //array_push($this->custom_fonts, $font['name']);
-                            }
-                        }
-                    }
-                }
-                */
+                $params = array(
+                    'include_hidden' => false,
+                    'recursive'      => true
+                );
+                
+                $fonts = $this->parent->filesystem->execute('dirlist', $this->upload_dir, $params);
+
                 if ( ! empty( $fonts ) ) {
                     foreach ( $fonts as $section ) {
                         if ( $section['type'] == "d" && ! empty( $section['name'] ) ) {
@@ -281,9 +239,11 @@
                             } else if ( $section['name'] == "fontsquirrel" ) {
                                 $section['name'] = __( 'Fonts Squirrel', 'redux-framework' );
                             }
+                            
                             if ( ! isset( $section['files'] ) || empty( $section['files'] ) ) {
                                 continue;
                             }
+                            
                             $this->custom_fonts[ $section['name'] ] = isset( $this->custom_fonts[ $section['name'] ] ) ? $this->custom_fonts[ $section['name'] ] : array();
 
                             $kinds = array();
@@ -292,6 +252,7 @@
                                     if ( ! isset( $font['files'] ) || empty( $font['files'] ) ) {
                                         continue;
                                     }
+                                    
                                     $kinds = array();
                                     foreach ( $font['files'] as $f ) {
                                         $valid = $this->checkFontFileName( $f );
@@ -299,9 +260,9 @@
                                             array_push( $kinds, $valid );
                                         }
                                     }
+                                    
                                     $this->custom_fonts[ $section['name'] ][ $font['name'] ] = $kinds;
                                 }
-
                             }
                         }
                     }
@@ -317,6 +278,7 @@
                 if ( ! is_array( $custom_fonts ) || empty( $custom_fonts ) ) {
                     $custom_fonts = array();
                 }
+                
                 $custom_fonts = wp_parse_args( $custom_fonts, $this->custom_fonts );
 
                 return $custom_fonts;
@@ -327,28 +289,25 @@
              */
             public function ajax() {
                 if ( ! isset( $_REQUEST['nonce'] ) || ! wp_verify_nonce( $_REQUEST['nonce'], "redux_{$this->parent->args['opt_name']}_custom_fonts" ) ) {
-                    //exit("Not a valid nonce");
                     die( 0 );
                 }
-
-                //$_REQUEST['title'] = "Lato-Black";
-                //$_REQUEST['attachment_id'] = 18;
-                //$_REQUEST['mime'] = "font/ttf";
-
 
                 if ( isset( $_REQUEST['type'] ) && $_REQUEST['type'] == "delete" ) {
                     if ( $_REQUEST['section'] == __( 'Custom Fonts', 'redux-framework' ) ) {
                         $_REQUEST['section'] = "custom";
                     }
+                    
                     if ( $_REQUEST['section'] == __( 'Fonts Squirrel', 'redux-framework' ) ) {
                         $_REQUEST['section'] = "fontssquirrel";
                     }
 
                     try {
-                        $this->filesystem->delete( $this->upload_dir . $_REQUEST['section'] . '/' . $_REQUEST['name'] . '/', true, 'd' );
+                        $this->parent->filesystem->execute('rmdir', $this->upload_dir . $_REQUEST['section'] . '/' . $_REQUEST['name'] . '/', array('recursive' => true));
+                        
                         $result = array(
                             'type' => "success"
                         );
+                        
                         echo json_encode( $result );
 
                     } catch ( Exception $e ) {
@@ -361,19 +320,25 @@
                     die();
                 }
 
-
                 if ( ! isset( $_REQUEST['title'] ) ) {
                     $_REQUEST['title'] = "";
                 }
+                
                 if ( isset( $_REQUEST['attachment_id'] ) && ! empty( $_REQUEST['attachment_id'] ) ) {
-                    $this->processWebfont( $_REQUEST['attachment_id'], $_REQUEST['title'], $_REQUEST['mime'] );
+                    $msg = $this->processWebfont( $_REQUEST['attachment_id'], $_REQUEST['title'], $_REQUEST['mime'] );
 
+                    if  (empty($msg)) {
+                        $msg = '';
+                    }
+                    
                     $result = array(
-                        'type' => "success"
+                        'type'  => "success",
+                        'msg'   => $msg
                     );
 
                     echo json_encode( $result );
                 }
+                
                 die();
             }
 
@@ -388,8 +353,13 @@
                 $output = array();
                 $path   = trailingslashit( $path );
 
-                $files = $this->filesystem->dirlist( $path, false, true );
-
+                $params = array(
+                    'include_hidden' => false,
+                    'recursive'      => true
+                );
+                
+                $files = $this->parent->filesystem->execute('dirlist', $path, $params);                
+                
                 foreach ( $files as $file ) {
                     if ( $file['type'] == "d" ) {
                         $output = array_merge( $output, $this->getValidFiles( $path . $file['name'] ) );
@@ -413,14 +383,13 @@
              * @param string $subfolder
              */
             function processWebfont( $attachment_id, $name, $mime_type, $subfolder = 'custom/' ) {
+                $missing = array();
 
                 $complete = array(
                     'ttf',
                     'woff',
-                    'woff2',
                     'eot',
-                    'svg',
-                    'otf'
+                    'svg'
                 );
 
                 $subtype = explode( '/', $mime_type );
@@ -429,11 +398,12 @@
                 if ( ! is_dir( $this->upload_dir ) ) {
                     $this->parent->filesystem->execute( 'mkdir', $this->upload_dir );
                 }
+                
                 if ( ! is_dir( $this->upload_dir . $subfolder ) ) {
                     $this->parent->filesystem->execute( 'mkdir', $this->upload_dir . $subfolder );
                 }
-                $temp = $this->upload_dir . 'temp/' . md5( uniqid( rand(), true ) );
-
+                
+                $temp = $this->upload_dir . 'temp';
                 $path = get_attached_file( $attachment_id, false );
 
                 if ( empty( $path ) ) {
@@ -441,106 +411,113 @@
                         'type' => 'error',
                         'msg'  => __( 'Attachment does not exist.', 'redux-framework' )
                     ) );
+                    
                     die();
                 }
+                
                 $filename = explode( '/', $path );
 
-                $filename = end( $filename );
+                $filename = $filename[ ( count( $filename ) - 1 ) ];
 
                 $fontname = ucfirst( str_replace( array(
                     '.zip',
                     '.ttf',
                     '.woff',
-                    '.woff2',
                     '.eot',
                     '.svg',
                     '.otf'
                 ), '', strtolower( $filename ) ) );
 
-                if ( ! is_dir( $temp ) ) {
-                    $this->parent->filesystem->execute( 'mkdir', $temp );
+                if ( ! isset( $name ) || empty( $name ) ) {
+                    $name = $fontname;
                 }
-
-
+                
+                $msg = '';
+                $ret = array();
+                
                 if ( $subtype == "zip" ) {
+                    if ( ! is_dir( $temp ) ) {
+                        $this->parent->filesystem->execute( 'mkdir', $temp );
+                    }
+                    
                     $unzipfile = unzip_file( $path, $temp );
-                } else if ( in_array( $subtype, $complete ) ) {
+                    $output    = $this->getValidFiles( $temp );
+
+                    if ( ! empty( $output ) ) {
+                        foreach ( $complete as $idx => $test ) {
+                            if ( ! isset( $output[ $test ] ) ) {
+                                $missing[] = $test;
+                            }
+                        }
+
+                        if ( ! is_dir( $this->upload_dir . $subfolder . $name . '/' ) ) {
+                            $this->parent->filesystem->execute( 'mkdir', $this->upload_dir . $subfolder . $name . '/' );
+                        }
+                        
+                        foreach ( $output as $key => $value ) {
+                            $param_array = array(
+                                'destination' => $this->upload_dir . $subfolder . $name . '/' . $fontname . '.' . $key,
+                                'overwrite'   => true,
+                                'chmod'       => 755
+                            );
+
+                            $this->parent->filesystem->execute( 'copy', $value, $param_array );
+                        }
+                        
+                        $ret = $this->getMissingFiles( $name, $fontname, $missing, $output, $subfolder );
+                    }
+                    
+                    $this->parent->filesystem->execute('rmdir', $temp, array('recursive' => true));
+                            
+                    $this->generateCSS();
+                    wp_delete_attachment( $attachment_id, true );
+                } else if ( $subtype == "ttf" || $subtype == "otf" || $subtype == "font-woff" ) {
+                    foreach ( $complete as $idx => $test ) {
+                        if ($test != $subtype) {
+                            if ( ! isset( $output[ $test ] ) ) {
+                                $missing[] = $test;
+                            }
+                        }
+                    }
+
+                    if ( ! is_dir( $this->upload_dir . $subfolder . $name . '/' ) ) {
+                        $this->parent->filesystem->execute( 'mkdir', $this->upload_dir . $subfolder . $name . '/' );
+                    }
+
                     $param_array = array(
-                        'destination' => $temp . '/' . $filename,
+                        'destination' => $this->upload_dir . $subfolder . '/' . $name . '/' . $fontname . '.' . $subtype,
                         'overwrite'   => true,
+                        'chmod'       => 755
                     );
+
                     $this->parent->filesystem->execute( 'copy', $path, $param_array );
+
+                    $output = array(
+                        $subtype => $path
+                    );
+
+                    $ret = $this->getMissingFiles( $name, $fontname, $missing, $output, $subfolder );
+                    
+                    $this->generateCSS();
+                    wp_delete_attachment( $attachment_id, true );
                 } else {
                     echo json_encode( array(
                         'type' => 'error',
                         'msg'  => __( 'File type not recognized.', 'redux-framework' )
                     ) );
+                    
                     die();
                 }
-
-                $output  = $this->getValidFiles( $temp );
-                $missing = array();
-                foreach ( $complete as $test ) {
-                    if ( ! isset( $output[ $test ] ) ) {
-                        if ( $test != "woff2" && $test != "otf" ) {
-                            $missing[] = $test;
-                        }
+                
+                if (is_array($ret) && !empty($ret)) {
+                    $msg = __("Unidentified error.", 'redux-framework');
+                    
+                    if (isset($ret['msg'])) {
+                        $msg = $ret['msg'];
                     }
+                    
+                    return $msg;
                 }
-
-                if ( empty( $missing ) ) {
-                    $this->parent->filesystem->execute( 'mkdir', $this->upload_dir . $fontname );
-                    foreach ( $output as $thePath ) {
-                        $param_array = array(
-                            'destination' => $this->upload_dir . $fontname,
-                            'overwrite'   => true,
-                        );
-                        $this->parent->filesystem->execute( 'copy', $thePath, $param_array );
-                    }
-                } else {
-
-                    if ( $this->getMissingFiles( $output, $missing, $temp ) ) {
-                        $new = $this->getValidFiles( $temp . '/converted' );
-
-                        $filename = explode( '/', end( $new ) );
-                        $filename = end( $filename );
-                        $fontname = ucfirst( str_replace( array(
-                            '.zip',
-                            '.ttf',
-                            '.woff',
-                            '.woff2',
-                            '.eot',
-                            '.svg',
-                            '.otf'
-                        ), '', strtolower( $filename ) ) );
-
-                        if ( ! is_dir( $this->upload_dir . $subfolder . $name . '/' ) ) {
-                            $this->parent->filesystem->execute( 'mkdir', $this->upload_dir . $subfolder . $fontname . '/' );
-                        }
-                        foreach ( $new as $key => $path ) {
-                            $param_array = array(
-                                'destination' => $this->upload_dir . $subfolder . $fontname . '/' . $fontname . '.' . $key,
-                                'overwrite'   => true,
-                                'chmod'       => FS_CHMOD_FILE
-                            );
-                            $this->parent->filesystem->execute( 'copy', $path, $param_array );
-                        }
-                        foreach ( $output as $key => $path ) {
-                            $param_array = array(
-                                'destination' => $this->upload_dir . $subfolder . $fontname . '/' . $fontname . '.' . $key,
-                                'overwrite'   => true,
-                                'chmod'       => FS_CHMOD_FILE
-                            );
-                            $this->parent->filesystem->execute( 'copy', $path, $param_array );
-                        }
-                    }
-
-                }
-
-                $this->filesystem->delete( $temp, true, 'd' );
-                $this->generateCSS();
-                wp_delete_attachment( $attachment_id, true );
-
             }
 
             /**
@@ -552,143 +529,103 @@
              * @param $output
              * @param $subfolder
              */
-            private function getMissingFiles( $output, $missing, $temp ) {
+            private function getMissingFiles( $name, $fontname, $missing, $output, $subfolder ) {
+                if ( ! isset( $name ) || empty( $name ) || ! isset( $missing ) || empty( $missing ) || ! is_array( $missing ) ) {
+                    return;
+                }
+                
+                $temp = $this->upload_dir . 'temp';
+
+                if ( count( $output ) == 1 && isset( $output['eot'] ) ) {
+                    echo json_encode( array(
+                        'type' => 'error',
+                        'msg'  => __( 'The font format .eot is not supported.', 'redux-framework' )
+                    ) );
+                    
+                    $this->parent->filesystem->execute('rmdir', $this->upload_dir . $subfolder . $name . '/', array('recursive' => true));
+                    $this->parent->filesystem->execute('rmdir', $temp, array('recursive' => true));
+                    
+                    die();
+                }
 
                 // Find a file to convert from
                 foreach ( $output as $key => $value ) {
                     if ( $key == "eot" ) {
-                        if ( count( $output ) == 1 ) {
-                            echo json_encode( array(
-                                'type' => 'error',
-                                'msg'  => __( 'The font format .eot is not supported.', 'redux-framework' )
-                            ) );
-
-                            return false;
-                        }
                         continue;
                     } else {
                         $main = $key;
                         break;
                     }
                 }
+                
                 if ( ! isset( $main ) ) {
                     echo json_encode( array(
                         'type' => 'error',
                         'msg'  => __( 'No valid font file was found.', 'redux-framework' )
                     ) );
-
-                    return false;
+                    
+                    $this->parent->filesystem->execute('rmdir', $temp, array('recursive' => true));
+                    $this->parent->filesystem->execute('rmdir', $this->upload_dir . $subfolder . $name . '/', array('recursive' => true));
+                            
+                    die();
                 }
 
-                try {
-                    $missing = implode( ',', $missing );
-
-                    $post_fields = array(
-                        'format' => $missing
-                    );
-
-                    $boundary = wp_generate_password( 24 ); // Just a random string, use something better than wp_generate_password() though.
+                foreach ( $missing as $idx => $item ) {
+                    update_option('redux_custom_font_current', $name . '.' . $item);
+                    
+                    $boundary = wp_generate_password( 24 );
+                    
                     $headers  = array(
                         'content-type' => 'multipart/form-data; boundary=' . $boundary,
-                        'user-agent' => 'redux-custom-fonts-1.0.7',
+                        'user-agent' => 'redux-custom-fonts-' . self::$version . ' using ' . wp_get_theme (),
                     );
 
                     $payload = '';
-
-                    // First, add the standard POST fields:
-                    foreach ( $post_fields as $tName => $value ) {
-                        $payload .= '--' . $boundary;
-                        $payload .= "\r\n";
-                        $payload .= 'Content-Disposition: form-data; name="' . $tName .
-                                    '"' . "\r\n\r\n";
-                        $payload .= $value;
-                        $payload .= "\r\n";
-                    }
-                    // Upload the file
+                    $payload .= '--' . $boundary;
+                    $payload .= "\r\n";
+                    $payload .= 'Content-Disposition: form-data; name="format"' . "\r\n\r\n";
+                    $payload .= $item;
+                    $payload .= "\r\n";
+                    
                     if ( $output[ $main ] ) {
                         $payload .= '--' . $boundary;
                         $payload .= "\r\n";
                         $payload .= 'Content-Disposition: form-data; name="convert"; filename="' . basename( $output[ $main ] ) . '"' . "\r\n";
                         $payload .= "\r\n";
-                        //$payload .= file_get_contents( $output[ $main ] );
+                        $payload .= file_get_contents( $output[ $main ] );
                         $payload .= "\r\n";
                     }
-
+                    
                     $payload .= '--' . $boundary . '--';
-
-                    var_dump(array(
-                        'headers' => $headers,
-                        'body'    => $payload,
+                    
+                    $args = array(
+                        'headers'   => $headers,
+                        'body'      => $payload,
                         'user-agent' => $headers['user-agent'],
-                        'timeout' => 1800,
-                    ));
-                    exit();
+                        'timeout'    => 60
+                    );
 
-                    $response = wp_remote_post( 'http://fonts.redux.io', array(
-                        'headers' => $headers,
-                        'body'    => $payload,
-                        'user-agent' => $headers['user-agent'],
-                        'timeout' => 1800,
-                    ) );
+                    $response = wp_remote_post( "http://fonts.redux.io/", $args );
 
                     if( is_wp_error( $response ) ) {
-                        echo json_encode( array(
+                        return array(
                             'type' => 'error',
-                            'msg'  => __( 'You font could not be converted at this time. Please try again later.', 'redux-framework' )
-                        ) );
-
-                        return false;
-                    }
-
-
-                    if ( ! empty( $response['body'] ) ) {
-
-                        if ( $response['body'][0] == "{" ) {
-                            // We hit an error!
-                            if ( $response['body'][0] == "{" ) {
-                                $result = json_decode( $response['body'], true );
-                                if ( json_last_error() == JSON_ERROR_NONE ) {
-                                    echo json_encode( array(
-                                        'type' => 'error',
-                                        'msg'  => $result['msg']
-                                    ) );
-                                    return false;
-                                }
-                            }
-                        }
-
-                        $param_array = array(
-                            'content' => $response['body'],
-                            'chmod'   => FS_CHMOD_FILE
+                            'msg'  => __( $response->get_error_message() . '<br><br>Your font could not be converted at this time. Please try again later.', 'redux-framework' )
                         );
+                    } elseif(json_decode($response['body']) != null) {
+                        return json_decode($response['body'], true);
+                    }                   
+                    
+                    $param_array = array(
+                        'content'   => $response['body'],
+                        'overwrite' => true,
+                        'chmod'     => FS_CHMOD_FILE
+                    );
 
-
-                        $this->parent->filesystem->execute( 'put_contents', $temp . '/converted.zip', $param_array );
-                        $unzipfile = unzip_file( $temp . '/converted.zip', $temp . '/converted' );
-
-                        return true;
-                    } else {
-                        echo json_encode( array(
-                            'type' => 'error',
-                            'msg'  => __( 'You font could not be converted at this time. Please try again later.', 'redux-framework' )
-                        ) );
-
-                        return false;
-                    }
-
-                } catch (Exception $e) {
-                    echo json_encode( array(
-                        'type' => 'error',
-                        'msg'  => __( 'You font could not be converted at this time. Please try again later.<span style="display:none;">'.$e->getMessage().'</span>', 'redux-framework' )
-                    ) );
-                    die();
+                    $this->parent->filesystem->execute( 'put_contents', $this->upload_dir . $subfolder . $name . '/' . $fontname . '.' . $item, $param_array );
                 }
-
-
-
-
-
-
+                
+                delete_option('redux_custom_font_current');
             }
 
             /**
@@ -699,24 +636,24 @@
              * @return bool|string
              */
             private function checkFontFileName( $file ) {
-
                 if ( strtolower( substr( $file['name'], - 5 ) ) == ".woff" ) {
                     return "woff";
                 }
-                if ( strtolower( substr( $file['name'], - 6 ) ) == ".woff2" ) {
-                    return "woff2";
-                }
+                
                 $sub = strtolower( substr( $file['name'], - 4 ) );
 
                 if ( $sub == ".ttf" ) {
                     return "ttf";
                 }
+                
                 if ( $sub == ".eot" ) {
                     return "eot";
                 }
+                
                 if ( $sub == ".svg" ) {
                     return "svg";
                 }
+                
                 if ( $sub == ".otf" ) {
                     return "otf";
                 }
@@ -728,11 +665,21 @@
              * Generate a new custom CSS file for enqueing on the frontend and backend.
              */
             private function generateCSS() {
-                $fonts = $this->filesystem->dirlist( $this->upload_dir . 'custom/', false, true );
-
+                $params = array(
+                    'include_hidden' => false,
+                    'recursive'      => true
+                );
+                
+                $fonts = $this->parent->filesystem->execute('dirlist', $this->upload_dir . 'custom/', $params);
+                
                 if ( empty( $fonts ) ) {
+                    if (file_exists($this->upload_dir . 'fonts.css')) {
+                        $this->parent->filesystem->execute( 'delete', $this->upload_dir . 'fonts.css' );
+                    }
+                    
                     return;
                 }
+                
                 $css = "";
 
                 foreach ( $fonts as $font ) {
@@ -740,6 +687,7 @@
                         $css .= $this->generateFontCSS( $font['name'], $this->upload_dir . 'custom/' );
                     }
                 }
+                
                 $param_array = array(
                     'content' => $css,
                     'chmod'   => FS_CHMOD_FILE
@@ -759,11 +707,17 @@
             private function generateFontCSS( $name, $dir ) {
                 $path = $dir . $name;
 
-                $files = $this->filesystem->dirlist( $path, false, true );
-
+                $params = array(
+                    'include_hidden' => false,
+                    'recursive'      => true
+                );
+                
+                $files = $this->parent->filesystem->execute('dirlist', $path, $params);
+                
                 if ( empty( $files ) ) {
                     return;
                 }
+                
                 $output = array();
 
                 foreach ( $files as $file ) {
@@ -779,21 +733,23 @@
                 if ( isset( $output['eot'] ) ) {
                     $src[] = "url('{$this->upload_url}custom/{$name}/{$output['eot']}?#iefix') format('embedded-opentype')";
                 }
-                if ( isset( $output['woff2'] ) ) {
-                    $src[] = "url('{$this->upload_url}custom/{$name}/{$output['woff2']}') format('woff2')";
-                }
+                
                 if ( isset( $output['woff'] ) ) {
                     $src[] = "url('{$this->upload_url}custom/{$name}/{$output['woff']}') format('woff')";
                 }
+                
                 if ( isset( $output['ttf'] ) ) {
                     $src[] = "url('{$this->upload_url}custom/{$name}/{$output['ttf']}') format('truetype')";
                 }
+                
                 if ( isset( $output['svg'] ) ) {
                     $src[] = "url('{$this->upload_url}custom/{$name}/{$output['svg']}#svg{$name}') format('svg')";
                 }
+                
                 if ( ! empty( $src ) ) {
                     $css .= "src:" . implode( ", ", $src ) . ";";
                 }
+                
                 // Replace font weight and style with sub-sets
                 $css .= "font-weight: normal;";
 
@@ -828,25 +784,25 @@
              * NOTE: the defined constants for URLs, and directories will NOT be available at this point in a child theme,
              * so you must use get_template_directory_uri() if you want to use any of the built in icons
              */
-            function add_section() {
-
-                if ( ! isset( $this->parent->fontControl ) ) {
+            function add_section () {
+                if ( !isset ( $this->parent->fontControl ) ) {
                     $this->parent->sections[] = array(
-                        'title'  => __( 'Font Control', 'redux-framework-demo' ),
-                        'desc'   => __( '<p class="description"></p>', 'redux-framework-demo' ),
-                        'icon'   => 'el-icon-font',
-                        'id'     => 'redux_dynamic_font_control',
+                        'title' => __ ( 'Font Control', 'redux-framework' ),
+                        'desc' => __ ( '<p class="description"></p>', 'redux-framework' ),
+                        'icon' => 'el-icon-font',
+                        'id' => 'redux_dynamic_font_control',
                         // Leave this as a blank section, no options just some intro text set above.
                         'fields' => array()
                     );
 
-                    for ( $i = count( $this->parent->sections ); $i >= 1; $i -- ) {
-                        if ( isset( $this->parent->sections[ $i ] ) && isset( $this->parent->sections[ $i ]['title'] ) && $this->parent->sections[ $i ]['title'] == __( 'Font Control', 'redux-framework-demo' ) ) {
+                    for ( $i = count ( $this->parent->sections ); $i >= 1; $i -- ) {
+                        if ( isset ( $this->parent->sections[ $i ] ) && isset ( $this->parent->sections[ $i ][ 'title' ] ) && $this->parent->sections[ $i ][ 'title' ] == __ ( 'Font Control', 'redux-framework' ) ) {
                             $this->parent->fontControl = $i;
-                            $this->parent->sections[ $this->parent->fontControl ]['fields'][] = array(
-                                'id'   => 'redux_font_control',
+                            $this->parent->sections[ $this->parent->fontControl ][ 'fields' ][] = array(
+                                'id' => 'redux_font_control',
                                 'type' => 'custom_fonts'
                             );
+                            
                             break;
                         }
                     }

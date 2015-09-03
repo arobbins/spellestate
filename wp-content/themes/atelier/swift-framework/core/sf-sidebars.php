@@ -164,12 +164,14 @@
 	                ) );
 
 	                if ( sf_theme_supports( 'mobile-shop-filters' ) ) {
+	                	
+	                	$woocommerce_filters_column_class = apply_filters( 'sf_woocommerce_mobile_filters_column_class' , 'col-sm-3' );
 
 		                register_sidebar( array(
 		                    'id'            => 'mobile-woocommerce-filters',
 		                    'name'          => 'Mobile WooCommerce Filters',
 		                    'description'   => 'This widget area is for you to use to display widgets in the Filters area of the mobile shop display.',
-		                    'before_widget' => '<section id="%1$s" class="widget %2$s clearfix">',
+		                    'before_widget' => '<section id="%1$s" class="widget %2$s '.$woocommerce_filters_column_class.' clearfix">',
 		                    'after_widget'  => '</section>',
 		                    'before_title'  => $sidebar_before_title,
 		                    'after_title'   => $sidebar_after_title,

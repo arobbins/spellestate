@@ -16,7 +16,7 @@
                 'classname'   => 'flickr-widget',
                 'description' => 'Show off your favorite Flickr photos'
             );
-            $this->WP_Widget( 'flickr-widget', 'Swift Framework Flickr Widget', $widget_ops );
+            parent::__construct( 'flickr-widget', 'Swift Framework Flickr Widget', $widget_ops );
         }
 
         function form( $instance ) {

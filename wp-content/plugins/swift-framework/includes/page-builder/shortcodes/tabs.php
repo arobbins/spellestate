@@ -225,10 +225,10 @@
                 }
 
                 if ( $tab_count == 0 ) {
-                    $tabs_nav .= '<li class="active"><a href="#' . preg_replace( "/[^A-Za-z0-9-]/i", "", ( strtolower( str_replace( ' ', '-', $tab_id ) ) ) ) . '" data-toggle="tab">' . $icon_text . $tab[0] . '</a></li>';
+                    $tabs_nav .= '<li class="active"><a href="#' . preg_replace( "/[^A-Za-z0-9-]/i", "", ( strtolower( str_replace( ' ', '-', $tab_id ) ) ) ) . '" data-toggle="tab"><span>' . $icon_text . $tab[0] . '</span></a></li>';
                     //$tabs_nav .= '<li class="active"><a href="#'. preg_replace("#[[:punct:]]#", "", (strtolower(str_replace(' ', '-', $tab[0])))).'" data-toggle="tab">'.$icon_text . $tab[0] . '</a></li>';
                 } else {
-                    $tabs_nav .= '<li><a href="#' . preg_replace( "/[^A-Za-z0-9-]/i", "", ( strtolower( str_replace( ' ', '-', $tab_id ) ) ) ) . '" data-toggle="tab">' . $icon_text . $tab[0] . '</a></li>';
+                    $tabs_nav .= '<li><a href="#' . preg_replace( "/[^A-Za-z0-9-]/i", "", ( strtolower( str_replace( ' ', '-', $tab_id ) ) ) ) . '" data-toggle="tab"><span>' . $icon_text . $tab[0] . '</span></a></li>';
                     //$tabs_nav .= '<li><a href="#'. preg_replace("#[[:punct:]]#", "", (strtolower(str_replace(' ', '-', $tab[0])))).'" data-toggle="tab">'.$icon_text . $tab[0] . '</a></li>';
                 }
                 $tab_count ++;

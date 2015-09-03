@@ -73,7 +73,7 @@ $col = 1;
 				if ( version_compare( WOOCOMMERCE_VERSION, "2.1.0" ) >= 0 ) {
 				$edit_address_url = wc_get_endpoint_url( 'edit-address', $name );
 				} else {
-				$edit_address_url = esc_url( add_query_arg('address', $name, get_permalink( woocommerce_get_page_id( 'edit_address' ) ) ) );
+				$edit_address_url = esc_url( add_query_arg('address', $name, get_permalink( wc_get_page_id( 'edit_address' ) ) ) );
 				}
 			?>
 		</address>

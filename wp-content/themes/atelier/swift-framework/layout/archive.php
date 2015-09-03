@@ -3,7 +3,7 @@
 	
     $blog_type      = $sf_options['archive_display_type'];
 	$blog_classes 	= sf_blog_classes( $blog_type );
-    $columns   		= 4;
+    $columns   		= 2;
     $pagination 	= "standard";
     $pagination_output = "";
     if ( isset($sf_options['archive_display_columns']) ) {

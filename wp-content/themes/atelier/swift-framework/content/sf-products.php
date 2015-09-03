@@ -342,7 +342,7 @@
 
 	                    <div class="product-carousel carousel-wrap <?php echo $list_class; ?>">
 
-	                        <div class="products list-<?php echo $asset_type; ?> carousel-items" id="carousel-<?php echo $sf_carouselID; ?>" data-columns="<?php echo $columns; ?>">
+	                        <ul class="products list-<?php echo $asset_type; ?> carousel-items" id="carousel-<?php echo $sf_carouselID; ?>" data-columns="<?php echo $columns; ?>">
 
 	                            <?php
 
@@ -356,7 +356,7 @@
 
 								?>
 
-	                        </div>
+	                        </ul>
 
 	                        <?php if ( sf_theme_opts_name() != "sf_atelier_options" ) { ?>
 
@@ -369,7 +369,7 @@
 
 	                <?php } else { ?>
 
-	                    <div class="products list-<?php echo $asset_type; ?> row <?php echo $list_class; ?>">
+	                    <ul class="products list-<?php echo $asset_type; ?> row <?php echo $list_class; ?>">
 
 	                        <?php
 
@@ -383,7 +383,7 @@
 
                     		?>
 
-	                    </div>
+	                    </ul>
 
 	                <?php }
 
@@ -543,7 +543,7 @@
 
                 <?php if ( $carousel == "yes" ) { ?>
 
-                    <div class="product-carousel carousel-wrap <?php echo $list_class; ?>">
+                    <ul class="product-carousel carousel-wrap <?php echo $list_class; ?>">
 
                         <div class="products list-<?php echo $asset_type; ?> carousel-items"
                              id="carousel-<?php echo $sf_carouselID; ?>" data-columns="<?php echo $columns; ?>">
@@ -563,11 +563,11 @@
 
 						<?php } ?>
 
-                    </div>
+                    </ul>
 
                 <?php } else { ?>
 
-                    <div class="products list-<?php echo $asset_type; ?> row <?php echo $list_class; ?>" data-columns="<?php echo $columns; ?>">
+                    <ul class="products list-<?php echo $asset_type; ?> row <?php echo $list_class; ?>" data-columns="<?php echo $columns; ?>">
 
                     	<?php if ( $multi_masonry == "yes" ) { ?>
 
@@ -581,7 +581,7 @@
 
                         <?php endwhile; // end of the loop. ?>
 
-                    </div>
+                    </ul>
 
                 <?php } ?>
 

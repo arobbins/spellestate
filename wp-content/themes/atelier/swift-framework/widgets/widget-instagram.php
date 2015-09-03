@@ -16,7 +16,7 @@
                 'classname'   => 'instagram-widget',
                 'description' => 'Show off your favorite Instagram photos'
             );
-            $this->WP_Widget( 'instagram-widget', 'Swift Framework Instagram Widget', $widget_ops );
+            parent::__construct( 'instagram-widget', 'Swift Framework Instagram Widget', $widget_ops );
         }
 
         function form( $instance ) {

@@ -13,18 +13,37 @@
 
         protected function content( $atts, $content = null ) {
 
-            $title = $category = $item_class = $width = $hover_style = $list_class = $el_class = $output = $filter = $items = $el_position = '';
+            $title = $category = $item_class = $width = $hover_style = $gutters = $fullwidth = $list_class = $el_class = $output = $filter = $items = $el_position = '';
 
             extract( shortcode_atts( array(
                 'title'        => '',
                 "item_count"   => '12',
                 'item_columns' => '4',
+                'fullwidth'    => 'no',
+                'gutters'      => 'yes',
                 "category"     => 'all',
                 'hover_style'  => 'default',
                 'el_position'  => '',
                 'width'        => '1/1',
                 'el_class'     => ''
             ), $atts ) );
+
+
+            /* SIDEBAR CONFIG
+            ================================================== */
+            global $sf_sidebar_config, $sf_options;
+
+            $sidebars = '';
+            if ( ( $sf_sidebar_config == "left-sidebar" ) || ( $sf_sidebar_config == "right-sidebar" ) ) {
+                $sidebars = 'one-sidebar';
+            } else if ( $sf_sidebar_config == "both-sidebars" ) {
+                $sidebars = 'both-sidebars';
+            } else {
+                $sidebars = 'no-sidebars';
+            }
+            if ( is_singular( 'portfolio' ) ) {
+                $sidebars = "no-sidebars";
+            }
 
             // CATEGORY SLUG MODIFICATION
             if ( $category == "All" ) {
@@ -67,12 +86,6 @@
                 $figure_height = 450;
             }
 
-            $sidebar_config = sf_get_post_meta( get_the_ID(), 'sf_sidebar_config', true );
-
-            if ( is_singular( 'portfolio' ) ) {
-                $sidebar_config = "no-sidebars";
-            }
-
             // Thumb Type
             if ( $hover_style == "default" && function_exists( 'sf_get_thumb_type' ) ) {
                 $list_class = sf_get_thumb_type();
@@ -80,10 +93,17 @@
                 $list_class = 'thumbnail-' . $hover_style;
             }
 
-            $items .= '<div id="carousel-' . $sf_carouselID . '" class="portfolio-items carousel-items gutters clearfix ' . $list_class . '" data-columns="' . $item_columns . '" data-auto="false">';
+            if ( $gutters == "no" ) {
+                $list_class .= ' no-gutters'; 
+            } else {
+                $list_class .= ' gutters'; 
+            }
+
+            $items .= '<div id="carousel-' . $sf_carouselID . '" class="portfolio-items carousel-items clearfix ' . $list_class . '" data-columns="' . $item_columns . '" data-auto="false">';
 
             while ( $portfolio_items->have_posts() ) : $portfolio_items->the_post();
 
+                $port_hover_style = $port_hover_text_style = '';
                 $item_title               = get_the_title();
                 $thumb_type               = sf_get_post_meta( $post->ID, 'sf_thumbnail_type', true );
                 $thumb_image              = rwmb_meta( 'sf_thumbnail_image', 'type=image&size=full' );
@@ -95,6 +115,8 @@
                 $thumb_lightbox_image     = rwmb_meta( 'sf_thumbnail_link_image', 'type=image&size=large' );
                 $thumb_lightbox_video_url = sf_get_post_meta( $post->ID, 'sf_thumbnail_link_video_url', true );
                 $thumb_lightbox_video_url = sf_get_embed_src( $thumb_lightbox_video_url );
+                $port_hover_bg_color      = sf_get_post_meta( $post->ID, 'sf_port_hover_bg_color', true );
+                $port_hover_text_color    = sf_get_post_meta( $post->ID, 'sf_port_hover_text_color', true );
 
                 foreach ( $thumb_image as $detail_image ) {
                     $thumb_img_url = $detail_image['url'];
@@ -111,29 +133,21 @@
                 $item_title    = get_the_title();
                 $item_subtitle = sf_get_post_meta( $post->ID, 'sf_portfolio_subtitle', true );
                 $permalink     = get_permalink();
+                $item_link     = sf_portfolio_item_link();
 
-                if ( $thumb_link_type == "link_to_url" ) {
-                    $link_config = 'href="' . $thumb_link_url . '" class="link-to-url"';
-                    $item_icon   = "ss-link";
-                } else if ( $thumb_link_type == "link_to_url_nw" ) {
-                    $link_config = 'href="' . $thumb_link_url . '" class="link-to-url" target="_blank"';
-                    $item_icon   = "ss-link";
-                } else if ( $thumb_link_type == "lightbox_thumb" ) {
-                    $link_config = 'href="' . $thumb_img_url . '" class="lightbox" data-rel="ilightbox[portfolio]"';
-                    $item_icon   = "ss-view";
-                } else if ( $thumb_link_type == "lightbox_image" ) {
-                    $lightbox_image_url = '';
-                    foreach ( $thumb_lightbox_image as $image ) {
-                        $lightbox_image_url = $image['full_url'];
+                if ( $port_hover_bg_color != "" ) {
+                    $overlay_opacity = $sf_options['overlay_opacity'];
+                    if ( $overlay_opacity == 100 ) {
+                        $overlay_opacity = '1';
+                    } else {
+                        $overlay_opacity = '0.' . $overlay_opacity;
                     }
-                    $link_config = 'href="' . $lightbox_image_url . '" class="lightbox" data-rel="ilightbox[portfolio]"';
-                    $item_icon   = "ss-view";
-                } else if ( $thumb_link_type == "lightbox_video" ) {
-                    $link_config = 'data-video="' . $thumb_lightbox_video_url . '" href="#" class="fw-video-link"';
-                    $item_icon   = "ss-video";
-                } else {
-                    $link_config = 'href="' . $permalink . '" class="link-to-post"';
-                    $item_icon   = "ss-navigateright";
+                    $port_hover_bg_rgb = sf_hex2rgb( $port_hover_bg_color );
+                    $port_hover_style  = 'style="background-color:rgba(' . $port_hover_bg_rgb['red'] . ',' . $port_hover_bg_rgb['green'] . ',' . $port_hover_bg_rgb['blue'] . ',' . $overlay_opacity . ');"';
+                }
+
+                if ( $port_hover_text_color != "" ) {
+                    $port_hover_text_style = 'style="color: ' . $port_hover_text_color . ';"';
                 }
 
                 $items .= '<div itemscope data-id="id-' . $count . '" class="clearfix carousel-item portfolio-item">';
@@ -157,7 +171,7 @@
                         if ( ! $alt ) {
                             $alt = $image['title'];
                         }
-                        $items .= "<li><a " . $link_config . "><img src='{$image['url']}' width='{$image['width']}' height='{$image['height']}' alt='{$alt}' /></a></li>";
+                        $items .= "<li><a " . $item_link['config'] . "><img src='{$image['url']}' width='{$image['width']}' height='{$image['height']}' alt='{$alt}' /></a></li>";
                     }
 
                     $items .= '</ul></div>';
@@ -172,12 +186,12 @@
 
                     if ( $image ) {
                         $items .= '<img itemprop="image" src="' . $image[0] . '" width="' . $image[1] . '" height="' . $image[2] . '" alt="' . $item_title . '" />';
-                        $items .= '<a ' . $link_config . '></a>';
-                        $items .= '<figcaption><div class="thumb-info">';
-                        $items .= '<h4>' . $item_title . '</h4>';
+                        $items .= '<a ' . $item_link['config'] . '></a>';
+                        $items .= '<figcaption ' . $port_hover_style . '><div class="thumb-info">';
+                        $items .= '<h4 ' . $port_hover_text_style . '>' . $item_title . '</h4>';
                         if ( $item_subtitle != "" ) {
                             $items .= '<div class="name-divide"></div>';
-                            $items .= '<h5>' . $item_subtitle . '</h5>';
+                            $items .= '<h5 ' . $port_hover_text_style . '>' . $item_subtitle . '</h5>';
                         }
                         $items .= '</div></figcaption>';
                     }
@@ -210,7 +224,11 @@
             $output .= "\n\t\t" . '</div>';
             $output .= "\n\t" . '</div> ' . $this->endBlockComment( $width );
 
-            $output = $this->startRow( $el_position ) . $output . $this->endRow( $el_position );
+            if ( $fullwidth == "yes" && $sidebars == "no-sidebars" ) {
+                $output = $this->startRow( $el_position, '', true ) . $output . $this->endRow( $el_position, '', true );
+            } else {
+                $output = $this->startRow( $el_position ) . $output . $this->endRow( $el_position );
+            }
 
             global $sf_include_carousel, $sf_include_isotope;
             $sf_include_carousel = true;
@@ -250,7 +268,30 @@
                 __( '4', 'swift-framework-plugin' ) => "4",
                 __( '5', 'swift-framework-plugin' ) => "5"
             ),
+            "std"         => "4",
             "description" => __( "Choose the amount of columns you would like for the asset.", 'swift-framework-plugin' )
+        ),
+        array(
+            "type"        => "buttonset",
+            "heading"     => __( "Full Width", 'swift-framework-plugin' ),
+            "param_name"  => "fullwidth",
+            "value"       => array(
+                __( 'Yes', 'swift-framework-plugin' ) => "yes",
+                __( 'No', 'swift-framework-plugin' )  => "no"
+            ),
+            "std"         => 'no',
+            "description" => __( "Select if you'd like the asset to be full width (edge to edge). NOTE: only possible on pages without sidebars.", 'swift-framework-plugin' )
+        ),
+        array(
+            "type"        => "buttonset",
+            "heading"     => __( "Gutters", 'swift-framework-plugin' ),
+            "param_name"  => "gutters",
+            "value"       => array(
+                __( 'Yes', 'swift-framework-plugin' ) => "yes",
+                __( 'No', 'swift-framework-plugin' )  => "no"
+            ),
+            "std"         => 'yes',
+            "description" => __( "Select if you'd like spacing between the items, or not.", 'swift-framework-plugin' )
         ),
         array(
             "type"        => "select-multiple",

@@ -35,7 +35,7 @@
             $widget_ops = array( 'classname' => 'twitter-widget', 'description' => 'Display your latest tweets.' );
 
             // Create the widget
-            $this->WP_Widget( 'twitter-widget', 'Swift Framework Tweets', $widget_ops );
+            parent::__construct( 'twitter-widget', 'Swift Framework Tweets', $widget_ops );
         }
 
 

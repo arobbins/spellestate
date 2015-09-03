@@ -860,7 +860,7 @@
                 $vk = $sf_options['vk_url'];
             }
             if ( isset( $sf_options['twitch_url'] ) ) {
-                $vk = $sf_options['twitch_url'];
+                $twitch = $sf_options['twitch_url'];
             }
 
             $social_icons = '';
@@ -999,7 +999,7 @@
                     if ( $id == "vk" ) {
                         $social_icons .= '<li class="vk"><a href="' . $vk . '" target="_blank"><i class="fa-vk"></i><i class="fa-vk"></i></a></li>' . "\n";
                     }
-                    if ( $id = "twitch" ) {
+                    if ( $id == "twitch" ) {
                         $social_icons .= '<li class="twitch"><a href="' . $twitch . '" target="_blank"><i class="fa-twitch"></i><i class="fa-twitch"></i></a></li>' . "\n";
                     }
                 }

@@ -149,13 +149,23 @@
                 $member_instagram   = sf_get_post_meta( $post->ID, 'sf_team_member_instagram', true );
                 $member_dribbble    = sf_get_post_meta( $post->ID, 'sf_team_member_dribbble', true );
                 $view_profile_text = __( "View Profile", 'swift-framework-plugin' );
-                $member_image       = get_post_thumbnail_id();
-                
+                $thumb_image = rwmb_meta( 'sf_thumbnail_image', 'type=image&size=full' );
+                $thumb_img_url = "";
+                    foreach ( $thumb_image as $detail_image ) {
+                    $thumb_image_id = $detail_image['ID'];
+                    $thumb_img_url  = $detail_image['url'];
+                    break;
+                }
+
+                if ( ! $thumb_image ) {
+                    $thumb_image    = get_post_thumbnail_id();
+                    $thumb_image_id = $thumb_image;
+                    $thumb_img_url  = wp_get_attachment_url( $thumb_image, 'full' );
+                }                
 
                 $items .= '<div itemscope data-id="id-' . $count . '" class="clearfix team-member ' . $item_class . '">';
 
-                $img_url = wp_get_attachment_url( $member_image, 'full' );
-                $image   = sf_aq_resize( $img_url, $image_width, $image_height, true, false );
+                $image   = sf_aq_resize( $thumb_img_url, $image_width, $image_height, true, false );
 
                 $items .= '<figure class="animated-overlay">';
                 if ( $image ) {
@@ -344,6 +354,7 @@
                     __( '4', 'swift-framework-plugin' ) => "4",
                     __( '5', 'swift-framework-plugin' ) => "5"
                 ),
+                "std"         => '4',
                 "description" => __( "Choose the amount of columns you would like for the team asset.", 'swift-framework-plugin' )
             ),
             array(

@@ -223,7 +223,8 @@ var SWIFTSLIDER = SWIFTSLIDER || {};
                 if ( !jQuery( 'html' ).hasClass( 'no-video' ) && !isMobileAlt ) {
 
                     // Get video instance
-                    var videoInstance = sliderInstance.find( '.swiper-slide-active video' ).get( 0 );
+                    var videoElement = sliderInstance.find( '.swiper-slide-active video' ),
+                        videoInstance = videoElement.get( 0 );
 
                     // Load video
                     videoInstance.load();
@@ -240,6 +241,13 @@ var SWIFTSLIDER = SWIFTSLIDER || {};
 
                         }
                     );
+
+                    // Add function to video end when no loop used
+                    videoInstance.onended = function(e) {
+                        if ( !videoElement.attr('loop') ) {
+                            sliderInstance.find( '.swiper-slide-active video' ).addClass('finished');
+                        }
+                    }
 
                 } else {
 
@@ -300,7 +308,7 @@ var SWIFTSLIDER = SWIFTSLIDER || {};
 
                             if (slideVideo.length > 0) {
 
-                                if (ssInstance.is(':in-viewport')) {
+                                if ( ssInstance.is(':in-viewport') && !slideVideo.hasClass('finished') ) {
                                     slideVideo.get( 0 ).play();
                                 } else {
                                     slideVideo.get( 0 ).pause();

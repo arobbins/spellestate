@@ -89,9 +89,13 @@
 		    $tb_right_config     = $sf_options['tb_right_config'];
 		    $tb_left_text = __($sf_options['tb_left_text'], 'swiftframework');
 			$tb_right_text = __($sf_options['tb_right_text'], 'swiftframework');
+			$enable_sticky_tb = false;
+			if ( isset( $sf_options['enable_sticky_topbar'] ) ) {
+				$enable_sticky_tb = $sf_options['enable_sticky_topbar'];	
+			}
 		    $header_left_config  = $sf_options['header_left_config'];
 		    $header_right_config = $sf_options['header_right_config'];
-
+			
 		    if ( ( $page_header_type == "naked-light" || $page_header_type == "naked-dark" ) && ( $header_layout == "header-vert" || $header_layout == "header-vert-right" ) ) {
 		        $header_layout = apply_filters( 'sf_naked_default_header', "header-1" );
 		        $enable_tb     = false;
@@ -104,6 +108,11 @@
 		        $tb_left_output .= sf_aux_links( 'tb-menu', true, 'header-1' ) . "\n";
 		    } else if ( $tb_left_config == "menu" ) {
 		        $tb_left_output .= sf_top_bar_menu() . "\n";
+		    } else if ($tb_left_config == "cart-wishlist") {
+			    $tb_left_output .= '<div class="aux-item aux-cart-wishlist"><nav class="std-menu cart-wishlist"><ul class="menu">'. "\n";
+			    $tb_left_output .= sf_get_cart();
+			    $tb_left_output .= sf_get_wishlist();
+			    $tb_left_output .= '</ul></nav></div>'. "\n";
 		    } else {
 		        $tb_left_output .= '<div class="tb-text">' . do_shortcode( $tb_left_text ) . '</div>' . "\n";
 		    }
@@ -114,13 +123,23 @@
 		        $tb_right_output .= sf_aux_links( 'tb-menu', true, 'header-1' ) . "\n";
 		    } else if ( $tb_right_config == "menu" ) {
 		        $tb_right_output .= sf_top_bar_menu() . "\n";
+		    } else if ($tb_right_config == "cart-wishlist") {
+			    $tb_right_output .= '<div class="aux-item aux-cart-wishlist"><nav class="std-menu cart-wishlist"><ul class="menu">'. "\n";
+			    $tb_right_output .= sf_get_cart();
+			    $tb_right_output .= sf_get_wishlist();
+			    $tb_right_output .= '</ul></nav></div>'. "\n";
 		    } else {
 		        $tb_right_output .= '<div class="tb-text">' . do_shortcode( $tb_right_text ) . '</div>' . "\n";
+		    }
+		    
+		    $top_bar_class = "";
+		    if ($enable_sticky_tb) {
+		    	$top_bar_class = "sticky-top-bar";
 		    }
 		?>
 		<?php if ($enable_tb) { ?>
 		<!--// TOP BAR //-->
-		<div id="top-bar">
+		<div id="top-bar" class="<?php echo $top_bar_class; ?>">
 		<?php if ($fullwidth_header) { ?>
 		<div class="container fw-header">
 		    <?php } else { ?>
@@ -1405,7 +1424,13 @@
                 }
 
                 if ( $count > 1 ) {
-                	$search_link = get_home_url() . '?s='.$search_term . '&post_type='. $header_search_pt;
+                	$search_link = get_search_link( $search_term );
+                	
+                	if (strpos($search_link,'?') !== false) {
+                		$search_link .= '&post_type='. $header_search_pt;
+                	} else {
+                		$search_link .= '?post_type='. $header_search_pt;
+                	}
                     $search_results_ouput .= '<a href="' . $search_link . '" class="all-results">' . sprintf( __( "View all %d results", "swiftframework" ), $count ) . '</a>';
                 }
 

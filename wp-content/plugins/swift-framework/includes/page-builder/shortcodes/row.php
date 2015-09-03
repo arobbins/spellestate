@@ -35,6 +35,7 @@
                 'bg_video_mp4'            => '',
                 'bg_video_webm'           => '',
                 'bg_video_ogg'            => '',
+                'bg_video_loop'           => 'yes',
                 'parallax_video_height'   => 'window-height',
                 'parallax_image_height'   => 'content-height',
                 'parallax_video_overlay'  => 'none',
@@ -134,10 +135,14 @@
             $output .= "\n\t\t" . '</div> ' . $this->endBlockComment( $width );
 
             if ( $row_bg_type == "video" ) {
+                $loop = 'loop';
+                if ( $bg_video_loop == "no" ) {
+                    $loop = '';
+                }
                 if ( $img_url ) {
-                    $output .= '<video class="parallax-video" poster="' . $img_url[0] . '" preload="auto" autoplay loop="loop" muted="muted">';
+                    $output .= '<video class="parallax-video" poster="' . $img_url[0] . '" preload="auto" autoplay ' . $loop . ' muted>';
                 } else {
-                    $output .= '<video class="parallax-video" preload="auto" autoplay loop="loop" muted="muted">';
+                    $output .= '<video class="parallax-video" preload="auto" autoplay ' . $loop . ' muted>';
                 }
                 if ( $bg_video_mp4 != "" ) {
                     $output .= '<source src="' . $bg_video_mp4 . '" type="video/mp4">';
@@ -196,6 +201,7 @@
                 'bg_video_mp4'            => '',
                 'bg_video_webm'           => '',
                 'bg_video_ogg'            => '',
+                'bg_video_loop'           => 'yes',
                 'parallax_video_height'   => 'window-height',
                 'parallax_image_height'   => 'content-height',
                 'parallax_video_overlay'  => 'none',
@@ -377,6 +383,18 @@
             "value"       => "",
             "required"       => array("row_bg_type", "=", "video"),
             "description" => "Provide a video URL in OGG format to use as the background for the parallax area. You can upload these videos through the WordPress media manager."
+        ),
+        array(
+            "type"        => "buttonset",
+            "heading"     => __( "Background Video Loop", 'swift-framework-plugin' ),
+            "param_name"  => "bg_video_loop",
+            "value"       => array(
+                __( "Yes", 'swift-framework-plugin' )  => "yes",
+                __( "No", 'swift-framework-plugin' ) => "no"
+            ),
+            "std"         => 'yes',
+            "required"       => array("row_bg_type", "=", "video"),
+            "description" => "Choose if you would like the background video to be looped."
         ),
         array(
             "type"        => "dropdown",

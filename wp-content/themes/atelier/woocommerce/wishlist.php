@@ -25,7 +25,7 @@ $shop_page_url = "";
 if ( version_compare( WOOCOMMERCE_VERSION, "2.1.0" ) >= 0 ) {
 	$shop_page_url = get_permalink( wc_get_page_id( 'shop' ) );
 } else {
-	$shop_page_url = get_permalink( woocommerce_get_page_id( 'shop' ) );
+	$shop_page_url = get_permalink( wc_get_page_id( 'shop' ) );
 }
 
 $user_id = "";
