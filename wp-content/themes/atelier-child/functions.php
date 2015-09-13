@@ -173,7 +173,7 @@ add_shortcode('bottleshots', 'show_bottle_shots');
 
 function get_reviews($productId) {
 
-  $reviews = [];
+  $reviews = array();
 
   $args = array(
     'post_type' => 'reviews',
@@ -202,6 +202,39 @@ function get_reviews($productId) {
 
   return $reviews;
 
+}
+
+function get_wines($current_vineyard_id = '') {
+
+  $wines = [];
+
+  $args = array(
+    'post_type' => 'product',
+    'posts_per_page' => -1
+  );
+
+  $products = new WP_Query($args);
+
+  if ( $products->have_posts() ) {
+    while ( $products->have_posts() ) : $products->the_post();
+      $product_id = get_the_ID();
+
+      if(get_field('product_vineyard', $product_id)) {
+        $vineyard = get_field('product_vineyard', $product_id);
+        $vineyardId = $vineyard[0]->ID;
+
+        if($vineyardId === $current_vineyard_id) {
+          $wines[] = $product_id;
+        }
+
+      }
+
+    endwhile;
+  }
+
+  wp_reset_postdata();
+
+  return $wines;
 }
 
 //

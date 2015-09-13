@@ -1,5 +1,13 @@
 <img src="<?php the_field('global_header_image', 'options'); ?>" alt="" />
-<div class="container">
+
+<?php
+
+  $current_vineyard_id = get_the_id();
+  $wines = get_wines($current_vineyard_id);
+
+?>
+
+<div class="container grower-single">
   <h1><?php the_field('grower_title'); ?></h1>
   <img src="<?php the_field('grower_image_full'); ?>" alt="<?php the_field('grower_title'); ?>">
   <dl class="grower-details">
@@ -26,4 +34,23 @@
   <div class="grower-description">
     <?php the_field('grower_description'); ?>
   </div>
+
+  <ul class="grower-wines row">
+    <h2>Wines from this Vineyard:</h2>
+    <?php
+      foreach ($wines as $wine => $wineID) {
+        $title = get_the_title($wineID);
+        $link = get_the_permalink($wineID);
+        $image = get_the_post_thumbnail($wineID, 'medium');
+
+        echo '<li class="col-sm-3 grower-wine">';
+          echo '<a href="' . $link .'" class="grower-wine-link">';
+            echo $image;
+            echo '<h3 class="grower-wine-title">' . $title . '</h3>';
+          echo '</a>';
+        echo "</li>";
+
+      }
+    ?>
+  </ul>
 </div>

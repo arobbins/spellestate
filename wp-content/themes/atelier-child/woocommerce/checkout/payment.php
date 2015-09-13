@@ -45,7 +45,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php wp_nonce_field( 'woocommerce-process_checkout' ); ?>
 
 		<?php do_action( 'woocommerce_review_order_before_submit' ); ?>
-				
+
 		<?php if ( wc_get_page_id( 'terms' ) > 0 && apply_filters( 'woocommerce_checkout_show_terms', true ) ) : ?>
 			<p class="form-row terms">
 				<label for="terms" class="checkbox"><?php printf( __( 'I&rsquo;ve read and accept the <a href="%s" target="_blank">terms &amp; conditions</a>', 'swiftframework' ), esc_url( wc_get_page_permalink( 'terms' ) ) ); ?></label>

@@ -30,7 +30,7 @@ function custom_post_type_growers() {
     'supports'            => array('title'),
     'taxonomies'          => array(),
     'hierarchical'        => false,
-    'public'              => false,
+    'public'              => true,
     'show_ui'             => true,
     'show_in_menu'        => true,
     'menu_position'       => 100,
@@ -38,7 +38,7 @@ function custom_post_type_growers() {
     'show_in_admin_bar'   => true,
     'can_export'          => true,
     'has_archive'         => false,
-    'exclude_from_search' => true,
+    'exclude_from_search' => false,
     'publicly_queryable'  => true,
     'capability_type'     => 'page',
     'rewrite'             => array( 'slug' => '/growers')

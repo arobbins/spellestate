@@ -122,6 +122,11 @@ ul.social-icons li:not(.sf-love) a i {
   margin-bottom: 21px;
 }
 
+dd,
+dt {
+  font-size: 18px;
+}
+
 #copyright p,
 #copyright .text-left,
 #copyright .text-right {
@@ -485,7 +490,7 @@ a.sf-button.sf-icon-reveal {
   display: block;
   color: black;
   float: left; margin-right: 10px;
-  width: 100%;
+  width: auto;
   text-align: center;
 }
 
@@ -1221,6 +1226,29 @@ body .gform_wrapper label.gfield_label + div.ginput_container {
   margin-bottom: 1em;
 }
 
+.grower-single {
+  img {
+    width: 100%;
+  }
+}
+
+.grower-wine-title {
+  text-align: center;
+  margin: 1em 0;
+  text-transform: capitalize;
+  font-family: Julius Sans One,arial,sans-serif;
+  font-size: 16px;
+}
+
+.grower-wine-link {
+  text-decoration: none;
+}
+
+.grower-wine-link:hover {
+  text-decoration: none;
+  opacity: 0.8;
+}
+
 .grower-link {
   color: black;
   text-decoration: none;
@@ -1709,8 +1737,13 @@ body.woocommerce p.stars a:hover:after {
 
 .woocommerce-checkout .checkout-confirmation h2 {
   margin-top: 40px;
-  font-size: 18px;
+  font-size: 26px;
+  text-align: center;
   font-weight: bold;
+}
+
+.checkout-confirmation .my-account-right .shop_table.order_details {
+  padding-bottom: 0;
 }
 
 .woocommerce .checkout-confirmation .order_details {
@@ -1740,11 +1773,30 @@ body.woocommerce p.stars a:hover:after {
 }
 
 .checkout-confirmation .shop_table.shop_table_responsive.customer_details {
-  border-top: none;
+  border: none;
+}
+
+.checkout-confirmation .my-account-right h4 {
+  margin-bottom: 10px;
+  font-size: 26px;
+  text-align: center;
+}
+
+.checkout-confirmation .my-account-right .shop_table.order_details th {
+  border-bottom: none;
 }
 
 .checkout-confirmation table.shop_table tbody:first-child tr:first-child th {
   border-top: 1px solid #e4e4e4;
+  border-bottom: none;
+}
+
+.checkout-confirmation table.shop_table tbody:first-child tr:first-child td {
+  border-bottom: none;
+}
+
+.woocommerce .checkout-confirmation table.customer_details td {
+  border-bottom: 1px solid #e3e3e3;
 }
 
 .checkout-confirmation .my-account-left h4,
@@ -1862,7 +1914,6 @@ body.woocommerce p.stars a:hover:after {
 .woocommerce table.shop_table tr td,
 .woocommerce-page table.shop_table tr td {
   width: 25%;
-  border-bottom: 1px solid #e3e3e3;
   border-width: 1px;
 }
 
@@ -2071,8 +2122,7 @@ body.woocommerce p.stars a:hover:after {
   }
 }
 
-@media only screen and (max-width: 767px) {
-
+@media only screen and (max-width: 770px) {
   .stacktable.large-only {
     display: none;
   }
@@ -2121,9 +2171,12 @@ body.woocommerce p.stars a:hover:after {
     text-align: left;
   }
 
+  .woocommerce-cart.woocommerce .shop_table td {
+    text-align: left;
+  }
+
   .woocommerce table.shop_table tr td,
   .woocommerce-page table.shop_table tr td {
-    text-align: left;
     width: 50%;
   }
 
@@ -2267,6 +2320,20 @@ body.woocommerce p.stars a:hover:after {
     &:last-child {
       margin-bottom: 0;
     }
+  }
+
+  .woocommerce div.product {
+    min-height: auto;
+  }
+
+  .product-shadows .products .product figure {
+    max-width: 35%;
+    margin: 0 auto;
+  }
+
+  #customer_details,
+  #review-order {
+    width: 100%;
   }
 
 }
@@ -2419,6 +2486,7 @@ body.woocommerce p.stars a:hover:after {
   .woocommerce table.shop_table tfoot td,
   .woocommerce table.shop_table tfoot th {
     font-weight: 100 !important;
+    border-width: 1px;
   }
 
 }
@@ -2430,3 +2498,18 @@ body.woocommerce p.stars a:hover:after {
 .st-head-row.st-head-row-main { font-size: 1.5em; padding-top: 0; }
 .st-key { width: 49%; text-align: right; padding-right: 1%; }
 .st-val { width: 49%; padding-left: 1%; }
+
+.shop_table.woocommerce-checkout-review-order-table:last-of-type {
+  display: none;
+}
+
+.woocommerce table.shop_table tbody th,
+.woocommerce table.shop_table tfoot td,
+.woocommerce table.shop_table tfoot th,
+.woocommerce #payment {
+  border-width: 1px;
+}
+
+.review-order-wrap table.shop_table tr td.product-name {
+  color: #b2243c;
+}
