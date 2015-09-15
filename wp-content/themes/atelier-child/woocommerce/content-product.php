@@ -55,7 +55,7 @@
 	if ( isset( $sf_options['disable_product_transition'] ) ) {
 		$disable_product_transition = $sf_options['disable_product_transition'];
 	}
-	
+
 	if ( $sf_product_display_type ) {
 		$product_display_type = $sf_product_display_type;
 	}
@@ -86,7 +86,7 @@
 	}
 
 	$figure_class = 'animated-overlay';
-	
+
 	$sidebar_config = $sf_options['woo_sidebar_config'];
 	if (isset($_GET['sidebar'])) {
 		$sidebar_config = $_GET['sidebar'];
@@ -128,13 +128,13 @@
 	if ($product_description == "") {
 		$product_description = $post->post_excerpt;
 	}
-	
+
 	// Get variations for variable products
 	if ( $product->is_type( 'variable' ) ) {
 		$available_variations = $product->get_available_variations();
 	}
-	
-	
+
+
 	// Width, Height parameters
 	if ( $sf_product_multimasonry ) {
 
@@ -158,7 +158,7 @@
 		}
 
 	} else {
-		
+
 		if ( $product_layout == "grid" ) {
 			if ( $sidebar_config == "no-sidebars" ) {
 				$classes[] = 'col-sm-sf-5';
@@ -186,13 +186,13 @@
 			$classes[] = 'col-sm-2';
 			$width = 'col-sm-2';
 		}
-		
+
 	}
 ?>
 <div <?php post_class( $classes ); ?> data-width="<?php echo esc_attr($width); ?>">
 
 	<?php do_action( 'woocommerce_before_shop_loop_item' ); ?>
-	
+
 	<?php if ( $product_display_type == "preview-slider" ) { ?>
 	<div class="preview-slider-item-wrapper">
 	<?php } ?>
@@ -207,7 +207,7 @@
 			$thumb_img_url  = wp_get_attachment_url( $thumb_image, 'full' );
 			$image = sf_aq_resize( $thumb_img_url, $thumb_width, $thumb_height, true, false );
 			$image_alt = esc_attr( sf_get_post_meta( $thumb_image_id, '_wp_attachment_image_alt', true ) );
-			
+
 			if ($image_alt == "") {
 				$image_alt = get_the_title();
 			}
@@ -216,21 +216,21 @@
 				echo '<div class="multi-masonry-img-wrap"><img src="' . $image[0] . '" width="' . $image[1] . '" height="' . $image[2] . '" alt="' . $image_alt . '" /></div>' . "\n";
 			}
 		} else if ( $product_display_type == "preview-slider" ) {
-						
+
 			if ( $product->is_type( 'variable' ) ) {
-				
+
 				echo '<div class="variable-image-wrapper is-variable">';
-				$img_count = 0;			
+				$img_count = 0;
 				$available_variations = $product->get_available_variations();
 				if ($available_variations) {
 					foreach ( $available_variations as $variation ) {
 						if ( $variation['variation_is_visible'] ) {
-							
+
 							$sale = false;
 							if ( $variation['display_price'] != $variation['display_regular_price'] ) {
 							$sale = true;
 							}
-											
+
 							if ( $img_count == 0 ) {
 							echo '<div class="img-wrap selected" data-sale="'.$sale.'">';
 							} else if ( $img_count == 1 ) {
@@ -239,24 +239,24 @@
 							echo '<div class="img-wrap" data-sale="'.$sale.'">';
 							}
 							echo '<div class="variation-price">'.$variation["price_html"].'</div>';
-							echo '<img src="'.$variation["image_src"].'" />';		
+							echo '<img src="'.$variation["image_src"].'" />';
 							echo '</div>';
 							$img_count++;
 						}
 					}
 				}
 				echo '</div>';
-				
+
 			} else {
-				
+
 				echo '<div class="variable-image-wrapper">';
 				echo '<div class="img-wrap selected">';
 				woocommerce_template_loop_product_thumbnail();
 				echo '</div>';
-				echo '</div>';	
-				
+				echo '</div>';
+
 			}
-			
+
 		} else {
 			echo '<div class="img-wrap first-image">';
 			woocommerce_template_loop_product_thumbnail();
@@ -274,7 +274,7 @@
 
 						if ( sf_get_post_meta( $attachment_id, '_woocommerce_exclude_image', true ) )
 							continue;
-						
+
 						echo '<div class="img-wrap second-image">'.wp_get_attachment_image( $attachment_id, 'shop_catalog' ).'</div>';
 
 						$img_count++;
@@ -298,7 +298,7 @@
 			</div>
 		</div>
 		<?php } ?>
-		
+
 		<?php if ( !( $product_display_type == "preview-slider" && $product->is_type( 'variable' ) ) ) { ?>
 		<a href="<?php the_permalink(); ?>"></a>
 		<?php } ?>
@@ -324,7 +324,7 @@
 							 */
 							do_action( 'woocommerce_after_shop_loop_item_title' );
 						?>
-						</div>				
+						</div>
 					<?php } else { ?>
 						<h6><?php woocommerce_template_loop_price(); ?></h6>
 					<?php } ?>
@@ -336,6 +336,7 @@
 	</figure>
 
 	<div class="product-details">
+
 		<?php do_action( 'woocommerce_before_shop_loop_item_title' ); ?>
 		<h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
 		<?php
@@ -364,7 +365,7 @@
 			<?php do_action( 'woocommerce_after_shop_loop_item' ); ?>
 		</div>
 	<?php } ?>
-	
+
 	<?php if ( $product_display_type == "preview-slider" ) { ?>
 	</div>
 	<?php } ?>

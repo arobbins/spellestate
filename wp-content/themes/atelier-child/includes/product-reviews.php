@@ -5,6 +5,8 @@
 
 ?>
 
+<?php if(isset($reviews) && $reviews) { ?>
+
 <dl class="accordion product-reviews">
   <dt class="accordion-heading">Reviews <i class="fa fa-chevron-right"></i></dt>
   <dd class="accordion-content">
@@ -35,3 +37,5 @@
     <?php } ?>
   </dd>
 </dl>
+
+<?php } ?>

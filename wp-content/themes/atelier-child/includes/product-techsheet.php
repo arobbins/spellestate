@@ -1,3 +1,5 @@
+<?php if(get_field('product_tech_sheet', get_the_id()) && get_field('product_tech_sheet', get_the_id())) { ?>
+
 <dl class="accordion product-techsheet">
   <dt class="accordion-heading">Techsheet <i class="fa fa-chevron-right"></i></dt>
   <dd class="accordion-content">
@@ -8,3 +10,5 @@
     <?php } ?>
   </dd>
 </dl>
+
+<?php } ?>
