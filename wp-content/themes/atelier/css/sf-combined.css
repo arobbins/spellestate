@@ -7528,7 +7528,7 @@ nav ul.menu > li.menu-item.sf-menu-item-btn > a > span.menu-item-text > i {
 .vertical-header-right nav.std-menu ul.sub-menu > li.parent:after {
 	content: "\f104";
 }
-.vertical-header nav .menu li.parent > a:after {
+.vertical-header nav#main-navigation .menu li.parent > a:after {
 	display: none!important;
 }
 
@@ -14292,6 +14292,11 @@ input[type="file"] {
 * Copyright Swift Ideas 2015
 */
 
+/* Fix for terrible generic WooCommerce css */
+.woocommerce .map-canvas img {
+	max-width: none;
+}
+
 /* --------------------------------------------
 	INDEX PRODUCT WIDTHS
 -------------------------------------------- */
@@ -14905,6 +14910,9 @@ select.hasCustomSelect {
 	margin: 0!important;
 	float: left!important;
 }
+.inner-page-wrap.full-width-shop ul.products > li.product-display-standard {
+	margin-bottom: 30px!important;
+}
 .woocommerce-count-wrap {
 	float: left;
 }
@@ -15397,7 +15405,7 @@ li.product .add-to-cart-wrap .variations_form {
 	color: inherit;
 }
 .product .cart-overlay .shop-actions .price del {
-	display: none;
+	display: none!important;
 }
 .product figure .cart-overlay .price-link {
 	border-right: 1px solid #e3e3e3;
@@ -15993,7 +16001,7 @@ nav.woocommerce-pagination ul li:first-child {
 -------------------------------------------- */
 
 .woocommerce .products .product.product-layout-list {
-	width: 100%;
+	width: 100%!important;
 }
 .woocommerce .products .product.product-layout-list figure {
 	float: left;
@@ -17619,13 +17627,22 @@ p.no-items {
 	CHECKOUT PAGE
 -------------------------------------------- */
 
-body.minimal-checkout.woocommerce-checkout .header-wrap, body.minimal-checkout.woocommerce-checkout #mobile-header, body.minimal-checkout.woocommerce-checkout #sf-header-banner, body.minimal-checkout.woocommerce-checkout #top-bar, body.minimal-checkout.woocommerce-checkout #footer {
+body.minimal-checkout.woocommerce-checkout .header-wrap, body.minimal-checkout.woocommerce-checkout #mobile-header, body.minimal-checkout.woocommerce-checkout #sf-header-banner, body.minimal-checkout.woocommerce-checkout #top-bar-sticky-wrapper, body.minimal-checkout.woocommerce-checkout #top-bar, body.minimal-checkout.woocommerce-checkout #footer {
 	display: none;
+}
+body.woocommerce-checkout.minimal-checkout.vertical-header #container {
+	padding-left: 0;
+}
+body.woocommerce-checkout.minimal-checkout.vertical-header-right #container {
+	padding-right: 0;
 }
 .minimal-checkout-return a {
 	display: block;
 	padding: 15px 0;
 	font-size: 18px;
+}
+.woocommerce-order-received .minimal-checkout-return {
+	display: none;
 }
 ul.checkout-process {
 	border: 2px solid #e4e4e4;
@@ -18746,14 +18763,18 @@ div.product .woocommerce_tabs .panel {
 .product-carousel {
 	clear: both;
 }
+.woocommerce .product-carousel ul.products {
+	margin-left: 0;
+	margin-right: 0;
+}
 .single-product .product-carousel {
 	padding-top: 50px;
 }
 .related-products .title-wrap > h3 {
 	text-transform: uppercase;
 }
-.product-carousel .owl-carousel .product {
-	width: 100%!important;
+.woocommerce .product-carousel .owl-carousel .product {
+    width: 100%!important;
 }
 .widget_shopping_cart .total {
 	border-top: 3px double #ccc;

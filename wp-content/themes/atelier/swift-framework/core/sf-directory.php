@@ -115,11 +115,13 @@
                     }
                 }
 
-                if ( count( $words ) > $excerpt_length ) :
+                if ( count( $words ) > $excerpt_length ) {
                     array_pop( $words );
                     array_push( $words, '...' );
                      $directory_item["pin_short_content"] = implode( ' ', $words );
-                endif;
+                }else{
+                     $directory_item["pin_short_content"] =  $content;
+                }
 
                 $pin_img_url                        = wp_get_attachment_image_src( sf_get_post_meta( $result->ID, 'sf_directory_map_pin', true ), 'full' );
                 $img_src                            = wp_get_attachment_image_src( get_post_thumbnail_id( $result->ID ), 'thumb-image' );

@@ -194,8 +194,17 @@ if ( ! class_exists( 'YITH_WCWL' ) ) {
             $user_id = ( ! empty( $this->details['user_id'] ) ) ? $this->details['user_id'] : false;
             $wishlist_name = ( ! empty( $this->details['wishlist_name'] ) ) ? $this->details['wishlist_name'] : '';
 
+            do_action( 'yith_wcwl_adding_to_wishlist', $prod_id, $wishlist_id, $user_id );
+
+            // filtering params
+            $prod_id = apply_filters( 'yith_wcwl_adding_to_wishlist_prod_id', $prod_id );
+            $wishlist_id = apply_filters( 'yith_wcwl_adding_to_wishlist_wishlist_id', $wishlist_id );
+            $quantity = apply_filters( 'yith_wcwl_adding_to_wishlist_quantity', $quantity );
+            $user_id = apply_filters( 'yith_wcwl_adding_to_wishlist_user_id', $user_id );
+            $wishlist_name = apply_filters( 'yith_wcwl_adding_to_wishlist_wishlist_name', $wishlist_name );
+
             if ( $prod_id == false ) {
-                $this->errors[] = __( 'An error occurred while adding products to the wishlist.', 'yit' );
+                $this->errors[] = __( 'An error occurred while adding products to the wishlist.', 'yith-woocommerce-wishlist' );
                 return "error";
             }
 
@@ -276,10 +285,11 @@ if ( ! class_exists( 'YITH_WCWL' ) ) {
             }
 
             if( $result ) {
+                do_action( 'yith_wcwl_added_to_wishlist', $prod_id, $wishlist_id, $user_id );
                 return "true";
             }
             else {
-                $this->errors[] = __( 'An error occurred while adding products to wishlist.', 'yit' );
+                $this->errors[] = __( 'An error occurred while adding products to wishlist.', 'yith-woocommerce-wishlist' );
                 return "error";
             }
         }
@@ -328,7 +338,7 @@ if ( ! class_exists( 'YITH_WCWL' ) ) {
                     return true;
                 }
                 else {
-                    $this->errors[] = __( 'An error occurred while removing products from the wishlist', 'yit' );
+                    $this->errors[] = __( 'An error occurred while removing products from the wishlist', 'yith-woocommerce-wishlist' );
                     return false;
                 }
             }
@@ -606,7 +616,7 @@ if ( ! class_exists( 'YITH_WCWL' ) ) {
             $user_id = ( ! empty( $this->details['user_id'] ) ) ? $this->details['user_id'] : false;
 
             if( $user_id == false ){
-                $this->errors[] = __( 'You need to log in before creating a new wishlist', 'yit' );
+                $this->errors[] = __( 'You need to log in before creating a new wishlist', 'yith-woocommerce-wishlist' );
                 return "error";
             }
 
@@ -1316,15 +1326,15 @@ if ( ! class_exists( 'YITH_WCWL' ) ) {
 
             if( $count != 0 ) {
                 if ( $this->remove() ) {
-                    $message = apply_filters( 'yith_wcwl_product_removed_text', __( 'Product successfully removed.', 'yit' ) );
+                    $message = apply_filters( 'yith_wcwl_product_removed_text', __( 'Product successfully removed.', 'yith-woocommerce-wishlist' ) );
                     $count --;
                 }
                 else {
-                    $message = apply_filters( 'yith_wcwl_unable_to_remove_product_message', __( 'Error. Unable to remove the product from the wishlist.', 'yit' ) );
+                    $message = apply_filters( 'yith_wcwl_unable_to_remove_product_message', __( 'Error. Unable to remove the product from the wishlist.', 'yith-woocommerce-wishlist' ) );
                 }
             }
             else{
-                $message = apply_filters( 'yith_wcwl_no_product_to_remove_message', __( 'No products were added to the wishlist', 'yit' ) );
+                $message = apply_filters( 'yith_wcwl_no_product_to_remove_message', __( 'No products were added to the wishlist', 'yith-woocommerce-wishlist' ) );
             }
 
             wc_add_notice( $message );
@@ -1366,7 +1376,7 @@ if ( ! class_exists( 'YITH_WCWL' ) ) {
 			    $type_msg = 'error';
 		    }
 		    else {
-			    $message = apply_filters( 'yith_wcwl_product_removed_text', __( 'An error as occurred.', 'yit' ) );
+			    $message = apply_filters( 'yith_wcwl_product_removed_text', __( 'An error as occurred.', 'yith-woocommerce-wishlist' ) );
 			    $type_msg = 'error';
 		    }
 

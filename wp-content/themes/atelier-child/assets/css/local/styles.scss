@@ -158,7 +158,20 @@ dt {
 }
 
 .swiper-slide .caption-content {
-  top: 47%;
+  top: 45%;
+}
+
+.single-product .product-type-subscription .price .amount {
+  float: left;
+  margin-right: 10px;
+}
+
+.single-product .product-type-subscription .product-price-wrap {
+  margin-bottom: 10px;
+}
+
+.single-product .product-type-subscription .price .sub-label {
+  font-size: 18px;
 }
 
 .swift-slider-pagination {
@@ -343,7 +356,7 @@ dt {
 }
 
 .promo-wrapper {
-  margin: 3em auto;
+  margin: 0 auto 3em auto;
 }
 
 #header .header-right .aux-cart-wishlist .wishlist-item,
@@ -389,18 +402,29 @@ body.woocommerce #review_form #respond .form-submit input:hover {
   font-weight: normal;
 }
 
+.product-link {
+  .sub-label {
+    line-height: 1.5;
+    display: inline-block;
+    text-align: center;
+  }
+}
+
 .woocommerce div.product .summary h3.price {
   font-size: 30px;
 }
 
 .product-type-subscription .price .amount {
   color: #b2243c;
+  display: block;
+  margin-bottom: 10px;
 }
 
 .team-member .team-member-position,
 .team-member .team-member-name {
   float: left;
   line-height: 40px;
+  font-size: 30px;
   //color: #767778;
 }
 
@@ -426,7 +450,6 @@ body.woocommerce #review_form #respond .form-submit input:hover {
 }
 
 .team-member .team-member-name {
-  font-size: 40px;
   font-style: italic;
   margin-left: 15px;
   font-family: Arapey, times;
@@ -615,6 +638,11 @@ legend,
 
 .woocommerce-page form .form-row label {
   font-size: 17px;
+}
+
+.woocommerce nav.woocommerce-pagination {
+  width: 100%;
+  float: left;
 }
 
 legend {
@@ -1212,7 +1240,7 @@ body .gform_wrapper label.gfield_label + div.ginput_container {
 
 .grower-title {
   margin-top: 10px;
-  font-size: 24px;
+  font-size: 20px;
   color: black;
   text-decoration: none;
 
@@ -1224,6 +1252,7 @@ body .gform_wrapper label.gfield_label + div.ginput_container {
 
 .grower {
   margin-bottom: 1em;
+  min-height: 300px;
 }
 
 .grower-single {
@@ -1234,10 +1263,12 @@ body .gform_wrapper label.gfield_label + div.ginput_container {
 
 .grower-wine-title {
   text-align: center;
-  margin: 1em 0;
   text-transform: capitalize;
   font-family: Julius Sans One,arial,sans-serif;
-  font-size: 16px;
+  font-size: 18px;
+  line-height: 1.5;
+  font-weight: 400;
+  font-style: normal;
 }
 
 .grower-wine-link {
@@ -1306,6 +1337,7 @@ body .gform_wrapper label.gfield_label + div.ginput_container {
   margin-left: 25px;
   float: left;
   margin-top: 8px;
+  display: none;
 }
 
 .stars a {
@@ -1580,7 +1612,7 @@ body.woocommerce p.stars a:hover:after {
 
 .bottleshots-list-item {
   margin-bottom: 1em;
-  min-height: 475px; // Prevents the float from getting stuck
+  min-height: 500px; // Prevents the float from getting stuck
 
   img {
     width: 100%;
@@ -1626,6 +1658,11 @@ body.woocommerce p.stars a:hover:after {
   border-top: 1px solid #e3e3e3;
 }
 
+.page-content .product-carousel {
+  margin: 0;
+  padding-left: 0;
+}
+
 .woocommerce div.product form.cart {
   margin-bottom: 0;
   margin-top: 2em;
@@ -1639,14 +1676,15 @@ body.woocommerce p.stars a:hover:after {
   display: none;
 }
 
-// .woocommerce.product-shadows.product-standard #product-img-slider .lSSlideOuter {
-//   margin-left: -35px;
-// }
 
 .woocommerce div.product {
   position: static !important;
-  min-height: 550px;
+  min-height: 600px;
   margin: 1em 0;
+}
+
+.home .woocommerce div.product {
+  min-height: 500px;
 }
 
 .woocommerce .help-bar {
@@ -1872,7 +1910,7 @@ body.woocommerce p.stars a:hover:after {
 .woocommerce-page table.shop_table tr td {
   padding: 10px 0;
   vertical-align: middle;
-  font-size: 17px;
+  font-size: 14px;
 }
 
 .my-account-right.tab-content .shop_table form .button {
@@ -2013,6 +2051,7 @@ body.woocommerce p.stars a:hover:after {
 
 .first-payment-date {
   margin-top: 5px;
+  display: none;
 }
 
 .shop_table.cart .actions {
@@ -2095,6 +2134,10 @@ body.woocommerce p.stars a:hover:after {
 
   .related-products .carousel-arrows a {
     font-size: 32px;
+  }
+
+  .woocommerce div.product {
+    min-height: 500px;
   }
 
 }
@@ -2242,10 +2285,6 @@ body.woocommerce p.stars a:hover:after {
     width: 200px;
     margin: 0 auto;
     display: block;
-  }
-
-  .bottleshots-list-item {
-    min-height: 350px;
   }
 
   .cart-items-wrap,
@@ -2512,4 +2551,35 @@ body.woocommerce p.stars a:hover:after {
 
 .review-order-wrap table.shop_table tr td.product-name {
   color: #b2243c;
+}
+
+.product-info {
+  margin: 0;
+  text-align: center;
+  font-size: 18px;
+  font-family: "Julius Sans One";
+  line-height: 1.5;
+  font-weight: 400;
+  font-style: normal;
+}
+
+#account_password_field label {
+  font-size: 13px;
+}
+
+.cart-totals-wrap .continue-shopping.accent {
+  float: right;
+}
+
+#shipping_method li label,
+.woocommerce ul#shipping_method .amount {
+  font-weight: 700;
+}
+
+#shipping_method li label {
+  margin-left: 0;
+}
+
+#shipping_method input[checked="checked"] + label {
+  color: green;
 }

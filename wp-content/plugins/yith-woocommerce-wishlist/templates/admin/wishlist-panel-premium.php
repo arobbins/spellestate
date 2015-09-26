@@ -182,30 +182,25 @@
     <div class="section section-cta section-odd">
         <div class="landing-container">
             <div class="wishlist-cta">
-                <p>
-                    Upgrade to the <span class="highlight">premium version</span><br/>
-                    of <span class="highlight">YITH WooCommerce Wishlist</span> to benefit from all features!
-                </p>
+                <p><?php echo sprintf (__('Upgrade to the %1$spremium version%2$s%3$sof %1$sYITH WooCommerce Wishlist%2$s to benefit from all features!','yith-woocommerce-wishlist'),'<span class="highlight">','</span>','<br/>');?></p>
                 <a href="<?php echo YITH_WCWL_Admin_Init()->get_premium_landing_uri(); ?>" target="_blank" class="wishlist-cta-button button btn">
-                    <span class="highlight">UPGRADE</span>
-                    <span>to the premium version</span>
+                   <?php echo sprintf (__('%1$sUPGRADE%2$s%3$s to the premium version%2$s','yith-woocommerce-wishlist'),'<span class="highlight">','</span>','<span>');?>
                 </a>
             </div>
         </div>
     </div>
     <div class="section section-even clear" style="background: url(<?php echo YITH_WCWL_URL ?>assets/images/landing/background-1.png) no-repeat #fff; background-position: 85% 75%">
-        <h1>Premium Features</h1>
+        <h1><?php _e('Premium Features', 'yith-woocommerce-wishlist');?></h1>
         <div class="landing-container">
             <div class="col-1">
-                <img src="<?php echo YITH_WCWL_URL ?>assets/images/landing/01.png" alt="Multiple Wishlist" />
+                <img src="<?php echo YITH_WCWL_URL ?>assets/images/landing/01.png" alt="<?php _e('Multiple Wishlist', 'yith-woocommerce-wishlist');?>" />
             </div>
             <div class="col-2">
                 <div class="section-title">
-                    <img src="<?php echo YITH_WCWL_URL ?>assets/images/landing/icon-1.png" alt="Multiple Wishlist"/>
-                    <h2>Multiple Wishlist</h2>
+                    <img src="<?php echo YITH_WCWL_URL ?>assets/images/landing/icon-1.png" alt="icon-1"/>
+                    <h2><?php _e('Multiple Wishlist', 'yith-woocommerce-wishlist');?></h2>
                 </div>
-                <p>Does it ever happened to you to have too many wishes for a single wish list? The possibility to manage one's wishes is a fundamental feature in a modern e-commerce store and it also lets users' degree of satisfaction increase.</p>
-                <p>The option "multiple wishlist" of <strong>YITH Wishlist</strong> makes this feature and many others on your online store available, and thanks to this plugin your customers will be able to create, manage and share their own wish lists.</p>
+                <p><?php echo sprintf (__('%1$sDoes it ever happened to you to have too many wishes for a single wish list?%2$s%3$s The possibility to manage one\'s wishes is a fundamental feature in a modern e-commerce store and it also lets users\' degree of satisfaction increase.%3$sThe option "multiple wishlist" of %1$sYITH Wishlist%2$s makes this feature and many others on your online store available, and thanks to this plugin your customers will be able to create, manage and share their own wish lists.','yith-woocommerce-wishlist'),'<strong>','</strong>','<br/>');?></p>
             </div>
         </div>
     </div>
@@ -213,33 +208,32 @@
         <div class="landing-container">
             <div class="col-2">
                 <div class="section-title">
-                    <img src="<?php echo YITH_WCWL_URL ?>assets/images/landing/icon-2.png" alt="Wishlist Private" />
-                    <h2>Wishlist Private</h2>
+                    <img src="<?php echo YITH_WCWL_URL ?>assets/images/landing/icon-2.png" alt="icon-2" />
+                    <h2><?php _e('Wishlist Private', 'yith-woocommerce-wishlist');?></h2>
                 </div>
-                <p>By enabling the option wishlist, users will also have the possibility to manage the visibility of their wish lists according to one of the following options:</p>
+                <p><?php echo sprintf (__('By enabling the option wishlist, users will also have the possibility to %1$smanage the visibility%2$s of their wish lists according to one of the following options:','yith-woocommerce-wishlist'),'<strong>','</strong>');?></p>
                 <ul>
-                    <li><strong>public:</strong> all users can look for your wish list and see it;</li>
-                    <li><strong>shared:</strong> only users possessing a direct link to the wish list page can display it;</li>
-                    <li><strong>private:</strong> only the wish list creator can see it.</li>
+                    <li><?php echo sprintf (__('%1$spublic:%2$s all users can look for your wish list and see it;','yith-woocommerce-wishlist'),'<strong>','</strong>');?></li>
+                    <li><?php echo sprintf (__('%1$sshared:%2$s only users possessing a direct link to the wish list page can display it;','yith-woocommerce-wishlist'),'<strong>','</strong>');?></li>
+                    <li><?php echo sprintf (__('%1$sprivate:%2$s only the wish list creator can see it.','yith-woocommerce-wishlist'),'<strong>','</strong>');?></li>
                 </ul>
             </div>
             <div class="col-1">
-                <img src="<?php echo YITH_WCWL_URL ?>assets/images/landing/02.png" alt="Private Wishlist" />
+                <img src="<?php echo YITH_WCWL_URL ?>assets/images/landing/02.png" alt="<?php _e('Wishlist Private', 'yith-woocommerce-wishlist');?>" />
             </div>
         </div>
     </div>
     <div class="section section-even clear" style="background: url(<?php echo YITH_WCWL_URL ?>assets/images/landing/background-3.png) no-repeat #fff; background-position: 85% 100%">
         <div class="landing-container">
             <div class="col-1">
-                <img src="<?php echo YITH_WCWL_URL ?>assets/images/landing/03.png" alt="Ask an estimate" />
+                <img src="<?php echo YITH_WCWL_URL ?>assets/images/landing/03.png" alt="<?php _e('Estimate Cost', 'yith-woocommerce-wishlist');?>" />
             </div>
             <div class="col-2">
                 <div class="section-title">
-                    <img src="<?php echo YITH_WCWL_URL ?>assets/images/landing/icon-3.png" alt="Ask an estimate" />
-                    <h2>Estimate Cost</h2>
+                    <img src="<?php echo YITH_WCWL_URL ?>assets/images/landing/icon-3.png" alt="icon-3" />
+                    <h2><?php _e('Estimate Cost', 'yith-woocommerce-wishlist');?></h2>
                 </div>
-                <p>Do you want to add the possibility to ask for estimates of costs into your catalogue? Do you want to manage customised packets for faithful customers in your store?</p>
-                <p>Thanks to the feature "estimate cost" of <strong>YITH WooCommerce Wishlist</strong>, each registered user will be able to ask for an estimate of their own products in the wishlist and add a text in the popup window that will open just after clicking. Then, they can confirm the text and send an email with all necessary information directly to the address that you have previously set.</p>
+                <p><?php echo sprintf (__('%1$sDo you want to add the possibility to ask for estimates of costs into your catalogue?%3$s Do you want to manage customised packets for faithful customers in your store?%2$s%3$sThanks to the feature "estimate cost" of %1$sYITH WooCommerce Wishlist%2$s, each registered user will be able to ask for an estimate of their own products in the wishlist and add a text in the popup window that will open just after clicking. Then, they can confirm the text and send an email with all necessary information directly to the address that you have previously set.','yith-woocommerce-wishlist'),'<strong>','</strong>','<br/>');?></p>
             </div>
         </div>
     </div>
@@ -247,31 +241,27 @@
         <div class="landing-container">
             <div class="col-2">
                 <div class="section-title">
-                    <img src="<?php echo YITH_WCWL_URL ?>assets/images/landing/icon-4.png" alt="Admin panel" />
-                    <h2>Admin Panel</h2>
+                    <img src="<?php echo YITH_WCWL_URL ?>assets/images/landing/icon-4.png" alt="icon-4" />
+                    <h2><?php _e('Admin Panel', 'yith-woocommerce-wishlist');?></h2>
                 </div>
-                <p>Thanks to the useful Admin panel, accessible directly among the WooCommerce submenu pages, you will have total control on users' wishlists. In addition to that, evaluating the degree of appreciation for your products has never been so easy, now that you can see a useful report, available directly in the product page, which registers the occurrences of the product in customers' wish lists.</p>
+                <p><?php echo sprintf (__('Thanks to the useful Admin panel, accessible directly among the WooCommerce submenu pages, you will have total control on users\' wishlists. In addition to that, evaluating the degree of appreciation for your products has never been so easy, now that %1$syou can see a useful report,%2$s available directly in the product page, which registers the occurrences of the product in customers\' wish lists.','yith-woocommerce-wishlist'),'<strong>','</strong>');?></p>
             </div>
             <div class="col-1">
-                <img src="<?php echo YITH_WCWL_URL ?>assets/images/landing/04.png" alt="Admin panel" />
+                <img src="<?php echo YITH_WCWL_URL ?>assets/images/landing/04.png" alt="<?php _e('Admin Panel', 'yith-woocommerce-wishlist');?>" />
             </div>
         </div>
     </div>
     <div class="section section-even clear" style="background: url(<?php echo YITH_WCWL_URL ?>assets/images/landing/background-5.png) no-repeat #fff; background-position: 85% 100%">
         <div class="landing-container">
             <div class="col-1">
-                <img src="<?php echo YITH_WCWL_URL ?>assets/images/landing/05.png" alt="Search wishlist" />
+                <img src="<?php echo YITH_WCWL_URL ?>assets/images/landing/05.png" alt="<?php _e('Search Wishlists', 'yith-woocommerce-wishlist');?>" />
             </div>
             <div class="col-2">
                 <div class="section-title">
-                    <img src="<?php echo YITH_WCWL_URL?>assets/images/landing/icon-5.png" alt="Search wishlist" />
-                    <h2>Search Wishlists</h2>
+                    <img src="<?php echo YITH_WCWL_URL?>assets/images/landing/icon-5.png" alt="icon-5" />
+                    <h2><?php _e('Search Wishlists', 'yith-woocommerce-wishlist');?></h2>
                 </div>
-                <p>How many times have you been looking for the perfect gift for a important event but you had no idea
-                    of what to buy? <b>“Search wishlists”</b> allows your e-shop users to access public wishlists of
-                    anyone, by simply knowing their name or email. This way you can grant <b>higher visibility</b> to your
-                    products and even encourage users to purchase.
-                </p>
+                <p><?php echo sprintf (__('How many times have you been looking for the perfect gift for a important event but you had no idea of what to buy? %1$s\'Search wishlists\'%2$s allows your e-shop users to access public wishlists of anyone, by simply knowing their name or email. This way you can grant %1$shigher visibility%2$s to your products and even encourage users to purchase.','yith-woocommerce-wishlist'),'<strong>','</strong>');?></p>
             </div>
         </div>
     </div>
@@ -279,35 +269,27 @@
         <div class="landing-container">
             <div class="col-2">
                 <div class="section-title">
-                    <img src="<?php echo YITH_WCWL_URL ?>assets/images/landing/06-icon.png" alt="Admin panel" />
-                    <h2>"ADD TO CART" CHECKBOX</h2>
+                    <img src="<?php echo YITH_WCWL_URL ?>assets/images/landing/06-icon.png" alt="icon-6" />
+                    <h2><?php _e('\'ADD TO CART\' CHECKBOX', 'yith-woocommerce-wishlist');?></h2>
                 </div>
-                <p>Your shop offers always a wide selection of products and wishlists of your users get more and more
-                    crowded everyday. Give them the possibility to select <b>some or all products</b> in the wishlist and add them to cart
-                    just with one click.
-                </p>
-
-                so that users can select some or all products in the wishlist and add them to cart
-                just with one click.
+                <p><?php echo sprintf (__('Your shop offers always a wide selection of products and wishlists of your users get more and more crowded everyday. Give them the possibility to select %1$ssome or all products%2$s in the wishlist and add them to cart just with one click. So that users can select some or all products in the wishlist and add them to cart just with one click.','yith-woocommerce-wishlist'),'<strong>','</strong>');?></p>
             </div>
             <div class="col-1">
-                <img src="<?php echo YITH_WCWL_URL ?>assets/images/landing/06.png" alt="Checkbox Add To CArt" />
+                <img src="<?php echo YITH_WCWL_URL ?>assets/images/landing/06.png" alt="<?php _e('\'ADD TO CART\'', 'yith-woocommerce-wishlist');?>" />
             </div>
         </div>
     </div>
     <div class="section section-even clear" style="background: url(<?php echo YITH_WCWL_URL ?>assets/images/landing/07-bg.png) no-repeat #fff; background-position: 85% 100%">
         <div class="landing-container">
             <div class="col-1">
-                <img src="<?php echo YITH_WCWL_URL ?>assets/images/landing/07.png" alt="Disabled Wishlist" />
+                <img src="<?php echo YITH_WCWL_URL ?>assets/images/landing/07.png" alt="<?php _e('DISABLE WISHLIST', 'yith-woocommerce-wishlist');?>" />
             </div>
             <div class="col-2">
                 <div class="section-title">
-                    <img src="<?php echo YITH_WCWL_URL?>assets/images/landing/07-icon.png" alt="Search wishlist" />
-                    <h2>DISABLE WISHLIST FOR UNLOGGED USERS</h2>
+                    <img src="<?php echo YITH_WCWL_URL?>assets/images/landing/07-icon.png" alt="icon-7" />
+                    <h2><?php _e('DISABLE WISHLIST FOR UNLOGGED USERS', 'yith-woocommerce-wishlist');?></h2>
                 </div>
-                <p>Favour users that have registered to your shop and disable plugin functionalities for all users that
-                    have not. By disabling this option, each time they try to add a product to the wishlist, they will
-                    be <b>redirected</b> to “My Account” page and a message will invite them to log in.</p>
+                <p><?php echo sprintf (__('Favour users that have registered to your shop and disable plugin functionalities for all users that have not. By disabling this option, each time they try to add a product to the wishlist, they will be %1$sredirected%2$s to "My Account" page and a message will invite them to log in.','yith-woocommerce-wishlist'),'<strong>','</strong>');?></p>
             </div>
         </div>
     </div>
@@ -315,27 +297,27 @@
         <div class="landing-container">
             <div class="col-2">
                 <div class="section-title">
-                    <img src="<?php echo YITH_WCWL_URL ?>assets/images/landing/08-icon.png" alt="Unlogged Users" />
-                    <h2>MESSAGE TO UNLOGGED USERS</h2>
+                    <img src="<?php echo YITH_WCWL_URL ?>assets/images/landing/08-icon.png" alt="icon-08" />
+                    <h2><?php _e('MESSAGE TO UNLOGGED USERS', 'yith-woocommerce-wishlist');?></h2>
                 </div>
-                <p>Invite users that are visiting your shop to login if they want to fully benefit from Wishlist functionalities. Show a <b>customised message</b> and redirect them to “My Account” page for registration.</p>
+                <p><?php echo sprintf (__('Invite users that are visiting your shop to login if they want to fully benefit from Wishlist functionalities. Show a %1$scustomised message%2$s and redirect them to "My Account" page for registration.','yith-woocommerce-wishlist'),'<strong>','</strong>');?></p>
             </div>
             <div class="col-1">
-                <img src="<?php echo YITH_WCWL_URL ?>assets/images/landing/08.png" alt="Admin panel" />
+                <img src="<?php echo YITH_WCWL_URL ?>assets/images/landing/08.png" alt="<?php _e('UNLOGGED USERS', 'yith-woocommerce-wishlist');?>" />
             </div>
         </div>
     </div>
     <div class="section section-even clear" style="background: url(<?php echo YITH_WCWL_URL ?>assets/images/landing/09-bg.png) no-repeat #fff; background-position: 85% 100%">
         <div class="landing-container">
             <div class="col-1">
-                <img src="<?php echo YITH_WCWL_URL ?>assets/images/landing/09.png" alt="Popular" />
+                <img src="<?php echo YITH_WCWL_URL ?>assets/images/landing/09.png" alt="<?php _e('POPULAR TABLE', 'yith-woocommerce-wishlist');?>" />
             </div>
             <div class="col-2">
                 <div class="section-title">
-                    <img src="<?php echo YITH_WCWL_URL?>assets/images/landing/09-icon.png" alt="Search wishlist" />
-                    <h2>POPULAR TABLE</h2>
+                    <img src="<?php echo YITH_WCWL_URL?>assets/images/landing/09-icon.png" alt="icon-09" />
+                    <h2><?php _e('POPULAR TABLE', 'yith-woocommerce-wishlist');?></h2>
                 </div>
-                <p>Some products draw customers’ attention more than others and they do not hesitate to add products to their wishlist. Table <b>“Popular”</b> allows you, as shop administrator, to track products that appear most frequently in their wishlists.</p>
+                <p><?php echo sprintf (__('Some products draw customer\'s attention more than others and they do not hesitate to add products to their wishlist. Table %1$s\'Popular\'%2$s allows you, as shop administrator, to track products that appear most frequently in their wishlists.','yith-woocommerce-wishlist'),'<strong>','</strong>');?></p>
             </div>
         </div>
     </div>
@@ -343,29 +325,27 @@
         <div class="landing-container">
             <div class="col-2">
                 <div class="section-title">
-                    <img src="<?php echo YITH_WCWL_URL ?>assets/images/landing/10-icon.png" alt="Create, manage and Search" />
-                    <h2>FUNCTIONALITIES IN ONE CLICK</h2>
+                    <img src="<?php echo YITH_WCWL_URL ?>assets/images/landing/10-icon.png" alt="icon-10" />
+                    <h2><?php _e('FUNCTIONALITIES IN ONE CLICK', 'yith-woocommerce-wishlist');?></h2>
                 </div>
-                <p>Users have the possibility to search for a wishlist, create a new one or display those already created. Add these <b>functionalities</b> through the dedicated widgets or show them immediately after “Wishlist” table.</p>
+                <p><?php echo sprintf (__('Users have the possibility to search for a wishlist, create a new one or display those already created. Add these %1$sfunctionalities%2$s through the dedicated widgets or show them immediately after "Wishlist" table.','yith-woocommerce-wishlist'),'<strong>','</strong>');?></p>
             </div>
             <div class="col-1">
-                <img src="<?php echo YITH_WCWL_URL ?>assets/images/landing/10.png" alt="Admin panel" />
+                <img src="<?php echo YITH_WCWL_URL ?>assets/images/landing/10.png" alt="<?php _e('FUNCTIONALITIES', 'yith-woocommerce-wishlist');?>" />
             </div>
         </div>
     </div>
     <div class="section section-even clear" style="background: url(<?php echo YITH_WCWL_URL ?>assets/images/landing/11-bg.png) no-repeat #fff; background-position: 85% 100%">
         <div class="landing-container">
             <div class="col-1">
-                <img src="<?php echo YITH_WCWL_URL ?>assets/images/landing/11.png" alt="Screen Option" />
+                <img src="<?php echo YITH_WCWL_URL ?>assets/images/landing/11.png" alt="<?php _e('PROMOTIONAL EMAIL', 'yith-woocommerce-wishlist');?>" />
             </div>
             <div class="col-2">
                 <div class="section-title">
-                    <img src="<?php echo YITH_WCWL_URL?>assets/images/landing/11-icon.png" alt="Icon" />
-                    <h2>PROMOTIONAL EMAIL</h2>
+                    <img src="<?php echo YITH_WCWL_URL?>assets/images/landing/11-icon.png" alt="Icon-11" />
+                    <h2><?php _e('PROMOTIONAL EMAIL', 'yith-woocommerce-wishlist');?></h2>
                 </div>
-                <p>If you want to give the right input to your users to persuade them to <b>purchase the products</b> they have in their wishlists, you need to use this feature!
-                    <b>Send them an email</b>: customize its whole content from the option panel and add a coupon they can use in your shop, so that they will know you are offering a unique offer!
-                </p>
+                <p><?php echo sprintf (__('If you want to give the right input to your users to persuade them to %1$spurchase the products%2$s they have in their wishlists, you need to use this feature! %1$sSend them an email%2$s: customize its whole content from the option panel and add a coupon they can use in your shop, so that they will know you are offering a unique offer!','yith-woocommerce-wishlist'),'<strong>','</strong>');?></p>
             </div>
         </div>
     </div>
@@ -373,46 +353,36 @@
         <div class="landing-container">
             <div class="col-2">
                 <div class="section-title">
-                    <img src="<?php echo YITH_WCWL_URL ?>assets/images/landing/12-icon.png" alt="Move product image" />
-                    <h2>FROM A WISHLIST TO ANOTHER</h2>
-                </div>
-                <p>Who said that a product has to remain forever in the same wishlist?
-                    With the option <b>"Show "Move to another wishlist" dropdown menu"</b>, with just one click users will be
-                    free to move a product from a wishlist to another one, managing as they want their lists.
-                </p>
+                    <img src="<?php echo YITH_WCWL_URL ?>assets/images/landing/12-icon.png" alt="icon-12" />
+                    <h2><?php _e('FROM A WISHLIST TO ANOTHER', 'yith-woocommerce-wishlist');?></h2>
+            </div>
+                <p><?php echo sprintf (__('Who said that a product has to remain forever in the same wishlist? With the option %1$s"Show "Move to another wishlist" dropdown menu"%2$s, with just one click users will be free to move a product from a wishlist to another one, managing as they want their lists.','yith-woocommerce-wishlist'),'<strong>','</strong>');?></p>
             </div>
             <div class="col-1">
-                <img src="<?php echo YITH_WCWL_URL ?>assets/images/landing/12.png" alt="icon" />
+                <img src="<?php echo YITH_WCWL_URL ?>assets/images/landing/12.png" alt="<?php _e('FROM A WISHLIST', 'yith-woocommerce-wishlist');?>" />
             </div>
         </div>
     </div>
     <div class="section section-even clear" style="background: url(<?php echo YITH_WCWL_URL ?>assets/images/landing/13-bg.png) no-repeat #fff; background-position: 85% 100%">
         <div class="landing-container">
             <div class="col-1">
-                <img src="<?php echo YITH_WCWL_URL ?>assets/images/landing/13.png" alt="Date icon" />
+                <img src="<?php echo YITH_WCWL_URL ?>assets/images/landing/13.png" alt="<?php _e('DATE', 'yith-woocommerce-wishlist');?>" />
             </div>
             <div class="col-2">
                 <div class="section-title">
-                    <img src="<?php echo YITH_WCWL_URL?>assets/images/landing/13-icon.png" alt="Date icon" />
-                    <h2>DATE OF ADDITION TO A WISHLIST</h2>
+                    <img src="<?php echo YITH_WCWL_URL?>assets/images/landing/13-icon.png" alt="icon-13" />
+                    <h2><?php _e('DATE OF ADDITION TO A WISHLIST', 'yith-woocommerce-wishlist');?></h2>
                 </div>
-                <p>
-                    Activating the <b>"Show date of addition"</b> option, users can see the date in which they have added a
-                    particular product to their list: a new way to keep you users informed about their operations.
-                </p>
+                <p><?php echo sprintf (__('Activating the %1$s"Show date of addition"%2$s option, users can see the date in which they have added a particular product to their list: a new way to keep you users informed about their operations.','yith-woocommerce-wishlist'),'<strong>','</strong>');?></p>
             </div>
         </div>
     </div>
     <div class="section section-cta section-odd">
         <div class="landing-container">
             <div class="wishlist-cta">
-                <p>
-                    Upgrade to the <span class="highlight">premium version</span><br/>
-                    of <span class="highlight">YITH WooCommerce Wishlist</span> to benefit from all features!
-                </p>
+                <p><?php echo sprintf (__('Upgrade to the %1$spremium version%2$s%3$sof %1$sYITH WooCommerce Wishlist%2$s to benefit from all features!','yith-woocommerce-wishlist'),'<span class="highlight">','</span>','<br/>');?></p>
                 <a href="<?php echo YITH_WCWL_Admin_Init()->get_premium_landing_uri();?>" target="_blank" class="wishlist-cta-button button btn">
-                    <span class="highlight">UPGRADE</span>
-                    <span>to the premium version</span>
+                    <?php echo sprintf (__('%1$sUPGRADE%2$s%3$s to the premium version%2$s','yith-woocommerce-wishlist'),'<span class="highlight">','</span>','<span>');?>
                 </a>
             </div>
         </div>

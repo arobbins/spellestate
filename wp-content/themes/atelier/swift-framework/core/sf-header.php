@@ -681,7 +681,8 @@
         function sf_mobile_menu() {
 
             global $post, $sf_options;
-
+			
+			$header_search_pt = $sf_options['header_search_pt'];
 			$mobile_header_layout = $sf_options['mobile_header_layout'];
             $mobile_show_translation = $sf_options['mobile_show_translation'];
             $mobile_show_search      = $sf_options['mobile_show_search'];
@@ -721,7 +722,10 @@
             }
             if ( $mobile_show_search ) {
                 $mobile_menu_output .= '<form method="get" class="mobile-search-form" action="' . home_url() . '/"><input type="text" placeholder="' . __( "Enter text to search", "swiftframework" ) . '" name="s" autocomplete="off" />';
-                 $mobile_menu_output .= '</form>' . "\n";
+                if ( $header_search_pt != "any" ) {
+                    $mobile_menu_output .= '<input type="hidden" name="post_type" value="' . $header_search_pt . '" />';
+                }
+                $mobile_menu_output .= '</form>' . "\n";
             }
             $mobile_menu_output .= '<nav id="mobile-menu" class="clearfix">' . "\n";
 

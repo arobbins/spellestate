@@ -905,10 +905,6 @@ var SWIFT = SWIFT || {};
 				});
 			}
 			
-			body.on('click', '.sf-share-link', function() {
-				window.open(jQuery(this).attr('href'));
-				return false;
-			});
 		},
 		articleNavigation: function() {
 			var postPagination = jQuery('.post-pagination-wrap'),
@@ -1660,7 +1656,8 @@ var SWIFT = SWIFT || {};
 		},
 		stickyTopBarInit: function() {
 			var spacing = 0,
-				stickyTB = jQuery('.sticky-top-bar');
+				stickyTB = jQuery('.sticky-top-bar'),
+				headerWrap = jQuery('.header-wrap');
 
 			if (jQuery('#wpadminbar').length > 0) {
 				spacing = 32;
@@ -2969,7 +2966,7 @@ var SWIFT = SWIFT || {};
 		},
 		fullWidthShop: function() {
 			var shopItems = jQuery('.full-width-shop').find('.products'),
-				itemWidth = shopItems.find('div.product').first().data('width'),
+				itemWidth = shopItems.find('li.product').first().data('width'),
 				shopSidebar = shopItems.find('.sidebar');
 
 			if (shopSidebar.length > 0) {
@@ -2979,7 +2976,7 @@ var SWIFT = SWIFT || {};
 				$window.smartresize( function() {
 					SWIFT.woocommerce.fullWidthShopSetSidebarHeight();
 				});
-
+				
 				shopItems.isotope({
 					itemSelector: '.product',
 					layoutMode: 'masonry',
@@ -2995,10 +2992,10 @@ var SWIFT = SWIFT || {};
 					'opacity': 1
 				}, 500);
 				shopItems.isotope( 'stamp', shopSidebar );
-				shopItems.isotope('layout');
+				shopItems.isotope( 'layout' );
 
 				setTimeout(function() {
-					shopItems.isotope('layout');
+					shopItems.isotope( 'layout' );
 				}, 500);
 
 			} else {
@@ -3023,7 +3020,7 @@ var SWIFT = SWIFT || {};
 				defaultSidebarHeight = shopSidebar.css('height', '').outerHeight(),
 				newSidebarHeight = 0,
 				sidebarHeightMultiply = 2,
-				firstProductHeight = shopItems.find('div.product').first().outerHeight(true);
+				firstProductHeight = shopItems.find('li.product').first().outerHeight(true);
 
 			sidebarHeightMultiply = Math.ceil(defaultSidebarHeight / firstProductHeight);
 			newSidebarHeight = firstProductHeight * sidebarHeightMultiply;
@@ -4321,6 +4318,7 @@ var SWIFT = SWIFT || {};
 				if (carouselInstance.hasClass('clients-items')) {
 					mobileCarouselItems = 2;
 				}
+				
 				if (carouselInstance.hasClass('testimonials')) {
 					desktopCarouselItems = 1;
 					desktopSmallCarouselItems = 1;
@@ -4342,6 +4340,7 @@ var SWIFT = SWIFT || {};
 						items : carouselColumns,
 						itemsDesktop: [desktopWidth,desktopCarouselItems],
 						itemsDesktopSmall: [desktopWidth-220,desktopSmallCarouselItems],
+						itemsTablet: mobileCarouselItems,
 						itemsMobile: [479,mobileCarouselItems],
 						paginationSpeed: carouselPSpeed,
 						slideSpeed: carouselSSpeed,
@@ -5517,6 +5516,7 @@ var SWIFT = SWIFT || {};
 			var mapFilter = mapContainer.getAttribute('data-directory-map-filter');
 			var mapFilterPos =  mapContainer.getAttribute('data-directory-map-filter-pos');
 			var mapResults =  mapContainer.getAttribute('data-directory-map-results');
+			var excerpt =  mapContainer.getAttribute('data-excerpt');
 			var directoryItemHtml = "";
 
 			//Only if we want to display the map
@@ -5684,7 +5684,7 @@ var SWIFT = SWIFT || {};
 						if ( mapResults != 'list') {
 
 							//Add directory item to the map
-							SWIFT.mapDirectory.addMarkerDir(mapInstance, pinLogoURL, pinTitle, pinShortContent, pinLink, address, pinButtonText,pinThumbnail, latitude, longitude);
+							SWIFT.mapDirectory.addMarkerDir(mapInstance, pinLogoURL, pinTitle, pinContent, pinLink, address, pinButtonText,pinThumbnail, latitude, longitude);
 
 							if ( pincount > 1 ) {
 								mapInstance.fitBounds(directory_bounds);

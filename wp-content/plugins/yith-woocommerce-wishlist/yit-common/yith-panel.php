@@ -282,14 +282,9 @@ if( !class_exists('YITH_Panel') ) {
          * @access protected
          */
         public function _get_tab() {
-            if( isset($_POST['panel_page']) && $_POST['panel_page'] != '' ) {
-                return $_POST['panel_page'];
-            } elseif( isset($_GET['panel_page']) && $_GET['panel_page'] != '' ) {
-                return $_GET['panel_page'];
-            } else {
-                $tabs = array_keys( $this->options );
-                return $tabs[0];
-            }
+            $panel_page = ! empty( $_REQUEST['panel_page'] )  ? sanitize_title_for_query( $_REQUEST['panel_page'] ) : '';
+            $tabs       = array_keys( $this->options );
+            return ! empty( $panel_page ) ? $panel_page : $tabs[0];
         }
 
         /**
@@ -403,10 +398,10 @@ if( !class_exists('YITH_Panel') ) {
                     $std = isset( $field['std'] ) ? $field['std'] : array( 'date' => '', 'hh' => 0, 'mm' => 0, 'ss' => 0 );
                     $value = ! empty( $value ) ? $value : array( 'date' => '', 'hh' => 0, 'mm' => 0, 'ss' => 0 );
 
-                    $echo  = "<input type='text' id='{$id}_date' name='{$name}[date]' value='{$value['date']}' class='medium-text code panel-datepicker' colorpicker='" . __( 'Select a date', 'yit' ) . "' /> - ";
-                    $echo .= "<input type='text' id='{$id}_hh' name='{$name}[hh]' value='{$value['hh']}' class='small-text code' colorpicker='" . __( 'Hours', 'yit' ) . "' /> : ";
-                    $echo .= "<input type='text' id='{$id}_mm' name='{$name}[mm]' value='{$value['mm']}' class='small-text code' colorpicker='" . __( 'Minutes', 'yit' ) . "' /> : ";
-                    $echo .= "<input type='text' id='{$id}_ss' name='{$name}[ss]' value='{$value['ss']}' class='small-text code' colorpicker='" . __( 'Minutes', 'yit' ) . "' />";
+                    $echo  = "<input type='text' id='{$id}_date' name='{$name}[date]' value='{$value['date']}' class='medium-text code panel-datepicker' colorpicker='" . __( 'Select a date', 'yith-woocommerce-wishlist' ) . "' /> - ";
+                    $echo .= "<input type='text' id='{$id}_hh' name='{$name}[hh]' value='{$value['hh']}' class='small-text code' colorpicker='" . __( 'Hours', 'yith-woocommerce-wishlist' ) . "' /> : ";
+                    $echo .= "<input type='text' id='{$id}_mm' name='{$name}[mm]' value='{$value['mm']}' class='small-text code' colorpicker='" . __( 'Minutes', 'yith-woocommerce-wishlist' ) . "' /> : ";
+                    $echo .= "<input type='text' id='{$id}_ss' name='{$name}[ss]' value='{$value['ss']}' class='small-text code' colorpicker='" . __( 'Minutes', 'yith-woocommerce-wishlist' ) . "' />";
                     if( isset($field['description']) && $field['description'] != '' ) {
                         $echo .= "<p class='description'>{$field['description']}</p>";
                     }
@@ -414,7 +409,7 @@ if( !class_exists('YITH_Panel') ) {
 
                 case 'upload':
                     $echo  = '<div class="uploader">';
-                    $echo .= "  <input type='text' id='{$id}' name='{$name}' value='{$value}' class='regular-text code' /> <input type='button' name='' id='{$id}_button' class='button' value='". __('Upload', 'yit') ."'>";
+                    $echo .= "  <input type='text' id='{$id}' name='{$name}' value='{$value}' class='regular-text code' /> <input type='button' name='' id='{$id}_button' class='button' value='". __('Upload', 'yith-woocommerce-wishlist') ."'>";
                     $echo .= '</div>';
                     if( isset($field['description']) && $field['description'] != '' ) {
                         $echo .= "<p class='description'>{$field['description']}</p>";
@@ -441,10 +436,10 @@ if( !class_exists('YITH_Panel') ) {
                             <!-- Unit -->
                             <div class="select-wrapper font-unit">
                                 <select class="typography_unit" name="<?php echo $name ?>[unit]" id="<?php echo $id ?>-unit">
-                                    <option value="px" <?php selected( $value['unit'], 'px' ) ?>><?php _e( 'px', 'yit' ) ?></option>
-                                    <option value="em" <?php selected( $value['unit'], 'em' ) ?>><?php _e( 'em', 'yit' ) ?></option>
-                                    <option value="pt" <?php selected( $value['unit'], 'pt' ) ?>><?php _e( 'pt', 'yit' ) ?></option>
-                                    <option value="rem" <?php selected( $value['unit'], 'rem' ) ?>><?php _e( 'rem', 'yit' ) ?></option>
+                                    <option value="px" <?php selected( $value['unit'], 'px' ) ?>><?php _e( 'px', 'yith-woocommerce-wishlist' ) ?></option>
+                                    <option value="em" <?php selected( $value['unit'], 'em' ) ?>><?php _e( 'em', 'yith-woocommerce-wishlist' ) ?></option>
+                                    <option value="pt" <?php selected( $value['unit'], 'pt' ) ?>><?php _e( 'pt', 'yith-woocommerce-wishlist' ) ?></option>
+                                    <option value="rem" <?php selected( $value['unit'], 'rem' ) ?>><?php _e( 'rem', 'yith-woocommerce-wishlist' ) ?></option>
                                 </select>
                             </div>
 
@@ -454,7 +449,7 @@ if( !class_exists('YITH_Panel') ) {
                                     <?php if( $value['family'] ): ?>
                                         <option value="<?php echo stripslashes( $value['family'] ) ?>"><?php echo $value['family'] ?></option>
                                     <?php else: ?>
-                                        <option value=""><?php _e('Select a font family', 'yit') ?></option>
+                                        <option value=""><?php _e('Select a font family', 'yith-woocommerce-wishlist') ?></option>
                                     <?php endif ?>
                                 </select>
                             </div>
@@ -462,11 +457,11 @@ if( !class_exists('YITH_Panel') ) {
                             <!-- Style -->
                             <div class="select-wrapper font-style">
                                 <select class="typography_style" name="<?php echo $name ?>[style]" id="<?php echo $id ?>-style">
-                                    <option value="regular" <?php selected( $value['style'], 'regular' ) ?>><?php _e( 'Regular', 'yit' ) ?></option>
-                                    <option value="bold" <?php selected( $value['style'], 'bold' ) ?>><?php _e( 'Bold', 'yit' ) ?></option>
-                                    <option value="extra-bold" <?php selected( $value['style'], 'extra-bold' ) ?>><?php _e( 'Extra bold', 'yit' ) ?></option>
-                                    <option value="italic" <?php selected( $value['style'], 'italic' ) ?>><?php _e( 'Italic', 'yit' ) ?></option>
-                                    <option value="bold-italic" <?php selected( $value['style'], 'bold-italic' ) ?>><?php _e( 'Italic bold', 'yit' ) ?></option>
+                                    <option value="regular" <?php selected( $value['style'], 'regular' ) ?>><?php _e( 'Regular', 'yith-woocommerce-wishlist' ) ?></option>
+                                    <option value="bold" <?php selected( $value['style'], 'bold' ) ?>><?php _e( 'Bold', 'yith-woocommerce-wishlist' ) ?></option>
+                                    <option value="extra-bold" <?php selected( $value['style'], 'extra-bold' ) ?>><?php _e( 'Extra bold', 'yith-woocommerce-wishlist' ) ?></option>
+                                    <option value="italic" <?php selected( $value['style'], 'italic' ) ?>><?php _e( 'Italic', 'yith-woocommerce-wishlist' ) ?></option>
+                                    <option value="bold-italic" <?php selected( $value['style'], 'bold-italic' ) ?>><?php _e( 'Italic bold', 'yith-woocommerce-wishlist' ) ?></option>
                                 </select>
                             </div>
 
@@ -478,7 +473,7 @@ if( !class_exists('YITH_Panel') ) {
                         <div class="font-preview">
                             <p>The quick brown fox jumps over the lazy dog</p>
                             <!-- Refresh -->
-                            <div class="refresh_container"><button class="refresh"><?php _e( 'Click to preview', 'yit' ) ?></button></div>
+                            <div class="refresh_container"><button class="refresh"><?php _e( 'Click to preview', 'yith-woocommerce-wishlist' ) ?></button></div>
                         </div>
                     </div>
                     <?php

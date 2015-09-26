@@ -358,8 +358,8 @@ if ( ! class_exists( 'YITH_WCWL_Init' ) ) {
 				'ajax_loader_url' => YITH_WCWL_URL . 'assets/images/ajax-loader.gif',
 				'remove_from_wishlist_after_add_to_cart' => get_option( 'yith_wcwl_remove_after_add_to_cart' ),
 				'labels' => array(
-					'cookie_disabled' => __( 'We are sorry, but this feature is available only if cookies are enabled on your browser.', 'yit' ),
-					'added_to_cart_message' => sprintf( '<div class="woocommerce-message">%s</div>', __( 'Product correctly added to cart', 'yit' ) )
+					'cookie_disabled' => __( 'We are sorry, but this feature is available only if cookies are enabled on your browser.', 'yith-woocommerce-wishlist' ),
+					'added_to_cart_message' => sprintf( '<div class="woocommerce-message">%s</div>', __( 'Product correctly added to cart', 'yith-woocommerce-wishlist' ) )
 				),
 				'actions' => array(
 					'add_to_wishlist_action' => 'add_to_wishlist',

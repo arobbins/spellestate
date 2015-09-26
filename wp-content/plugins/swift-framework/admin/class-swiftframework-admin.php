@@ -77,32 +77,19 @@ class SwiftFramework_Admin {
 		</h2>
 
 		<div class="about-content">
-			<h3>Latest Update (v1.60)</h3>
+			<h3>Latest Update (v1.63)</h3>
 			<p></p>
 			<ul>
-				<li>Added loop on/off option to Row background video.</li>
-				<li>Videos set not to loop now won't restart when scrolled into view.</li>
-				<li>Fixed row/column layout issues.</li>
-				<li>Fixed issue with social output.</li>
-				<li>Fixed issue with page builder not loading when on the s"Text" content tab.</li>
-				<li>Fixed background position align of Swift Slider.</li>
+				<li>Updated Redux framework</li>
 			</ul>
-			<h3>Previous Update (v1.51)</h3>
+			<h3>Previous Update (v1.62)</h3>
 			<p></p>
 			<ul>
-				<li>Disabled options developer mode</li>
-				<li>Multi-layer parallax display fixes</li>
-				<li>Updated language files</li>
+				<li>Team gallery display images are now clickable on mobile</li>
+				<li>Updated minified files after previous update</li>
+				<li>Updated Redux framework</li>
 			</ul>
 			<p></p>
-			<h3>Previous Update (v1.50)</h3>
-			<p></p>
-			<ul>
-				<li>Added options panel for all framework related options.</li>
-				<li>Added background image horizontal alignment and size options to Swift Slider slides.</li>
-				<li>Fixed further issues with intro animations.</li>
-				<li>Fixed issue with campaign category display.</li>
-			</ul>
 		</div>
 
 		</div>

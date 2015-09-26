@@ -2430,6 +2430,12 @@ function saveFormEditing( element ) {
             if ( jQuery( this ).hasClass( "textfield" ) ) {
                 new_value = jQuery( this ).val();
             }
+            // Textfield - input
+            if ( jQuery( this ).hasClass( "textfield_html" ) ) {
+                new_value = jQuery( this ).val();
+                element.find( '[name=' + element_to_update + '_code]' ).val( base64_encode( rawurlencode( new_value ) ) );
+                new_value = jQuery( "<div/>" ).text( new_value ).html();
+            }
             // Color - input
             else if ( jQuery( this ).hasClass( "colorpicker" ) ) {
                 new_value = jQuery( this ).val();
@@ -2836,6 +2842,9 @@ function generateShortcodesFromHtml( dom_tree, single_element ) {
                             } else {
                                 new_value = jQuery( this ).val();
                             }
+                        }
+                        else if ( jQuery( this ).hasClass( "textfield_html" ) ) {
+                            new_value = jQuery( this ).val();
                         }
                         else if ( jQuery( this ).hasClass( "colorpicker" ) ) {
                             new_value = jQuery( this ).val();

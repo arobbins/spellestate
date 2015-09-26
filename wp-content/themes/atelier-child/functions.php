@@ -569,7 +569,9 @@ function init() {
       $timestamp = strtotime($date);
       $date = date("F j, Y", $timestamp);
 
-      return wc_price($product->subscription_price) . '<span class="sub-label"> per ' . $product->subscription_period . ' starting on ' . $date . '</span>';
+      // return wc_price($product->subscription_price) . '<span class="sub-label"> per ' . $product->subscription_period . ' starting on ' . $date . '</span>';
+
+      return wc_price($product->subscription_price) . '<span class="sub-label">per year</span>';
 
     }
 

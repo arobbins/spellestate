@@ -168,6 +168,10 @@
                 $image   = sf_aq_resize( $thumb_img_url, $image_width, $image_height, true, false );
 
                 $items .= '<figure class="animated-overlay">';
+
+                if ( $display_type == "gallery" ) {
+                    $items .= '<a class="team-gallery-mobile-link" href="' . get_permalink() . '"></a>';
+                }
                 if ( $image ) {
                     $items .= '<img itemprop="image" src="' . $image[0] . '" width="' . $image[1] . '" height="' . $image[2] . '" alt="' . $member_name . '" />';
                 }

@@ -39,6 +39,11 @@
     <h2>Wines from this Vineyard:</h2>
     <?php
       foreach ($wines as $wine => $wineID) {
+
+        $location = get_field('product_location', $wineID);
+        $name = get_field('product_name', $wineID);
+        $category = wp_get_post_terms( $wineID, 'product_cat' );
+
         $title = get_the_title($wineID);
         $link = get_the_permalink($wineID);
         $image = get_the_post_thumbnail($wineID, 'medium');
@@ -46,7 +51,10 @@
         echo '<li class="col-sm-3 grower-wine">';
           echo '<a href="' . $link .'" class="grower-wine-link">';
             echo $image;
-            echo '<h3 class="grower-wine-title">' . $title . '</h3>';
+            echo '<h3 class="grower-wine-title">' . $name;
+              echo '<p class="product-info">' . $category[0]->name . '</p>';
+              echo '<p class="product-info">' . $location . '</p>';
+            echo '</h3>';
           echo '</a>';
         echo "</li>";
 

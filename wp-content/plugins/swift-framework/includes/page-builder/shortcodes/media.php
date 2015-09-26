@@ -140,6 +140,8 @@
 			$link_icon = apply_filters( 'sf_link_icon' , '<i class="ss-link"></i>' );
 			$view_icon = apply_filters( 'sf_view_icon' , '<i class="ss-view"></i>' );
 
+            $caption = html_entity_decode($caption);
+            
             if ( $image_size == "" ) {
                 $image_size = "large";
             }
@@ -400,7 +402,7 @@
                 "description" => __( "Select if you want the link to open in a new window", 'swift-framework-plugin' )
             ),
             array(
-                "type"        => "textfield",
+                "type"        => "textfield_html",
                 "heading"     => __( "Image Caption", 'swift-framework-plugin' ),
                 "param_name"  => "caption",
                 "value"       => "",

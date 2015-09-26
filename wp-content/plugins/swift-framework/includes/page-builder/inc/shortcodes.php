@@ -488,7 +488,11 @@
                 } else {
                     $param_line .= '<input name="' . $param['param_name'] . '" class="spb_param_value spb-textinput ' . $param['param_name'] . ' ' . $param['type'] . '" type="text" value="' . $value . '" />';
                 }
-
+            // Textfield - input
+            } else if ( $param['type'] == 'textfield_html' ) {
+                $value = __( $param_value, 'swift-framework-plugin' );
+                $param_value = htmlentities( $param_value );
+                $param_line .= '<input name="' . $param['param_name'] . '" class="spb_param_value spb-textinput ' . $param['param_name'] . ' ' . $param['type'] . '" type="text" value="' . $value . '" />';
             } // Textfield - color
             else if ( $param['type'] == 'colorpicker' ) {
                 $value = __( $param_value, 'swift-framework-plugin' );

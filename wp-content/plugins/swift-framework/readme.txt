@@ -2,7 +2,7 @@
 Contributors: SwiftIdeas
 Tags: swift framework
 Requires at least: 3.6
-Tested up to: 4.2.4
+Tested up to: 4.3
 Stable tag: 4.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -16,6 +16,19 @@ The Swift Framework plugin provides the Custom Post Types, Swift Slider, and Swi
 Supported Themes: Atelier, Cardinal, JOYN
 
 == Changelog ==
+
+= 1.63 =
+* Updated Redux framework
+
+= 1.62 =
+* Team gallery display images are now clickable on mobile
+* Updated minified files after previous update
+* Updated Redux framework
+
+= 1.61 =
+* Slide video now only starts playing when the slider is in the viewport
+* Image caption field now supports HTML (line breaks etc)
+* Updated Redux framework
 
 = 1.60 =
 * Added loop on/off option to Row background video

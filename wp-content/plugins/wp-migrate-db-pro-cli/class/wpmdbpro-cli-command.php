@@ -95,6 +95,13 @@ class WPMDBPro_CLI_Command extends WPMDBPro_Command {
 	 *     * remove-and-copy - removes all remote media files and uploads all local
 	 *                         media files (skips comparison)
 	 *
+	 * [--media-subsites=<blog-id|subsite-url>]
+	 * : Only transfer media files for selected subsites
+	 *
+	 *     * Only applies to multisite installs
+	 *     * Separate multiple subsites with commas
+	 *     * Use Blog ID or URL of *local* subsites
+	 *
 	 * ## EXAMPLES
 	 *
 	 *     wp migratedb push http://bradt.ca LJPmq3t8h6uuN7aqQ3YSnt7C88Wzzv5BVPlgLbYE \
@@ -203,6 +210,13 @@ class WPMDBPro_CLI_Command extends WPMDBPro_Command {
 	 *                            media files that are not found on the remote site
 	 *     * remove-and-copy - removes all local media files and downloads all remote
 	 *                         media files (skips comparison)
+	 *
+	 * [--media-subsites=<blog-id|subsite-url>]
+	 * : Only transfer media files for selected subsites
+	 *
+	 *     * Only applies to multisite installs
+	 *     * Separate multiple subsites with commas
+	 *     * Use Blog ID or URL of *remote* subsites
 	 *
 	 * ## EXAMPLES
 	 *

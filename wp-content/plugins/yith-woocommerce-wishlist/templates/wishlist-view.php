@@ -25,7 +25,7 @@
             <?php if( $wishlist_meta['is_default'] != 1 && $is_user_owner ): ?>
                 <a class="btn button show-title-form">
                     <?php echo apply_filters( 'yith_wcwl_edit_title_icon', '<i class="fa fa-pencil"></i>' )?>
-                    <?php _e( 'Edit title', 'yit' ) ?>
+                    <?php _e( 'Edit title', 'yith-woocommerce-wishlist' ) ?>
                 </a>
             <?php endif; ?>
         </div>
@@ -34,11 +34,11 @@
                 <input type="text" value="<?php echo $page_title ?>" name="wishlist_name"/>
                 <button>
                     <?php echo apply_filters( 'yith_wcwl_save_wishlist_title_icon', '<i class="fa fa-check"></i>' )?>
-                    <?php _e( 'Save', 'yit' )?>
+                    <?php _e( 'Save', 'yith-woocommerce-wishlist' )?>
                 </button>
                 <a class="hide-title-form btn button">
                     <?php echo apply_filters( 'yith_wcwl_cancel_wishlist_title_icon', '<i class="fa fa-remove"></i>' )?>
-                    <?php _e( 'Cancel', 'yit' )?>
+                    <?php _e( 'Cancel', 'yith-woocommerce-wishlist' )?>
                 </a>
             </div>
         <?php endif; ?>
@@ -75,14 +75,14 @@
             <th class="product-thumbnail"></th>
 
             <th class="product-name">
-                <span class="nobr"><?php echo apply_filters( 'yith_wcwl_wishlist_view_name_heading', __( 'Product Name', 'yit' ) ) ?></span>
+                <span class="nobr"><?php echo apply_filters( 'yith_wcwl_wishlist_view_name_heading', __( 'Product Name', 'yith-woocommerce-wishlist' ) ) ?></span>
             </th>
 
             <?php if( $show_price ) : ?>
 
                 <th class="product-price">
                     <span class="nobr">
-                        <?php echo apply_filters( 'yith_wcwl_wishlist_view_price_heading', __( 'Unit Price', 'yit' ) ) ?>
+                        <?php echo apply_filters( 'yith_wcwl_wishlist_view_price_heading', __( 'Unit Price', 'yith-woocommerce-wishlist' ) ) ?>
                     </span>
                 </th>
 
@@ -95,7 +95,7 @@
 
                 <th class="product-stock-stauts">
                     <span class="nobr">
-                        <?php echo apply_filters( 'yith_wcwl_wishlist_view_stock_heading', __( 'Stock Status', 'yit' ) ) ?>
+                        <?php echo apply_filters( 'yith_wcwl_wishlist_view_stock_heading', __( 'Stock Status', 'yith-woocommerce-wishlist' ) ) ?>
                     </span>
                 </th>
 
@@ -141,7 +141,7 @@
                         <?php if( $is_user_owner ): ?>
                         <td class="product-remove">
                             <div>
-                                <a href="<?php echo esc_url( add_query_arg( 'remove_from_wishlist', $item['prod_id'] ) ) ?>" class="remove remove_from_wishlist" title="<?php _e( 'Remove this product', 'yit' ) ?>">&times;</a>
+                                <a href="<?php echo esc_url( add_query_arg( 'remove_from_wishlist', $item['prod_id'] ) ) ?>" class="remove remove_from_wishlist" title="<?php _e( 'Remove this product', 'yith-woocommerce-wishlist' ) ?>">&times;</a>
                             </div>
                         </td>
                         <?php endif; ?>
@@ -171,7 +171,7 @@
 	                                echo $product->get_price_html();
                                 }
                                 else {
-                                    echo apply_filters( 'yith_free_text', __( 'Free!', 'yit' ) );
+                                    echo apply_filters( 'yith_free_text', __( 'Free!', 'yith-woocommerce-wishlist' ) );
                                 }
                                 ?>
                             </td>
@@ -182,10 +182,10 @@
                                 <?php
                                 if( $stock_status == 'out-of-stock' ) {
                                     $stock_status = "Out";
-                                    echo '<span class="wishlist-out-of-stock">' . __( 'Out of Stock', 'yit' ) . '</span>';
+                                    echo '<span class="wishlist-out-of-stock">' . __( 'Out of Stock', 'yith-woocommerce-wishlist' ) . '</span>';
                                 } else {
                                     $stock_status = "In";
-                                    echo '<span class="wishlist-in-stock">' . __( 'In Stock', 'yit' ) . '</span>';
+                                    echo '<span class="wishlist-in-stock">' . __( 'In Stock', 'yith-woocommerce-wishlist' ) . '</span>';
                                 }
                                 ?>
                             </td>
@@ -196,7 +196,7 @@
 	                        <!-- Date added -->
 	                        <?php
 	                        if( $show_dateadded && isset( $item['dateadded'] ) ):
-								echo '<span class="dateadded">' . sprintf( __( 'Added on : %s', 'yit' ), date_i18n( get_option( 'date_format' ), strtotime( $item['dateadded'] ) ) ) . '</span>';
+								echo '<span class="dateadded">' . sprintf( __( 'Added on : %s', 'yith-woocommerce-wishlist' ), date_i18n( get_option( 'date_format' ), strtotime( $item['dateadded'] ) ) ) . '</span>';
 	                        endif;
 	                        ?>
 
@@ -215,7 +215,7 @@
 	                        <!-- Change wishlist -->
 							<?php if( $available_multi_wishlist && is_user_logged_in() && count( $users_wishlists ) > 1 && $move_to_another_wishlist ): ?>
 	                        <select class="change-wishlist selectBox">
-		                        <option value=""><?php _e( 'Move', 'yit' ) ?></option>
+		                        <option value=""><?php _e( 'Move', 'yith-woocommerce-wishlist' ) ?></option>
 		                        <?php
 		                        foreach( $users_wishlists as $wl ):
 			                        if( $wl['wishlist_token'] == $wishlist_meta['wishlist_token'] ){
@@ -227,13 +227,13 @@
 				                        <?php
 				                        $wl_title = ! empty( $wl['wishlist_name'] ) ? esc_html( $wl['wishlist_name'] ) : esc_html( $default_wishlsit_title );
 				                        if( $wl['wishlist_privacy'] == 1 ){
-					                        $wl_privacy = __( 'Shared', 'yit' );
+					                        $wl_privacy = __( 'Shared', 'yith-woocommerce-wishlist' );
 				                        }
 				                        elseif( $wl['wishlist_privacy'] == 2 ){
-					                        $wl_privacy = __( 'Private', 'yit' );
+					                        $wl_privacy = __( 'Private', 'yith-woocommerce-wishlist' );
 				                        }
 				                        else{
-					                        $wl_privacy = __( 'Public', 'yit' );
+					                        $wl_privacy = __( 'Public', 'yith-woocommerce-wishlist' );
 				                        }
 
 				                        echo sprintf( '%s - %s', $wl_title, $wl_privacy );
@@ -247,7 +247,7 @@
 
 	                        <!-- Remove from wishlist -->
 	                        <?php if( $is_user_owner && $repeat_remove_button ): ?>
-                                <a href="<?php echo esc_url( add_query_arg( 'remove_from_wishlist', $item['prod_id'] ) ) ?>" class="remove_from_wishlist button" title="<?php _e( 'Remove this product', 'yit' ) ?>"><?php _e( 'Remove', 'yit' ) ?></a>
+                                <a href="<?php echo esc_url( add_query_arg( 'remove_from_wishlist', $item['prod_id'] ) ) ?>" class="remove_from_wishlist button" title="<?php _e( 'Remove this product', 'yith-woocommerce-wishlist' ) ?>"><?php _e( 'Remove', 'yith-woocommerce-wishlist' ) ?></a>
                             <?php endif; ?>
                         </td>
 	                <?php endif; ?>
@@ -257,7 +257,7 @@
             endforeach;
         else: ?>
             <tr>
-                <td colspan="<?php echo esc_attr( $column_count ) ?>" class="wishlist-empty"><?php _e( 'No products were added to the wishlist', 'yit' ) ?></td>
+                <td colspan="<?php echo esc_attr( $column_count ) ?>" class="wishlist-empty"><?php _e( 'No products were added to the wishlist', 'yith-woocommerce-wishlist' ) ?></td>
             </tr>
         <?php
         endif;
@@ -274,7 +274,7 @@
 	        <td colspan="<?php echo esc_attr( $column_count ) ?>">
 	            <?php if( $show_cb ) : ?>
 		            <div class="custom-add-to-cart-button-cotaniner">
-		                <a href="<?php echo esc_url( add_query_arg( array( 'wishlist_products_to_add_to_cart' => '', 'wishlist_token' => $wishlist_meta['wishlist_token'] ) ) ) ?>" class="button alt" id="custom_add_to_cart"><?php echo apply_filters( 'yith_wcwl_custom_add_to_cart_text', __( 'Add the selected products to the cart', 'yit' ) ) ?></a>
+		                <a href="<?php echo esc_url( add_query_arg( array( 'wishlist_products_to_add_to_cart' => '', 'wishlist_token' => $wishlist_meta['wishlist_token'] ) ) ) ?>" class="button alt" id="custom_add_to_cart"><?php echo apply_filters( 'yith_wcwl_custom_add_to_cart_text', __( 'Add the selected products to the cart', 'yith-woocommerce-wishlist' ) ) ?></a>
 		            </div>
 	            <?php endif; ?>
 
@@ -282,7 +282,7 @@
 		            <div class="ask-an-estimate-button-container">
 	                    <a href="<?php echo ( $additional_info ) ? '#ask_an_estimate_popup' : $ask_estimate_url ?>" class="btn button ask-an-estimate-button" <?php echo ( $additional_info ) ? 'data-rel="prettyPhoto[ask_an_estimate]"' : '' ?> >
 	                    <?php echo apply_filters( 'yith_wcwl_ask_an_estimate_icon', '<i class="fa fa-shopping-cart"></i>' )?>
-	                    <?php echo apply_filters( 'yith_wcwl_ask_an_estimate_text', __( 'Ask for an estimate', 'yit' ) ) ?>
+	                    <?php echo apply_filters( 'yith_wcwl_ask_an_estimate_text', __( 'Ask for an estimate', 'yith-woocommerce-wishlist' ) ) ?>
 	                </a>
 		            </div>
 	            <?php endif; ?>
@@ -324,7 +324,7 @@
 
 			<button class="btn button ask-an-estimate-button ask-an-estimate-button-popup" >
 				<?php echo apply_filters( 'yith_wcwl_ask_an_estimate_icon', '<i class="fa fa-shopping-cart"></i>' )?>
-				<?php _e( 'Ask for an estimate', 'yit' ) ?>
+				<?php _e( 'Ask for an estimate', 'yith-woocommerce-wishlist' ) ?>
 			</button>
 		</form>
 	</div>

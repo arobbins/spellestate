@@ -150,8 +150,7 @@
     -webkit-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    background-position-x: center;
-    background-position-y: center;
+    background-position: center;
 }
 
 .swiper-slide[data-bg-size="auto"] {

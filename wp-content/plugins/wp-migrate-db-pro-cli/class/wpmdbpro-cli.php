@@ -54,8 +54,11 @@ class WPMDBPro_CLI extends WPMDBPro_CLI_Export {
 		// enable profile migrations
 		add_filter( 'wpmdb_cli_profile_before_migration', array( $this, 'get_wpmdbpro_profile_before_migration' ), 10, 1 );
 
-		// check for MF plugin
-		add_filter( 'wpmdb_cli_profile_before_migration', array( $this, 'check_wpmdbpro_media_files_before_migration' ), 20, 1 );
+		// check for MF plugin locally
+		add_filter( 'wpmdb_cli_profile_before_migration', array( $this, 'check_local_wpmdbpro_media_files_before_migration' ), 20, 1 );
+
+		// check remote for MF plugin after remote connection has been made
+		add_filter( 'wpmdb_cli_filter_before_cli_initiate_migration', array( $this, 'check_remote_wpmdbpro_media_files_before_migration' ), 20, 1 );
 
 		// run ajax_finalize_migration
 		add_filter( 'wpmdb_cli_finalize_migration_response', array( $this, 'finalize_ajax' ), 10, 1 );
@@ -266,6 +269,25 @@ class WPMDBPro_CLI extends WPMDBPro_CLI_Export {
 			}
 		}
 
+		// --media-subsites
+		if ( isset( $assoc_args['media-subsites'] ) ) {
+			if ( ! is_multisite() ) {
+				return $this->cli_error( __( 'The --media-subsites option can only be used on a multisite install', 'wp-migrate-db-pro-cli' ) );
+			}
+			if ( empty( $assoc_args['media'] ) ) {
+				return $this->cli_error( __( 'The --media-subsites option can only be used in conjunction with the --media option', 'wp-migrate-db-pro-cli' ) );
+			}
+			if ( empty( $assoc_args['media-subsites'] ) ) {
+				return $this->cli_error( __( 'One or more valid Blog IDs or Subsite URLs must be supplied to make use of the --media-subsites option', 'wp-migrate-db-pro-cli' ) );
+			}
+
+			$mf_select_subsites   = 1;
+			$mf_selected_subsites = str_getcsv( $assoc_args['media-subsites'] );
+
+			$media_vars[] = 'mf_select_subsites';
+			$media_vars[] = 'mf_selected_subsites';
+		}
+
 		$filtered_profile = compact(
 			'connection_info',
 			'exclude_transients',
@@ -425,7 +447,7 @@ class WPMDBPro_CLI extends WPMDBPro_CLI_Export {
 	function check_wpmdbpro_version_before_migration( $profile ) {
 		// TODO: maybe instantiate WPMDBPro_CLI_Addon to make WPMDBPro_Addon::meets_version_requirements() available here
 		$wpmdb_pro_version = $GLOBALS['wpmdb_meta']['wp-migrate-db-pro']['version'];
-		if ( ! version_compare( $wpmdb_pro_version, '1.5.1', '>=' ) ) {
+		if ( ! version_compare( $wpmdb_pro_version, '1.5.2', '>=' ) ) {
 			return $this->cli_error( __( 'Please update WP Migrate DB Pro.', 'wp-migrate-db-pro-cli' ) );
 		}
 
@@ -456,13 +478,13 @@ class WPMDBPro_CLI extends WPMDBPro_CLI_Export {
 
 	/**
 	 * Check if MF option enabled in profile but plugin not active locally.
-	 * wpmdb_cli_profile_before_migration
+	 * hooks on: wpmdb_cli_profile_before_migration
 	 *
 	 * @param array $profile
 	 *
 	 * @return array|WP_Error
 	 */
-	function check_wpmdbpro_media_files_before_migration( $profile ) {
+	function check_local_wpmdbpro_media_files_before_migration( $profile ) {
 		if ( is_wp_error( $profile ) ) {
 			return $profile;
 		}
@@ -474,6 +496,49 @@ class WPMDBPro_CLI extends WPMDBPro_CLI_Export {
 		}
 
 		return $profile;
+	}
+
+	/**
+	 * Check if MF option enabled in profile but plugin not active on remote and that selected subsites make sense if being used.
+	 * hooks on: wpmdb_cli_filter_before_cli_initiate_migration
+	 *
+	 * @param array $profile
+	 *
+	 * @return array|WP_Error
+	 */
+	function check_remote_wpmdbpro_media_files_before_migration( $profile ) {
+		if ( is_wp_error( $profile ) ) {
+			return $profile;
+		}
+
+		if ( isset( $this->profile['media_files'] ) && true == $this->profile['media_files'] ) {
+			if ( ! isset( $this->remote['media_files_max_file_uploads'] ) ) {
+				return $this->cli_error( __( 'The profile is set to migrate media files, however WP Migrate DB Pro Media Files does not seem to be installed/active on the remote website.', 'wp-migrate-db-pro-cli' ) );
+			}
+		}
+
+		if ( is_multisite() && ! empty( $profile['mf_select_subsites'] ) && 'savefile' !== $profile['action'] ) {
+			if (  'pull' === $profile['action'] ) {
+				if ( empty( $this->remote['subsites'] ) || ! is_array( $this->remote['subsites'] ) ) {
+					return $this->cli_error( __( 'One or more subsites should exist on the remote to make use of the --media-subsites option', 'wp-migrate-db-pro-cli' ) );
+				}
+				$subsites_list = $this->remote['subsites'];
+			} else {
+				$subsites_list = $this->subsites_list();
+			}
+
+			$mf_selected_subsites = $this->get_subsite_ids( $profile['mf_selected_subsites'], $subsites_list );
+
+			if ( empty( $mf_selected_subsites ) || in_array( false, $mf_selected_subsites ) ) {
+				return $this->cli_error( __( 'One or more valid Blog IDs or Subsite URLs must be supplied to make use of the --media-subsites option', 'wp-migrate-db-pro-cli' ) );
+			}
+
+			// We now have a validated and clean set of blog ids to use.
+			$profile['mf_selected_subsites'] = $mf_selected_subsites;
+		}
+
+		return $profile;
+
 	}
 
 	/**
@@ -504,7 +569,7 @@ class WPMDBPro_CLI extends WPMDBPro_CLI_Export {
 	function finalize_flush( $response ) {
 		WP_CLI::log( _x( 'Flushing caches and rewrite rules...', 'The caches and rewrite rules for the target are being flushed', 'wp-migrate-db-pro-cli' ) );
 
-		$args     = $this->filter_post_elements( $this->post_data, array( 'action', 'migration_state_id', 'key' ) );
+		$args     = $this->filter_post_elements( $this->post_data, array( 'action', 'migration_state_id' ) );
 		$response = $this->flush( $args );
 
 		return trim( $response );

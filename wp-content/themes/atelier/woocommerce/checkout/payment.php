@@ -4,7 +4,7 @@
  *
  * @author 		WooThemes
  * @package 	WooCommerce/Templates
- * @version     2.3.0
+ * @version     2.4.7
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -32,7 +32,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					$no_gateways_message = __( 'Sorry, it seems that there are no available payment methods for your state. Please contact us if you require assistance or wish to make alternate arrangements.', 'swiftframework' );
 				}
 
-				echo '<p>' . apply_filters( 'woocommerce_no_available_payment_methods_message', $no_gateways_message ) . '</p>';
+				echo '<li>' . apply_filters( 'woocommerce_no_available_payment_methods_message', $no_gateways_message ) . '</li>';
 			}
 		?>
 	</ul>
@@ -40,7 +40,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<div class="form-row place-order">
 
-		<noscript><?php _e( 'Since your browser does not support JavaScript, or it is disabled, please ensure you click the <em>Update Totals</em> button before placing your order. You may be charged more than the amount stated above if you fail to do so.', 'swiftframework' ); ?><br/><input type="submit" class="button alt" name="woocommerce_checkout_update_totals" value="<?php _e( 'Update totals', 'swiftframework' ); ?>" /></noscript>
+		<noscript><?php _e( 'Since your browser does not support JavaScript, or it is disabled, please ensure you click the <em>Update Totals</em> button before placing your order. You may be charged more than the amount stated above if you fail to do so.', 'swiftframework' ); ?><br/><input type="submit" class="button alt" name="woocommerce_checkout_update_totals" value="<?php esc_attr_e( 'Update totals', 'swiftframework' ); ?>" /></noscript>
 
 		<?php wp_nonce_field( 'woocommerce-process_checkout' ); ?>
 

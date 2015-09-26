@@ -64,11 +64,22 @@ if ( $products->have_posts() ) : ?>
 
 				<?php
           $feat_image = wp_get_attachment_url( get_post_thumbnail_id($post->ID));
+
           global $product;
+          global $post;
+
+          $categories = wp_get_post_terms($post->ID, 'product_cat', array('taxonomy' => 'product_cat'));
+
         ?>
         <a href="<?php the_permalink(); ?>" class="product-link">
           <img src="<?php echo $feat_image; ?>" alt="<?php the_title(); ?>">
-          <h1 class="product-title"><?php the_title(); ?></h1>
+
+          <h3 class="product-title">
+            <p class="product-info"><?php the_field('product_name'); ?></p>
+            <p class="product-info"><?php echo $categories[0]->name; ?></p>
+            <p class="product-info"><?php the_field('product_location'); ?></p>
+          </h3>
+
           <?php
             if($price_html = $product->get_price_html()) :
               echo $price_html;

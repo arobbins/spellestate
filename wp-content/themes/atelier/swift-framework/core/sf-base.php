@@ -181,7 +181,7 @@
             $sidebar_config         = $left_sidebar = $right_sidebar = "";
 
             // ARCHIVE / CATEGORY SIDEBAR CONFIG
-            if ( is_archive() || is_author() || is_category() || is_home() ) {
+            if ( is_search() || is_archive() || is_author() || is_category() || is_home() ) {
                 $default_sidebar_config = $sf_options['archive_sidebar_config'];
                 $default_left_sidebar   = $sf_options['archive_sidebar_left'];
                 $default_right_sidebar  = $sf_options['archive_sidebar_right'];

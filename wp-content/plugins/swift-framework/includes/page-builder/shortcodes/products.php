@@ -178,7 +178,7 @@
             $width    = spb_translateColumnWidthToSpan( $width );
             $page_button   = $title_wrap_class = "";
             $has_button    = true;
-            $shop_page_url = get_permalink( woocommerce_get_page_id( 'shop' ) );
+            $shop_page_url = get_permalink( wc_get_page_id( 'shop' ) );
             $page_button   = '<a class="sf-button medium white sf-icon-stroke " href="' . $shop_page_url . '">' . $view_all_icon . '<span class="text">' . __( "VIEW ALL PRODUCTS", 'swift-framework-plugin' ) . '</span></a>';
 
             if ( $has_button && $button_enabled == "yes" ) {

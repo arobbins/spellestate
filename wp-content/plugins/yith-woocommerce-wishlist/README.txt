@@ -3,13 +3,13 @@
 Contributors: yithemes
 Tags: wishlist, woocommerce, products, themes, yit, e-commerce, shop, ecommerce wishlist, yith, woocommerce wishlist, woocommerce 2.3 ready, shop wishlist
 Requires at least: 4.0
-Tested up to: 4.2.4
-Stable tag: 2.0.10
+Tested up to: 4.3.1
+Stable tag: 2.0.11
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 YITH WooCommerce Wishlist add all Wishlist features to your website. Needs WooCommerce to work.
-WooCommerce 2.3.x compatible.
+WooCommerce 2.4.x compatible.
 
 
 == Description ==
@@ -30,19 +30,24 @@ This plugin is 100% compatible with [WPML](http://wpml.org/?aid=24889&affiliate_
 
 = Available Languages =
 
+**NOTE: The translation process of this plugin has been changed by WordPress. Please, read the correlated FAQ to be updated about the news changes.**
+
 * Chinese - CHINA
 * Chinese - TAIWAN
 * English - UNITED KINGDOM (Default)
-* German - GERMANY
-* Spanish - ARGENTINA
-* Spanish - MEXICO
 * French - FRANCE
+* German - GERMANY
 * Hebrew - ISRAEL
 * Italian - ITALY
 * Persian - IRAN, ISLAMIC REPUBLIC OF
+* Polish - POLAND
 * Portuguese - BRAZIL
 * Portuguese - PORTUGAL
 * Russian - RUSSIAN FEDERATION
+* Spanish - ARGENTINA
+* Spanish - SPAIN
+* Spanish - MEXICO
+* Swedish - SWEDEN
 * Turkish - TURKEY
 * Ukrainian - UKRAINE
 
@@ -77,6 +82,15 @@ This might depend on the fact that your theme overrides plugin templates. Check 
 = I am currently using Wishlist plugin with Catalog Mode enabled in my site. Prices for products should disappear, yet they still appear in the wishlist page. Can I remove them? =
 Yes, of course you can. To avoid Wishlist page to show product prices, you can hide price column from wishlist table. Go to YIT plugins -> wishlist -> settings and disable option "Show Unit price".
 
+= What are the main changes in plugin translation? =
+Recently YITH WooCommerce Wishlist has been selected to be included in the "translate.wordpress.org" translate programme.
+In order to import correctly the plugin strings in the new system, we had to change the text domain form 'yit' to 'yith-woocommerce-wishlist'.
+Once the plugin will be imported in the translate.wordpress.org system, the translations of other languages will be downloaded directly from WordPress, without using any .po and .mo files. Moreover, users will be able to participate in a more direct way to plugin translations, suggesting texts in their languages in the dedicated tab on translate.wordpress.org.
+During this transition step, .po and .mo files will be used as always, but in order to be recognized by WordPress, they will need to have a new nomenclature, renaming them in:
+yith-woocommerce-wishlist-<WORDPRESS LOCALE>.po
+yith-woocommerce-wishlist-<WORDPRESS LOCALE >.mo
+
+
 == Screenshots ==
 
 1. The page with "Add to wishlist" button
@@ -85,6 +99,14 @@ Yes, of course you can. To avoid Wishlist page to show product prices, you can h
 4. The Wishlist settings page
 
 == Changelog ==
+
+= 2.0.11 =
+
+* Added: spanish translation (thanks to Arman S.)
+* Added: polish translation (thanks to Roan)
+* Added: swedish translation (thanks to Lallex)
+* Updated: changed text domain from yit to yith-woocommerce-wishlist
+* Updated: changed all language file for the new text domain
 
 = 2.0.10 =
 
@@ -284,6 +306,7 @@ If you have suggestions about how to improve YITH WooCommerce Wishlist, you can 
 * English - UNITED KINGDOM (Default)
 * German - GERMANY
 * Spanish - ARGENTINA
+* Spanish - SPAIN
 * Spanish - MEXICO
 * French - FRANCE
 * Hebrew - ISRAEL
@@ -296,8 +319,8 @@ If you have suggestions about how to improve YITH WooCommerce Wishlist, you can 
 * Ukrainian - UKRAINE
 
 Some of these translations are not complete.
-If you have created your own language pack, or have an update for an existing one, you can send [gettext PO and MO file](http://codex.wordpress.org/Translating_WordPress "Translating WordPress")
-[use](http://yithemes.com/contact/ "Your Inspiration Themes") so we can bundle it into YITH WooCommerce Wishlist Languages.
+If you want to contribute to the translation of the plugin, please [go to WordPress official translator platform](https://translate.wordpress.org/ "Translating WordPress") and translate the strings in your own language. In this way, we will be able to increase the languages available for YITH WooCommerce Wishlist.
+
 
 == Documentation ==
 
@@ -305,10 +328,10 @@ Full documentation is available [here](http://yithemes.com/docs-plugins/yith-woo
 
 == Upgrade notice ==
 
-= 2.0.10 =
+= 2.0.11 =
 
-* Added: Compatibility with WC 2.4.2
-* Tweak: added nonce field to wishlist-view form
-* Tweak: added yith_wcwl_custom_add_to_cart_text and yith_wcwl_ask_an_estimate_text filters
-* Tweak: added check for presence of required function in wishlist script
-* Fixed: admin colorpicker field (for WC 2.4.x compatibility)
+* Added: spanish translation (thanks to Arman S.)
+* Added: polish translation (thanks to Roan)
+* Added: swedish translation (thanks to Lallex)
+* Updated: changed text domain from yit to yith-woocommerce-wishlist
+* Updated: changed all language file for the new text domain

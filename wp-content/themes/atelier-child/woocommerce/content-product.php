@@ -338,7 +338,11 @@
 	<div class="product-details">
 
 		<?php do_action( 'woocommerce_before_shop_loop_item_title' ); ?>
-		<h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+		<h3>
+      <a href="<?php the_permalink(); ?>"><?php the_field('product_name'); ?></a>
+      <p class="product-info"><?php print_r($product->get_categories()); ?></p>
+      <p class="product-info"><?php the_field('product_location'); ?></p>
+    </h3>
 		<?php
 			$size = sizeof( get_the_terms( $post->ID, 'product_cat' ) );
 			echo $product->get_categories( ', ', '<span class="posted_in">', '</span>' );

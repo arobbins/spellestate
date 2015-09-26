@@ -236,8 +236,8 @@ if ( !class_exists( 'YITH_WCWL_Install' ) ) {
                 'post_status' 		=> 'publish',
                 'post_type' 		=> 'page',
                 'post_author' 		=> 1,
-                'post_name' 		=> esc_sql( _x( 'wishlist', 'page_slug', 'yit' ) ),
-                'post_title' 		=> __( 'Wishlist', 'yit' ),
+                'post_name' 		=> esc_sql( _x( 'wishlist', 'page_slug', 'yith-woocommerce-wishlist' ) ),
+                'post_title' 		=> __( 'Wishlist', 'yith-woocommerce-wishlist' ),
                 'post_content' 		=> '[yith_wcwl_wishlist]',
                 'post_parent' 		=> 0,
                 'comment_status' 	=> 'closed'

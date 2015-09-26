@@ -6902,7 +6902,7 @@ nav ul.menu > li.menu-item.sf-menu-item-btn > a > span.menu-item-text > i {
 .vertical-header-right nav.std-menu ul.sub-menu > li.parent:after {
 	content: "\f104";
 }
-.vertical-header nav .menu li.parent > a:after {
+.vertical-header nav#main-navigation .menu li.parent > a:after {
 	display: none!important;
 }
 

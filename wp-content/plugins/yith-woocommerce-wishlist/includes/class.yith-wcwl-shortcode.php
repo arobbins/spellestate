@@ -239,7 +239,7 @@ if( ! class_exists( 'YITH_WCWL_Shortcode' ) ) {
 				);
 
 				if( $share_enabled ){
-					$share_title = apply_filters( 'yith_wcwl_socials_share_title', __( 'Share on:', 'yit' ) );
+					$share_title = apply_filters( 'yith_wcwl_socials_share_title', __( 'Share on:', 'yith-woocommerce-wishlist' ) );
 					$share_link_url = ( ! empty( $wishlist_id ) ) ? YITH_WCWL()->get_wishlist_url( 'view' . '/' . $wishlist_id ) : YITH_WCWL()->get_wishlist_url( 'user' . '/' . get_current_user_id() );
 					$share_links_title = apply_filters( 'plugin_text', urlencode( get_option( 'yith_wcwl_socials_title' ) ) );
 					$share_twitter_summary = urlencode( str_replace( '%wishlist_url%', '', get_option( 'yith_wcwl_socials_text' ) ) );

@@ -888,7 +888,11 @@ var SWIFTSLIDER = SWIFTSLIDER || {};
                         setTimeout(
                             function() {
                                 if ( slideHasVideo ) {
-                                    slideVideo.get( 0 ).play();
+                                    if ( sliderInstance.is(':in-viewport') && !slideVideo.hasClass('finished') ) {
+                                        slideVideo.get( 0 ).play();
+                                    } else {
+                                        slideVideo.get( 0 ).pause();
+                                    }
                                 }
 
                                 // Fade in the current slide content

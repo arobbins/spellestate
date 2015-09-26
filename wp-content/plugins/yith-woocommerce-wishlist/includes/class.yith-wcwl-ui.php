@@ -78,8 +78,8 @@ if( ! class_exists( 'YITH_WCWL_UI' ) ) {
             $html .= '<img src="' . esc_url( admin_url( 'images/wpspin_light.gif' ) ) . '" class="ajax-loading" alt="loading" width="16" height="16" style="visibility:hidden" />';
             $html .= '</div>';
 
-            $html .= '<div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;"><span class="feedback">' . __( 'Product added!','yit' ) . '</span> <a href="' . esc_url( $url ) . '">' . apply_filters( 'yith-wcwl-browse-wishlist-label', __( 'Browse Wishlist', 'yit' ) ) . '</a></div>';
-            $html .= '<div class="yith-wcwl-wishlistexistsbrowse ' . ( $exists ? 'show' : 'hide' ) . '" style="display:' . ( $exists ? 'block' : 'none' ) . '"><span class="feedback">' . __( 'The product is already in the wishlist!', 'yit' ) . '</span> <a href="' . esc_url( $url ) . '">' . apply_filters( 'yith-wcwl-browse-wishlist-label', __( 'Browse Wishlist', 'yit' ) ) . '</a></div>';
+            $html .= '<div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;"><span class="feedback">' . __( 'Product added!','yith-woocommerce-wishlist' ) . '</span> <a href="' . esc_url( $url ) . '">' . apply_filters( 'yith-wcwl-browse-wishlist-label', __( 'Browse Wishlist', 'yith-woocommerce-wishlist' ) ) . '</a></div>';
+            $html .= '<div class="yith-wcwl-wishlistexistsbrowse ' . ( $exists ? 'show' : 'hide' ) . '" style="display:' . ( $exists ? 'block' : 'none' ) . '"><span class="feedback">' . __( 'The product is already in the wishlist!', 'yith-woocommerce-wishlist' ) . '</span> <a href="' . esc_url( $url ) . '">' . apply_filters( 'yith-wcwl-browse-wishlist-label', __( 'Browse Wishlist', 'yith-woocommerce-wishlist' ) ) . '</a></div>';
             $html .= '<div style="clear:both"></div><div class="yith-wcwl-wishlistaddresponse"></div>';
 
             $html .= '</div>';
@@ -113,7 +113,7 @@ if( ! class_exists( 'YITH_WCWL_UI' ) ) {
             $label_option = get_option( 'yith_wcwl_add_to_cart_text' );
             $localize_label = function_exists( 'icl_translate' ) ? icl_translate( 'Plugins', 'plugin_yit_wishlist_button', $label_option ) : $label_option;
 
-            $label = $product->product_type == 'variable' ? apply_filters( 'variable_add_to_cart_text', __('Select options', 'yit') ) : apply_filters( 'yith_wcwl_add_to_cart_label', $localize_label );
+            $label = $product->product_type == 'variable' ? apply_filters( 'variable_add_to_cart_text', __('Select options', 'yith-woocommerce-wishlist') ) : apply_filters( 'yith_wcwl_add_to_cart_label', $localize_label );
             $icon = get_option( 'yith_wcwl_use_button' ) == 'yes' && get_option( 'yith_wcwl_add_to_cart_icon' ) != 'none' ? '<i class="fa ' . get_option( 'yith_wcwl_add_to_cart_icon' ) . '"></i>' : '';
 
             $cartlink = '';
@@ -158,14 +158,14 @@ if( ! class_exists( 'YITH_WCWL_UI' ) ) {
             $imageurl = urlencode( get_option( 'yith_wcwl_socials_image_url' ) );
 
             $html  = '<div class="yith-wcwl-share">';
-            $html .= apply_filters( 'yith_wcwl_socials_share_title', '<span>' . __( 'Share on:', 'yit' ) . '</span>' );
+            $html .= apply_filters( 'yith_wcwl_socials_share_title', '<span>' . __( 'Share on:', 'yith-woocommerce-wishlist' ) . '</span>' );
             $html .= '<ul>';
 
             if( get_option( 'yith_wcwl_share_fb' ) == 'yes' )
-            { $html .= '<li style="list-style-type: none; display: inline-block;"><a target="_blank" class="facebook" href="https://www.facebook.com/sharer.php?s=100&amp;p[title]=' . $title . '&amp;p[url]=' . $url . '&amp;p[summary]=' . $summary . '&amp;p[images][0]=' . $imageurl . '" title="' . __( 'Facebook', 'yit' ) . '"></a></li>'; }
+            { $html .= '<li style="list-style-type: none; display: inline-block;"><a target="_blank" class="facebook" href="https://www.facebook.com/sharer.php?s=100&amp;p[title]=' . $title . '&amp;p[url]=' . $url . '&amp;p[summary]=' . $summary . '&amp;p[images][0]=' . $imageurl . '" title="' . __( 'Facebook', 'yith-woocommerce-wishlist' ) . '"></a></li>'; }
 
             if( get_option( 'yith_wcwl_share_twitter' ) == 'yes' )
-            { $html .= '<li style="list-style-type: none; display: inline-block;"><a target="_blank" class="twitter" href="https://twitter.com/share?url=' . $url . '&amp;text=' . $twitter_summary . '" title="' . __( 'Twitter', 'yit' ) . '"></a></li>'; }
+            { $html .= '<li style="list-style-type: none; display: inline-block;"><a target="_blank" class="twitter" href="https://twitter.com/share?url=' . $url . '&amp;text=' . $twitter_summary . '" title="' . __( 'Twitter', 'yith-woocommerce-wishlist' ) . '"></a></li>'; }
 
             if( get_option( 'yith_wcwl_share_pinterest' ) == 'yes' )
             { $html .= '<li style="list-style-type: none; display: inline-block;"><a target="_blank" class="pinterest" href="http://pinterest.com/pin/create/button/?url=' . $url . '&amp;description=' . $summary . '&media=' . $imageurl . '" onclick="window.open(this.href); return false;"></a></li>'; }
@@ -174,7 +174,7 @@ if( ! class_exists( 'YITH_WCWL_UI' ) ) {
             { $html .= '<li style="list-style-type: none; display: inline-block;"><a target="_blank" class="googleplus" href="https://plus.google.com/share?url=' . $url . '&amp;title=' . $title . '" title="' . $title . '" onclick=\'javascript:window.open(this.href, "", "menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600");return false;\'></a></li>'; }
 
             if( get_option( 'yith_wcwl_share_email' ) == 'yes' )
-            { $html .= '<li style="list-style-type: none; display: inline-block;"><a class="email" href="mailto:?subject=I wanted you to see this site&amp;body= ' . $url . '&amp;title=' . __('email', 'yit') . '" title="' . $title . '" ></a></li>'; }
+            { $html .= '<li style="list-style-type: none; display: inline-block;"><a class="email" href="mailto:?subject=I wanted you to see this site&amp;body= ' . $url . '&amp;title=' . __('email', 'yith-woocommerce-wishlist') . '" title="' . $title . '" ></a></li>'; }
 
             $html .= '</ul>';
             $html .= '</div>';
@@ -196,7 +196,7 @@ if( ! class_exists( 'YITH_WCWL_UI' ) ) {
             // retrieve options
             $label_option = get_option( 'yith_wcwl_add_to_cart_text' );
 
-            $label = $product->product_type == 'variable' ? apply_filters( 'variable_add_to_cart_text', __('Select options', 'yit') ) : apply_filters( 'yith_wcwl_add_to_cart_label', $label_option );
+            $label = $product->product_type == 'variable' ? apply_filters( 'variable_add_to_cart_text', __('Select options', 'yith-woocommerce-wishlist') ) : apply_filters( 'yith_wcwl_add_to_cart_label', $label_option );
             if( get_option( 'yith_wcwl_frontend_css' ) != 'yes' ) {
                 $icon = get_option( 'yith_wcwl_use_button' ) == 'yes' && get_option( 'yith_wcwl_add_to_cart_icon' ) != 'none' ? '<i class="fa ' . get_option( 'yith_wcwl_add_to_cart_icon' ) . '"></i>' : '';
             }

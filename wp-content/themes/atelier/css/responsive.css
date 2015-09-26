@@ -28,6 +28,11 @@
 		padding: 8px 18px;
 	}
 }
+@media screen and (max-height: 760px) {
+	.bag-contents {
+		max-height: 200px;
+	}
+}
 @media screen and (max-height: 600px) {
 	.vertical-menu-bottom {
 		display: none;
@@ -128,6 +133,18 @@
 		margin-bottom: 20px;
 		margin-right: 0;
 	}
+}
+
+@media only screen and (min-width: 768px) {
+	
+	.sf-mobile-shop-filters {
+		margin-bottom: 40px;
+	}
+	
+	.sf-mobile-shop-filters .widget {
+		border-bottom-width: 0;	
+	}
+	
 }
 
 @media (max-width: 1020px) {
@@ -1394,6 +1411,10 @@
 	}
 	.my_account_orders th.subscription-title, .my_account_orders td.subscription-title {
 		max-width: none;
+	}
+	.sf-mobile-shop-filters {
+		margin-left: 0;
+		margin-right: 0;
 	}
 	.sf-mobile-shop-filters .tagcloud {
 		padding: 30px 0;

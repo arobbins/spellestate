@@ -45,6 +45,7 @@
 	# SOCIAL SHORTCODE
 	# TABLE SHORTCODE
 	# TABS SHORTCODE
+	# TEAM SHORTCODE
 	# TESTIMONIALS SHORTCODE
 	# TESTIMONIALS SLIDER SHORTCODE
 	# TEXT BLOCK SHORTCODE
@@ -480,11 +481,6 @@
 .spb_accordion .ui-accordion .ui-accordion-content .row {
 	margin-left: 0!important;
 	margin-bottom: 0!important;
-}
-.spb_accordion .ui-accordion .ui-accordion-content .row > [class*="col-sm"] {
-	width: 95%!important;
-	padding-left: 0!important;
-	padding-right: 0!important;
 }
 .spb_accordion .ui-accordion .ui-accordion-header {
 	position: relative;
@@ -3720,6 +3716,18 @@ table.striped_bordered th, table.striped_bordered td {
 .spb_tour .tab-content .row [class*="span"] {
 	width: 100%!important;
 	margin-left: 0!important;
+}
+
+
+/* --------------------------------------------
+	TEAM SHORTCODE
+-------------------------------------------- */
+
+figure a.team-gallery-mobile-link {
+	display: none;
+}
+.mobile-browser figure a.team-gallery-mobile-link {
+	display: block;
 }
 
 

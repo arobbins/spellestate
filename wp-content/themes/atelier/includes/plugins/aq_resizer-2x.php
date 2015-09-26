@@ -15,7 +15,7 @@ function sf_aq_resize( $url, $width, $height = null, $crop = null, $single = tru
 	if ( !$url OR !$width ) return false;
 
 	if ( $url == "default" ) {
-		$url = get_template_directory_uri()."/images/default-thumb.png";
+		$url = apply_filters( 'sf_placeholder_image_src', get_template_directory_uri()."/images/default-thumb.png" );
 		$image = array (
 			0 => $url,
 			1 => '1600',

@@ -43,11 +43,17 @@
     <section class="row">
       <h2 class="bottleshots-vintage"><?php echo $year; ?></h2>
       <ul class="bottleshots-list">
-        <?php foreach ($ids as $key => $id) { ?>
-          <li class="bottleshots-list-item col-sm-3">
-            <?php echo get_the_post_thumbnail($id, 'medium'); ?>
-            <p class="bottleshots-title"><?php echo get_the_title($id); ?></p>
-          </li>
+        <?php
+          foreach ($ids as $key => $id) {
+            global $post;
+            $categories = wp_get_post_terms($id, 'product_cat', array('taxonomy' => 'product_cat'));
+        ?>
+        <li class="bottleshots-list-item col-sm-3">
+          <?php echo get_the_post_thumbnail($id, 'medium'); ?>
+          <p class="product-info"><?php the_field('product_name', $id); ?></p>
+          <p class="product-info"><?php echo $categories[0]->name; ?></p>
+          <p class="product-info"><?php the_field('product_location', $id); ?></p>
+        </li>
         <?php } ?>
       </ul>
     </section>

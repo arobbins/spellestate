@@ -3,10 +3,10 @@
 * Plugin Name: YITH WooCommerce Wishlist
 * Plugin URI: http://yithemes.com/themes/plugins/yith-woocommerce-wishlist/
 * Description: YITH WooCommerce Wishlist allows you to add Wishlist functionality to your e-commerce.
-* Version: 2.0.10
+* Version: 2.0.11
 * Author: Yithemes
 * Author URI: http://yithemes.com/
-* Text Domain: yit
+* Text Domain: yith-woocommerce-wishlist
 * Domain Path: /languages/
 * 
 * @author Your Inspiration Themes
@@ -73,7 +73,7 @@ if ( ! defined( 'YITH_WCWL_FREE_INIT' ) ) {
 if( ! function_exists( 'yith_wishlist_constructor' ) ) {
     function yith_wishlist_constructor() {
 
-        load_plugin_textdomain( 'yit', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+        load_plugin_textdomain( 'yith-woocommerce-wishlist', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
         // Load required classes and functions
         require_once( YITH_WCWL_INC . 'functions.yith-wcwl.php' );
@@ -126,7 +126,7 @@ if( ! function_exists( 'yith_wcwl_install_woocommerce_admin_notice' ) ) {
     function yith_wcwl_install_woocommerce_admin_notice() {
         ?>
         <div class="error">
-            <p><?php _e( 'YITH WooCommerce Wishlist is enabled but not effective. It requires WooCommerce in order to work.', 'yit' ); ?></p>
+            <p><?php _e( 'YITH WooCommerce Wishlist is enabled but not effective. It requires WooCommerce in order to work.', 'yith-woocommerce-wishlist' ); ?></p>
         </div>
     <?php
     }
@@ -136,7 +136,7 @@ if( ! function_exists( 'yith_wcwl_install_free_admin_notice' ) ){
     function yith_wcwl_install_free_admin_notice() {
         ?>
         <div class="error">
-            <p><?php _e( 'You can\'t activate the free version of YITH WooCommerce Wishlist while you are using the premium one.', 'yit' ); ?></p>
+            <p><?php _e( 'You can\'t activate the free version of YITH WooCommerce Wishlist while you are using the premium one.', 'yith-woocommerce-wishlist' ); ?></p>
         </div>
     <?php
     }
