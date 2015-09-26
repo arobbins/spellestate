@@ -35,7 +35,9 @@
     <?php the_field('grower_description'); ?>
   </div>
 
+  <?php if(isset($wines) && $wines) { ?>
   <ul class="grower-wines row">
+
     <h2>Wines from this Vineyard:</h2>
     <?php
       foreach ($wines as $wine => $wineID) {
@@ -61,4 +63,6 @@
       }
     ?>
   </ul>
+  <?php } ?>
+
 </div>
