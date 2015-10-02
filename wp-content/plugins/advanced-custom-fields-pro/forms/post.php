@@ -293,41 +293,11 @@ class acf_form_post {
 			'id'			=> $id,
 			'key'			=> $field_group['key'],
 			'style'			=> $field_group['style'],
+			'label'			=> $field_group['label_placement'],
 			'edit_url'		=> '',
 			'edit_title'	=> __('Edit field group', 'acf'),
 			'visibility'	=> $visibility
 		);
-		
-		
-		// render fields, or render a replace-me div
-		if( $visibility ) {
-			
-			// load fields
-			$fields = acf_get_fields( $field_group );
-			
-			
-			// render
-			if( $field_group['label_placement'] == 'left' ) {
-				
-				?>
-				<table class="acf-table">
-					<tbody>
-						<?php acf_render_fields( $this->post_id, $fields, 'tr', $field_group['instruction_placement'] ); ?>
-					</tbody>
-				</table>
-				<?php
-				
-			} else {
-				
-				acf_render_fields( $this->post_id, $fields, 'div', $field_group['instruction_placement'] );
-				
-			}
-			
-		} else {
-			
-			echo '<div class="acf-replace-with-fields"><div class="acf-loading"></div></div>';
-			
-		}
 		
 		
 		// edit_url
@@ -337,8 +307,25 @@ class acf_form_post {
 				
 		}
 		
+			
+		// load and render fields	
+		if( $visibility ) {
+			
+			// load fields
+			$fields = acf_get_fields( $field_group );
+			
+			
+			// render
+			acf_render_fields( $this->post_id, $fields, 'div', $field_group['instruction_placement'] );
 		
-?>
+		// render replace-me div
+		} else {
+			
+			echo '<div class="acf-replace-with-fields"><div class="acf-loading"></div></div>';
+		
+		}
+	
+	?>
 <script type="text/javascript">
 if( typeof acf !== 'undefined' ) {
 		
@@ -430,21 +417,7 @@ if( typeof acf !== 'undefined' ) {
 				
 				
 				// render
-				if( $field_group['label_placement'] == 'left' ) {
-					
-					?>
-					<table class="acf-table">
-						<tbody>
-							<?php acf_render_fields( $options['post_id'], $fields, 'tr', $field_group['instruction_placement'] ); ?>
-						</tbody>
-					</table>
-					<?php
-					
-				} else {
-					
-					acf_render_fields( $options['post_id'], $fields, 'div', $field_group['instruction_placement'] );
-				
-				}
+				acf_render_fields( $options['post_id'], $fields, 'div', $field_group['instruction_placement'] );
 				
 				
 				$html = ob_get_clean();

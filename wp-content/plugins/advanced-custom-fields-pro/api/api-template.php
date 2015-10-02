@@ -439,7 +439,7 @@ function get_field_objects( $post_id = false, $format_value = true, $load_value 
 *  have_rows
 *
 *  This function will instantiate a global variable containing the rows of a repeater or flexible content field,
-*  afterwhich, it will determin if another row exists to loop through
+*  afterwhich, it will determine if another row exists to loop through
 *
 *  @type	function
 *  @date	2/09/13
@@ -1148,7 +1148,7 @@ function _acf_pre_save_post( $post_id, $form ) {
 	);
 	
 	
-	// determin save data
+	// determine save data
 	if( is_numeric($post_id) ) {
 		
 		// update post
@@ -1419,7 +1419,7 @@ function acf_form( $args = array() ) {
 	<div class="acf-hidden">
 		<?php acf_hidden_input(array( 'name' => '_acf_form', 'value' => base64_encode(json_encode($args)) )); ?>
 	</div>
-	<div class="acf-fields acf-form-fields">
+	<div class="acf-fields acf-form-fields -<?php echo $args['label_placement']; ?>">
 	
 		<?php
 		
@@ -1427,24 +1427,8 @@ function acf_form( $args = array() ) {
 		echo $args['html_before_fields'];
 		
 		
-		// start table
-		if( $args['label_placement'] == 'left' ) {
-			
-			$args['field_el'] = 'tr';
-			
-			?><table class="acf-table"><tbody><?php
-		}
-		
-		
+		// render
 		acf_render_fields( $post_id, $fields, $args['field_el'], $args['instruction_placement'] );
-		
-		
-		// end table
-		if( $args['label_placement'] == 'left' ) {
-			
-			?></tbody></table><?php
-				
-		}
 		
 		
 		// html after fields

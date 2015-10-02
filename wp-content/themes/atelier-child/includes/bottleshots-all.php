@@ -50,9 +50,9 @@
         ?>
         <li class="bottleshots-list-item col-sm-3">
           <?php echo get_the_post_thumbnail($id, 'medium'); ?>
-          <p class="product-info"><?php the_field('product_name', $id); ?></p>
-          <p class="product-info"><?php echo $categories[0]->name; ?></p>
-          <p class="product-info"><?php the_field('product_location', $id); ?></p>
+          <p class="product-info product-name"><?php the_field('product_name', $id); ?></p>
+          <p class="product-info product-category"><?php echo $categories[0]->name; ?></p>
+          <p class="product-info product-location"><?php the_field('product_location', $id); ?></p>
         </li>
         <?php } ?>
       </ul>

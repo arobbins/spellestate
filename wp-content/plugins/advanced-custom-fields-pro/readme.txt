@@ -1,6 +1,6 @@
 === Advanced Custom Fields Pro ===
 Contributors: elliotcondon
-Tags: custom, field, custom field, advanced, simple fields, magic fields, more fields, repeater, matrix, post, type, text, textarea, file, image, edit, admin
+Tags: acf, advanced, custom, field, fields, custom field, custom fields, simple fields, magic fields, more fields, repeater, edit
 Requires at least: 3.6.0
 Tested up to: 4.3
 License: GPLv2 or later
@@ -105,6 +105,19 @@ http://support.advancedcustomfields.com/
 
 
 == Changelog ==
+
+= 5.3.1 =
+* Flexible Content field: added toggle icons to show layout open/close state
+* Gallery field: Fixed bug where images could not save a blank title value
+* Taxonomy field: Added pagination when rendered as a Select2 element
+* Relationship field: Changed validation to better edit values when a minimum is set
+* Google map field: Fixed minor autocomplete bugs and added search icon
+* Message field: Added new_lines setting
+* Core: Added '*' to required fields when editing a field group
+* Core: Prevented updates to .json file when syncing
+* Core: Fields now render as div (instead of table) when labels are left aligned
+* Core: Minor fixes and improvements
+* Language: Updated .po headers - thanks to Ralf Koller
 
 = 5.3.0 =
 * WYSIWYG field: Fixed 'Visual/Text' toggle bug with WP 4.3

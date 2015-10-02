@@ -1,10 +1,10 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Advanced Custom Fields Pro v5.2.8\n"
+"Project-Id-Version: Advanced Custom Fields Pro v5.2.9\n"
 "Report-Msgid-Bugs-To: http://support.advancedcustomfields.com\n"
-"POT-Creation-Date: 2015-08-01 18:32-0300\n"
-"PO-Revision-Date: 2015-08-01 20:50-0300\n"
-"Last-Translator: Augusto Simão <augusto@ams.art.br>\n"
+"POT-Creation-Date: 2015-08-11 23:37+0200\n"
+"PO-Revision-Date: 2015-08-11 23:37+0200\n"
+"Last-Translator: Ralf Koller <r.koller@gmail.com>\n"
 "Language-Team: Augusto Simão <augusto@ams.art.br>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -20,8 +20,7 @@ msgstr ""
 "X-Poedit-WPHeader: acf.php\n"
 "X-Textdomain-Support: yes\n"
 "X-Poedit-SearchPath-0: .\n"
-"X-Poedit-SearchPathExcluded-0: assets\n"
-"X-Poedit-SearchPathExcluded-1: pro/assets\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
 
 # @ acf
 #: acf.php:63
@@ -126,7 +125,8 @@ msgstr "Nenhum Campo encontrado"
 msgid "No Fields found in Trash"
 msgstr "Nenhum Campo encontrado na Lixeira"
 
-#: acf.php:268 admin/field-group.php:283 admin/views/field-group-options.php:18
+#: acf.php:268 admin/field-group.php:283 admin/field-groups.php:583
+#: admin/views/field-group-options.php:18
 msgid "Disabled"
 msgstr "Desabilitado"
 
@@ -384,7 +384,7 @@ msgid_plural "%s field groups synchronised."
 msgstr[0] "%s grupo de campos sincronizado."
 msgstr[1] "%s grupos de campos sincronizados."
 
-#: admin/field-groups.php:403
+#: admin/field-groups.php:403 admin/field-groups.php:573
 msgid "Sync available"
 msgstr "Sincronização disponível"
 
@@ -397,6 +397,10 @@ msgstr "Título"
 #: admin/views/update-network.php:20 admin/views/update-network.php:28
 msgid "Description"
 msgstr "Descrição"
+
+#: admin/field-groups.php:518 admin/views/field-group-options.php:10
+msgid "Status"
+msgstr "Status"
 
 # @ acf
 #: admin/field-groups.php:616 admin/settings-info.php:76
@@ -899,10 +903,6 @@ msgstr "Comentário"
 #: admin/views/field-group-locations.php:65
 msgid "Widget"
 msgstr "Widget"
-
-#: admin/views/field-group-options.php:10
-msgid "Status"
-msgstr "Status"
 
 # @ acf
 #: admin/views/field-group-options.php:25

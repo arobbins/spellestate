@@ -92,9 +92,16 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 				<?php
 					$breadcrumb_args = array('wrap_before' => '<nav class="woocommerce-breadcrumb">');
 					woocommerce_breadcrumb($breadcrumb_args);
+
+          global $post;
+          $categories = wp_get_post_terms($post->ID, 'product_cat', array('taxonomy' => 'product_cat'));
 				?>
 
-				<h1><?php the_title(); ?></h1>
+				<h1>
+          <span class="product-info product-name"><?php the_field('product_name', $post->ID); ?></span>
+          <span class="product-info product-category"><?php echo $categories[0]->name; ?></span>
+          <span class="product-info product-location"><?php the_field('product_location', $post->ID); ?></span>
+        </h1>
 
 				<?php
 					$has_cat = get_the_terms( $post->ID, 'product_cat' );

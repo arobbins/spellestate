@@ -955,6 +955,30 @@ a:hover,
   text-decoration: underline;
 }
 
+.product-details .product-name {
+  font-weight: bold;
+}
+
+.product-info.product-name {
+  font-weight: bold;
+}
+
+.product-info.product-category {
+  font-style: italic;
+
+  a {
+    font-style: italic;
+  }
+}
+
+.product-info.product-location {
+  font-size: 16px;
+}
+
+.summary-top .product-info.product-location {
+  font-size: 28px;
+}
+
 .owl-item:hover {
   img {
     opacity: 0.8;
@@ -1271,7 +1295,7 @@ body .gform_wrapper label.gfield_label + div.ginput_container {
   font-family: Julius Sans One,arial,sans-serif;
   font-size: 18px;
   line-height: 1.5;
-  font-weight: 400;
+  font-weight: bold;
   font-style: normal;
 }
 
@@ -1636,6 +1660,12 @@ body.woocommerce p.stars a:hover:after {
 .winclub-level,
 .winclub-levels {
   float: left;
+}
+
+.winclub-level ul > ul {
+  list-style: none;
+  //margin: 0;
+  padding: 0;
 }
 
 .winclub-levels-heading {
@@ -2560,11 +2590,16 @@ body.woocommerce p.stars a:hover:after {
 .product-info {
   margin: 0;
   text-align: center;
-  font-size: 18px;
+  font-size: 17px;
   font-family: "Julius Sans One";
   line-height: 1.5;
   font-weight: 400;
   font-style: normal;
+}
+
+.woocommerce .products .product h3,
+.woocommerce ul.products li.product h3 {
+  font-size: 17px;
 }
 
 #account_password_field label {
@@ -2586,4 +2621,11 @@ body.woocommerce p.stars a:hover:after {
 
 #shipping_method input[checked="checked"] + label {
   color: green;
+}
+
+.summary-top .product-info {
+  width: 100%;
+  display: block;
+  text-align: left;
+  font-size: 34px;
 }

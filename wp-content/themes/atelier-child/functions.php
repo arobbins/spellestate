@@ -572,13 +572,10 @@ function init() {
       // return wc_price($product->subscription_price) . '<span class="sub-label"> per ' . $product->subscription_period . ' starting on ' . $date . '</span>';
 
       return wc_price($product->subscription_price) . '<span class="sub-label">per year</span>';
-
     }
 
     add_filter('woocommerce_subscriptions_product_price_string', 'my_subs_price_string', 10, 3);
 
-
   }
-
 
 }

@@ -53,9 +53,9 @@
         echo '<li class="col-sm-3 grower-wine">';
           echo '<a href="' . $link .'" class="grower-wine-link">';
             echo $image;
-            echo '<h3 class="grower-wine-title">' . $name;
-              echo '<p class="product-info">' . $category[0]->name . '</p>';
-              echo '<p class="product-info">' . $location . '</p>';
+            echo '<h3 class="grower-wine-title product-name">' . $name;
+              echo '<p class="product-info product-category">' . $category[0]->name . '</p>';
+              echo '<p class="product-info product-location">' . $location . '</p>';
             echo '</h3>';
           echo '</a>';
         echo "</li>";

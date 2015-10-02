@@ -115,7 +115,6 @@ function acf_get_value( $post_id, $field, $db_only = false ) {
 	$value = apply_filters( "acf/load_value/type={$field['type']}", $value, $post_id, $field );
 	$value = apply_filters( "acf/load_value/name={$field['name']}", $value, $post_id, $field );
 	$value = apply_filters( "acf/load_value/key={$field['key']}", $value, $post_id, $field );
-		
 	
 	
 	//update cache

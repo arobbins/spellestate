@@ -339,9 +339,9 @@
 
 		<?php do_action( 'woocommerce_before_shop_loop_item_title' ); ?>
 		<h3>
-      <a href="<?php the_permalink(); ?>"><?php the_field('product_name'); ?></a>
-      <p class="product-info"><?php print_r($product->get_categories()); ?></p>
-      <p class="product-info"><?php the_field('product_location'); ?></p>
+      <a href="<?php the_permalink(); ?>" class="product-name"><?php the_field('product_name'); ?></a>
+      <p class="product-info product-category"><?php print_r($product->get_categories()); ?></p>
+      <p class="product-info product-location"><?php the_field('product_location'); ?></p>
     </h3>
 		<?php
 			$size = sizeof( get_the_terms( $post->ID, 'product_cat' ) );

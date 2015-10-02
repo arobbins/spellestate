@@ -43,14 +43,23 @@
 			
 			
 			// loop over all table layouts
-			$('.acf-input-table.table-layout').each(function(){
+			$('.acf-table').each(function(){
 				
 				// vars
-				var $table = $(this);
+				var $table = $(this),
+					$ths = $table.find('> thead th.acf-th');
+				
+				
+				// bail early if no $th
+				if( !$ths.exists() ) {
+					
+					return;
+					
+				}
 				
 				
 				// loop over th
-				$table.find('> thead th.acf-th').each(function(){
+				$ths.each(function(){
 					
 					// vars
 					var $th = $(this),
@@ -93,18 +102,17 @@
 		
 		render_table : function( $table ){
 			
-			//console.log( 'render_table %o', $table);
-			// bail early if table is row layout
-			if( $table.hasClass('row-layout') ) {
+			// vars
+			var $th = $table.find('> thead th.acf-th'),
+				available_width = 100;
 			
+			
+			// bail early if no $th
+			if( !$th.exists() ) {
+				
 				return;
 				
 			}
-			
-			
-			// vars
-			var $th = $table.find('> thead > tr > th'),
-				available_width = 100;
 			
 			
 			// clear widths
@@ -112,7 +120,7 @@
 			
 			
 			// update $th
-			$th = $th.not('.order, .remove, .hidden-by-conditional-logic');
+			$th = $th.not('.hidden-by-conditional-logic');
 			
 			
 			// set custom widths first
@@ -298,11 +306,11 @@
 			// empty?
 			if( this.count() == 0 ) {
 			
-				this.$el.addClass('empty');
+				this.$el.addClass('-empty');
 				
 			} else {
 			
-				this.$el.removeClass('empty');
+				this.$el.removeClass('-empty');
 				
 			}
 			
@@ -310,12 +318,10 @@
 			// row limit reached
 			if( this.o.max > 0 && this.count() >= this.o.max ) {
 				
-				this.$el.addClass('disabled');
 				this.$el.find('> .acf-hl .acf-button').addClass('disabled');
 				
 			} else {
 				
-				this.$el.removeClass('disabled');
 				this.$el.find('> .acf-hl .acf-button').removeClass('disabled');
 				
 			}
@@ -460,6 +466,7 @@
 		events: {
 			'click .acf-fc-remove': 		'remove',
 			'click .acf-fc-layout-handle':	'toggle',
+			'click .acf-fc-toggle':			'toggle',
 			'click .acf-fc-popup li a':		'add',
 			'click .acf-fc-add': 			'open_popup',
 			'blur .acf-fc-popup .focus':	'close_popup'
@@ -968,18 +975,16 @@
 			var $layout	= e.$el.closest('.layout');
 			
 			
-			if( $layout.attr('data-toggle') == 'closed' ) {
+			if( $layout.hasClass('closed') ) {
 			
-				$layout.attr('data-toggle', 'open');
-				$layout.children('.acf-input-table').show();
+				$layout.removeClass('closed');
 				
 				// refresh layout
 				acf.do_action('refresh', $layout);
 				
 			} else {
 				
-				$layout.attr('data-toggle', 'closed');
-				$layout.children('.acf-input-table').hide();
+				$layout.addClass('closed');
 				
 			}
 			
@@ -997,13 +1002,14 @@
 			
 			this.$values.children('.layout').each(function( i ){
 				
-				if( $(this).attr('data-toggle') == 'closed' ) {
+				if( $(this).hasClass('closed') ) {
 				
 					collapsed.push( i );
 					
 				}
 				
 			});
+			
 			
 			acf.update_cookie( name, collapsed.join('|') );	
 			

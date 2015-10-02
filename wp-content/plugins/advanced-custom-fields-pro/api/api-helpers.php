@@ -2060,7 +2060,7 @@ function acf_decode_choices( $string = '' ) {
 	// force array on single numeric values
 	} elseif( is_numeric($string) ) {
 		
-		return array( $string );
+		// allow
 	
 	// bail early if not a a string
 	} elseif( !is_string($string) ) {

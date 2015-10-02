@@ -52,6 +52,7 @@ $atts['class'] = str_replace('_', '-', $atts['class']);
 			<li class="li-field-label">
 				<strong>
 					<a class="edit-field" title="<?php _e("Edit field",'acf'); ?>" href="#"><?php echo $field['label']; ?></a>
+					<?php if( $field['required'] ): ?><span class="acf-required">*</span><?php endif; ?>
 				</strong>
 				<div class="row-options">
 					<a class="edit-field" title="<?php _e("Edit field",'acf'); ?>" href="#"><?php _e("Edit",'acf'); ?></a>
@@ -85,6 +86,7 @@ $atts['class'] = str_replace('_', '-', $atts['class']);
 					'name'			=> 'label',
 					'prefix'		=> $field['prefix'],
 					'value'			=> $field['label'],
+					'class'			=> 'field-label'
 				), 'tr');
 				
 				
@@ -97,6 +99,7 @@ $atts['class'] = str_replace('_', '-', $atts['class']);
 					'name'			=> 'name',
 					'prefix'		=> $field['prefix'],
 					'value'			=> $field['name'],
+					'class'			=> 'field-name'
 				), 'tr');
 				
 				
@@ -110,6 +113,7 @@ $atts['class'] = str_replace('_', '-', $atts['class']);
 					'prefix'		=> $field['prefix'],
 					'value'			=> $field['type'],
 					'choices' 		=> acf_get_field_types(),
+					'class'			=> 'field-type'
 				), 'tr');
 				
 				
@@ -138,6 +142,7 @@ $atts['class'] = str_replace('_', '-', $atts['class']);
 						0				=> __("No",'acf'),
 					),
 					'layout'		=> 'horizontal',
+					'class'			=> 'field-required'
 				), 'tr');
 				
 				

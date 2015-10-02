@@ -75,9 +75,9 @@ if ( $products->have_posts() ) : ?>
           <img src="<?php echo $feat_image; ?>" alt="<?php the_title(); ?>">
 
           <h3 class="product-title">
-            <p class="product-info"><?php the_field('product_name'); ?></p>
-            <p class="product-info"><?php echo $categories[0]->name; ?></p>
-            <p class="product-info"><?php the_field('product_location'); ?></p>
+            <p class="product-info product-name"><?php the_field('product_name'); ?></p>
+            <p class="product-info product-category"><?php echo $categories[0]->name; ?></p>
+            <p class="product-info product-location"><?php the_field('product_location'); ?></p>
           </h3>
 
           <?php
