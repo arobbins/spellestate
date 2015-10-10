@@ -583,3 +583,34 @@ function init() {
   }
 
 }
+
+/*
+  Changing the default Wordpress login logo
+*/
+function my_login_logo() { ?>
+  <style type="text/css">
+    .login #login h1 a {
+      background-image: url(<?php echo get_stylesheet_directory_uri(); ?>/assets/imgs/logo-dark-login.svg) !important;
+      padding-bottom: 72px !important;
+      width: 300px !important;
+      background-size: cover;
+    }
+  </style>
+<?php }
+add_action( 'login_enqueue_scripts', 'my_login_logo' );
+
+/*
+  Changing the default Wordpress login logo URL
+*/
+function my_login_logo_url() {
+  return home_url();
+}
+add_filter('login_headerurl', 'my_login_logo_url');
+
+/*
+  Changing the default Wordpress login title
+*/
+function my_login_logo_url_title() {
+  return 'Spell Estate';
+}
+add_filter('login_headertitle', 'my_login_logo_url_title');
