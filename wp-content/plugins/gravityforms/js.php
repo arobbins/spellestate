@@ -672,6 +672,8 @@ if ( ! class_exists( 'GFForms' ) ) {
 				field.inputs = null;
 				if (!field.label)
 					field.label = <?php echo json_encode( esc_html__( 'Website', 'gravityforms' ) ); ?>;
+				if (!field.placeholder)
+					field.placeholder = 'http://';
 				break;
 			case "password" :
 				field.inputs = GetPasswordFieldInputs(field);
@@ -844,6 +846,13 @@ if ( ! class_exists( 'GFForms' ) ) {
 		prefixInput.isHidden = prefixHidden;
 
 		var firstInput = new Input(field.id + '.3', <?php echo json_encode( gf_apply_filters( 'gform_name_first', rgget( 'id' ), esc_html__( 'First', 'gravityforms' ), rgget( 'id' ) ) ); ?>);
+
+		/**
+		 * Allows for modification for the middle name input for the Name Field in a form
+		 *
+		 * @param int The ID for the field
+		 * @oaram string The Label for the input
+		 */
 		var middleInput = new Input(field.id + '.4', <?php echo json_encode( gf_apply_filters( 'gform_name_middle', rgget( 'id' ), esc_html__( 'Middle', 'gravityforms' ), rgget( 'id' ) ) ); ?>);
 		middleInput.isHidden = middleHidden;
 

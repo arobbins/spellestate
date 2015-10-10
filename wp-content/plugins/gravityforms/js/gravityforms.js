@@ -1466,3 +1466,42 @@ function gformInitSpinner( formId, spinnerUrl ) {
 	});
 
 }
+
+
+
+//----------------------------------------
+//------ EVENT FUNCTIONS -----------------
+//----------------------------------------
+
+function gf_input_change( elem, formId, fieldId ) {
+    gform.doAction( 'gform_input_change', elem, formId, fieldId );
+}
+
+
+
+//----------------------------------------
+//------ HELPER FUNCTIONS ----------------
+//----------------------------------------
+
+if( ! window['rgars'] ) {
+    function rgars( array, prop ) {
+
+        var props = prop.split( '/' ),
+            value = array;
+
+        for( var i = 0; i < props.length; i++ ) {
+            value = rgar( value, props[ i ] );
+        }
+
+        return value;
+    }
+}
+
+if( ! window['rgar'] ) {
+    function rgar( array, prop ) {
+        if ( typeof array[ prop ] != 'undefined' ) {
+            return array[ prop ];
+        }
+        return '';
+    }
+}

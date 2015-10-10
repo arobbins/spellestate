@@ -43,7 +43,7 @@ class GF_Field_Checkbox extends GF_Field {
 		$field_id      = $is_entry_detail || $is_form_editor || $form_id == 0 ? "input_$id" : 'input_' . $form_id . "_$id";
 		$disabled_text = $is_form_editor ? 'disabled="disabled"' : '';
 
-		return sprintf( "<div class='ginput_container'><ul class='gfield_checkbox' id='%s'>%s</ul></div>", esc_attr( $field_id ), $this->get_checkbox_choices( $value, $disabled_text, $form_id ) );
+		return sprintf( "<div class='ginput_container ginput_container_checkbox'><ul class='gfield_checkbox' id='%s'>%s</ul></div>", esc_attr( $field_id ), $this->get_checkbox_choices( $value, $disabled_text, $form_id ) );
 	}
 
 	public function get_first_input_id( $form ) {
@@ -308,7 +308,8 @@ class GF_Field_Checkbox extends GF_Field {
 		foreach ( $lead_field_keys as $input_id ) {
 			//mark as a tick if input label (from form meta) is equal to submitted value (from lead)
 			if ( is_numeric( $input_id ) && absint( $input_id ) == absint( $field_id ) ) {
-				if ( $entry[ $input_id ] == $field_label ) {
+				$sanitized_value = wp_kses( $entry[ $input_id ], wp_kses_allowed_html( 'post' ) );
+				if ( $sanitized_value == $field_label ) {
 					return $entry[ $input_id ];
 				} else {
 					if ( $this->enableChoiceValue || $this->enablePrice ) {
