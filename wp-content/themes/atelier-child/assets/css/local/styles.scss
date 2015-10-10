@@ -15,6 +15,13 @@
   version 3.0 (http://www.gnu.org/licenses/gpl-3.0.html)
 
    ==================================================
+
+
+  TODO:
+  Needs to be reorganized. The theme came with tons of !important declarations which
+  forced me to use them in my CSS below to override.
+
+
 */
 
 @import "mixins";
@@ -815,7 +822,7 @@ legend {
 }
 
 .woocommerce .cart_totals table tr.order-total td span {
-  font-size: 22px;
+  font-size: 20px;
   font-weight: bold;
 }
 
@@ -1516,6 +1523,11 @@ body.woocommerce p.stars a:hover:after {
   color: #777;
 }
 
+.bag-buttons a.checkout-button,
+.bag-buttons a.create-account-button,
+.woocommerce input.button.alt,
+.woocommerce .alt-button,
+.woocommerce button.button.alt,
 .button {
   color: #ffffff;
   background-color: #b2243c;
@@ -1663,7 +1675,7 @@ body.woocommerce p.stars a:hover:after {
 }
 
 .winclub-level ul > ul {
-  list-style: none;
+  // list-style: none;
   //margin: 0;
   padding: 0;
 }
@@ -2628,4 +2640,41 @@ body.woocommerce p.stars a:hover:after {
   display: block;
   text-align: left;
   font-size: 34px;
+}
+
+.woocommerce .wc-new-badge,
+.is-sub .cart-subtotal,
+.is-sub .order-total,
+.is-sub .recurring-totals {
+  display: none;
+}
+
+.order-total.recurring-total,
+.cart-subtotal.recurring-total {
+  display: table-row;
+}
+
+.order-total th,
+.order-total .amount {
+  font-size: 20px;
+}
+
+.woocommerce .cart_totals.is-sub table tr>th {
+  width: 57%;
+}
+
+.cart_totals  .woocommerce-info p {
+  font-size: 16px;
+}
+
+.standard-browser .products .product figure.product-transition-fade:hover .img-wrap.first-image > img {
+  opacity: 0.8;
+}
+
+.shopping-bag-item .sub-menu .shopping-bag .bag-total {
+  display: none;
+}
+
+.woocommerce-cart .cart-totals-wrap .cart_totals .shipping {
+  display: none;
 }

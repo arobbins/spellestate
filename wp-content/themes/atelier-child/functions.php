@@ -303,107 +303,111 @@ add_filter('woocommerce_package_rates', 'hide_shipping_based_on_group', 10, 2);
  */
 if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins')))) {
 
-    // 6 Bottle Club
-    if (! class_exists('WC_6_Bottle_Club_Shipping_Method')) {
+  // 6 Bottle Club
+  if (! class_exists('WC_6_Bottle_Club_Shipping_Method')) {
 
-      function six_bottle_club_shipping_method_init() {
+    function six_bottle_club_shipping_method_init() {
 
-        class WC_6_Bottle_Club_Shipping_Method extends WC_Shipping_Method {
-          /**
-           * Constructor for your shipping class
-           *
-           * @access public
-           * @return void
-           */
-          public function __construct() {
+      class WC_6_Bottle_Club_Shipping_Method extends WC_Shipping_Method {
 
-            global $woocommerce;
+        /**
+         * Constructor for your shipping class
+         *
+         * @access public
+         * @return void
+         */
+        public function __construct() {
 
-            // Id for your shipping method. Should be unique.
-            $this->id  = '6_bottle_club';
-            // Title shown in admin
-            $this->title = __('6 Bottle Club Shipping Method');
-            $this->six_bottle_rate_option = '6_bottle_club';
-            // Description shown in admin
-            $this->method_description = __('');
-            $this->title = "6 Bottle Club Rate";
-            // Actions
-            add_action( 'woocommerce_update_options_shipping_' . $this->id, array( $this, 'process_admin_options' ) );
+          global $woocommerce;
 
-            $this->init();
+          // Id for your shipping method. Should be unique.
+          $this->id  = '6_bottle_club';
+          // Title shown in admin
+          $this->title = __('6 Bottle Club Shipping Method');
+          $this->six_bottle_rate_option = '6_bottle_club';
+          // Description shown in admin
+          $this->method_description = __('');
+          $this->title = "6 Bottle Club Rate";
+          // Actions
+          add_action( 'woocommerce_update_options_shipping_' . $this->id, array( $this, 'process_admin_options' ) );
 
-          }
+          $this->init();
 
-          /**
-            * Init your settings
-            *
-            * @access public
-            * @return void
-          */
-          public function init() {
+        }
 
-            // Load the form fields.
-            $this->init_form_fields();
+        /**
+          * Init your settings
+          *
+          * @access public
+          * @return void
+        */
+        public function init() {
 
-            // Load the form settings.
-            $this->init_settings();
+          // Load the form fields.
+          $this->init_form_fields();
 
-            $this->enabled  = $this->get_option('enabled');
-            $this->type     = $this->settings['type'];
-            $this->cost     = $this->settings['cost'];
-          }
+          // Load the form settings.
+          $this->init_settings();
 
-          function init_form_fields() {
+          $this->enabled  = $this->get_option('enabled');
+          $this->type     = $this->settings['type'];
+          $this->cost     = $this->settings['cost'];
+        }
 
-            global $woocommerce;
+        function init_form_fields() {
 
-            $this->form_fields = array(
-                'enabled'   => array(
-                'title'     => __( 'Enable', 'woocommerce' ),
-                'type'      => 'checkbox',
-                'label'     => __( 'Enable 6 Bottle Club Shipping', 'woocommerce' ),
-                'default'   => 'no'
-              ),
-              'amount'      => array(
-                'title'       => 'Shipping amount',
-                'description' => '',
-                'type'        => 'price',
-                'placeholder' => wc_format_localized_price(0),
-                'class'       => 'Test'
-              )
-            );
-          }
+          global $woocommerce;
 
-          /**
-            * calculate_shipping function.
-            *
-            * @access public
-            * @param mixed $package
-            * @return void
-          */
-          public function calculate_shipping($package) {
-            $rate = array(
-              'id' => $this->id,
-              'label' => $this->title,
-              'cost' => $this->settings['amount'],
-              'calc_tax' => 'per_item'
-            );
+          $this->form_fields = array(
+              'enabled'   => array(
+              'title'     => __( 'Enable', 'woocommerce' ),
+              'type'      => 'checkbox',
+              'label'     => __( 'Enable 6 Bottle Club Shipping', 'woocommerce' ),
+              'default'   => 'no'
+            ),
+            'amount'      => array(
+              'title'       => 'Shipping amount',
+              'description' => '',
+              'type'        => 'price',
+              'placeholder' => wc_format_localized_price(0),
+              'class'       => 'Test'
+            )
+          );
+        }
 
-            // Register the rate
-            $this->add_rate($rate);
-          }
+        /**
+          * calculate_shipping function.
+          *
+          * @access public
+          * @param mixed $package
+          * @return void
+        */
+        public function calculate_shipping($package) {
+          $rate = array(
+            'id' => $this->id,
+            'label' => $this->title,
+            'cost' => $this->settings['amount'],
+            'calc_tax' => 'per_item'
+          );
+
+          // Register the rate
+          $this->add_rate($rate);
         }
       }
     }
+  }
 
-    add_action('woocommerce_shipping_init', 'six_bottle_club_shipping_method_init');
+  add_action('woocommerce_shipping_init', 'six_bottle_club_shipping_method_init');
 
-    function add_6_bottle_club_method( $methods ) {
-      $methods[] = 'WC_6_Bottle_Club_Shipping_Method';
-      return $methods;
-    }
+  function add_6_bottle_club_method( $methods ) {
 
-    add_filter( 'woocommerce_shipping_methods', 'add_6_bottle_club_method' );
+    $methods[] = 'WC_6_Bottle_Club_Shipping_Method';
+    return $methods;
+  }
+
+  add_filter( 'woocommerce_shipping_methods', 'add_6_bottle_club_method' );
+
+
 }
 
 

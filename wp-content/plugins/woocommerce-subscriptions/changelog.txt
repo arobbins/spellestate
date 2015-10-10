@@ -1,5 +1,28 @@
 *** WooCommerce Subscriptions Changelog ***
 
+2015.10.05 - version 2.0.0
+ * New: purchase different subscription products in the same transaction: https://docs.woothemes.com/document/subscriptions/version-2/#section-2
+ * New: administration interface for Adding or Editing a subscription: https://docs.woothemes.com/document/subscriptions/version-2/#section-3
+ * New: downloadable content dripping: https://docs.woothemes.com/document/subscriptions/version-2/#section-4
+ * New: customer facing View Subscription page: https://docs.woothemes.com/document/subscriptions/version-2/#section-5
+ * New: support for PayPal Reference Transactions: https://docs.woothemes.com/document/subscriptions/version-2/#section-8
+ * New: Pending Cancellation status applied to a subscription after it has been cancelled but the customer or store manager until the prepaid term ends: https://docs.woothemes.com/document/subscriptions/version-2/#pending-cancellation
+ * Tweak: Subscriptions administration list table now includes recurring total, payment method and all search/sorting features for stores with a large number of subscriptions: https://docs.woothemes.com/document/subscriptions/version-2/#list-table
+ * Tweak: Improved flow on renewal - create renewal orders before processing the payment: https://docs.woothemes.com/document/subscriptions/version-2/#section-7
+ * Tweak: one end date is now used to refer to the date on which a subscription did or will expire or was cancelled: https://docs.woothemes.com/document/subscriptions/version-2/#one-end-date
+ * Tweak: the renewal of a cancelled or expired subscription is now called "Resubscribe" to avoid confusion with normal renewal process: https://docs.woothemes.com/document/subscriptions/version-2/#resubscribe-not-renew
+
+2015.09.29 - version 1.5.31
+ * Tweak: introduce a new transient lock at the start of PayPal IPN handling to prevent duplicate IPN handling on sites taking more than a minute to process an IPN message and set the permanent lock
+ * Fix: handling of PayPal's 'recurring_payment_suspended_due_to_max_failed_payment' IPN message for subscriptions purchased with PayPal Standard
+ * Fix: infinite loop and memory exhaustion when attempting to switch a limited subscription product
+
+2015.08.28 - version 1.5.30
+ * Fix: redundant pricing elements in subtotal and cart widget totals
+ * Fix: never given an additional free trials when renewing a cancelled subscription
+ * Fix: always set an end date for the a switched subscription
+ * Fix: don't copy over download permissions meta from initial order to renewal order/s
+
 2015.07.28 - version 1.5.29
  * Tweak: WooCommerce v2.4 compatibility
  * Tweak: improve Javascript show/hide field logic on Edit Product to make it easier for 3rd party extensions to work with Subscriptions

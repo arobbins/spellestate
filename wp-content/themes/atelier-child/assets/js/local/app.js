@@ -11,6 +11,7 @@
     Utils.removeMailText();
     Utils.toggleRows();
     Utils.responsifyTables();
+    // Utils.addClassWhenSubCheckout();
 
     /* Team */
     Team.reorderNameAndPosition();

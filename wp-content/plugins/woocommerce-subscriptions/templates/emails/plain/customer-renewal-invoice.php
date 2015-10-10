@@ -6,7 +6,9 @@
  * @package WooCommerce_Subscriptions/Templates/Emails/Plain
  * @version 1.4
  */
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
 
 echo $email_heading . "\n\n";
 
@@ -18,20 +20,20 @@ if ( $order->status == 'pending' ) {
 
 echo "****************************************************\n\n";
 
-do_action( 'woocommerce_email_before_order_table', $order, false );
+do_action( 'woocommerce_email_before_order_table', $order, false, true );
 
-echo sprintf( __( 'Order number: %s', 'woocommerce-subscriptions'), $order->get_order_number() ) . "\n";
-echo sprintf( __( 'Order date: %s', 'woocommerce-subscriptions'), date_i18n( woocommerce_date_format(), strtotime( $order->order_date ) ) ) . "\n";
+echo sprintf( __( 'Order number: %s', 'woocommerce-subscriptions' ), $order->get_order_number() ) . "\n";
+echo sprintf( __( 'Order date: %s', 'woocommerce-subscriptions' ), date_i18n( woocommerce_date_format(), strtotime( $order->order_date ) ) ) . "\n";
 
 do_action( 'woocommerce_email_order_meta', $order, false, true );
 
 echo "\n";
 
 switch ( $order->status ) {
-	case "completed" :
+	case 'completed' :
 		echo $order->email_order_items_table( $order->is_download_permitted(), false, true, '', '', true );
 	break;
-	case "processing" :
+	case 'processing' :
 		echo $order->email_order_items_table( $order->is_download_permitted(), true, true, '', '', true );
 	break;
 	default :

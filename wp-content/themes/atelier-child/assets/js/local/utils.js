@@ -21,6 +21,17 @@
       $mailNavItem.addClass('icon-envelope');
     };
 
+    var addClassWhenSubCheckout = function addClassWhenSubCheckout() {
+      var $sub = $('.woocommerce-cart .cart_totals .recurring-total');
+      var $totalWrap = $('.woocommerce-cart .cart_totals');
+      var $items = parseInt($('.woocommerce-cart .shopping-bag-item .num-items').text());
+
+      if($sub && $items === 1) {
+        $totalWrap.addClass('is-sub');
+      }
+
+    };
+
     var toggleRows = function toggleRows() {
 
       $reviewRows.click(function() {
@@ -45,7 +56,8 @@
       addBorderOnScroll: addBorderOnScroll,
       removeMailText: removeMailText,
       toggleRows: toggleRows,
-      responsifyTables: responsifyTables
+      responsifyTables: responsifyTables,
+      addClassWhenSubCheckout: addClassWhenSubCheckout
     }
 
   })();

@@ -6,27 +6,30 @@
  * @package WooCommerce_Subscriptions/Templates/Emails
  * @version 1.5
  */
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
-
-<h2><?php _e( 'Subscription Information:', 'woocommerce-subscriptions' ) ?></h2>
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+?>
+<?php if ( ! empty( $subscriptions ) ) : ?>
+<h2><?php esc_html_e( 'Subscription Information:', 'woocommerce-subscriptions' ) ?></h2>
 <table cellspacing="0" cellpadding="6" style="width: 100%; border: 1px solid #eee;" border="1" bordercolor="#eee">
 	<thead>
 		<tr>
-			<th scope="col" style="text-align:left; border: 1px solid #eee;"><?php _e( 'Subscription', 'woocommerce-subscriptions' ); ?></th>
-			<th scope="col" style="text-align:left; border: 1px solid #eee;"><?php _e( 'Start Date', 'woocommerce-subscriptions' ); ?></th>
-			<th scope="col" style="text-align:left; border: 1px solid #eee;"><?php _e( 'End Date', 'woocommerce-subscriptions' ); ?></th>
+			<th scope="col" style="text-align:left; border: 1px solid #eee;"><?php esc_html_e( 'Subscription', 'woocommerce-subscriptions' ); ?></th>
+			<th scope="col" style="text-align:left; border: 1px solid #eee;"><?php esc_html_e( 'Start Date', 'woocommerce-subscriptions' ); ?></th>
+			<th scope="col" style="text-align:left; border: 1px solid #eee;"><?php esc_html_e( 'End Date', 'woocommerce-subscriptions' ); ?></th>
+			<th scope="col" style="text-align:left; border: 1px solid #eee;"><?php esc_html_e( 'Price', 'woocommerce-subscriptions' ); ?></th>
 		</tr>
 	</thead>
 	<tbody>
-	<?php
-	foreach ( WC_Subscriptions_Order::get_recurring_items( $order ) as $item ) { ?>
-			<tr>
-				<td scope="row" style="text-align:left; border: 1px solid #eee;"><?php echo $item['name']; ?></td>
-				<td scope="row" style="text-align:left; border: 1px solid #eee;"><?php echo date_i18n( woocommerce_date_format(), strtotime( $item['subscription_start_date'] ) ); ?></td>
-				<td scope="row" style="text-align:left; border: 1px solid #eee;"><?php echo ( ! empty( $item['subscription_expiry_date'] ) ? date_i18n( woocommerce_date_format(), strtotime( $item['subscription_expiry_date'] ) ) : __( 'When Cancelled', 'woocommerce-subscriptions' ) ); ?>
-			</tr>
-	<?php
-	}
-?>
-	</tbody>
+	<?php foreach ( $subscriptions as $subscription ) : ?>
+		<tr>
+			<td scope="row" style="text-align:left; border: 1px solid #eee;"><a href="<?php echo esc_url( ( $is_admin_email ) ? wcs_get_edit_post_link( $subscription->id ) : $subscription->get_view_order_url() ); ?>"><?php echo esc_html( $subscription->get_order_number() ); ?></a></td>
+			<td scope="row" style="text-align:left; border: 1px solid #eee;"><?php echo esc_html( date_i18n( wc_date_format(), $subscription->get_time( 'start', 'site' ) ) ); ?></td>
+			<td scope="row" style="text-align:left; border: 1px solid #eee;"><?php echo esc_html( ( 0 < $subscription->get_time( 'end' ) ) ? date_i18n( wc_date_format(), $subscription->get_time( 'end', 'site' ) ) : __( 'When Cancelled', 'woocommerce-subscriptions' ) ); ?></td>
+			<td scope="row" style="text-align:left; border: 1px solid #eee;"><?php echo wp_kses_post( $subscription->get_formatted_order_total() ); ?></td>
+		</tr>
+	<?php endforeach; ?>
+</tbody>
 </table>
+<?php endif; ?>
