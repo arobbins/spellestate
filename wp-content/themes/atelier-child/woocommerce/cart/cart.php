@@ -9,11 +9,13 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-wc_print_notices();
+  wc_print_notices();
 
 	$cart_count = sf_product_items_text(WC()->cart->cart_contents_count);
 
-	do_action( 'woocommerce_before_cart' ); ?>
+	do_action( 'woocommerce_before_cart' );
+
+  ?>
 
 	<form action="<?php echo esc_url( WC()->cart->get_cart_url() ); ?>" method="post">
 

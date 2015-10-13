@@ -56,7 +56,12 @@
 	$sf_include_isotope = true;
 ?>
 
-<?php get_header('shop'); ?>
+<?php
+
+  require_once(dirname(__FILE__) . '/../includes/user-account.php');
+  get_header('shop');
+
+?>
 
 <!--
   Showing custom header

@@ -614,3 +614,11 @@ function my_login_logo_url_title() {
   return 'Spell Estate';
 }
 add_filter('login_headertitle', 'my_login_logo_url_title');
+
+/*
+  Redirect non-admins to the homepage after logging into the site.
+*/
+function acme_login_redirect($redirect_to, $request, $user) {
+  return ( is_array( $user->roles ) && in_array( 'administrator', $user->roles ) ) ? admin_url() : site_url('/my-account');
+}
+add_filter('login_redirect', 'acme_login_redirect', 10, 3);

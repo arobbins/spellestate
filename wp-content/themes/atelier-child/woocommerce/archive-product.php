@@ -131,7 +131,10 @@
 	$sf_include_isotope = true;
 	$sf_has_products = true;
 
-	get_header('shop');	?>
+  require_once(dirname(__FILE__) . '/../includes/user-account.php');
+	get_header('shop');
+
+  ?>
 
 	<?php if (!$product_fw_mode) { ?>
 

@@ -1,4 +1,9 @@
-<?php get_header(); ?>
+<?php
+
+  include('includes/user-account.php');
+  get_header();
+
+?>
 
 <!--
   Showing custom header
@@ -44,6 +49,7 @@
   // Check if page should be enabled in full width mode
   if (!$pb_fw_mode) { ?>
   <div class="container">
+
 <?php } ?>
 
   <?php sf_base_layout('page'); ?>

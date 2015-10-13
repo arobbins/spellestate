@@ -1,4 +1,9 @@
-<?php get_header(); ?>
+<?php
+
+  include('includes/user-account.php');
+  get_header();
+
+?>
 
 <?php
   global $sf_options;

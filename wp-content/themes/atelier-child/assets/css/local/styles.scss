@@ -110,6 +110,11 @@ nav .menu > li.menu-item > a, nav.std-menu .menu > li > a span,
   font-size: 32px;
 }
 
+.shopping-bag-item>a>i.sf-icon-cart {
+  top: 31%;
+  position: relative;
+}
+
 #footer-wrap {
   box-shadow: none;
 }
@@ -2677,4 +2682,49 @@ body.woocommerce p.stars a:hover:after {
 
 .woocommerce-cart .cart-totals-wrap .cart_totals .shipping {
   display: none;
+}
+
+.page-shadow #container {
+  box-shadow: none;
+}
+
+.user-account {
+  margin-top: 10px;
+  float: left;
+  width: 100%;
+}
+
+.user-account-link {
+  margin-left: 10px;
+}
+
+.user-account span,
+.user-account-link {
+  float: right;
+  font-size: 14px;
+  color: #333;
+  font-family: "Julius Sans One";
+}
+
+.user-account-link:hover {
+  color: #b2243c;
+}
+
+.sticky-wrapper #header > .container {
+  position: relative;
+  top: -13px;
+}
+
+.sticky-wrapper.is-sticky #header > .container {
+  position: relative;
+  top: 0;
+}
+
+.my-account-right #address-book {
+  float: left;
+  width: 100%;
+}
+
+.woocommerce-account p.myaccount_address {
+  padding-bottom: 1em;
 }
