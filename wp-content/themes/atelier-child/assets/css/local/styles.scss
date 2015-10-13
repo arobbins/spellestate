@@ -2728,3 +2728,8 @@ body.woocommerce p.stars a:hover:after {
 .woocommerce-account p.myaccount_address {
   padding-bottom: 1em;
 }
+
+.owl-wrapper-outer,
+.variable-image-wrapper .img-wrap {
+  height: auto !important;
+}
