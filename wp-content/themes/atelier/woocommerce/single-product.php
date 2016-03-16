@@ -109,7 +109,7 @@
 				<?php do_action('sf_before_sidebar'); ?>
 				
 				<div class="sidebar-widget-wrap">
-					<?php dynamic_sidebar($left_sidebar); ?>
+					<?php dynamic_sidebar(strtolower($left_sidebar)); ?>
 				</div>
 				
 				<?php do_action('sf_after_sidebar'); ?>
@@ -127,7 +127,7 @@
 				<?php do_action('sf_before_sidebar'); ?>
 				
 				<div class="sidebar-widget-wrap">
-					<?php dynamic_sidebar($left_sidebar); ?>
+					<?php dynamic_sidebar(strtolower($left_sidebar)); ?>
 				</div>
 				
 				<?php do_action('sf_after_sidebar'); ?>
@@ -141,7 +141,7 @@
 				<?php do_action('sf_before_sidebar'); ?>
 				
 				<div class="sidebar-widget-wrap">
-					<?php dynamic_sidebar($right_sidebar); ?>
+					<?php dynamic_sidebar(strtolower($right_sidebar)); ?>
 				</div>
 				
 				<?php do_action('sf_after_sidebar'); ?>
@@ -155,7 +155,7 @@
 				<?php do_action('sf_before_sidebar'); ?>
 				
 				<div class="sidebar-widget-wrap">
-					<?php dynamic_sidebar($right_sidebar); ?>
+					<?php dynamic_sidebar(strtolower($right_sidebar)); ?>
 				</div>
 				
 				<?php do_action('sf_after_sidebar'); ?>

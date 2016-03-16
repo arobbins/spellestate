@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div class="total_row tax_row" data-order_item_id="<?php echo esc_attr( $item_id ); ?>">
 	<p class="wide">
 		<select name="recurring_order_taxes_rate_id[<?php echo esc_attr( $item_id ); ?>]">
-			<option value=""><?php esc_html_e( 'N/A', 'woocommerce-subscriptions' ); ?></option>
+			<option value=""><?php echo esc_html_x( 'N/A', 'no information about something', 'woocommerce-subscriptions' ); ?></option>
 			<?php foreach ( $tax_codes as $tax_id => $tax_code ) : ?>
 				<option value="<?php echo esc_attr( $tax_id ); ?>" <?php selected( $tax_id, isset( $item['rate_id'] ) ? $item['rate_id'] : '' ); ?>><?php echo esc_html( $tax_code ); ?></option>
 			<?php endforeach; ?>

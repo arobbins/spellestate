@@ -83,7 +83,7 @@ class WPMDBPro_CLI_Command extends WPMDBPro_Command {
 	 *     * A comma separated list of the tables to backup.
 	 *
 	 * [--media=<compare|compare-and-remove|remove-and-copy>]
-	 * : Perform a migration of the media files. Requires the Media Files Addon.
+	 * : Perform a migration of the media files. Requires the Media Files addon.
 	 *
 	 *     Accepted values:
 	 *
@@ -101,6 +101,12 @@ class WPMDBPro_CLI_Command extends WPMDBPro_Command {
 	 *     * Only applies to multisite installs
 	 *     * Separate multiple subsites with commas
 	 *     * Use Blog ID or URL of *local* subsites
+	 *
+	 * [--subsite=<blog-id|subsite-url>]
+	 * : Push the given subsite to the remote single site install.
+	 * Requires the Multisite Tools addon.
+	 *
+	 *     Overrides the --media-subsites option.
 	 *
 	 * ## EXAMPLES
 	 *
@@ -199,7 +205,7 @@ class WPMDBPro_CLI_Command extends WPMDBPro_Command {
 	 *     * A comma separated list of the tables to backup.
 	 *
 	 * [--media=<compare|compare-and-remove|remove-and-copy>]
-	 * : Perform a migration of the media files. Requires the Media Files Addon.
+	 * : Perform a migration of the media files. Requires the Media Files addon.
 	 *
 	 *     Accepted values:
 	 *
@@ -217,6 +223,12 @@ class WPMDBPro_CLI_Command extends WPMDBPro_Command {
 	 *     * Only applies to multisite installs
 	 *     * Separate multiple subsites with commas
 	 *     * Use Blog ID or URL of *remote* subsites
+	 *
+	 * [--subsite=<blog-id|subsite-url>]
+	 * : Pull the remote single site install into the given subsite.
+	 * Requires the Multisite Tools addon.
+	 *
+	 *     Overrides the --media-subsites option.
 	 *
 	 * ## EXAMPLES
 	 *

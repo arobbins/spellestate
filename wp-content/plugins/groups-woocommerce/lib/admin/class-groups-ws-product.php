@@ -37,6 +37,7 @@ class Groups_WS_Product {
 			add_action( 'admin_enqueue_scripts', array( __CLASS__, 'admin_enqueue_scripts' ) );
 			add_action( 'woocommerce_product_after_variable_attributes', array( __CLASS__, 'woocommerce_product_after_variable_attributes'), 10, 3 );
 			//add_action( 'woocommerce_variation_options', array( __CLASS__, 'woocommerce_variation_options'), 10, 3 );
+			add_action( 'woocommerce_save_product_variation', array( __CLASS__, 'woocommerce_save_product_variation' ), 10, 2 );
 		}
 		add_filter( 'woocommerce_get_price_html', array( __CLASS__, 'woocommerce_get_price_html' ), 10, 2 );
 	}
@@ -497,6 +498,43 @@ class Groups_WS_Product {
 	 * @param WP_Post $variation
 	 */
 	public static function woocommerce_variation_options( $loop, $variation_data, $variation ) {
+	}
+
+	/**
+	 * Save variation parameters.
+	 * 
+	 * @param int $variation_id
+	 * @param int $i
+	 */
+	public static function woocommerce_save_product_variation( $variation_id, $i ) {
+
+		// variations
+		$variation_post_ids = isset( $_POST['variable_post_id'] ) ? $_POST['variable_post_id'] : null;
+		if ( ( $variation_post_ids !== null ) && is_array( $variation_post_ids ) ) {
+			foreach( $variation_post_ids as $variation_post_id ) {
+				$variation_post_id = intval( $variation_post_id );
+				delete_post_meta( $variation_post_id, '_groups_variation_groups' );
+				delete_post_meta( $variation_post_id, '_groups_variation_groups_remove' );
+				if ( !empty( $_POST['_groups_variation_groups'] ) && is_array( $_POST['_groups_variation_groups'] ) ) {
+					if ( !empty( $_POST['_groups_variation_groups'][$variation_post_id] ) && is_array( $_POST['_groups_variation_groups'][$variation_post_id] ) ) {
+						foreach( $_POST['_groups_variation_groups'][$variation_post_id] as $group_id ) {
+							if ( $group = Groups_Group::read( $group_id ) ) {
+								add_post_meta( $variation_post_id, '_groups_variation_groups', $group->group_id );
+							}
+						}
+					}
+				}
+				if ( !empty( $_POST['_groups_variation_groups_remove'] ) && is_array( $_POST['_groups_variation_groups_remove'] ) ) {
+					if ( !empty( $_POST['_groups_variation_groups_remove'][$variation_post_id] ) && is_array( $_POST['_groups_variation_groups_remove'][$variation_post_id] ) ) {
+						foreach( $_POST['_groups_variation_groups_remove'][$variation_post_id] as $group_id ) {
+							if ( $group = Groups_Group::read( $group_id ) ) {
+								add_post_meta( $variation_post_id, '_groups_variation_groups_remove', $group->group_id );
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 
 	/**

@@ -14,15 +14,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 <tr class="variable_subscription_pricing show_if_variable-subscription">
 	<td colspan="2">
-		<label><?php printf( esc_html__( 'Subscription Price (%s)', 'woocommerce-subscriptions' ), esc_html( get_woocommerce_currency_symbol() ) ) ?></label>
+		<label>
+			<?php
+			// translators: placeholder is a currency symbol / code
+			printf( esc_html__( 'Subscription Price (%s)', 'woocommerce-subscriptions' ), esc_html( get_woocommerce_currency_symbol() ) );
+			?>
+		</label>
 		<?php
 		// Subscription Price
 		woocommerce_wp_text_input( array(
 			'id'            => 'variable_subscription_price[' . $loop . ']',
 			'class'         => 'wc_input_subscription_price',
 			'wrapper_class' => '_subscription_price_field',
+			// translators: placeholder is a currency symbol / code
 			'label'         => sprintf( __( 'Subscription Price (%s)', 'woocommerce-subscriptions' ), get_woocommerce_currency_symbol() ),
-			'placeholder'   => _x( 'e.g. 5.90', 'example price', 'woocommerce-subscriptions' ),
+			'placeholder'   => _x( 'e.g. 9.90', 'example price', 'woocommerce-subscriptions' ),
 			'value'         => get_post_meta( $variation->ID, '_subscription_price', true ),
 			'type'          => 'number',
 			'custom_attributes' => array(
@@ -50,7 +56,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			'wrapper_class' => '_subscription_period_field',
 			'label'         => __( 'Billing Period', 'woocommerce-subscriptions' ),
 			'value'         => $subscription_period,
-			'description'   => __( 'for', 'woocommerce-subscriptions' ),
+			'description'   => _x( 'for', 'Edit product screen, between the Billing Period and Subscription Length dropdowns', 'woocommerce-subscriptions' ),
 			'options'       => wcs_get_subscription_period_strings(),
 			)
 		);
@@ -108,7 +114,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 			'wrapper_class' => '_subscription_trial_period_field',
 			'label'         => __( 'Subscription Trial Period', 'woocommerce-subscriptions' ),
 			'options'       => wcs_get_available_time_periods(),
-			'description'   => sprintf( __( 'An optional period of time to wait before charging the first recurring payment. Any sign up fee will still be charged at the outset of the subscription. %s', 'woocommerce-subscriptions' ), self::get_trial_period_validation_message() ),
+			// translators: placeholder is trial period validation message if passed an invalid value (e.g. "Trial period can not exceed 4 weeks")
+			'description'   => sprintf( _x( 'An optional period of time to wait before charging the first recurring payment. Any sign up fee will still be charged at the outset of the subscription. %s', 'Trial period dropdown\'s description in pricing fields', 'woocommerce-subscriptions' ), self::get_trial_period_validation_message() ),
 			'desc_tip'      => true,
 			'value'         => WC_Subscriptions_Product::get_trial_period( $variation->ID ), // Explicity set value in to ensure backward compatibility
 			)

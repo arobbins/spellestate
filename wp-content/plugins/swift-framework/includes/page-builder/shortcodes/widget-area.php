@@ -5,7 +5,7 @@
     *	Swift Page Builder - Sidebar Widget Shortcode
     *	------------------------------------------------
     *	Swift Framework
-    * 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+    * 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     */
 
@@ -56,8 +56,8 @@
     SPBMap::map( 'spb_widget_area', array(
             "name"   => __( "Widget Area", 'swift-framework-plugin' ),
             "base"   => "spb_widget_area",
-            "class"  => "spb_widget_area",
-            "icon"   => "spb-icon-widget-area",
+            "class"  => "spb_widget_area spb_tab_layout",
+            "icon"   => "icon-widget-area",
             "params" => array(
                 array(
                     "type"        => "widgetised_sidebars",

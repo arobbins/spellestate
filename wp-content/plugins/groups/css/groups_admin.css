@@ -1,18 +1,18 @@
 /**
  * groups_admin.css
- * 
+ *
  * Copyright (c) "kento" Karim Rahimpur www.itthinx.com
- * 
+ *
  * This code is released under the GNU General Public License.
  * See COPYRIGHT.txt and LICENSE.txt.
- * 
+ *
  * This code is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * This header and all notices must be kept intact.
- * 
+ *
  * @author Karim Rahimpur
  * @package groups
  * @since groups 1.0.0
@@ -24,9 +24,21 @@
 .filters,
 .manage {
 	background-color: #fff;
-	padding: 1em;
-	margin-bottom: 1em;
+	padding: 0.62em;
+	margin-bottom: 0.62em;
 	border: 1px solid #ddd;
+}
+.filters fieldset,
+.manage fieldset {
+	display: inline-block;
+	clear: both;
+}
+.filters legend {
+	padding: 0 0 2px 0;
+}
+.filters form label {
+	white-space: nowrap;
+	margin-bottom: 0.62em;
 }
 .manage a.add {
 	text-decoration: none;
@@ -35,6 +47,16 @@
 .manage a.add .icon {
 	vertical-align: middle;
 	padding-right: 4px;
+}
+.manage-groups a.add.page-title-action img.icon,
+.manage-groups a.refresh.page-title-action img.icon,
+.manage-groups .row-actions span.edit img,
+.manage-groups .row-actions span.remove img,
+.manage-capabilities a.add.page-title-action img.icon,
+.manage-capabilities a.refresh.page-title-action img.icon,
+.manage-capabilities .row-actions span.edit img,
+.manage-capabilities .row-actions span.remove img {
+	vertical-align: sub;
 }
 .manage a.add .label {
 	height: 20px;
@@ -74,10 +96,7 @@ input.group-id-filter,
 input.group-name-filter,
 input.capability-id-filter,
 input.capability-filter {
-	margin-right: 1em;
-}
-input[name="clear_filters"] {
-	float:right;
+	margin-right: 0.31em;
 }
 
 div.group.new label,
@@ -149,14 +168,16 @@ div.capability.edit label {
 	background: url(../images/required.png) transparent no-repeat left center;
 	padding-left: 16px ! important;
 }
-div.groups-footer {
+.groups-footer {
 	padding-top: 16px;
 	color: #999;
 }
-div.groups-footer a {
+.groups-footer a {
 	color: #777;
+	text-decoration: none;
+	font-weight: bold;
 }
-div.groups-footer form {
+.groups-footer form {
 	display: inline;
 }
 
@@ -266,4 +287,44 @@ div.groups-footer form {
 		height: 32px;
 		font-size: 16px;
 	}
+}
+
+.groups-admin-add-ons ul {
+	list-style: none;
+	display: block;
+	padding: 0;
+	overflow: hidden;
+}
+.groups-admin-add-ons li {
+	float: left;
+	margin: 0 1em 1em 0;
+	padding: 8px;
+	vertical-align: top;
+	width: 256px;
+	height: 158px;
+	background-color: #fff;
+	border: 1px solid #ccc;
+}
+.groups-admin-add-ons .add-ons h3 {
+	margin: 0;
+	display: block;
+	clear: both;
+}
+.groups-admin-add-ons .add-ons h3 img {
+	vertical-align: middle;
+	margin: 0 8px 0 0;
+	display: block;
+	float: left;
+}
+.groups-admin-add-ons .add-ons a {
+	text-decoration: none;
+	display: block;
+	overflow: hidden;
+}
+.groups-admin-add-ons .add-ons p {
+	margin: 0;
+	padding-top: 8px;
+	clear: both;
+	display: block;
+	color: #333;
 }

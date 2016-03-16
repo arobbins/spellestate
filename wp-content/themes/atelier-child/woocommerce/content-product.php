@@ -6,7 +6,7 @@
 	 *
 	 * @author 		WooThemes
 	 * @package 	WooCommerce/Templates
-	 * @version     2.4.0
+	 * @version     2.5.0
 	 */
 
 	if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -130,7 +130,7 @@
 	}
 
 	// Get variations for variable products
-	if ( $product->is_type( 'variable' ) ) {
+	if ( $product->is_type( 'variable' ) && $product_display_type == "preview-slider" ) {
 		$available_variations = $product->get_available_variations();
 	}
 
@@ -189,7 +189,7 @@
 
 	}
 ?>
-<div <?php post_class( $classes ); ?> data-width="<?php echo esc_attr($width); ?>">
+<li <?php post_class( $classes ); ?> data-width="<?php echo esc_attr($width); ?>">
 
 	<?php do_action( 'woocommerce_before_shop_loop_item' ); ?>
 
@@ -205,10 +205,15 @@
 			$thumb_image    = get_post_thumbnail_id();
 			$thumb_image_id = $thumb_image;
 			$thumb_img_url  = wp_get_attachment_url( $thumb_image, 'full' );
+
+			if ( $thumb_img_url == "" ) {
+				$thumb_img_url = "default";
+			}
+
 			$image = sf_aq_resize( $thumb_img_url, $thumb_width, $thumb_height, true, false );
 			$image_alt = esc_attr( sf_get_post_meta( $thumb_image_id, '_wp_attachment_image_alt', true ) );
 
-			if ($image_alt == "") {
+			if ( $image_alt == "" ) {
 				$image_alt = get_the_title();
 			}
 
@@ -336,7 +341,6 @@
 	</figure>
 
 	<div class="product-details">
-
 		<?php do_action( 'woocommerce_before_shop_loop_item_title' ); ?>
 		<h3>
       <a href="<?php the_permalink(); ?>" class="product-name"><?php the_field('product_name'); ?></a>
@@ -374,4 +378,4 @@
 	</div>
 	<?php } ?>
 
-</div>
+</li>

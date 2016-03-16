@@ -76,6 +76,8 @@ class WC_Product_Variable_Subscription extends WC_Product_Variable {
 
 		$this->subscription_payment_sync_date = 0;
 
+		$this->subscription_one_time_shipping = ( ! isset( $this->product_custom_fields['_subscription_one_time_shipping'][0] ) ) ? 'no' : $this->product_custom_fields['_subscription_one_time_shipping'][0];
+
 		if ( ! isset( $this->product_custom_fields['_subscription_limit'][0] ) ) {
 			$this->limit_subscriptions = 'no';
 		} elseif ( 'yes' == $this->product_custom_fields['_subscription_limit'][0] ) { // backward compatibility
@@ -524,7 +526,7 @@ class WC_Product_Variable_Subscription extends WC_Product_Variable {
 	 * @return object WC_Product_Subscription or WC_Product_Subscription_Variation
 	 */
 	public function get_child( $child_id ) {
-		return get_product( $child_id, array(
+		return wc_get_product( $child_id, array(
 			'product_type' => 'Subscription_Variation',
 			'parent_id'    => $this->id,
 			'parent'       => $this,

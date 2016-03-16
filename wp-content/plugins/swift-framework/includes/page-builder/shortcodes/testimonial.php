@@ -5,7 +5,7 @@
     *	Swift Page Builder - Testimonial Shortcode
     *	------------------------------------------------
     *	Swift Framework
-    * 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+    * 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     */
 
@@ -22,6 +22,8 @@
                 'order'       => '',
                 'category'    => '',
                 'pagination'  => 'no',
+                'display_type'=> 'standard',
+                'columns'     => '1',
                 'page_link'   => '',
                 'el_class'    => '',
                 'el_position' => '',
@@ -63,7 +65,28 @@
 
             $testimonials = new WP_Query( $testimonials_args );
 
-            $items .= '<ul class="testimonials clearfix">';
+            if ( $display_type == "masonry" ) {
+                $items .= '<ul class="testimonials masonry-items spb-isotope col-' . $columns . ' gutters row clearfix" data-layout-mode="masonry">';
+            } else {
+                $items .= '<ul class="testimonials clearfix">';
+            }
+
+            /* COLUMN VARIABLE CONFIG
+            ================================================== */
+            $item_class = "";
+            if ( $display_type == "masonry" ) {
+                if ( $columns == "1" ) {
+                    $item_class = "col-sm-12 ";
+                } else if ( $columns == "2" ) {
+                    $item_class = "col-sm-6 ";
+                } else if ( $columns == "3" ) {
+                    $item_class = "col-sm-4 ";
+                } else if ( $columns == "4" ) {
+                    $item_class = "col-sm-3 ";
+                } else if ( $columns == "5" ) {
+                    $item_class = "col-sm-sf-5 ";
+                }
+            }
 
             // TESTIMONIAL LOOP
 
@@ -86,14 +109,18 @@
 
                 $testimonial_image = sf_aq_resize( $testimonial_image_url, 70, 70, true, false );
 
-                $items .= '<li class="testimonial">';
+                if ( $testimonial_cite != "" ) {
+                    $items .= '<li class="testimonial has-cite '.$item_class.'">';
+                } else {
+                    $items .= '<li class="testimonial '.$item_class.'">';
+                }
                 $items .= '<div class="testimonial-text">' . do_shortcode( $testimonial_text ) . '</div>';
                 $items .= '<div class="testimonial-cite">';
                 if ( $testimonial_image ) {
                     $items .= '<img src="' . $testimonial_image[0] . '" width="' . $testimonial_image[1] . '" height="' . $testimonial_image[2] . '" alt="' . $testimonial_cite . '" />';
-                    $items .= '<div class="cite-text has-cite-image"><span class="cite-name">' . $testimonial_cite . '</span><span>' . $testimonial_cite_subtext . '</span></div>';
+                    $items .= '<div class="cite-text has-cite-image"><span class="cite-name">' . $testimonial_cite . '</span><span class="cite-subtext">' . $testimonial_cite_subtext . '</span></div>';
                 } else {
-                    $items .= '<div class="cite-text"><span class="cite-name">' . $testimonial_cite . '</span><span>' . $testimonial_cite_subtext . '</span></div>';
+                    $items .= '<div class="cite-text"><span class="cite-name">' . $testimonial_cite . '</span><span class="cite-subtext">' . $testimonial_cite_subtext . '</span></div>';
                 }
                 $items .= '</div>';
                 $items .= '</li>';
@@ -141,14 +168,9 @@
         }
     }
 
-    SPBMap::map( 'spb_testimonial', array(
-        "name"          => __( "Testimonials", 'swift-framework-plugin' ),
-        "base"          => "spb_testimonial",
-        "class"         => "",
-        "icon"          => "spb-icon-testimonial",
-        "wrapper_class" => "clearfix",
-        "controls"      => "full",
-        "params"        => array(
+     /* PARAMS
+    ================================================== */
+    $params = array(
             array(
                 "type"        => "textfield",
                 "heading"     => __( "Widget title", 'swift-framework-plugin' ),
@@ -211,12 +233,48 @@
                 ),
                 "description" => __( "Include a link to the testimonials page (which you must choose in the theme options).", 'swift-framework-plugin' )
             ),
-            array(
-                "type"        => "textfield",
-                "heading"     => __( "Extra class", 'swift-framework-plugin' ),
-                "param_name"  => "el_class",
-                "value"       => "",
-                "description" => __( "If you wish to style this particular content element differently, then use this field to add a class name and then refer to it in your css file.", 'swift-framework-plugin' )
-            )
-        )
+    );
+
+    if ( spb_get_theme_name() == "uplift" ) {
+        $params[] = array(
+            "type"        => "dropdown",
+            "heading"     => __( "Display Type", 'swift-framework-plugin' ),
+            "param_name"  => "display_type",
+            "value"       => array(
+                __( 'Standard', 'swift-framework-plugin' ) => "standard",
+                __( 'Masonry', 'swift-framework-plugin' )  => "masonry"
+            ),
+            "std"         => 'standard',
+            "description" => __( "Choose the display type for the asset.", 'swift-framework-plugin' )
+        );
+        $params[] = array(
+            "type"        => "dropdown",
+            "heading"     => __( "Column count", 'swift-framework-plugin' ),
+            "param_name"  => "columns",
+            "value"       => array( "5", "4", "3", "2", "1" ),
+            "required"       => array("display_type", "!=", "masonry"),
+            "std"         => '3',
+            "description" => __( "How many columns to display.", 'swift-framework-plugin' )
+        );
+    }
+
+    $params[] = array(
+            "type"        => "textfield",
+            "heading"     => __( "Extra class", 'swift-framework-plugin' ),
+            "param_name"  => "el_class",
+            "value"       => "",
+            "description" => __( "If you wish to style this particular content element differently, then use this field to add a class name and then refer to it in your css file.", 'swift-framework-plugin' )
+        );
+
+
+    /* SPBMap
+    ================================================== */
+    SPBMap::map( 'spb_testimonial', array(
+        "name"          => __( "Testimonials", 'swift-framework-plugin' ),
+        "base"          => "spb_testimonial",
+        "class"         => "",
+        "icon"          => "icon-testimonials",
+        "wrapper_class" => "clearfix",
+        "controls"      => "full",
+        "params"        => $params
     ) );

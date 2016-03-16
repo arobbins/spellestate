@@ -61,17 +61,27 @@ class Groups_WS {
 			foreach( $scheduled as $timestamp => $tasks ) {
 				foreach ( $tasks as $task ) {
 					if ( isset( $task['args'] ) &&
-						 isset( $task['args']['user_id'] ) &&
-						 isset( $task['args']['subscription_key'] )
+						 isset( $task['args']['user_id'] )
 					) {
-						wp_schedule_single_event(
-							$timestamp,
-							'groups_ws_subscription_expired',
-							array(
-								'user_id' => $task['args']['user_id'],
-								'subscription_key' => $task['args']['subscription_key']
-							)
-						);
+						if ( isset( $task['args']['subscription_id'] ) ) {
+							wp_schedule_single_event(
+								$timestamp,
+								'groups_ws_subscription_expired',
+								array(
+									'user_id' => $task['args']['user_id'],
+									'subscription_id' => $task['args']['subscription_id']
+								)
+							);
+						} else if ( isset( $task['args']['subscription_key'] ) ) {
+							wp_schedule_single_event(
+								$timestamp,
+								'groups_ws_subscription_expired',
+								array(
+									'user_id' => $task['args']['user_id'],
+									'subscription_key' => $task['args']['subscription_key']
+								)
+							);
+						}
 					}
 				}
 			}

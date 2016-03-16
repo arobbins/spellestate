@@ -33,6 +33,9 @@ class WPMDBPro_CLI extends WPMDBPro_CLI_Export {
 		$this->wpmdb    = &$this->wpmdbpro;
 		$this->wpmdbpro = $wpmdbpro;
 
+		// announce extra args
+		add_filter( 'wpmdb_cli_filter_get_extra_args', array( $this, 'filter_extra_args' ), 10, 1 );
+
 		// process push/pull profile args
 		add_filter( 'wpmdb_cli_filter_get_profile_data_from_args', array( $this, 'add_extra_args_for_addon_migrations' ), 10, 3 );
 
@@ -206,6 +209,25 @@ class WPMDBPro_CLI extends WPMDBPro_CLI_Export {
 	}
 
 	/**
+	 * Add extra CLI args used by this plugin.
+	 *
+	 * @param array $args
+	 *
+	 * @return array
+	 */
+	public function filter_extra_args( $args = array() ) {
+		$args[] = 'preserve-active-plugins';
+		$args[] = 'include-transients';
+		$args[] = 'backup';
+
+		// TODO: Move following to WPMDBPro_Media_Files_CLI along with Media Files args parsing.
+		$args[] = 'media';
+		$args[] = 'media-subsites';
+
+		return $args;
+	}
+
+	/**
 	 * Extend get_profile_data_from_args with options for push/pull
 	 * hooks on: wpmdb_cli_filter_get_profile_data_from_args
 	 *
@@ -340,8 +362,7 @@ class WPMDBPro_CLI extends WPMDBPro_CLI_Export {
 	 * @return array
 	 */
 	function extend_cli_migration( $profile ) {
-
-		if ( 'savefile' !== $this->profile['action'] ) {
+		if ( 'savefile' !== $profile['action'] ) {
 			$this->remote = $this->verify_remote_connection();
 			if ( is_wp_error( $this->remote ) ) {
 				return $this->remote;
@@ -350,6 +371,8 @@ class WPMDBPro_CLI extends WPMDBPro_CLI_Export {
 			$this->post_data['gzip']       = ( '1' == $this->remote['gzip'] ) ? 1 : 0;
 			$this->post_data['bottleneck'] = $this->remote['bottleneck'];
 			$this->post_data['prefix']     = $this->remote['prefix'];
+
+			$this->post_data['site_details']['remote'] = $this->remote['site_details'];
 
 			// set delay between requests if remote has a delay
 			if ( isset( $this->remote['delay_between_requests'] ) ) {
@@ -361,26 +384,28 @@ class WPMDBPro_CLI extends WPMDBPro_CLI_Export {
 			}
 
 			// Default the find/replace pairs if nothing specified so that we don't break the target.
-			if ( empty( $this->profile['replace_old'] ) && empty( $this->profile['replace_new'] ) ) {
+			if ( empty( $profile['replace_old'] ) && empty( $profile['replace_new'] ) ) {
 				$local  = array(
-					'',
-					preg_replace( '#^https?:#', '', home_url() ),
-					$this->get_absolute_root_file_path()
+						'',
+						preg_replace( '#^https?:#', '', home_url() ),
+						$this->get_absolute_root_file_path(),
 				);
 				$remote = array(
-					'',
-					preg_replace( '#^https?:#', '', $this->remote['url'] ),
-					$this->remote['path']
+						'',
+						preg_replace( '#^https?:#', '', $this->remote['url'] ),
+						$this->remote['path'],
 				);
 
-				if ( 'push' == $this->profile['action'] ) {
-					$this->profile['replace_old'] = $local;
-					$this->profile['replace_new'] = $remote;
+				if ( 'push' == $profile['action'] ) {
+					$profile['replace_old'] = $local;
+					$profile['replace_new'] = $remote;
 				} else {
-					$this->profile['replace_old'] = $remote;
-					$this->profile['replace_new'] = $local;
+					$profile['replace_old'] = $remote;
+					$profile['replace_new'] = $local;
 				}
 				unset( $local, $remote );
+
+				$profile = apply_filters( 'wpmdb_cli_default_find_and_replace', $profile, $this->post_data );
 			}
 		}
 
@@ -447,7 +472,7 @@ class WPMDBPro_CLI extends WPMDBPro_CLI_Export {
 	function check_wpmdbpro_version_before_migration( $profile ) {
 		// TODO: maybe instantiate WPMDBPro_CLI_Addon to make WPMDBPro_Addon::meets_version_requirements() available here
 		$wpmdb_pro_version = $GLOBALS['wpmdb_meta']['wp-migrate-db-pro']['version'];
-		if ( ! version_compare( $wpmdb_pro_version, '1.5.2', '>=' ) ) {
+		if ( ! version_compare( $wpmdb_pro_version, '1.5.4', '>=' ) ) {
 			return $this->cli_error( __( 'Please update WP Migrate DB Pro.', 'wp-migrate-db-pro-cli' ) );
 		}
 

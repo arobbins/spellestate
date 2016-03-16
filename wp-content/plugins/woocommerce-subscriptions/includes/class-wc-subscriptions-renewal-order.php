@@ -26,6 +26,9 @@ class WC_Subscriptions_Renewal_Order {
 		add_filter( 'woocommerce_order_status_changed', __CLASS__ . '::maybe_record_subscription_payment', 10, 3 );
 
 		add_filter( 'wcs_renewal_order_created', __CLASS__ . '::add_order_note', 10, 2 );
+
+		// Prevent customers from cancelling renewal orders. Needs to be hooked before WC_Form_Handler::cancel_order() (20)
+		add_filter( 'wp_loaded', __CLASS__ . '::prevent_cancelling_renewal_orders', 19, 3 );
 	}
 
 	/* Helper functions */
@@ -117,14 +120,37 @@ class WC_Subscriptions_Renewal_Order {
 
 		if ( is_a( $renewal_order, 'WC_Order' ) && wcs_is_subscription( $subscription ) ) {
 
-			// translators: placeholder is order number, hash before order number
-			$order_number = sprintf( __( '#%s', 'woocommerce-subscriptions' ), $renewal_order->get_order_number() );
+			$order_number = sprintf( _x( '#%s', 'hash before order number', 'woocommerce-subscriptions' ), $renewal_order->get_order_number() );
 
 			// translators: placeholder is order ID
 			$subscription->add_order_note( sprintf( __( 'Order %s created to record renewal.', 'woocommerce-subscriptions' ), sprintf( '<a href="%s">%s</a> ', esc_url( wcs_get_edit_post_link( $renewal_order->id ) ), $order_number ) ) );
 		}
 
 		return $renewal_order;
+	}
+
+	/**
+	 * Do not allow customers to cancel renewal orders.
+	 *
+	 * @since 2.0
+	 */
+	public static function prevent_cancelling_renewal_orders() {
+		if ( isset( $_GET['cancel_order'] ) && isset( $_GET['order'] ) && isset( $_GET['order_id'] ) ) {
+
+			$order_id = absint( $_GET['order_id'] );
+			$order    = wc_get_order( $order_id );
+			$redirect = $_GET['redirect'];
+
+			if ( wcs_order_contains_renewal( $order ) ) {
+				remove_action( 'wp_loaded', 'WC_Form_Handler::cancel_order', 20 );
+				wc_add_notice( __( 'Subscription renewal orders cannot be cancelled.', 'woocommerce-subscriptions' ), 'notice' );
+
+				if ( $redirect ) {
+					wp_safe_redirect( $redirect );
+					exit;
+				}
+			}
+		}
 	}
 
 	/* Deprecated functions */
@@ -199,7 +225,7 @@ class WC_Subscriptions_Renewal_Order {
 			$subject  = apply_filters(
 				'woocommerce_subscriptions_email_subject_customer_procesing_renewal_order',
 				// translators: placeholder is blog name
-				sprintf( _x( '[%s] Subscription Renewal Order', 'used in processing renewal order email to customer', 'woocommerce-subscriptions' ), $blogname ),
+				sprintf( _x( '[%s] Subscription Renewal Order', 'used as email subject for renewal order notification email to customer', 'woocommerce-subscriptions' ), $blogname ),
 				$order
 			);
 		}
@@ -223,7 +249,7 @@ class WC_Subscriptions_Renewal_Order {
 			$subject  = apply_filters(
 				'woocommerce_subscriptions_email_subject_customer_completed_renewal_order',
 				// translators: placeholder is blog name
-				sprintf( _x( '[%s] Subscription Renewal Order', 'used in completed renewal order email to customer', 'woocommerce-subscriptions' ), $blogname ),
+				sprintf( _x( '[%s] Subscription Renewal Order', 'used as email subject for renewal order notification email to customer', 'woocommerce-subscriptions' ), $blogname ),
 				$order
 			);
 		}

@@ -1,5 +1,5 @@
 <?php global $loaded_profile; ?>
-<div class="option-section sub-option" style="display: block;">
+<div id="mf-select-subsites-section" class="option-section sub-option" style="display: block;">
 	<label for="mf-select-subsites" class="mf-select-subsites-checkbox checkbox-label">
 		<input type="checkbox" id="mf-select-subsites" value="1" autocomplete="off" name="mf_select_subsites"<?php $this->maybe_checked( $loaded_profile, 'mf_select_subsites' ); ?> />
 		<?php _e( 'Only transfer files for selected subsites', 'wp-migrate-db-pro-media-files' ); ?>

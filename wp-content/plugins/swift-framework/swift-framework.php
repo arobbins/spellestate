@@ -5,11 +5,11 @@
 	*	Plugin Name: Swift Framework
 	*	Plugin URI: http://www.swiftideas.com/swift-framework/
 	*	Description: The Swift Framework plugin.
-	*	Version: 1.63
+	*	Version: 2.0.3
 	*	Author: Swift Ideas
 	*	Author URI: http://swiftideas.com
 	*	Requires at least: 3.6
-	*	Tested up to: 4.3
+	*	Tested up to: 4.4.2
 	*
 	*	Text Domain: swift-framework-plugin
 	*	Domain Path: /languages/
@@ -65,8 +65,13 @@
 		$swiftframework = new SwiftFramework();
 		$swiftframework->run();
 
-		require_once plugin_dir_path( __FILE__ ) . 'includes/wp-updates-plugin.php';
-		new WPUpdatesPluginUpdater_977( 'http://wp-updates.com/api/2/plugin', plugin_basename(__FILE__));
+		require_once plugin_dir_path( __FILE__ ) . 'includes/plugin_update_check.php';
+		$SwiftFrameworkUpdateChecker = new PluginUpdateChecker_2_0 (
+		    'https://kernl.us/api/v1/updates/564cb2337ad3303b210d6b4b/',
+		    __FILE__,
+		    'swift-framework',
+		    1
+		);
 
 	}
 	init_swiftframework();

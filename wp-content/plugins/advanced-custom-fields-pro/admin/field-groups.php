@@ -524,7 +524,7 @@ class acf_admin_field_groups {
 			'cb'	 				=> '<input type="checkbox" />',
 			'title' 				=> __('Title', 'acf'),
 			'acf-fg-description'	=> __('Description', 'acf'),
-			'acf-fg-status' 		=> '<i class="acf-icon acf-icon-dot-3 small acf-js-tooltip" title="' . __('Status', 'acf') . '"></i>',
+			'acf-fg-status' 		=> '<i class="acf-icon -dot-3 small acf-js-tooltip" title="' . __('Status', 'acf') . '"></i>',
 			'acf-fg-count' 			=> __('Fields', 'acf'),
 			
 		);
@@ -573,17 +573,17 @@ class acf_admin_field_groups {
 			
 			if( isset($this->sync[ $field_group['key'] ]) ) {
 				
-				echo '<i class="acf-icon acf-icon-sync grey small acf-js-tooltip" title="' . __('Sync available', 'acf') .'"></i> ';
+				echo '<i class="acf-icon -sync grey small acf-js-tooltip" title="' . __('Sync available', 'acf') .'"></i> ';
 				
 			}
 			
 			if( $field_group['active'] ) {
 				
-				//echo '<i class="acf-icon acf-icon-check small acf-js-tooltip" title="' . __('Active', 'acf') .'"></i> ';
+				//echo '<i class="acf-icon -check small acf-js-tooltip" title="' . __('Active', 'acf') .'"></i> ';
 				
 			} else {
 				
-				echo '<i class="acf-icon acf-icon-minus yellow small acf-js-tooltip" title="' . __('Disabled', 'acf') . '"></i> ';
+				echo '<i class="acf-icon -minus yellow small acf-js-tooltip" title="' . __('Disabled', 'acf') . '"></i> ';
 				
 			}
 	    
@@ -619,7 +619,7 @@ class acf_admin_field_groups {
 <div class="acf-column-2">
 	<div class="acf-box">
 		<div class="inner">
-			<h2><?php echo acf_get_setting('name'); ?> <?php echo acf_get_setting('version'); ?></h2>
+			<h2><?php echo acf_get_setting('name'); ?></h2>
 
 			<h3><?php _e("Changelog",'acf'); ?></h3>
 			<p><?php _e("See what's new in",'acf'); ?> <a href="<?php echo admin_url('edit.php?post_type=acf-field-group&page=acf-settings-info&tab=changelog'); ?>"><?php _e("version",'acf'); ?> <?php echo acf_get_setting('version'); ?></a>
@@ -705,7 +705,7 @@ class acf_admin_field_groups {
 	
 	
 	// mobile compatibility
-	var status = $('.acf-icon-dot-3').first().attr('title');
+	var status = $('.acf-icon.-dot-3').first().attr('title');
 	$('td.column-acf-fg-status').attr('data-colname', status);
 	
 })(jQuery);

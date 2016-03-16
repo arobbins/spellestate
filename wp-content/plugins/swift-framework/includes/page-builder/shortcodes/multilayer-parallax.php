@@ -5,9 +5,9 @@
 *	Swift Page Builder - Multilayer Parallax Shortcode
 *	------------------------------------------------
 *	Swift Framework
-* 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+* 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
 *
-*/
+*/   
 
     class SwiftPageBuilderShortcode_spb_multilayer_parallax extends SwiftPageBuilderShortcode {
 
@@ -40,7 +40,7 @@
             $iner = '';
             foreach ( $this->settings['params'] as $param ) {
                 $custom_markup = '';
-                $param_value   = isset( $$param['param_name'] ) ? $$param['param_name'] : null;
+                $param_value   = isset( ${$param['param_name']} ) ? ${$param['param_name']} : null;
 
                 if ( is_array( $param_value ) ) {
                     // Get first element from the array
@@ -99,15 +99,15 @@
 
             return $output;
         }
-
+  
     }
 
     SPBMap::map( 'spb_multilayer_parallax', array(
         "name"            => __( "Multilayer Parallax", 'swift-framework-plugin' ),
         "base"            => "spb_multilayer_parallax",
         "controls"        => "full",
-        "class"           => "spb_multilayer_parallax",
-        "icon"            => "spb-icon-parallax",
+        "class"           => "spb_multilayer_parallax spb_tab_media",
+        "icon"            => "icon-multilayer-parallax",
         "params"          => array(
             array(
                 "type"        => "buttonset",
@@ -117,6 +117,7 @@
                     __( 'Yes', 'swift-framework-plugin' ) => "true",
                     __( 'No', 'swift-framework-plugin' )  => "false"
                 ),
+                "buttonset_on"  => "yes",
                 "description" => __( "Choose if you would like the slider to be window height.", 'swift-framework-plugin' )
             ),
             array(
@@ -149,17 +150,13 @@
             )
         ),
         "custom_markup"   => '
-	<div class="tab_controls">
-		<button class="add_tab">' . __( "Add New Layer", 'swift-framework-plugin' ) . '</button>
-	</div>
-
-	<div class="spb_tabs_holder">
-		%content%
-	</div>',
+	           <div class="spb_tabs_holder">
+		              %content%
+	           </div>
+              <div class="container-helper"><a href="#" class="add-parallax-layer btn-floating waves-effect waves-light"><span class="icon-add"></span></a></div>',
         'default_content' => '
-
-				[spb_multilayer_parallax_layer layer_title="' . __( "Layer 1", 'swift-framework-plugin' ) . '"]' . __( 'This is a Parallax Layer text. Click the edit button to change it.', 'swift-framework-plugin' ) . '[/spb_multilayer_parallax_layer]',
-        "js_callback"     => array( "init" => "spbTabsInitCallBack" )
+				[spb_multilayer_parallax_layer layer_title="' . __( "Layer 1", 'swift-framework-plugin' ) . '"]' . __( 'This is a Parallax Layer text. Click the edit button to change it.', 'swift-framework-plugin' ) . '[/spb_multilayer_parallax_layer]'
+        
 
 
     ) );
@@ -198,7 +195,7 @@
 
             foreach ( $this->settings['params'] as $param ) {
 
-                $param_value = isset( $$param['param_name'] ) ? $$param['param_name'] : null;
+                $param_value = isset( ${$param['param_name']} ) ? ${$param['param_name']} : null;
 
                 if ( is_array( $param_value ) ) {
                     // Get first element from the array
@@ -248,9 +245,11 @@
                 if ( ( $param['type'] ) == 'attach_image' ) {
                     $img = spb_getImageBySize( array(
                         'attach_id'  => (int) preg_replace( '/[^\d]/', '', $value ),
-                        'thumb_size' => 'medium'
+                        'thumb_size' => '66x66'
+                       
                     ) );
-                    $output .= ( $img ? $img['thumbnail'] : '<img width="150" height="150" src="' . SwiftPageBuilder::getInstance()->assetURL( 'img/blank_f7.gif' ) . '" class="attachment-medium" alt="" title="" />' ) . '<a href="#" class="column_edit_trigger' . ( $img && ! empty( $img['p_img_large'][0] ) ? ' image-exists' : '' ) . '"><i class="spb-icon-single-image"></i>' . __( 'No image yet! Click here to select it now.', 'swift-framework-plugin' ) . '</a>';
+                    
+                    $output .= ( $img ? $img['p_img_small'] : '<img width="66" height="66" src="' . SwiftPageBuilder::getInstance()->assetURL( 'img/blank_f7.gif' ) . '" class="attachment-thumbnail" alt="" title="" />' ) . '<a href="#" class="column_edit_trigger' . ( $img && ! empty( $img['p_img_small'] ) ? ' image-exists' : '' ) . '"><i class="spb-icon-single-image"></i>' . __( 'No image yet! Click here to select it now.', 'swift-framework-plugin' ) . '</a>';
                 }
             } else {
                 $output .= '<' . $param['holder'] . ' class="spb_param_value ' . $param_name . ' ' . $type . ' ' . $class . '" name="' . $param_name . '">' . $value . '</' . $param['holder'] . '>';
@@ -261,7 +260,7 @@
 
         public function singleParamHtmlHolderParallaxImage( $param, $value ) {
 
-            $output = '';
+            $output = '';  
 
             $param_name = isset( $param['param_name'] ) ? $param['param_name'] : '';
             $type       = isset( $param['type'] ) ? $param['type'] : '';
@@ -271,12 +270,12 @@
                 $output .= '<input type="hidden" class="spb_param_value ' . $param_name . ' ' . $type . ' ' . $class . '" name="' . $param_name . '" value="' . $value . '" />';
                 if ( ( $param['type'] ) == 'attach_image' ) {
 
-
+  
                     $img = spb_getImageBySize( array(
                         'attach_id'  => (int) preg_replace( '/[^\d]/', '', $value ),
-                        'thumb_size' => 'medium'
+                        'thumb_size' => '66x66'
                     ) );
-                    $output .= ( $img ? $img['thumbnail'] : '<img width="150" height="150" src="' . SwiftPageBuilder::getInstance()->assetURL( 'img/blank_f7.gif' ) . '" class="attachment-medium" alt="" title="" />' ) . '<a href="#" class="hide-layer-image column_edit_trigger' . ( $img && ! empty( $img['p_img_large'][0] ) ? ' image-exists' : '' ) . '"><i class="spb-icon-single-image"></i>' . __( 'No image yet! Click here to select it now.', 'swift-framework-plugin' ) . '</a>';
+                    $output .= ( $img ? $img['p_img_small'] : '<img width="66" height="66" src="' . SwiftPageBuilder::getInstance()->assetURL( 'img/blank_f7.gif' ) . '" class="attachment-thumbnail" alt="" title="" />' ) . '<a href="#" class="hide-layer-image column_edit_trigger' . ( $img && ! empty( $img['p_img_small'] ) ? ' image-exists' : '' ) . '"><i class="spb-icon-single-image"></i>' . __( 'No image yet! Click here to select it now.', 'swift-framework-plugin' ) . '</a>';
                 }
             } else {
                 $output .= '<' . $param['holder'] . ' class="spb_param_value ' . $param_name . ' ' . $type . ' ' . $class . '" name="' . $param_name . '">' . $value . '</' . $param['holder'] . '>';
@@ -335,7 +334,6 @@
             "params"   => array(
                 array(
                     "type"        => "textfield",
-                    "holder"      => "div",
                     "heading"     => __( "Title", 'swift-framework-plugin' ),
                     "param_name"  => "layer_title",
                     "value"       => "",
@@ -343,6 +341,7 @@
                 ),
                 array(
                     "type"        => "attach_image",
+                    "holder"  => "hidden",
                     "heading"     => __( "Layer Image", 'swift-framework-plugin' ),
                     "param_name"  => "layer_image",
                     "value"       => "",
@@ -417,18 +416,18 @@
                     "heading"     => __( "Text Layer Enable", 'swift-framework-plugin' ),
                     "param_name"  => "text_layer",
                     "value"       => array(
-                        __( 'No', 'swift-framework-plugin' )  => "no",
                         __( 'Yes', 'swift-framework-plugin' ) => "yes",
+                        __( 'No', 'swift-framework-plugin' )  => "no"
                     ),
+                    "buttonset_on"  => "yes",
                     "description" => __( "Select if you would like this layer to be a text layer.", 'swift-framework-plugin' )
                 ),
                 array(
                     "type"        => "textarea_html",
-                    "holder"      => "div",
                     "class"       => "",
                     "heading"     => __( "Text Layer Content", 'swift-framework-plugin' ),
                     "param_name"  => "content",
-                    "value"       => __( "", 'swift-framework-plugin' ),
+                    "value"       => '',
                     "required"       => array("text_layer", "=", "yes"),
                     "description" => __( "Enter your content if you have set this to be a text layer.", 'swift-framework-plugin' )
                 ),

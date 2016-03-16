@@ -232,12 +232,16 @@ class WPMDBPro_Media_Files_Base extends WPMDBPro_Addon {
 		// Get file paths from attachments
 		foreach ( $local_media_attachments['attachments'] as $blog_id => $attachments ) {
 			foreach ( $attachments as $attachment ) {
-				$local_media_attachment_files[] = $attachment['file'];
-				$last_attachment_id             = $attachment['ID'];
+				if ( ! empty( $attachment['file_size'] ) ) {
+					$local_media_attachment_files[] = $attachment['file'];
+					$last_attachment_id             = $attachment['ID'];
+				}
 
 				if ( isset( $attachment['sizes'] ) && ! empty( $attachment['sizes'] ) ) {
 					foreach ( $attachment['sizes'] as $size ) {
-						$local_media_attachment_files[] = $size['file'];
+						if ( ! empty( $size['file_size'] ) ) {
+							$local_media_attachment_files[] = $size['file'];
+						}
 					}
 				}
 			}
@@ -310,11 +314,12 @@ class WPMDBPro_Media_Files_Base extends WPMDBPro_Addon {
 
 		$dir      = ( '/' == $dir ) ? '' : $dir;
 		$dir_path = $upload_dir . $dir;
+		$sub_paths = glob( $dir_path . '*', GLOB_MARK );
 
 		// Get all the files except the one we use to store backups.
 		$wpmdb_upload_folder = $this->get_upload_info();
 		$pattern             = '/' . preg_quote( $wpmdb_upload_folder, '/' ) . '/';
-		$files               = preg_grep( $pattern, glob( $dir_path . '*', GLOB_MARK ), PREG_GREP_INVERT );
+		$files               = preg_grep( $pattern, $sub_paths ? $sub_paths : array(), PREG_GREP_INVERT );
 
 		$reached_start_file = false;
 
@@ -345,6 +350,10 @@ class WPMDBPro_Media_Files_Base extends WPMDBPro_Addon {
 			// ignore files that we shouldn't touch, e.g. .php, .sql, etc
 			$filetype = wp_check_filetype( $short_file_path );
 			if ( ! isset( $allowed_mime_types[ $filetype['type'] ] ) ) {
+				continue;
+			}
+
+			if ( apply_filters( 'wpmdbmf_exclude_local_media_file_from_removal', false, $upload_dir, $short_file_path, $this ) ) {
 				continue;
 			}
 
@@ -551,11 +560,12 @@ class WPMDBPro_Media_Files_Base extends WPMDBPro_Addon {
 	/**
 	 * Compare a set of files with those on the local filesystem
 	 *
-	 * @param mixed $files Files to compare
+	 * @param mixed  $files Files to compare
+	 * @param string $intent
 	 *
 	 * @return array $files_to_remove Files that do not exist locally
 	 */
-	function get_files_not_on_local( $files ) {
+	function get_files_not_on_local( $files, $intent ) {
 		if ( ! is_array( $files ) ) {
 			$files = @unserialize( $files );
 		}
@@ -564,7 +574,7 @@ class WPMDBPro_Media_Files_Base extends WPMDBPro_Addon {
 		$files_to_remove = array();
 
 		foreach ( $files as $file ) {
-			if ( ! $this->filesystem->file_exists( $upload_dir . $file ) ) {
+			if ( ! $this->filesystem->file_exists( $upload_dir . apply_filters( 'wpmdbmf_file_not_on_local', $file, $intent, $this ) ) ) {
 				$files_to_remove[] = $file;
 			}
 		}
@@ -742,7 +752,7 @@ class WPMDBPro_Media_Files_Base extends WPMDBPro_Addon {
 		$blogs = wp_get_sites( $args );
 
 		foreach ( $blogs as $blog ) {
-			if ( apply_filters( 'wpmdbmf_include_subsite', true, $blog['blog_id'] ) ) {
+			if ( apply_filters( 'wpmdbmf_include_subsite', true, $blog['blog_id'], $this ) ) {
 				$blog_ids[] = $blog['blog_id'];
 			}
 		}

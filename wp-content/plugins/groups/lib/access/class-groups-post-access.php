@@ -33,17 +33,17 @@ if ( !defined( 'ABSPATH' ) ) {
  * 
  */
 class Groups_Post_Access {
-	
+
 	const POSTMETA_PREFIX = 'groups-';
-	
+
 	const CACHE_GROUP     = 'groups';
 	const CAN_READ_POST   = 'can_read_post';
-	
+
 	const READ_POST_CAPABILITY = "groups_read_post";
 	const READ_POST_CAPABILITY_NAME = "Read Post";
 	const READ_POST_CAPABILITIES = 'read_post_capabilities';
 	const POST_TYPES = 'post_types';
-	
+
 	/**
 	 * Create needed capabilities on plugin activation.
 	 * Must be called explicitly or hooked into activation.
@@ -172,7 +172,7 @@ class Groups_Post_Access {
 
 		// 2. Filter the posts that require a capability that the user doesn't
 		// have, or in other words: exclude posts that the user must NOT access:
-		
+
 		// The following is not correct in that it requires the user to have ALL capabilities:
 // 		$where .= sprintf(
 // 			" AND {$wpdb->posts}.ID NOT IN (SELECT DISTINCT ID FROM $wpdb->posts LEFT JOIN $wpdb->postmeta on {$wpdb->posts}.ID = {$wpdb->postmeta}.post_id WHERE {$wpdb->postmeta}.meta_key = '%s' AND {$wpdb->postmeta}.meta_value NOT IN (%s) ) ",
@@ -212,7 +212,7 @@ class Groups_Post_Access {
 		}
 		return $result;
 	}
-	
+
 	/**
 	 * Filter posts by access capability.
 	 * 
@@ -229,7 +229,7 @@ class Groups_Post_Access {
 		}
 		return $result;
 	}
-	
+
 	/**
 	 * Filter menu items by access capability.
 	 * 
@@ -251,7 +251,7 @@ class Groups_Post_Access {
 		}
 		return $result;
 	}
-	
+
 	/**
 	 * Filter excerpt by access capability.
 	 * 
@@ -271,7 +271,7 @@ class Groups_Post_Access {
 		}
 		return $result;
 	}
-	
+
 	/**
 	 * Filter content by access capability.
 	 *
@@ -291,7 +291,7 @@ class Groups_Post_Access {
 		}
 		return $result;
 	}
-	
+
 	/**
 	 * Adds an access capability requirement.
 	 * 
@@ -330,7 +330,7 @@ class Groups_Post_Access {
 		}
 		return $result;
 	}
-	
+
 	/**
 	 * Returns true if the post requires the given capability to grant access.
 	 * 
@@ -349,7 +349,7 @@ class Groups_Post_Access {
 		}
 		return $result;
 	}
-	
+
 	/**
 	 * Currently does nothing, always returns false.
 	 * 
@@ -359,7 +359,7 @@ class Groups_Post_Access {
 	public static function update( $map ) {
 		return false;
 	}
-	
+
 	/**
 	 * Removes a capability requirement from a post.
 	 * 
@@ -378,7 +378,7 @@ class Groups_Post_Access {
 		}
 		return $result;
 	}
-	
+
 	/**
 	 * Returns a list of capabilities that grant access to the post.
 	 * 
@@ -388,7 +388,7 @@ class Groups_Post_Access {
 	public static function get_read_post_capabilities( $post_id ) {
 		return get_post_meta( $post_id, self::POSTMETA_PREFIX . self::READ_POST_CAPABILITY );
 	}
-	
+
 	/**
 	 * Returns true if the user has any of the capabilities that grant access to the post.
 	 * 
@@ -402,9 +402,11 @@ class Groups_Post_Access {
 			if ( $user_id === null ) {
 				$user_id = get_current_user_id();
 			}
-			$found = false;
-			$result = wp_cache_get( self::CAN_READ_POST . '_' . $user_id . '_' . $post_id, self::CACHE_GROUP, false, $found );
-			if ( $found === false ) {
+			$cached = Groups_Cache::get( self::CAN_READ_POST . '_' . $user_id . '_' . $post_id, self::CACHE_GROUP );
+			if ( $cached !== null ) {
+				$result = $cached->value;
+				unset( $cached ) ;
+			} else {
 				$groups_user = new Groups_User( $user_id );
 				$read_caps = self::get_read_post_capabilities( $post_id );
 				if ( !empty( $read_caps ) ) {
@@ -418,7 +420,7 @@ class Groups_Post_Access {
 					$result = true;
 				}
 				$result = apply_filters( 'groups_post_access_user_can_read_post', $result, $post_id, $user_id );
-				wp_cache_set( self::CAN_READ_POST . '_' . $user_id . '_' . $post_id, $result, self::CACHE_GROUP );
+				Groups_Cache::set( self::CAN_READ_POST . '_' . $user_id . '_' . $post_id, $result, self::CACHE_GROUP );
 			}
 		}
 		return $result;

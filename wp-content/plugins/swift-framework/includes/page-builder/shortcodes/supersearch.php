@@ -5,7 +5,7 @@
     *	Swift Page Builder - SuperSearch Shortcode
     *	------------------------------------------------
     *	Swift Framework
-    * 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+    * 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     */
 
@@ -13,7 +13,7 @@
 
         protected function content( $atts, $content = null ) {
 
-            $title = $width = $el_class = $output = $items = $el_position = '';
+            $title = $width = $contained = $el_class = $output = $items = $el_position = '';
 
             extract( shortcode_atts( array(
                 'title'       => '',
@@ -30,14 +30,16 @@
             $el_class = $this->getExtraClass( $el_class );
             if ( $fullwidth == "yes" && $width == "col-sm-12" ) {
                 $fullwidth = true;
+                $contained = "true";
             } else {
                 $fullwidth = false;
+                $contained = "false";
             }
 
             $output .= "\n\t" . '<div class="spb_supersearch_widget spb_content_element ' . $width . $el_class . '">';
             $output .= "\n\t\t" . '<div class="spb-asset-content">';
             $output .= ( $title != '' ) ? "\n\t\t\t" . $this->spb_title( $title, '', $fullwidth ) : '';
-            $output .= "\n\t\t" . do_shortcode( '[sf_supersearch]' );
+            $output .= "\n\t\t" . do_shortcode( '[sf_supersearch contained="'.$contained.'"]' );
             $output .= "\n\t\t" . '</div>';
             $output .= "\n\t" . '</div> ' . $this->endBlockComment( $width );
 
@@ -55,8 +57,8 @@
     SPBMap::map( 'spb_supersearch', array(
         "name"   => __( "Super Search", 'swift-framework-plugin' ),
         "base"   => "spb_supersearch",
-        "class"  => "spb_supersearch",
-        "icon"   => "spb-icon-supersearch",
+        "class"  => "spb_supersearch spb_tab_ui",
+        "icon"   => "icon-super-search",
         "params" => array(
             array(
                 "type"        => "buttonset",

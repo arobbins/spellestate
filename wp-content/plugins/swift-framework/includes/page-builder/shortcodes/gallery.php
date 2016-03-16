@@ -5,7 +5,7 @@
     *	Swift Page Builder - Gallery Shortcode
     *	------------------------------------------------
     *	Swift Framework
-    * 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+    * 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     */
 
@@ -22,6 +22,7 @@
                 'columns'           => '',
                 'fullwidth'         => '',
                 'gutters'           => '',
+                'image_size'        => '',
                 'show_thumbs'       => '',
                 'show_captions'     => '',
                 'autoplay'          => 'no',
@@ -90,22 +91,34 @@
                     ================================================== */
                     $item_class = "";
 
-                    $image_size = "gallery-image";
+                    $gallery_image_size = "gallery-image";
 
                     if ( $columns == "1" ) {
                         $item_class = "col-sm-12 ";
-                        $image_size = "full";
+                        $gallery_image_size = "full";
                     } else if ( $columns == "2" ) {
                         $item_class = "col-sm-6 ";
+                        $gallery_image_size = "gallery-image";
                     } else if ( $columns == "3" ) {
                         $item_class = "col-sm-4 ";
+                        $gallery_image_size = "gallery-image";
                     } else if ( $columns == "4" ) {
                         $item_class = "col-sm-3 ";
+                        $gallery_image_size = "thumb-image";
                     } else if ( $columns == "5" ) {
                         $item_class = "col-sm-sf-5 ";
+                        $gallery_image_size = "thumb-image";
                     }
 
-                    $gallery_images = rwmb_meta( 'sf_gallery_images', 'type=image&size=' . $image_size );
+                    if ( $columns == "5" && $width != "1/1" ) {
+                        $gallery_image_size = "thumb-square";
+                    }
+
+                    if ( $image_size != "" ) {
+                        $gallery_image_size = $image_size;
+                    }
+
+                    $gallery_images = rwmb_meta( 'sf_gallery_images', 'type=image&size=' . $gallery_image_size );
 
                     $masonry_gallery .= '<div class="masonry-gallery filterable-items ' . $list_class . '">' . "\n";
 
@@ -129,11 +142,13 @@
                             } else {
                                 $masonry_gallery .= '<h3>' . $image['title'] . '</h3>';
                             }
-                        } else {
+                            $masonry_gallery .= '</figcaption>' . "\n";
+                        } else if ($enable_lightbox == "yes") {
                             $masonry_gallery .= '<figcaption><div class="thumb-info thumb-info-alt">';
                             $masonry_gallery .= $search_icon;
+                            $masonry_gallery .= '</figcaption>' . "\n";
                         }
-                        $masonry_gallery .= '</figcaption>' . "\n";
+                        
                         $masonry_gallery .= '</figure>' . "\n";
                         $masonry_gallery .= '</div>' . "\n";
                     }
@@ -313,6 +328,7 @@
                 __( 'Yes', 'swift-framework-plugin' ) => "yes",
                 __( 'No', 'swift-framework-plugin' )  => "no"
             ),
+            "buttonset_on"  => "yes",
             "description" => __( "Select if you'd like the asset to be full width (edge to edge). NOTE: only possible on pages without sidebars.", 'swift-framework-plugin' )
         ),
         array(
@@ -323,8 +339,26 @@
                 __( 'Yes', 'swift-framework-plugin' ) => "yes",
                 __( 'No', 'swift-framework-plugin' )  => "no"
             ),
+            "buttonset_on"  => "yes",
             "required"       => array("display_type", "=", "masonry"),
             "description" => __( "Select if you'd like spacing between the gallery items, or not.", 'swift-framework-plugin' )
+        ),
+        array(
+            "type"        => "dropdown",
+            "heading"     => __( "Image Size Override", 'swift-framework-plugin' ),
+            "param_name"  => "image_size",
+            "value"       => array(
+                __( "Full", 'swift-framework-plugin' )               => "full",
+                __( "Large", 'swift-framework-plugin' )              => "large",
+                __( "Medium", 'swift-framework-plugin' )             => "medium",
+                __( "Thumbnail", 'swift-framework-plugin' )          => "thumbnail",
+                __( "Small 4/3 Cropped", 'swift-framework-plugin' )  => "thumb-image",
+                __( "Medium 4/3 Cropped", 'swift-framework-plugin' ) => "thumb-image-twocol",
+                __( "Large 4/3 Cropped", 'swift-framework-plugin' )  => "thumb-image-onecol",
+                __( "Large 1/1 Cropped", 'swift-framework-plugin' )  => "large-square",
+            ),
+            "required"       => array("display_type", "=", "masonry"),
+            "description" => __( "Override the source size for the images (NOTE: this doesn't affect it's size on the front-end, only the quality).", 'swift-framework-plugin' )
         ),
         array(
             "type"        => "dropdown",
@@ -345,6 +379,7 @@
                 __( "Yes", 'swift-framework-plugin' ) => "yes",
                 __( "No", 'swift-framework-plugin' )  => "no"
             ),
+            "buttonset_on"  => "yes",
             "required"       => array("display_type", "=", "slider"),
             "description" => __( "Show a thumbnail navigation display below the slider.", 'swift-framework-plugin' )
         ),
@@ -356,6 +391,7 @@
                 __( "Yes", 'swift-framework-plugin' ) => "yes",
                 __( "No", 'swift-framework-plugin' )  => "no"
             ),
+            "buttonset_on"  => "yes",
             "required"       => array("display_type", "=", "slider"),
             "description" => __( "Choose whether to autoplay the slider or not.", 'swift-framework-plugin' )
         ),
@@ -367,6 +403,7 @@
                 __( "Yes", 'swift-framework-plugin' ) => "yes",
                 __( "No", 'swift-framework-plugin' )  => "no"
             ),
+            "buttonset_on"  => "yes",
             "description" => __( "Choose whether to show captions.", 'swift-framework-plugin' )
         ),
         array(
@@ -377,6 +414,7 @@
                 __( "Yes", 'swift-framework-plugin' ) => "yes",
                 __( "No", 'swift-framework-plugin' )  => "no"
             ),
+            "buttonset_on"  => "yes",
             "description" => __( "Enable lightbox functionality from the gallery.", 'swift-framework-plugin' )
         ),
     );
@@ -410,7 +448,7 @@
     SPBMap::map( 'spb_gallery', array(
         "name"   => __( "Gallery", 'swift-framework-plugin' ),
         "base"   => "spb_gallery",
-        "class"  => "spb_gallery",
-        "icon"   => "spb-icon-gallery",
+        "class"  => "spb_gallery spb_tab_media",
+        "icon"   => "icon-gallery",
         "params" => $params
     ) );

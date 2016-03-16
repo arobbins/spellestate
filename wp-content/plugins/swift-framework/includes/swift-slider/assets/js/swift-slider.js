@@ -3,7 +3,7 @@
  *  Swift Slider Frontend JS
  *  ------------------------------------------------
  *  Swift Slider
- *  Copyright Swift Ideas 2015 - http://www.swiftideas.com
+ *  Copyright Swift Ideas 2016 - http://www.swiftideas.com
  *
  */
 
@@ -642,7 +642,7 @@ var SWIFTSLIDER = SWIFTSLIDER || {};
                             ssVideoWrap = ssInstance.find( '.video-wrap' ),
                             sliderHeight = windowHeight > ssMaxHeight && !ssFullscreen ? ssMaxHeight : windowHeight,
                             sliderWidth = ssInstance.width();
-
+                        
                         // Set slider and slide width & height
                         SWIFTSLIDER.setSliderSize( ssInstance, ssFullscreen, sliderWidth, sliderHeight );
 
@@ -763,6 +763,11 @@ var SWIFTSLIDER = SWIFTSLIDER || {};
                 numberOfSlides = pagination.find( '.dot' ).length,
                 ssContinue = sliderInstance.data( 'continue' );
 
+            if ( body.hasClass('header-naked-light') || body.hasClass('header-naked-dark') ) {
+                var slideColour = currentSlide.data('header-style');
+                jQuery('.header-wrap').attr('data-style', slideColour);
+            }
+
             // Resize current slider
             SWIFTSLIDER.resizeSliders( sliderInstance );
 
@@ -848,6 +853,7 @@ var SWIFTSLIDER = SWIFTSLIDER || {};
                         slideID = slide.data( 'slide-id' ),
                         slideCaption = slide.find( '.caption-content' ),
                         slideVideo = slide.find( '.video-wrap > video' ),
+                        slideColour = slide.data('header-style'),
                         slideHasVideo = false;
 
                     // Check if there is a video
@@ -879,36 +885,40 @@ var SWIFTSLIDER = SWIFTSLIDER || {};
                                 'padding-bottom': '',
                                 'opacity': '0'
                             }
-                        );
+                        ).removeClass('caption-active');
                     }
 
                     // animate current slide content
                     if ( slideID === currentSlideID ) {
+
+                        if ( body.hasClass('header-naked-light') || body.hasClass('header-naked-dark') ) {
+                            jQuery('.header-wrap').attr('data-style', slideColour);
+                        }
+
                         // Play the active slide video, if there is one
-                        setTimeout(
-                            function() {
-                                if ( slideHasVideo ) {
-                                    if ( sliderInstance.is(':in-viewport') && !slideVideo.hasClass('finished') ) {
-                                        slideVideo.get( 0 ).play();
-                                    } else {
-                                        slideVideo.get( 0 ).pause();
-                                    }
+                        setTimeout( function() {
+                            if ( slideHasVideo ) {
+                                if ( sliderInstance.is(':in-viewport') && !slideVideo.hasClass('finished') ) {
+                                    slideVideo.get( 0 ).play();
+                                } else {
+                                    slideVideo.get( 0 ).pause();
                                 }
+                            }
 
-                                // Fade in the current slide content
-                                if ( slideCaption.length > 0 ) {
-                                    var captionHeight = slideCaption.height();
+                            // Fade in the current slide content
+                            if ( slideCaption.length > 0 ) {
+                                var captionHeight = slideCaption.height();
 
-                                    slideCaption.css( 'margin-top', -captionHeight / 2 ).stop().animate(
-                                        {
-                                            'opacity': 1,
-                                            'padding-top': 0,
-                                            'padding-bottom': 0
-                                        }, 800, 'easeOutQuart'
-                                    );
-                                }
-                            }, timeoutDelay
-                        );
+                                slideCaption.addClass('caption-active');
+                                slideCaption.css( 'margin-top', -captionHeight / 2 ).stop().animate(
+                                    {
+                                        'opacity': 1,
+                                        'padding-top': 0,
+                                        'padding-bottom': 0
+                                    }, 800, 'easeOutQuart'
+                                );
+                            }
+                        }, timeoutDelay );
                     }
                 }
             );

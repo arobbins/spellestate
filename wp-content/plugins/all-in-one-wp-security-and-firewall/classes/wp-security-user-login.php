@@ -38,6 +38,7 @@ class AIOWPSecurity_User_Login
             if($aio_wp_security->configs->get_value('aiowps_allow_unlock_requests')=='1')
             {
                 add_action('login_form', array(&$this, 'insert_unlock_request_form'));
+                add_action('woocommerce_login_form', array(&$this, 'insert_unlock_request_form'));
             }
             $aio_wp_security->debug_logger->log_debug("Login attempt from blocked IP range - ".$user_locked['failed_login_ip'],2);
             return new WP_Error('authentication_failed', __('<strong>ERROR</strong>: Login failed because your IP address has been blocked. Please contact the administrator.', 'all-in-one-wp-security-and-firewall'));
@@ -276,6 +277,9 @@ class AIOWPSecurity_User_Login
             $from_name = empty($site_title)?'WordPress':$site_title;
             $email_header = 'From: '.$from_name.' <'.get_bloginfo('admin_email').'>' . "\r\n\\";
             $sendMail = wp_mail($to_email_address, $subject, $email_msg, $email_header);
+            if(FALSE === $sendMail){
+                $aio_wp_security->debug_logger->log_debug("Lockout notification email failed to send to ".$to_email_address." for IP ".$ip,4);
+            }
         }
     }
 
@@ -353,6 +357,9 @@ class AIOWPSecurity_User_Login
         $from_name = empty($site_title)?'WordPress':$site_title;
         $email_header = 'From: '.$from_name.' <'.get_bloginfo('admin_email').'>' . "\r\n\\";
         $sendMail = wp_mail($to_email_address, $subject, $email_msg, $email_header);
+        if(FALSE === $sendMail){
+            $aio_wp_security->debug_logger->log_debug("Unlock Request Notification email failed to send to ".$email,4);
+        }
     }
     
     /*
@@ -545,7 +552,7 @@ class AIOWPSecurity_User_Login
         
         $unlock_request_form .= '<div style="padding-bottom:10px;"><input type="hidden" name="aiowps-unlock-string-info" id="aiowps-unlock-string-info" value="'.$enc_result.'" />';
         $unlock_request_form .= '<input type="hidden" name="aiowps-unlock-temp-string" id="aiowps-unlock-temp-string" value="'.$current_time.'" />';
-        $unlock_request_form .= '<button type="submit" name="aiowps_unlock_request" class="button">'.__('Request Unlock', 'all-in-one-wp-security-and-firewall').'</button></div>';
+        $unlock_request_form .= '<button type="submit" name="aiowps_unlock_request" id="aiowps_unlock_request" class="button">'.__('Request Unlock', 'all-in-one-wp-security-and-firewall').'</button></div>';
         echo $unlock_request_form;
     }
     

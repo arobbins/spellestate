@@ -4,7 +4,7 @@
     *	Swift Slider
     *	------------------------------------------------
     *	Swift Framework
-    * 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+    * 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     */
 
@@ -119,4 +119,22 @@
     }
 
     add_action( 'wp_enqueue_scripts', 'ss_frontend_js' );
-?>
+
+
+    /* WPML DUPLICATION FIX
+    ================================================== */
+    function sf_wpml_override_post_duplication( $value_to_filter, $target_language, $meta_data ) {
+       if ( $meta_data[ 'key' ] === 'sf_ss_category' && $meta_data[ 'context' ] === 'custom_field' ) {
+          $tag = get_term_by( 'slug', $value_to_filter, 'swift-slider-category');
+
+          $translated_id = apply_filters( 'wpml_object_id', (int)$tag->term_id, 'swift-slider-category', true, $target_language  );
+
+          $translated_term = get_term_by( 'id', $translated_id, 'swift-slider-category');
+
+          $value_to_filter = $translated_term->slug;
+       }
+
+       return $value_to_filter;
+    }
+    add_filter( 'wpml_duplicate_generic_string', 'sf_wpml_override_post_duplication', 10, 3 );
+    

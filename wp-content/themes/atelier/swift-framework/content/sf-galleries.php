@@ -143,7 +143,7 @@
                 /* DISPLAY TYPE CONFIG
                 ================================================== */
                 if ( $display_type == "masonry" || $display_type == "masonry-gallery" ) {
-                    $item_class .= "masonry-item masonry-gallery-item";
+                    $item_class .= "masonry-item masonry-gallery-item gallery-item";
                 } else if ( $display_type == "gallery" ) {
                     $item_class .= "gallery-item ";
                 } else {
@@ -328,7 +328,11 @@
                     }
                     $gallery_thumb .= '<h5 itemprop="name alternativeHeadline">' . $item_subtitle . '</h5>';
                 } else {
-                    $gallery_thumb .= '<i class="' . $item_link['icon'] . '"></i>';
+                	if ( $item_link['svg_icon'] != "" ) {
+                		$gallery_thumb .= $item_link['svg_icon'];
+                	} else {
+                    	$gallery_thumb .= '<i class="' . $item_link['icon'] . '"></i>';
+                	}
                 }
                 $gallery_thumb .= '</div></figcaption>';
             }
@@ -345,7 +349,7 @@
     if ( ! function_exists( 'sf_gallery_item_link' ) ) {
         function sf_gallery_item_link( $link_type, $id = 0 ) {
 
-            $link_config = $link_script = $item_icon = "";
+            $link_config = $link_script = $item_icon = $item_svg_icon = "";
 
             global $post, $sf_options;
             $lightbox_nav     = $sf_options['lightbox_nav'];
@@ -356,11 +360,13 @@
             if ( $link_type == "page" ) {
                 $link_config = 'href="' . get_permalink() . '" class="link-to-url"';
                 $item_icon   = apply_filters( 'sf_gallery_page_icon', "ss-navigateright" );
+                $item_svg_icon   = apply_filters( 'sf_gallery_page_svg_icon', "" );
             } else if ( $link_type == "lightbox" ) {
                 $gallery_images = rwmb_meta( 'sf_gallery_images', 'type=image&size=gallery-image' );
                 $link_config    = 'id="gallery-' . $id . '" href="#" class="gallery-lightbox"';
                 $item_icon      = apply_filters( 'sf_gallery_lightbox_icon', "ss-view" );
-                $link_script .= "<script>jQuery(document).ready(function(){jQuery('#gallery-" . $id . "').click(function(){
+                $item_svg_icon      = apply_filters( 'sf_gallery_lightbox_svg_icon', "" );
+                $link_script .= "<script type='text/javascript'>jQuery(document).ready(function(){jQuery('#gallery-" . $id . "').click(function(){
 				var lightboxSocial = {
 						facebook: true,
 						twitter: true,
@@ -373,12 +379,13 @@
 					jQuery.iLightBox(
 						[";
                 foreach ( $gallery_images as $image ) {
-                    $link_script .= "{
-								URL: '" . $image['full_url'] . "',
-								type: 'image',
-								title: '" . $image['title'] . "',
-								caption: '" . $image['caption'] . "'
-					},";
+                	$caption = str_replace('"', '', $image['caption']);
+                    $link_script .= '{
+								URL: "' . $image['full_url'] . '",
+								type: "image",
+								title: "' . $image['title'] . '",
+								caption: "' . $caption . '"
+					},';
                 }
                 $link_script .= "],
 						{";
@@ -415,6 +422,7 @@
 
             $item_link = array(
                 "icon"   => $item_icon,
+                "svg_icon"   => $item_svg_icon,
                 "config" => $link_config,
                 "script" => $link_script
             );

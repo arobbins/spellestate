@@ -55,13 +55,14 @@ class AIOWPSecurity_Filescan_Menu extends AIOWPSecurity_Admin_Menu
      */
     function render_menu_page() 
     {
+        echo '<div class="wrap">';
+        echo '<h2>'.__('Scanner','all-in-one-wp-security-and-firewall').'</h2>';//Interface title
         $this->set_menu_tabs();
         $tab = $this->get_current_tab();
-        ?>
-        <div class="wrap">
+        $this->render_menu_tabs();
+        ?>        
         <div id="poststuff"><div id="post-body">
         <?php 
-        $this->render_menu_tabs();
         //$tab_keys = array_keys($this->menu_tabs);
         call_user_func(array(&$this, $this->menu_tabs_handler[$tab]));
         ?>
@@ -74,7 +75,6 @@ class AIOWPSecurity_Filescan_Menu extends AIOWPSecurity_Admin_Menu
     {
         global $wpdb, $aio_wp_security;
         global $aiowps_feature_mgr;
-        
         if (isset($_POST['fcd_scan_info']))
         {
             //Display scan file change info and clear the global alert variable
@@ -159,13 +159,20 @@ class AIOWPSecurity_Filescan_Menu extends AIOWPSecurity_Admin_Menu
                 
             }
 
-            $email_address = sanitize_email($_POST['aiowps_fcd_scan_email_address']);
-            if(!is_email($email_address))
-            {
-                $error .= '<p>'.__('You have entered an incorrect email address format. It has been set to your WordPress admin email as default.','all-in-one-wp-security-and-firewall').'</p>';
-                $email_address = get_bloginfo('admin_email'); //Set the default value to the blog admin email
-            }
+            //$email_address = sanitize_email($_POST['aiowps_fcd_scan_email_address']);
+            $email_address = $_POST['aiowps_fcd_scan_email_address'];
+            $email_list_array = explode(PHP_EOL, $email_address);
+            foreach($email_list_array as $key=>$value){
+                $email_sane = sanitize_email($value);
+                if(!is_email($email_sane))
+                {
+                    $err_msg = 'The following address was removed because it is not a valid email address: '.htmlspecialchars($value);
+                    $error .= '<p>'.__($err_msg,'all-in-one-wp-security-and-firewall').'</p>';
+                    unset($email_list_array[$key]);
+                }
 
+            }
+            $email_address = implode(PHP_EOL, $email_list_array);
             if($error)
             {
                 $this->show_msg_error(__('Attention!','all-in-one-wp-security-and-firewall').$error);
@@ -230,7 +237,7 @@ class AIOWPSecurity_Filescan_Menu extends AIOWPSecurity_Admin_Menu
         </div>
 
         <div class="postbox">
-        <h3><label for="title"><?php _e('Manual File Change Detection Scan', 'all-in-one-wp-security-and-firewall'); ?></label></h3>
+        <h3 class="hndle"><label for="title"><?php _e('Manual File Change Detection Scan', 'all-in-one-wp-security-and-firewall'); ?></label></h3>
         <div class="inside">
         <form action="" method="POST">
         <?php wp_nonce_field('aiowpsec-fcd-manual-scan-nonce'); ?>
@@ -243,7 +250,7 @@ class AIOWPSecurity_Filescan_Menu extends AIOWPSecurity_Admin_Menu
         </form>
         </div></div>
         <div class="postbox">
-        <h3><label for="title"><?php _e('View Last Saved File Change Results', 'all-in-one-wp-security-and-firewall'); ?></label></h3>
+        <h3 class="hndle"><label for="title"><?php _e('View Last Saved File Change Results', 'all-in-one-wp-security-and-firewall'); ?></label></h3>
         <div class="inside">
         <form action="" method="POST">
         <?php wp_nonce_field('aiowpsec-view-last-fcd-results-nonce'); ?>
@@ -256,7 +263,7 @@ class AIOWPSecurity_Filescan_Menu extends AIOWPSecurity_Admin_Menu
         </form>
         </div></div>
         <div class="postbox">
-        <h3><label for="title"><?php _e('File Change Detection Settings', 'all-in-one-wp-security-and-firewall'); ?></label></h3>
+        <h3 class="hndle"><label for="title"><?php _e('File Change Detection Settings', 'all-in-one-wp-security-and-firewall'); ?></label></h3>
         <div class="inside">
         <?php
         //Display security info badge
@@ -287,7 +294,7 @@ class AIOWPSecurity_Filescan_Menu extends AIOWPSecurity_Admin_Menu
             </tr>
             <tr valign="top">
                 <th scope="row"><?php _e('File Types To Ignore', 'all-in-one-wp-security-and-firewall')?>:</th>
-                <td><textarea name="aiowps_fcd_exclude_filetypes" rows="5" cols="50"><?php echo $aio_wp_security->configs->get_value('aiowps_fcd_exclude_filetypes'); ?></textarea>
+                <td><textarea name="aiowps_fcd_exclude_filetypes" rows="5" cols="50"><?php echo htmlspecialchars($aio_wp_security->configs->get_value('aiowps_fcd_exclude_filetypes')); ?></textarea>
                     <br />
                     <span class="description"><?php _e('Enter each file type or extension on a new line which you wish to exclude from the file change detection scan.', 'all-in-one-wp-security-and-firewall'); ?></span>
                     <span class="aiowps_more_info_anchor"><span class="aiowps_more_info_toggle_char">+</span><span class="aiowps_more_info_toggle_text"><?php _e('More Info', 'all-in-one-wp-security-and-firewall'); ?></span></span>
@@ -304,7 +311,7 @@ class AIOWPSecurity_Filescan_Menu extends AIOWPSecurity_Admin_Menu
             </tr>
             <tr valign="top">
                 <th scope="row"><?php _e('Files/Directories To Ignore', 'all-in-one-wp-security-and-firewall')?>:</th>
-                <td><textarea name="aiowps_fcd_exclude_files" rows="5" cols="50"><?php echo $aio_wp_security->configs->get_value('aiowps_fcd_exclude_files'); ?></textarea>
+                <td><textarea name="aiowps_fcd_exclude_files" rows="5" cols="50"><?php echo htmlspecialchars($aio_wp_security->configs->get_value('aiowps_fcd_exclude_files')); ?></textarea>
                     <br />
                     <span class="description"><?php _e('Enter each file or directory on a new line which you wish to exclude from the file change detection scan.', 'all-in-one-wp-security-and-firewall'); ?></span>
                     <span class="aiowps_more_info_anchor"><span class="aiowps_more_info_toggle_char">+</span><span class="aiowps_more_info_toggle_text"><?php _e('More Info', 'all-in-one-wp-security-and-firewall'); ?></span></span>
@@ -323,8 +330,10 @@ class AIOWPSecurity_Filescan_Menu extends AIOWPSecurity_Admin_Menu
                 <td>
                 <input name="aiowps_send_fcd_scan_email" type="checkbox"<?php if($aio_wp_security->configs->get_value('aiowps_send_fcd_scan_email')=='1') echo ' checked="checked"'; ?> value="1"/>
                 <span class="description"><?php _e('Check this if you want the system to email you if a file change was detected', 'all-in-one-wp-security-and-firewall'); ?></span>
-                <br /><input type="text" size="40" name="aiowps_fcd_scan_email_address" value="<?php echo $aio_wp_security->configs->get_value('aiowps_fcd_scan_email_address'); ?>" />
-                <span class="description"><?php _e('Enter an email address', 'all-in-one-wp-security-and-firewall'); ?></span>
+                <br />
+                    <textarea name="aiowps_fcd_scan_email_address" rows="5" cols="50"><?php echo htmlspecialchars($aio_wp_security->configs->get_value('aiowps_fcd_scan_email_address')); ?></textarea>
+                    <br />
+                    <span class="description"><?php _e('Enter one or more email addresses on a new line.', 'all-in-one-wp-security-and-firewall'); ?></span>
                 </td>
             </tr>            
         </table>
@@ -407,7 +416,7 @@ class AIOWPSecurity_Filescan_Menu extends AIOWPSecurity_Admin_Menu
         </div>
 
         <div class="postbox">
-        <h3><label for="title"><?php _e('Database Scan', 'all-in-one-wp-security-and-firewall'); ?></label></h3>
+        <h3 class="hndle"><label for="title"><?php _e('Database Scan', 'all-in-one-wp-security-and-firewall'); ?></label></h3>
         <div class="inside">
         <form action="" method="POST">
         <?php wp_nonce_field('aiowpsec-manual-db-scan-nonce'); ?>
@@ -449,7 +458,7 @@ class AIOWPSecurity_Filescan_Menu extends AIOWPSecurity_Admin_Menu
         }
         ?>
         <div class="postbox">
-        <h3><label for="title"><?php _e('Latest File Change Scan Results', 'all-in-one-wp-security-and-firewall'); ?></label></h3>
+        <h3 class="hndle"><label for="title"><?php _e('Latest File Change Scan Results', 'all-in-one-wp-security-and-firewall'); ?></label></h3>
         <div class="inside">
         <?php
         $files_added_output = "";

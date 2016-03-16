@@ -56,6 +56,18 @@ class Groups_WS_Handler {
 
 		// subscriptions
 
+		// >= 2.x
+
+		// do_action( 'woocommerce_subscription_status_updated', $this, $new_status, $old_status );
+		add_action( 'woocommerce_subscription_status_updated', array( __CLASS__, 'woocommerce_subscription_status_updated' ), 10, 3 );
+
+		// do_action( 'woocommerce_subscription_trashed', $post_id );
+		add_action( 'woocommerce_subscription_trashed', array( __CLASS__, 'woocommerce_subscription_trashed' ), 10, 1 );
+		// do_action( 'woocommerce_subscriptions_switched_item', $subscription, $new_order_item, WC_Subscriptions_Order::get_item_by_id( $new_order_item['switched_subscription_item_id'] ) );
+		add_action( 'woocommerce_subscriptions_switched_item', array( __CLASS__, 'woocommerce_subscriptions_switched_item' ), 10, 3 );
+
+		// < 2.x
+
 		// do_action( 'activated_subscription', $user_id, $subscription_key );
 		add_action( 'activated_subscription', array( __CLASS__, 'activated_subscription' ), 10, 2 );
 		// do_action( 'cancelled_subscription', $user_id, $subscription_key );
@@ -86,6 +98,7 @@ class Groups_WS_Handler {
 		// force registration at checkout
 		add_filter( 'option_woocommerce_enable_guest_checkout', array( __CLASS__, 'option_woocommerce_enable_guest_checkout' ) );
 		add_filter( 'option_woocommerce_enable_signup_and_login_from_checkout', array( __CLASS__, 'option_woocommerce_enable_signup_and_login_from_checkout' ) );
+
 	}
 
 	/**
@@ -317,12 +330,301 @@ class Groups_WS_Handler {
 	}
 
 	/**
+	 * Handle subscription status updates.
+	 * Added for subscriptions 2.x compatibility.
+	 * 
+	 * @param WC_Subscription $subscription
+	 * @param string $new_status
+	 * @param string $old_status
+	 */
+	public static function woocommerce_subscription_status_updated( $subscription, $new_status, $old_status ) {
+
+		switch( $new_status ) {
+
+			case 'active' :
+			case 'completed' :
+				self::subscription_status_active( $subscription );
+				// subscriptions >= 2.x can transition from pending to on-hold to active
+				// so this doen't make sense anymore - left for reference
+				//if ( $old_status != 'on-hold' ) {
+				//	self::subscription_status_active( $subscription );
+				//} else {
+				//	self::subscription_status_reactivated( $subscription );
+				//}
+				break;
+
+			case 'cancelled' :
+				self::subscription_status_cancelled( $subscription );
+				break;
+
+			case 'pending' :
+				self::subscription_status_pending( $subscription );
+				break;
+
+			case 'failed' :
+			case 'on-hold' :
+				self::subscription_status_on_hold( $subscription );
+				break;
+
+			case 'pending-cancel' :
+				// nothing to do here, wait until cancelled
+				break;
+
+			case 'expired' :
+				self::subscription_status_expired( $subscription );
+				break;
+
+			case 'switched' :
+				self::subscription_status_switched( $subscription );
+				break;
+		}
+	}
+
+	/**
+	 * 2.x subscriptions activation handler.
+	 * 
+	 * @param WC_Subscription $subscription
+	 * @since 1.9.0
+	 */
+	private static function subscription_status_active( $subscription ) {
+
+		if ( !empty( $subscription->order ) ) {
+			$order_id = $subscription->order->id;
+		} else {
+			$order_id = $subscription->id;
+		}
+		$user_id  = $subscription->user_id;
+
+		// maybe unschedule pending expiration
+		wp_clear_scheduled_hook(
+			'groups_ws_subscription_expired',
+			array(
+				'user_id' => $user_id,
+				'subscription_id' => $subscription->id
+			)
+		);
+
+		$items = $subscription->get_items();
+		foreach( $items as $item ) {
+			$product_id = $item['product_id'];
+			// get the product from the subscription
+			$product = groups_ws_get_product( $product_id );
+			if ( $product->exists() ) {
+				// get the groups related to the product
+				$product_groups = get_post_meta( $product_id, '_groups_groups', false );
+				if ( isset( $item['variation_id'] ) ) {
+					if ( $variation_product_groups = get_post_meta( $item['variation_id'], '_groups_variation_groups', false ) ) {
+						$product_groups = array_merge( $product_groups, $variation_product_groups );
+					}
+				}
+				if ( $product_groups ) {
+					if ( count( $product_groups )  > 0 ) {
+						// add the groups to the subscription (in case the product is changed later on, the subscription is still valid)
+						$groups_product_groups = get_user_meta( $user_id, '_groups_product_groups', true );
+						if ( empty( $groups_product_groups ) ) {
+							$groups_product_groups = array();
+						}
+						$groups_product_groups[$order_id][$product_id]['version'] = GROUPS_WS_VERSION;
+						$groups_product_groups[$order_id][$product_id]['start']  = time();
+						$groups_product_groups[$order_id][$product_id]['groups']  = $product_groups;
+						$groups_product_groups[$order_id][$product_id]['subscription_id'] = $subscription->id;
+						update_user_meta( $user_id, '_groups_product_groups', $groups_product_groups );
+						// add the user to the groups
+						foreach( $product_groups as $group_id ) {
+							Groups_User_Group::create(
+								array(
+									'user_id' => $user_id,
+									'group_id' => $group_id
+								)
+							);
+						}
+						Groups_WS_Terminator::mark_as_eternal( $user_id, $group_id );
+					}
+				}
+				// remove from groups
+				$product_groups_remove = get_post_meta( $product_id, '_groups_groups_remove', false );
+				if ( isset( $item['variation_id'] ) ) {
+					if ( $variation_product_groups_remove = get_post_meta( $item['variation_id'], '_groups_variation_groups_remove', false ) ) {
+						$product_groups_remove = array_merge( $product_groups_remove, $variation_product_groups_remove );
+					}
+				}
+				if ( $product_groups_remove ) {
+					if ( count( $product_groups_remove )  > 0 ) {
+						$groups_product_groups_remove = get_user_meta( $user_id, '_groups_product_groups_remove', true );
+						if ( empty( $groups_product_groups_remove ) ) {
+							$groups_product_groups_remove = array();
+						}
+						$groups_product_groups_remove[$order_id][$product_id]['groups'] = $product_groups_remove;
+						update_user_meta( $user_id, '_groups_product_groups_remove', $groups_product_groups_remove );
+						// remove the user from the groups
+						foreach( $product_groups_remove as $group_id ) {
+							self::maybe_delete( $user_id, $group_id, $order_id );
+						}
+					}
+				}
+			}
+		}
+
+	}
+
+	/**
+	 * Reactivated (subscription status transition from on-hold to active).
+	 * 
+	 * Not used. See notes above for 'active' status handling.
+	 *
+	 * @param WC_Subscription $subscription
+	 * @since 1.9.0
+	 */
+	private static function subscription_status_reactivated( $subscription ) {
+		if ( !empty( $subscription->order ) ) {
+			$order_id = $subscription->order->id;
+		} else {
+			$order_id = $subscription->id;
+		}
+		$user_id  = $subscription->user_id;
+		$items = $subscription->get_items();
+		foreach( $items as $item ) {
+			$product_id = $item['product_id'];
+			$groups_product_groups = get_user_meta( $user_id, '_groups_product_groups', true );
+			if (
+				isset( $groups_product_groups[$order_id] ) &&
+				isset( $groups_product_groups[$order_id][$product_id] ) &&
+				isset( $groups_product_groups[$order_id][$product_id]['groups'] )
+			) {
+				foreach( $groups_product_groups[$order_id][$product_id]['groups'] as $group_id ) {
+					Groups_User_Group::create(
+						array(
+							'user_id' => $user_id,
+							'group_id' => $group_id
+						)
+					);
+				}
+			}
+		}
+	}
+
+	/**
+	 * Remove the user from the subscription products' related groups.
+	 *
+	 * @param int $user_id
+	 * @param WC_Subscription $subscription
+	 * @since 1.9.0
+	 */
+	private static function subscription_status_cancelled( $subscription ) {
+
+		if ( !empty( $subscription->order ) ) {
+			$order_id = $subscription->order->id;
+		} else {
+			$order_id = $subscription->id;
+		}
+		$user_id  = $subscription->user_id;
+
+		$items = $subscription->get_items();
+		foreach( $items as $item ) {
+			$product_id = $item['product_id'];
+			$groups_product_groups = get_user_meta( $user_id, '_groups_product_groups', true );
+			if (
+				isset( $groups_product_groups[$order_id] ) &&
+				isset( $groups_product_groups[$order_id][$product_id] ) &&
+				isset( $groups_product_groups[$order_id][$product_id]['groups'] )
+			) {
+				foreach( $groups_product_groups[$order_id][$product_id]['groups'] as $group_id ) {
+					self::maybe_delete( $user_id, $group_id, $order_id );
+				}
+			}
+		}
+	}
+
+	/**
+	 * Invokes the handler for cancelled.
+	 * 
+	 * @param WC_Subscription $subscription
+	 * @uses Groups_WS_Handler::subscription_status_cancelled( $subscription )
+	 * @since 1.9.0
+	 */
+	private static function subscription_status_expired( $subscription ) {
+		self::subscription_status_cancelled( $subscription );
+	}
+
+	/**
+	 * Invokes the handler for cancelled.
+	 * 
+	 * @param WC_Subscription $subscription
+	 * @uses Groups_WS_Handler::subscription_status_cancelled( $subscription )
+	 * @since 1.9.0
+	 */
+	private static function subscription_status_switched( $subscription ) {
+		self::subscription_status_cancelled( $subscription );
+	}
+
+	/**
+	 * Trashed subscriptions expire immediately.
+	 * 
+	 * @param int $post_id
+	 * @since 1.9.0
+	 */
+	public static function woocommerce_subscription_trashed( $post_id ) {
+		if ( $subscription = wcs_get_subscription( $post_id ) ) {
+			self::subscription_status_expired( $subscription );
+			// unschedule pending expiration if any
+			wp_clear_scheduled_hook(
+				'groups_ws_subscription_expired',
+				array(
+					'user_id' => $user_id,
+					'subscription_id' => $subscription->id
+				)
+			);
+		}
+	}
+
+	/**
+	 * Invokes the handler for on-hold subscription status.
+	 * 
+	 * @param WC_Subscription $subscription
+	 * @uses Groups_WS_Handler::subscription_status_on_hold( $subscription )
+	 * @since 1.9.0
+	 */
+	private static function subscription_status_pending( $subscription ) {
+		self::subscription_status_on_hold( $subscription );
+	}
+
+	/**
+	 * Handles subscriptions put on hold; does the same thing as for
+	 * cancelled subscriptions; keep as separate implementations though.
+	 * 
+	 * @param WC_Subscription $subscription
+	 * @since 1.9.0
+	 */
+	private static function subscription_status_on_hold( $subscription ) {
+		if ( !empty( $subscription->order ) ) {
+			$order_id = $subscription->order->id;
+		} else {
+			$order_id = $subscription->id;
+		}
+		$user_id  = $subscription->user_id;
+		$items = $subscription->get_items();
+		foreach( $items as $item ) {
+			$product_id = $item['product_id'];
+			$groups_product_groups = get_user_meta( $user_id, '_groups_product_groups', true );
+			if (
+				isset( $groups_product_groups[$order_id] ) &&
+				isset( $groups_product_groups[$order_id][$product_id] ) &&
+				isset( $groups_product_groups[$order_id][$product_id]['groups'] )
+			) {
+				foreach( $groups_product_groups[$order_id][$product_id]['groups'] as $group_id ) {
+					self::maybe_delete( $user_id, $group_id, $order_id );
+				}
+			}
+		}
+	}
+
+	/**
 	 * Handle group assignment : assign the user to the groups related to the subscription's product.
 	 * @param int $user_id
 	 * @param string $subscription_key
 	 */
 	public static function activated_subscription( $user_id, $subscription_key ) {
-		$subscription = WC_Subscriptions_Manager::get_subscription( $subscription_key );
+		$subscription = self::get_subscription_by_subscription_key( $subscription_key );
 		if ( isset( $subscription['product_id'] ) && isset( $subscription['order_id'] ) ) {
 			$product_id = $subscription['product_id'];
 			$order_id = $subscription['order_id'];
@@ -428,7 +730,7 @@ class Groups_WS_Handler {
 	 * @param string $subscription_key
 	 */
 	public static function reactivated_subscription( $user_id, $subscription_key ) {
-		$subscription = WC_Subscriptions_Manager::get_subscription( $subscription_key );
+		$subscription = self::get_subscription_by_subscription_key( $subscription_key );
 		if ( isset( $subscription['product_id'] ) && isset( $subscription['order_id'] ) ) {
 			$product_id = $subscription['product_id'];
 			$order_id = $subscription['order_id'];
@@ -463,7 +765,7 @@ class Groups_WS_Handler {
 	 * @param string $subscription_key
 	 */
 	public static function cancelled_subscription( $user_id, $subscription_key ) {
-		$subscription = WC_Subscriptions_Manager::get_subscription( $subscription_key );
+		$subscription = self::get_subscription_by_subscription_key( $subscription_key );
 		if ( isset( $subscription['product_id'] ) && isset( $subscription['order_id'] ) ) {
 			if ( $order = Groups_WS_Helper::get_order( $subscription['order_id'] ) ) {
 				switch( $order->status ) {
@@ -477,15 +779,36 @@ class Groups_WS_Handler {
 	}
 
 	/**
+	 * Handle switched subscription (Subscriptions 2.x)
+	 * 
+	 * @param WC_Subscription $subscription
+	 * @param unknown $new_order_item
+	 * @param unknown $switched_order_item
+	 */
+	public static function woocommerce_subscriptions_switched_item( $subscription, $new_order_item, $switched_order_item ) {
+		$new_subscription_key = wcs_get_old_subscription_key( $subscription );
+		if ( isset( $switched_order_item['product_id'] ) && isset( $switched_order_item['order_id'] ) ) {
+			$order_id = $switched_order_item['order_id'];  // the subscription id
+			$product_id = $switched_order_item['product_id'];
+			$user_id = $subscription->get_user_id();
+			if ( $switched_subscription = wcs_get_subscription( $order_id ) ) {
+				self::subscription_status_cancelled( $switched_subscription );
+			}
+		}
+		self::subscription_status_active( $subscription );
+	}
+
+	/**
 	 * Handle a switched subscription.
+	 * 
+	 * This action is not invoked anymore from Subscriptions 2.x.
 	 * 
 	 * @param int $user_id customer's user ID
 	 * @param string $subscription_key switched subscription's key
 	 * @param string $new_subscription_key subscription key of the new subscription
 	 */
 	public static function switched_subscription( $user_id, $subscription_key, $new_subscription_key ) {
-		$subscription     = WC_Subscriptions_Manager::get_subscription( $subscription_key );
-		$new_subscription = WC_Subscriptions_Manager::get_subscription( $new_subscription_key );
+		$subscription = self::get_subscription_by_subscription_key( $subscription_key );
 		if ( isset( $subscription['product_id'] ) && isset( $subscription['order_id'] ) ) {
 			$product_id            = $subscription['product_id'];
 			$order_id              = $subscription['order_id'];
@@ -513,7 +836,7 @@ class Groups_WS_Handler {
 	 * @param array $new_subscription_details
 	 */
 	public static function updated_users_subscription( $subscription_key, $new_subscription_details ) {
-		$subscription = WC_Subscriptions_Manager::get_subscription( $subscription_key );
+		$subscription = self::get_subscription_by_subscription_key( $subscription_key );
 		if ( isset( $subscription['status'] ) && ( 'switched' == $subscription['status'] ) ) {
 			if ( isset( $subscription['product_id'] ) && isset( $subscription['order_id'] ) ) {
 				if ( $order = Groups_WS_Helper::get_order( $subscription['order_id'] ) ) {
@@ -572,7 +895,7 @@ class Groups_WS_Handler {
 	 * @param string $subscription_key
 	 */
 	public static function subscription_put_on_hold( $user_id, $subscription_key ) {
-		$subscription = WC_Subscriptions_Manager::get_subscription( $subscription_key );
+		$subscription = self::get_subscription_by_subscription_key( $subscription_key );
 		if ( isset( $subscription['product_id'] ) && isset( $subscription['order_id'] ) ) {
 			$product_id = $subscription['product_id'];
 			$order_id = $subscription['order_id'];
@@ -594,7 +917,7 @@ class Groups_WS_Handler {
 	 * @param string $subscription_key
 	 */
 	public static function subscription_expired( $user_id, $subscription_key ) {
-		$subscription = WC_Subscriptions_Manager::get_subscription( $subscription_key );
+		$subscription = self::get_subscription_by_subscription_key( $subscription_key );
 		if ( isset( $subscription['product_id'] ) && isset( $subscription['order_id'] ) ) {
 			$product_id = $subscription['product_id'];
 			$order_id = $subscription['order_id'];
@@ -608,6 +931,30 @@ class Groups_WS_Handler {
 				}
 			}
 		}
+	}
+
+	/**
+	 * Obtain subscription by subscriptions < 2.x subscription key without
+	 * use of deprecated methods when using subscriptions >= 2.x
+	 * 
+	 * @param string $subscription_key
+	 * @return array subscription
+	 */
+	private static function get_subscription_by_subscription_key( $subscription_key ) {
+		if (
+			function_exists( 'wcs_get_subscription_from_key' ) &&
+			function_exists( 'wcs_get_subscription_in_deprecated_structure' )
+		) {
+			try {
+				$subscription = wcs_get_subscription_from_key( $subscription_key );
+				$subscription = wcs_get_subscription_in_deprecated_structure( $subscription );
+			} catch ( Exception $e ) {
+				$subscription = array();
+			}
+		} else {
+			$subscription = WC_Subscriptions_Manager::get_subscription( $subscription_key );
+		}
+		return $subscription;
 	}
 
 	/**
@@ -772,7 +1119,6 @@ class Groups_WS_Handler {
 	public static function get_valid_order_ids_granting_group_membership_from_order_items( $user_id, $group_id ) {
 		$order_ids = array();
 		if ( !empty( $user_id ) ) {
-
 			$base_statuses = array( 'processing', 'completed' );
 			$statuses      = array( 'completed' );
 			$options       = get_option( 'groups-woocommerce', array() );
@@ -789,9 +1135,7 @@ class Groups_WS_Handler {
 			}
 
 			foreach( $groups_product_groups as $order_id => $product_ids ) {
-
 				if ( $order = Groups_WS_Helper::get_order( $order_id ) ) {
-
 					// If this is a completed/processing order, consider group assignments.
 					// We check the order status for non-subscription products below,
 					// for subscriptions the subscription status is checked.
@@ -803,78 +1147,102 @@ class Groups_WS_Handler {
 						if ( $items = $order->get_items() ) {
 							foreach ( $items as $item ) {
 								if ( $product = $order->get_product_from_item( $item ) ) {
-
 									// Use the groups that were stored for the product when it was ordered,
 									// this avoids hickups when the product's groups were changed since.
 									if ( isset( $product_ids[$product->id] ) && isset( $product_ids[$product->id]['groups'] ) ) {
 										$product_groups = $product_ids[$product->id]['groups'];
 										if ( in_array( $group_id, $product_groups ) ) {
-
 											// non-subscriptions
 											if ( !class_exists( 'WC_Subscriptions_Product' ) || !WC_Subscriptions_Product::is_subscription( $product->id ) ) {
-
 												if ( in_array( $order->status, $statuses ) ) {
-
-												if ( isset( $product_ids[$product->id] ) &&
-													 isset( $product_ids[$product->id]['version'] ) // as of 1.5.0
-												) {
-													$has_duration =
-														isset( $product_ids[$product->id]['duration'] ) &&
-														$product_ids[$product->id]['duration'] &&
-														isset( $product_ids[$product->id]['duration_uom'] );
-												} else {
-													$has_duration = Groups_WS_Product::has_duration( $product );
-												}
-												// unlimited membership
-												if ( !$has_duration ) {
-													if ( !in_array( $order_id, $order_ids ) ) {
-														$order_ids[] = $order_id;
-													}
-												} else {
 													if ( isset( $product_ids[$product->id] ) &&
-													 	 isset( $product_ids[$product->id]['version'] ) // as of 1.5.0
+														 isset( $product_ids[$product->id]['version'] ) // as of 1.5.0
 													) {
-														$duration = Groups_WS_Product::calculate_duration(
-															$product_ids[$product->id]['duration'],
-															$product_ids[$product->id]['duration_uom']
-														);
-													} else { // <= 1.4.1
-														$duration = Groups_WS_Product::get_duration( $product );
+														$has_duration =
+															isset( $product_ids[$product->id]['duration'] ) &&
+															$product_ids[$product->id]['duration'] &&
+															isset( $product_ids[$product->id]['duration_uom'] );
+													} else {
+														$has_duration = Groups_WS_Product::has_duration( $product );
 													}
-													// time-limited membership
-													if ( $duration ) {
-														$start_date = $order->order_date;
-														if ( $paid_date = get_post_meta( $order_id, '_paid_date', true ) ) {
-															$start_date = $paid_date;
+													// unlimited membership
+													if ( !$has_duration ) {
+														if ( !in_array( $order_id, $order_ids ) ) {
+															$order_ids[] = $order_id;
 														}
-														$end = strtotime( $start_date ) + $duration;
-														if ( time() < $end ) {
-															if ( !in_array( $order_id, $order_ids ) ) {
-																$order_ids[] = $order_id;
+													} else {
+														if ( isset( $product_ids[$product->id] ) &&
+														 	 isset( $product_ids[$product->id]['version'] ) // as of 1.5.0
+														) {
+															$duration = Groups_WS_Product::calculate_duration(
+																$product_ids[$product->id]['duration'],
+																$product_ids[$product->id]['duration_uom']
+															);
+														} else { // <= 1.4.1
+															$duration = Groups_WS_Product::get_duration( $product );
+														}
+														// time-limited membership
+														if ( $duration ) {
+															$start_date = $order->order_date;
+															if ( $paid_date = get_post_meta( $order_id, '_paid_date', true ) ) {
+																$start_date = $paid_date;
+															}
+															$end = strtotime( $start_date ) + $duration;
+															if ( time() < $end ) {
+																if ( !in_array( $order_id, $order_ids ) ) {
+																	$order_ids[] = $order_id;
+																}
 															}
 														}
 													}
 												}
-											}
 
 											} else {
-												// include active subscriptions
-												$subscription_key = WC_Subscriptions_Manager::get_subscription_key( $order_id, $product->id );
-												$subscription = WC_Subscriptions_Manager::get_subscription( $subscription_key );
-												if ( isset( $subscription['status'] ) ) {
-													$valid = false;
-													if ( $subscription['status'] == 'active' ) {
-														$valid = true;
-													} else if ( $subscription['status'] == 'cancelled' ) {
-														$hook_args = array( 'user_id' => ( int ) $user_id, 'subscription_key' => $subscription_key );
-														$end_timestamp = wp_next_scheduled( 'scheduled_subscription_end_of_prepaid_term', $hook_args );
-														if ( ( $end_timestamp !== false ) && ( $end_timestamp > time() ) ) {
-															$valid = true;
+
+												// include active subscriptions ( subscriptions >= 2.x )
+												if ( function_exists( 'wcs_get_subscriptions_for_order' ) ) {
+													if ( $subscriptions = wcs_get_subscriptions_for_order( $order_id ) ) {
+														if ( is_array( $subscriptions ) ) {
+															foreach( $subscriptions as $subscription ) {
+																if ( $subscription->has_product( $product->id ) ) {
+																	$valid = false;
+																	if ( $subscription->get_status() == 'active' ) {
+																		$valid = true;
+																	} else if ( $subscription->get_status() == 'cancelled' ) {
+																		$hook_args = array( 'subscription_id' => $subscription->id );
+																		$end_timestamp = wp_next_scheduled( 'scheduled_subscription_end_of_prepaid_term', $hook_args );
+																		if ( ( $end_timestamp !== false ) && ( $end_timestamp > time() ) ) {
+																			$valid = true;
+																		}
+																	}
+																	if ( $valid ) {
+																		if ( !in_array( $order_id, $order_ids ) ) {
+																			$order_ids[] = $order_id;
+																			break;
+																		}
+																	}
+																}
+															}
 														}
 													}
-													if ( $valid ) {
-														if ( !in_array( $order_id, $order_ids ) ) {
-															$order_ids[] = $order_id;
+												} else {
+													$subscription_key = WC_Subscriptions_Manager::get_subscription_key( $order_id, $product->id );
+													$subscription = WC_Subscriptions_Manager::get_subscription( $subscription_key );
+													if ( isset( $subscription['status'] ) ) {
+														$valid = false;
+														if ( $subscription['status'] == 'active' ) {
+															$valid = true;
+														} else if ( $subscription['status'] == 'cancelled' ) {
+															$hook_args = array( 'user_id' => ( int ) $user_id, 'subscription_key' => $subscription_key );
+															$end_timestamp = wp_next_scheduled( 'scheduled_subscription_end_of_prepaid_term', $hook_args );
+															if ( ( $end_timestamp !== false ) && ( $end_timestamp > time() ) ) {
+																$valid = true;
+															}
+														}
+														if ( $valid ) {
+															if ( !in_array( $order_id, $order_ids ) ) {
+																$order_ids[] = $order_id;
+															}
 														}
 													}
 												}

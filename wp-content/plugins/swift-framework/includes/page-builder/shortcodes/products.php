@@ -5,7 +5,7 @@
     *	Swift Page Builder - Products Shortcode
     *	------------------------------------------------
     *	Swift Framework
-    * 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+    * 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     */
 
@@ -71,7 +71,7 @@
         "name"   => __( "Products (Mini)", 'swift-framework-plugin' ),
         "base"   => "spb_products_mini",
         "class"  => "spb-products-mini",
-        "icon"   => "spb-icon-products-mini",
+        "icon"   => "icon-products-mini",
         "params" => array(
             array(
                 "type"        => "textfield",
@@ -232,6 +232,23 @@
 
     /* PARAMS
     ================================================== */
+    $product_display_type = array(
+                __( 'Standard', 'swift-framework-plugin' )  => "standard",
+                __( 'Gallery', 'swift-framework-plugin' )   => "gallery",
+                __( 'Gallery Bordered', 'swift-framework-plugin' )   => "gallery-bordered",
+            );
+
+    if ( sf_theme_supports('product-preview-slider') ) {
+        $product_display_type = array(
+                __( 'Standard', 'swift-framework-plugin' )  => "standard",
+                __( 'Gallery', 'swift-framework-plugin' )   => "gallery",
+                __( 'Gallery Bordered', 'swift-framework-plugin' )   => "gallery-bordered",
+                __( 'Preview Slider', 'swift-framework-plugin' )   => "preview-slider",
+            );
+    }
+
+    $product_display_type = apply_filters( 'spb_product_display_types', $product_display_type );
+
     $params = array(
         array(
             "type"        => "textfield",
@@ -255,7 +272,7 @@
             ),
         ),
         array(
-            "type"        => "select-multiple",
+            "type"        => "select-multiple-id",
             "heading"     => __( "Product category", 'swift-framework-plugin' ),
             "param_name"  => "category",
             "value"       => spb_get_product_categories(),
@@ -270,31 +287,13 @@
             "description" => __( "Select specific products to show here, providing the Product ID in comma delimited format.", 'swift-framework-plugin' )
         ),
     );
-    
-    if ( spb_get_theme_name() == "atelier" ) {
-        $params[] = array(
-    	    "type"        => "dropdown",
-    	    "heading"     => __( "Product display type", 'swift-framework-plugin' ),
-    	    "param_name"  => "display_type",
-    	    "value"       => array(
-    	        __( 'Standard', 'swift-framework-plugin' )  => "standard",
-    	        __( 'Gallery', 'swift-framework-plugin' )   => "gallery",
-                __( 'Gallery Bordered', 'swift-framework-plugin' )   => "gallery-bordered",
-                __( 'Preview Slider', 'swift-framework-plugin' )   => "preview-slider",
-            )
-        );
-    } else {
-        $params[] = array(
-            "type"        => "dropdown",
-            "heading"     => __( "Product display type", 'swift-framework-plugin' ),
-            "param_name"  => "display_type",
-            "value"       => array(
-                __( 'Standard', 'swift-framework-plugin' )  => "standard",
-                __( 'Gallery', 'swift-framework-plugin' )   => "gallery",
-                __( 'Gallery Bordered', 'swift-framework-plugin' )   => "gallery-bordered",
-            )
-        );
-    }
+
+    $params[] = array(
+        "type"        => "dropdown",
+        "heading"     => __( "Product display type", 'swift-framework-plugin' ),
+        "param_name"  => "display_type",
+        "value"       => $product_display_type
+    );
 
     if ( sf_theme_supports('product-multi-masonry') ) {
     	$params[] = array(
@@ -302,9 +301,10 @@
     		    "heading"     => __( "Multi-Masonry display", 'swift-framework-plugin' ),
     		    "param_name"  => "multi_masonry",
     		    "value"       => array(
-    		        __( 'No', 'swift-framework-plugin' )  => "no",
     		        __( 'Yes', 'swift-framework-plugin' ) => "yes",
+                    __( 'No', 'swift-framework-plugin' )  => "no"
     		    ),
+                "buttonset_on"  => "yes",
     		    "description" => __( "Select if you'd like the asset to show products in a Multi-Masonry layout. NOTE: Not supported with Preview Slider display type.", 'swift-framework-plugin' )
     	);
     }
@@ -317,6 +317,7 @@
     	        __( 'No', 'swift-framework-plugin' )  => "no",
     	        __( 'Yes', 'swift-framework-plugin' ) => "yes",
     	    ),
+            "buttonset_on"  => "yes",
     	    "required"       => array("multi_masonry", "!=", "yes"),
     	);
    $params[] = array(
@@ -327,6 +328,7 @@
     	        __( 'No', 'swift-framework-plugin' )  => "no",
     	        __( 'Yes', 'swift-framework-plugin' ) => "yes"
     	    ),
+            "buttonset_on"  => "yes",
     	);
     $params[] = array(
     	    "type"        => "dropdown",
@@ -373,6 +375,7 @@
     	        __( 'No', 'swift-framework-plugin' )  => "no",
     	        __( 'Yes', 'swift-framework-plugin' ) => "yes"
     	    ),
+            "buttonset_on"  => "yes",
     	    "description" => __( "Select if you'd like to include a button in the title bar to link through to all shop items.", 'swift-framework-plugin' )
    		);
     $params[] = array(
@@ -390,6 +393,6 @@
 	    "name"   => __( "Products", 'swift-framework-plugin' ),
 	    "base"   => "spb_products",
 	    "class"  => "spb-products",
-	    "icon"   => "spb-icon-products",
+	    "icon"   => "icon-products",
 	    "params" => $params
 	) );

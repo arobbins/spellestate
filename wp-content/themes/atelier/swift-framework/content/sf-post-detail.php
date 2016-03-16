@@ -18,37 +18,72 @@
 	================================================== */
 	if ( ! function_exists( 'sf_post_detail_meta' ) ) {
 	    function sf_post_detail_meta() {
-	        global $post;
+	        global $post, $sf_options;
+	        $site_name = apply_filters('sf_schema_meta_site_name', get_bloginfo( 'name' ));
 	        $post_title = get_the_title();
-	        $post_date = get_the_date();
-	        $post_date_str = get_the_date('Y-m-d');
+	        $post_date = get_the_date('Y-m-d g:i:s');
+	        $modified_date = get_the_modified_date('Y-m-d g:i:s');
+	        $permalink = get_permalink();
 	        
 	        $post_image = get_post_thumbnail_id();
 	       	$image_meta = array();
 	       	$post_image_url = $post_image_alt = "";
+	        $post_image_width = $post_image_height = 0;
 	        
 	        if ( $post_image != "" ) {
 		        $post_image_meta = sf_get_attachment_meta( $post_image );
 		        if ( isset($post_image_meta) ) {
 		        	$post_image_alt = esc_attr( $post_image_meta['alt'] );
 		        } 
-		        $post_image_url = wp_get_attachment_url(get_post_thumbnail_id());
+		        $post_thumb_id = get_post_thumbnail_id();
+		        $post_image_url = wp_get_attachment_url( $post_thumb_id );
+		        $post_image_meta = wp_get_attachment_metadata( $post_thumb_id );
+		        $post_image_width = isset($post_image_meta['width']) ? $post_image_meta['width'] : 0;
+		        $post_image_height = isset($post_image_meta['height']) ? $post_image_meta['height'] : 0;
+	        }
+	        $logo = array();
+	        $logo_width = $logo_height = 0;
+	        if ( isset($sf_options['logo_upload']) ) {
+	        	$logo = $sf_options['logo_upload'];
+	        	if ( isset($logo['width']) ) {
+	        		$logo_width = $logo['width'];
+	        	}
+	        	if ( isset($logo['height']) ) {
+	        		$logo_height = $logo['height'];
+	        	}
 	        }
 	        
 	        ?>
 	        
 	        <div class="article-meta hide">
+	        	<div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+	        		<?php if ( !empty($logo) ) { ?>
+						<div itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+							<img src="<?php echo $logo['url']; ?>" alt="<?php echo $site_name; ?>" />
+							<meta itemprop="url" content="<?php echo $logo['url']; ?>">
+							<meta itemprop="width" content="<?php echo $logo_width; ?>">
+							<meta itemprop="height" content="<?php echo $logo_height; ?>">
+						</div>
+					<?php } ?>
+					<meta itemprop="name" content="<?php echo $site_name; ?>">
+				</div>
+	        	<meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="<?php echo $permalink; ?>"/>
 	        	<div itemprop="headline"><?php echo $post_title; ?></div>
-	        	<time itemprop="datePublished" datetime="<?php echo $post_date_str; ?>"><?php echo $post_date; ?></time>
+	        	<meta itemprop="datePublished" content="<?php echo $post_date; ?>"/>
+	        	<meta itemprop="dateModified" content="<?php echo $modified_date; ?>"/>
 	        	<?php if ( $post_image != "" ) { ?>
-	        	<img itemprop="image" src="<?php echo $post_image_url; ?>" alt="<?php echo $post_image_alt; ?>"/>
+	        	<div itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
+					<meta itemprop="url" content="<?php echo $post_image_url; ?>">
+					<meta itemprop="width" content="<?php echo $post_image_width; ?>">
+					<meta itemprop="height" content="<?php echo $post_image_height; ?>">
+				</div>
 	        	<?php } ?>
 	        </div>
 	        
 	    <?php
 	    }
 	}
-	add_action( 'sf_post_article_start', 'sf_post_detail_meta', 0 );
+	add_action( 'sf_post_article_start', 'sf_post_detail_meta', 5 );
 	
 	
     /* POST DETAIL HEADING
@@ -60,6 +95,10 @@
             <header class="article-heading hidden-hatom">
                 <div class="container">
                     <div class="entry-title" itemprop="name"><?php the_title(); ?></div>
+                    <span class="date updated"><?php the_date(); ?></span>
+                    <span class="vcard author">
+                    	<span class="fn"><?php the_author_meta( 'display_name' ); ?></span>
+                    </span>
                 </div>
             </header>
         <?php
@@ -118,10 +157,10 @@
                 }
                 $image_url = sf_image_post( $post->ID, 1920, $media_height, $use_thumb_content, true )
                 ?>
-                <div class="detail-feature"
-                     style="background-image: url(<?php echo esc_url($image_url); ?>); min-height: <?php echo esc_attr($custom_media_height); ?>px;">
+                <div class="detail-feature" style="background-image: url(<?php echo esc_url($image_url); ?>); min-height: <?php echo esc_attr($custom_media_height); ?>px;">
                    <span class="media-overlay" style="background-color:<?php echo $bg_color_title; ?>;opacity:<?php echo ( $bg_opacity_title / 100 ); ?>;"></span>
                     <div class="details-overlay">
+                    	<?php do_action( 'sf_post_detail_media_details_before' ); ?>
                         <h1 class="entry-title"
                             itemprop="name" <?php echo $details_overlay_styling; ?>><?php the_title(); ?></h1>
                         <?php if ( $single_author && ! $remove_dates ) { ?>
@@ -134,6 +173,7 @@
                             <div
                                 class="post-item-details" <?php echo $details_overlay_styling; ?>><?php echo sprintf( __( '<span class="vcard author">By <span itemprop="author" class="fn">%1$s</span></span> in %2$s', 'swiftframework' ), $post_author, $post_categories ); ?></div>
                         <?php } ?>
+                    	<?php do_action( 'sf_post_detail_media_details_after' ); ?>
                     </div>
                 </div>
             <?php
@@ -158,7 +198,7 @@
     if ( ! function_exists( 'sf_post_left_sidebar' ) ) {
         function sf_post_left_sidebar() {
             global $post, $sf_options;
-            $left_sidebar  = sf_get_post_meta( $post->ID, 'sf_left_sidebar', true );
+            $left_sidebar  = strtolower(sf_get_post_meta( $post->ID, 'sf_left_sidebar', true ));
 
             $sidebar_width = "";
             if ($sf_options['sidebar_width'] == "reduced") {
@@ -192,7 +232,7 @@
     if ( ! function_exists( 'sf_post_right_sidebar' ) ) {
         function sf_post_right_sidebar() {
             global $post, $sf_options;
-            $right_sidebar = sf_get_post_meta( $post->ID, 'sf_right_sidebar', true );
+            $right_sidebar = strtolower(sf_get_post_meta( $post->ID, 'sf_right_sidebar', true ));
             $sidebar_width = "";
             if ($sf_options['sidebar_width'] == "reduced") {
             	$sidebar_width = apply_filters( 'sf_post_sidebar_width', 'col-sm-3' );
@@ -353,7 +393,7 @@
             ?>
             <div class="article-divider"></div>
             <div class="article-share" data-buttontext="<?php echo esc_attr($share_text); ?>"
-                 data-image="<?php echo esc_url($image); ?>"></div>
+                 data-image="<?php echo esc_url($image); ?>"><share-button class="share-button"></share-button></div>
         <?php
         }
     }

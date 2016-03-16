@@ -4,7 +4,7 @@
   Plugin Name: WooCommerce Dynamic Pricing
   Plugin URI: http://www.woothemes.com/woocommerce
   Description: WooCommerce Dynamic Pricing lets you configure dynamic pricing rules for products, categories and members. For WooCommerce 1.4+
-  Version: 2.10.3
+  Version: 2.10.11
   Author: Lucas Stark
   Author URI: http://lucasstark.com
   Requires at least: 3.3
@@ -160,9 +160,12 @@ class WC_Dynamic_Pricing {
 
 			//add_filter( 'woocommerce_variation_sale_price_html', array(&$this, 'on_price_html'), 10, 2 );
 
-			add_action('woocommerce_before_mini_cart', array($this, 'remove_price_filters'));
-			add_action('woocommerce_after_mini_cart', array($this, 'add_price_filters'));
-			
+			add_action( 'woocommerce_before_mini_cart', array($this, 'remove_price_filters') );
+			add_action( 'woocommerce_after_mini_cart', array($this, 'add_price_filters') );
+			add_filter( 'woocommerce_product_is_on_sale', array($this, 'on_get_product_is_on_sale'), 10, 2 );
+
+
+
 			add_filter( 'woocommerce_get_variation_price', array($this, 'on_get_variation_price'), 10, 4 );
 			add_filter( 'woocommerce_get_price_html', array(&$this, 'on_price_html'), 10, 2 );
 			add_filter( 'woocommerce_get_price', array($this, 'on_get_price'), 10, 2 );
@@ -173,23 +176,23 @@ class WC_Dynamic_Pricing {
 
 		add_filter( 'woocommerce_dynamic_pricing_get_rule_amount', array($this, 'convert_decimals'), 99, 4 );
 	}
-	
+
 	/**
 	 * Remove the price filter when mini-cart is triggered. 
 	 * @since 2.10.2
 	 */
-	public function remove_price_filters(){
+	public function remove_price_filters() {
 		remove_filter( 'woocommerce_get_price', array($this, 'on_get_price'), 10, 2 );
 	}
-	
+
 	/**
 	 * Add the price filters back in after mini-cart is done. 
 	 * @since 2.10.2
 	 */
-	public function add_price_filters(){
+	public function add_price_filters() {
 		add_filter( 'woocommerce_get_price', array($this, 'on_get_price'), 10, 2 );
 	}
-	
+
 	public function convert_decimals( $amount, $rule, $cart_item, $module ) {
 		if ( function_exists( 'wc_format_decimal' ) ) {
 			$amount = wc_format_decimal( str_replace( get_option( 'woocommerce_price_thousand_sep' ), '', $amount ) );
@@ -246,24 +249,27 @@ class WC_Dynamic_Pricing {
 	 * @param type $_product
 	 * @return float
 	 */
-	public function on_get_price( $base_price, $_product ) {
-		if ( is_product() ) {
+	public function on_get_price( $base_price, $_product, $force_calculation = false ) {
+		$composite_ajax = did_action( 'wp_ajax_woocommerce_show_composited_product' ) | did_action( 'wp_ajax_nopriv_woocommerce_show_composited_product' ) | did_action( 'wc_ajax_woocommerce_show_composited_product' );
+
+		if ( is_product() || $force_calculation || $composite_ajax ) {
 			$id = isset( $_product->variation_id ) ? $_product->variation_id : $_product->id;
 			$discount_price = false;
 			$working_price = isset( $this->discounted_products[$id] ) ? $this->discounted_products[$id] : $base_price;
 
-			foreach ( $this->modules as $module ) {
+			$modules = apply_filters( 'wc_dynamic_pricing_load_modules', $this->modules );
+			foreach ( $modules as $module ) {
 				if ( $module->module_type == 'simple' ) {
 					//Make sure we are using the price that was just discounted.
 					$working_price = $discount_price ? $discount_price : $base_price;
 					$working_price = $module->get_product_working_price( $working_price, $_product );
-					if ( floatval( $working_price ) ) {
+					if ( $working_price !== false ) {
 						$discount_price = $module->get_discounted_price_for_shop( $_product, $working_price );
 					}
 				}
 			}
-
-			if ( $discount_price ) {
+			
+			if ( $discount_price !== false ) {
 				return $discount_price;
 			} else {
 				return $base_price;
@@ -285,7 +291,8 @@ class WC_Dynamic_Pricing {
 		$discount_price = false;
 		$working_price = isset( $this->discounted_products[$id] ) ? $this->discounted_products[$id] : $base_price;
 
-		foreach ( $this->modules as $module ) {
+		$modules = apply_filters( 'wc_dynamic_pricing_load_modules', $this->modules );
+		foreach ( $modules as $module ) {
 			if ( $module->module_type == 'simple' ) {
 				//Make sure we are using the price that was just discounted.
 				$working_price = $discount_price ? $discount_price : $base_price;
@@ -350,65 +357,118 @@ class WC_Dynamic_Pricing {
 	}
 
 	public function on_price_html( $html, $_product ) {
+		if ( $_product ) {
+			remove_filter( 'woocommerce_get_price', array($this, 'on_get_price'), 10, 2 );
 
-		remove_filter( 'woocommerce_get_price', array($this, 'on_get_price'), 10, 2 );
+			$from = strstr( $html, __( 'From', 'woocommerce' ) ) !== false ? ' ' . __( 'From', 'woocommerce' ) . ' ' : ' ';
+			$discount_price = false;
+			$id = isset( $_product->variation_id ) ? $_product->variation_id : $_product->id;
 
-		$from = strstr( $html, __( 'From', 'woocommerce' ) ) !== false ? ' ' . __( 'From', 'woocommerce' ) . ' ' : ' ';
-		$discount_price = false;
-		$id = isset( $_product->variation_id ) ? $_product->variation_id : $_product->id;
+			if ( apply_filters( 'wc_dynamic_pricing_get_use_sale_price', true, $_product ) ) {
+				$working_price = $_product->get_price();
+			} else {
+				$working_price = $_product->get_regular_price();
+			}
 
-		if ( apply_filters( 'wc_dynamic_pricing_get_use_sale_price', true, $_product ) ) {
-			$working_price = $_product->get_price();
-		} else {
-			$working_price = $_product->get_regular_price();
-		}
+			$tax_display_mode = get_option( 'woocommerce_tax_display_shop' );
+			$base_price = $tax_display_mode == 'incl' ? $_product->get_price_including_tax( 1, $working_price ) : $_product->get_price_excluding_tax( 1, $working_price );
+			$working_discount_price = $base_price;
 
-		$tax_display_mode = get_option( 'woocommerce_tax_display_shop' );
-		$base_price = $tax_display_mode == 'incl' ? $_product->get_price_including_tax( 1, $working_price ) : $_product->get_price_excluding_tax( 1, $working_price );
+			$discounted = false;
+			$modules = apply_filters( 'wc_dynamic_pricing_load_modules', $this->modules );
+			foreach ( $modules as $module ) {
+				if ( $module->module_type == 'simple' ) {
 
-		foreach ( $this->modules as $module ) {
-			if ( $module->module_type == 'simple' ) {
+					//Make sure we are using the price that was just discounted.
+					$working_price = $working_discount_price ? $working_discount_price : $base_price;
+					$working_price = $module->get_product_working_price( $working_price, $_product );
 
+					if ( floatval( $working_price ) ) {
+						$wd = $module->get_discounted_price_for_shop( $_product, $working_price );
 
-				//Make sure we are using the price that was just discounted.
-				$working_price = $discount_price ? $discount_price : $base_price;
-				$working_price = $module->get_product_working_price( $working_price, $_product );
+						if ( $wd && $wd != $base_price ) {
 
-				if ( floatval( $working_price ) ) {
-					$discount_price = $module->get_discounted_price_for_shop( $_product, $working_price );
-					if ( $discount_price && $discount_price != $base_price ) {
-
-						$display_price = $discount_price;
-
-						if ( apply_filters( 'wc_dynamic_pricing_use_discount_format', true ) ) {
-
-							if ( $_product->is_type( 'variable' ) ) {
-								$from = '<span class="from">' . _x( 'From:', 'min_price', 'woocommerce' ) . ' </span>';
+							$cumulative = apply_filters( 'woocommerce_dynamic_pricing_is_cumulative', true, $module->module_id, array('data' => $_product), '' );
+							if ( $discounted && !$cumulative ) {
+								continue;
 							}
 
-							$html = '<del>' . WC_Dynamic_Pricing_Compatibility::wc_price( $base_price ) . '</del><ins> ' . $from . WC_Dynamic_Pricing_Compatibility::wc_price( $display_price ) . '</ins>';
-						} else {
+							$working_discount_price = $wd;
+							$discounted = true;
 
-							if ( $_product->is_type( 'variable' ) ) {
-								$from = '<span class="from">' . _x( 'From:', 'min_price', 'woocommerce' ) . ' </span>';
+							$display_price = $working_discount_price;
+
+							//Set the discount price for use later. 
+							$discount_price = $working_discount_price;
+
+							if ( apply_filters( 'wc_dynamic_pricing_use_discount_format', true ) ) {
+
+								if ( $_product->is_type( 'variable' ) ) {
+									$from = '<span class="from">' . _x( 'From:', 'min_price', 'woocommerce' ) . ' </span>';
+								}
+
+								$html = '<del>' . WC_Dynamic_Pricing_Compatibility::wc_price( $base_price ) . '</del><ins> ' . $from . WC_Dynamic_Pricing_Compatibility::wc_price( $display_price ) . '</ins>';
+							} else {
+
+								if ( $_product->is_type( 'variable' ) ) {
+									$from = '<span class="from">' . _x( 'From:', 'min_price', 'woocommerce' ) . ' </span>';
+								}
+
+								$html = $from . WC_Dynamic_Pricing_Compatibility::wc_price( $display_price );
 							}
 
-							$html = $from . WC_Dynamic_Pricing_Compatibility::wc_price( $display_price );
+							$html .= $_product->get_price_suffix();
+						} elseif ( $wd === 0 || $wd === 0.00 ) {
+							$html = $_product->get_price_html_from_to( $_product->regular_price, __( 'Free!', 'woocommerce' ) );
+							//Set the discount price for use later. 
+							$working_discount_price = $wd;
+							$discount_price = $working_discount_price;
 						}
-
-						$html .= $_product->get_price_suffix();
-					} elseif ( $discount_price === 0 || $discount_price === 0.00 ) {
-						$html = $_product->get_price_html_from_to( $_product->regular_price, __( 'Free!', 'woocommerce' ) );
 					}
 				}
 			}
+
+			$this->discounted_products[$id] = $discount_price ? $discount_price : $base_price;
+
+			add_filter( 'woocommerce_get_price', array($this, 'on_get_price'), 10, 2 );
+
+			return apply_filters( 'wc_dynamic_pricing_price_html', $html, $_product );
+		} else {
+			return $html;
+		}
+	}
+
+	/**
+	 * Overrides the default woocommerce is on sale to ensure sale badges show properly. 
+	 * @since 2.10.8
+	 * @param bool $is_on_sale
+	 * @param WC_Product $product
+	 * @return bool
+	 */
+	public function on_get_product_is_on_sale( $is_on_sale, $product ) {
+		if ( $is_on_sale ) {
+			return $is_on_sale;
 		}
 
-		$this->discounted_products[$id] = $discount_price ? $discount_price : $base_price;
+		if ( $product->is_type( 'variable' ) ) {
+			$is_on_sale = false;
+			$prices = $product->get_variation_prices();
+			if ( $prices['price'] !== $prices['regular_price'] ) {
+				$is_on_sale = true;
+			}
+		} else {
 
-		add_filter( 'woocommerce_get_price', array($this, 'on_get_price'), 10, 2 );
+			$dynamic_price = $this->on_get_price( $product->price, $product, true );
+			$regular_price = $product->get_regular_price();
 
-		return apply_filters( 'wc_dynamic_pricing_price_html', $html, $_product );
+			if ( empty( $regular_price ) || empty( $dynamic_price ) ) {
+				return $is_on_sale;
+			} else {
+				$is_on_sale = $regular_price != $dynamic_price;
+			}
+		}
+
+		return $is_on_sale;
 	}
 
 	//Helper functions to modify the woocommerce cart.  Called from the individual modules.
@@ -431,8 +491,8 @@ class WC_Dynamic_Pricing {
 			if ( $_product->product_type == 'composite' ) {
 				$woocommerce->cart->cart_contents[$cart_item_key]['data']->base_price = $adjusted_price;
 			}
-			
-			
+
+
 			if ( !isset( $woocommerce->cart->cart_contents[$cart_item_key]['discounts'] ) ) {
 
 				$discount_data = array(

@@ -2,10 +2,10 @@
 
     /*
     *
-    *	Swift Page Builder - Default Shortcodes
-    *	------------------------------------------------
-    *	Swift Framework
-    * 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+    *   Swift Page Builder - Default Shortcodes
+    *   ------------------------------------------------
+    *   Swift Framework
+    *   Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     */
 
@@ -16,7 +16,7 @@
 
         public function content( $atts, $content = null ) {
 
-            $title = $el_class = $width = $el_position = $inline_style = '';
+            $title = $el_class = $width = $el_position = $inline_style = $form_content = '';
 
             extract( shortcode_atts( array(
                 'title'              => '',
@@ -27,9 +27,14 @@
                 'animation_delay'    => '',
                 'el_class'           => '',
                 'el_position'        => '',
+                'form_content'       => '',
                 'width'              => '1/2'
             ), $atts ) );
 
+            if ( $form_content != '' ){
+                $content = html_entity_decode($form_content);
+            }  
+           
             $output = '';
 
             $el_class = $this->getExtraClass( $el_class );
@@ -71,12 +76,13 @@
             return $output;
         }
     }
-
-    SPBMap::map( 'spb_text_block', array(
+    
+   
+   SPBMap::map( 'spb_text_block', array(
             "name"          => __( "Text Block", 'swift-framework-plugin' ),
             "base"          => "spb_text_block",
-            "class"         => "",
-            "icon"          => "spb-icon-text-block",
+            "class"         => "spb_tab_media",
+            "icon"          => "icon-text-block",
             "wrapper_class" => "clearfix",
             "controls"      => "full",
             "params"        => array(
@@ -93,7 +99,7 @@
                     "heading"     => __( "Title icon", 'swift-framework-plugin' ),
                     "param_name"  => "icon",
                     "value"       => "",
-                    "description" => __( "Icon to the left of the title text. You can get the code from <a href='http://fortawesome.github.com/Font-Awesome/' target='_blank'>here</a>. E.g. fa-cloud", 'swift-framework-plugin' )
+                    "description" => __( "Icon to the left of the title text. This is the class name for the icon, e.g. fa-cloud", 'swift-framework-plugin' )
                 ),
                 array(
                     "type"        => "textarea_html",
@@ -106,9 +112,9 @@
                     "description" => __( "Enter your content.", 'swift-framework-plugin' )
                 ),
                 array(
-                    "type"       => "section",
-                    "param_name" => "tb_animation_options",
-                    "heading"    => __( "Animation Options", 'swift-framework-plugin' ),
+                    "type"       => "section_tab",
+                    "param_name" => "animation_options_tab",
+                    "heading"    => __( "Animation", 'swift-framework-plugin' ),
                 ),
                 array(
                     "type"        => "dropdown",
@@ -125,9 +131,9 @@
                     "description" => __( "If you wish to add a delay to the animation, then you can set it here (ms).", 'swift-framework-plugin' )
                 ),
                 array(
-                    "type"       => "section",
-                    "param_name" => "tb_styling_options",
-                    "heading"    => __( "Styling Options", 'swift-framework-plugin' ),
+                    "type"       => "section_tab",
+                    "param_name" => "styling_options_tab",
+                    "heading"    => __( "Styling", 'swift-framework-plugin' ),
                 ),
                 array(
                     "type"        => "uislider",
@@ -151,180 +157,10 @@
                 ),
                 array(
                     "type"        => "textfield",
-                    "heading"     => __( "Extra class", 'swift-framework-plugin' ),
-                    "param_name"  => "el_class",
+                    "heading"     => __( "Data Form Content", 'swift-framework-plugin' ),
+                    "param_name"  => "form_content",
                     "value"       => "",
-                    "description" => __( "If you wish to style this particular content element differently, then use this field to add a class name and then refer to it in your css file.", 'swift-framework-plugin' )
-                )
-            )
-        )
-    );
-
-
-    /* BUTTON ASSET
-    ================================================== */
-
-    class SwiftPageBuilderShortcode_spb_button extends SwiftPageBuilderShortcode {
-
-        public function content( $atts, $content = null ) {
-
-            $title = $el_class = $width = $el_position = $inline_style = '';
-
-            extract( shortcode_atts( array(
-                'button_size'       => 'standard',
-                'button_colour'     => 'accent',
-                'button_type'       => 'standard',
-                'button_text'       => '',
-                'button_icon'       => '',
-                'button_link'       => '#',
-                'button_target'     => '_self',
-                'button_dropshadow' => '',
-                'animation'         => '',
-                'animation_delay'   => '',
-                'el_class'          => '',
-                'el_position'       => '',
-                'width'             => '1/2'
-            ), $atts ) );
-
-            $output = '';
-
-            $el_class = $this->getExtraClass( $el_class );
-            $width    = spb_translateColumnWidthToSpan( $width );
-
-            $output .= "\n\t" . '<div class="spb_button_element sf-animation ' . $width . $el_class . '" data-animation="' . $animation . '" data-delay="' . $animation_delay . '">';
-            $output .= "\n\t\t\t" . do_shortcode( '[sf_button colour="' . $button_colour . '" type="' . $button_type . '" size="' . $button_size . '" link="' . $button_link . '" target="' . $button_target . '" icon="' . $button_icon . '" dropshadow="' . $button_dropshadow . '"]' . $button_text . '[/sf_button]' );
-            $output .= "\n\t" . '</div> ' . $this->endBlockComment( $width );
-
-            $output = $this->startRow( $el_position ) . $output . $this->endRow( $el_position );
-
-            return $output;
-        }
-    }
-
-    $type_arr = array(
-        __( "Standard", 'swift-framework-plugin' )       => "standard",
-        __( "Stroke to Fill", 'swift-framework-plugin' ) => "stroke-to-fill",
-        __( "Icon Reveal", 'swift-framework-plugin' )    => "sf-icon-reveal",
-        __( "Icon Stroke", 'swift-framework-plugin' )    => "sf-icon-stroke",
-    );
-    if ( spb_get_theme_name() == "joyn" ) {
-        $type_arr = array(
-            __( "Standard", 'swift-framework-plugin' )       => "standard",
-            __( "Bordered", 'swift-framework-plugin' )       => "bordered",
-            __( "Rotate 3D", 'swift-framework-plugin' )      => "rotate-3d",
-            __( "Stroke to Fill", 'swift-framework-plugin' ) => "stroke-to-fill",
-            __( "Icon Reveal", 'swift-framework-plugin' )    => "sf-icon-reveal",
-            __( "Icon Stroke", 'swift-framework-plugin' )    => "sf-icon-stroke",
-        );
-    }
-    $target_arr = array(
-        __( "Same window", 'swift-framework-plugin' ) => "_self",
-        __( "New window", 'swift-framework-plugin' )  => "_blank"
-    );
-
-
-    SPBMap::map( 'spb_button', array(
-            "name"          => __( "Button", 'swift-framework-plugin' ),
-            "base"          => "spb_button",
-            "class"         => "",
-            "icon"          => "spb-icon-button",
-            "wrapper_class" => "clearfix",
-            "controls"      => "full",
-            "params"        => array(
-                array(
-                    "type"       => "dropdown",
-                    "heading"    => __( "Button Size", 'swift-framework-plugin' ),
-                    "param_name" => "button_size",
-                    "value"      => array(
-                        __( "Standard", 'swift-framework-plugin' ) => "standard",
-                        __( "Large", 'swift-framework-plugin' )    => "large",
-                    )
-                ),
-                array(
-                    "type"       => "dropdown",
-                    "heading"    => __( "Button Colour", 'swift-framework-plugin' ),
-                    "param_name" => "button_colour",
-                    "value"      => array(
-                        __( "Accent", 'swift-framework-plugin' )              => "accent",
-                        __( "Black", 'swift-framework-plugin' )               => "black",
-                        __( "White", 'swift-framework-plugin' )               => "white",
-                        __( "Blue", 'swift-framework-plugin' )                => "blue",
-                        __( "Grey", 'swift-framework-plugin' )                => "grey",
-                        __( "Light Grey", 'swift-framework-plugin' )          => "lightgrey",
-                        __( "Orange", 'swift-framework-plugin' )              => "orange",
-                        __( "Turquoise", 'swift-framework-plugin' )           => "turquoise",
-                        __( "Green", 'swift-framework-plugin' )               => "green",
-                        __( "Pink", 'swift-framework-plugin' )                => "pink",
-                        __( "Gold", 'swift-framework-plugin' )                => "gold",
-                        __( "Transparent - Light", 'swift-framework-plugin' ) => "transparent-light",
-                        __( "Transparent - Dark", 'swift-framework-plugin' )  => "transparent-dark",
-                    )
-                ),
-                array(
-                    "type"       => "dropdown",
-                    "heading"    => __( "Button Type", 'swift-framework-plugin' ),
-                    "param_name" => "button_type",
-                    "value"      => $type_arr
-                ),
-                array(
-                    "type"        => "textfield",
-                    "heading"     => __( "Button Text", 'swift-framework-plugin' ),
-                    "param_name"  => "button_text",
-                    "holder"      => "div",
-                    "value"       => "Button Text",
-                    "description" => __( "Icon to the left of the title text. You can get the code from <a href='http://fortawesome.github.com/Font-Awesome/' target='_blank'>here</a>. E.g. fa-cloud", 'swift-framework-plugin' )
-                ),
-                array(
-                    "type"        => "icon-picker",
-                    "heading"     => __( "Button Icon", 'swift-framework-plugin' ),
-                    "param_name"  => "button_icon",
-                    "value"       => "",
-                    "description" => ''
-                ),
-                array(
-                    "type"       => "textfield",
-                    "heading"    => __( "Button Link", 'swift-framework-plugin' ),
-                    "param_name" => "button_link",
-                    "value"      => "",
-                ),
-                array(
-                    "type"       => "dropdown",
-                    "heading"    => __( "Button Target", 'swift-framework-plugin' ),
-                    "param_name" => "button_target",
-                    "value"      => $target_arr
-                ),
-                array(
-                    "type"       => "buttonset",
-                    "heading"    => __( "Button Dropshadow", 'swift-framework-plugin' ),
-                    "param_name" => "button_dropshadow",
-                    "value"      => array(
-                        __( 'No', 'swift-framework-plugin' )  => "no",
-                        __( 'Yes', 'swift-framework-plugin' ) => "yes"
-                    ),
-                ),
-                array(
-                    "type"       => "section",
-                    "param_name" => "tb_animation_options",
-                    "heading"    => __( "Animation Options", 'swift-framework-plugin' ),
-                ),
-                array(
-                    "type"        => "dropdown",
-                    "heading"     => __( "Intro Animation", 'swift-framework-plugin' ),
-                    "param_name"  => "animation",
-                    "value"       => spb_animations_list(),
-                    "description" => __( "Select an intro animation for the text block that will show it when it appears within the viewport.", 'swift-framework-plugin' )
-                ),
-                array(
-                    "type"        => "textfield",
-                    "heading"     => __( "Animation Delay", 'swift-framework-plugin' ),
-                    "param_name"  => "animation_delay",
-                    "value"       => "0",
-                    "description" => __( "If you wish to add a delay to the animation, then you can set it here (ms).", 'swift-framework-plugin' )
-                ),
-                array(
-                    "type"       => "section",
-                    "param_name" => "btn_misc_options",
-                    "heading"    => __( "Misc Options", 'swift-framework-plugin' ),
+                    "description" => __( "This is a hidden field that is used to save the content when using forms inside the content.", 'swift-framework-plugin' )
                 ),
                 array(
                     "type"        => "textfield",
@@ -352,6 +188,8 @@
                 'type'               => '',
                 'custom_bg_colour'   => '',
                 'custom_text_colour' => '',
+                'box_link'           => '',
+                'box_link_target'    => '',
                 'padding_vertical'   => '0',
                 'padding_horizontal' => '0',
                 'el_class'           => '',
@@ -384,6 +222,10 @@
             $output .= "\n\t" . '<div class="spb-bg-color-wrap ' . $type . '" style="' . $bg_style . '">';
             $output .= "\n\t\t" . '<div class="spb-asset-content">';
 
+            if ( $box_link != "" ) {
+                $output .= '<a href="' . $box_link . '" target="' . $box_link_target . '" class="box-link"></a>';
+            }
+
             $output .= "\n\t\t";
             if ( $inline_style != "" ) {
                 $output .= '<div class="box-content-wrap" style="' . $inline_style . '">' . do_shortcode( $content ) . '</div>';
@@ -400,11 +242,16 @@
         }
     }
 
+    $target_arr = array(
+        __( "Same window", 'swift-framework-plugin' ) => "_self",
+        __( "New window", 'swift-framework-plugin' )  => "_blank"
+    );
+
     SPBMap::map( 'spb_boxed_content', array(
         "name"          => __( "Boxed Content", 'swift-framework-plugin' ),
         "base"          => "spb_boxed_content",
-        "class"         => "",
-        "icon"          => "spb-icon-boxed-content",
+        "class"         => "spb_tab_media",
+        "icon"          => "icon-boxed-content",
         "wrapper_class" => "clearfix",
         "controls"      => "full",
         "params"        => array(
@@ -448,6 +295,19 @@
                 "param_name"  => "custom_text_colour",
                 "value"       => "",
                 "description" => __( "Provide a text colour here. If blank, your colour customisaer settings will be used.", 'swift-framework-plugin' )
+            ),
+            array(
+                "type"       => "textfield",
+                "heading"    => __( "Overlay Link", 'swift-framework-plugin' ),
+                "param_name" => "box_link",
+                "value"      => "",
+                "description" => __( "Optionally provide a link here. This will overlay the boxed content and make the asset a whole clickable link.", 'swift-framework-plugin' )
+            ),
+            array(
+                "type"       => "dropdown",
+                "heading"    => __( "Overlay Link Target", 'swift-framework-plugin' ),
+                "param_name" => "box_link_target",
+                "value"      => $target_arr
             ),
             array(
                 "type"        => "uislider",
@@ -541,7 +401,7 @@
         "name"        => __( "Divider", 'swift-framework-plugin' ),
         "base"        => "spb_divider",
         "class"       => "spb_divider",
-        'icon'        => 'spb-icon-divider',
+        'icon'        => 'icon-divider',
         "controls"    => '',
         "params"      => array(
             array(
@@ -563,7 +423,7 @@
                 "type"        => "textfield",
                 "heading"     => __( "Divider Heading Text", 'swift-framework-plugin' ),
                 "param_name"  => "heading_text",
-                "value"       => __( "", 'swift-framework-plugin' ),
+                "value"       => '',
                 "description" => __( "The text for the the 'Heading' divider type.", 'swift-framework-plugin' )
             ),
             array(
@@ -596,6 +456,7 @@
                     __( 'No', 'swift-framework-plugin' )  => "no",
                     __( 'Yes', 'swift-framework-plugin' ) => "yes"
                 ),
+                "buttonset_on"  => "yes",
                 "description" => __( "Select yes if you'd like the divider to be full width (only to be used with no sidebars, and with Standard/Thin/Dotted divider types).", 'swift-framework-plugin' )
             ),
             array(
@@ -643,7 +504,7 @@
         "name"   => __( "Blank Spacer", 'swift-framework-plugin' ),
         "base"   => "spb_blank_spacer",
         "class"  => "spb_blank_spacer",
-        'icon'   => 'spb-icon-spacer',
+        'icon'   => 'icon-blank-spacer',
         "params" => array(
             array(
                 "type"        => "textfield",
@@ -700,8 +561,8 @@
     SPBMap::map( 'spb_message', array(
         "name"          => __( "Message Box", 'swift-framework-plugin' ),
         "base"          => "spb_message",
-        "class"         => "spb_messagebox spb_controls_top_right",
-        "icon"          => "spb-icon-message-box",
+        "class"         => "spb_messagebox spb_controls_top_right spb_tab_ui",
+        "icon"          => "icon-message-box",
         "wrapper_class" => "alert",
         "controls"      => "edit_popup_delete",
         "params"        => array(
@@ -771,12 +632,11 @@
     SPBMap::map( 'spb_toggle', array(
         "name"   => __( "Toggle", 'swift-framework-plugin' ),
         "base"   => "spb_toggle",
-        "class"  => "spb_faq",
-        "icon"   => "spb-icon-toggle",
+        "class"  => "spb_faq spb_tab_ui",
+        "icon"   => "icon-toggle",
         "params" => array(
             array(
                 "type"        => "textfield",
-                "holder"      => "h4",
                 "class"       => "toggle_title",
                 "heading"     => __( "Toggle title", 'swift-framework-plugin' ),
                 "param_name"  => "title",

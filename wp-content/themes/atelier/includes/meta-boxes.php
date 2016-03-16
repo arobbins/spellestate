@@ -1763,6 +1763,17 @@
 				'wrap-class' => 'pageslider-swift-slider',
 				'desc' => __('Choose the category of slide that you would like to show, or all.', 'swiftframework'),
 			),
+			
+			
+			// SWIFT SLIDER RANDOM
+			array(
+				'name' => __('Swift Slider Random', 'swiftframework'),
+				'id'   => "{$prefix}ss_random",
+				'type' => 'checkbox',
+				'std'  => 0,
+				'wrap-class' => 'pageslider-swift-slider',
+				'desc' => __('Choose if you would like the slider to show slides in random order.', 'swiftframework'),
+			),
 
 
 			// SWIFT SLIDER SLIDE COUNT
@@ -1820,7 +1831,7 @@
 				'multiple' => false,
 				'std'  => 'slide',
 				'wrap-class' => 'pageslider-swift-slider',
-				'desc' => __('Choose if you would like the slider to loop (not possible on curtain slider).', 'swiftframework'),
+				'desc' => __('Choose the transition type for the slider.', 'swiftframework'),
 			),
 
 			// SWIFT SLIDER LOOP
@@ -1946,6 +1957,25 @@
 				'type' => 'checkbox',
 				'desc' => __('Enable the one page nav which appears on the right of the page.', 'swiftframework'),
 				'std' => 0,
+			),
+			
+			// CUSTOM EXCERPT SECTION
+			array(
+			    'name'  => '',
+			    'title' => __( 'Custom Excerpt', 'swiftframework' ),
+			    'id'    => "{$prefix}heading_custom_excerpt",
+			    'type'  => 'section'
+			),
+			
+			// CUSTOM EXCERPT
+			array(
+			    'name' => __( 'Custom excerpt', 'swiftframework' ),
+			    'desc' => __( "You can optionally write a custom excerpt here to display content when pages show up in search results.", 'swiftframework' ),
+			    'id'   => "{$prefix}custom_excerpt",
+			    'type' => 'textarea',
+			    'std'  => "",
+			    'cols' => '40',
+			    'rows' => '8',
 			),
 
 			// MISC OPTIONS SECTION

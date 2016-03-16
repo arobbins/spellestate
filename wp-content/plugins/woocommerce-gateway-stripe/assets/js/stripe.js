@@ -90,10 +90,7 @@ function stripeResponseHandler( status, response ) {
     if ( response.error ) {
 
         // show the errors on the form
-        jQuery('.woocommerce_error, .woocommerce-error, .woocommerce-message, .woocommerce_message, .stripe_token').remove();
-        jQuery('#stripe-card-number').closest('p').before( '<ul class="woocommerce_error woocommerce-error"><li>' + response.error.message + '</li></ul>' );
-        $form.unblock();
-
+		jQuery("body").trigger('wc-stripe-error', {response: response, form: $form});
     } else {
 
         // token contains id, last4, and card type
@@ -103,4 +100,20 @@ function stripeResponseHandler( status, response ) {
         $form.append("<input type='hidden' class='stripe_token' name='stripe_token' value='" + token + "'/>");
         $form.submit();
     }
+}
+
+// listen for any errors on the form & send the information to a function to handle them
+jQuery("body").on( "wc-stripe-error", {}, function( event, response ) {
+    var fn = window[ wc_stripe_params.error_response_handler ];
+	// make sure the function exists
+    if ( typeof fn === 'function' ) {
+        fn.apply( null, [ response ] );
+    }
+} );
+
+// display error & unblock the form
+function stripeErrorHandler( responseObject ) {
+    jQuery('.woocommerce_error, .woocommerce-error, .woocommerce-message, .woocommerce_message, .stripe_token').remove();
+    jQuery('#stripe-card-number').closest('p').before( '<ul class="woocommerce_error woocommerce-error"><li>' + responseObject.response.error.message + '</li></ul>' );
+    responseObject.form.unblock();
 }

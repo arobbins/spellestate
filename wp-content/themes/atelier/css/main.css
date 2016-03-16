@@ -968,19 +968,14 @@ a.text-link {
 	overflow-y: auto;
 	z-index: 2000;
 	visibility: hidden;
-	-webkit-backface-visibility: hidden;
-	-moz-backface-visibility: hidden;
-	backface-visibility: hidden;
-	-webkit-transform: translateX(-50%) translateY(-50%)!important;
-	-moz-transform: translateX(-50%) translateY(-50%)!important;
-	-ms-transform: translateX(-50%) translateY(-50%)!important;
-	transform: translateX(-50%) translateY(-50%)!important;
+}
+.modal-dialog, .modal.fade .modal-dialog {
+	-webkit-transform: translate(-50%, -50%)!important;
+	-moz-transform: translate(-50%, -50%)!important;
+	-ms-transform: translate(-50%, -50%)!important;
+	transform: translate(-50%, -50%)!important;
 }
 .modal-dialog .modal-content {
-	-webkit-transform: translateY(-5%);
-	-moz-transform: translateY(-5%);
-	-ms-transform: translateY(-5%);
-	transform: translateY(-5%);
 	opacity: 0;
 	-webkit-transition: all 0.3s;
 	-moz-transition: all 0.3s;
@@ -994,10 +989,6 @@ a.text-link {
 	visibility: visible;
 }
 .modal.in .modal-content {
-	-webkit-transform: translateY(0);
-	-moz-transform: translateY(0);
-	-ms-transform: translateY(0);
-	transform: translateY(0);
 	opacity: 1;
 }
 .modal-open #container {
@@ -1026,6 +1017,9 @@ a.text-link {
 	outline: none!important;
 	text-shadow: none;
 	opacity: 1;
+	float: right;
+    background: transparent;
+    border: 0;
 }
 .modal-body {
 	padding: 30px;
@@ -1223,6 +1217,7 @@ audio {
 	transition: opacity 0.4s;
 	line-height: inherit;
 	display: inline-block;
+	display: none;
 }
 .sf-share-counts > a span.animate {
 	opacity: 1;
@@ -3577,9 +3572,6 @@ img.aligncenter, img.alignleft, img.alignright, img.alignnone {
 	overflow: visible;
 	max-width: 100%;
 	z-index: 10;
-	position: static;
-}
-.browser-ff #main-container {
 	position: relative;
 }
 #main-container > .inner-page-wrap.row {
@@ -3853,8 +3845,7 @@ h4.spb-heading, h3.spb-heading, h4.lined-heading, .gform_heading h3 {
 	padding: 0;
 	margin-top: 0;
 	max-width: 100%;
-	text-overflow: ellipsis;
-	white-space: nowrap;
+	white-space: wrap;
 	overflow: hidden;
 	position: relative;
 }
@@ -5295,6 +5286,9 @@ body.header-below-slider .home-slider-wrap #slider-continue {
 	HEADER LANGUAGES
 -------------------------------------------- */
 
+#header .aux-languages > a {
+	opacity: 0;
+}
 #header .aux-languages img, #top-bar .aux-languages img {
 	margin-right: 5px;
 	vertical-align: -2px;
@@ -6114,7 +6108,50 @@ nav .menu ul.sub-menu li > span {
 .aux-item.aux-language ul.menu > li.aux-languages > a > span {
 	display: none;
 }
-
+.aux-currency .currency-switch-item .current-currency {
+	font-size: 18px;
+	padding: 0 10px;
+}
+.aux-currency .currency-switch-item .current-currency:hover {
+	cursor: pointer;
+}
+.aux-currency .wcml_currency_switcher {
+	visibility: hidden;
+	position: absolute;
+}
+.aux-currency .currency-switch-item > img {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	left: 50%;
+	margin: 0 0 0 -8px!important;
+}
+.aux-currency .wcml_currency_switcher.sub-menu {
+	visibility: visible;
+	border-top-width: 0;
+	min-width: 120px;
+    padding-left: 20px!important;
+    padding-right: 20px!important;
+    letter-spacing: normal;
+    -webkit-box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.1);
+    -moz-box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.1);
+    box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.1);
+    border-radius: 4px;
+}
+.aux-currency .wcml_currency_switcher.sub-menu li {
+	border-left-width: 0;
+	border-right-width: 0;
+	border-bottom-width: 0;
+	background: transparent;
+	padding: 14px 0 ;
+	line-height: 150%;
+}
+.aux-currency .wcml_currency_switcher.sub-menu li.wcml-active-currency {
+	cursor: default;
+}
+.aux-currency .wcml_currency_switcher.sub-menu li:first-child {
+	border-top-width: 0;
+}
 
 /* --------------------------------------------
 	MAIN NAVIGATION
@@ -7325,6 +7362,11 @@ body.side-slideout-open, .side-slideout-open #container {
 .sf-side-slideout .vertical-menu li.sf-menu-item-html {
 	display: none;
 }
+.slideout-sidebar {
+	padding: 0 30px;
+	overflow-y: scroll;
+	height: 100%;
+}
 
 /* --------------------------------------------
 	FULLSCREEN SEARCH
@@ -7773,8 +7815,21 @@ a.contact-menu-link > i {
 	line-height: 22px;
 	text-align: center;
 }
+.search-result {
+	position: relative;
+}
+.search-result .search-result-link {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 3;
+}
 .search-result .search-item-content {
 	margin-left: 0;
+	position: relative;
+	z-index: 2;
 }
 .search-result.has-img .search-item-content {
 	margin-left: 46px;
@@ -8109,7 +8164,7 @@ body[class*="header-naked"] #header-section #header {
 .page-header-naked-dark .sticky-wrapper:not(.is-sticky) #logo.has-dark-logo img.dark-logo, .page-header-naked-dark .header-2 #logo.has-dark-logo img.dark-logo, .page-header-naked-dark .header-6 #logo.has-dark-logo img.dark-logo {
 	display: inline-block;
 }
-.page-header-naked-light:not(.full-header-stick) .header-left, .page-header-naked-light:not(.full-header-stick) .header-left a, .page-header-naked-light:not(.full-header-stick) .header-right, .page-header-naked-light:not(.full-header-stick) .header-right a, .page-header-naked-light:not(.full-header-stick) #logo h1, .sticky-header-disabled .page-header-naked-light.full-header-stick .header-left, .sticky-header-disabled .page-header-naked-light.full-header-stick .header-left a, .sticky-header-disabled .page-header-naked-light.full-header-stick .header-right, .sticky-header-disabled .page-header-naked-light.full-header-stick .header-right a, .sticky-header-disabled .page-header-naked-light.full-header-stick #logo h1 {
+.page-header-naked-light:not(.full-header-stick) .header-left, .page-header-naked-light:not(.full-header-stick) .header-left ul.menu > li.parent > a, .page-header-naked-light:not(.full-header-stick) .header-right, .page-header-naked-light:not(.full-header-stick) .header-right ul.menu > li.parent > a, .page-header-naked-light:not(.full-header-stick) #logo h1, .sticky-header-disabled .page-header-naked-light.full-header-stick .header-left, .sticky-header-disabled .page-header-naked-light.full-header-stick .header-left ul.menu > li.parent > a, .sticky-header-disabled .page-header-naked-light.full-header-stick .header-right, .sticky-header-disabled .page-header-naked-light.full-header-stick .header-right ul.menu > li.parent > a, .sticky-header-disabled .page-header-naked-light.full-header-stick #header .header-right ul.menu > li > a.header-search-link, .sticky-header-disabled .page-header-naked-light.full-header-stick #logo h1 {
 	color: #fff;
 }
 .page-header-naked-light .sticky-wrapper:not(.is-sticky) #logo h1, .page-header-naked-light .sticky-wrapper:not(.is-sticky) #main-nav ul.menu > li > a, .page-header-naked-light .sticky-wrapper:not(.is-sticky) nav .menu > li.menu-item > a, .page-header-naked-light .sticky-wrapper:not(.is-sticky) nav.std-menu .menu > li > a, .page-header-naked-light .sticky-wrapper:not(.is-sticky) .header-left, .page-header-naked-light .sticky-wrapper:not(.is-sticky) .header-left ul.menu > li > a, .page-header-naked-light .sticky-wrapper:not(.is-sticky) .header-right, .page-header-naked-light .sticky-wrapper:not(.is-sticky) .header-right ul.menu > li > a, .page-header-naked-light .sticky-wrapper:not(.is-sticky) .shopping-bag-item a > span.num-items, .page-header-naked-light .sticky-wrapper:not(.is-sticky) #header .aux-item ul.menu > li > a.header-search-link, .page-header-naked-light .header-6 #header .aux-item ul.menu > li > a.header-search-link, .page-header-naked-light .header-6 .shopping-bag-item a > span.num-items, .page-header-naked-light .sticky-wrapper:not(.is-sticky) .fs-supersearch-link, .page-header-naked-light.full-header-stick .sticky-wrapper:not(.is-sticky) .aux-item a.contact-menu-link, .page-header-naked-light.full-header-stick .sticky-wrapper:not(.is-sticky) .aux-item ul.social-icons > li > a, .sticky-header-disabled .page-header-naked-light.full-header-stick #main-nav ul.menu > li > a, .sticky-header-disabled .page-header-naked-light.full-header-stick nav .menu > li.menu-item > a, .sticky-header-disabled .page-header-naked-light a.contact-menu-link {
@@ -8121,7 +8176,7 @@ body[class*="header-naked"] #header-section #header {
 .page-header-naked-light .sticky-wrapper:not(.is-sticky) .shopping-bag-item a > span.num-items:after, .page-header-naked-light .header-6 .shopping-bag-item a > span.num-items:after {
 	border-color: #fff;
 }
-.page-header-naked-dark:not(.full-header-stick) .header-left, .page-header-naked-dark:not(.full-header-stick) .header-left a, .page-header-naked-dark:not(.full-header-stick) .header-right, .page-header-naked-dark:not(.full-header-stick) .header-right a, .page-header-naked-dark:not(.full-header-stick) #logo h1, .page-header-naked-dark .sticky-wrapper:not(.is-sticky) #main-nav ul.menu > li > a, .page-header-naked-dark .sticky-wrapper:not(.is-sticky) nav .menu > li.menu-item > a, .page-header-naked-dark .sticky-wrapper:not(.is-sticky) nav.std-menu .menu > li > a, .page-header-naked-dark .sticky-wrapper:not(.is-sticky) .header-left, .page-header-naked-dark .sticky-wrapper:not(.is-sticky) .header-left ul.menu > li > a, .page-header-naked-dark .sticky-wrapper:not(.is-sticky) .header-right, .page-header-naked-dark .sticky-wrapper:not(.is-sticky) .header-right ul.menu > li > a, .page-header-naked-dark .sticky-wrapper:not(.is-sticky) .shopping-bag-item a > span.num-items, .page-header-naked-dark .sticky-wrapper:not(.is-sticky) #header .aux-item ul.menu > li, .page-header-naked-dark .header-6 #header .aux-item ul.menu > li > a.header-search-link, .page-header-naked-dark .header-6 .shopping-bag-item a > span.num-items, .page-header-naked-dark .sticky-wrapper:not(.is-sticky) .fs-supersearch-link, .page-header-naked-dark.full-header-stick .sticky-wrapper:not(.is-sticky) .aux-item a.contact-menu-link, .page-header-naked-dark.full-header-stick .sticky-wrapper:not(.is-sticky) .aux-item ul.social-icons > li > a, .sticky-header-disabled .page-header-naked-dark.full-header-stick .header-left, .sticky-header-disabled .page-header-naked-dark.full-header-stick .header-left a, .sticky-header-disabled .page-header-naked-dark.full-header-stick .header-right, .sticky-header-disabled .page-header-naked-dark.full-header-stick .header-right a, .sticky-header-disabled .page-header-naked-dark.full-header-stick #logo h1 {
+.page-header-naked-dark:not(.full-header-stick) .header-left, .page-header-naked-dark:not(.full-header-stick) .header-left ul.menu > li.parent > a, .page-header-naked-dark:not(.full-header-stick) .header-right, .page-header-naked-dark:not(.full-header-stick) .header-right ul.menu > li.parent > a, .page-header-naked-dark:not(.full-header-stick) #logo h1, .page-header-naked-dark .sticky-wrapper:not(.is-sticky) #main-nav ul.menu > li > a, .page-header-naked-dark .sticky-wrapper:not(.is-sticky) nav .menu > li.menu-item > a, .page-header-naked-dark .sticky-wrapper:not(.is-sticky) nav.std-menu .menu > li > a, .page-header-naked-dark .sticky-wrapper:not(.is-sticky) .header-left, .page-header-naked-dark .sticky-wrapper:not(.is-sticky) .header-left ul.menu > li > a, .page-header-naked-dark .sticky-wrapper:not(.is-sticky) .header-right, .page-header-naked-dark .sticky-wrapper:not(.is-sticky) .header-right ul.menu > li > a, .page-header-naked-dark .sticky-wrapper:not(.is-sticky) .shopping-bag-item a > span.num-items, .page-header-naked-dark .sticky-wrapper:not(.is-sticky) #header .aux-item ul.menu > li, .page-header-naked-dark .header-6 #header .aux-item ul.menu > li > a.header-search-link, .page-header-naked-dark .header-6 .shopping-bag-item a > span.num-items, .page-header-naked-dark .sticky-wrapper:not(.is-sticky) .fs-supersearch-link, .page-header-naked-dark.full-header-stick .sticky-wrapper:not(.is-sticky) .aux-item a.contact-menu-link, .page-header-naked-dark.full-header-stick .sticky-wrapper:not(.is-sticky) .aux-item ul.social-icons > li > a, .sticky-header-disabled .page-header-naked-dark.full-header-stick .header-left, .sticky-header-disabled .page-header-naked-dark.full-header-stick .header-left ul.menu > li.parent > a, .sticky-header-disabled .page-header-naked-dark.full-header-stick .header-right, .sticky-header-disabled .page-header-naked-dark.full-header-stick .header-right ul.menu > li.parent > a, .sticky-header-disabled .page-header-naked-dark.full-header-stick #logo h1 {
 	color: #222;
 }
 .page-header-naked-dark .sticky-wrapper:not(.is-sticky) a.menu-bars-link span, .page-header-naked-dark .sticky-wrapper:not(.is-sticky) a.menu-bars-link span:before, .page-header-naked-dark .sticky-wrapper:not(.is-sticky) a.menu-bars-link span:after, .page-header-naked-dark .header-6 a.menu-bars-link span, .page-header-naked-dark .header-6 a.menu-bars-link span:before, .page-header-naked-dark .header-6 a.menu-bars-link span:after, .sticky-header-disabled .page-header-naked-dark a.menu-bars-link span, .sticky-header-disabled .page-header-naked-dark a.menu-bars-link span:before, .sticky-header-disabled .page-header-naked-dark a.menu-bars-link span:after {
@@ -8161,6 +8216,9 @@ body[class*="header-naked"] .inner-page-wrap {
 }
 #sf-banner-widgets .widget:first-child {
 	padding-top: 0;
+}
+.header-standard-overlay #sf-header-banner {
+	display: none;
 }
 
 
@@ -8573,7 +8631,7 @@ ul.wp-tag-cloud li > a:hover {
 	position: absolute;
 	margin-top: -6px;
 }
-.recent-posts-list li .recent-post-details {
+.recent-posts-list li.has-image .recent-post-details {
 	padding: 0 10px;
 	margin-left: 98px;
 }
@@ -9412,6 +9470,14 @@ ul.mobile-language-select {
 }
 #mobile-cart-wrap ul.mobile-cart-menu {
 	display: none!important;
+}
+#mobile-cart-wrap .bag-contents {
+	max-height: none;
+	overflow-y: auto;
+	padding-top: 0;
+}
+#mobile-cart-wrap .bag-product {
+    margin: 0 30px;
 }
 #mobile-cart-wrap .bag-product .bag-product-details .bag-product-title {
 	font-size: 14px;
@@ -12455,10 +12521,6 @@ ul.member-contact li a {
 }
 .comment-form-author, .comment-form-email, .comment-form-url {
 	margin-bottom: 0;
-	padding-right: 15px;
-}
-.comment-form-url {
-	padding-right: 15px;
 }
 #commentform {
 	margin-top: 10px;
@@ -12466,6 +12528,17 @@ ul.member-contact li a {
 	clear: both;
 	height: auto;
 	overflow: hidden;
+}
+#commentform p.comment-notes span.required {
+	float: none;
+	position: relative;
+	top: auto;
+	right: auto;
+}
+#commentform p .required {
+	position: absolute;
+	top: 15px;
+	right: 30px;
 }
 #commentform p.comment-notes {
 	margin-bottom: 20px;
@@ -12500,6 +12573,7 @@ ul.member-contact li a {
 	-webkit-background-clip: padding-box;
 	background-clip: padding-box;
 	height: 200px;
+	margin-bottom: 0;
 }
 #commentform p.form-allowed-tags {
 	display: none;
@@ -13418,6 +13492,50 @@ input[type="file"] {
 	content: '\e60b';
 	font-family: 'atelier'!important;
 }
+
+
+/* #BuddyPress
+================================================== */
+
+#buddypress div.dir-search {
+	margin: 0 0 20px;
+}
+#buddypress div.dir-search label {
+	margin-bottom: 0;
+}
+#buddypress div.dir-search input[type=text] {
+	margin: 0;
+}
+#buddypress div.dir-search input[type="submit"] {
+	margin: 0 0 0 5px;
+	height: 36px;
+	vertical-align: top;
+}
+#buddypress div.item-list-tabs ul li.last select, #buddypress form#whats-new-form #whats-new-options select {
+	width: 185px;
+	height: 32px;
+	margin-left: 10px;
+	padding: 0 10px;
+	margin-top: -4px;
+}
+#buddypress form#whats-new-form p.activity-greeting {
+	line-height: 1em;
+}
+#whats-new-post-in-box {
+	line-height: 24px;
+}
+#buddypress form#whats-new-form #whats-new-submit {
+	margin-top: 0;
+}
+#buddypress form#whats-new-form #whats-new-submit input[type=submit] {
+	margin-right: 0;
+	margin-bottom: 0;
+	height: 36px;
+}
+#buddypress div#item-header-cover-image h2 a, #buddypress div#item-header-cover-image h2 {
+	margin-bottom: 1em;
+}
+
 
 /* --------------------------------------------
 	SPINNER ANIMATIONS

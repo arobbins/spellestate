@@ -5,7 +5,7 @@
     *	Swift Page Builder - Raw Content Shortcode
     *	------------------------------------------------
     *	Swift Framework
-    * 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+    * 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     */
 
@@ -88,7 +88,7 @@
         "name"          => __( "Raw HTML", 'swift-framework-plugin' ),
         "base"          => "spb_raw_html",
         "class"         => "div",
-        "icon"          => "spb-icon-raw-html",
+        "icon"          => "icon-raw-code",
         "wrapper_class" => "clearfix",
         "controls"      => "full",
         "params"        => array(
@@ -140,7 +140,7 @@
         "name"          => __( "Raw JS", 'swift-framework-plugin' ),
         "base"          => "spb_raw_js",
         "class"         => "div",
-        "icon"          => "spb-icon-raw-javascript",
+        "icon"          => "icon-raw-code",
         "wrapper_class" => "clearfix",
         "controls"      => "full",
         "params"        => array(

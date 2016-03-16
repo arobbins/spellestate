@@ -132,6 +132,35 @@
 	$sf_has_products = true;
 
 	get_header('shop');	?>
+	
+	<?php
+		// Swift Slider meta
+		$woo_slider	   = $sf_options['woo_shop_slider'];
+		$ss_category   = "";
+		if ( isset($sf_options['woo_shop_category']) ) {
+		$ss_category   = $sf_options['woo_shop_category'];
+		}
+		$ss_random	   = $sf_options['woo_shop_slider_random'];
+		$ss_maxheight  = $sf_options['woo_shop_slider_maxheight'];
+		$ss_slidecount = $sf_options['woo_shop_slider_slides'];
+		$ss_autoplay   = $sf_options['woo_shop_slider_auto'];
+		$ss_transition = $sf_options['woo_shop_slider_transition'];
+		$ss_loop       = $sf_options['woo_shop_slider_loop'];
+		$ss_nav        = $sf_options['woo_shop_slider_nav'];
+		$ss_pagination = $sf_options['woo_shop_slider_pagination'];
+		
+		if ( $woo_slider == "swift-slider" ) {
+			global $sf_has_swiftslider;
+			$sf_has_swiftslider = true;
+			
+			if ( $ss_category != "" ) {
+				$ss_category_obj = get_term( $ss_category, 'swift-slider-category', 'object');
+				$ss_category = $ss_category_obj->slug;
+			}
+					
+			echo do_shortcode( '[swift_slider type="slider" category="' . $ss_category . '" random="' . $ss_random . '" fullscreen="false" max_height="' . $ss_maxheight . '" slide_count="' . $ss_slidecount . '" transition="'.$ss_transition.'" loop="' . $ss_loop . '" nav="' . $ss_nav . '" pagination="' . $ss_pagination . '" autoplay="' . $ss_autoplay . '"]' );
+		}
+	?>
 
 	<?php if (!$product_fw_mode) { ?>
 	<div class="container">
@@ -213,16 +242,10 @@
 
 						<?php if ($product_fw_mode && ($orig_sidebar_config == "left-sidebar" || $orig_sidebar_config == "both-sidebars")) { ?>
 							<div class="sidebar left-sidebar <?php echo esc_attr($width); ?>">
-								<?php dynamic_sidebar($left_sidebar); ?>
+								<?php dynamic_sidebar(strtolower($left_sidebar)); ?>
 							</div>
 
 						<?php } ?>
-
-						<?php if ( $product_multi_masonry ) { ?>
-
-                    		<div class="clearfix product col-sm-3 grid-sizer"></div>
-
-                    	<?php } ?>
 
 						<?php while ( have_posts() ) : the_post(); ?>
 
@@ -233,7 +256,7 @@
 						<?php if ($product_fw_mode && ($orig_sidebar_config == "right-sidebar" || $orig_sidebar_config == "both-sidebars")) { ?>
 
 						<div class="sidebar right-sidebar <?php echo esc_attr($width); ?>">
-							<?php dynamic_sidebar($right_sidebar); ?>
+							<?php dynamic_sidebar(strtolower($right_sidebar)); ?>
 						</div>
 
 						<?php } ?>
@@ -267,7 +290,7 @@
 					<?php do_action('sf_after_sidebar'); ?>
 
 					<div class="sidebar-widget-wrap">
-						<?php dynamic_sidebar($left_sidebar); ?>
+						<?php dynamic_sidebar(strtolower($left_sidebar)); ?>
 					</div>
 
 					<?php do_action('sf_before_sidebar'); ?>
@@ -285,7 +308,7 @@
 				<?php do_action('sf_after_sidebar'); ?>
 
 				<div class="sidebar-widget-wrap">
-					<?php dynamic_sidebar($left_sidebar); ?>
+					<?php dynamic_sidebar(strtolower($left_sidebar)); ?>
 				</div>
 
 				<?php do_action('sf_before_sidebar'); ?>
@@ -299,7 +322,7 @@
 				<?php do_action('sf_after_sidebar'); ?>
 
 				<div class="sidebar-widget-wrap">
-					<?php dynamic_sidebar($right_sidebar); ?>
+					<?php dynamic_sidebar(strtolower($right_sidebar)); ?>
 				</div>
 
 				<?php do_action('sf_before_sidebar'); ?>
@@ -313,7 +336,7 @@
 				<?php do_action('sf_after_sidebar'); ?>
 
 				<div class="sidebar-widget-wrap">
-					<?php dynamic_sidebar($right_sidebar); ?>
+					<?php dynamic_sidebar(strtolower($right_sidebar)); ?>
 				</div>
 
 				<?php do_action('sf_before_sidebar'); ?>

@@ -27,7 +27,7 @@ function embedSelectedShortcode() {
         var button_text = document.getElementById( 'button-text' ).value;
         var button_url = document.getElementById( 'button-url' ).value;
         var button_extraclass = document.getElementById( 'button-extraclass' ).value;
-        var button_target = button_dropshadow = "";
+        var button_target = button_dropshadow = button_rounded = "";
 
         if ( document.getElementById( 'button-target' ).checked ) {
             button_target = "_blank";
@@ -39,6 +39,12 @@ function embedSelectedShortcode() {
             button_dropshadow = "yes";
         } else {
             button_dropshadow = "no";
+        }
+        
+        if ( document.getElementById( 'button-rounded' ).checked ) {
+            button_rounded = "yes";
+        } else {
+            button_rounded = "no";
         }
 
         // Icons
@@ -124,7 +130,6 @@ function embedSelectedShortcode() {
         var countdown_year = document.getElementById( 'countdown-year' ).value;
         var countdown_month = document.getElementById( 'countdown-month' ).value;
         var countdown_day = document.getElementById( 'countdown-day' ).value;
-        var countdown_fontsize = document.getElementById( 'countdown-fontsize' ).value;
         var countdown_displaytext = document.getElementById( 'countdown-displaytext' ).value;
 
         // Tooltip
@@ -177,7 +182,7 @@ function embedSelectedShortcode() {
         /////////////////////////////////////////
 
         if ( shortcode_select == 'shortcode-buttons' ) {
-            shortcodeHTML = '[sf_button colour="' + button_colour + '" type="' + button_type + '" size="' + button_size + '" link="' + button_url + '" target="' + button_target + '" icon="' + button_icon + '" dropshadow="' + button_dropshadow + '" extraclass="' + button_extraclass + '"]' + button_text + '[/sf_button]';
+            shortcodeHTML = '[sf_button colour="' + button_colour + '" type="' + button_type + '" size="' + button_size + '" link="' + button_url + '" target="' + button_target + '" icon="' + button_icon + '" dropshadow="' + button_dropshadow + '" rounded="' + button_rounded + '" extraclass="' + button_extraclass + '"]' + button_text + '[/sf_button]';
         }
 
         /////////////////////////////////////////
@@ -309,7 +314,7 @@ function embedSelectedShortcode() {
 
         if ( shortcode_select == 'shortcode-countdown' ) {
 
-            shortcodeHTML = '[sf_countdown year="' + countdown_year + '" month="' + countdown_month + '" day="' + countdown_day + '" fontsize="' + countdown_fontsize + '" displaytext="' + countdown_displaytext + '"]<br/>';
+            shortcodeHTML = '[sf_countdown year="' + countdown_year + '" month="' + countdown_month + '" day="' + countdown_day + '" displaytext="' + countdown_displaytext + '"]<br/>';
 
         }
 

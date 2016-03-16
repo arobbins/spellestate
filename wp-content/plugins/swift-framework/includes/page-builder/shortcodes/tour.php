@@ -5,7 +5,7 @@
     *	Swift Page Builder - Tour Shortcode
     *	------------------------------------------------
     *	Swift Framework
-    * 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+    * 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     */
 
@@ -73,7 +73,7 @@
                     } else {
                         $icon_text = '';
                     }
-                    $tmp .= '<li data-title-icon="' . $icon_text . '"><a href="#tab-' . sanitize_title( $tab[0] ) . '"><span>' . $tab[0] . '</span></a><a class="delete_tab"></a><a class="edit_tab"></a></li>';
+                    $tmp .= '<li data-title-icon="' . $icon_text . '"><a href="#tab-' . sanitize_title( $tab[0] ) . '"><span>' . $tab[0] . '</span></a><a class="delete_tab"><span class="icon-delete"></span></a><a class="edit_tab"><span class="icon-edit"></span></a></li>';
                     $tab_index ++;
                 }
                 $tmp .= '</ul>';
@@ -85,7 +85,7 @@
             $iner = '';
             foreach ( $this->settings['params'] as $param ) {
                 $custom_markup = '';
-                $param_value   = isset( $$param['param_name'] ) ? $$param['param_name'] : null;
+                $param_value   = isset( ${$param['param_name']} ) ? ${$param['param_name']} : null;
 
                 if ( is_array( $param_value ) ) {
                     // Get first element from the array
@@ -189,8 +189,8 @@
         "name"            => __( "Tour Section", 'swift-framework-plugin' ),
         "base"            => "spb_tour",
         "controls"        => "full",
-        "class"           => "spb_tour",
-        "icon"            => "spb-icon-tour",
+        "class"           => "spb_tour spb_tab_ui",
+        "icon"            => "icon-tour",
         "wrapper_class"   => "clearfix",
         "params"          => array(
             array(
@@ -216,14 +216,55 @@
             )
         ),
         "custom_markup"   => '
-		<div class="tab_controls">
-			<button class="add_tab">' . __( "Add slide", 'swift-framework-plugin' ) . '</button>
-		</div>
-	
 		<div class="spb_tabs_holder clearfix">
 			%content%
 		</div>',
         'default_content' => '
+
+            <ul class="clearfix ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all ui-sortable" role="tablist">
+                 <li data-title-icon="" class="ui-state-default ui-corner-top ui-tabs-active ui-state-active ui-sortable-handle" role="tab" tabindex="0" aria-controls="tab-1" aria-labelledby="ui-id-1" aria-selected="true" aria-expanded="true">
+                     <a href="#tab-1" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-1"><span>' . __( 'Slide 1', 'swift-framework-plugin' ) . '</span></a>
+                     <a class="delete_tab"><span class="icon-delete"></span></a>
+                     <a class="edit_tab"><span class="icon-edit"></span></a>
+                </li>
+                <li data-title-icon="" class="ui-state-default ui-corner-top ui-sortable-handle" role="tab" tabindex="-1" aria-controls="tab-2" aria-labelledby="ui-id-2" aria-selected="false" aria-expanded="false">
+                    <a href="#tab-2" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-2"><span>' . __( 'Slide 2', 'swift-framework-plugin' ) . '</span></a>
+                    <a class="delete_tab"><span class="icon-delete"></span></a>
+                    <a class="edit_tab"><span class="icon-edit"></span></a>
+                </li>
+            </ul> 
+            
+            <div id="tab-1" class="row-fluid spb_column_container spb_sortable not-column-inherit not-sortable ui-sortable ui-droppable ui-resizable ui-tabs-panel ui-widget-content ui-corner-bottom" aria-labelledby="ui-id-1" role="tabpanel" aria-hidden="false"> 
+
+                 [spb_text_block width="1/1"] ' . __( 'This is a text block. Click the edit button to change this text.', 'swift-framework-plugin' ) . ' [/spb_text_block]
+
+                <div class="tabs_expanded_helper">
+                      <a href="#" class="add_element"><span class="icon-add"></span>' . __( "Add Element", 'swift-framework-plugin' ) .'</a>
+                      <a href="#" class="add_tab"><span class="icon-add-tab"></span>' . __( "Add Tab", 'swift-framework-plugin' ) .'</a>
+                </div>
+                
+                <div class="container-helper">
+                      <a href="#" class="add-element-to-column btn-floating waves-effect waves-light"><span class="icon-add"></span></a>
+                </div>
+                
+            </div>
+
+            <div id="tab-2" class="row-fluid spb_column_container spb_sortable not-column-inherit not-sortable ui-sortable ui-droppable ui-resizable ui-tabs-panel ui-widget-content ui-corner-bottom" aria-labelledby="ui-id-2" role="tabpanel" aria-hidden="true" style="display: none;"> 
+
+                   [spb_text_block width="1/1"] ' . __( 'This is a text block. Click the edit button to change this text.', 'swift-framework-plugin' ) . ' [/spb_text_block]
+
+                <div class="tabs_expanded_helper">
+                      <a href="#" class="add_element"><span class="icon-add"></span>' . __( "Add Element", 'swift-framework-plugin' ) .'</a>
+                      <a href="#" class="add_tab"><span class="icon-add-tab"></span>' . __( "Add Tab", 'swift-framework-plugin' ) .'</a>
+                </div>
+
+                <div class="container-helper">
+                      <a href="#" class="add-element-to-column btn-floating waves-effect waves-light"><span class="icon-add"></span></a>
+                </div>
+                
+            </div> 
+        ',  
+        'default_content222' => '
 		<ul>
 			<li><a href="#tab-1"><span>' . __( 'Slide 1', 'swift-framework-plugin' ) . '</span></a><a class="delete_tab"></a><a class="edit_tab"></a></li>
 			<li><a href="#tab-2"><span>' . __( 'Slide 2', 'swift-framework-plugin' ) . '</span></a><a class="delete_tab"></a><a class="edit_tab"></a></li>
@@ -237,4 +278,5 @@
 			[spb_text_block width="1/1"] ' . __( 'This is a text block. Click the edit button to change this text.', 'swift-framework-plugin' ) . ' [/spb_text_block]
 		</div>',
         "js_callback"     => array( "init" => "spbTabsInitCallBack", "shortcode" => "spbTabsGenerateShortcodeCallBack" )
+        
     ) );

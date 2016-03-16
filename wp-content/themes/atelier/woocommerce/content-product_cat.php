@@ -5,7 +5,7 @@
      *
      * @author        WooThemes
      * @package       WooCommerce/Templates
-     * @version       2.4.0
+     * @version       2.5.2
      */
 
     if ( ! defined( 'ABSPATH' ) ) {
@@ -63,7 +63,7 @@
     }
     
 ?>
-<div <?php wc_product_cat_class($classes); ?> data-width="<?php echo esc_attr($width); ?>">
+<li <?php wc_product_cat_class( $classes, $category ); ?> data-width="<?php echo esc_attr($width); ?>">
 
     <?php do_action( 'woocommerce_before_subcategory', $category ); ?>
 
@@ -108,4 +108,4 @@
 
     <?php do_action( 'woocommerce_after_subcategory', $category ); ?>
 
-</div>
+</li>

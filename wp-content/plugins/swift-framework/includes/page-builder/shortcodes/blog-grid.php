@@ -5,7 +5,7 @@
     *	Swift Page Builder - Blog Grid Shortcode
     *	------------------------------------------------
     *	Swift Framework
-    * 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+    * 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     */
 
@@ -13,7 +13,7 @@
 
         protected function content( $atts, $content = null ) {
 
-            $title = $width = $el_class = $output = $show_blog_aux = $exclude_categories = $blog_aux = $show_read_more = $offset = $posts_order = $content_output = $items = $item_figure = $el_position = '';
+            $title = $width = $el_class = $output = $items_output = $el_position = '';
 
             extract( shortcode_atts( array(
                 'title'            => '',
@@ -22,7 +22,6 @@
                 "instagram_id"     => '',
                 "instagram_token"  => '',
                 "twitter_username" => '',
-                "category"         => '',
                 'el_position'      => '',
                 'width'            => '1/1',
                 'el_class'         => ''
@@ -45,32 +44,19 @@
                 $sidebars = 'no-sidebars';
             }
 
-            $blog_items_output = "";
+            $items_output = "";
 
             global $sf_options, $sf_sidebar_config;
 
 
-            /* CATEGORY SLUG MODIFICATION
+            /* COUNT CALC
             ================================================== */
-            if ( $category == "All" ) {
-                $category = "all";
-            }
-            if ( $category == "all" ) {
-                $category = '';
-            }
-            $category_slug = str_replace( '_', '-', $category );
-
-
-            /* BLOG QUERY SETUP
-            ================================================== */
-            global $post, $wp_query;
-
-            if ( get_query_var( 'paged' ) ) {
-                $paged = get_query_var( 'paged' );
-            } elseif ( get_query_var( 'page' ) ) {
-                $paged = get_query_var( 'page' );
+            $item_class = "col-sm-4";
+            if ( $fullwidth == "yes" ) {
+                $item_class = "col-sm-sf-5";
+                $item_count = $item_count * 5;
             } else {
-                $paged = 1;
+                $item_count = $item_count * 3;
             }
 
             $tweet_count = $instagram_count = floor( $item_count / 2 );
@@ -88,28 +74,29 @@
                 $tweet_count     = $item_count;
             }
 
-            /* BLOG ITEMS OUTPUT
+
+            /* ITEMS OUTPUT
             ================================================== */
-            $blog_items_output .= '<div class="blog-items blog-grid-items">';
-            $blog_items_output .= '<ul class="grid-items row clearfix">';
-            $blog_items_output .= '</ul>';
+            $items_output .= '<div class="blog-items blog-grid-items">';
+            $items_output .= '<ul class="grid-items row clearfix">';
+            $items_output .= '</ul>';
 
 
             /* TWEETS
             ================================================== */
             if ( $twitter_username != "" ) {
-                $blog_items_output .= '<ul class="blog-tweets">' . sf_get_tweets( $twitter_username, $tweet_count, 'blog-grid' ) . '</ul>';
+                $items_output .= '<ul class="blog-tweets">' . sf_get_tweets( $twitter_username, $tweet_count, 'blog-grid', $item_class ) . '</ul>';
             }
 
 
             /* INSTAGRAMS
             ================================================== */
             if ( $instagram_id != "" && $instagram_token != "" ) {
-                $blog_items_output .= '<ul class="blog-instagrams" data-title="' . __( "Instagram", 'swift-framework-plugin' ) . '" data-count="' . $instagram_count . '" data-userid="' . $instagram_id . '" data-token="' . $instagram_token . '" data-itemclass="col-sm-sf-5"></ul>';
+                $items_output .= '<ul class="blog-instagrams" data-title="' . __( "Instagram", 'swift-framework-plugin' ) . '" data-count="' . $instagram_count . '" data-userid="' . $instagram_id . '" data-token="' . $instagram_token . '" data-itemclass="'.$item_class.'"></ul>';
             }
 
 
-            $blog_items_output .= '</div>';
+            $items_output .= '</div>';
 
 
             /* FINAL OUTPUT
@@ -124,7 +111,7 @@
             $output .= "\n\t" . '<div class="spb_blog_grid_widget blog-wrap spb_content_element ' . $width . $el_class . '">';
             $output .= "\n\t\t" . '<div class="spb-asset-content">';
             $output .= ( $title != '' ) ? "\n\t\t\t" . $this->spb_title( $title, '', $fullwidth ) : '';
-            $output .= "\n\t\t" . $blog_items_output;
+            $output .= "\n\t\t" . $items_output;
             $output .= "\n\t\t" . '</div>';
             $output .= "\n\t" . '</div> ' . $this->endBlockComment( $width );
 
@@ -146,8 +133,8 @@
     SPBMap::map( 'spb_blog_grid', array(
         "name"   => __( "Social Grid", 'swift-framework-plugin' ),
         "base"   => "spb_blog_grid",
-        "class"  => "spb_blog_grid",
-        "icon"   => "spb-icon-blog-grid",
+        "class"  => "spb_blog_grid spb_tab_media",
+        "icon"   => "icon-social-grid",
         "params" => array(
             array(
                 "type"        => "textfield",
@@ -159,10 +146,10 @@
             array(
                 "type"        => "dropdown",
                 "class"       => "",
-                "heading"     => __( "Number of items", 'swift-framework-plugin' ),
+                "heading"     => __( "Number of rows", 'swift-framework-plugin' ),
                 "param_name"  => "item_count",
-                "value"       => apply_filters( 'sf_blog_grid_item_counts', array( "5", "10", "15", "20" ) ),
-                "description" => __( "The number of blog items to show per page.", 'swift-framework-plugin' )
+                "value"       => apply_filters( 'sf_blog_grid_item_counts', array( "1", "2", "3", "4", "5" ) ),
+                "description" => __( "The number of grid rows to show.", 'swift-framework-plugin' )
             ),
             array(
                 "type"        => "textfield",
@@ -193,6 +180,7 @@
                     __( 'Yes', 'swift-framework-plugin' ) => "yes",
                     __( 'No', 'swift-framework-plugin' )  => "no"
                 ),
+                "buttonset_on"  => "yes",
                 "description" => __( "Select if you'd like the asset to be full width (edge to edge). NOTE: only possible on pages without sidebars.", 'swift-framework-plugin' )
             ),
             array(

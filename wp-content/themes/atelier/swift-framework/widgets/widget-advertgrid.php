@@ -11,7 +11,7 @@
 
     class sf_advert_grid_widget extends WP_Widget {
 
-        function sf_advert_grid_widget() {
+        function __construct() {
             $widget_ops  = array(
                 'classname'   => 'widget-advert-grid',
                 'description' => 'Styled advert grid of up to eight 125x125 adverts'

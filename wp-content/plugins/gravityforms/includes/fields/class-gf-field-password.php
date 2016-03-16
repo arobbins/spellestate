@@ -103,10 +103,10 @@ class GF_Field_Password extends GF_Field {
 		$confirm_password_field_input = GFFormsModel::get_input( $this, $this->id . '.2' );
 
 		$enter_password_label = rgar( $enter_password_field_input, 'customLabel' ) != '' ? $enter_password_field_input['customLabel'] : esc_html__( 'Enter Password', 'gravityforms' );
-		$enter_password_label = gf_apply_filters( 'gform_password', $form_id, $enter_password_label, $form_id );
+		$enter_password_label = gf_apply_filters( array( 'gform_password', $form_id ), $enter_password_label, $form_id );
 
 		$confirm_password_label = rgar( $confirm_password_field_input, 'customLabel' ) != '' ? $confirm_password_field_input['customLabel'] : esc_html__( 'Confirm Password', 'gravityforms' );
-		$confirm_password_label = gf_apply_filters( 'gform_password_confirm', $form_id, $confirm_password_label, $form_id );
+		$confirm_password_label = gf_apply_filters( array( 'gform_password_confirm', $form_id ), $confirm_password_label, $form_id );
 
 
 		$enter_password_placeholder_attribute   = GFCommon::get_input_placeholder_attribute( $enter_password_field_input );

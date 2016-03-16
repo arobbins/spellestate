@@ -26,8 +26,9 @@
                         echo get_avatar( $comment, '100' );
                     } ?>
                     <?php if ( $comment->comment_author_email == get_the_author_meta( 'email' ) ) { ?>
-                        <span class="tooltip"><?php _e( "Author", "swiftframework" ); ?><span
-                                class="arrow"></span></span>
+                        <span class="tooltip"><?php _e( "Author", "swiftframework" ); ?>
+                            <span class="arrow"></span>
+                        </span>
                     <?php } ?>
                 </div>
                 <div class="comment-content">

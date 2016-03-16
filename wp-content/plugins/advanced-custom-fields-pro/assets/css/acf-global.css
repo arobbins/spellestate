@@ -100,10 +100,6 @@ img.acf-fw {
   vertical-align: text-top;
   background: transparent url(../images/spinner.gif) no-repeat 50% 50%;
 }
-.acf-loading + .acf-button,
-.acf-spinner + .acf-button {
-  margin-left: 3px;
-}
 /* spinner */
 .acf-spinner {
   display: none;
@@ -277,88 +273,102 @@ img.acf-fw {
   text-transform: none;
   /* fix buttons height, for twitter bootstrap */
   line-height: 1em;
-  /* Animation center compensation - margins should be symmetric */
-  /* remove if not needed */
-  /* you can be more comfortable with increased icons size */
-  /* font-size: 120%; */
   /* Font smoothing. That was taken from TWBS */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* Uncomment for 3D effect */
-  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+  /* more consistent vertical align */
+  position: relative;
 }
-.acf-icon-plus:before {
+.acf-icon.-plus:before {
   content: '\e800';
 }
 /* '' */
-.acf-icon-minus:before {
+.acf-icon.-minus:before {
   content: '\e801';
 }
 /* '' */
-.acf-icon-cancel:before {
+.acf-icon.-cancel:before {
   content: '\e802';
 }
 /* '' */
-.acf-icon-pencil:before {
+.acf-icon.-pencil:before {
   content: '\e803';
+  top: -1px;
 }
 /* '' */
-.acf-icon-location:before {
+.acf-icon.-location:before {
   content: '\e804';
 }
 /* '' */
-.acf-icon-down:before {
+.acf-icon.-down:before {
   content: '\e805';
+  top: 1px;
 }
 /* '' */
-.acf-icon-left:before {
+.acf-icon.-left:before {
   content: '\e806';
+  left: -1px;
 }
 /* '' */
-.acf-icon-right:before {
+.acf-icon.-right:before {
   content: '\e807';
+  left: 1px;
 }
 /* '' */
-.acf-icon-up:before {
+.acf-icon.-up:before {
   content: '\e808';
+  top: -1px;
 }
 /* '' */
-.acf-icon-sync:before {
+.acf-icon.-sync:before {
   content: '\e809';
 }
 /* '' */
-.acf-icon-globe:before {
+.acf-icon.-globe:before {
   content: '\e80a';
 }
 /* '' */
-.acf-icon-picture:before {
+.acf-icon.-picture:before {
   content: '\e80b';
 }
 /* '' */
-.acf-icon-check:before {
+.acf-icon.-check:before {
   content: '\e80c';
 }
 /* '' */
-.acf-icon-dot-3:before {
+.acf-icon.-dot-3:before {
   content: '\e80d';
 }
 /* '' */
-.acf-icon-arrow-combo:before {
+.acf-icon.-arrow-combo:before {
   content: '\e80e';
 }
 /* '' */
-.acf-icon-arrow-down:before {
-  content: '\e80f';
-}
-/* '' */
-.acf-icon-arrow-up:before {
+.acf-icon.-arrow-up:before {
   content: '\e810';
+  top: -1px;
 }
 /* '' */
-.acf-icon-search:before {
+.acf-icon.-arrow-down:before {
+  content: '\e80f';
+  top: 1px;
+}
+/* '' */
+.acf-icon.-search:before {
   content: '\e811';
 }
 /* '' */
+/* collapse */
+.acf-icon.-collapse:before {
+  content: '\e810';
+  top: -1px;
+}
+/* arrow-up */
+.-collapsed .acf-icon.-collapse:before {
+  content: '\e80f';
+  top: 1px;
+}
+/* arrow-down */
 /* default */
 .acf-icon {
   display: inline-block;
@@ -367,7 +377,7 @@ img.acf-fw {
   border: transparent solid 1px;
   border-radius: 100%;
   font-size: 16px;
-  line-height: 24px;
+  line-height: 26px;
   text-align: center;
   text-decoration: none;
   vertical-align: top;
@@ -378,7 +388,7 @@ span.acf-icon {
   border-color: #BBB;
   background-color: #fff;
 }
-/* button */
+/* icon */
 a.acf-icon {
   color: #999;
   border-color: #BBB;
@@ -388,23 +398,11 @@ a.acf-icon {
   transition: none;
 }
 /* minor tweaks */
-.acf-icon-pencil {
-  font-size: 14px;
+.acf-icon.-pencil {
+  font-size: 15px;
 }
-.acf-icon-pencil.small {
-  font-size: 12px;
-}
-.acf-icon-location {
+.acf-icon.-location {
   font-size: 18px;
-}
-.acf-icon-left:before {
-  left: -1px;
-  position: relative;
-}
-.acf-icon-sync.small,
-.acf-icon-arrow-up.small,
-.acf-icon-arrow-down.small {
-  font-size: 14px;
 }
 /* states */
 a.acf-icon:hover {
@@ -417,15 +415,16 @@ a.acf-icon:focus {
   outline: none;
   box-shadow: none;
 }
-a.acf-icon-minus:hover,
-a.acf-icon-cancel:hover {
+a.acf-icon.-minus:hover,
+a.acf-icon.-cancel:hover {
   background-color: #F55E4F;
 }
 /* sizes */
 .acf-icon.small {
   width: 18px;
   height: 18px;
-  line-height: 17px;
+  line-height: 18px;
+  font-size: 14px;
 }
 /* styles */
 .acf-icon.light {
@@ -447,8 +446,8 @@ a.acf-icon.dark:hover {
   background: #191E23;
   color: #00b9eb;
 }
-a.acf-icon-minus.dark:hover,
-a.acf-icon-cancel.dark:hover {
+a.acf-icon.-minus.dark:hover,
+a.acf-icon.-cancel.dark:hover {
   color: #D54E21;
 }
 /* grey */
@@ -462,8 +461,8 @@ a.acf-icon.grey:hover {
   background: #00A0D2;
   color: #fff;
 }
-a.acf-icon-minus.grey:hover,
-a.acf-icon-cancel.grey:hover {
+a.acf-icon.-minus.grey:hover,
+a.acf-icon.-cancel.grey:hover {
   background: #32373C;
 }
 /* red */
@@ -576,31 +575,43 @@ a.acf-icon-cancel.grey:hover {
   position: relative;
   display: block;
   background: #F55E4F;
-  border-radius: 3px;
   margin: 5px 0 15px;
-  padding: 1px 10px;
+  padding: 1px 12px;
   min-height: 0px;
+  border-left: #dd4232 solid 4px;
 }
 .acf-error-message p {
   font-size: 13px !important;
-  line-height: 1.4;
-  margin: 8px 0;
-  padding: 0;
+  line-height: 1.5;
+  margin: 0.5em 0;
+  padding: 2px;
   text-shadow: none;
   color: #fff;
-  text-shadow: 0 1px 0 #DD4232;
 }
 .acf-error-message .acf-icon {
   position: absolute;
-  top: 8px;
-  right: 10px;
+  top: 9px;
+  right: 12px;
   background-color: #dd4232;
   border-color: transparent;
   color: #fff;
 }
-.acf-error-message .acf-icon:hover {
-  background-color: #F1F1F1;
+/* important to include .-cancel to override .acf-icon.-cancel class */
+.acf-error-message .acf-icon.-cancel:hover {
+  background-color: #191e23;
   color: #F55E4F;
+}
+/* success */
+.acf-error-message.-success {
+  background-color: #46b450;
+  border-color: #32973b;
+}
+.acf-error-message.-success .acf-icon {
+  background-color: #32973b;
+}
+.acf-error-message.-success .acf-icon.-cancel:hover {
+  background-color: #191e23;
+  color: #46b450;
 }
 /*--------------------------------------------------------------------------------------------
 *
@@ -674,14 +685,9 @@ a.acf-icon-cancel.grey:hover {
 }
 /*---------------------------------------------------------------------------------------------
 *
-*  Input Table
+*  media-modal
 *
 *---------------------------------------------------------------------------------------------*/
-/*
-.compat-item .acf-table {
-	border: #DFDFDF solid 1px;
-}
-*/
 /* media fix */
 .media-modal .acf-field * {
   box-sizing: border-box;
@@ -691,112 +697,6 @@ a.acf-icon-cancel.grey:hover {
 }
 .media-item .describe .acf-table > thead > tr > th {
   width: auto;
-}
-/*--------------------------------------------------------------------------------------------
-*
-*	acf-button
-*
-*--------------------------------------------------------------------------------------------*/
-.acf-button {
-  position: relative;
-  display: inline-block;
-  border-radius: 3px;
-  height: 28px;
-  padding: 0 11px 1px;
-  cursor: pointer;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  color: #333;
-  font-weight: normal;
-  font-size: 13px;
-  line-height: 26px;
-  text-align: center;
-  text-decoration: none;
-  background: #F9F9F9;
-  border: #BBBBBB solid 1px;
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.25) inset;
-}
-.acf-button:hover {
-  border-color: #999;
-  color: #333;
-}
-.acf-button:focus,
-.acf-button:active {
-  outline: none;
-  line-height: 28px;
-}
-.acf-button:active {
-  box-shadow: none;
-}
-.acf-button[disabled],
-.acf-button.disabled {
-  background: #F7F7F7 !important;
-  border-color: #DDDDDD !important;
-  box-shadow: none !important;
-  color: #AAAAAA !important;
-  cursor: default !important;
-}
-/* sizes */
-.acf-button.large {
-  height: 32px;
-  line-height: 31px;
-  font-size: 14px;
-}
-/* all colors */
-.acf-button.blue,
-.acf-button.green,
-.acf-button.orange {
-  color: #fff !important;
-}
-/* blue */
-.acf-button.blue {
-  background-color: #00a0d2;
-  border-color: #0073aa;
-}
-.acf-button.blue:hover {
-  background-color: #298CBA;
-}
-.acf-button.blue[disabled],
-.acf-button.blue.disabled {
-  background: #298CBA !important;
-  border-color: #1B607F !important;
-  box-shadow: none !important;
-  color: #94CDE7 !important;
-}
-/* orange */
-.acf-button.orange {
-  background: #e86740;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#eb7551), to(#e05c37));
-  /* Safari 4+, Chrome */
-  background-image: -webkit-linear-gradient(top, #eb7551, #e05c37);
-  /* Chrome 10+, Safari 5.1+, iOS 5+ */
-  background-image: -moz-linear-gradient(top, #eb7551, #e05c37);
-  /* Firefox 3.6-15 */
-  background-image: -o-linear-gradient(top, #eb7551, #e05c37);
-  /* Opera 11.10+ */
-  background-image: linear-gradient(to bottom, #eb7551, #e05c37);
-  /* Firefox 16+ */
-  border: #c94c2a solid 1px;
-  text-shadow: #c94c2a 0 1px 0;
-  box-shadow: inset #f09674 0 1px 0 0;
-}
-/* green */
-.acf-button.green {
-  background: #2CB75A;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#39cb69), to(#27b957));
-  /* Safari 4+, Chrome */
-  background-image: -webkit-linear-gradient(top, #39cb69, #27b957);
-  /* Chrome 10+, Safari 5.1+, iOS 5+ */
-  background-image: -moz-linear-gradient(top, #39cb69, #27b957);
-  /* Firefox 3.6-15 */
-  background-image: -o-linear-gradient(top, #39cb69, #27b957);
-  /* Opera 11.10+ */
-  background-image: linear-gradient(to bottom, #39cb69, #27b957);
-  /* Firefox 16+ */
-  border: #21B351 solid 1px;
-  text-shadow: #21B351 0 1px 0;
-  box-shadow: inset #4DDF7D 0 1px 0 0;
 }
 /*---------------------------------------------------------------------------------------------
 *
@@ -916,8 +816,8 @@ a.acf-icon-cancel.grey:hover {
   font-weight: bold;
 }
 .acf-tfoot {
-  background: #EAF2FA;
-  border-top: #c7d7e2 solid 1px;
+  background: #f5f5f5;
+  border-top: #dddddd solid 1px;
 }
 .acf-tfoot > li {
   color: #7A9BBE;
@@ -935,6 +835,12 @@ a.acf-icon-cancel.grey:hover {
 *--------------------------------------------------------------------------------------------*/
 .acf-settings-wrap .acf-box {
   margin: 20px 0;
+}
+.acf-settings-wrap table {
+  margin: 0;
+}
+.acf-settings-wrap table .button {
+  vertical-align: middle;
 }
 /*--------------------------------------------------------------------------------------------
 *
@@ -973,7 +879,7 @@ a.acf-icon-cancel.grey:hover {
 *--------------------------------------------------------------------------------------------*/
 #acf-popup {
   position: fixed;
-  z-index: 9999;
+  z-index: 999999;
   top: 0;
   left: 0;
   right: 0;
@@ -1028,6 +934,9 @@ html[dir="rtl"] #acf-popup .title .acf-icon {
   left: 50%;
   margin: -10px 0 0 -10px;
 }
+#acf-popup .inner > *:first-child {
+  margin-top: 0;
+}
 /* submit p */
 .acf-submit {
   margin-bottom: 0;
@@ -1039,7 +948,7 @@ html[dir="rtl"] #acf-popup .title .acf-icon {
 .acf-submit .acf-loading {
   display: none;
 }
-.acf-submit .acf-button {
+.acf-submit .button {
   margin-right: 5px;
 }
 /*--------------------------------------------------------------------------------------------
@@ -1148,6 +1057,15 @@ html[dir="rtl"] #acf-popup .title .acf-icon {
 }
 /*--------------------------------------------------------------------------------------------
 *
+*	misc
+*
+*--------------------------------------------------------------------------------------------*/
+.acf-actions li {
+  float: right;
+  margin-left: 5px;
+}
+/*--------------------------------------------------------------------------------------------
+*
 *	RTL
 *
 *--------------------------------------------------------------------------------------------*/
@@ -1214,5 +1132,6 @@ html[dir="rtl"] .acf-table > tbody > tr > td.order + td {
   .acf-columns-2 .acf-column-2 {
     float: none;
     width: auto;
+    margin: 0;
   }
 }

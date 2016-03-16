@@ -19,6 +19,10 @@ jQuery(document).ready(function($){
 				$('.options_group.pricing ._regular_price_field').hide();
 				$('#sale-price-period').show();
 				$('.hide_if_subscription').hide();
+
+				if('day' == $('#_subscription_period').val()) {
+					$('.subscription_sync').hide();
+				}
 			} else {
 				$('.options_group.pricing ._regular_price_field').show();
 				$('#sale-price-period').hide();
@@ -274,7 +278,7 @@ jQuery(document).ready(function($){
 	$('.options_group.pricing ._sale_price_field .description').prepend('<span id="sale-price-period" style="display: none;"></span>');
 
 	// Move the subscription pricing section to the same location as the normal pricing section
-	$('.options_group.subscription_pricing').not('.variable_subscription_pricing .options_group.subscription_pricing').insertBefore($('.options_group.pricing'));
+	$('.options_group.subscription_pricing').not('.variable_subscription_pricing .options_group.subscription_pricing').insertBefore($('.options_group.pricing:first'));
 	$('.show_if_subscription.clear').insertAfter($('.options_group.subscription_pricing'));
 
 	// Move the subscription variation pricing section to a better location in the DOM on load
@@ -286,6 +290,7 @@ jQuery(document).ready(function($){
 		$.moveSubscriptionVariationFields();
 		$.showHideVariableSubscriptionMeta();
 		$.showHideSyncOptions();
+		$.setSubscriptionLengths();
 	});
 
 	if($('.options_group.pricing').length > 0) {

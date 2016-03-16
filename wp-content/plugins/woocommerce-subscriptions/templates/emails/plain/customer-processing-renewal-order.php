@@ -18,12 +18,19 @@ echo "****************************************************\n\n";
 
 do_action( 'woocommerce_email_before_order_table', $order, false, true );
 
-echo sprintf( __( 'Order number: %s', 'woocommerce-subscriptions' ), $order->get_order_number() ) . "\n";
-echo sprintf( __( 'Order date: %s', 'woocommerce-subscriptions' ), date_i18n( woocommerce_date_format(), strtotime( $order->order_date ) ) ) . "\n";
+printf( __( 'Order number: %s', 'woocommerce-subscriptions' ), $order->get_order_number() ) . "\n";
+printf( __( 'Order date: %s', 'woocommerce-subscriptions' ), date_i18n( wc_date_format(), strtotime( $order->order_date ) ) ) . "\n";
 
 do_action( 'woocommerce_email_order_meta', $order, false, true );
 
-echo "\n" . $order->email_order_items_table( $order->is_download_permitted(), true, ( $order->status == 'processing' ) ? true : false, '', '', true );
+echo "\n" . WC_Subscriptions_Email::email_order_items_table( $order, array(
+	'show_download_links' => $order->is_download_permitted(),
+	'show_sku'            => true,
+	'show_purchase_note'  => ( 'processing' == $order->status ) ? true : false,
+	'show_image'          => '',
+	'image_size'          => '',
+	'plain_text'          => true,
+	) );
 
 echo "----------\n\n";
 
@@ -40,11 +47,15 @@ do_action( 'woocommerce_email_after_order_table', $order, false, true );
 echo __( 'Your details', 'woocommerce-subscriptions' ) . "\n\n";
 
 if ( $order->billing_email ) {
-	echo __( 'Email:', 'woocommerce-subscriptions' ); echo $order->billing_email. "\n";
+	// translators: placeholder is customer's billing email
+	printf( __( 'Email: %s', 'woocommerce-subscriptions' ), $order->billing_email );
+	echo "\n";
 }
 
 if ( $order->billing_phone ) {
-	echo __( 'Tel:', 'woocommerce-subscriptions' ); ?> <?php echo $order->billing_phone. "\n";
+	// translators: placeholder is customer's billing phone number
+	printf( __( 'Tel: %s', 'woocommerce-subscriptions' ), $order->billing_phone );
+	echo "\n";
 }
 
 wc_get_template( 'emails/plain/email-addresses.php', array( 'order' => $order ) );

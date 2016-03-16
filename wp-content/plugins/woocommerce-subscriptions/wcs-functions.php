@@ -56,7 +56,7 @@ function wcs_is_subscription( $subscription ) {
  */
 function wcs_do_subscriptions_exist() {
 	global $wpdb;
-	$sql = $wpdb->prepare( "SELECT ID FROM {$wpdb->posts} WHERE post_type = %s;", 'shop_subscription' );
+	$sql = $wpdb->prepare( "SELECT ID FROM {$wpdb->posts} WHERE post_type = %s LIMIT 1;", 'shop_subscription' );
 
 	// query is the fastest, every other built in method uses this. Plus, the return value is the number of rows found
 	$num_rows_found = $wpdb->query( $sql );
@@ -98,12 +98,18 @@ function wcs_create_subscription( $args = array() ) {
 
 	$order = ( isset( $args['order_id'] ) ) ? wc_get_order( $args['order_id'] ) : null;
 
+	if ( ! empty( $order ) && isset( $order->post->post_date ) ) {
+		$default_start_date = ( '0000-00-00 00:00:00' != $order->post->post_date_gmt ) ? $order->post->post_date_gmt : get_gmt_from_date( $order->post->post_date );
+	} else {
+		$default_start_date = current_time( 'mysql', true );
+	}
+
 	$default_args = array(
 		'status'             => '',
 		'order_id'           => 0,
 		'customer_note'      => null,
 		'customer_id'        => ( ! empty( $order ) ) ? $order->get_user_id() : null,
-		'start_date'         => ( ! empty( $order ) ) ? $order->order_date : current_time( 'mysql', true ),
+		'start_date'         => $default_start_date,
 		'created_via'        => ( ! empty( $order ) ) ? $order->created_via : '',
 		'order_version'      => ( ! empty( $order ) ) ? $order->order_version : WC_VERSION,
 		'currency'           => ( ! empty( $order ) ) ? $order->order_currency : get_woocommerce_currency(),
@@ -115,24 +121,24 @@ function wcs_create_subscription( $args = array() ) {
 
 	// validate the start_date field
 	if ( ! is_string( $args['start_date'] ) || false === wcs_is_datetime_mysql_format( $args['start_date'] ) ) {
-		return new WP_Error( 'woocommerce_subscription_invalid_start_date_format', __( 'Invalid date. The date must be a string and of the format: "Y-m-d H:i:s".', 'woocommerce-subscriptions' ) );
+		return new WP_Error( 'woocommerce_subscription_invalid_start_date_format', _x( 'Invalid date. The date must be a string and of the format: "Y-m-d H:i:s".', 'Error message while creating a subscription', 'woocommerce-subscriptions' ) );
 	} else if ( strtotime( $args['start_date'] ) > current_time( 'timestamp', true ) ) {
-		return new WP_Error( 'woocommerce_subscription_invalid_start_date', __( 'Subscription start date must be before current day', 'woocommerce-subscriptions' ) );
+		return new WP_Error( 'woocommerce_subscription_invalid_start_date', _x( 'Subscription start date must be before current day.', 'Error message while creating a subscription', 'woocommerce-subscriptions' ) );
 	}
 
 	// check customer id is set
 	if ( empty( $args['customer_id'] ) || ! is_numeric( $args['customer_id'] ) || $args['customer_id'] <= 0 ) {
-		return new WP_Error( 'woocommerce_subscription_invalid_customer_id', __( 'Invalid Subscription customer_id', 'woocommerce-subscriptions' ) );
+		return new WP_Error( 'woocommerce_subscription_invalid_customer_id', _x( 'Invalid subscription customer_id.', 'Error message while creating a subscription', 'woocommerce-subscriptions' ) );
 	}
 
 	// check the billing period
 	if ( empty( $args['billing_period'] ) || ! in_array( strtolower( $args['billing_period'] ), array_keys( wcs_get_subscription_period_strings() ) ) ) {
-		return new WP_Error( 'woocommerce_subscription_invalid_billing_period', __( 'Invalid Subscription billing period given.', 'woocommerce-subscriptions' ) );
+		return new WP_Error( 'woocommerce_subscription_invalid_billing_period', __( 'Invalid subscription billing period given.', 'woocommerce-subscriptions' ) );
 	}
 
 	// check the billing interval
 	if ( empty( $args['billing_interval'] ) || ! is_numeric( $args['billing_interval'] ) || absint( $args['billing_interval'] ) <= 0 ) {
-		return new WP_Error( 'woocommerce_subscription_invalid_billing_interval', __( 'Invalid Subscription billing interval given.', 'woocommerce-subscriptions' ) );
+		return new WP_Error( 'woocommerce_subscription_invalid_billing_interval', __( 'Invalid subscription billing interval given. Must be an integer greater than 0.', 'woocommerce-subscriptions' ) );
 	}
 
 	$subscription_data['post_type']     = 'shop_subscription';
@@ -141,9 +147,10 @@ function wcs_create_subscription( $args = array() ) {
 	$subscription_data['post_author']   = 1;
 	$subscription_data['post_password'] = uniqid( 'order_' );
 	// translators: Order date parsed by strftime
-	$post_title_date = strftime( __( '%b %d, %Y @ %I:%M %p', 'woocommerce-subscriptions' ) );
+	$post_title_date = strftime( _x( '%b %d, %Y @ %I:%M %p', 'Used in subscription post title. "Subscription renewal order - <this>"', 'woocommerce-subscriptions' ) );
 	// translators: placeholder is order date parsed by strftime
-	$subscription_data['post_title']    = sprintf( __( 'Subscription &ndash; %s', 'woocommerce-subscriptions' ), $post_title_date );
+	$subscription_data['post_title']    = sprintf( _x( 'Subscription &ndash; %s', 'The post title for the new subscription', 'woocommerce-subscriptions' ), $post_title_date );
+	$subscription_data['post_date_gmt'] = $args['start_date'];
 	$subscription_data['post_date']     = get_date_from_gmt( $args['start_date'] );
 
 	if ( $args['order_id'] > 0 ) {
@@ -157,7 +164,7 @@ function wcs_create_subscription( $args = array() ) {
 	// Only set the status if creating a new subscription, use wcs_update_subscription to update the status
 	if ( $args['status'] ) {
 		if ( ! in_array( 'wc-' . $args['status'], array_keys( wcs_get_subscription_statuses() ) ) ) {
-			return new WP_Error( 'woocommerce_invalid_subscription_status', __( 'Invalid subscription status', 'woocommerce-subscriptions' ) );
+			return new WP_Error( 'woocommerce_invalid_subscription_status', __( 'Invalid subscription status given.', 'woocommerce-subscriptions' ) );
 		}
 		$subscription_data['post_status']  = 'wc-' . $args['status'];
 	}
@@ -230,6 +237,29 @@ function wcs_get_subscription_status_name( $status ) {
 }
 
 /**
+ * Helper function to return a localised display name for an address type
+ *
+ * @param string $address_type the type of address (shipping / billing)
+ *
+ * @return string
+ */
+function wcs_get_address_type_to_display( $address_type ) {
+	if ( ! is_string( $address_type ) ) {
+		return new WP_Error( 'woocommerce_subscription_wrong_address_type_format', __( 'Can not get address type display name. Address type is not a string.', 'woocommerce-subscriptions' ) );
+	}
+
+	$address_types = apply_filters( 'woocommerce_subscription_address_types', array(
+		'shipping' => __( 'Shipping Address', 'woocommerce-subscriptions' ),
+		'billing' => __( 'Billing Address', 'woocommerce-subscriptions' ),
+	) );
+
+	// if we can't find the address type, return the raw key
+	$address_type_display = isset( $address_types[ $address_type ] ) ? $address_types[ $address_type ] : $address_type;
+
+	return apply_filters( 'woocommerce_subscription_address_type_display', $address_type_display, $address_type );
+}
+
+/**
  * Returns an array of subscription dates
  *
  * @since  2.0
@@ -238,11 +268,11 @@ function wcs_get_subscription_status_name( $status ) {
 function wcs_get_subscription_date_types() {
 
 	$dates = array(
-		'start'        => _x( 'Start Date', 'table column header', 'woocommerce-subscriptions' ),
-		'trial_end'    => _x( 'Trial End', 'table column header', 'woocommerce-subscriptions' ),
-		'next_payment' => _x( 'Next Payment', 'table column header', 'woocommerce-subscriptions' ),
-		'last_payment' => _x( 'Last Payment', 'table column header', 'woocommerce-subscriptions' ),
-		'end'          => _x( 'End Date', 'table column header', 'woocommerce-subscriptions' ),
+		'start'        => _x( 'Start Date', 'table heading', 'woocommerce-subscriptions' ),
+		'trial_end'    => _x( 'Trial End', 'table heading', 'woocommerce-subscriptions' ),
+		'next_payment' => _x( 'Next Payment', 'table heading', 'woocommerce-subscriptions' ),
+		'last_payment' => _x( 'Last Payment', 'table heading', 'woocommerce-subscriptions' ),
+		'end'          => _x( 'End Date', 'table heading', 'woocommerce-subscriptions' ),
 	);
 
 	return apply_filters( 'woocommerce_subscription_dates', $dates );
@@ -530,3 +560,4 @@ function wcs_is_view_subscription_page() {
 
 	return ( is_page( wc_get_page_id( 'myaccount' ) ) && isset( $wp->query_vars['view-subscription'] ) ) ? true : false;
 }
+

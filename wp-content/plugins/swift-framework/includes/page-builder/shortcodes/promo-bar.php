@@ -5,7 +5,7 @@
     *	Swift Page Builder - Promo Bar Shortcode
     *	------------------------------------------------
     *	Swift Framework
-    * 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+    * 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     */
 
@@ -13,6 +13,7 @@
 
         protected function content( $atts, $content = null ) {
             $btn_color = $btn_text = $display_type = $target = $href = $promo_bar_text = $fullwidth = $inline_style = $inline_style_alt = $width = $position = $el_class = '';
+            
             extract( shortcode_atts( array(
                 'btn_color'      => 'accent',
                 'btn_text'       => '',
@@ -27,6 +28,7 @@
                 'width'          => '1/1',
                 'bg_color'       => '',
                 'text_color'     => '',
+                'page_align'     => 'no',
                 'fullwidth'      => 'no',
                 'el_class'       => '',
                 'el_position'    => '',
@@ -67,7 +69,10 @@
             $next_icon = apply_filters( 'sf_next_icon' , '<i class="ss-navigateright"></i>' );
 
             $output .= '<div class="spb-promo-wrap spb_content_element clearfix ' . $width . ' ' . $position . $el_class . '">' . "\n";
-            $output .= '<div class="sf-promo-bar ' . $display_type . '" style="' . $inline_style . '">';
+            $output .= '<div class="sf-promo-bar ' . $display_type . ' text-size-'.$promo_bar_text_size.' page-align-'.$page_align.'" style="' . $inline_style . '">';
+            if ( $page_align == "yes" ) {
+                $output .= '<div class="container">';
+            }
             if ( $display_type == "promo-button" ) {
                 $output .= '<p class="'.$promo_bar_text_size.'" style="' . $inline_style_alt . '">' . $promo_bar_text . '</p>';
                 $output .= '<a href="' . $href . '" target="' . $target . '" class="sf-button '.$btn_type.' ' . $btn_color . '">' . $btn_text . '</a>';
@@ -77,6 +82,9 @@
                 $output .= '<a href="' . $href . '" target="' . $target . '" class="'.$promo_bar_text_size.'" style="' . $inline_style_alt . '"><p>' . do_shortcode( $promo_bar_text ) . '</p></a>';
             } else {
                 $output .= '<p>' . do_shortcode( $content ) . '</p>';
+            }
+            if ( $page_align == "yes" ) {
+                $output .= '</div>';
             }
             $output .= '</div>';
             $output .= '</div> ' . $this->endBlockComment( '.spb-promo-wrap' ) . "\n";
@@ -143,11 +151,13 @@
 		);
 	}
 
+    $promo_bar_types = apply_filters( 'spb_promo_bar_types', $promo_bar_types );
+
     SPBMap::map( 'spb_promo_bar', array(
         "name"     => __( "Promo Bar", 'swift-framework-plugin' ),
         "base"     => "spb_promo_bar",
-        "class"    => "button_grey",
-        "icon"     => "spb-icon-impact-text",
+        "class"    => "button_grey spb_tab_media",
+        "icon"     => "icon-promo-bar",
         "controls" => "edit_popup_delete",
         "params"   => array(
             array(
@@ -232,6 +242,16 @@
                 "param_name"  => "text_color",
                 "value"       => "",
                 "description" => __( "Select a text colour for the asset here.", 'swift-framework-plugin' )
+            ),
+            array(
+                "type"        => "buttonset",
+                "heading"     => __( "Align to page", 'swift-framework-plugin' ),
+                "param_name"  => "page_align",
+                "value"       => array(
+                    __( 'No', 'swift-framework-plugin' )  => "no",
+                    __( 'Yes', 'swift-framework-plugin' ) => "yes"
+                ),
+                "description" => __( "Select if you'd like the asset to be aligned to the page (contained).", 'swift-framework-plugin' )
             ),
             array(
                 "type"        => "buttonset",

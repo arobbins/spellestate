@@ -130,9 +130,9 @@ class acf_field_google_map extends acf_field {
 	<div class="title acf-soh">
 		
 		<div class="actions acf-soh-target">
-			<a href="#" data-name="search" class="acf-icon acf-icon-search grey" title="<?php _e("Search", 'acf'); ?>"></a>
-			<a href="#" data-name="clear" class="acf-icon acf-icon-cancel grey" title="<?php _e("Clear location", 'acf'); ?>"></a>
-			<a href="#" data-name="locate" class="acf-icon acf-icon-location grey" title="<?php _e("Find current location", 'acf'); ?>"></a>
+			<a href="#" data-name="search" class="acf-icon -search grey" title="<?php _e("Search", 'acf'); ?>"></a>
+			<a href="#" data-name="clear" class="acf-icon -cancel grey" title="<?php _e("Clear location", 'acf'); ?>"></a>
+			<a href="#" data-name="locate" class="acf-icon -location grey" title="<?php _e("Find current location", 'acf'); ?>"></a>
 		</div>
 		
 		<input class="search" type="text" placeholder="<?php _e("Search for address...",'acf'); ?>" value="<?php echo $field['value']['address']; ?>" />

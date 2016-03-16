@@ -22,8 +22,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<tr>
 			<th class="subscription-id order-number"><span class="nobr"><?php esc_html_e( 'Subscription', 'woocommerce-subscriptions' ); ?></span></th>
 			<th class="subscription-status order-status"><span class="nobr"><?php esc_html_e( 'Status', 'woocommerce-subscriptions' ); ?></span></th>
-			<th class="subscription-next-payment order-date"><span class="nobr"><?php esc_html_e( 'Next Payment', 'woocommerce-subscriptions' ); ?></span></th>
-			<th class="subscription-total order-total"><span class="nobr"><?php esc_html_e( 'Total', 'woocommerce-subscriptions' ); ?></span></th>
+			<th class="subscription-next-payment order-date"><span class="nobr"><?php echo esc_html_x( 'Next Payment', 'table heading', 'woocommerce-subscriptions' ); ?></span></th>
+			<th class="subscription-total order-total"><span class="nobr"><?php echo esc_html_x( 'Total', 'table heading', 'woocommerce-subscriptions' ); ?></span></th>
 			<th class="subscription-actions order-actions">&nbsp;</th>
 		</tr>
 	</thead>
@@ -32,25 +32,28 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<?php foreach ( $subscriptions as $subscription_id => $subscription ) : ?>
 		<tr class="order">
 			<td class="subscription-id order-number" data-title="<?php esc_attr_e( 'ID', 'woocommerce-subscriptions' ); ?>">
-				<a href="<?php echo esc_url( $subscription->get_view_order_url() ); ?>"><?php echo esc_html( $subscription->get_order_number() ); ?></a>
+				<a href="<?php echo esc_url( $subscription->get_view_order_url() ); ?>"><?php echo esc_html( sprintf( _x( '#%s', 'hash before order number', 'woocommerce-subscriptions' ), $subscription->get_order_number() ) ); ?></a>
 				<?php do_action( 'woocommerce_my_subscriptions_after_subscription_id', $subscription ); ?>
 			</td>
 			<td class="subscription-status order-status" style="text-align:left; white-space:nowrap;" data-title="<?php esc_attr_e( 'Status', 'woocommerce-subscriptions' ); ?>">
 				<?php echo esc_attr( wcs_get_subscription_status_name( $subscription->get_status() ) ); ?>
 			</td>
-			<td class="subscription-next-payment order-date" data-title="<?php esc_attr_e( 'Next Payment', 'woocommerce-subscriptions' ); ?>">
+			<td class="subscription-next-payment order-date" data-title="<?php echo esc_attr_x( 'Next Payment', 'table heading', 'woocommerce-subscriptions' ); ?>">
 				<?php echo esc_attr( $subscription->get_date_to_display( 'next_payment' ) ); ?>
 				<?php if ( ! $subscription->is_manual() && $subscription->has_status( 'active' ) && $subscription->get_time( 'next_payment' ) > 0 ) : ?>
-					<?php $payment_method_to_display = sprintf( __( 'Via %s', 'woocommerce-subscriptions' ), $subscription->get_payment_method_to_display() ); ?>
-					<?php $payment_method_to_display = apply_filters( 'woocommerce_my_subscriptions_payment_method', $payment_method_to_display, $subscription ); ?>
+					<?php
+					// translators: placeholder is the display name of a payment gateway a subscription was paid by
+					$payment_method_to_display = sprintf( __( 'Via %s', 'woocommerce-subscriptions' ), $subscription->get_payment_method_to_display() );
+					$payment_method_to_display = apply_filters( 'woocommerce_my_subscriptions_payment_method', $payment_method_to_display, $subscription );
+					?>
 				&nbsp;<small><?php echo esc_attr( $payment_method_to_display ); ?></small>
 				<?php endif; ?>
 			</td>
-			<td class="subscription-total order-total">
+			<td class="subscription-total order-total" data-title="<?php echo esc_attr_x( 'Total', 'Used in data attribute. Escaped', 'woocommerce-subscriptions' ); ?>">
 				<?php echo wp_kses_post( $subscription->get_formatted_order_total() ); ?>
 			</td>
 			<td class="subscription-actions order-actions">
-				<a href="<?php echo esc_url( $subscription->get_view_order_url() ) ?>" class="button view"><?php esc_html_e( 'View', 'woocommerce-subscriptions' ); ?></a>
+				<a href="<?php echo esc_url( $subscription->get_view_order_url() ) ?>" class="button view"><?php echo esc_html_x( 'View', 'view a subscription', 'woocommerce-subscriptions' ); ?></a>
 			</td>
 		</tr>
 	<?php endforeach; ?>
@@ -59,7 +62,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</table>
 	<?php else : ?>
 
-		<p class="no_subscriptions"><?php printf( esc_html__( 'You have no active subscriptions. Find your first subscription in the %sstore%s.', 'woocommerce-subscriptions' ), '<a href="' . esc_url( apply_filters( 'woocommerce_subscriptions_message_store_url', get_permalink( woocommerce_get_page_id( 'shop' ) ) ) ) . '">', '</a>' ); ?></p>
+		<p class="no_subscriptions">
+			<?php
+			// translators: placeholders are opening and closing link tags to take to the shop page
+			printf( esc_html__( 'You have no active subscriptions. Find your first subscription in the %sstore%s.', 'woocommerce-subscriptions' ), '<a href="' . esc_url( apply_filters( 'woocommerce_subscriptions_message_store_url', get_permalink( wc_get_page_id( 'shop' ) ) ) ) . '">', '</a>' );
+			?>
+		</p>
 
 	<?php endif; ?>
 

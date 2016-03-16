@@ -288,8 +288,8 @@ class WC_Dynamic_Pricing_Simple_Membership extends WC_Dynamic_Pricing_Simple_Bas
 
 				if ( $this->available_rulesets && count( $this->available_rulesets ) ) {
 					$available_rule = reset( $this->available_rulesets );
-
-					$s_working_price = apply_filters( 'woocommerce_dyanmic_pricing_working_price', $discounted_price, 'membership', $fake_cart_item );
+						
+					$s_working_price = apply_filters( 'woocommerce_dyanmic_pricing_working_price', $working_price, 'membership', $fake_cart_item );
 					return $this->get_adjusted_price( $available_rule, $s_working_price );
 				} else {
 					return $discounted_price;

@@ -24,6 +24,7 @@
             // Swift Slider meta
             $ss_type       = sf_get_post_meta( $post->ID, 'sf_ss_type', true );
             $ss_category   = sf_get_post_meta( $post->ID, 'sf_ss_category', true );
+            $ss_random	   = sf_get_post_meta( $post->ID, 'sf_ss_random', true );
             $ss_fs         = sf_get_post_meta( $post->ID, 'sf_ss_fs', true );
             $ss_maxheight  = sf_get_post_meta( $post->ID, 'sf_ss_maxheight', true );
             $ss_slidecount = sf_get_post_meta( $post->ID, 'sf_ss_slides', true );
@@ -54,7 +55,7 @@
 				global $sf_has_swiftslider;
 				$sf_has_swiftslider = true;
 
-				echo do_shortcode( '[swift_slider type="' . $ss_type . '" category="' . $ss_category . '" fullscreen="' . $ss_fs . '" max_height="' . $ss_maxheight . '" slide_count="' . $ss_slidecount . '" transition="'.$ss_transition.'" loop="' . $ss_loop . '" nav="' . $ss_nav . '" pagination="' . $ss_pagination . '" autoplay="' . $ss_autoplay . '" continue="' . $ss_continue . '"]' );
+				echo do_shortcode( '[swift_slider type="' . $ss_type . '" category="' . $ss_category . '" random="' . $ss_random . '" fullscreen="' . $ss_fs . '" max_height="' . $ss_maxheight . '" slide_count="' . $ss_slidecount . '" transition="'.$ss_transition.'" loop="' . $ss_loop . '" nav="' . $ss_nav . '" pagination="' . $ss_pagination . '" autoplay="' . $ss_autoplay . '" continue="' . $ss_continue . '"]' );
 
             } else if ( $page_slider == "revslider" && $rs_ID != "" ) { ?>
 

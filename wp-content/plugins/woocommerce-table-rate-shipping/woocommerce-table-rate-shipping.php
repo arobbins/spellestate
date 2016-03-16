@@ -1,9 +1,9 @@
 <?php
 /*
 Plugin Name: WooCommerce Table Rate Shipping
-Plugin URI: http://www.woothemes.com/products/table-rate-shipping-2/
+Plugin URI: http://www.woothemes.com/products/table-rate-shipping/
 Description: Table rate shipping lets you define rates depending on location vs shipping class, price, weight, or item count.
-Version: 2.9.0
+Version: 2.9.2
 Author: Mike Jolley
 Author URI: http://mikejolley.com
 Requires at least: 4.0
@@ -31,7 +31,7 @@ woothemes_queue_update( plugin_basename( __FILE__ ), '3034ed8aff427b0f635fe4c86b
  */
 if ( is_woocommerce_active() ) {
 
-	define( 'TABLE_RATE_SHIPPING_VERSION', '2.9.0' );
+	define( 'TABLE_RATE_SHIPPING_VERSION', '2.9.2' );
 
 	if ( defined( 'WP_DEBUG' ) && 'true' == WP_DEBUG && ( ! defined( 'WP_DEBUG_DISPLAY' ) || 'true' == WP_DEBUG_DISPLAY ) ) {
 		define( 'TABLE_RATE_SHIPPING_DEBUG', true );
@@ -72,8 +72,8 @@ if ( is_woocommerce_active() ) {
 	function table_rate_shipping_plugin_row_meta( $links, $file ) {
 		if ( $file == plugin_basename( __FILE__ ) ) {
 			$row_meta = array(
-				'docs'    =>	'<a href="' . esc_url( apply_filters( 'woocommerce_table_rate_shipping_docs_url', 'http://docs.woothemes.com/document/table-rate-shipping-v2/' ) ) . '" title="' . esc_attr( __( 'View Documentation', 'woocommerce-table-rate-shipping' ) ) . '">' . __( 'Docs', 'woocommerce-table-rate-shipping' ) . '</a>',
-				'support' =>	'<a href="' . esc_url( apply_filters( 'woocommerce_table_rate_support_url', 'http://support.woothemes.com/' ) ) . '" title="' . esc_attr( __( 'Visit Premium Customer Support Forum', 'woocommerce-table-rate-shipping' ) ) . '">' . __( 'Premium Support', 'woocommerce-table-rate-shipping' ) . '</a>',
+				'docs'    => '<a href="' . esc_url( apply_filters( 'woocommerce_table_rate_shipping_docs_url', 'http://docs.woothemes.com/document/table-rate-shipping/' ) ) . '" title="' . esc_attr( __( 'View Documentation', 'woocommerce-table-rate-shipping' ) ) . '">' . __( 'Docs', 'woocommerce-table-rate-shipping' ) . '</a>',
+				'support' => '<a href="' . esc_url( apply_filters( 'woocommerce_table_rate_support_url', 'http://support.woothemes.com/' ) ) . '" title="' . esc_attr( __( 'Visit Premium Customer Support Forum', 'woocommerce-table-rate-shipping' ) ) . '">' . __( 'Premium Support', 'woocommerce-table-rate-shipping' ) . '</a>',
 			);
 			return array_merge( $links, $row_meta );
 		}
@@ -116,7 +116,7 @@ if ( is_woocommerce_active() ) {
 		<div id="message" class="updated woocommerce-message wc-connect">
 			<div class="squeezer">
 				<h4><?php _e( '<strong>Table Rates is installed</strong> &#8211; Add some shipping zones to get started :)', 'woocommerce-table-rate-shipping' ); ?></h4>
-				<p class="submit"><a href="<?php echo admin_url('admin.php?page=shipping_zones'); ?>" class="button-primary"><?php _e( 'Setup Zones', 'woocommerce-table-rate-shipping' ); ?></a> <a class="skip button-primary" href="http://docs.woothemes.com/document/table-rate-shipping-v2/"><?php _e('Documentation', 'woocommerce-table-rate-shipping'); ?></a></p>
+				<p class="submit"><a href="<?php echo admin_url('admin.php?page=shipping_zones'); ?>" class="button-primary"><?php _e( 'Setup Zones', 'woocommerce-table-rate-shipping' ); ?></a> <a class="skip button-primary" href="http://docs.woothemes.com/document/table-rate-shipping/"><?php _e('Documentation', 'woocommerce-table-rate-shipping'); ?></a></p>
 			</div>
 		</div>
 		<?php
@@ -143,10 +143,10 @@ if ( is_woocommerce_active() ) {
 	 	*/
 		class WC_Shipping_Table_Rate extends WC_Shipping_Method {
 
-			var $available_rates;	// Available table rates titles and costs
-			var $instance_id;		// ID for the instance/shipping method. id-number
-			var $id;				// Method ID - should be unique to the shipping method
-			var $number;			// Instance ID number
+			var $available_rates; // Available table rates titles and costs
+			var $instance_id;     // ID for the instance/shipping method. id-number
+			var $id;              // Method ID - should be unique to the shipping method
+			var $number;          // Instance ID number
 
 			/**
 			 * Constructor
@@ -154,15 +154,15 @@ if ( is_woocommerce_active() ) {
 			public function __construct( $instance = false ) {
 				global $wpdb;
 
-				$this->id				= 'table_rate';
-				$this->method_title 	= __( 'Table rates', 'woocommerce-table-rate-shipping' );
-				$this->title 			= $this->method_title;
-				$this->has_settings		= false;
-				$this->enabled			= 'yes';
-				$this->supports			= array( 'zones' );
-				$this->tax 				= new WC_Tax();
+				$this->id           = 'table_rate';
+				$this->method_title = __( 'Table rates', 'woocommerce-table-rate-shipping' );
+				$this->title        = $this->method_title;
+				$this->has_settings = false;
+				$this->enabled      = 'yes';
+				$this->supports     = array( 'zones' );
+				$this->tax          = new WC_Tax();
 
-		        // Load the form fields.
+				// Load the form fields.
 				$this->init_form_fields();
 
 				// Load any GLOBAL settings
@@ -186,156 +186,156 @@ if ( is_woocommerce_active() ) {
 				}
 
 				// Table rate specific variables
-		        $this->rates_table 		= $wpdb->prefix . 'woocommerce_shipping_table_rates';
-		        $this->available_rates	= array();
-		    }
-
-		    /**
-		     * Instance related functions (not yet in core API's)
-		     */
-		    private function _set( $number ) {
-			    $this->number = $number;
-			    $this->instance_id = $this->id . '-' . $number;
+				$this->rates_table     = $wpdb->prefix . 'woocommerce_shipping_table_rates';
+				$this->available_rates = array();
 			}
 
 			/**
-		     * Initialise Instance Settings
-		     */
-		    public function init_instance_settings() {
-
-		    	// Load instance settings (if applicable)
-		    	if ( ! empty( $this->instance_fields ) && ! empty( $this->instance_id ) ) {
-
-		    		$instance_settings = ( array ) get_option( $this->plugin_id . $this->instance_id . '_settings' );
-
-			    	if ( ! $instance_settings ) {
-
-			    		// If there are no settings defined, load defaults
-			    		foreach ( $this->instance_fields as $k => $v ) {
-			    			$instance_settings[ $k ] = isset( $v['default'] ) ? $v['default'] : '';
-			    		}
-
-			    	} else {
-
-				    	// Prevent "undefined index" errors.
-				    	foreach ( $this->instance_fields as $k => $v ) {
-		    				$instance_settings[ $k ] = isset( $instance_settings[ $k ] ) ? $instance_settings[ $k ] : $v['default'];
-				    	}
-
-			    	}
-
-			    	// Set and decode escaped values
-			    	$this->settings = array_merge( (array) $this->settings, array_map( array( $this, 'format_settings' ), $instance_settings ) );
-		    	}
-
-		    	if ( isset( $this->settings['enabled'] ) ) {
-		    		$this->enabled = $this->settings['enabled'];
-		    	}
-
-		    	$this->settings = apply_filters( 'woocommerce_table_rate_instance_settings', $this->settings, $this->instance_id );
-		    }
+			 * Instance related functions (not yet in core API's)
+			 */
+			private function _set( $number ) {
+				$this->number = $number;
+				$this->instance_id = $this->id . '-' . $number;
+			}
 
 			/**
-		     * Initialise Gateway Settings Form Fields
-		     */
-		    public function init_form_fields() {
+			 * Initialise Instance Settings
+			 */
+			public function init_instance_settings() {
+
+				// Load instance settings (if applicable)
+				if ( ! empty( $this->instance_fields ) && ! empty( $this->instance_id ) ) {
+
+					$instance_settings = ( array ) get_option( $this->plugin_id . $this->instance_id . '_settings' );
+
+					if ( ! $instance_settings ) {
+
+						// If there are no settings defined, load defaults
+						foreach ( $this->instance_fields as $k => $v ) {
+							$instance_settings[ $k ] = isset( $v['default'] ) ? $v['default'] : '';
+						}
+
+					} else {
+
+						// Prevent "undefined index" errors.
+						foreach ( $this->instance_fields as $k => $v ) {
+							$instance_settings[ $k ] = isset( $instance_settings[ $k ] ) ? $instance_settings[ $k ] : $v['default'];
+						}
+
+					}
+
+					// Set and decode escaped values
+					$this->settings = array_merge( (array) $this->settings, array_map( array( $this, 'format_settings' ), $instance_settings ) );
+				}
+
+				if ( isset( $this->settings['enabled'] ) ) {
+					$this->enabled = $this->settings['enabled'];
+				}
+
+				$this->settings = apply_filters( 'woocommerce_table_rate_instance_settings', $this->settings, $this->instance_id );
+			}
+
+			/**
+			 * Initialise Gateway Settings Form Fields
+			 */
+			public function init_form_fields() {
 		    	$this->form_fields     = array(); // No global options for table rates
 		    	$this->instance_fields = array(
 					'enabled' => array(
-						'title' 		=> __( 'Enable/Disable', 'woocommerce-table-rate-shipping' ),
-						'type' 			=> 'checkbox',
-						'label' 		=> __( 'Enable this table rate', 'woocommerce-table-rate-shipping' ),
-						'default' 		=> 'yes'
+						'title'   => __( 'Enable/Disable', 'woocommerce-table-rate-shipping' ),
+						'type'    => 'checkbox',
+						'label'   => __( 'Enable this table rate', 'woocommerce-table-rate-shipping' ),
+						'default' => 'yes'
 					),
 					'title' => array(
-						'title' 		=> __( 'Method Title', 'woocommerce-table-rate-shipping' ),
-						'type' 			=> 'text',
-						'desc_tip'      => true,
-						'description' 	=> __( 'This controls the title which the user sees during checkout.', 'woocommerce-table-rate-shipping' ),
-						'default'		=> __( 'Table Rate', 'woocommerce-table-rate-shipping' )
+						'title'       => __( 'Method Title', 'woocommerce-table-rate-shipping' ),
+						'type'        => 'text',
+						'desc_tip'    => true,
+						'description' => __( 'This controls the title which the user sees during checkout.', 'woocommerce-table-rate-shipping' ),
+						'default'     => __( 'Table Rate', 'woocommerce-table-rate-shipping' )
 					),
 					'tax_status' => array(
-						'title' 		=> __( 'Tax Status', 'woocommerce-table-rate-shipping' ),
-						'type' 			=> 'select',
-						'description' 	=> '',
-						'desc_tip'      => true,
-						'default' 		=> 'taxable',
-						'options'		=> array(
-							'taxable' 	=> __('Taxable', 'woocommerce-table-rate-shipping'),
-							'none' 		=> __('None', 'woocommerce-table-rate-shipping')
+						'title'       => __( 'Tax Status', 'woocommerce-table-rate-shipping' ),
+						'type'        => 'select',
+						'description' => '',
+						'desc_tip'    => true,
+						'default'     => 'taxable',
+						'options'     => array(
+							'taxable' => __('Taxable', 'woocommerce-table-rate-shipping'),
+							'none'    => __('None', 'woocommerce-table-rate-shipping')
 						)
 					),
 					'order_handling_fee' => array(
-						'title' 		=> __( 'Handling Fee', 'woocommerce-table-rate-shipping' ),
-						'type' 			=> 'text',
-						'desc_tip'      => __( 'Enter an amount, e.g. 2.50, or leave blank to disable. This cost is applied once for the order as a whole.', 'woocommerce-table-rate-shipping '),
-						'default'		=> '',
+						'title'       => __( 'Handling Fee', 'woocommerce-table-rate-shipping' ),
+						'type'        => 'text',
+						'desc_tip'    => __( 'Enter an amount, e.g. 2.50, or leave blank to disable. This cost is applied once for the order as a whole.', 'woocommerce-table-rate-shipping '),
+						'default'     => '',
 						'placeholder' => __( 'n/a', 'woocommerce-table-rate-shipping' )
 					),
 					'max_shipping_cost' => array(
-						'title' 		=> __( 'Maximum Shipping Cost', 'woocommerce-table-rate-shipping' ),
-						'type' 			=> 'text',
-						'desc_tip'      => __( 'Maximum cost that the customer will pay after all the shipping rules have been applied. If the shipping cost calculated is bigger than this value, this cost will be the one shown.', 'woocommerce-table-rate-shipping '),
-						'default'		=> '',
+						'title'       => __( 'Maximum Shipping Cost', 'woocommerce-table-rate-shipping' ),
+						'type'        => 'text',
+						'desc_tip'    => __( 'Maximum cost that the customer will pay after all the shipping rules have been applied. If the shipping cost calculated is bigger than this value, this cost will be the one shown.', 'woocommerce-table-rate-shipping '),
+						'default'     => '',
 						'placeholder' => __( 'n/a', 'woocommerce-table-rate-shipping' )
 					),
 					'rates' => array(
-						'title' 		=> __( 'Rates', 'woocommerce-table-rate-shipping' ),
-						'type' => 'title',
-						'description'	=> __( 'This is where you define your table rates which are applied to an order.', 'woocommerce-table-rate-shipping'),
-						'default' => ''
+						'title'       => __( 'Rates', 'woocommerce-table-rate-shipping' ),
+						'type'        => 'title',
+						'description' => __( 'This is where you define your table rates which are applied to an order.', 'woocommerce-table-rate-shipping'),
+						'default'     => ''
 					),
 					'calculation_type' => array(
-						'title' 		=> __( 'Calculation Type', 'woocommerce-table-rate-shipping' ),
-						'type' 			=> 'select',
-						'description' 	=> __( 'Per order rates will offer the customer all matching rates. Calculated rates will sum all matching rates and provide a single total.', 'woocommerce-table-rate-shipping' ),
-						'default' 		=> '',
-						'desc_tip'      => true,
-						'options'		=> array(
-							'' 			=> __( 'Per order', 'woocommerce-table-rate-shipping' ),
-							'item' 		=> __( 'Calculated rates per item', 'woocommerce-table-rate-shipping' ),
-							'line' 		=> __( 'Calculated rates per line item', 'woocommerce-table-rate-shipping' ),
-							'class' 	=> __( 'Calculated rates per shipping class', 'woocommerce-table-rate-shipping' )
+						'title'       => __( 'Calculation Type', 'woocommerce-table-rate-shipping' ),
+						'type'        => 'select',
+						'description' => __( 'Per order rates will offer the customer all matching rates. Calculated rates will sum all matching rates and provide a single total.', 'woocommerce-table-rate-shipping' ),
+						'default'     => '',
+						'desc_tip'    => true,
+						'options'     => array(
+							''      => __( 'Per order', 'woocommerce-table-rate-shipping' ),
+							'item'  => __( 'Calculated rates per item', 'woocommerce-table-rate-shipping' ),
+							'line'  => __( 'Calculated rates per line item', 'woocommerce-table-rate-shipping' ),
+							'class' => __( 'Calculated rates per shipping class', 'woocommerce-table-rate-shipping' )
 						)
 					),
 					'handling_fee' => array(
-						'title' 		=> __( 'Handling Fee Per [item]', 'woocommerce-table-rate-shipping' ),
-						'type' 			=> 'text',
-						'desc_tip'      => __( 'Handling fee excluding tax. Enter an amount, e.g. 2.50, or a percentage, e.g. 5%. Leave blank to disable. Applied based on the "Calculation Type" chosen below.', 'woocommerce-table-rate-shipping '),
-						'default'		=> '',
+						'title'       => __( 'Handling Fee Per [item]', 'woocommerce-table-rate-shipping' ),
+						'type'        => 'text',
+						'desc_tip'    => __( 'Handling fee excluding tax. Enter an amount, e.g. 2.50, or a percentage, e.g. 5%. Leave blank to disable. Applied based on the "Calculation Type" chosen below.', 'woocommerce-table-rate-shipping '),
+						'default'     => '',
 						'placeholder' => __( 'n/a', 'woocommerce-table-rate-shipping' )
 					),
 					'min_cost' => array(
-						'title' 		=> __( 'Minimum Cost Per [item]', 'woocommerce-table-rate-shipping' ),
-						'type' 			=> 'text',
-						'desc_tip'      => true,
-						'description'	=> __('Minimum cost for this shipping method (optional). If the cost is lower, this minimum cost will be enforced.', 'woocommerce-table-rate-shipping'),
-						'default'		=> '',
+						'title'       => __( 'Minimum Cost Per [item]', 'woocommerce-table-rate-shipping' ),
+						'type'        => 'text',
+						'desc_tip'    => true,
+						'description' => __('Minimum cost for this shipping method (optional). If the cost is lower, this minimum cost will be enforced.', 'woocommerce-table-rate-shipping'),
+						'default'     => '',
 						'placeholder' => __( 'n/a', 'woocommerce-table-rate-shipping' )
 					),
 					'max_cost' => array(
-						'title' 		=> __( 'Maximum Cost Per [item]', 'woocommerce-table-rate-shipping' ),
-						'type' 			=> 'text',
-						'desc_tip'      => true,
-						'description'	=> __( 'Maximum cost for this shipping method (optional). If the cost is higher, this maximum cost will be enforced.', 'woocommerce-table-rate-shipping'),
-						'default'		=> '',
+						'title'       => __( 'Maximum Cost Per [item]', 'woocommerce-table-rate-shipping' ),
+						'type'        => 'text',
+						'desc_tip'    => true,
+						'description' => __( 'Maximum cost for this shipping method (optional). If the cost is higher, this maximum cost will be enforced.', 'woocommerce-table-rate-shipping'),
+						'default'     => '',
 						'placeholder' => __( 'n/a', 'woocommerce-table-rate-shipping' )
 					),
 				);
 
-		    }
+			}
 
-		    /**
-		     * admin_options function.
-		     */
-		    public function instance_options() {
-			    include_once( 'admin/table-rate-rows.php' );
-			    ?>
-			    <table class="form-table">
-				    <?php
-			    	$this->generate_settings_html( $this->instance_fields );
+			/**
+			 * admin_options function.
+			 */
+			public function instance_options() {
+				include_once( 'admin/table-rate-rows.php' );
+				?>
+				<table class="form-table">
+					<?php
+					$this->generate_settings_html( $this->instance_fields );
 					?>
-			        <tr>
+					<tr>
 						<th><?php _e( 'Table Rates', 'woocommerce-table-rate-shipping' ); ?></th>
 						<td>
 							<?php wc_table_rate_admin_shipping_rows( $this ); ?>
@@ -343,15 +343,15 @@ if ( is_woocommerce_active() ) {
 					</tr>
 					<?php if ( sizeof( WC()->shipping->get_shipping_classes() ) ) : ?>
 						<tr valign="top" id="shipping_class_priorities">
-				            <th scope="row" class="titledesc"><?php _e( 'Class Priorities', 'woocommerce-table-rate-shipping' ); ?></th>
-				            <td class="forminp" id="shipping_rates">
-				            	<?php wc_table_rate_admin_shipping_class_priorities( $this->number ); ?>
-				            </td>
-				        </tr>
-				    <?php endif; ?>
-			    </table>
-			    <?php
-		    }
+							<th scope="row" class="titledesc"><?php _e( 'Class Priorities', 'woocommerce-table-rate-shipping' ); ?></th>
+							<td class="forminp" id="shipping_rates">
+								<?php wc_table_rate_admin_shipping_class_priorities( $this->number ); ?>
+							</td>
+						</tr>
+					<?php endif; ?>
+				</table>
+				<?php
+			}
 
 			/**
 			 * Admin Panel Options Processing
@@ -359,40 +359,40 @@ if ( is_woocommerce_active() ) {
 			 *
 			 * @since 1.0.0
 			 */
-		    public function process_instance_options() {
-		    	include_once( 'admin/table-rate-rows.php' );
+			public function process_instance_options() {
+				include_once( 'admin/table-rate-rows.php' );
 
-		    	$this->validate_settings_fields( $this->instance_fields  );
+				$this->validate_settings_fields( $this->instance_fields  );
 
-		    	if ( count( $this->errors ) > 0 ) {
-		    		$this->display_errors();
-		    		return false;
-		    	} else {
-		    		wc_table_rate_admin_shipping_rows_process( $this->number  );
-		    		update_option( $this->plugin_id . $this->instance_id . '_settings', $this->sanitized_fields );
-		    		return true;
-		    	}
-		    }
+				if ( count( $this->errors ) > 0 ) {
+					$this->display_errors();
+					return false;
+				} else {
+					wc_table_rate_admin_shipping_rows_process( $this->number  );
+					update_option( $this->plugin_id . $this->instance_id . '_settings', $this->sanitized_fields );
+					return true;
+				}
+			}
 
-		    /**
-		     * is_available function.
-		     *
-		     * @param array $package
-		     * @return bool
-		     */
-		    public function is_available( $package ) {
-		    	$available = true;
+			/**
+			 * is_available function.
+			 *
+			 * @param array $package
+			 * @return bool
+			 */
+			public function is_available( $package ) {
+				$available = true;
 
-		    	if ( $this->enabled === "no" ) {
-		    		$available = false;
-		    	}
+				if ( $this->enabled === "no" ) {
+					$available = false;
+				}
 
-		    	if ( ! $this->get_rates( $package ) ) {
-			    	$available = false;
-			    }
+				if ( ! $this->get_rates( $package ) ) {
+					$available = false;
+				}
 
-		    	return apply_filters( 'woocommerce_shipping_' . $this->id . '_is_available', $available, $package, $this );
-		    }
+				return apply_filters( 'woocommerce_shipping_' . $this->id . '_is_available', $available, $package, $this );
+			}
 
 			/**
 			 * count_items_in_class function.
@@ -402,42 +402,42 @@ if ( is_woocommerce_active() ) {
 				$count = 0;
 
 				// Find shipping classes for products in the package
-    			foreach ( $package['contents'] as $item_id => $values ) {
-    				if ( $values['data']->needs_shipping() && $values['data']->get_shipping_class_id() == $class_id ) {
-    					$count += $values['quantity'];
-    				}
-    			}
+				foreach ( $package['contents'] as $item_id => $values ) {
+					if ( $values['data']->needs_shipping() && $values['data']->get_shipping_class_id() == $class_id ) {
+						$count += $values['quantity'];
+					}
+				}
 
-    			return $count;
+				return $count;
 			}
 
-		    /**
-		     * get_cart_shipping_class_id function.
-		     * @return int
-		     */
-		    public function get_cart_shipping_class_id( $package ) {
+			/**
+			 * get_cart_shipping_class_id function.
+			 * @return int
+			 */
+			public function get_cart_shipping_class_id( $package ) {
 				// Find shipping class for cart
 				$found_shipping_classes = array();
 				$shipping_class_id = 0;
 				$shipping_class_slug = '';
 
-	    		// Find shipping classes for products in the package
-	    		if ( sizeof( $package['contents'] ) > 0 ) {
-	    			foreach ( $package['contents'] as $item_id => $values ) {
-	    				if ( $values['data']->needs_shipping() ) {
-	    					$found_shipping_classes[ $values['data']->get_shipping_class_id() ] = $values['data']->get_shipping_class();
-	    				}
-	    			}
-	    		}
+				// Find shipping classes for products in the package
+				if ( sizeof( $package['contents'] ) > 0 ) {
+					foreach ( $package['contents'] as $item_id => $values ) {
+						if ( $values['data']->needs_shipping() ) {
+							$found_shipping_classes[ $values['data']->get_shipping_class_id() ] = $values['data']->get_shipping_class();
+						}
+					}
+				}
 
-	    		$found_shipping_classes = array_unique( $found_shipping_classes );
+				$found_shipping_classes = array_unique( $found_shipping_classes );
 
 				if ( sizeof( $found_shipping_classes ) == 1 ) {
 					$shipping_class_slug = current( $found_shipping_classes );
 				} elseif ( $found_shipping_classes > 1 ) {
 
 					// Get class with highest priority
-					$priority 	= get_option('woocommerce_table_rate_default_priority_' . $this->number );
+					$priority   = get_option('woocommerce_table_rate_default_priority_' . $this->number );
 					$priorities = get_option( 'woocommerce_table_rate_priorities_' . $this->number );
 
 					foreach ( $found_shipping_classes as $class ) {
@@ -454,22 +454,22 @@ if ( is_woocommerce_active() ) {
 					$shipping_class_id = $found_shipping_classes[ $shipping_class_slug ];
 
 				return $shipping_class_id;
-		    }
+			}
 
-		    /**
-		     * query_rates function.
-		     *
-		     * @param array $args
-		     * @return array
-		     */
-		    public function query_rates( $args ) {
-			    global $wpdb;
+			/**
+			 * query_rates function.
+			 *
+			 * @param array $args
+			 * @return array
+			 */
+			public function query_rates( $args ) {
+				global $wpdb;
 
 				$defaults = array(
-					'price' 			=> '',
-					'weight' 			=> '',
-					'count' 			=> 1,
-					'count_in_class' 	=> 1,
+					'price'             => '',
+					'weight'            => '',
+					'count'             => 1,
+					'count_in_class'    => 1,
 					'shipping_class_id' => ''
 				);
 
@@ -483,7 +483,7 @@ if ( is_woocommerce_active() ) {
 					$shipping_class_id_in = " AND rate_class IN ( '', '" . absint( $shipping_class_id ) . "' )";
 				}
 
-			   	$rates = $wpdb->get_results(
+				$rates = $wpdb->get_results(
 					$wpdb->prepare( "
 						SELECT rate_id, rate_cost, rate_cost_per_item, rate_cost_per_weight_unit, rate_cost_percent, rate_label, rate_priority, rate_abort, rate_abort_reason
 						FROM {$this->rates_table}
@@ -554,45 +554,45 @@ if ( is_woocommerce_active() ) {
 				);
 
 				return apply_filters( 'woocommerce_table_rate_query_rates', $rates );
-		    }
+			}
 
-		    /**
-		     * get_rates function.
-		     * @return array
-		     */
-		    public function get_rates( $package ) {
-		    	global $wpdb;
+			/**
+			 * get_rates function.
+			 * @return array
+			 */
+			public function get_rates( $package ) {
+				global $wpdb;
 
-		    	if ( $this->enabled == "no" || ! $this->instance_id )
-		    		return false;
+				if ( $this->enabled == "no" || ! $this->instance_id )
+					return false;
 
-		    	$rates = array();
+				$rates = array();
 
 				// Get rates, depending on type
 				if ( $this->calculation_type == 'item' ) {
 
-	    			// For each ITEM get matching rates
-	    			$costs = array();
+					// For each ITEM get matching rates
+					$costs = array();
 
-	    			$matched = false;
+					$matched = false;
 
-	    			foreach ( $package['contents'] as $item_id => $values ) {
+					foreach ( $package['contents'] as $item_id => $values ) {
 
-	    				$_product = $values['data'];
+						$_product = $values['data'];
 
 						if ( $values['quantity'] > 0 && $_product->needs_shipping() ) {
 
 							$matching_rates = $this->query_rates( array(
-								'price' 			=> $this->get_product_price( $_product ),
-								'weight' 			=> $_product->get_weight(),
-								'count' 			=> 1,
-								'count_in_class' 	=> $this->count_items_in_class( $package, $_product->get_shipping_class_id() ),
+								'price'             => $this->get_product_price( $_product ),
+								'weight'            => $_product->get_weight(),
+								'count'             => 1,
+								'count_in_class'    => $this->count_items_in_class( $package, $_product->get_shipping_class_id() ),
 								'shipping_class_id' => $_product->get_shipping_class_id()
 							) );
 
-							$item_weight 		= round( $_product->get_weight(), 2 );
-							$item_fee			= $this->get_fee( $this->fee, $this->get_product_price( $_product ) );
-							$item_cost 			= 0;
+							$item_weight = round( $_product->get_weight(), 2 );
+							$item_fee    = $this->get_fee( $this->fee, $this->get_product_price( $_product ) );
+							$item_cost   = 0;
 
 							foreach ( $matching_rates as $rate ) {
 								$item_cost += $rate->rate_cost;
@@ -632,16 +632,16 @@ if ( is_woocommerce_active() ) {
 
 						if ( $this->max_shipping_cost && ( $costs['order'] + array_sum( $costs ) ) > $this->max_shipping_cost ) {
 							$rates[] = array(
-								'id' 		=> $this->instance_id,
-								'label' 	=> __( $this->title, 'woocommerce-table-rate-shipping' ),
-								'cost' 		=> $this->max_shipping_cost
+								'id'    => $this->instance_id,
+								'label' => __( $this->title, 'woocommerce-table-rate-shipping' ),
+								'cost'  => $this->max_shipping_cost
 							);
 						} else {
 							$rates[] = array(
-								'id' 		=> $this->instance_id,
-								'label' 	=> __( $this->title, 'woocommerce-table-rate-shipping' ),
-								'cost' 		=> $costs,
-								'calc_tax' 	=> 'per_item'
+								'id'       => $this->instance_id,
+								'label'    => __( $this->title, 'woocommerce-table-rate-shipping' ),
+								'cost'     => $costs,
+								'calc_tax' => 'per_item'
 							);
 						}
 					}
@@ -649,27 +649,27 @@ if ( is_woocommerce_active() ) {
 				} elseif ( $this->calculation_type == 'line' ) {
 
 					// For each LINE get matching rates
-	    			$costs = array();
+					$costs = array();
 
-	    			$matched = false;
+					$matched = false;
 
-	    			foreach ( $package['contents'] as $item_id => $values ) {
+					foreach ( $package['contents'] as $item_id => $values ) {
 
-	    				$_product = $values['data'];
+						$_product = $values['data'];
 
 						if ( $values['quantity'] > 0 && $_product->needs_shipping() ) {
 
 							$matching_rates = $this->query_rates( array(
-								'price' 			=> $this->get_product_price( $_product, $values['quantity'] ),
-								'weight' 			=> $_product->get_weight() * $values['quantity'],
-								'count' 			=> $values['quantity'],
-								'count_in_class' 	=> $this->count_items_in_class( $package, $_product->get_shipping_class_id() ),
+								'price'             => $this->get_product_price( $_product, $values['quantity'] ),
+								'weight'            => $_product->get_weight() * $values['quantity'],
+								'count'             => $values['quantity'],
+								'count_in_class'    => $this->count_items_in_class( $package, $_product->get_shipping_class_id() ),
 								'shipping_class_id' => $_product->get_shipping_class_id()
 							) );
 
-							$item_weight 		= round( $_product->get_weight() * $values['quantity'], 2 );
-							$item_fee			= $this->get_fee( $this->fee, $this->get_product_price( $_product, $values['quantity'] ) );
-							$item_cost 			= 0;
+							$item_weight = round( $_product->get_weight() * $values['quantity'], 2 );
+							$item_fee    = $this->get_fee( $this->fee, $this->get_product_price( $_product, $values['quantity'] ) );
+							$item_cost   = 0;
 
 							foreach ( $matching_rates as $rate ) {
 								$item_cost += $rate->rate_cost;
@@ -712,16 +712,16 @@ if ( is_woocommerce_active() ) {
 
 						if ( $this->max_shipping_cost && ( $costs['order'] + array_sum( $costs ) ) > $this->max_shipping_cost ) {
 							$rates[] = array(
-								'id' 		=> $this->instance_id,
-								'label' 	=> __( $this->title, 'woocommerce-table-rate-shipping' ),
-								'cost' 		=> $this->max_shipping_cost
+								'id'    => $this->instance_id,
+								'label' => __( $this->title, 'woocommerce-table-rate-shipping' ),
+								'cost'  => $this->max_shipping_cost
 							);
 						} else {
-				    		$rates[] = array(
-								'id' 		=> $this->instance_id,
-								'label' 	=> __( $this->title, 'woocommerce-table-rate-shipping' ),
-								'cost' 		=> $costs,
-								'calc_tax' 	=> 'per_item'
+							$rates[] = array(
+								'id'       => $this->instance_id,
+								'label'    => __( $this->title, 'woocommerce-table-rate-shipping' ),
+								'cost'     => $costs,
+								'calc_tax' => 'per_item'
 							);
 						}
 					}
@@ -729,88 +729,88 @@ if ( is_woocommerce_active() ) {
 				} elseif ( $this->calculation_type == 'class' ) {
 
 					// For each CLASS get matching rates
-	    			$total_cost	= 0;
+					$total_cost	= 0;
 
-	    			// First get all the rates in the table
-	    			$all_rates = $this->get_shipping_rates();
+					// First get all the rates in the table
+					$all_rates = $this->get_shipping_rates();
 
-	    			// Now go through cart items and group items by class
-	    			$classes 	= array();
+					// Now go through cart items and group items by class
+					$classes 	= array();
 
-	  	    		foreach ( $package['contents'] as $item_id => $values ) {
+					foreach ( $package['contents'] as $item_id => $values ) {
 
-	    				$_product = $values['data'];
+						$_product = $values['data'];
 
-	    				if ( $values['quantity'] > 0 && $_product->needs_shipping() ) {
+						if ( $values['quantity'] > 0 && $_product->needs_shipping() ) {
 
-		    				$shipping_class = $_product->get_shipping_class_id();
+							$shipping_class = $_product->get_shipping_class_id();
 
-		    				if ( ! isset( $classes[ $shipping_class ] ) ) {
-		    					$classes[ $shipping_class ] = new stdClass();
-		    					$classes[ $shipping_class ]->price = 0;
-		    					$classes[ $shipping_class ]->weight = 0;
-		    					$classes[ $shipping_class ]->items = 0;
-		    					$classes[ $shipping_class ]->items_in_class = 0;
-		    				}
-
-		    				$classes[ $shipping_class ]->price          += $this->get_product_price( $_product, $values['quantity'] );
-		    				$classes[ $shipping_class ]->weight         += $_product->get_weight() * $values['quantity'];
-		    				$classes[ $shipping_class ]->items          += $values['quantity'];
-		    				$classes[ $shipping_class ]->items_in_class += $values['quantity'];
-	    				}
-	    			}
-
-	    			$matched = false;
-	    			$total_cost = 0;
-	    			$stop = false;
-
-	    			// Now we have groups, loop the rates and find matches in order
-	    			foreach ( $all_rates as $rate ) {
-
-		    			foreach ( $classes as $class_id => $class ) {
-
-		    				if ( $class_id == "" ) {
-								if ( $rate->rate_class !== 0 && $rate->rate_class !== '' )
-		    						continue;
-							} else {
-								if ( $rate->rate_class != $class_id && $rate->rate_class !== '' )
-		    						continue;
+							if ( ! isset( $classes[ $shipping_class ] ) ) {
+								$classes[ $shipping_class ] = new stdClass();
+								$classes[ $shipping_class ]->price = 0;
+								$classes[ $shipping_class ]->weight = 0;
+								$classes[ $shipping_class ]->items = 0;
+								$classes[ $shipping_class ]->items_in_class = 0;
 							}
 
-			    			$rate_match = false;
+							$classes[ $shipping_class ]->price          += $this->get_product_price( $_product, $values['quantity'] );
+							$classes[ $shipping_class ]->weight         += $_product->get_weight() * $values['quantity'];
+							$classes[ $shipping_class ]->items          += $values['quantity'];
+							$classes[ $shipping_class ]->items_in_class += $values['quantity'];
+						}
+					}
 
-			    			switch ( $rate->rate_condition ) {
-				    			case '' :
-				    				$rate_match = true;
-				    			break;
-				    			case 'price' :
-				    			case 'weight' :
-				    			case 'items_in_class' :
-				    			case 'items' :
+					$matched = false;
+					$total_cost = 0;
+					$stop = false;
 
-				    				$condition = $rate->rate_condition;
-				    				$value = $class->$condition;
+					// Now we have groups, loop the rates and find matches in order
+					foreach ( $all_rates as $rate ) {
 
-				    				if ( $rate->rate_min === '' && $rate->rate_max === '' )
-				    					$rate_match = true;
+						foreach ( $classes as $class_id => $class ) {
 
-				    				if ( $value >= $rate->rate_min && $value <= $rate->rate_max )
-				    					$rate_match = true;
+							if ( $class_id == "" ) {
+								if ( $rate->rate_class != 0 && $rate->rate_class !== '' )
+									continue;
+							} else {
+								if ( $rate->rate_class != $class_id && $rate->rate_class !== '' )
+									continue;
+							}
 
-				    				if ( $value >= $rate->rate_min && ! $rate->rate_max )
-				    					$rate_match = true;
+							$rate_match = false;
 
-				    				if ( $value <= $rate->rate_max && ! $rate->rate_min )
-				    					$rate_match = true;
+							switch ( $rate->rate_condition ) {
+								case '' :
+									$rate_match = true;
+								break;
+								case 'price' :
+								case 'weight' :
+								case 'items_in_class' :
+								case 'items' :
 
-				    			break;
-			    			}
+									$condition = $rate->rate_condition;
+									$value = $class->$condition;
 
-			    			// Rate matched class
-			    			if ( $rate_match ) {
+									if ( $rate->rate_min === '' && $rate->rate_max === '' )
+										$rate_match = true;
 
-			    				$class_cost = 0;
-				    			$class_cost += $rate->rate_cost;
+									if ( $value >= $rate->rate_min && $value <= $rate->rate_max )
+										$rate_match = true;
+
+									if ( $value >= $rate->rate_min && ! $rate->rate_max )
+										$rate_match = true;
+
+									if ( $value <= $rate->rate_max && ! $rate->rate_min )
+										$rate_match = true;
+
+								break;
+							}
+
+							// Rate matched class
+							if ( $rate_match ) {
+
+								$class_cost = 0;
+								$class_cost += $rate->rate_cost;
 								$class_cost += $rate->rate_cost_per_item * $class->items_in_class;
 								$class_cost += $rate->rate_cost_per_weight_unit * $class->weight;
 								$class_cost += ( $rate->rate_cost_percent / 100 ) * $class->price;
@@ -833,22 +833,22 @@ if ( is_woocommerce_active() ) {
 
 								if ( $this->min_cost && $class_cost < $this->min_cost ) {
 									$class_cost = $this->min_cost;
-					    		}
-					    		if ( $this->max_cost && $class_cost > $this->max_cost ) {
+								}
+								if ( $this->max_cost && $class_cost > $this->max_cost ) {
 									$class_cost = $this->max_cost;
 								}
 
 								$total_cost += $class_cost;
-			    			}
-		    			}
+							}
+						}
 
-		    			// Breakpoint
-		    			if ( $stop ) {
-		    				break;
-		    			}
-		    		}
+						// Breakpoint
+						if ( $stop ) {
+							break;
+						}
+					}
 
-		    		if ( $this->order_handling_fee ) {
+					if ( $this->order_handling_fee ) {
 						$total_cost += $this->order_handling_fee;
 					}
 
@@ -856,44 +856,44 @@ if ( is_woocommerce_active() ) {
 						$total_cost = $this->max_shipping_cost;
 					}
 
-		    		if ( $matched ) {
-			    		$rates[] = array(
-							'id' 		=> $this->instance_id,
-							'label' 	=> __( $this->title, 'woocommerce-table-rate-shipping' ),
-							'cost' 		=> $total_cost
+					if ( $matched ) {
+						$rates[] = array(
+							'id'    => $this->instance_id,
+							'label' => __( $this->title, 'woocommerce-table-rate-shipping' ),
+							'cost'  => $total_cost
 						);
 					}
 
 				} else {
 
 					// For the ORDER get matching rates
-					$shipping_class 	= $this->get_cart_shipping_class_id( $package );
-	    			$price = 0;
-    				$weight = 0;
-    				$count = 0;
-    				$count_in_class = 0;
+					$shipping_class = $this->get_cart_shipping_class_id( $package );
+					$price          = 0;
+					$weight         = 0;
+					$count          = 0;
+					$count_in_class = 0;
 
-	    			foreach ( $package['contents'] as $item_id => $values ) {
+					foreach ( $package['contents'] as $item_id => $values ) {
 
-	    				$_product = $values['data'];
+						$_product = $values['data'];
 
-	    				if ( $values['quantity'] > 0 && $_product->needs_shipping() ) {
+						if ( $values['quantity'] > 0 && $_product->needs_shipping() ) {
 
-		    				$price 			+= $this->get_product_price( $_product, $values['quantity'] );
-		    				$weight			+= ( $_product->get_weight() * $values['quantity'] );
-		    				$count			+= $values['quantity'];
+							$price  += ! empty( $values['line_total'] ) ? $values['line_total'] : $this->get_product_price( $_product, $values['quantity'] );
+							$weight += ( $_product->get_weight() * $values['quantity'] );
+							$count  += $values['quantity'];
 
-		    				if ( $_product->get_shipping_class_id() == $shipping_class )
-		    					$count_in_class += $values['quantity'];
+							if ( $_product->get_shipping_class_id() == $shipping_class )
+								$count_in_class += $values['quantity'];
 
-	    				}
-	    			}
+						}
+					}
 
-	    			$matching_rates = $this->query_rates( array(
-						'price' 			=> $price,
-						'weight' 			=> $weight,
-						'count' 			=> $count,
-						'count_in_class' 	=> $count_in_class,
+					$matching_rates = $this->query_rates( array(
+						'price'             => $price,
+						'weight'            => $weight,
+						'count'             => $count,
+						'count_in_class'    => $count_in_class,
 						'shipping_class_id' => $shipping_class
 					) );
 
@@ -936,9 +936,9 @@ if ( is_woocommerce_active() ) {
 						}
 
 						$rates[] = array(
-							'id' 		=> $this->instance_id . ' : ' . $rate->rate_id,
-							'label' 	=> __( $label, 'woocommerce-table-rate-shipping' ),
-							'cost' 		=> $cost
+							'id'    => $this->instance_id . ' : ' . $rate->rate_id,
+							'label' => __( $label, 'woocommerce-table-rate-shipping' ),
+							'cost'  => $cost
 						);
 
 						if ( $rate->rate_priority ) {
@@ -957,33 +957,33 @@ if ( is_woocommerce_active() ) {
 				$this->available_rates = $rates;
 
 				return true;
-		    }
+			}
 
-		    /**
-		     * calculate_shipping function.
-		     * @param array $package
-		     */
-		    public function calculate_shipping( $package ) {
-		    	if ( $this->available_rates ) {
-		    		foreach ( $this->available_rates as $rate ) {
-		    			$this->add_rate( $rate );
-		    		}
-		    	}
-		    }
+			/**
+			 * calculate_shipping function.
+			 * @param array $package
+			 */
+			public function calculate_shipping( $package ) {
+				if ( $this->available_rates ) {
+					foreach ( $this->available_rates as $rate ) {
+						$this->add_rate( $rate );
+					}
+				}
+			}
 
-		    /**
-		     * get_shipping_rates function.
-		     * @param int $class (default: 0)
-		     * @return array
-		     */
-		    public function get_shipping_rates( ) {
-		    	global $wpdb;
+			/**
+			 * get_shipping_rates function.
+			 * @param int $class (default: 0)
+			 * @return array
+			 */
+			public function get_shipping_rates( ) {
+				global $wpdb;
 
-		    	return $wpdb->get_results( "
-		    		SELECT * FROM {$this->rates_table}
-		    		WHERE shipping_method_id = {$this->number}
-		    		ORDER BY rate_order ASC;
-		    	" );
+				return $wpdb->get_results( "
+					SELECT * FROM {$this->rates_table}
+					WHERE shipping_method_id = {$this->number}
+					ORDER BY rate_order ASC;
+				" );
 			}
 
 			/**
@@ -1001,13 +1001,13 @@ if ( is_woocommerce_active() ) {
 
 				if ( get_option('woocommerce_prices_include_tax') == 'yes' ) {
 
-					$base_tax_rates 		= $this->tax->get_shop_base_rate( $_product->tax_class );
-					$tax_rates				= $this->tax->get_rates( $_product->get_tax_class() );
+					$base_tax_rates = $this->tax->get_shop_base_rate( $_product->tax_class );
+					$tax_rates      = $this->tax->get_rates( $_product->get_tax_class() );
 
 					if ( $tax_rates !== $base_tax_rates ) {
-						$base_taxes			= $this->tax->calc_tax( $row_base_price, $base_tax_rates, true, true );
-						$modded_taxes		= $this->tax->calc_tax( $row_base_price - array_sum( $base_taxes ), $tax_rates, false );
-						$row_base_price 	= ( $row_base_price - array_sum( $base_taxes ) ) + array_sum( $modded_taxes );
+						$base_taxes     = $this->tax->calc_tax( $row_base_price, $base_tax_rates, true, true );
+						$modded_taxes   = $this->tax->calc_tax( $row_base_price - array_sum( $base_taxes ), $tax_rates, false );
+						$row_base_price = ( $row_base_price - array_sum( $base_taxes ) ) + array_sum( $modded_taxes );
 					}
 				}
 

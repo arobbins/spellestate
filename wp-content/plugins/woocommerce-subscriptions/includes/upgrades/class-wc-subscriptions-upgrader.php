@@ -98,10 +98,10 @@ class WC_Subscriptions_Upgrader {
 
 		$total_initial_subscription_count = self::get_total_subscription_count( true );
 
-		if ( $total_initial_subscription_count > 10000 ) {
-			$base_upgrade_limit = 25;
-		} elseif ( $total_initial_subscription_count > 5000 ) {
-			$base_upgrade_limit = 35;
+		if ( $total_initial_subscription_count > 5000 ) {
+			$base_upgrade_limit = 20;
+		} elseif ( $total_initial_subscription_count > 1500 ) {
+			$base_upgrade_limit = 30;
 		} else {
 			$base_upgrade_limit = 50;
 		}
@@ -154,15 +154,16 @@ class WC_Subscriptions_Upgrader {
 
 		// Migrate products, WP-Cron hooks and subscriptions to the latest architecture, via Ajax
 		if ( '0' != self::$active_version && version_compare( self::$active_version, '2.0', '<' ) ) {
-
-			// Make sure the new /my-account/view-subscription/{id} endpoints will work
-			flush_rewrite_rules();
-
 			// Delete old cron locks
 			$deleted_rows = $wpdb->query( "DELETE FROM {$wpdb->options} WHERE `option_name` LIKE 'wcs\_blocker\_%'" );
 
 			WCS_Upgrade_Logger::add( sprintf( 'Deleted %d rows of "wcs_blocker_"', $deleted_rows ) );
 
+			self::ajax_upgrade_handler();
+		}
+
+		// Repair incorrect dates set when upgrading with 2.0.0
+		if ( version_compare( self::$active_version, '2.0.0', '>=' ) && version_compare( self::$active_version, '2.0.2', '<' ) && self::migrated_subscription_count() > 0 ) {
 			self::ajax_upgrade_handler();
 		}
 
@@ -265,8 +266,8 @@ class WC_Subscriptions_Upgrader {
 				$upgraded_hook_count = WCS_Upgrade_1_5::upgrade_hooks( self::$upgrade_limit_hooks );
 				$results = array(
 					'upgraded_count' => $upgraded_hook_count,
-					// translators: placeholder is number of action scheduler hooks upgraded
-					'message'        => sprintf( __( 'Migrated %s subscription related hooks to the new scheduler (in {execution_time} seconds).', 'woocommerce-subscriptions' ), $upgraded_hook_count ),
+					// translators: 1$: number of action scheduler hooks upgraded, 2$: "{execution_time}", will be replaced on front end with actual time
+					'message'        => sprintf( __( 'Migrated %1$s subscription related hooks to the new scheduler (in %2$s seconds).', 'woocommerce-subscriptions' ), $upgraded_hook_count, '{execution_time}' ),
 				);
 				break;
 
@@ -281,10 +282,11 @@ class WC_Subscriptions_Upgrader {
 
 					$results = array(
 						'upgraded_count' => $upgraded_subscriptions,
-						// translators: placeholder is number of subscriptions upgraded
-						'message'        => sprintf( __( 'Migrated %s subscriptions to the new structure (in {execution_time} seconds).', 'woocommerce-subscriptions' ), $upgraded_subscriptions ),
+						// translators: 1$: number of subscriptions upgraded, 2$: "{execution_time}", will be replaced on front end with actual time it took
+						'message'        => sprintf( __( 'Migrated %1$s subscriptions to the new structure (in %2$s seconds).', 'woocommerce-subscriptions' ), $upgraded_subscriptions, '{execution_time}' ),
 						'status'         => 'success',
-						'time_message'   => __( 'Estimated time left (minutes:seconds): {time_left}', 'woocommerce-subscriptions' ),
+						// translators: placeholder is "{time_left}", will be replaced on front end with actual time
+						'time_message'   => sprintf( _x( 'Estimated time left (minutes:seconds): %s', 'Message that gets sent to front end.', 'woocommerce-subscriptions' ), '{time_left}' ),
 					);
 
 				} catch ( Exception $e ) {
@@ -300,16 +302,76 @@ class WC_Subscriptions_Upgrader {
 				}
 
 				break;
+
+			case 'subscription_dates_repair':
+
+				require_once( 'class-wcs-upgrade-2-0.php' );
+				require_once( 'class-wcs-repair-2-0-2.php' );
+
+				$subscription_ids_to_repair = WCS_Repair_2_0_2::get_subscriptions_to_repair( self::$upgrade_limit_subscriptions );
+
+				try {
+
+					$subscription_counts = WCS_Repair_2_0_2::maybe_repair_subscriptions( $subscription_ids_to_repair );
+
+					// translators: placeholder is the number of subscriptions repaired
+					$repair_incorrect = sprintf( _x( 'Repaired %d subscriptions with incorrect dates, line tax data or missing customer notes.', 'Repair message that gets sent to front end.', 'woocommerce-subscriptions' ), $subscription_counts['repaired_count'] );
+
+					$repair_not_needed = '';
+
+					if ( $subscription_counts['unrepaired_count'] > 0 ) {
+						// translators: placeholder is number of subscriptions that were checked and did not need repairs. There's a space at the beginning!
+						$repair_not_needed = sprintf( _nx( ' %d other subscription was checked and did not need any repairs.', '%d other subscriptions were checked and did not need any repairs.', $subscription_counts['unrepaired_count'], 'Repair message that gets sent to front end.', 'woocommerce-subscriptions' ), $subscription_counts['unrepaired_count'] );
+					}
+
+					// translators: placeholder is "{execution_time}", which will be replaced on front end with actual time
+					$repair_time = sprintf( _x( '(in %s seconds)', 'Repair message that gets sent to front end.', 'woocommerce-subscriptions' ), '{execution_time}' );
+
+					// translators: $1: "Repaired x subs with incorrect dates...", $2: "X others were checked and no repair needed", $3: "(in X seconds)". Ordering for RTL languages.
+					$repair_message = sprintf( _x( '%1$s%2$s %3$s', 'The assembled repair message that gets sent to front end.', 'woocommerce-subscriptions' ), $repair_incorrect, $repair_not_needed, $repair_time );
+
+					$results = array(
+						'repaired_count'   => $subscription_counts['repaired_count'],
+						'unrepaired_count' => $subscription_counts['unrepaired_count'],
+						'message'          => $repair_message,
+						'status'           => 'success',
+						// translators: placeholder is "{time_left}", will be replaced on front end with actual time
+						'time_message'     => sprintf( _x( 'Estimated time left (minutes:seconds): %s', 'Message that gets sent to front end.', 'woocommerce-subscriptions' ), '{time_left}' ),
+					);
+
+				} catch ( Exception $e ) {
+
+					WCS_Upgrade_Logger::add( sprintf( 'Error on upgrade step: %s. Error: %s', $_POST['upgrade_step'], $e->getMessage() ) );
+
+					$results = array(
+						'repaired_count'   => 0,
+						'unrepaired_count' => 0,
+						// translators: 1$: error message, 2$: opening link tag, 3$: closing link tag
+						'message'          => sprintf( _x( 'Unable to repair subscriptions.<br/>Error: %1$s<br/>Please refresh the page and try again. If problem persists, %2$scontact support%3$s.', 'Error message that gets sent to front end when upgrading Subscriptions', 'woocommerce-subscriptions' ), '<code>' . $e->getMessage(). '</code>', '<a href="' . esc_url( 'https://woothemes.com/my-account/create-a-ticket/' ) . '">', '</a>' ),
+						'status'           => 'error',
+					);
+				}
+
+				break;
 		}
 
-		if ( 0 === self::get_total_subscription_count_query() ) {
+		if ( 'subscriptions' == $_POST['upgrade_step'] && 0 === self::get_total_subscription_count_query() ) {
+
 			self::upgrade_complete();
+
+		} elseif ( 'subscription_dates_repair' == $_POST['upgrade_step'] ) {
+
+			$subscriptions_to_repair = WCS_Repair_2_0_2::get_subscriptions_to_repair( self::$upgrade_limit_subscriptions );
+
+			if ( empty( $subscriptions_to_repair ) ) {
+				self::upgrade_complete();
+			}
 		}
 
 		WCS_Upgrade_Logger::add( sprintf( 'Completed upgrade step: %s', $_POST['upgrade_step'] ) );
 
 		header( 'Content-Type: application/json; charset=utf-8' );
-		echo json_encode( $results );
+		echo wcs_json_encode( $results );
 		exit();
 	}
 
@@ -421,11 +483,23 @@ class WC_Subscriptions_Upgrader {
 		wp_register_style( 'wcs-upgrade', plugins_url( '/assets/css/wcs-upgrade.css', WC_Subscriptions::$plugin_file ) );
 		wp_register_script( 'wcs-upgrade', plugins_url( '/assets/js/wcs-upgrade.js', WC_Subscriptions::$plugin_file ), 'jquery' );
 
-		$subscription_count = self::get_total_subscription_count();
+		if ( version_compare( self::$active_version, '2.0.0', '<' ) ) {
+			// We're running the 2.0 upgrade routine
+			$subscription_count = self::get_total_subscription_count();
+		} elseif ( version_compare( self::$active_version, '2.0.0', '>=' ) && version_compare( self::$active_version, '2.0.2', '<' ) ) {
+			// We're running the 2.0.2 repair routine
+			$subscription_counts = wp_count_posts( 'shop_subscription' );
+			$subscription_count  = array_sum( (array) $subscription_counts ) - $subscription_counts->trash - $subscription_counts->{'auto-draft'};
+		} else {
+			// How did we get here?
+			$subscription_count = 0;
+		}
 
 		$script_data = array(
 			'really_old_version'        => ( version_compare( self::$active_version, '1.4', '<' ) ) ? 'true' : 'false',
 			'upgrade_to_1_5'            => ( version_compare( self::$active_version, '1.5', '<' ) ) ? 'true' : 'false',
+			'upgrade_to_2_0'            => ( version_compare( self::$active_version, '2.0.0', '<' ) ) ? 'true' : 'false',
+			'repair_2_0'                => ( version_compare( self::$active_version, '2.0.0', '>=' ) && version_compare( self::$active_version, '2.0.2', '<' ) ) ? 'true' : 'false',
 			'hooks_per_request'         => self::$upgrade_limit_hooks,
 			'ajax_url'                  => admin_url( 'admin-ajax.php' ),
 			'upgrade_nonce'             => wp_create_nonce( 'wcs_upgrade_process' ),
@@ -436,8 +510,6 @@ class WC_Subscriptions_Upgrader {
 
 		// Can't get subscription count with database structure < 1.4
 		if ( 'false' == $script_data['really_old_version'] ) {
-
-			$batch_size = self::$upgrade_limit_subscriptions;
 
 			// The base duration is 50 subscriptions per minute (i.e. approximately 60 seconds per batch of 50)
 			$estimated_duration = ceil( $subscription_count / 50 );
@@ -541,7 +613,6 @@ class WC_Subscriptions_Upgrader {
 		return $subscription_count;
 	}
 
-
 	/**
 	 * Returns the number of subscriptions left in the 1.5 structure
 	 * @return integer number of 1.5 subscriptions left
@@ -555,7 +626,6 @@ class WC_Subscriptions_Upgrader {
 
 		return $wpdb->num_rows;
 	}
-
 
 	/**
 	 * Single source of truth for the query
@@ -589,9 +659,26 @@ class WC_Subscriptions_Upgrader {
 				%s
 			) AS a3 USING (order_item_id)
 			WHERE meta.meta_key REGEXP '_subscription_(.*)|_product_id|_variation_id'
-			AND meta.order_item_id = a3.order_item_id", $select, $limit );
+			AND meta.order_item_id = a3.order_item_id
+			AND items.order_item_id IS NOT NULL", $select, $limit );
 
 		return $query;
+	}
+
+	/**
+	 * Check if the database has some data that was migrated from 1.5 to 2.0
+	 *
+	 * @return bool True if it detects some v1.5 migrated data, otherwise false
+	 */
+	protected static function migrated_subscription_count() {
+		global $wpdb;
+
+		$migrated_subscription_count = $wpdb->get_var(
+			"SELECT COUNT(DISTINCT `post_id`) FROM $wpdb->postmeta
+			 WHERE `meta_key` LIKE '%wcs\_migrated%'"
+		);
+
+		return $migrated_subscription_count;
 	}
 
 	/**

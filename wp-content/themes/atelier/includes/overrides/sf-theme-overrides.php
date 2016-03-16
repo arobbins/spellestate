@@ -383,6 +383,7 @@
 	/* WOOCOMMERCE PRODUCT IMAGE HTML
 	================================================== */
 	function sf_atelier_single_product_image_html( $html, $post_ID ) {
+		$video_url = get_post_meta( $post_ID, '_video_url', true );
 		$product_image_width = apply_filters('sf_product_image_width', 700);
 		$image_id			= get_post_thumbnail_id();
 		$image_meta 		= sf_get_attachment_meta( $image_id );
@@ -402,8 +403,11 @@
 
 		$image_html = '<img class="product-slider-image" data-zoom-image="'.$image_link.'" src="'.$image_link.'" alt="'.$image_alt.'" title="'.$image_title.'" />';
 	
-		return sprintf( '<li itemprop="image" data-thumb="%s">%s%s<a href="%s" itemprop="image" class="woocommerce-main-image zoom lightbox" data-rel="ilightbox[product]" data-caption="%s" title="%s" alt="%s"><i class="fa-search-plus"></i></a></li>', $thumb_image, $caption_html, $image_html, $image_link, $image_caption, $image_title, $image_alt );
-		
+		if ( $video_url != '' ) {
+			return '<div class="video-wrap" data-thumb="' . $thumb_image . '">' . $html . '</div>';
+		} else {
+			return sprintf( '<li itemprop="image" data-thumb="%s">%s%s<a href="%s" itemprop="image" class="woocommerce-main-image zoom lightbox" data-rel="ilightbox[product]" data-caption="%s" title="%s" alt="%s"><i class="fa-search-plus"></i></a></li>', $thumb_image, $caption_html, $image_html, $image_link, $image_caption, $image_title, $image_alt );
+		}
 	}
 	add_filter('woocommerce_single_product_image_html', 'sf_atelier_single_product_image_html', 15, 2);
 

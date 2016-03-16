@@ -12,17 +12,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 echo $email_heading . "\n\n";
 
-printf( __( 'A subscription belonging to %s %s has been cancelled. Their subscription\'s details are as follows:', 'woocommerce-subscriptions' ), $subscription->billing_first_name, $subscription->billing_last_name );
+// translators: $1: customer's billing first name, $2: customer's billing last name
+printf( __( 'A subscription belonging to %1$s %2$s has been cancelled. Their subscription\'s details are as follows:', 'woocommerce-subscriptions' ), $subscription->billing_first_name, $subscription->billing_last_name );
 
 echo "\n\n****************************************************\n";
 
-echo strtoupper( sprintf( __( 'Subscription number: %s', 'woocommerce-subscriptions' ), $subscription->get_order_number() ) ) . "\n";
-echo sprintf( __( 'Last Payment: %s', 'woocommerce-subscriptions' ), $subscription->get_date_to_display( 'last_payment' ) ) . "\n";
+echo strtoupper( sprintf( __( 'Subscription Number: %s', 'woocommerce-subscriptions' ), $subscription->get_order_number() ) ) . "\n";
+// translators: placeholder is last time subscription was paid
+printf( __( 'Last Payment: %s', 'woocommerce-subscriptions' ), $subscription->get_date_to_display( 'last_payment' ) ) . "\n";
 
 $end_time = $subscription->get_time( 'end', 'site' );
 
 if ( ! empty( $end_time ) ) {
-	echo sprintf( __( 'End of Prepaid Term: %s', 'woocommerce-subscriptions' ), date_i18n( wc_date_format(), $end_time ) ) . "\n";
+	// translators: placeholder is localised date string
+	printf( __( 'End of Prepaid Term: %s', 'woocommerce-subscriptions' ), date_i18n( wc_date_format(), $end_time ) ) . "\n";
 }
 
 do_action( 'woocommerce_email_order_meta', $subscription, true, true );
@@ -30,7 +33,14 @@ do_action( 'woocommerce_email_order_meta', $subscription, true, true );
 echo "\n\n****************************************************\n\n";
 
 do_action( 'woocommerce_email_before_subscription_table', $subscription, true, true );
-echo $subscription->email_order_items_table( false, true, '', '', '', true );
+echo WC_Subscriptions_Email::email_order_items_table( $subscription, array(
+	'show_download_links' => false,
+	'show_sku'            => true,
+	'show_purchase_note'  => '',
+	'show_image'          => '',
+	'image_size'          => '',
+	'plain_text'          => true,
+) );
 echo "***********\n\n";
 
 if ( $totals = $subscription->get_order_item_totals() ) {
@@ -38,7 +48,8 @@ if ( $totals = $subscription->get_order_item_totals() ) {
 		echo $total['label'] . "\t " . $total['value'] . "\n";
 	}
 }
-echo "\n" . sprintf( __( 'View Subscription: %s', 'woocommerce-subscriptions' ), wcs_get_edit_post_link( $subscription->id ) ) . "\n";
+// translators: placeholder is edit post link for the subscription
+echo "\n" . sprintf( _x( 'View Subscription: %s', 'in plain emails for subscription information', 'woocommerce-subscriptions' ), wcs_get_edit_post_link( $subscription->id ) ) . "\n";
 do_action( 'woocommerce_email_after_subscription_table', $subscription, true, true );
 
 echo "\n***************************************************\n\n";

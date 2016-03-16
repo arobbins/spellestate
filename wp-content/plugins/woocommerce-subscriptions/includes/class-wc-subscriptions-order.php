@@ -59,6 +59,9 @@ class WC_Subscriptions_Order {
 		add_action( 'woocommerce_order_details_after_order_table', __CLASS__ . '::add_subscriptions_to_view_order_templates', 10, 1 );
 
 		add_action( 'woocommerce_subscription_details_after_subscription_table', __CLASS__ . '::get_related_orders_template', 10, 1 );
+
+		add_action( 'woocommerce_order_partially_refunded', __CLASS__ . '::maybe_cancel_subscription_on_partial_refund' );
+		add_action( 'woocommerce_order_fully_refunded', __CLASS__ . '::maybe_cancel_subscription_on_full_refund' );
 	}
 
 	/*
@@ -357,7 +360,7 @@ class WC_Subscriptions_Order {
 			$thank_you_message = '<p>' . _n( 'Your subscription will be activated when payment clears.', 'Your subscriptions will be activated when payment clears.', $subscription_count, 'woocommerce-subscriptions' ) . '</p>';
 
 			// translators: placeholders are opening and closing link tags
-			$thank_you_message .= '<p>' . sprintf( _n( 'View the status of your subscription in %syour account%s.', 'View the status of your subscriptions in %syour account%s.', $subscription_count, 'woocommerce-subscriptions' ), '<a href="' . get_permalink( woocommerce_get_page_id( 'myaccount' ) ) . '">', '</a>' ) . '</p>';
+			$thank_you_message .= '<p>' . sprintf( _n( 'View the status of your subscription in %syour account%s.', 'View the status of your subscriptions in %syour account%s.', $subscription_count, 'woocommerce-subscriptions' ), '<a href="' . get_permalink( wc_get_page_id( 'myaccount' ) ) . '">', '</a>' ) . '</p>';
 			echo wp_kses( apply_filters( 'woocommerce_subscriptions_thank_you_message', $thank_you_message, $order_id ), array( 'a' => array( 'href' => array(), 'title' => array() ), 'p' => array(), 'em' => array(), 'strong' => array() ) );
 		}
 
@@ -423,7 +426,41 @@ class WC_Subscriptions_Order {
 				// Do we need to activate a subscription?
 				if ( $order_completed && ! $subscription->has_status( wcs_get_subscription_ended_statuses() ) && ! $subscription->has_status( 'active' ) ) {
 
-					$subscription->update_dates( array( 'start' => current_time( 'mysql', true ) ) );
+					$new_start_date_offset = current_time( 'timestamp', true ) - $subscription->get_time( 'start' );
+
+					$dates = array( 'start' => current_time( 'mysql', true ) );
+
+					if ( 0 != $subscription->get_time( 'trial_end' ) ) {
+						$dates['trial_end'] = gmdate( 'Y-m-d H:i:s', $subscription->get_time( 'trial_end' ) + $new_start_date_offset );
+					}
+
+					if ( 0 != $subscription->get_time( 'next_payment' ) ) {
+
+						if ( WC_Subscriptions_Synchroniser::subscription_contains_synced_product( $subscription ) ) {
+
+							$prior_date = isset( $dates['trial_end'] ) ? $dates['trial_end'] : $dates['start'];
+
+							if ( $subscription->get_time( 'next_payment' ) < strtotime( $prior_date ) ) {
+
+								foreach ( $subscription->get_items() as $item ) {
+									$product_id = wcs_get_canonical_product_id( $item );
+
+									if ( WC_Subscriptions_Synchroniser::is_product_synced( $product_id ) ) {
+										$dates['next_payment'] = WC_Subscriptions_Synchroniser::calculate_first_payment_date( $product_id );
+										break;
+									}
+								}
+							}
+						} else {
+							$dates['next_payment'] = gmdate( 'Y-m-d H:i:s', $subscription->get_time( 'next_payment' ) + $new_start_date_offset );
+						}
+					}
+
+					if ( 0 != $subscription->get_time( 'end' ) ) {
+						$dates['end'] = gmdate( 'Y-m-d H:i:s', $subscription->get_time( 'end' ) + $new_start_date_offset );
+					}
+
+					$subscription->update_dates( $dates );
 					$subscription->payment_complete();
 					$was_activated = true;
 
@@ -815,6 +852,63 @@ class WC_Subscriptions_Order {
 		}
 
 		return $hidden_meta_keys;
+	}
+
+	/**
+	 * If the subscription is pending cancellation and a latest order is refunded, cancel the subscription.
+	 *
+	 * @param $order_id
+	 *
+	 * @since 2.0
+	 */
+	public static function maybe_cancel_subscription_on_full_refund( $order ) {
+
+		if ( ! is_object( $order ) ) {
+			$order = new WC_Order( $order );
+		}
+
+		if ( wcs_order_contains_subscription( $order, array( 'parent', 'renewal' ) ) ) {
+
+			$subscriptions = wcs_get_subscriptions_for_order( $order->id, array( 'order_type' => array( 'parent', 'renewal' ) ) );
+
+			foreach ( $subscriptions as $subscription ) {
+				$latest_order = $subscription->get_last_order();
+
+				if ( $order->id == $latest_order && $subscription->has_status( 'pending-cancel' ) && $subscription->can_be_updated_to( 'cancelled' ) ) {
+					// translators: $1: opening link tag, $2: order number, $3: closing link tag
+					$subscription->update_status( 'cancelled', wp_kses( sprintf( __( 'Subscription cancelled for refunded order %1$s#%2$s%3$s.', 'woocommerce-subscriptions' ), sprintf( '<a href="%s">', esc_url( wcs_get_edit_post_link( $order->id ) ) ), $order->get_order_number(), '</a>' ), array( 'a' => array( 'href' => true ) ) ) );
+				}
+			}
+		}
+	}
+
+	/**
+	 * Handles partial refunds on orders in WC versions pre 2.5 which would be considered full refunds in WC 2.5.
+	 *
+	 * @param $order_id
+	 *
+	 * @since 2.0
+	 */
+	public static function maybe_cancel_subscription_on_partial_refund( $order_id ) {
+
+		if ( WC_Subscriptions::is_woocommerce_pre( '2.5' ) && wcs_order_contains_subscription( $order_id, array( 'parent', 'renewal' ) ) ) {
+
+			$order                 = wc_get_order( $order_id );
+			$remaining_order_total = wc_format_decimal( $order->get_total() - $order->get_total_refunded() );
+			$remaining_order_items = absint( $order->get_item_count() - $order->get_item_count_refunded() );
+			$order_has_free_item   = false;
+
+			foreach ( $order->get_items() as $item ) {
+				if ( ! $item['line_total'] ) {
+					$order_has_free_item = true;
+					break;
+				}
+			}
+
+			if ( ! ( $remaining_order_total > 0 || ( $order_has_free_item && $remaining_order_items > 0 ) ) ) {
+				self::maybe_cancel_subscription_on_full_refund( $order );
+			}
+		}
 	}
 
 	/* Deprecated Functions */
@@ -1370,12 +1464,12 @@ class WC_Subscriptions_Order {
 
 			// Find the total for all recurring items
 			if ( empty( $product_id ) ) {
-				$recurring_total_tax += $subscription->get_tax_totals();
+				$recurring_total_tax += $subscription->get_total_tax();
 			} else {
 				// We want the discount for a specific item (so we need to find if this subscription contains that item)
 				foreach ( $subscription->get_items() as $line_item ) {
 					if ( wcs_get_canonical_product_id( $line_item ) == $product_id ) {
-						$recurring_total_tax += $subscription->get_tax_totals();
+						$recurring_total_tax += $subscription->get_total_tax();
 						break;
 					}
 				}
@@ -1404,8 +1498,6 @@ class WC_Subscriptions_Order {
 	 * @since 1.2
 	 */
 	public static function get_recurring_total( $order ) {
-		_deprecated_function( __METHOD__, '2.0', 'the total for each subscription object. Recurring totals are now stored against the subscription object since Subscriptions v2.0 as an order can be used to create multiple different subscriptions with different recurring totals, so use the subscription object' );
-
 		$recurring_total = 0;
 
 		foreach ( wcs_get_subscriptions_for_order( $order, array( 'order_type' => 'parent' ) ) as $subscription ) {

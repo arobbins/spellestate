@@ -5,7 +5,7 @@
     *	Swift Page Builder - Google Chart Shortcode
     *	------------------------------------------------
     *	Swift Framework
-    * 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+    * 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     */
 
@@ -98,7 +98,7 @@
         "name"   => __( "Google Chart", 'swift-framework-plugin' ),
         "base"   => "spb_googlechart",
         "class"  => "spb_googlechart",
-        "icon"   => "spb-icon-chart",
+        "icon"   => "icon-chart",
         "params" => array(
             array(
                 "type"        => "textfield",

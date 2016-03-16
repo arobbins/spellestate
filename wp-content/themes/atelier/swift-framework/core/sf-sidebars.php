@@ -169,8 +169,8 @@
 
 		                register_sidebar( array(
 		                    'id'            => 'mobile-woocommerce-filters',
-		                    'name'          => 'Mobile WooCommerce Filters',
-		                    'description'   => 'This widget area is for you to use to display widgets in the Filters area of the mobile shop display.',
+		                    'name'          => 'WooCommerce Filters',
+		                    'description'   => 'This widget area is for you to use to display widgets in the Filters area of the shop display.',
 		                    'before_widget' => '<section id="%1$s" class="widget %2$s '.$woocommerce_filters_column_class.' clearfix">',
 		                    'after_widget'  => '</section>',
 		                    'before_title'  => $sidebar_before_title,
@@ -296,6 +296,30 @@
         } else {
             $sf_sidebar_config = 'no-sidebars';
         }
+    }
+    
+    
+    /* CHECK SIDEBAR IS ACTIVE
+    ================================================== */
+    function sf_is_sidebar_active( $index ) {
+        global $wp_registered_sidebars;
+        $widgetcolums = wp_get_sidebars_widgets();
+        if ($widgetcolums[$index])
+            return true;
+        return false;
+    }
+    
+    
+    /* RETURN SIDEBAR
+    ================================================== */
+    if ( !function_exists('sf_get_dynamic_sidebar') ) {
+    	function sf_get_dynamic_sidebar($index) {
+		    $sidebar_contents = "";
+		    ob_start();
+		    dynamic_sidebar($index);
+		    $sidebar_contents = ob_get_clean();
+		    return $sidebar_contents;
+    	}
     }
 
 ?>

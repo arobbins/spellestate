@@ -644,8 +644,9 @@ a.delete_recurring_tax_row {
 	color: #AA0000;
 }
 /* Hide irrelevant sections on Edit Subscription screen */
-body.post-type-shop_subscription .order_actions #actions,
-body.post-type-shop_subscription .add-items .description.tips {
+body.post-type-shop_subscription .order_actions #actions optgroup[label='Resend order emails'],
+body.post-type-shop_subscription .add-items .description.tips,
+body.post-type-shop_subscription .add-items .button.refund-items {
 	display: none;
 }
 @media screen and (max-width: 782px) {

@@ -1,19 +1,19 @@
 <?php
 /**
  * groups-admin-options.php
- * 
+ *
  * Copyright (c) "kento" Karim Rahimpur www.itthinx.com
- * 
+ *
  * This code is released under the GNU General Public License.
  * See COPYRIGHT.txt and LICENSE.txt.
- * 
+ *
  * This code is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * This header and all notices must be kept intact.
- * 
+ *
  * @author Karim Rahimpur
  * @package groups
  * @since groups 1.0.0
@@ -126,12 +126,12 @@ function groups_admin_options() {
 		}
 	}
 
-	echo '<div class="groups-options">';
+	echo '<div class="groups-options wrap">';
 
 	echo
-		'<h2>' .
-		__( 'Groups options', GROUPS_PLUGIN_DOMAIN ) .
-		'</h2>';
+		'<h1>' .
+		__( 'Groups Options', GROUPS_PLUGIN_DOMAIN ) .
+		'</h1>';
 
 	echo Groups_Admin::render_messages();
 
@@ -169,7 +169,7 @@ function groups_admin_options() {
 			} else {
 				$checked = '';
 			}
-			 
+
 			$caps_table .= '<td class="checkbox">';
 			$role_cap_id = $rolekey.'-'.$capkey;
 			$caps_table .= '<input type="checkbox" name="' . $role_cap_id . '" id="' . $role_cap_id . '" ' . $checked . '/>';
@@ -190,7 +190,7 @@ function groups_admin_options() {
 		$dismiss_url = wp_nonce_url( add_query_arg( 'dismiss-groups-extensions-box', '1', admin_url( 'admin.php?page=groups-admin-options' ) ), 'dismiss-box', 'groups-extensions-box-nonce' );
 		$extensions_box =
 			'<div id="groups-extensions-box">' .
-			__( 'Enhanced functionality is available via official <a href="http://www.itthinx.com/plugins/groups/">Extensions</a> for Groups.', GROUPS_PLUGIN_DOMAIN ) .
+			__( 'Enhanced functionality is available via official <a href="http://www.itthinx.com/shop/">Extensions</a> for Groups.', GROUPS_PLUGIN_DOMAIN ) .
 			sprintf( '<a class="close" href="%s">x</a>', esc_url( $dismiss_url ) ) .
 			'</div>';
 	}
@@ -207,7 +207,7 @@ function groups_admin_options() {
 		'</p>' .
 
 		'<div>' .
-		'<h3>' . __( 'Administrator Access Override', GROUPS_PLUGIN_DOMAIN ) . '</h3>' .
+		'<h2>' . __( 'Administrator Access Override', GROUPS_PLUGIN_DOMAIN ) . '</h2>' .
 		'<p>' .
 		'<label>' .
 		'<input name="' . GROUPS_ADMINISTRATOR_ACCESS_OVERRIDE . '" type="checkbox" ' . ( $admin_override ? 'checked="checked"' : '' ) . '/>' .
@@ -215,9 +215,9 @@ function groups_admin_options() {
 		 '</label>' .
 		'</p>';
 
-	echo '<h3>' . __( 'Access restricions', GROUPS_PLUGIN_DOMAIN ) . '</h3>';
+	echo '<h2>' . __( 'Access restricions', GROUPS_PLUGIN_DOMAIN ) . '</h2>';
 
-	echo '<h4>' . __( 'Post types', GROUPS_PLUGIN_DOMAIN ) . '</h4>';
+	echo '<h3>' . __( 'Post types', GROUPS_PLUGIN_DOMAIN ) . '</h3>';
 
 	echo
 		'<p class="description">' .  __( 'Show access restrictions for these post types.', GROUPS_PLUGIN_DOMAIN ) . '</p>';
@@ -248,7 +248,7 @@ function groups_admin_options() {
 		'</p>';
 
 
-	echo '<h4>' . __( 'Capabilities', GROUPS_PLUGIN_DOMAIN ) . '</h4>';
+	echo '<h3>' . __( 'Capabilities', GROUPS_PLUGIN_DOMAIN ) . '</h3>';
 
 	echo '<p class="description">' .
 		__( 'Include these capabilities to enforce read access on posts. The selected capabilities will be offered to restrict access to posts.', GROUPS_PLUGIN_DOMAIN ) .
@@ -272,7 +272,7 @@ function groups_admin_options() {
 	echo Groups_UIE::render_select( '.select.capability' );
 
 	echo
-		'<h3>' . __( 'User profiles', GROUPS_PLUGIN_DOMAIN ) . '</h3>' .
+		'<h2>' . __( 'User profiles', GROUPS_PLUGIN_DOMAIN ) . '</h2>' .
 		'<p>' .
 		'<label>' .
 		'<input name="' . GROUPS_SHOW_IN_USER_PROFILE . '" type="checkbox" ' . ( $show_in_user_profile ? 'checked="checked"' : '' ) . '/>' .
@@ -281,7 +281,7 @@ function groups_admin_options() {
 		'</p>';
 
 	echo
-		'<h3>' . __( 'Tree view', GROUPS_PLUGIN_DOMAIN ) . '</h3>' .
+		'<h2>' . __( 'Tree view', GROUPS_PLUGIN_DOMAIN ) . '</h2>' .
 		'<p>' .
 		'<label>' .
 		'<input name="' . GROUPS_SHOW_TREE_VIEW . '" type="checkbox" ' . ( $show_tree_view ? 'checked="checked"' : '' ) . '/>' .
@@ -290,7 +290,7 @@ function groups_admin_options() {
 		'</p>';
 
 	echo
-		'<h3>' . __( 'Permissions', GROUPS_PLUGIN_DOMAIN ) . '</h3>' .
+		'<h2>' . __( 'Permissions', GROUPS_PLUGIN_DOMAIN ) . '</h2>' .
 		'<p>' . __( 'These permissions apply to Groups management. They do not apply to access permissions derived from Groups capabilities.', GROUPS_PLUGIN_DOMAIN ) . '</p>' .
 		$caps_table .
 		'<p class="description">' .
@@ -300,7 +300,7 @@ function groups_admin_options() {
 		'</p>';
 	if ( !$is_sitewide_plugin ) {
 		echo
-			'<h3>' . __( 'Deactivation and data persistence', GROUPS_PLUGIN_DOMAIN ) . '</h3>' .
+			'<h2>' . __( 'Deactivation and data persistence', GROUPS_PLUGIN_DOMAIN ) . '</h2>' .
 			'<p>' .
 			'<label>' .
 			'<input name="delete-data" type="checkbox" ' . ( $delete_data ? 'checked="checked"' : '' ) . '/>' .
@@ -320,7 +320,6 @@ function groups_admin_options() {
 		'</form>';
 
 	echo '</div>'; // .groups-options
-	Groups_Help::footer();
 }
 
 function groups_network_admin_options() {
@@ -331,9 +330,9 @@ function groups_network_admin_options() {
 
 	echo
 		'<div>' .
-		'<h2>' .
+		'<h1>' .
 		__( 'Groups network options', GROUPS_PLUGIN_DOMAIN ) .
-		'</h2>' .
+		'</h1>' .
 		'</div>';
 
 	// handle options form submission
@@ -354,7 +353,7 @@ function groups_network_admin_options() {
 	echo
 		'<form action="" name="options" method="post">' .
 		'<div>' .
-		'<h3>' . __( 'Network deactivation and data persistence', GROUPS_PLUGIN_DOMAIN ) . '</h3>' .
+		'<h2>' . __( 'Network deactivation and data persistence', GROUPS_PLUGIN_DOMAIN ) . '</h2>' .
 		'<p>' .
 		'<input name="delete-data" type="checkbox" ' . ( $delete_data ? 'checked="checked"' : '' ) . '/>' .
 		'<label for="delete-data">' . __( 'Delete all Groups plugin data for ALL sites on network deactivation', GROUPS_PLUGIN_DOMAIN ) . '</label>' .
@@ -368,5 +367,4 @@ function groups_network_admin_options() {
 		'</p>' .
 		'</div>' .
 		'</form>';
-	Groups_Help::footer();
 }

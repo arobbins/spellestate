@@ -5,7 +5,7 @@
     *	Swift Page Builder - Accordian Shortcode
     *	------------------------------------------------
     *	Swift Framework
-    * 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+    * 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     */
     
@@ -53,14 +53,40 @@
             $defaults = array( 'title' => __( 'Section', 'swift-framework-plugin' ), 'icon' => '', 'accordion_id' => '' );
             extract( shortcode_atts( $defaults, $atts ) );
 
-            return '<div class="group">
-			<h3 data-title-icon="' . $icon . '" accordion_id="' . $accordion_id . '"><a class="title-text" href="#">' . $title . '</a><a class="delete_tab"></a><a class="edit_tab"></a></h3>
+           /* return '<div class="group">
+			<h3 data-title-icon="' . $icon . '" accordion_id="' . $accordion_id . '"><a class="title-text" href="#">' . $title . '</a><a class="delete_tab"><span class="icon-delete"></span></a><a class="edit_tab"><span class="icon-edit"></span></a></h3>
 			<div>
 				<div class="row-fluid spb_column_container not-column-inherit">
-					' . do_shortcode( $content ) . SwiftPageBuilder::getInstance()->getLayout()->getContainerHelper() . '
-				</div>
-			</div>
-		    </div>';
+					   ' . do_shortcode( $content ) . SwiftPageBuilder::getInstance()->getLayout()->getContainerHelper() . '
+				    <div class="tabs_expanded_helper">
+                        <a href="#" class="add_element"><span class="icon-add"></span>' . __( "Add Element", 'swift-framework-plugin' ) .'</a>
+                        <a href="#" class="add_section"><span class="icon-add-tab"></span>' . __( "Add Section", 'swift-framework-plugin' ) .'</a>
+                    </div>
+          
+			    </div>
+		    </div>';*/
+
+
+            return '<div class="group">
+            
+            <h3 data-title-icon="' . $icon . '" accordion_id="' . $accordion_id . '"><a class="title-text" href="#">' . $title . '</a><a class="delete_tab"><span class="icon-delete"></span></a><a class="edit_tab"><span class="icon-edit"></span></a></h3>
+            <div>
+                <div class="row-fluid spb_column_container spb_sortable_container not-column-inherit">
+                       ' . do_shortcode( $content ) . '
+
+                    
+                    <div class="tabs_expanded_helper">
+                      <a href="#" class="add_element"><span class="icon-add"></span>' . __( "Add Element", 'swift-framework-plugin' ) .'</a>
+                      <a href="#" class="add_section"><span class="icon-add-tab"></span>' . __( "Add Section", 'swift-framework-plugin' ) .'</a>
+                    </div>
+                    
+                    <div class="container-helper">
+                         <a href="#" class="add-element-to-column btn-floating waves-effect waves-light"><span class="icon-add"></span></a>
+                    </div>
+
+                </div>
+            </div>
+        </div>';
         }
     }
 
@@ -123,9 +149,9 @@
             $elem = $this->getElementHolder( $width );
 
             $iner = '';
-            foreach ( $this->settings['params'] as $param ) {
-                $param_value = isset( $$param['param_name'] ) ? $$param['param_name'] : null;
-
+            foreach ( $this->settings['params'] as $param ) { 
+                $param_value = isset( ${$param['param_name']} ) ? ${$param['param_name']} : null;
+                
                 if ( is_array( $param_value ) ) {
                     // Get first element from the array
                     reset( $param_value );
@@ -156,8 +182,8 @@
         "name"            => __( "Accordion", 'swift-framework-plugin' ),
         "base"            => "spb_accordion",
         "controls"        => "full",
-        "class"           => "spb_accordion",
-        "icon"            => "spb-icon-accordion",
+        "class"           => "spb_accordion spb_tab_ui",
+        "icon"            => "icon-accordion",
         "params"          => array(
             array(
                 "type"        => "textfield",
@@ -182,27 +208,46 @@
             )
         ),
         "custom_markup"   => '
-		<div class="tab_controls">
-			<button class="add_tab">' . __( "Add section", 'swift-framework-plugin' ) . '</button>
-		</div>
-	
+			
 		<div class="spb_accordion_holder clearfix">
 			%content%
 		</div>',
         'default_content' => '
 		<div class="group">
-			<h3><a class="title-text" href="#section-1"  id="section-1">' . __( 'Section 1', 'swift-framework-plugin' ) . '</a><a class="delete_tab"></a><a class="edit_tab"></a></h3>
+			<h3><a class="title-text" href="#section-1"  id="section-1">' . __( 'Section 1', 'swift-framework-plugin' ) . '</a><a class="delete_tab"><span class="icon-delete"></span></a><a class="edit_tab"><span class="icon-edit"></span></a></h3>
 			<div>
 				<div class="row-fluid spb_column_container spb_sortable_container not-column-inherit">
+
 					[spb_text_block width="1/1"] ' . __( 'This is a text block. Click the edit button to change this text.', 'swift-framework-plugin' ) . ' [/spb_text_block]
+                    
+                    <div class="tabs_expanded_helper">
+                      <a href="#" class="add_element"><span class="icon-add"></span>' . __( "Add Element", 'swift-framework-plugin' ) .'</a>
+                      <a href="#" class="add_section"><span class="icon-add-tab"></span>' . __( "Add Section", 'swift-framework-plugin' ) .'</a>
+                    </div>
+                    
+                    <div class="container-helper">
+                         <a href="#" class="add-element-to-column btn-floating waves-effect waves-light"><span class="icon-add"></span></a>
+                    </div>
+
 				</div>
 			</div>
 		</div>
 		<div class="group">
-			<h3><a class="title-text" href="#section-2" id="section-2">' . __( 'Section 2', 'swift-framework-plugin' ) . '</a><a class="delete_tab"></a><a class="edit_tab"></a></h3>
+			<h3><a class="title-text" href="#section-2" id="section-2">' . __( 'Section 2', 'swift-framework-plugin' ) . '</a><a class="delete_tab"><span class="icon-delete"></span></a><a class="edit_tab"><span class="icon-edit"></span></a></h3>
 			<div>
 				<div class="row-fluid spb_column_container spb_sortable_container not-column-inherit">
-					[spb_text_block width="1/1"] ' . __( 'This is a text block. Click the edit button to change this text.', 'swift-framework-plugin' ) . ' [/spb_text_block]
+					
+                    [spb_text_block width="1/1"] ' . __( 'This is a text block. Click the edit button to change this text.', 'swift-framework-plugin' ) . ' [/spb_text_block]
+                    
+                    <div class="tabs_expanded_helper">
+                      <a href="#" class="add_element"><span class="icon-add"></span>' . __( "Add Element", 'swift-framework-plugin' ) .'</a>
+                      <a href="#" class="add_section"><span class="icon-add-tab"></span>' . __( "Add Section", 'swift-framework-plugin' ) .'</a>
+                    </div>
+                    
+                    <div class="container-helper">
+                         <a href="#" class="add-element-to-column btn-floating waves-effect waves-light"><span class="icon-add"></span></a>
+                    </div>
+
 				</div>
 			</div>
 		</div>',

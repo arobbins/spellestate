@@ -16,13 +16,16 @@
     }
 
     class sf_recent_posts extends WP_Widget {
-        function sf_recent_posts() {
+    
+        function __construct() {
             parent::__construct( 'sf_recent_custom_posts', $name = 'Swift Framework Recent Posts' );
         }
 
         function widget( $args, $instance ) {
-            global $post;
+            global $post, $sf_options;
             extract( $args );
+            
+            $remove_dates  = $sf_options['remove_dates'];
 
             // Widget Options
             $title    = apply_filters( 'widget_title', $instance['title'] ); // Title
@@ -55,6 +58,9 @@
                     'category_name'  => $category_slug,
                 )
             );
+            
+            $thumb_width = apply_filters('sf_widget_posts_thumb_width', 94);
+            $thumb_height = apply_filters('sf_widget_posts_thumb_height', 75);
 
             if ( $recent_posts->have_posts() ) :
 
@@ -73,40 +79,42 @@
                         $post_permalink  = get_permalink();
                         $thumb_image     = get_post_thumbnail_id();
                         $thumb_img_url   = wp_get_attachment_url( $thumb_image, 'widget-image' );
-                        $image           = sf_aq_resize( $thumb_img_url, 94, 75, true, false );
+                        $image           = sf_aq_resize( $thumb_img_url, $thumb_width, $thumb_height, true, false );
                         $image_alt       = esc_attr( sf_get_post_meta( $thumb_image, '_wp_attachment_image_alt', true ) );
+                        
                         ?>
-                        <li>
+                        <?php if ( $image ) { ?>
+                        <li class="has-image">
                             <a href="<?php echo esc_url($post_permalink); ?>" class="recent-post-image">
-                                <?php if ( $image ) { ?>
-                                    <img src="<?php echo esc_url($image[0]); ?>" width="<?php echo esc_attr($image[1]); ?>"
-                                         height="<?php echo esc_attr($image[2]); ?>" alt="<?php echo esc_attr($image_alt); ?>"/>
-                                <?php } else if ( $thumb_type == "video" ) { ?>
-                                    <?php echo $video_icon; ?>
-                                <?php } else if ( $thumb_type == "audio" ) { ?>
-                                    <?php echo $audio_icon; ?>
-                                <?php } else if ( $thumb_type == "slider" ) { ?>
-                                    <?php echo $picture_icon; ?>
-                                <?php } else { ?>
-                                    <?php echo $post_icon; ?>
-                                <?php } ?>
+                                <img src="<?php echo esc_url($image[0]); ?>" width="<?php echo esc_attr($image[1]); ?>" height="<?php echo esc_attr($image[2]); ?>" alt="<?php echo esc_attr($image_alt); ?>"/>
                             </a>
+                        <?php } else { ?>
+                        <li>
+                        <?php } ?>
 
                             <div class="recent-post-details">
                                 <a class="recent-post-title" href="<?php echo esc_url($post_permalink); ?>"
                                    title="<?php echo esc_attr($post_title); ?>"><?php echo esc_attr($post_title); ?></a>
-                                <span><?php printf( __( 'By %1$s on %2$s', 'swiftframework' ), $post_author, $post_date ); ?></span>
-
-                                <div class="comments-likes">
-                                    <?php if ( comments_open() ) { ?>
-                                        <div class="comments-wrapper">
-                                            <a href="<?php echo esc_url($post_permalink); ?>#comment-area"><?php echo apply_filters( 'sf_comments_icon', '<i class="ss-chat"></i>' ); ?><span><?php echo esc_attr($post_comments); ?></span></a>
-                                        </div>
-                                    <?php } ?>
-                                    <?php if ( function_exists( 'lip_love_it_link' ) ) {
-                                        echo lip_love_it_link( get_the_ID(), false );
-                                    } ?>
-                                </div>
+                                 
+                                <?php if ( sf_theme_opts_name() == "sf_uplift_options" ) {
+                                	echo '<div class="excerpt">'. sf_excerpt(20) . '</div>';
+                                	if ( ! $remove_dates ) {
+                                	    echo '<div class="blog-item-details">' . sprintf( __( '<time datetime="%1$s">%2$s</time>', 'swiftframework' ), get_the_date('Y-m-d'), get_the_date() ) . '</div>';
+                                	}
+                                } else { ?>
+	                                <span><?php printf( __( 'By %1$s on %2$s', 'swiftframework' ), $post_author, $post_date ); ?></span>
+	
+	                                <div class="comments-likes">
+	                                    <?php if ( comments_open() ) { ?>
+	                                        <div class="comments-wrapper">
+	                                            <a href="<?php echo esc_url($post_permalink); ?>#comment-area"><?php echo apply_filters( 'sf_comments_icon', '<i class="ss-chat"></i>' ); ?><span><?php echo esc_attr($post_comments); ?></span></a>
+	                                        </div>
+	                                    <?php } ?>
+	                                    <?php if ( function_exists( 'lip_love_it_link' ) ) {
+	                                        echo lip_love_it_link( get_the_ID(), false );
+	                                    } ?>
+	                                </div>
+                                <?php } ?>
                             </div>
                         </li>
 

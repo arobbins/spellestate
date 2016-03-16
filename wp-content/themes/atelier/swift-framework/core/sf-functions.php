@@ -19,6 +19,7 @@
     *	sf_layerslider_overrides()
     *	sf_envato_toolkit_admin_init()
     *	sf_widget_area_filter()
+	*	sf_get_gshare_count()
     *	sf_get_tweets()
     *	sf_hyperlinks()
     *	sf_twitter_users()
@@ -51,7 +52,6 @@
     *	sf_gravityforms_list()
     *	sf_gopricing_list()
     *	sf_global_include_classes()
-    *	sf_admin_bar_menu()
     *	sf_admin_css()
     *   sf_woo_list_parent_categories()
 	*   sf_get_woo_product_parent_category_array()
@@ -407,6 +407,8 @@
 
 			global $post;
 			$page_has_swiftslider = $page_has_gopricing = false;
+			$woo_shop_slider = $sf_options['woo_shop_slider'];
+			
 			$page_slider = "";
 
 			if ( $post ) {
@@ -417,6 +419,13 @@
 			}
 
 			// Swift Slider
+			if ( function_exists( 'is_shop' ) && is_shop() && $woo_shop_slider == "swift-slider") {
+				$page_has_swiftslider = true;
+			}
+			if ( function_exists( 'is_product_category' ) && is_product_category() && $woo_shop_slider == "swift-slider") {
+				$page_has_swiftslider = true;
+			}
+			
 			if ( !$page_has_swiftslider && $page_slider != "swift-slider" ) {
 				wp_dequeue_style( 'swift-slider' );
 				wp_dequeue_style( 'swift-slider-min' );
@@ -431,7 +440,6 @@
 				wp_dequeue_style( 'go_pricing_jqplugin-mediaelementjs-skin' );
 				wp_dequeue_script( 'go_pricing_scripts' );
 				wp_dequeue_script( 'go_pricing_jqplugin-mediaelementjs' );
-				wp_dequeue_script( 'wp-mediaelement' );
 			}
 
 
@@ -539,7 +547,9 @@
                     "spb_icon_box",
                     "spb_multilayer_parallax",
                     "spb_multilayer_parallax_layer",
-                    "spb_image_banner"
+                    "spb_image_banner",
+                    "spb_icon_box_grid",
+                    "spb_icon_box_grid_element"
                 ) );
             // opening tag
             $rep = preg_replace( "/(<p>)?\[($block)(\s[^\]]+)?\](<\/p>|<br \/>)?/", "[$2$3]", $content );
@@ -561,67 +571,6 @@
     }
 
     add_action( 'layerslider_ready', 'sf_layerslider_overrides' );
-
-
-    /* ENVATO TOOLKIT
-    ================================================== */
-    function sf_envato_toolkit_admin_init() {
-
-        // Include the Toolkit Library
-        include_once( SF_INCLUDES_PATH . '/envato-wordpress-toolkit-library/class-envato-wordpress-theme-upgrader.php' );
-
-        // Display a notice in the admin to remind the user to enter their credentials
-        function sf_envato_toolkit_credentials_admin_notices() {
-            $message = sprintf( __( "To enable theme update notifications, please enter your Envato Marketplace credentials in the %s", "swiftframework" ),
-                "<a href='" . admin_url() . "admin.php?page=envato-wordpress-toolkit'>Envato WordPress Toolkit Plugin</a>" );
-            echo "<div id='message' class='updated below-h2'><p>{$message}</p></div>";
-        }
-
-        // Use credentials used in toolkit plugin so that we don't have to show our own forms anymore
-        $credentials = get_option( 'envato-wordpress-toolkit' );
-        if ( empty( $credentials['user_name'] ) || empty( $credentials['api_key'] ) ) {
-            add_action( 'admin_notices', 'sf_envato_toolkit_credentials_admin_notices' );
-
-            return;
-        }
-
-        // Check updates only after a while
-        $lastCheck = get_option( 'toolkit-last-toolkit-check' );
-        if ( false === $lastCheck ) {
-            update_option( 'toolkit-last-toolkit-check', time() );
-
-            return;
-        }
-
-        // Check for an update every 3 hours
-        if ( ( time() - $lastCheck ) < 10800 ) {
-            return;
-        }
-
-        // Update the time we last checked
-        update_option( 'toolkit-last-toolkit-check', time() );
-
-        // Check for updates
-        $upgrader = new Envato_WordPress_Theme_Upgrader( $credentials['user_name'], $credentials['api_key'] );
-        $updates  = $upgrader->check_for_theme_update();
-
-        // Add update alert, to update the theme
-        if ( $updates->updated_themes_count ) {
-            add_action( 'admin_notices', 'sf_envato_toolkit_admin_notices' );
-        }
-
-        // Display a notice in the admin that an update is available
-        function sf_envato_toolkit_admin_notices() {
-            $message = sprintf( __( "A theme update is available! Head over to %s to update it now.", "swiftframework" ),
-                "<a href='" . admin_url() . "admin.php?page=envato-wordpress-toolkit'>Envato WordPress Toolkit Plugin</a>" );
-            echo "<div id='message' class='updated below-h2'><p>{$message}</p></div>";
-        }
-
-    }
-
-    if ( class_exists( 'Envato_WP_Toolkit' ) ) {
-        add_action( 'admin_init', 'sf_envato_toolkit_admin_init' );
-    }
 
 
     /* FEATURED IMAGE IN RSS FEED
@@ -689,7 +638,27 @@
 
         add_filter( 'redux_custom_widget_args', 'sf_widget_area_filter' );
     }
-
+    
+    /* GET GSHARE COUNT
+    ================================================== */
+    if ( ! function_exists( 'sf_get_gshare_count' ) ) {
+		function sf_get_gshare_count( $url = "" ) {
+			if ( function_exists( 'file_get_contents' ) && $url != '' ) {
+				
+				if ( !filter_var($url, FILTER_VALIDATE_URL) ) {
+					return 0;
+				}
+				
+				$url = sprintf('https://plusone.google.com/u/0/_/+1/fastbutton?url=%s', urlencode($url));
+				$contents = file_get_contents($url);
+				preg_match_all('/{c: (.*?),/', file_get_contents($url), $match, PREG_SET_ORDER);
+				return (1 === sizeof($match) && 2 === sizeof($match[0])) ? intval($match[0][1]) : 0;
+			} else {
+				return 0;
+			}
+		}
+	}
+	
 
     /* TWEET FUNCTIONS
     ================================================== */
@@ -1187,18 +1156,25 @@
         $query = new WP_Query();
         $terms = wp_get_object_terms( $post_id, 'portfolio-category' );
         if ( count( $terms ) ) {
-            $post_ids = get_objects_in_term( $terms[0]->term_id, 'portfolio-category' );
+        	$post_ids = array();
+        	$term_categories = array();
+        	
+        	foreach ($terms as $term) {
+        		$term_categories[] = $term->term_id;
+        		$term_objects = get_objects_in_term( $term->term_id, 'portfolio-category' );
+        		foreach ($term_objects as $object) {
+        			$post_ids[] = $object;
+        		}
+        	}
 
             $index = array_search( $post_id, $post_ids );
             if ( $index !== false ) {
                 unset( $post_ids[ $index ] );
             }
-
+                                    
             $args  = array(
                 'post_type'      => 'portfolio',
-                'post__in'       => $post_ids,
-                'taxonomy'       => 'portfolio-category',
-                'term'           => $terms[0]->slug,
+                'post__in'	 => $post_ids,
                 'posts_per_page' => $item_count
             );
             $query = new WP_Query( $args );
@@ -1981,27 +1957,1051 @@
             return $spb_sections_list;
         }
     }
+    
+    /* REGISTER FORM
+    ================================================== */
+    if ( ! function_exists( 'sf_register_form' ) ) {
+        function sf_register_form( ) {
+    	
+    		$form = '';
+    		$username = ! empty( $_POST['username'] ) ? esc_attr( $_POST['username'] ) : '';
+    		$email =  ! empty( $_POST['email'] ) ? esc_attr( $_POST['email'] ) : '';
+    		
+			$form .= '<form method="post" class="register">';
+
+			$form .= do_action( 'woocommerce_register_form_start' );
+
+			if ( 'no' === get_option( 'woocommerce_registration_generate_username' ) ) {
+
+			$form .= '<p class="form-row form-row-wide register-username">';
+			$form .= '<input type="text" class="input-text" name="username" id="reg_username" value="' . $username . '" placeholder="' . __( 'Username', 'swiftframework' ) . '" />';
+			$form .= '</p>';
+
+			}
+
+			$form .= '<p class="form-row form-row-wide register-email">';
+			$form .= '<input type="email" class="input-text" name="email" id="reg_email" value="' . $email . '" placeholder="' . __( 'Email', 'swiftframework' ) . '" />';
+			$form .= '</p>';
+
+			if ( 'no' === get_option( 'woocommerce_registration_generate_password' ) ) {
+
+			$form .= '<p class="form-row form-row-wide register-password">';
+			$form .= '<input type="password" class="input-text" name="password" id="reg_password" placeholder="' . __( 'Password', 'swiftframework' ) . '" />';
+			$form .= '</p>';
+				
+			}
+
+			$form .= '<!-- Spam Trap --><div style="' . ( ( is_rtl() ) ? 'right' : 'left' ) . ': -999em; position: absolute;"><label for="trap">' . __( 'Anti-spam', 'swiftframework' ) . '</label><input type="text" name="email_2" id="trap" tabindex="-1" /></div>';
+
+			$form .= do_action( 'woocommerce_register_form' );
+			$form .= do_action( 'register_form' );
+
+			$form .= '<p class="form-row register-submit">';
+			$form .= wp_nonce_field( 'woocommerce-register' );
+			$form .= '<input type="submit" class="button" name="register" value="' . __( 'Register', 'swiftframework' ) . '" />';
+			$form .= '</p>';
+
+			$form .= do_action( 'woocommerce_register_form_end' );
+			
+			return $form;
+			
+		}
+	}
 
     /* ICON LIST
     ================================================== */
     if ( ! function_exists( 'sf_get_icons_list' ) ) {
-        function sf_get_icons_list( $type = "" ) {
+        function sf_get_icons_list( $type = "", $format = "list" ) {
 
             // VARIABLES
-            $icon_list = $fa_list = $gizmo_list = "";
+            $icon_list = $fontawesome = $gizmo_list = $nucleo_interface = $nucleo_general = "";
 
             // FONT AWESOME
-            $fa_list = '<li><i class="fa-500px"></i><span class="icon-name">fa-500px</span></li><li><i class="fa-adjust"></i><span class="icon-name">fa-adjust</span></li><li><i class="fa-adn"></i><span class="icon-name">fa-adn</span></li><li><i class="fa-align-center"></i><span class="icon-name">fa-align-center</span></li><li><i class="fa-align-justify"></i><span class="icon-name">fa-align-justify</span></li><li><i class="fa-align-left"></i><span class="icon-name">fa-align-left</span></li><li><i class="fa-align-right"></i><span class="icon-name">fa-align-right</span></li><li><i class="fa-amazon"></i><span class="icon-name">fa-amazon</span></li><li><i class="fa-ambulance"></i><span class="icon-name">fa-ambulance</span></li><li><i class="fa-anchor"></i><span class="icon-name">fa-anchor</span></li><li><i class="fa-android"></i><span class="icon-name">fa-android</span></li><li><i class="fa-angellist"></i><span class="icon-name">fa-angellist</span></li><li><i class="fa-angle-double-down"></i><span class="icon-name">fa-angle-double-down</span></li><li><i class="fa-angle-double-left"></i><span class="icon-name">fa-angle-double-left</span></li><li><i class="fa-angle-double-right"></i><span class="icon-name">fa-angle-double-right</span></li><li><i class="fa-angle-double-up"></i><span class="icon-name">fa-angle-double-up</span></li><li><i class="fa-angle-down"></i><span class="icon-name">fa-angle-down</span></li><li><i class="fa-angle-left"></i><span class="icon-name">fa-angle-left</span></li><li><i class="fa-angle-right"></i><span class="icon-name">fa-angle-right</span></li><li><i class="fa-angle-up"></i><span class="icon-name">fa-angle-up</span></li><li><i class="fa-apple"></i><span class="icon-name">fa-apple</span></li><li><i class="fa-archive"></i><span class="icon-name">fa-archive</span></li><li><i class="fa-area-chart"></i><span class="icon-name">fa-area-chart</span></li><li><i class="fa-arrow-circle-down"></i><span class="icon-name">fa-arrow-circle-down</span></li><li><i class="fa-arrow-circle-left"></i><span class="icon-name">fa-arrow-circle-left</span></li><li><i class="fa-arrow-circle-o-down"></i><span class="icon-name">fa-arrow-circle-o-down</span></li><li><i class="fa-arrow-circle-o-left"></i><span class="icon-name">fa-arrow-circle-o-left</span></li><li><i class="fa-arrow-circle-o-right"></i><span class="icon-name">fa-arrow-circle-o-right</span></li><li><i class="fa-arrow-circle-o-up"></i><span class="icon-name">fa-arrow-circle-o-up</span></li><li><i class="fa-arrow-circle-right"></i><span class="icon-name">fa-arrow-circle-right</span></li><li><i class="fa-arrow-circle-up"></i><span class="icon-name">fa-arrow-circle-up</span></li><li><i class="fa-arrow-down"></i><span class="icon-name">fa-arrow-down</span></li><li><i class="fa-arrow-left"></i><span class="icon-name">fa-arrow-left</span></li><li><i class="fa-arrow-right"></i><span class="icon-name">fa-arrow-right</span></li><li><i class="fa-arrow-up"></i><span class="icon-name">fa-arrow-up</span></li><li><i class="fa-arrows"></i><span class="icon-name">fa-arrows</span></li><li><i class="fa-arrows-alt"></i><span class="icon-name">fa-arrows-alt</span></li><li><i class="fa-arrows-h"></i><span class="icon-name">fa-arrows-h</span></li><li><i class="fa-arrows-v"></i><span class="icon-name">fa-arrows-v</span></li><li><i class="fa-asterisk"></i><span class="icon-name">fa-asterisk</span></li><li><i class="fa-at"></i><span class="icon-name">fa-at</span></li><li><i class="fa-automobile"></i><span class="icon-name">fa-automobile</span></li><li><i class="fa-backward"></i><span class="icon-name">fa-backward</span></li><li><i class="fa-balance-scale"></i><span class="icon-name">fa-balance-scale</span></li><li><i class="fa-ban"></i><span class="icon-name">fa-ban</span></li><li><i class="fa-bank"></i><span class="icon-name">fa-bank</span></li><li><i class="fa-bar-chart"></i><span class="icon-name">fa-bar-chart</span></li><li><i class="fa-bar-chart-o"></i><span class="icon-name">fa-bar-chart-o</span></li><li><i class="fa-barcode"></i><span class="icon-name">fa-barcode</span></li><li><i class="fa-bars"></i><span class="icon-name">fa-bars</span></li><li><i class="fa-battery-0"></i><span class="icon-name">fa-battery-0</span></li><li><i class="fa-battery-1"></i><span class="icon-name">fa-battery-1</span></li><li><i class="fa-battery-2"></i><span class="icon-name">fa-battery-2</span></li><li><i class="fa-battery-3"></i><span class="icon-name">fa-battery-3</span></li><li><i class="fa-battery-4"></i><span class="icon-name">fa-battery-4</span></li><li><i class="fa-battery-empty"></i><span class="icon-name">fa-battery-empty</span></li><li><i class="fa-battery-full"></i><span class="icon-name">fa-battery-full</span></li><li><i class="fa-battery-half"></i><span class="icon-name">fa-battery-half</span></li><li><i class="fa-battery-quarter"></i><span class="icon-name">fa-battery-quarter</span></li><li><i class="fa-battery-three-quarters"></i><span class="icon-name">fa-battery-three-quarters</span></li><li><i class="fa-bed"></i><span class="icon-name">fa-bed</span></li><li><i class="fa-beer"></i><span class="icon-name">fa-beer</span></li><li><i class="fa-behance"></i><span class="icon-name">fa-behance</span></li><li><i class="fa-behance-square"></i><span class="icon-name">fa-behance-square</span></li><li><i class="fa-bell"></i><span class="icon-name">fa-bell</span></li><li><i class="fa-bell-o"></i><span class="icon-name">fa-bell-o</span></li><li><i class="fa-bell-slash"></i><span class="icon-name">fa-bell-slash</span></li><li><i class="fa-bell-slash-o"></i><span class="icon-name">fa-bell-slash-o</span></li><li><i class="fa-bicycle"></i><span class="icon-name">fa-bicycle</span></li><li><i class="fa-binoculars"></i><span class="icon-name">fa-binoculars</span></li><li><i class="fa-birthday-cake"></i><span class="icon-name">fa-birthday-cake</span></li><li><i class="fa-bitbucket"></i><span class="icon-name">fa-bitbucket</span></li><li><i class="fa-bitbucket-square"></i><span class="icon-name">fa-bitbucket-square</span></li><li><i class="fa-bitcoin"></i><span class="icon-name">fa-bitcoin</span></li><li><i class="fa-black-tie"></i><span class="icon-name">fa-black-tie</span></li><li><i class="fa-bold"></i><span class="icon-name">fa-bold</span></li><li><i class="fa-bolt"></i><span class="icon-name">fa-bolt</span></li><li><i class="fa-bomb"></i><span class="icon-name">fa-bomb</span></li><li><i class="fa-book"></i><span class="icon-name">fa-book</span></li><li><i class="fa-bookmark"></i><span class="icon-name">fa-bookmark</span></li><li><i class="fa-bookmark-o"></i><span class="icon-name">fa-bookmark-o</span></li><li><i class="fa-briefcase"></i><span class="icon-name">fa-briefcase</span></li><li><i class="fa-btc"></i><span class="icon-name">fa-btc</span></li><li><i class="fa-bug"></i><span class="icon-name">fa-bug</span></li><li><i class="fa-building"></i><span class="icon-name">fa-building</span></li><li><i class="fa-building-o"></i><span class="icon-name">fa-building-o</span></li><li><i class="fa-bullhorn"></i><span class="icon-name">fa-bullhorn</span></li><li><i class="fa-bullseye"></i><span class="icon-name">fa-bullseye</span></li><li><i class="fa-bus"></i><span class="icon-name">fa-bus</span></li><li><i class="fa-buysellads"></i><span class="icon-name">fa-buysellads</span></li><li><i class="fa-cab"></i><span class="icon-name">fa-cab</span></li><li><i class="fa-calculator"></i><span class="icon-name">fa-calculator</span></li><li><i class="fa-calendar"></i><span class="icon-name">fa-calendar</span></li><li><i class="fa-calendar-check-o"></i><span class="icon-name">fa-calendar-check-o</span></li><li><i class="fa-calendar-minus-o"></i><span class="icon-name">fa-calendar-minus-o</span></li><li><i class="fa-calendar-o"></i><span class="icon-name">fa-calendar-o</span></li><li><i class="fa-calendar-plus-o"></i><span class="icon-name">fa-calendar-plus-o</span></li><li><i class="fa-calendar-times-o"></i><span class="icon-name">fa-calendar-times-o</span></li><li><i class="fa-camera"></i><span class="icon-name">fa-camera</span></li><li><i class="fa-camera-retro"></i><span class="icon-name">fa-camera-retro</span></li><li><i class="fa-car"></i><span class="icon-name">fa-car</span></li><li><i class="fa-caret-down"></i><span class="icon-name">fa-caret-down</span></li><li><i class="fa-caret-left"></i><span class="icon-name">fa-caret-left</span></li><li><i class="fa-caret-right"></i><span class="icon-name">fa-caret-right</span></li><li><i class="fa-caret-square-o-down"></i><span class="icon-name">fa-caret-square-o-down</span></li><li><i class="fa-caret-square-o-left"></i><span class="icon-name">fa-caret-square-o-left</span></li><li><i class="fa-caret-square-o-right"></i><span class="icon-name">fa-caret-square-o-right</span></li><li><i class="fa-caret-square-o-up"></i><span class="icon-name">fa-caret-square-o-up</span></li><li><i class="fa-caret-up"></i><span class="icon-name">fa-caret-up</span></li><li><i class="fa-cart-arrow-down"></i><span class="icon-name">fa-cart-arrow-down</span></li><li><i class="fa-cart-plus"></i><span class="icon-name">fa-cart-plus</span></li><li><i class="fa-cc"></i><span class="icon-name">fa-cc</span></li><li><i class="fa-cc-amex"></i><span class="icon-name">fa-cc-amex</span></li><li><i class="fa-cc-diners-club"></i><span class="icon-name">fa-cc-diners-club</span></li><li><i class="fa-cc-discover"></i><span class="icon-name">fa-cc-discover</span></li><li><i class="fa-cc-jcb"></i><span class="icon-name">fa-cc-jcb</span></li><li><i class="fa-cc-mastercard"></i><span class="icon-name">fa-cc-mastercard</span></li><li><i class="fa-cc-paypal"></i><span class="icon-name">fa-cc-paypal</span></li><li><i class="fa-cc-stripe"></i><span class="icon-name">fa-cc-stripe</span></li><li><i class="fa-cc-visa"></i><span class="icon-name">fa-cc-visa</span></li><li><i class="fa-certificate"></i><span class="icon-name">fa-certificate</span></li><li><i class="fa-chain"></i><span class="icon-name">fa-chain</span></li><li><i class="fa-chain-broken"></i><span class="icon-name">fa-chain-broken</span></li><li><i class="fa-check"></i><span class="icon-name">fa-check</span></li><li><i class="fa-check-circle"></i><span class="icon-name">fa-check-circle</span></li><li><i class="fa-check-circle-o"></i><span class="icon-name">fa-check-circle-o</span></li><li><i class="fa-check-square"></i><span class="icon-name">fa-check-square</span></li><li><i class="fa-check-square-o"></i><span class="icon-name">fa-check-square-o</span></li><li><i class="fa-chevron-circle-down"></i><span class="icon-name">fa-chevron-circle-down</span></li><li><i class="fa-chevron-circle-left"></i><span class="icon-name">fa-chevron-circle-left</span></li><li><i class="fa-chevron-circle-right"></i><span class="icon-name">fa-chevron-circle-right</span></li><li><i class="fa-chevron-circle-up"></i><span class="icon-name">fa-chevron-circle-up</span></li><li><i class="fa-chevron-down"></i><span class="icon-name">fa-chevron-down</span></li><li><i class="fa-chevron-left"></i><span class="icon-name">fa-chevron-left</span></li><li><i class="fa-chevron-right"></i><span class="icon-name">fa-chevron-right</span></li><li><i class="fa-chevron-up"></i><span class="icon-name">fa-chevron-up</span></li><li><i class="fa-child"></i><span class="icon-name">fa-child</span></li><li><i class="fa-chrome"></i><span class="icon-name">fa-chrome</span></li><li><i class="fa-circle"></i><span class="icon-name">fa-circle</span></li><li><i class="fa-circle-o"></i><span class="icon-name">fa-circle-o</span></li><li><i class="fa-circle-o-notch"></i><span class="icon-name">fa-circle-o-notch</span></li><li><i class="fa-circle-thin"></i><span class="icon-name">fa-circle-thin</span></li><li><i class="fa-clipboard"></i><span class="icon-name">fa-clipboard</span></li><li><i class="fa-clock-o"></i><span class="icon-name">fa-clock-o</span></li><li><i class="fa-clone"></i><span class="icon-name">fa-clone</span></li><li><i class="fa-close"></i><span class="icon-name">fa-close</span></li><li><i class="fa-cloud"></i><span class="icon-name">fa-cloud</span></li><li><i class="fa-cloud-download"></i><span class="icon-name">fa-cloud-download</span></li><li><i class="fa-cloud-upload"></i><span class="icon-name">fa-cloud-upload</span></li><li><i class="fa-cny"></i><span class="icon-name">fa-cny</span></li><li><i class="fa-code"></i><span class="icon-name">fa-code</span></li><li><i class="fa-code-fork"></i><span class="icon-name">fa-code-fork</span></li><li><i class="fa-codepen"></i><span class="icon-name">fa-codepen</span></li><li><i class="fa-coffee"></i><span class="icon-name">fa-coffee</span></li><li><i class="fa-cog"></i><span class="icon-name">fa-cog</span></li><li><i class="fa-cogs"></i><span class="icon-name">fa-cogs</span></li><li><i class="fa-columns"></i><span class="icon-name">fa-columns</span></li><li><i class="fa-comment"></i><span class="icon-name">fa-comment</span></li><li><i class="fa-comment-o"></i><span class="icon-name">fa-comment-o</span></li><li><i class="fa-commenting"></i><span class="icon-name">fa-commenting</span></li><li><i class="fa-commenting-o"></i><span class="icon-name">fa-commenting-o</span></li><li><i class="fa-comments"></i><span class="icon-name">fa-comments</span></li><li><i class="fa-comments-o"></i><span class="icon-name">fa-comments-o</span></li><li><i class="fa-compass"></i><span class="icon-name">fa-compass</span></li><li><i class="fa-compress"></i><span class="icon-name">fa-compress</span></li><li><i class="fa-connectdevelop"></i><span class="icon-name">fa-connectdevelop</span></li><li><i class="fa-contao"></i><span class="icon-name">fa-contao</span></li><li><i class="fa-copy"></i><span class="icon-name">fa-copy</span></li><li><i class="fa-copyright"></i><span class="icon-name">fa-copyright</span></li><li><i class="fa-creative-commons"></i><span class="icon-name">fa-creative-commons</span></li><li><i class="fa-credit-card"></i><span class="icon-name">fa-credit-card</span></li><li><i class="fa-crop"></i><span class="icon-name">fa-crop</span></li><li><i class="fa-crosshairs"></i><span class="icon-name">fa-crosshairs</span></li><li><i class="fa-css3"></i><span class="icon-name">fa-css3</span></li><li><i class="fa-cube"></i><span class="icon-name">fa-cube</span></li><li><i class="fa-cubes"></i><span class="icon-name">fa-cubes</span></li><li><i class="fa-cut"></i><span class="icon-name">fa-cut</span></li><li><i class="fa-cutlery"></i><span class="icon-name">fa-cutlery</span></li><li><i class="fa-dashboard"></i><span class="icon-name">fa-dashboard</span></li><li><i class="fa-dashcube"></i><span class="icon-name">fa-dashcube</span></li><li><i class="fa-database"></i><span class="icon-name">fa-database</span></li><li><i class="fa-dedent"></i><span class="icon-name">fa-dedent</span></li><li><i class="fa-delicious"></i><span class="icon-name">fa-delicious</span></li><li><i class="fa-desktop"></i><span class="icon-name">fa-desktop</span></li><li><i class="fa-deviantart"></i><span class="icon-name">fa-deviantart</span></li><li><i class="fa-diamond"></i><span class="icon-name">fa-diamond</span></li><li><i class="fa-digg"></i><span class="icon-name">fa-digg</span></li><li><i class="fa-dollar"></i><span class="icon-name">fa-dollar</span></li><li><i class="fa-dot-circle-o"></i><span class="icon-name">fa-dot-circle-o</span></li><li><i class="fa-download"></i><span class="icon-name">fa-download</span></li><li><i class="fa-dribbble"></i><span class="icon-name">fa-dribbble</span></li><li><i class="fa-dropbox"></i><span class="icon-name">fa-dropbox</span></li><li><i class="fa-drupal"></i><span class="icon-name">fa-drupal</span></li><li><i class="fa-edit"></i><span class="icon-name">fa-edit</span></li><li><i class="fa-eject"></i><span class="icon-name">fa-eject</span></li><li><i class="fa-ellipsis-h"></i><span class="icon-name">fa-ellipsis-h</span></li><li><i class="fa-ellipsis-v"></i><span class="icon-name">fa-ellipsis-v</span></li><li><i class="fa-empire"></i><span class="icon-name">fa-empire</span></li><li><i class="fa-envelope"></i><span class="icon-name">fa-envelope</span></li><li><i class="fa-envelope-o"></i><span class="icon-name">fa-envelope-o</span></li><li><i class="fa-envelope-square"></i><span class="icon-name">fa-envelope-square</span></li><li><i class="fa-eraser"></i><span class="icon-name">fa-eraser</span></li><li><i class="fa-eur"></i><span class="icon-name">fa-eur</span></li><li><i class="fa-euro"></i><span class="icon-name">fa-euro</span></li><li><i class="fa-exchange"></i><span class="icon-name">fa-exchange</span></li><li><i class="fa-exclamation"></i><span class="icon-name">fa-exclamation</span></li><li><i class="fa-exclamation-circle"></i><span class="icon-name">fa-exclamation-circle</span></li><li><i class="fa-exclamation-triangle"></i><span class="icon-name">fa-exclamation-triangle</span></li><li><i class="fa-expand"></i><span class="icon-name">fa-expand</span></li><li><i class="fa-expeditedssl"></i><span class="icon-name">fa-expeditedssl</span></li><li><i class="fa-external-link"></i><span class="icon-name">fa-external-link</span></li><li><i class="fa-external-link-square"></i><span class="icon-name">fa-external-link-square</span></li><li><i class="fa-eye"></i><span class="icon-name">fa-eye</span></li><li><i class="fa-eye-slash"></i><span class="icon-name">fa-eye-slash</span></li><li><i class="fa-eyedropper"></i><span class="icon-name">fa-eyedropper</span></li><li><i class="fa-facebook"></i><span class="icon-name">fa-facebook</span></li><li><i class="fa-facebook-f"></i><span class="icon-name">fa-facebook-f</span></li><li><i class="fa-facebook-official"></i><span class="icon-name">fa-facebook-official</span></li><li><i class="fa-facebook-square"></i><span class="icon-name">fa-facebook-square</span></li><li><i class="fa-fast-backward"></i><span class="icon-name">fa-fast-backward</span></li><li><i class="fa-fast-forward"></i><span class="icon-name">fa-fast-forward</span></li><li><i class="fa-fax"></i><span class="icon-name">fa-fax</span></li><li><i class="fa-feed"></i><span class="icon-name">fa-feed</span></li><li><i class="fa-female"></i><span class="icon-name">fa-female</span></li><li><i class="fa-fighter-jet"></i><span class="icon-name">fa-fighter-jet</span></li><li><i class="fa-file"></i><span class="icon-name">fa-file</span></li><li><i class="fa-file-archive-o"></i><span class="icon-name">fa-file-archive-o</span></li><li><i class="fa-file-audio-o"></i><span class="icon-name">fa-file-audio-o</span></li><li><i class="fa-file-code-o"></i><span class="icon-name">fa-file-code-o</span></li><li><i class="fa-file-excel-o"></i><span class="icon-name">fa-file-excel-o</span></li><li><i class="fa-file-image-o"></i><span class="icon-name">fa-file-image-o</span></li><li><i class="fa-file-movie-o"></i><span class="icon-name">fa-file-movie-o</span></li><li><i class="fa-file-o"></i><span class="icon-name">fa-file-o</span></li><li><i class="fa-file-pdf-o"></i><span class="icon-name">fa-file-pdf-o</span></li><li><i class="fa-file-photo-o"></i><span class="icon-name">fa-file-photo-o</span></li><li><i class="fa-file-picture-o"></i><span class="icon-name">fa-file-picture-o</span></li><li><i class="fa-file-powerpoint-o"></i><span class="icon-name">fa-file-powerpoint-o</span></li><li><i class="fa-file-sound-o"></i><span class="icon-name">fa-file-sound-o</span></li><li><i class="fa-file-text"></i><span class="icon-name">fa-file-text</span></li><li><i class="fa-file-text-o"></i><span class="icon-name">fa-file-text-o</span></li><li><i class="fa-file-video-o"></i><span class="icon-name">fa-file-video-o</span></li><li><i class="fa-file-word-o"></i><span class="icon-name">fa-file-word-o</span></li><li><i class="fa-file-zip-o"></i><span class="icon-name">fa-file-zip-o</span></li><li><i class="fa-files-o"></i><span class="icon-name">fa-files-o</span></li><li><i class="fa-film"></i><span class="icon-name">fa-film</span></li><li><i class="fa-filter"></i><span class="icon-name">fa-filter</span></li><li><i class="fa-fire"></i><span class="icon-name">fa-fire</span></li><li><i class="fa-fire-extinguisher"></i><span class="icon-name">fa-fire-extinguisher</span></li><li><i class="fa-firefox"></i><span class="icon-name">fa-firefox</span></li><li><i class="fa-flag"></i><span class="icon-name">fa-flag</span></li><li><i class="fa-flag-checkered"></i><span class="icon-name">fa-flag-checkered</span></li><li><i class="fa-flag-o"></i><span class="icon-name">fa-flag-o</span></li><li><i class="fa-flash"></i><span class="icon-name">fa-flash</span></li><li><i class="fa-flask"></i><span class="icon-name">fa-flask</span></li><li><i class="fa-flickr"></i><span class="icon-name">fa-flickr</span></li><li><i class="fa-floppy-o"></i><span class="icon-name">fa-floppy-o</span></li><li><i class="fa-folder"></i><span class="icon-name">fa-folder</span></li><li><i class="fa-folder-o"></i><span class="icon-name">fa-folder-o</span></li><li><i class="fa-folder-open"></i><span class="icon-name">fa-folder-open</span></li><li><i class="fa-folder-open-o"></i><span class="icon-name">fa-folder-open-o</span></li><li><i class="fa-font"></i><span class="icon-name">fa-font</span></li><li><i class="fa-fonticons"></i><span class="icon-name">fa-fonticons</span></li><li><i class="fa-forumbee"></i><span class="icon-name">fa-forumbee</span></li><li><i class="fa-forward"></i><span class="icon-name">fa-forward</span></li><li><i class="fa-foursquare"></i><span class="icon-name">fa-foursquare</span></li><li><i class="fa-frown-o"></i><span class="icon-name">fa-frown-o</span></li><li><i class="fa-futbol-o"></i><span class="icon-name">fa-futbol-o</span></li><li><i class="fa-gamepad"></i><span class="icon-name">fa-gamepad</span></li><li><i class="fa-gavel"></i><span class="icon-name">fa-gavel</span></li><li><i class="fa-gbp"></i><span class="icon-name">fa-gbp</span></li><li><i class="fa-ge"></i><span class="icon-name">fa-ge</span></li><li><i class="fa-gear"></i><span class="icon-name">fa-gear</span></li><li><i class="fa-gears"></i><span class="icon-name">fa-gears</span></li><li><i class="fa-genderless"></i><span class="icon-name">fa-genderless</span></li><li><i class="fa-get-pocket"></i><span class="icon-name">fa-get-pocket</span></li><li><i class="fa-gg"></i><span class="icon-name">fa-gg</span></li><li><i class="fa-gg-circle"></i><span class="icon-name">fa-gg-circle</span></li><li><i class="fa-gift"></i><span class="icon-name">fa-gift</span></li><li><i class="fa-git"></i><span class="icon-name">fa-git</span></li><li><i class="fa-git-square"></i><span class="icon-name">fa-git-square</span></li><li><i class="fa-github"></i><span class="icon-name">fa-github</span></li><li><i class="fa-github-alt"></i><span class="icon-name">fa-github-alt</span></li><li><i class="fa-github-square"></i><span class="icon-name">fa-github-square</span></li><li><i class="fa-gittip"></i><span class="icon-name">fa-gittip</span></li><li><i class="fa-glass"></i><span class="icon-name">fa-glass</span></li><li><i class="fa-globe"></i><span class="icon-name">fa-globe</span></li><li><i class="fa-google"></i><span class="icon-name">fa-google</span></li><li><i class="fa-google-plus"></i><span class="icon-name">fa-google-plus</span></li><li><i class="fa-google-plus-square"></i><span class="icon-name">fa-google-plus-square</span></li><li><i class="fa-google-wallet"></i><span class="icon-name">fa-google-wallet</span></li><li><i class="fa-graduation-cap"></i><span class="icon-name">fa-graduation-cap</span></li><li><i class="fa-gratipay"></i><span class="icon-name">fa-gratipay</span></li><li><i class="fa-group"></i><span class="icon-name">fa-group</span></li><li><i class="fa-h-square"></i><span class="icon-name">fa-h-square</span></li><li><i class="fa-hacker-news"></i><span class="icon-name">fa-hacker-news</span></li><li><i class="fa-hand-grab-o"></i><span class="icon-name">fa-hand-grab-o</span></li><li><i class="fa-hand-lizard-o"></i><span class="icon-name">fa-hand-lizard-o</span></li><li><i class="fa-hand-o-down"></i><span class="icon-name">fa-hand-o-down</span></li><li><i class="fa-hand-o-left"></i><span class="icon-name">fa-hand-o-left</span></li><li><i class="fa-hand-o-right"></i><span class="icon-name">fa-hand-o-right</span></li><li><i class="fa-hand-o-up"></i><span class="icon-name">fa-hand-o-up</span></li><li><i class="fa-hand-paper-o"></i><span class="icon-name">fa-hand-paper-o</span></li><li><i class="fa-hand-peace-o"></i><span class="icon-name">fa-hand-peace-o</span></li><li><i class="fa-hand-pointer-o"></i><span class="icon-name">fa-hand-pointer-o</span></li><li><i class="fa-hand-rock-o"></i><span class="icon-name">fa-hand-rock-o</span></li><li><i class="fa-hand-scissors-o"></i><span class="icon-name">fa-hand-scissors-o</span></li><li><i class="fa-hand-spock-o"></i><span class="icon-name">fa-hand-spock-o</span></li><li><i class="fa-hand-stop-o"></i><span class="icon-name">fa-hand-stop-o</span></li><li><i class="fa-hdd-o"></i><span class="icon-name">fa-hdd-o</span></li><li><i class="fa-header"></i><span class="icon-name">fa-header</span></li><li><i class="fa-headphones"></i><span class="icon-name">fa-headphones</span></li><li><i class="fa-heart"></i><span class="icon-name">fa-heart</span></li><li><i class="fa-heart-o"></i><span class="icon-name">fa-heart-o</span></li><li><i class="fa-heartbeat"></i><span class="icon-name">fa-heartbeat</span></li><li><i class="fa-history"></i><span class="icon-name">fa-history</span></li><li><i class="fa-home"></i><span class="icon-name">fa-home</span></li><li><i class="fa-hospital-o"></i><span class="icon-name">fa-hospital-o</span></li><li><i class="fa-hotel"></i><span class="icon-name">fa-hotel</span></li><li><i class="fa-hourglass"></i><span class="icon-name">fa-hourglass</span></li><li><i class="fa-hourglass-1"></i><span class="icon-name">fa-hourglass-1</span></li><li><i class="fa-hourglass-2"></i><span class="icon-name">fa-hourglass-2</span></li><li><i class="fa-hourglass-3"></i><span class="icon-name">fa-hourglass-3</span></li><li><i class="fa-hourglass-end"></i><span class="icon-name">fa-hourglass-end</span></li><li><i class="fa-hourglass-half"></i><span class="icon-name">fa-hourglass-half</span></li><li><i class="fa-hourglass-o"></i><span class="icon-name">fa-hourglass-o</span></li><li><i class="fa-hourglass-start"></i><span class="icon-name">fa-hourglass-start</span></li><li><i class="fa-houzz"></i><span class="icon-name">fa-houzz</span></li><li><i class="fa-html5"></i><span class="icon-name">fa-html5</span></li><li><i class="fa-i-cursor"></i><span class="icon-name">fa-i-cursor</span></li><li><i class="fa-ils"></i><span class="icon-name">fa-ils</span></li><li><i class="fa-image"></i><span class="icon-name">fa-image</span></li><li><i class="fa-inbox"></i><span class="icon-name">fa-inbox</span></li><li><i class="fa-indent"></i><span class="icon-name">fa-indent</span></li><li><i class="fa-industry"></i><span class="icon-name">fa-industry</span></li><li><i class="fa-info"></i><span class="icon-name">fa-info</span></li><li><i class="fa-info-circle"></i><span class="icon-name">fa-info-circle</span></li><li><i class="fa-inr"></i><span class="icon-name">fa-inr</span></li><li><i class="fa-instagram"></i><span class="icon-name">fa-instagram</span></li><li><i class="fa-institution"></i><span class="icon-name">fa-institution</span></li><li><i class="fa-internet-explorer"></i><span class="icon-name">fa-internet-explorer</span></li><li><i class="fa-intersex"></i><span class="icon-name">fa-intersex</span></li><li><i class="fa-ioxhost"></i><span class="icon-name">fa-ioxhost</span></li><li><i class="fa-italic"></i><span class="icon-name">fa-italic</span></li><li><i class="fa-joomla"></i><span class="icon-name">fa-joomla</span></li><li><i class="fa-jpy"></i><span class="icon-name">fa-jpy</span></li><li><i class="fa-jsfiddle"></i><span class="icon-name">fa-jsfiddle</span></li><li><i class="fa-key"></i><span class="icon-name">fa-key</span></li><li><i class="fa-keyboard-o"></i><span class="icon-name">fa-keyboard-o</span></li><li><i class="fa-krw"></i><span class="icon-name">fa-krw</span></li><li><i class="fa-language"></i><span class="icon-name">fa-language</span></li><li><i class="fa-laptop"></i><span class="icon-name">fa-laptop</span></li><li><i class="fa-lastfm"></i><span class="icon-name">fa-lastfm</span></li><li><i class="fa-lastfm-square"></i><span class="icon-name">fa-lastfm-square</span></li><li><i class="fa-leaf"></i><span class="icon-name">fa-leaf</span></li><li><i class="fa-leanpub"></i><span class="icon-name">fa-leanpub</span></li><li><i class="fa-legal"></i><span class="icon-name">fa-legal</span></li><li><i class="fa-lemon-o"></i><span class="icon-name">fa-lemon-o</span></li><li><i class="fa-level-down"></i><span class="icon-name">fa-level-down</span></li><li><i class="fa-level-up"></i><span class="icon-name">fa-level-up</span></li><li><i class="fa-life-bouy"></i><span class="icon-name">fa-life-bouy</span></li><li><i class="fa-life-buoy"></i><span class="icon-name">fa-life-buoy</span></li><li><i class="fa-life-ring"></i><span class="icon-name">fa-life-ring</span></li><li><i class="fa-life-saver"></i><span class="icon-name">fa-life-saver</span></li><li><i class="fa-lightbulb-o"></i><span class="icon-name">fa-lightbulb-o</span></li><li><i class="fa-line-chart"></i><span class="icon-name">fa-line-chart</span></li><li><i class="fa-link"></i><span class="icon-name">fa-link</span></li><li><i class="fa-linkedin"></i><span class="icon-name">fa-linkedin</span></li><li><i class="fa-linkedin-square"></i><span class="icon-name">fa-linkedin-square</span></li><li><i class="fa-linux"></i><span class="icon-name">fa-linux</span></li><li><i class="fa-list"></i><span class="icon-name">fa-list</span></li><li><i class="fa-list-alt"></i><span class="icon-name">fa-list-alt</span></li><li><i class="fa-list-ol"></i><span class="icon-name">fa-list-ol</span></li><li><i class="fa-list-ul"></i><span class="icon-name">fa-list-ul</span></li><li><i class="fa-location-arrow"></i><span class="icon-name">fa-location-arrow</span></li><li><i class="fa-lock"></i><span class="icon-name">fa-lock</span></li><li><i class="fa-long-arrow-down"></i><span class="icon-name">fa-long-arrow-down</span></li><li><i class="fa-long-arrow-left"></i><span class="icon-name">fa-long-arrow-left</span></li><li><i class="fa-long-arrow-right"></i><span class="icon-name">fa-long-arrow-right</span></li><li><i class="fa-long-arrow-up"></i><span class="icon-name">fa-long-arrow-up</span></li><li><i class="fa-magic"></i><span class="icon-name">fa-magic</span></li><li><i class="fa-magnet"></i><span class="icon-name">fa-magnet</span></li><li><i class="fa-mail-forward"></i><span class="icon-name">fa-mail-forward</span></li><li><i class="fa-mail-reply"></i><span class="icon-name">fa-mail-reply</span></li><li><i class="fa-mail-reply-all"></i><span class="icon-name">fa-mail-reply-all</span></li><li><i class="fa-male"></i><span class="icon-name">fa-male</span></li><li><i class="fa-map"></i><span class="icon-name">fa-map</span></li><li><i class="fa-map-marker"></i><span class="icon-name">fa-map-marker</span></li><li><i class="fa-map-o"></i><span class="icon-name">fa-map-o</span></li><li><i class="fa-map-pin"></i><span class="icon-name">fa-map-pin</span></li><li><i class="fa-map-signs"></i><span class="icon-name">fa-map-signs</span></li><li><i class="fa-mars"></i><span class="icon-name">fa-mars</span></li><li><i class="fa-mars-double"></i><span class="icon-name">fa-mars-double</span></li><li><i class="fa-mars-stroke"></i><span class="icon-name">fa-mars-stroke</span></li><li><i class="fa-mars-stroke-h"></i><span class="icon-name">fa-mars-stroke-h</span></li><li><i class="fa-mars-stroke-v"></i><span class="icon-name">fa-mars-stroke-v</span></li><li><i class="fa-maxcdn"></i><span class="icon-name">fa-maxcdn</span></li><li><i class="fa-meanpath"></i><span class="icon-name">fa-meanpath</span></li><li><i class="fa-medium"></i><span class="icon-name">fa-medium</span></li><li><i class="fa-medkit"></i><span class="icon-name">fa-medkit</span></li><li><i class="fa-meh-o"></i><span class="icon-name">fa-meh-o</span></li><li><i class="fa-mercury"></i><span class="icon-name">fa-mercury</span></li><li><i class="fa-microphone"></i><span class="icon-name">fa-microphone</span></li><li><i class="fa-microphone-slash"></i><span class="icon-name">fa-microphone-slash</span></li><li><i class="fa-minus"></i><span class="icon-name">fa-minus</span></li><li><i class="fa-minus-circle"></i><span class="icon-name">fa-minus-circle</span></li><li><i class="fa-minus-square"></i><span class="icon-name">fa-minus-square</span></li><li><i class="fa-minus-square-o"></i><span class="icon-name">fa-minus-square-o</span></li><li><i class="fa-mobile"></i><span class="icon-name">fa-mobile</span></li><li><i class="fa-mobile-phone"></i><span class="icon-name">fa-mobile-phone</span></li><li><i class="fa-money"></i><span class="icon-name">fa-money</span></li><li><i class="fa-moon-o"></i><span class="icon-name">fa-moon-o</span></li><li><i class="fa-mortar-board"></i><span class="icon-name">fa-mortar-board</span></li><li><i class="fa-motorcycle"></i><span class="icon-name">fa-motorcycle</span></li><li><i class="fa-mouse-pointer"></i><span class="icon-name">fa-mouse-pointer</span></li><li><i class="fa-music"></i><span class="icon-name">fa-music</span></li><li><i class="fa-navicon"></i><span class="icon-name">fa-navicon</span></li><li><i class="fa-neuter"></i><span class="icon-name">fa-neuter</span></li><li><i class="fa-newspaper-o"></i><span class="icon-name">fa-newspaper-o</span></li><li><i class="fa-object-group"></i><span class="icon-name">fa-object-group</span></li><li><i class="fa-object-ungroup"></i><span class="icon-name">fa-object-ungroup</span></li><li><i class="fa-odnoklassniki"></i><span class="icon-name">fa-odnoklassniki</span></li><li><i class="fa-odnoklassniki-square"></i><span class="icon-name">fa-odnoklassniki-square</span></li><li><i class="fa-opencart"></i><span class="icon-name">fa-opencart</span></li><li><i class="fa-openid"></i><span class="icon-name">fa-openid</span></li><li><i class="fa-opera"></i><span class="icon-name">fa-opera</span></li><li><i class="fa-optin-monster"></i><span class="icon-name">fa-optin-monster</span></li><li><i class="fa-outdent"></i><span class="icon-name">fa-outdent</span></li><li><i class="fa-pagelines"></i><span class="icon-name">fa-pagelines</span></li><li><i class="fa-paint-brush"></i><span class="icon-name">fa-paint-brush</span></li><li><i class="fa-paper-plane"></i><span class="icon-name">fa-paper-plane</span></li><li><i class="fa-paper-plane-o"></i><span class="icon-name">fa-paper-plane-o</span></li><li><i class="fa-paperclip"></i><span class="icon-name">fa-paperclip</span></li><li><i class="fa-paragraph"></i><span class="icon-name">fa-paragraph</span></li><li><i class="fa-paste"></i><span class="icon-name">fa-paste</span></li><li><i class="fa-pause"></i><span class="icon-name">fa-pause</span></li><li><i class="fa-paw"></i><span class="icon-name">fa-paw</span></li><li><i class="fa-paypal"></i><span class="icon-name">fa-paypal</span></li><li><i class="fa-pencil"></i><span class="icon-name">fa-pencil</span></li><li><i class="fa-pencil-square"></i><span class="icon-name">fa-pencil-square</span></li><li><i class="fa-pencil-square-o"></i><span class="icon-name">fa-pencil-square-o</span></li><li><i class="fa-phone"></i><span class="icon-name">fa-phone</span></li><li><i class="fa-phone-square"></i><span class="icon-name">fa-phone-square</span></li><li><i class="fa-photo"></i><span class="icon-name">fa-photo</span></li><li><i class="fa-picture-o"></i><span class="icon-name">fa-picture-o</span></li><li><i class="fa-pie-chart"></i><span class="icon-name">fa-pie-chart</span></li><li><i class="fa-pied-piper"></i><span class="icon-name">fa-pied-piper</span></li><li><i class="fa-pied-piper-alt"></i><span class="icon-name">fa-pied-piper-alt</span></li><li><i class="fa-pinterest"></i><span class="icon-name">fa-pinterest</span></li><li><i class="fa-pinterest-p"></i><span class="icon-name">fa-pinterest-p</span></li><li><i class="fa-pinterest-square"></i><span class="icon-name">fa-pinterest-square</span></li><li><i class="fa-plane"></i><span class="icon-name">fa-plane</span></li><li><i class="fa-play"></i><span class="icon-name">fa-play</span></li><li><i class="fa-play-circle"></i><span class="icon-name">fa-play-circle</span></li><li><i class="fa-play-circle-o"></i><span class="icon-name">fa-play-circle-o</span></li><li><i class="fa-plug"></i><span class="icon-name">fa-plug</span></li><li><i class="fa-plus"></i><span class="icon-name">fa-plus</span></li><li><i class="fa-plus-circle"></i><span class="icon-name">fa-plus-circle</span></li><li><i class="fa-plus-square"></i><span class="icon-name">fa-plus-square</span></li><li><i class="fa-plus-square-o"></i><span class="icon-name">fa-plus-square-o</span></li><li><i class="fa-power-off"></i><span class="icon-name">fa-power-off</span></li><li><i class="fa-print"></i><span class="icon-name">fa-print</span></li><li><i class="fa-puzzle-piece"></i><span class="icon-name">fa-puzzle-piece</span></li><li><i class="fa-qq"></i><span class="icon-name">fa-qq</span></li><li><i class="fa-qrcode"></i><span class="icon-name">fa-qrcode</span></li><li><i class="fa-question"></i><span class="icon-name">fa-question</span></li><li><i class="fa-question-circle"></i><span class="icon-name">fa-question-circle</span></li><li><i class="fa-quote-left"></i><span class="icon-name">fa-quote-left</span></li><li><i class="fa-quote-right"></i><span class="icon-name">fa-quote-right</span></li><li><i class="fa-ra"></i><span class="icon-name">fa-ra</span></li><li><i class="fa-random"></i><span class="icon-name">fa-random</span></li><li><i class="fa-rebel"></i><span class="icon-name">fa-rebel</span></li><li><i class="fa-recycle"></i><span class="icon-name">fa-recycle</span></li><li><i class="fa-reddit"></i><span class="icon-name">fa-reddit</span></li><li><i class="fa-reddit-square"></i><span class="icon-name">fa-reddit-square</span></li><li><i class="fa-refresh"></i><span class="icon-name">fa-refresh</span></li><li><i class="fa-registered"></i><span class="icon-name">fa-registered</span></li><li><i class="fa-remove"></i><span class="icon-name">fa-remove</span></li><li><i class="fa-renren"></i><span class="icon-name">fa-renren</span></li><li><i class="fa-reorder"></i><span class="icon-name">fa-reorder</span></li><li><i class="fa-repeat"></i><span class="icon-name">fa-repeat</span></li><li><i class="fa-reply"></i><span class="icon-name">fa-reply</span></li><li><i class="fa-reply-all"></i><span class="icon-name">fa-reply-all</span></li><li><i class="fa-retweet"></i><span class="icon-name">fa-retweet</span></li><li><i class="fa-rmb"></i><span class="icon-name">fa-rmb</span></li><li><i class="fa-road"></i><span class="icon-name">fa-road</span></li><li><i class="fa-rocket"></i><span class="icon-name">fa-rocket</span></li><li><i class="fa-rotate-left"></i><span class="icon-name">fa-rotate-left</span></li><li><i class="fa-rotate-right"></i><span class="icon-name">fa-rotate-right</span></li><li><i class="fa-rouble"></i><span class="icon-name">fa-rouble</span></li><li><i class="fa-rss"></i><span class="icon-name">fa-rss</span></li><li><i class="fa-rss-square"></i><span class="icon-name">fa-rss-square</span></li><li><i class="fa-rub"></i><span class="icon-name">fa-rub</span></li><li><i class="fa-ruble"></i><span class="icon-name">fa-ruble</span></li><li><i class="fa-rupee"></i><span class="icon-name">fa-rupee</span></li><li><i class="fa-safari"></i><span class="icon-name">fa-safari</span></li><li><i class="fa-save"></i><span class="icon-name">fa-save</span></li><li><i class="fa-scissors"></i><span class="icon-name">fa-scissors</span></li><li><i class="fa-search"></i><span class="icon-name">fa-search</span></li><li><i class="fa-search-minus"></i><span class="icon-name">fa-search-minus</span></li><li><i class="fa-search-plus"></i><span class="icon-name">fa-search-plus</span></li><li><i class="fa-sellsy"></i><span class="icon-name">fa-sellsy</span></li><li><i class="fa-send"></i><span class="icon-name">fa-send</span></li><li><i class="fa-send-o"></i><span class="icon-name">fa-send-o</span></li><li><i class="fa-server"></i><span class="icon-name">fa-server</span></li><li><i class="fa-share"></i><span class="icon-name">fa-share</span></li><li><i class="fa-share-alt"></i><span class="icon-name">fa-share-alt</span></li><li><i class="fa-share-alt-square"></i><span class="icon-name">fa-share-alt-square</span></li><li><i class="fa-share-square"></i><span class="icon-name">fa-share-square</span></li><li><i class="fa-share-square-o"></i><span class="icon-name">fa-share-square-o</span></li><li><i class="fa-shekel"></i><span class="icon-name">fa-shekel</span></li><li><i class="fa-sheqel"></i><span class="icon-name">fa-sheqel</span></li><li><i class="fa-shield"></i><span class="icon-name">fa-shield</span></li><li><i class="fa-ship"></i><span class="icon-name">fa-ship</span></li><li><i class="fa-shirtsinbulk"></i><span class="icon-name">fa-shirtsinbulk</span></li><li><i class="fa-shopping-cart"></i><span class="icon-name">fa-shopping-cart</span></li><li><i class="fa-sign-in"></i><span class="icon-name">fa-sign-in</span></li><li><i class="fa-sign-out"></i><span class="icon-name">fa-sign-out</span></li><li><i class="fa-signal"></i><span class="icon-name">fa-signal</span></li><li><i class="fa-simplybuilt"></i><span class="icon-name">fa-simplybuilt</span></li><li><i class="fa-sitemap"></i><span class="icon-name">fa-sitemap</span></li><li><i class="fa-skyatlas"></i><span class="icon-name">fa-skyatlas</span></li><li><i class="fa-skype"></i><span class="icon-name">fa-skype</span></li><li><i class="fa-slack"></i><span class="icon-name">fa-slack</span></li><li><i class="fa-sliders"></i><span class="icon-name">fa-sliders</span></li><li><i class="fa-slideshare"></i><span class="icon-name">fa-slideshare</span></li><li><i class="fa-smile-o"></i><span class="icon-name">fa-smile-o</span></li><li><i class="fa-soccer-ball-o"></i><span class="icon-name">fa-soccer-ball-o</span></li><li><i class="fa-sort"></i><span class="icon-name">fa-sort</span></li><li><i class="fa-sort-alpha-asc"></i><span class="icon-name">fa-sort-alpha-asc</span></li><li><i class="fa-sort-alpha-desc"></i><span class="icon-name">fa-sort-alpha-desc</span></li><li><i class="fa-sort-amount-asc"></i><span class="icon-name">fa-sort-amount-asc</span></li><li><i class="fa-sort-amount-desc"></i><span class="icon-name">fa-sort-amount-desc</span></li><li><i class="fa-sort-asc"></i><span class="icon-name">fa-sort-asc</span></li><li><i class="fa-sort-desc"></i><span class="icon-name">fa-sort-desc</span></li><li><i class="fa-sort-down"></i><span class="icon-name">fa-sort-down</span></li><li><i class="fa-sort-numeric-asc"></i><span class="icon-name">fa-sort-numeric-asc</span></li><li><i class="fa-sort-numeric-desc"></i><span class="icon-name">fa-sort-numeric-desc</span></li><li><i class="fa-sort-up"></i><span class="icon-name">fa-sort-up</span></li><li><i class="fa-soundcloud"></i><span class="icon-name">fa-soundcloud</span></li><li><i class="fa-space-shuttle"></i><span class="icon-name">fa-space-shuttle</span></li><li><i class="fa-spinner"></i><span class="icon-name">fa-spinner</span></li><li><i class="fa-spoon"></i><span class="icon-name">fa-spoon</span></li><li><i class="fa-spotify"></i><span class="icon-name">fa-spotify</span></li><li><i class="fa-square"></i><span class="icon-name">fa-square</span></li><li><i class="fa-square-o"></i><span class="icon-name">fa-square-o</span></li><li><i class="fa-stack-exchange"></i><span class="icon-name">fa-stack-exchange</span></li><li><i class="fa-stack-overflow"></i><span class="icon-name">fa-stack-overflow</span></li><li><i class="fa-star"></i><span class="icon-name">fa-star</span></li><li><i class="fa-star-half"></i><span class="icon-name">fa-star-half</span></li><li><i class="fa-star-half-empty"></i><span class="icon-name">fa-star-half-empty</span></li><li><i class="fa-star-half-full"></i><span class="icon-name">fa-star-half-full</span></li><li><i class="fa-star-half-o"></i><span class="icon-name">fa-star-half-o</span></li><li><i class="fa-star-o"></i><span class="icon-name">fa-star-o</span></li><li><i class="fa-steam"></i><span class="icon-name">fa-steam</span></li><li><i class="fa-steam-square"></i><span class="icon-name">fa-steam-square</span></li><li><i class="fa-step-backward"></i><span class="icon-name">fa-step-backward</span></li><li><i class="fa-step-forward"></i><span class="icon-name">fa-step-forward</span></li><li><i class="fa-stethoscope"></i><span class="icon-name">fa-stethoscope</span></li><li><i class="fa-sticky-note"></i><span class="icon-name">fa-sticky-note</span></li><li><i class="fa-sticky-note-o"></i><span class="icon-name">fa-sticky-note-o</span></li><li><i class="fa-stop"></i><span class="icon-name">fa-stop</span></li><li><i class="fa-street-view"></i><span class="icon-name">fa-street-view</span></li><li><i class="fa-strikethrough"></i><span class="icon-name">fa-strikethrough</span></li><li><i class="fa-stumbleupon"></i><span class="icon-name">fa-stumbleupon</span></li><li><i class="fa-stumbleupon-circle"></i><span class="icon-name">fa-stumbleupon-circle</span></li><li><i class="fa-subscript"></i><span class="icon-name">fa-subscript</span></li><li><i class="fa-subway"></i><span class="icon-name">fa-subway</span></li><li><i class="fa-suitcase"></i><span class="icon-name">fa-suitcase</span></li><li><i class="fa-sun-o"></i><span class="icon-name">fa-sun-o</span></li><li><i class="fa-superscript"></i><span class="icon-name">fa-superscript</span></li><li><i class="fa-support"></i><span class="icon-name">fa-support</span></li><li><i class="fa-table"></i><span class="icon-name">fa-table</span></li><li><i class="fa-tablet"></i><span class="icon-name">fa-tablet</span></li><li><i class="fa-tachometer"></i><span class="icon-name">fa-tachometer</span></li><li><i class="fa-tag"></i><span class="icon-name">fa-tag</span></li><li><i class="fa-tags"></i><span class="icon-name">fa-tags</span></li><li><i class="fa-tasks"></i><span class="icon-name">fa-tasks</span></li><li><i class="fa-taxi"></i><span class="icon-name">fa-taxi</span></li><li><i class="fa-television"></i><span class="icon-name">fa-television</span></li><li><i class="fa-tencent-weibo"></i><span class="icon-name">fa-tencent-weibo</span></li><li><i class="fa-terminal"></i><span class="icon-name">fa-terminal</span></li><li><i class="fa-text-height"></i><span class="icon-name">fa-text-height</span></li><li><i class="fa-text-width"></i><span class="icon-name">fa-text-width</span></li><li><i class="fa-th"></i><span class="icon-name">fa-th</span></li><li><i class="fa-th-large"></i><span class="icon-name">fa-th-large</span></li><li><i class="fa-th-list"></i><span class="icon-name">fa-th-list</span></li><li><i class="fa-thumb-tack"></i><span class="icon-name">fa-thumb-tack</span></li><li><i class="fa-thumbs-down"></i><span class="icon-name">fa-thumbs-down</span></li><li><i class="fa-thumbs-o-down"></i><span class="icon-name">fa-thumbs-o-down</span></li><li><i class="fa-thumbs-o-up"></i><span class="icon-name">fa-thumbs-o-up</span></li><li><i class="fa-thumbs-up"></i><span class="icon-name">fa-thumbs-up</span></li><li><i class="fa-ticket"></i><span class="icon-name">fa-ticket</span></li><li><i class="fa-times"></i><span class="icon-name">fa-times</span></li><li><i class="fa-times-circle"></i><span class="icon-name">fa-times-circle</span></li><li><i class="fa-times-circle-o"></i><span class="icon-name">fa-times-circle-o</span></li><li><i class="fa-tint"></i><span class="icon-name">fa-tint</span></li><li><i class="fa-toggle-down"></i><span class="icon-name">fa-toggle-down</span></li><li><i class="fa-toggle-left"></i><span class="icon-name">fa-toggle-left</span></li><li><i class="fa-toggle-off"></i><span class="icon-name">fa-toggle-off</span></li><li><i class="fa-toggle-on"></i><span class="icon-name">fa-toggle-on</span></li><li><i class="fa-toggle-right"></i><span class="icon-name">fa-toggle-right</span></li><li><i class="fa-toggle-up"></i><span class="icon-name">fa-toggle-up</span></li><li><i class="fa-trademark"></i><span class="icon-name">fa-trademark</span></li><li><i class="fa-train"></i><span class="icon-name">fa-train</span></li><li><i class="fa-transgender"></i><span class="icon-name">fa-transgender</span></li><li><i class="fa-transgender-alt"></i><span class="icon-name">fa-transgender-alt</span></li><li><i class="fa-trash"></i><span class="icon-name">fa-trash</span></li><li><i class="fa-trash-o"></i><span class="icon-name">fa-trash-o</span></li><li><i class="fa-tree"></i><span class="icon-name">fa-tree</span></li><li><i class="fa-trello"></i><span class="icon-name">fa-trello</span></li><li><i class="fa-tripadvisor"></i><span class="icon-name">fa-tripadvisor</span></li><li><i class="fa-trophy"></i><span class="icon-name">fa-trophy</span></li><li><i class="fa-truck"></i><span class="icon-name">fa-truck</span></li><li><i class="fa-try"></i><span class="icon-name">fa-try</span></li><li><i class="fa-tty"></i><span class="icon-name">fa-tty</span></li><li><i class="fa-tumblr"></i><span class="icon-name">fa-tumblr</span></li><li><i class="fa-tumblr-square"></i><span class="icon-name">fa-tumblr-square</span></li><li><i class="fa-turkish-lira"></i><span class="icon-name">fa-turkish-lira</span></li><li><i class="fa-tv"></i><span class="icon-name">fa-tv</span></li><li><i class="fa-twitch"></i><span class="icon-name">fa-twitch</span></li><li><i class="fa-twitter"></i><span class="icon-name">fa-twitter</span></li><li><i class="fa-twitter-square"></i><span class="icon-name">fa-twitter-square</span></li><li><i class="fa-umbrella"></i><span class="icon-name">fa-umbrella</span></li><li><i class="fa-underline"></i><span class="icon-name">fa-underline</span></li><li><i class="fa-undo"></i><span class="icon-name">fa-undo</span></li><li><i class="fa-university"></i><span class="icon-name">fa-university</span></li><li><i class="fa-unlink"></i><span class="icon-name">fa-unlink</span></li><li><i class="fa-unlock"></i><span class="icon-name">fa-unlock</span></li><li><i class="fa-unlock-alt"></i><span class="icon-name">fa-unlock-alt</span></li><li><i class="fa-unsorted"></i><span class="icon-name">fa-unsorted</span></li><li><i class="fa-upload"></i><span class="icon-name">fa-upload</span></li><li><i class="fa-usd"></i><span class="icon-name">fa-usd</span></li><li><i class="fa-user"></i><span class="icon-name">fa-user</span></li><li><i class="fa-user-md"></i><span class="icon-name">fa-user-md</span></li><li><i class="fa-user-plus"></i><span class="icon-name">fa-user-plus</span></li><li><i class="fa-user-secret"></i><span class="icon-name">fa-user-secret</span></li><li><i class="fa-user-times"></i><span class="icon-name">fa-user-times</span></li><li><i class="fa-users"></i><span class="icon-name">fa-users</span></li><li><i class="fa-venus"></i><span class="icon-name">fa-venus</span></li><li><i class="fa-venus-double"></i><span class="icon-name">fa-venus-double</span></li><li><i class="fa-venus-mars"></i><span class="icon-name">fa-venus-mars</span></li><li><i class="fa-viacoin"></i><span class="icon-name">fa-viacoin</span></li><li><i class="fa-video-camera"></i><span class="icon-name">fa-video-camera</span></li><li><i class="fa-vimeo"></i><span class="icon-name">fa-vimeo</span></li><li><i class="fa-vimeo-square"></i><span class="icon-name">fa-vimeo-square</span></li><li><i class="fa-vine"></i><span class="icon-name">fa-vine</span></li><li><i class="fa-vk"></i><span class="icon-name">fa-vk</span></li><li><i class="fa-volume-down"></i><span class="icon-name">fa-volume-down</span></li><li><i class="fa-volume-off"></i><span class="icon-name">fa-volume-off</span></li><li><i class="fa-volume-up"></i><span class="icon-name">fa-volume-up</span></li><li><i class="fa-warning"></i><span class="icon-name">fa-warning</span></li><li><i class="fa-wechat"></i><span class="icon-name">fa-wechat</span></li><li><i class="fa-weibo"></i><span class="icon-name">fa-weibo</span></li><li><i class="fa-weixin"></i><span class="icon-name">fa-weixin</span></li><li><i class="fa-whatsapp"></i><span class="icon-name">fa-whatsapp</span></li><li><i class="fa-wheelchair"></i><span class="icon-name">fa-wheelchair</span></li><li><i class="fa-wifi"></i><span class="icon-name">fa-wifi</span></li><li><i class="fa-wikipedia-w"></i><span class="icon-name">fa-wikipedia-w</span></li><li><i class="fa-windows"></i><span class="icon-name">fa-windows</span></li><li><i class="fa-won"></i><span class="icon-name">fa-won</span></li><li><i class="fa-wordpress"></i><span class="icon-name">fa-wordpress</span></li><li><i class="fa-wrench"></i><span class="icon-name">fa-wrench</span></li><li><i class="fa-xing"></i><span class="icon-name">fa-xing</span></li><li><i class="fa-xing-square"></i><span class="icon-name">fa-xing-square</span></li><li><i class="fa-y-combinator"></i><span class="icon-name">fa-y-combinator</span></li><li><i class="fa-y-combinator-square"></i><span class="icon-name">fa-y-combinator-square</span></li><li><i class="fa-yahoo"></i><span class="icon-name">fa-yahoo</span></li><li><i class="fa-yc"></i><span class="icon-name">fa-yc</span></li><li><i class="fa-yc-square"></i><span class="icon-name">fa-yc-square</span></li><li><i class="fa-yelp"></i><span class="icon-name">fa-yelp</span></li><li><i class="fa-yen"></i><span class="icon-name">fa-yen</span></li><li><i class="fa-youtube"></i><span class="icon-name">fa-youtube</span></li><li><i class="fa-youtube-play"></i><span class="icon-name">fa-youtube-play</span></li><li><i class="fa-youtube-square"></i><span class="icon-name">fa-youtube-square</span></li>';
+            $fontawesome = array(
+	            'f26e' => 'fa-500px', 
+	            'f042' => 'fa-adjust', 
+	            'f170' => 'fa-adn', 
+	            'f037' => 'fa-align-center', 
+	            'f039' => 'fa-align-justify', 
+	            'f036' => 'fa-align-left', 
+	            'f038' => 'fa-align-right', 
+	            'f270' => 'fa-amazon', 
+	            'f0f9' => 'fa-ambulance', 
+	            'f13d' => 'fa-anchor', 
+	            'f17b' => 'fa-android', 
+	            'f209' => 'fa-angellist', 
+	            'f103' => 'fa-angle-double-down', 
+	            'f100' => 'fa-angle-double-left', 
+	            'f101' => 'fa-angle-double-right', 
+	            'f102' => 'fa-angle-double-up', 
+	            'f107' => 'fa-angle-down', 
+	            'f104' => 'fa-angle-left', 
+	            'f105' => 'fa-angle-right', 
+	            'f106' => 'fa-angle-up', 
+	            'f179' => 'fa-apple', 
+	            'f187' => 'fa-archive', 
+	            'f1fe' => 'fa-area-chart', 
+	            'f0ab' => 'fa-arrow-circle-down', 
+	            'f0a8' => 'fa-arrow-circle-left', 
+	            'f01a' => 'fa-arrow-circle-o-down', 
+	            'f190' => 'fa-arrow-circle-o-left', 
+	            'f18e' => 'fa-arrow-circle-o-right', 
+	            'f01b' => 'fa-arrow-circle-o-up', 
+	            'f0a9' => 'fa-arrow-circle-right', 
+	            'f0aa' => 'fa-arrow-circle-up', 
+	            'f063' => 'fa-arrow-down', 
+	            'f060' => 'fa-arrow-left', 
+	            'f061' => 'fa-arrow-right', 
+	            'f062' => 'fa-arrow-up', 
+	            'f047' => 'fa-arrows', 
+	            'f0b2' => 'fa-arrows-alt', 
+	            'f07e' => 'fa-arrows-h', 
+	            'f07d' => 'fa-arrows-v', 
+	            'f069' => 'fa-asterisk', 
+	            'f1fa' => 'fa-at', 
+	            'f1b9' => 'fa-automobile', 
+	            'f04a' => 'fa-backward', 
+	            'f24e' => 'fa-balance-scale', 
+	            'f05e' => 'fa-ban', 
+	            'f19c' => 'fa-bank', 
+	            'f080' => 'fa-bar-chart', 
+	            'f080' => 'fa-bar-chart-o', 
+	            'f02a' => 'fa-barcode', 
+	            'f0c9' => 'fa-bars', 
+	            'f244' => 'fa-battery-0', 
+	            'f243' => 'fa-battery-1', 
+	            'f242' => 'fa-battery-2', 
+	            'f241' => 'fa-battery-3', 
+	            'f240' => 'fa-battery-4', 
+	            'f244' => 'fa-battery-empty', 
+	            'f240' => 'fa-battery-full', 
+	            'f242' => 'fa-battery-half', 
+	            'f243' => 'fa-battery-quarter', 
+	            'f241' => 'fa-battery-three-quarters', 
+	            'f236' => 'fa-bed', 
+	            'f0fc' => 'fa-beer', 
+	            'f1b4' => 'fa-behance', 
+	            'f1b5' => 'fa-behance-square', 
+	            'f0f3' => 'fa-bell', 
+	            'f0a2' => 'fa-bell-o', 
+	            'f1f6' => 'fa-bell-slash', 
+	            'f1f7' => 'fa-bell-slash-o', 
+	            'f206' => 'fa-bicycle', 
+	            'f1e5' => 'fa-binoculars', 
+	            'f1fd' => 'fa-birthday-cake', 
+	            'f171' => 'fa-bitbucket', 
+	            'f172' => 'fa-bitbucket-square', 
+	            'f15a' => 'fa-bitcoin', 
+	            'f27e' => 'fa-black-tie', 
+	            'f293' => 'fa-bluetooth', 
+	            'f294' => 'fa-bluetooth-b', 
+	            'f032' => 'fa-bold', 
+	            'f0e7' => 'fa-bolt', 
+	            'f1e2' => 'fa-bomb', 
+	            'f02d' => 'fa-book', 
+	            'f02e' => 'fa-bookmark', 
+	            'f097' => 'fa-bookmark-o', 
+	            'f0b1' => 'fa-briefcase', 
+	            'f15a' => 'fa-btc', 
+	            'f188' => 'fa-bug', 
+	            'f1ad' => 'fa-building', 
+	            'f0f7' => 'fa-building-o', 
+	            'f0a1' => 'fa-bullhorn', 
+	            'f140' => 'fa-bullseye', 
+	            'f207' => 'fa-bus', 
+	            'f20d' => 'fa-buysellads', 
+	            'f1ba' => 'fa-cab', 
+	            'f1ec' => 'fa-calculator', 
+	            'f073' => 'fa-calendar', 
+	            'f274' => 'fa-calendar-check-o', 
+	            'f272' => 'fa-calendar-minus-o', 
+	            'f133' => 'fa-calendar-o', 
+	            'f271' => 'fa-calendar-plus-o', 
+	            'f273' => 'fa-calendar-times-o', 
+	            'f030' => 'fa-camera', 
+	            'f083' => 'fa-camera-retro', 
+	            'f1b9' => 'fa-car', 
+	            'f0d7' => 'fa-caret-down', 
+	            'f0d9' => 'fa-caret-left', 
+	            'f0da' => 'fa-caret-right', 
+	            'f150' => 'fa-caret-square-o-down', 
+	            'f191' => 'fa-caret-square-o-left', 
+	            'f152' => 'fa-caret-square-o-right', 
+	            'f151' => 'fa-caret-square-o-up', 
+	            'f0d8' => 'fa-caret-up', 
+	            'f218' => 'fa-cart-arrow-down', 
+	            'f217' => 'fa-cart-plus', 
+	            'f20a' => 'fa-cc', 
+	            'f1f3' => 'fa-cc-amex', 
+	            'f24c' => 'fa-cc-diners-club', 
+	            'f1f2' => 'fa-cc-discover', 
+	            'f24b' => 'fa-cc-jcb', 
+	            'f1f1' => 'fa-cc-mastercard', 
+	            'f1f4' => 'fa-cc-paypal', 
+	            'f1f5' => 'fa-cc-stripe', 
+	            'f1f0' => 'fa-cc-visa', 
+	            'f0a3' => 'fa-certificate', 
+	            'f0c1' => 'fa-chain', 
+	            'f127' => 'fa-chain-broken', 
+	            'f00c' => 'fa-check', 
+	            'f058' => 'fa-check-circle', 
+	            'f05d' => 'fa-check-circle-o', 
+	            'f14a' => 'fa-check-square', 
+	            'f046' => 'fa-check-square-o', 
+	            'f13a' => 'fa-chevron-circle-down', 
+	            'f137' => 'fa-chevron-circle-left', 
+	            'f138' => 'fa-chevron-circle-right', 
+	            'f139' => 'fa-chevron-circle-up', 
+	            'f078' => 'fa-chevron-down', 
+	            'f053' => 'fa-chevron-left', 
+	            'f054' => 'fa-chevron-right', 
+	            'f077' => 'fa-chevron-up', 
+	            'f1ae' => 'fa-child', 
+	            'f268' => 'fa-chrome', 
+	            'f111' => 'fa-circle', 
+	            'f10c' => 'fa-circle-o', 
+	            'f1ce' => 'fa-circle-o-notch', 
+	            'f1db' => 'fa-circle-thin', 
+	            'f0ea' => 'fa-clipboard', 
+	            'f017' => 'fa-clock-o', 
+	            'f24d' => 'fa-clone', 
+	            'f00d' => 'fa-close', 
+	            'f0c2' => 'fa-cloud', 
+	            'f0ed' => 'fa-cloud-download', 
+	            'f0ee' => 'fa-cloud-upload', 
+	            'f157' => 'fa-cny', 
+	            'f121' => 'fa-code', 
+	            'f126' => 'fa-code-fork', 
+	            'f1cb' => 'fa-codepen', 
+	            'f284' => 'fa-codiepie', 
+	            'f0f4' => 'fa-coffee', 
+	            'f013' => 'fa-cog', 
+	            'f085' => 'fa-cogs', 
+	            'f0db' => 'fa-columns', 
+	            'f075' => 'fa-comment', 
+	            'f0e5' => 'fa-comment-o', 
+	            'f27a' => 'fa-commenting', 
+	            'f27b' => 'fa-commenting-o', 
+	            'f086' => 'fa-comments', 
+	            'f0e6' => 'fa-comments-o', 
+	            'f14e' => 'fa-compass', 
+	            'f066' => 'fa-compress', 
+	            'f20e' => 'fa-connectdevelop', 
+	            'f26d' => 'fa-contao', 
+	            'f0c5' => 'fa-copy', 
+	            'f1f9' => 'fa-copyright', 
+	            'f25e' => 'fa-creative-commons', 
+	            'f09d' => 'fa-credit-card', 
+	            'f283' => 'fa-credit-card-alt', 
+	            'f125' => 'fa-crop', 
+	            'f05b' => 'fa-crosshairs', 
+	            'f13c' => 'fa-css3', 
+	            'f1b2' => 'fa-cube', 
+	            'f1b3' => 'fa-cubes', 
+	            'f0c4' => 'fa-cut', 
+	            'f0f5' => 'fa-cutlery', 
+	            'f0e4' => 'fa-dashboard', 
+	            'f210' => 'fa-dashcube', 
+	            'f1c0' => 'fa-database', 
+	            'f03b' => 'fa-dedent', 
+	            'f1a5' => 'fa-delicious', 
+	            'f108' => 'fa-desktop', 
+	            'f1bd' => 'fa-deviantart', 
+	            'f219' => 'fa-diamond', 
+	            'f1a6' => 'fa-digg', 
+	            'f155' => 'fa-dollar', 
+	            'f192' => 'fa-dot-circle-o', 
+	            'f019' => 'fa-download', 
+	            'f17d' => 'fa-dribbble', 
+	            'f16b' => 'fa-dropbox', 
+	            'f1a9' => 'fa-drupal', 
+	            'f282' => 'fa-edge', 
+	            'f044' => 'fa-edit', 
+	            'f052' => 'fa-eject', 
+	            'f141' => 'fa-ellipsis-h', 
+	            'f142' => 'fa-ellipsis-v', 
+	            'f1d1' => 'fa-empire', 
+	            'f0e0' => 'fa-envelope', 
+	            'f003' => 'fa-envelope-o', 
+	            'f199' => 'fa-envelope-square', 
+	            'f12d' => 'fa-eraser', 
+	            'f153' => 'fa-eur', 
+	            'f153' => 'fa-euro', 
+	            'f0ec' => 'fa-exchange', 
+	            'f12a' => 'fa-exclamation', 
+	            'f06a' => 'fa-exclamation-circle', 
+	            'f071' => 'fa-exclamation-triangle', 
+	            'f065' => 'fa-expand', 
+	            'f23e' => 'fa-expeditedssl', 
+	            'f08e' => 'fa-external-link', 
+	            'f14c' => 'fa-external-link-square', 
+	            'f06e' => 'fa-eye', 
+	            'f070' => 'fa-eye-slash', 
+	            'f1fb' => 'fa-eyedropper', 
+	            'f09a' => 'fa-facebook', 
+	            'f09a' => 'fa-facebook-f', 
+	            'f230' => 'fa-facebook-official', 
+	            'f082' => 'fa-facebook-square', 
+	            'f049' => 'fa-fast-backward', 
+	            'f050' => 'fa-fast-forward', 
+	            'f1ac' => 'fa-fax', 
+	            'f09e' => 'fa-feed', 
+	            'f182' => 'fa-female', 
+	            'f0fb' => 'fa-fighter-jet', 
+	            'f15b' => 'fa-file', 
+	            'f1c6' => 'fa-file-archive-o', 
+	            'f1c7' => 'fa-file-audio-o', 
+	            'f1c9' => 'fa-file-code-o', 
+	            'f1c3' => 'fa-file-excel-o', 
+	            'f1c5' => 'fa-file-image-o', 
+	            'f1c8' => 'fa-file-movie-o', 
+	            'f016' => 'fa-file-o', 
+	            'f1c1' => 'fa-file-pdf-o', 
+	            'f1c5' => 'fa-file-photo-o', 
+	            'f1c5' => 'fa-file-picture-o', 
+	            'f1c4' => 'fa-file-powerpoint-o', 
+	            'f1c7' => 'fa-file-sound-o', 
+	            'f15c' => 'fa-file-text', 
+	            'f0f6' => 'fa-file-text-o', 
+	            'f1c8' => 'fa-file-video-o', 
+	            'f1c2' => 'fa-file-word-o', 
+	            'f1c6' => 'fa-file-zip-o', 
+	            'f0c5' => 'fa-files-o', 
+	            'f008' => 'fa-film', 
+	            'f0b0' => 'fa-filter', 
+	            'f06d' => 'fa-fire', 
+	            'f134' => 'fa-fire-extinguisher', 
+	            'f269' => 'fa-firefox', 
+	            'f024' => 'fa-flag', 
+	            'f11e' => 'fa-flag-checkered', 
+	            'f11d' => 'fa-flag-o', 
+	            'f0e7' => 'fa-flash', 
+	            'f0c3' => 'fa-flask', 
+	            'f16e' => 'fa-flickr', 
+	            'f0c7' => 'fa-floppy-o', 
+	            'f07b' => 'fa-folder', 
+	            'f114' => 'fa-folder-o', 
+	            'f07c' => 'fa-folder-open', 
+	            'f115' => 'fa-folder-open-o', 
+	            'f031' => 'fa-font', 
+	            'f280' => 'fa-fonticons', 
+	            'f286' => 'fa-fort-awesome', 
+	            'f211' => 'fa-forumbee', 
+	            'f04e' => 'fa-forward', 
+	            'f180' => 'fa-foursquare', 
+	            'f119' => 'fa-frown-o', 
+	            'f1e3' => 'fa-futbol-o', 
+	            'f11b' => 'fa-gamepad', 
+	            'f0e3' => 'fa-gavel', 
+	            'f154' => 'fa-gbp', 
+	            'f1d1' => 'fa-ge', 
+	            'f013' => 'fa-gear', 
+	            'f085' => 'fa-gears', 
+	            'f22d' => 'fa-genderless', 
+	            'f265' => 'fa-get-pocket', 
+	            'f260' => 'fa-gg', 
+	            'f261' => 'fa-gg-circle', 
+	            'f06b' => 'fa-gift', 
+	            'f1d3' => 'fa-git', 
+	            'f1d2' => 'fa-git-square', 
+	            'f09b' => 'fa-github', 
+	            'f113' => 'fa-github-alt', 
+	            'f092' => 'fa-github-square', 
+	            'f184' => 'fa-gittip', 
+	            'f000' => 'fa-glass', 
+	            'f0ac' => 'fa-globe', 
+	            'f1a0' => 'fa-google', 
+	            'f0d5' => 'fa-google-plus', 
+	            'f0d4' => 'fa-google-plus-square', 
+	            'f1ee' => 'fa-google-wallet', 
+	            'f19d' => 'fa-graduation-cap', 
+	            'f184' => 'fa-gratipay', 
+	            'f0c0' => 'fa-group', 
+	            'f0fd' => 'fa-h-square', 
+	            'f1d4' => 'fa-hacker-news', 
+	            'f255' => 'fa-hand-grab-o', 
+	            'f258' => 'fa-hand-lizard-o', 
+	            'f0a7' => 'fa-hand-o-down', 
+	            'f0a5' => 'fa-hand-o-left', 
+	            'f0a4' => 'fa-hand-o-right', 
+	            'f0a6' => 'fa-hand-o-up', 
+	            'f256' => 'fa-hand-paper-o', 
+	            'f25b' => 'fa-hand-peace-o', 
+	            'f25a' => 'fa-hand-pointer-o', 
+	            'f255' => 'fa-hand-rock-o', 
+	            'f257' => 'fa-hand-scissors-o', 
+	            'f259' => 'fa-hand-spock-o', 
+	            'f256' => 'fa-hand-stop-o', 
+	            'f292' => 'fa-hashtag', 
+	            'f0a0' => 'fa-hdd-o', 
+	            'f1dc' => 'fa-header', 
+	            'f025' => 'fa-headphones', 
+	            'f004' => 'fa-heart', 
+	            'f08a' => 'fa-heart-o', 
+	            'f21e' => 'fa-heartbeat', 
+	            'f1da' => 'fa-history', 
+	            'f015' => 'fa-home', 
+	            'f0f8' => 'fa-hospital-o', 
+	            'f236' => 'fa-hotel', 
+	            'f254' => 'fa-hourglass', 
+	            'f251' => 'fa-hourglass-1', 
+	            'f252' => 'fa-hourglass-2', 
+	            'f253' => 'fa-hourglass-3', 
+	            'f253' => 'fa-hourglass-end', 
+	            'f252' => 'fa-hourglass-half', 
+	            'f250' => 'fa-hourglass-o', 
+	            'f251' => 'fa-hourglass-start', 
+	            'f27c' => 'fa-houzz', 
+	            'f13b' => 'fa-html5', 
+	            'f246' => 'fa-i-cursor', 
+	            'f20b' => 'fa-ils', 
+	            'f03e' => 'fa-image', 
+	            'f01c' => 'fa-inbox', 
+	            'f03c' => 'fa-indent', 
+	            'f275' => 'fa-industry', 
+	            'f129' => 'fa-info', 
+	            'f05a' => 'fa-info-circle', 
+	            'f156' => 'fa-inr', 
+	            'f16d' => 'fa-instagram', 
+	            'f19c' => 'fa-institution', 
+	            'f26b' => 'fa-internet-explorer', 
+	            'f224' => 'fa-intersex', 
+	            'f208' => 'fa-ioxhost', 
+	            'f033' => 'fa-italic', 
+	            'f1aa' => 'fa-joomla', 
+	            'f157' => 'fa-jpy', 
+	            'f1cc' => 'fa-jsfiddle', 
+	            'f084' => 'fa-key', 
+	            'f11c' => 'fa-keyboard-o', 
+	            'f159' => 'fa-krw', 
+	            'f1ab' => 'fa-language', 
+	            'f109' => 'fa-laptop', 
+	            'f202' => 'fa-lastfm', 
+	            'f203' => 'fa-lastfm-square', 
+	            'f06c' => 'fa-leaf', 
+	            'f212' => 'fa-leanpub', 
+	            'f0e3' => 'fa-legal', 
+	            'f094' => 'fa-lemon-o', 
+	            'f149' => 'fa-level-down', 
+	            'f148' => 'fa-level-up', 
+	            'f1cd' => 'fa-life-bouy', 
+	            'f1cd' => 'fa-life-buoy', 
+	            'f1cd' => 'fa-life-ring', 
+	            'f1cd' => 'fa-life-saver', 
+	            'f0eb' => 'fa-lightbulb-o', 
+	            'f201' => 'fa-line-chart', 
+	            'f0c1' => 'fa-link', 
+	            'f0e1' => 'fa-linkedin', 
+	            'f08c' => 'fa-linkedin-square', 
+	            'f17c' => 'fa-linux', 
+	            'f03a' => 'fa-list', 
+	            'f022' => 'fa-list-alt', 
+	            'f0cb' => 'fa-list-ol', 
+	            'f0ca' => 'fa-list-ul', 
+	            'f124' => 'fa-location-arrow', 
+	            'f023' => 'fa-lock', 
+	            'f175' => 'fa-long-arrow-down', 
+	            'f177' => 'fa-long-arrow-left', 
+	            'f178' => 'fa-long-arrow-right', 
+	            'f176' => 'fa-long-arrow-up', 
+	            'f0d0' => 'fa-magic', 
+	            'f076' => 'fa-magnet', 
+	            'f064' => 'fa-mail-forward', 
+	            'f112' => 'fa-mail-reply', 
+	            'f122' => 'fa-mail-reply-all', 
+	            'f183' => 'fa-male', 
+	            'f279' => 'fa-map', 
+	            'f041' => 'fa-map-marker', 
+	            'f278' => 'fa-map-o', 
+	            'f276' => 'fa-map-pin', 
+	            'f277' => 'fa-map-signs', 
+	            'f222' => 'fa-mars', 
+	            'f227' => 'fa-mars-double', 
+	            'f229' => 'fa-mars-stroke', 
+	            'f22b' => 'fa-mars-stroke-h', 
+	            'f22a' => 'fa-mars-stroke-v', 
+	            'f136' => 'fa-maxcdn', 
+	            'f20c' => 'fa-meanpath', 
+	            'f23a' => 'fa-medium', 
+	            'f0fa' => 'fa-medkit', 
+	            'f11a' => 'fa-meh-o', 
+	            'f223' => 'fa-mercury', 
+	            'f130' => 'fa-microphone', 
+	            'f131' => 'fa-microphone-slash', 
+	            'f068' => 'fa-minus', 
+	            'f056' => 'fa-minus-circle', 
+	            'f146' => 'fa-minus-square', 
+	            'f147' => 'fa-minus-square-o', 
+	            'f289' => 'fa-mixcloud', 
+	            'f10b' => 'fa-mobile', 
+	            'f10b' => 'fa-mobile-phone', 
+	            'f285' => 'fa-modx', 
+	            'f0d6' => 'fa-money', 
+	            'f186' => 'fa-moon-o', 
+	            'f19d' => 'fa-mortar-board', 
+	            'f21c' => 'fa-motorcycle', 
+	            'f245' => 'fa-mouse-pointer', 
+	            'f001' => 'fa-music', 
+	            'f0c9' => 'fa-navicon', 
+	            'f22c' => 'fa-neuter', 
+	            'f1ea' => 'fa-newspaper-o', 
+	            'f247' => 'fa-object-group', 
+	            'f248' => 'fa-object-ungroup', 
+	            'f263' => 'fa-odnoklassniki', 
+	            'f264' => 'fa-odnoklassniki-square', 
+	            'f23d' => 'fa-opencart', 
+	            'f19b' => 'fa-openid', 
+	            'f26a' => 'fa-opera', 
+	            'f23c' => 'fa-optin-monster', 
+	            'f03b' => 'fa-outdent', 
+	            'f18c' => 'fa-pagelines', 
+	            'f1fc' => 'fa-paint-brush', 
+	            'f1d8' => 'fa-paper-plane', 
+	            'f1d9' => 'fa-paper-plane-o', 
+	            'f0c6' => 'fa-paperclip', 
+	            'f1dd' => 'fa-paragraph', 
+	            'f0ea' => 'fa-paste', 
+	            'f04c' => 'fa-pause', 
+	            'f28b' => 'fa-pause-circle', 
+	            'f28c' => 'fa-pause-circle-o', 
+	            'f1b0' => 'fa-paw', 
+	            'f1ed' => 'fa-paypal', 
+	            'f040' => 'fa-pencil', 
+	            'f14b' => 'fa-pencil-square', 
+	            'f044' => 'fa-pencil-square-o', 
+	            'f295' => 'fa-percent', 
+	            'f095' => 'fa-phone', 
+	            'f098' => 'fa-phone-square', 
+	            'f03e' => 'fa-photo', 
+	            'f03e' => 'fa-picture-o', 
+	            'f200' => 'fa-pie-chart', 
+	            'f1a7' => 'fa-pied-piper', 
+	            'f1a8' => 'fa-pied-piper-alt', 
+	            'f0d2' => 'fa-pinterest', 
+	            'f231' => 'fa-pinterest-p', 
+	            'f0d3' => 'fa-pinterest-square', 
+	            'f072' => 'fa-plane', 
+	            'f04b' => 'fa-play', 
+	            'f144' => 'fa-play-circle', 
+	            'f01d' => 'fa-play-circle-o', 
+	            'f1e6' => 'fa-plug', 
+	            'f067' => 'fa-plus', 
+	            'f055' => 'fa-plus-circle', 
+	            'f0fe' => 'fa-plus-square', 
+	            'f196' => 'fa-plus-square-o', 
+	            'f011' => 'fa-power-off', 
+	            'f02f' => 'fa-print', 
+	            'f288' => 'fa-product-hunt', 
+	            'f12e' => 'fa-puzzle-piece', 
+	            'f1d6' => 'fa-qq', 
+	            'f029' => 'fa-qrcode', 
+	            'f128' => 'fa-question', 
+	            'f059' => 'fa-question-circle', 
+	            'f10d' => 'fa-quote-left', 
+	            'f10e' => 'fa-quote-right', 
+	            'f1d0' => 'fa-ra', 
+	            'f074' => 'fa-random', 
+	            'f1d0' => 'fa-rebel', 
+	            'f1b8' => 'fa-recycle', 
+	            'f1a1' => 'fa-reddit', 
+	            'f281' => 'fa-reddit-alien', 
+	            'f1a2' => 'fa-reddit-square', 
+	            'f021' => 'fa-refresh', 
+	            'f25d' => 'fa-registered', 
+	            'f00d' => 'fa-remove', 
+	            'f18b' => 'fa-renren', 
+	            'f0c9' => 'fa-reorder', 
+	            'f01e' => 'fa-repeat', 
+	            'f112' => 'fa-reply', 
+	            'f122' => 'fa-reply-all', 
+	            'f079' => 'fa-retweet', 
+	            'f157' => 'fa-rmb', 
+	            'f018' => 'fa-road', 
+	            'f135' => 'fa-rocket', 
+	            'f0e2' => 'fa-rotate-left', 
+	            'f01e' => 'fa-rotate-right', 
+	            'f158' => 'fa-rouble', 
+	            'f09e' => 'fa-rss', 
+	            'f143' => 'fa-rss-square', 
+	            'f158' => 'fa-rub', 
+	            'f158' => 'fa-ruble', 
+	            'f156' => 'fa-rupee', 
+	            'f267' => 'fa-safari', 
+	            'f0c7' => 'fa-save', 
+	            'f0c4' => 'fa-scissors', 
+	            'f28a' => 'fa-scribd', 
+	            'f002' => 'fa-search', 
+	            'f010' => 'fa-search-minus', 
+	            'f00e' => 'fa-search-plus', 
+	            'f213' => 'fa-sellsy', 
+	            'f1d8' => 'fa-send', 
+	            'f1d9' => 'fa-send-o', 
+	            'f233' => 'fa-server', 
+	            'f064' => 'fa-share', 
+	            'f1e0' => 'fa-share-alt', 
+	            'f1e1' => 'fa-share-alt-square', 
+	            'f14d' => 'fa-share-square', 
+	            'f045' => 'fa-share-square-o', 
+	            'f20b' => 'fa-shekel', 
+	            'f20b' => 'fa-sheqel', 
+	            'f132' => 'fa-shield', 
+	            'f21a' => 'fa-ship', 
+	            'f214' => 'fa-shirtsinbulk', 
+	            'f290' => 'fa-shopping-bag', 
+	            'f291' => 'fa-shopping-basket', 
+	            'f07a' => 'fa-shopping-cart', 
+	            'f090' => 'fa-sign-in', 
+	            'f08b' => 'fa-sign-out', 
+	            'f012' => 'fa-signal', 
+	            'f215' => 'fa-simplybuilt', 
+	            'f0e8' => 'fa-sitemap', 
+	            'f216' => 'fa-skyatlas', 
+	            'f17e' => 'fa-skype', 
+	            'f198' => 'fa-slack', 
+	            'f1de' => 'fa-sliders', 
+	            'f1e7' => 'fa-slideshare', 
+	            'f118' => 'fa-smile-o', 
+	            'f1e3' => 'fa-soccer-ball-o', 
+	            'f0dc' => 'fa-sort', 
+	            'f15d' => 'fa-sort-alpha-asc', 
+	            'f15e' => 'fa-sort-alpha-desc', 
+	            'f160' => 'fa-sort-amount-asc', 
+	            'f161' => 'fa-sort-amount-desc', 
+	            'f0de' => 'fa-sort-asc', 
+	            'f0dd' => 'fa-sort-desc', 
+	            'f0dd' => 'fa-sort-down', 
+	            'f162' => 'fa-sort-numeric-asc', 
+	            'f163' => 'fa-sort-numeric-desc', 
+	            'f0de' => 'fa-sort-up', 
+	            'f1be' => 'fa-soundcloud', 
+	            'f197' => 'fa-space-shuttle', 
+	            'f110' => 'fa-spinner', 
+	            'f1b1' => 'fa-spoon', 
+	            'f1bc' => 'fa-spotify', 
+	            'f0c8' => 'fa-square', 
+	            'f096' => 'fa-square-o', 
+	            'f18d' => 'fa-stack-exchange', 
+	            'f16c' => 'fa-stack-overflow', 
+	            'f005' => 'fa-star', 
+	            'f089' => 'fa-star-half', 
+	            'f123' => 'fa-star-half-empty', 
+	            'f123' => 'fa-star-half-full', 
+	            'f123' => 'fa-star-half-o', 
+	            'f006' => 'fa-star-o', 
+	            'f1b6' => 'fa-steam', 
+	            'f1b7' => 'fa-steam-square', 
+	            'f048' => 'fa-step-backward', 
+	            'f051' => 'fa-step-forward', 
+	            'f0f1' => 'fa-stethoscope', 
+	            'f249' => 'fa-sticky-note', 
+	            'f24a' => 'fa-sticky-note-o', 
+	            'f04d' => 'fa-stop', 
+	            'f28d' => 'fa-stop-circle', 
+	            'f28e' => 'fa-stop-circle-o', 
+	            'f21d' => 'fa-street-view', 
+	            'f0cc' => 'fa-strikethrough', 
+	            'f1a4' => 'fa-stumbleupon', 
+	            'f1a3' => 'fa-stumbleupon-circle', 
+	            'f12c' => 'fa-subscript', 
+	            'f239' => 'fa-subway', 
+	            'f0f2' => 'fa-suitcase', 
+	            'f185' => 'fa-sun-o', 
+	            'f12b' => 'fa-superscript', 
+	            'f1cd' => 'fa-support', 
+	            'f0ce' => 'fa-table', 
+	            'f10a' => 'fa-tablet', 
+	            'f0e4' => 'fa-tachometer', 
+	            'f02b' => 'fa-tag', 
+	            'f02c' => 'fa-tags', 
+	            'f0ae' => 'fa-tasks', 
+	            'f1ba' => 'fa-taxi', 
+	            'f26c' => 'fa-television', 
+	            'f1d5' => 'fa-tencent-weibo', 
+	            'f120' => 'fa-terminal', 
+	            'f034' => 'fa-text-height', 
+	            'f035' => 'fa-text-width', 
+	            'f00a' => 'fa-th', 
+	            'f009' => 'fa-th-large', 
+	            'f00b' => 'fa-th-list', 
+	            'f08d' => 'fa-thumb-tack', 
+	            'f165' => 'fa-thumbs-down', 
+	            'f088' => 'fa-thumbs-o-down', 
+	            'f087' => 'fa-thumbs-o-up', 
+	            'f164' => 'fa-thumbs-up', 
+	            'f145' => 'fa-ticket', 
+	            'f00d' => 'fa-times', 
+	            'f057' => 'fa-times-circle', 
+	            'f05c' => 'fa-times-circle-o', 
+	            'f043' => 'fa-tint', 
+	            'f150' => 'fa-toggle-down', 
+	            'f191' => 'fa-toggle-left', 
+	            'f204' => 'fa-toggle-off', 
+	            'f205' => 'fa-toggle-on', 
+	            'f152' => 'fa-toggle-right', 
+	            'f151' => 'fa-toggle-up', 
+	            'f25c' => 'fa-trademark', 
+	            'f238' => 'fa-train', 
+	            'f224' => 'fa-transgender', 
+	            'f225' => 'fa-transgender-alt', 
+	            'f1f8' => 'fa-trash', 
+	            'f014' => 'fa-trash-o', 
+	            'f1bb' => 'fa-tree', 
+	            'f181' => 'fa-trello', 
+	            'f262' => 'fa-tripadvisor', 
+	            'f091' => 'fa-trophy', 
+	            'f0d1' => 'fa-truck', 
+	            'f195' => 'fa-try', 
+	            'f1e4' => 'fa-tty', 
+	            'f173' => 'fa-tumblr', 
+	            'f174' => 'fa-tumblr-square', 
+	            'f195' => 'fa-turkish-lira', 
+	            'f26c' => 'fa-tv', 
+	            'f1e8' => 'fa-twitch', 
+	            'f099' => 'fa-twitter', 
+	            'f081' => 'fa-twitter-square', 
+	            'f0e9' => 'fa-umbrella', 
+	            'f0cd' => 'fa-underline', 
+	            'f0e2' => 'fa-undo', 
+	            'f19c' => 'fa-university', 
+	            'f127' => 'fa-unlink', 
+	            'f09c' => 'fa-unlock', 
+	            'f13e' => 'fa-unlock-alt', 
+	            'f0dc' => 'fa-unsorted', 
+	            'f093' => 'fa-upload', 
+	            'f287' => 'fa-usb', 
+	            'f155' => 'fa-usd', 
+	            'f007' => 'fa-user', 
+	            'f0f0' => 'fa-user-md', 
+	            'f234' => 'fa-user-plus', 
+	            'f21b' => 'fa-user-secret', 
+	            'f235' => 'fa-user-times', 
+	            'f0c0' => 'fa-users', 
+	            'f221' => 'fa-venus', 
+	            'f226' => 'fa-venus-double', 
+	            'f228' => 'fa-venus-mars', 
+	            'f237' => 'fa-viacoin', 
+	            'f03d' => 'fa-video-camera', 
+	            'f27d' => 'fa-vimeo', 
+	            'f194' => 'fa-vimeo-square', 
+	            'f1ca' => 'fa-vine', 
+	            'f189' => 'fa-vk', 
+	            'f027' => 'fa-volume-down', 
+	            'f026' => 'fa-volume-off', 
+	            'f028' => 'fa-volume-up', 
+	            'f071' => 'fa-warning', 
+	            'f1d7' => 'fa-wechat', 
+	            'f18a' => 'fa-weibo', 
+	            'f1d7' => 'fa-weixin', 
+	            'f232' => 'fa-whatsapp', 
+	            'f193' => 'fa-wheelchair', 
+	            'f1eb' => 'fa-wifi', 
+	            'f266' => 'fa-wikipedia-w', 
+	            'f17a' => 'fa-windows', 
+	            'f159' => 'fa-won', 
+	            'f19a' => 'fa-wordpress', 
+	            'f0ad' => 'fa-wrench', 
+	            'f168' => 'fa-xing', 
+	            'f169' => 'fa-xing-square', 
+	            'f23b' => 'fa-y-combinator', 
+	            'f1d4' => 'fa-y-combinator-square', 
+	            'f19e' => 'fa-yahoo', 
+	            'f23b' => 'fa-yc', 
+	            'f1d4' => 'fa-yc-square', 
+	            'f1e9' => 'fa-yelp', 
+	            'f157' => 'fa-yen', 
+	            'f167' => 'fa-youtube', 
+	            'f16a' => 'fa-youtube-play', 
+	            'f166' => 'fa-youtube-square',
+            );
 
             // GIZMO
             $gizmo_list = '<li><i class="ss-cursor"></i><span class="icon-name">ss-cursor</span></li><li><i class="ss-crosshair"></i><span class="icon-name">ss-crosshair</span></li><li><i class="ss-search"></i><span class="icon-name">ss-search</span></li><li><i class="ss-zoomin"></i><span class="icon-name">ss-zoomin</span></li><li><i class="ss-zoomout"></i><span class="icon-name">ss-zoomout</span></li><li><i class="ss-view"></i><span class="icon-name">ss-view</span></li><li><i class="ss-attach"></i><span class="icon-name">ss-attach</span></li><li><i class="ss-link"></i><span class="icon-name">ss-link</span></li><li><i class="ss-unlink"></i><span class="icon-name">ss-unlink</span></li><li><i class="ss-move"></i><span class="icon-name">ss-move</span></li><li><i class="ss-write"></i><span class="icon-name">ss-write</span></li><li><i class="ss-writingdisabled"></i><span class="icon-name">ss-writingdisabled</span></li><li><i class="ss-erase"></i><span class="icon-name">ss-erase</span></li><li><i class="ss-compose"></i><span class="icon-name">ss-compose</span></li><li><i class="ss-lock"></i><span class="icon-name">ss-lock</span></li><li><i class="ss-unlock"></i><span class="icon-name">ss-unlock</span></li><li><i class="ss-key"></i><span class="icon-name">ss-key</span></li><li><i class="ss-backspace"></i><span class="icon-name">ss-backspace</span></li><li><i class="ss-ban"></i><span class="icon-name">ss-ban</span></li><li><i class="ss-smoking"></i><span class="icon-name">ss-smoking</span></li><li><i class="ss-nosmoking"></i><span class="icon-name">ss-nosmoking</span></li><li><i class="ss-trash"></i><span class="icon-name">ss-trash</span></li><li><i class="ss-target"></i><span class="icon-name">ss-target</span></li><li><i class="ss-tag"></i><span class="icon-name">ss-tag</span></li><li><i class="ss-bookmark"></i><span class="icon-name">ss-bookmark</span></li><li><i class="ss-flag"></i><span class="icon-name">ss-flag</span></li><li><i class="ss-like"></i><span class="icon-name">ss-like</span></li><li><i class="ss-dislike"></i><span class="icon-name">ss-dislike</span></li><li><i class="ss-heart"></i><span class="icon-name">ss-heart</span></li><li><i class="ss-star"></i><span class="icon-name">ss-star</span></li><li><i class="ss-sample"></i><span class="icon-name">ss-sample</span></li><li><i class="ss-crop"></i><span class="icon-name">ss-crop</span></li><li><i class="ss-layers"></i><span class="icon-name">ss-layers</span></li><li><i class="ss-layergroup"></i><span class="icon-name">ss-layergroup</span></li><li><i class="ss-pen"></i><span class="icon-name">ss-pen</span></li><li><i class="ss-bezier"></i><span class="icon-name">ss-bezier</span></li><li><i class="ss-pixels"></i><span class="icon-name">ss-pixels</span></li><li><i class="ss-phone"></i><span class="icon-name">ss-phone</span></li><li><i class="ss-phonedisabled"></i><span class="icon-name">ss-phonedisabled</span></li><li><i class="ss-touchtonephone"></i><span class="icon-name">ss-touchtonephone</span></li><li><i class="ss-mail"></i><span class="icon-name">ss-mail</span></li><li><i class="ss-inbox"></i><span class="icon-name">ss-inbox</span></li><li><i class="ss-outbox"></i><span class="icon-name">ss-outbox</span></li><li><i class="ss-chat"></i><span class="icon-name">ss-chat</span></li><li><i class="ss-user"></i><span class="icon-name">ss-user</span></li><li><i class="ss-users"></i><span class="icon-name">ss-users</span></li><li><i class="ss-usergroup"></i><span class="icon-name">ss-usergroup</span></li><li><i class="ss-businessuser"></i><span class="icon-name">ss-businessuser</span></li><li><i class="ss-man"></i><span class="icon-name">ss-man</span></li><li><i class="ss-male"></i><span class="icon-name">ss-male</span></li><li><i class="ss-woman"></i><span class="icon-name">ss-woman</span></li><li><i class="ss-female"></i><span class="icon-name">ss-female</span></li><li><i class="ss-raisedhand"></i><span class="icon-name">ss-raisedhand</span></li><li><i class="ss-hand"></i><span class="icon-name">ss-hand</span></li><li><i class="ss-pointup"></i><span class="icon-name">ss-pointup</span></li><li><i class="ss-pointupright"></i><span class="icon-name">ss-pointupright</span></li><li><i class="ss-pointright"></i><span class="icon-name">ss-pointright</span></li><li><i class="ss-pointdownright"></i><span class="icon-name">ss-pointdownright</span></li><li><i class="ss-pointdown"></i><span class="icon-name">ss-pointdown</span></li><li><i class="ss-pointdownleft"></i><span class="icon-name">ss-pointdownleft</span></li><li><i class="ss-pointleft"></i><span class="icon-name">ss-pointleft</span></li><li><i class="ss-pointupleft"></i><span class="icon-name">ss-pointupleft</span></li><li><i class="ss-cart"></i><span class="icon-name">ss-cart</span></li><li><i class="ss-creditcard"></i><span class="icon-name">ss-creditcard</span></li><li><i class="ss-calculator"></i><span class="icon-name">ss-calculator</span></li><li><i class="ss-barchart"></i><span class="icon-name">ss-barchart</span></li><li><i class="ss-piechart"></i><span class="icon-name">ss-piechart</span></li><li><i class="ss-box"></i><span class="icon-name">ss-box</span></li><li><i class="ss-home"></i><span class="icon-name">ss-home</span></li><li><i class="ss-globe"></i><span class="icon-name">ss-globe</span></li><li><i class="ss-navigate"></i><span class="icon-name">ss-navigate</span></li><li><i class="ss-compass"></i><span class="icon-name">ss-compass</span></li><li><i class="ss-signpost"></i><span class="icon-name">ss-signpost</span></li><li><i class="ss-location"></i><span class="icon-name">ss-location</span></li><li><i class="ss-floppydisk"></i><span class="icon-name">ss-floppydisk</span></li><li><i class="ss-database"></i><span class="icon-name">ss-database</span></li><li><i class="ss-hdd"></i><span class="icon-name">ss-hdd</span></li><li><i class="ss-microchip"></i><span class="icon-name">ss-microchip</span></li><li><i class="ss-music"></i><span class="icon-name">ss-music</span></li><li><i class="ss-headphones"></i><span class="icon-name">ss-headphones</span></li><li><i class="ss-discdrive"></i><span class="icon-name">ss-discdrive</span></li><li><i class="ss-volume"></i><span class="icon-name">ss-volume</span></li><li><i class="ss-lowvolume"></i><span class="icon-name">ss-lowvolume</span></li><li><i class="ss-mediumvolume"></i><span class="icon-name">ss-mediumvolume</span></li><li><i class="ss-highvolume"></i><span class="icon-name">ss-highvolume</span></li><li><i class="ss-airplay"></i><span class="icon-name">ss-airplay</span></li><li><i class="ss-camera"></i><span class="icon-name">ss-camera</span></li><li><i class="ss-picture"></i><span class="icon-name">ss-picture</span></li><li><i class="ss-video"></i><span class="icon-name">ss-video</span></li><li><i class="ss-webcam"></i><span class="icon-name">ss-webcam</span></li><li><i class="ss-film"></i><span class="icon-name">ss-film</span></li><li><i class="ss-playvideo"></i><span class="icon-name">ss-playvideo</span></li><li><i class="ss-videogame"></i><span class="icon-name">ss-videogame</span></li><li><i class="ss-play"></i><span class="icon-name">ss-play</span></li><li><i class="ss-pause"></i><span class="icon-name">ss-pause</span></li><li><i class="ss-stop"></i><span class="icon-name">ss-stop</span></li><li><i class="ss-record"></i><span class="icon-name">ss-record</span></li><li><i class="ss-rewind"></i><span class="icon-name">ss-rewind</span></li><li><i class="ss-fastforward"></i><span class="icon-name">ss-fastforward</span></li><li><i class="ss-skipback"></i><span class="icon-name">ss-skipback</span></li><li><i class="ss-skipforward"></i><span class="icon-name">ss-skipforward</span></li><li><i class="ss-eject"></i><span class="icon-name">ss-eject</span></li><li><i class="ss-repeat"></i><span class="icon-name">ss-repeat</span></li><li><i class="ss-replay"></i><span class="icon-name">ss-replay</span></li><li><i class="ss-shuffle"></i><span class="icon-name">ss-shuffle</span></li><li><i class="ss-index"></i><span class="icon-name">ss-index</span></li><li><i class="ss-storagebox"></i><span class="icon-name">ss-storagebox</span></li><li><i class="ss-book"></i><span class="icon-name">ss-book</span></li><li><i class="ss-notebook"></i><span class="icon-name">ss-notebook</span></li><li><i class="ss-newspaper"></i><span class="icon-name">ss-newspaper</span></li><li><i class="ss-gridlines"></i><span class="icon-name">ss-gridlines</span></li><li><i class="ss-rows"></i><span class="icon-name">ss-rows</span></li><li><i class="ss-columns"></i><span class="icon-name">ss-columns</span></li><li><i class="ss-thumbnails"></i><span class="icon-name">ss-thumbnails</span></li><li><i class="ss-mouse"></i><span class="icon-name">ss-mouse</span></li><li><i class="ss-usb"></i><span class="icon-name">ss-usb</span></li><li><i class="ss-desktop"></i><span class="icon-name">ss-desktop</span></li><li><i class="ss-laptop"></i><span class="icon-name">ss-laptop</span></li><li><i class="ss-tablet"></i><span class="icon-name">ss-tablet</span></li><li><i class="ss-smartphone"></i><span class="icon-name">ss-smartphone</span></li><li><i class="ss-cell"></i><span class="icon-name">ss-cell</span></li><li><i class="ss-battery"></i><span class="icon-name">ss-battery</span></li><li><i class="ss-highbattery"></i><span class="icon-name">ss-highbattery</span></li><li><i class="ss-mediumbattery"></i><span class="icon-name">ss-mediumbattery</span></li><li><i class="ss-lowbattery"></i><span class="icon-name">ss-lowbattery</span></li><li><i class="ss-chargingbattery"></i><span class="icon-name">ss-chargingbattery</span></li><li><i class="ss-lightbulb"></i><span class="icon-name">ss-lightbulb</span></li><li><i class="ss-washer"></i><span class="icon-name">ss-washer</span></li><li><i class="ss-downloadcloud"></i><span class="icon-name">ss-downloadcloud</span></li><li><i class="ss-download"></i><span class="icon-name">ss-download</span></li><li><i class="ss-downloadbox"></i><span class="icon-name">ss-downloadbox</span></li><li><i class="ss-uploadcloud"></i><span class="icon-name">ss-uploadcloud</span></li><li><i class="ss-upload"></i><span class="icon-name">ss-upload</span></li><li><i class="ss-uploadbox"></i><span class="icon-name">ss-uploadbox</span></li><li><i class="ss-fork"></i><span class="icon-name">ss-fork</span></li><li><i class="ss-merge"></i><span class="icon-name">ss-merge</span></li><li><i class="ss-refresh"></i><span class="icon-name">ss-refresh</span></li><li><i class="ss-sync"></i><span class="icon-name">ss-sync</span></li><li><i class="ss-loading"></i><span class="icon-name">ss-loading</span></li><li><i class="ss-file"></i><span class="icon-name">ss-file</span></li><li><i class="ss-files"></i><span class="icon-name">ss-files</span></li><li><i class="ss-addfile"></i><span class="icon-name">ss-addfile</span></li><li><i class="ss-removefile"></i><span class="icon-name">ss-removefile</span></li><li><i class="ss-checkfile"></i><span class="icon-name">ss-checkfile</span></li><li><i class="ss-deletefile"></i><span class="icon-name">ss-deletefile</span></li><li><i class="ss-exe"></i><span class="icon-name">ss-exe</span></li><li><i class="ss-zip"></i><span class="icon-name">ss-zip</span></li><li><i class="ss-doc"></i><span class="icon-name">ss-doc</span></li><li><i class="ss-pdf"></i><span class="icon-name">ss-pdf</span></li><li><i class="ss-jpg"></i><span class="icon-name">ss-jpg</span></li><li><i class="ss-png"></i><span class="icon-name">ss-png</span></li><li><i class="ss-mp3"></i><span class="icon-name">ss-mp3</span></li><li><i class="ss-rar"></i><span class="icon-name">ss-rar</span></li><li><i class="ss-gif"></i><span class="icon-name">ss-gif</span></li><li><i class="ss-folder"></i><span class="icon-name">ss-folder</span></li><li><i class="ss-openfolder"></i><span class="icon-name">ss-openfolder</span></li><li><i class="ss-downloadfolder"></i><span class="icon-name">ss-downloadfolder</span></li><li><i class="ss-uploadfolder"></i><span class="icon-name">ss-uploadfolder</span></li><li><i class="ss-quote"></i><span class="icon-name">ss-quote</span></li><li><i class="ss-unquote"></i><span class="icon-name">ss-unquote</span></li><li><i class="ss-print"></i><span class="icon-name">ss-print</span></li><li><i class="ss-copier"></i><span class="icon-name">ss-copier</span></li><li><i class="ss-fax"></i><span class="icon-name">ss-fax</span></li><li><i class="ss-scanner"></i><span class="icon-name">ss-scanner</span></li><li><i class="ss-printregistration"></i><span class="icon-name">ss-printregistration</span></li><li><i class="ss-shredder"></i><span class="icon-name">ss-shredder</span></li><li><i class="ss-expand"></i><span class="icon-name">ss-expand</span></li><li><i class="ss-contract"></i><span class="icon-name">ss-contract</span></li><li><i class="ss-help"></i><span class="icon-name">ss-help</span></li><li><i class="ss-info"></i><span class="icon-name">ss-info</span></li><li><i class="ss-alert"></i><span class="icon-name">ss-alert</span></li><li><i class="ss-caution"></i><span class="icon-name">ss-caution</span></li><li><i class="ss-logout"></i><span class="icon-name">ss-logout</span></li><li><i class="ss-login"></i><span class="icon-name">ss-login</span></li><li><i class="ss-scaleup"></i><span class="icon-name">ss-scaleup</span></li><li><i class="ss-scaledown"></i><span class="icon-name">ss-scaledown</span></li><li><i class="ss-plus"></i><span class="icon-name">ss-plus</span></li><li><i class="ss-hyphen"></i><span class="icon-name">ss-hyphen</span></li><li><i class="ss-check"></i><span class="icon-name">ss-check</span></li><li><i class="ss-delete"></i><span class="icon-name">ss-delete</span></li><li><i class="ss-notifications"></i><span class="icon-name">ss-notifications</span></li><li><i class="ss-notificationsdisabled"></i><span class="icon-name">ss-notificationsdisabled</span></li><li><i class="ss-clock"></i><span class="icon-name">ss-clock</span></li><li><i class="ss-stopwatch"></i><span class="icon-name">ss-stopwatch</span></li><li><i class="ss-alarmclock"></i><span class="icon-name">ss-alarmclock</span></li><li><i class="ss-egg"></i><span class="icon-name">ss-egg</span></li><li><i class="ss-eggs"></i><span class="icon-name">ss-eggs</span></li><li><i class="ss-cheese"></i><span class="icon-name">ss-cheese</span></li><li><i class="ss-chickenleg"></i><span class="icon-name">ss-chickenleg</span></li><li><i class="ss-pizzapie"></i><span class="icon-name">ss-pizzapie</span></li><li><i class="ss-pizza"></i><span class="icon-name">ss-pizza</span></li><li><i class="ss-cheesepizza"></i><span class="icon-name">ss-cheesepizza</span></li><li><i class="ss-frenchfries"></i><span class="icon-name">ss-frenchfries</span></li><li><i class="ss-apple"></i><span class="icon-name">ss-apple</span></li><li><i class="ss-carrot"></i><span class="icon-name">ss-carrot</span></li><li><i class="ss-broccoli"></i><span class="icon-name">ss-broccoli</span></li><li><i class="ss-cucumber"></i><span class="icon-name">ss-cucumber</span></li><li><i class="ss-orange"></i><span class="icon-name">ss-orange</span></li><li><i class="ss-lemon"></i><span class="icon-name">ss-lemon</span></li><li><i class="ss-onion"></i><span class="icon-name">ss-onion</span></li><li><i class="ss-bellpepper"></i><span class="icon-name">ss-bellpepper</span></li><li><i class="ss-peas"></i><span class="icon-name">ss-peas</span></li><li><i class="ss-grapes"></i><span class="icon-name">ss-grapes</span></li><li><i class="ss-strawberry"></i><span class="icon-name">ss-strawberry</span></li><li><i class="ss-bread"></i><span class="icon-name">ss-bread</span></li><li><i class="ss-mug"></i><span class="icon-name">ss-mug</span></li><li><i class="ss-mugs"></i><span class="icon-name">ss-mugs</span></li><li><i class="ss-espresso"></i><span class="icon-name">ss-espresso</span></li><li><i class="ss-macchiato"></i><span class="icon-name">ss-macchiato</span></li><li><i class="ss-cappucino"></i><span class="icon-name">ss-cappucino</span></li><li><i class="ss-latte"></i><span class="icon-name">ss-latte</span></li><li><i class="ss-icedcoffee"></i><span class="icon-name">ss-icedcoffee</span></li><li><i class="ss-coffeebean"></i><span class="icon-name">ss-coffeebean</span></li><li><i class="ss-coffeemilk"></i><span class="icon-name">ss-coffeemilk</span></li><li><i class="ss-coffeefoam"></i><span class="icon-name">ss-coffeefoam</span></li><li><i class="ss-coffeesugar"></i><span class="icon-name">ss-coffeesugar</span></li><li><i class="ss-sugarpackets"></i><span class="icon-name">ss-sugarpackets</span></li><li><i class="ss-capsule"></i><span class="icon-name">ss-capsule</span></li><li><i class="ss-capsulerecycling"></i><span class="icon-name">ss-capsulerecycling</span></li><li><i class="ss-insertcapsule"></i><span class="icon-name">ss-insertcapsule</span></li><li><i class="ss-tea"></i><span class="icon-name">ss-tea</span></li><li><i class="ss-teabag"></i><span class="icon-name">ss-teabag</span></li><li><i class="ss-jug"></i><span class="icon-name">ss-jug</span></li><li><i class="ss-pitcher"></i><span class="icon-name">ss-pitcher</span></li><li><i class="ss-kettle"></i><span class="icon-name">ss-kettle</span></li><li><i class="ss-wineglass"></i><span class="icon-name">ss-wineglass</span></li><li><i class="ss-sugar"></i><span class="icon-name">ss-sugar</span></li><li><i class="ss-oven"></i><span class="icon-name">ss-oven</span></li><li><i class="ss-stove"></i><span class="icon-name">ss-stove</span></li><li><i class="ss-vent"></i><span class="icon-name">ss-vent</span></li><li><i class="ss-exhaust"></i><span class="icon-name">ss-exhaust</span></li><li><i class="ss-steam"></i><span class="icon-name">ss-steam</span></li><li><i class="ss-dishwasher"></i><span class="icon-name">ss-dishwasher</span></li><li><i class="ss-toaster"></i><span class="icon-name">ss-toaster</span></li><li><i class="ss-microwave"></i><span class="icon-name">ss-microwave</span></li><li><i class="ss-electrickettle"></i><span class="icon-name">ss-electrickettle</span></li><li><i class="ss-refrigerator"></i><span class="icon-name">ss-refrigerator</span></li><li><i class="ss-freezer"></i><span class="icon-name">ss-freezer</span></li><li><i class="ss-utensils"></i><span class="icon-name">ss-utensils</span></li><li><i class="ss-cookingutensils"></i><span class="icon-name">ss-cookingutensils</span></li><li><i class="ss-whisk"></i><span class="icon-name">ss-whisk</span></li><li><i class="ss-pizzacutter"></i><span class="icon-name">ss-pizzacutter</span></li><li><i class="ss-measuringcup"></i><span class="icon-name">ss-measuringcup</span></li><li><i class="ss-colander"></i><span class="icon-name">ss-colander</span></li><li><i class="ss-eggtimer"></i><span class="icon-name">ss-eggtimer</span></li><li><i class="ss-platter"></i><span class="icon-name">ss-platter</span></li><li><i class="ss-plates"></i><span class="icon-name">ss-plates</span></li><li><i class="ss-steamplate"></i><span class="icon-name">ss-steamplate</span></li><li><i class="ss-cups"></i><span class="icon-name">ss-cups</span></li><li><i class="ss-steamglass"></i><span class="icon-name">ss-steamglass</span></li><li><i class="ss-pot"></i><span class="icon-name">ss-pot</span></li><li><i class="ss-steampot"></i><span class="icon-name">ss-steampot</span></li><li><i class="ss-chef"></i><span class="icon-name">ss-chef</span></li><li><i class="ss-weathervane"></i><span class="icon-name">ss-weathervane</span></li><li><i class="ss-thermometer"></i><span class="icon-name">ss-thermometer</span></li><li><i class="ss-thermometerup"></i><span class="icon-name">ss-thermometerup</span></li><li><i class="ss-thermometerdown"></i><span class="icon-name">ss-thermometerdown</span></li><li><i class="ss-droplet"></i><span class="icon-name">ss-droplet</span></li><li><i class="ss-sunrise"></i><span class="icon-name">ss-sunrise</span></li><li><i class="ss-sunset"></i><span class="icon-name">ss-sunset</span></li><li><i class="ss-sun"></i><span class="icon-name">ss-sun</span></li><li><i class="ss-cloud"></i><span class="icon-name">ss-cloud</span></li><li><i class="ss-clouds"></i><span class="icon-name">ss-clouds</span></li><li><i class="ss-partlycloudy"></i><span class="icon-name">ss-partlycloudy</span></li><li><i class="ss-rain"></i><span class="icon-name">ss-rain</span></li><li><i class="ss-rainheavy"></i><span class="icon-name">ss-rainheavy</span></li><li><i class="ss-lightning"></i><span class="icon-name">ss-lightning</span></li><li><i class="ss-thunderstorm"></i><span class="icon-name">ss-thunderstorm</span></li><li><i class="ss-umbrella"></i><span class="icon-name">ss-umbrella</span></li><li><i class="ss-rainumbrella"></i><span class="icon-name">ss-rainumbrella</span></li><li><i class="ss-rainbow"></i><span class="icon-name">ss-rainbow</span></li><li><i class="ss-rainbowclouds"></i><span class="icon-name">ss-rainbowclouds</span></li><li><i class="ss-fog"></i><span class="icon-name">ss-fog</span></li><li><i class="ss-wind"></i><span class="icon-name">ss-wind</span></li><li><i class="ss-tornado"></i><span class="icon-name">ss-tornado</span></li><li><i class="ss-snowflake"></i><span class="icon-name">ss-snowflake</span></li><li><i class="ss-snowcrystal"></i><span class="icon-name">ss-snowcrystal</span></li><li><i class="ss-lightsnow"></i><span class="icon-name">ss-lightsnow</span></li><li><i class="ss-snow"></i><span class="icon-name">ss-snow</span></li><li><i class="ss-heavysnow"></i><span class="icon-name">ss-heavysnow</span></li><li><i class="ss-hail"></i><span class="icon-name">ss-hail</span></li><li><i class="ss-crescentmoon"></i><span class="icon-name">ss-crescentmoon</span></li><li><i class="ss-waxingcrescentmoon"></i><span class="icon-name">ss-waxingcrescentmoon</span></li><li><i class="ss-firstquartermoon"></i><span class="icon-name">ss-firstquartermoon</span></li><li><i class="ss-waxinggibbousmoon"></i><span class="icon-name">ss-waxinggibbousmoon</span></li><li><i class="ss-waninggibbousmoon"></i><span class="icon-name">ss-waninggibbousmoon</span></li><li><i class="ss-lastquartermoon"></i><span class="icon-name">ss-lastquartermoon</span></li><li><i class="ss-waningcrescentmoon"></i><span class="icon-name">ss-waningcrescentmoon</span></li><li><i class="ss-fan"></i><span class="icon-name">ss-fan</span></li><li><i class="ss-bike"></i><span class="icon-name">ss-bike</span></li><li><i class="ss-wheelchair"></i><span class="icon-name">ss-wheelchair</span></li><li><i class="ss-briefcase"></i><span class="icon-name">ss-briefcase</span></li><li><i class="ss-hanger"></i><span class="icon-name">ss-hanger</span></li><li><i class="ss-comb"></i><span class="icon-name">ss-comb</span></li><li><i class="ss-medicalcross"></i><span class="icon-name">ss-medicalcross</span></li><li><i class="ss-up"></i><span class="icon-name">ss-up</span></li><li><i class="ss-upright"></i><span class="icon-name">ss-upright</span></li><li><i class="ss-right"></i><span class="icon-name">ss-right</span></li><li><i class="ss-downright"></i><span class="icon-name">ss-downright</span></li><li><i class="ss-down"></i><span class="icon-name">ss-down</span></li><li><i class="ss-downleft"></i><span class="icon-name">ss-downleft</span></li><li><i class="ss-left"></i><span class="icon-name">ss-left</span></li><li><i class="ss-upleft"></i><span class="icon-name">ss-upleft</span></li><li><i class="ss-navigateup"></i><span class="icon-name">ss-navigateup</span></li><li><i class="ss-navigateright"></i><span class="icon-name">ss-navigateright</span></li><li><i class="ss-navigatedown"></i><span class="icon-name">ss-navigatedown</span></li><li><i class="ss-navigateleft"></i><span class="icon-name">ss-navigateleft</span></li><li><i class="ss-retweet"></i><span class="icon-name">ss-retweet</span></li><li><i class="ss-share"></i><span class="icon-name">ss-share</span></li>';
 
 			// IconMind
 			$icon_mind_list = '<li><i class="sf-im-gear"></i><span class="icon-name">sf-im-gear</span></li><li><i class="sf-im-gears"></i><span class="icon-name">sf-im-gears</span></li><li><i class="sf-im-information"></i><span class="icon-name">sf-im-information</span></li><li><i class="sf-im-magnifi-glass-"></i><span class="icon-name">sf-im-magnifi-glass-</span></li><li><i class="sf-im-magnifi-glass"></i><span class="icon-name">sf-im-magnifi-glass</span></li><li><i class="sf-im-magnifi-glass2"></i><span class="icon-name">sf-im-magnifi-glass2</span></li><li><i class="sf-im-preview"></i><span class="icon-name">sf-im-preview</span></li><li><i class="sf-im-pricing"></i><span class="icon-name">sf-im-pricing</span></li><li><i class="sf-im-repair"></i><span class="icon-name">sf-im-repair</span></li><li><i class="sf-im-support"></i><span class="icon-name">sf-im-support</span></li><li><i class="sf-im-user"></i><span class="icon-name">sf-im-user</span></li><li><i class="sf-im-equalizer"></i><span class="icon-name">sf-im-equalizer</span></li><li><i class="sf-im-microphone-2"></i><span class="icon-name">sf-im-microphone-2</span></li><li><i class="sf-im-rock-androll"></i><span class="icon-name">sf-im-rock-androll</span></li><li><i class="sf-im-sound-wave"></i><span class="icon-name">sf-im-sound-wave</span></li><li><i class="sf-im-close-window"></i><span class="icon-name">sf-im-close-window</span></li><li><i class="sf-im-network-window"></i><span class="icon-name">sf-im-network-window</span></li><li><i class="sf-im-settings-window"></i><span class="icon-name">sf-im-settings-window</span></li><li><i class="sf-im-two-windows"></i><span class="icon-name">sf-im-two-windows</span></li><li><i class="sf-im-upload-window"></i><span class="icon-name">sf-im-upload-window</span></li><li><i class="sf-im-url-window"></i><span class="icon-name">sf-im-url-window</span></li><li><i class="sf-im-width-window"></i><span class="icon-name">sf-im-width-window</span></li><li><i class="sf-im-windows-2"></i><span class="icon-name">sf-im-windows-2</span></li><li><i class="sf-im-drop"></i><span class="icon-name">sf-im-drop</span></li><li><i class="sf-im-clapperboard-open"></i><span class="icon-name">sf-im-clapperboard-open</span></li><li><i class="sf-im-video-3"></i><span class="icon-name">sf-im-video-3</span></li><li><i class="sf-im-hand-touch2"></i><span class="icon-name">sf-im-hand-touch2</span></li><li><i class="sf-im-thumb"></i><span class="icon-name">sf-im-thumb</span></li><li><i class="sf-im-clock"></i><span class="icon-name">sf-im-clock</span></li><li><i class="sf-im-watch"></i><span class="icon-name">sf-im-watch</span></li><li><i class="sf-im-normal-text"></i><span class="icon-name">sf-im-normal-text</span></li><li><i class="sf-im-text-box"></i><span class="icon-name">sf-im-text-box</span></li><li><i class="sf-im-text-effect"></i><span class="icon-name">sf-im-text-effect</span></li><li><i class="sf-im-archery-2"></i><span class="icon-name">sf-im-archery-2</span></li><li><i class="sf-im-medal-3"></i><span class="icon-name">sf-im-medal-3</span></li><li><i class="sf-im-skate-shoes"></i><span class="icon-name">sf-im-skate-shoes</span></li><li><i class="sf-im-trophy"></i><span class="icon-name">sf-im-trophy</span></li><li><i class="sf-im-speach-bubbleasking"></i><span class="icon-name">sf-im-speach-bubbleasking</span></li><li><i class="sf-im-speach-bubbledialog"></i><span class="icon-name">sf-im-speach-bubbledialog</span></li><li><i class="sf-im-inifity"></i><span class="icon-name">sf-im-inifity</span></li><li><i class="sf-im-quotes"></i><span class="icon-name">sf-im-quotes</span></li><li><i class="sf-im-ribbon"></i><span class="icon-name">sf-im-ribbon</span></li><li><i class="sf-im-venn-diagram"></i><span class="icon-name">sf-im-venn-diagram</span></li><li><i class="sf-im-car-coins"></i><span class="icon-name">sf-im-car-coins</span></li><li><i class="sf-im-cash-register2"></i><span class="icon-name">sf-im-cash-register2</span></li><li><i class="sf-im-password-shopping"></i><span class="icon-name">sf-im-password-shopping</span></li><li><i class="sf-im-tag-5"></i><span class="icon-name">sf-im-tag-5</span></li><li><i class="sf-im-coding"></i><span class="icon-name">sf-im-coding</span></li><li><i class="sf-im-consulting"></i><span class="icon-name">sf-im-consulting</span></li><li><i class="sf-im-testimonal"></i><span class="icon-name">sf-im-testimonal</span></li><li><i class="sf-im-lock-2"></i><span class="icon-name">sf-im-lock-2</span></li><li><i class="sf-im-unlock-2"></i><span class="icon-name">sf-im-unlock-2</span></li><li><i class="sf-im-atom"></i><span class="icon-name">sf-im-atom</span></li><li><i class="sf-im-chemical"></i><span class="icon-name">sf-im-chemical</span></li><li><i class="sf-im-plaster"></i><span class="icon-name">sf-im-plaster</span></li><li><i class="sf-im-camera-2"></i><span class="icon-name">sf-im-camera-2</span></li><li><i class="sf-im-flash-2"></i><span class="icon-name">sf-im-flash-2</span></li><li><i class="sf-im-photo"></i><span class="icon-name">sf-im-photo</span></li><li><i class="sf-im-photos"></i><span class="icon-name">sf-im-photos</span></li><li><i class="sf-im-sport-mode"></i><span class="icon-name">sf-im-sport-mode</span></li><li><i class="sf-im-business-man"></i><span class="icon-name">sf-im-business-man</span></li><li><i class="sf-im-business-woman"></i><span class="icon-name">sf-im-business-woman</span></li><li><i class="sf-im-speak-2"></i><span class="icon-name">sf-im-speak-2</span></li><li><i class="sf-im-talk-man"></i><span class="icon-name">sf-im-talk-man</span></li><li><i class="sf-im-chair"></i><span class="icon-name">sf-im-chair</span></li><li><i class="sf-im-footprint"></i><span class="icon-name">sf-im-footprint</span></li><li><i class="sf-im-gift-box"></i><span class="icon-name">sf-im-gift-box</span></li><li><i class="sf-im-key"></i><span class="icon-name">sf-im-key</span></li><li><i class="sf-im-light-bulb"></i><span class="icon-name">sf-im-light-bulb</span></li><li><i class="sf-im-luggage-2"></i><span class="icon-name">sf-im-luggage-2</span></li><li><i class="sf-im-paper-plane"></i><span class="icon-name">sf-im-paper-plane</span></li><li><i class="sf-im-environmental-3"></i><span class="icon-name">sf-im-environmental-3</span></li><li><i class="sf-im-compass-4"></i><span class="icon-name">sf-im-compass-4</span></li><li><i class="sf-im-globe"></i><span class="icon-name">sf-im-globe</span></li><li><i class="sf-im-map-marker"></i><span class="icon-name">sf-im-map-marker</span></li><li><i class="sf-im-map2"></i><span class="icon-name">sf-im-map2</span></li><li><i class="sf-im-satelite-2"></i><span class="icon-name">sf-im-satelite-2</span></li><li><i class="sf-im-add"></i><span class="icon-name">sf-im-add</span></li><li><i class="sf-im-close"></i><span class="icon-name">sf-im-close</span></li><li><i class="sf-im-cursor-click2"></i><span class="icon-name">sf-im-cursor-click2</span></li><li><i class="sf-im-download-2"></i><span class="icon-name">sf-im-download-2</span></li><li><i class="sf-im-link"></i><span class="icon-name">sf-im-link</span></li><li><i class="sf-im-upload-2"></i><span class="icon-name">sf-im-upload-2</span></li><li><i class="sf-im-yes"></i><span class="icon-name">sf-im-yes</span></li><li><i class="sf-im-old-camera"></i><span class="icon-name">sf-im-old-camera</span></li><li><i class="sf-im-mouse-4"></i><span class="icon-name">sf-im-mouse-4</span></li><li><i class="sf-im-coffee"></i><span class="icon-name">sf-im-coffee</span></li><li><i class="sf-im-doughnut"></i><span class="icon-name">sf-im-doughnut</span></li><li><i class="sf-im-glass-water"></i><span class="icon-name">sf-im-glass-water</span></li><li><i class="sf-im-hot-dog"></i><span class="icon-name">sf-im-hot-dog</span></li><li><i class="sf-im-juice"></i><span class="icon-name">sf-im-juice</span></li><li><i class="sf-im-pizza-slice"></i><span class="icon-name">sf-im-pizza-slice</span></li><li><i class="sf-im-pizza"></i><span class="icon-name">sf-im-pizza</span></li><li><i class="sf-im-wine-glass"></i><span class="icon-name">sf-im-wine-glass</span></li><li><i class="sf-im-box-open"></i><span class="icon-name">sf-im-box-open</span></li><li><i class="sf-im-box-withfolders"></i><span class="icon-name">sf-im-box-withfolders</span></li><li><i class="sf-im-add-file"></i><span class="icon-name">sf-im-add-file</span></li><li><i class="sf-im-delete-file"></i><span class="icon-name">sf-im-delete-file</span></li><li><i class="sf-im-file-download"></i><span class="icon-name">sf-im-file-download</span></li><li><i class="sf-im-file-horizontaltext"></i><span class="icon-name">sf-im-file-horizontaltext</span></li><li><i class="sf-im-file-link"></i><span class="icon-name">sf-im-file-link</span></li><li><i class="sf-im-file-love"></i><span class="icon-name">sf-im-file-love</span></li><li><i class="sf-im-file-pictures"></i><span class="icon-name">sf-im-file-pictures</span></li><li><i class="sf-im-file-zip"></i><span class="icon-name">sf-im-file-zip</span></li><li><i class="sf-im-files"></i><span class="icon-name">sf-im-files</span></li><li><i class="sf-im-remove-file"></i><span class="icon-name">sf-im-remove-file</span></li><li><i class="sf-im-thumbs-upsmiley"></i><span class="icon-name">sf-im-thumbs-upsmiley</span></li><li><i class="sf-im-letter-open"></i><span class="icon-name">sf-im-letter-open</span></li><li><i class="sf-im-mail"></i><span class="icon-name">sf-im-mail</span></li><li><i class="sf-im-mailbox-full"></i><span class="icon-name">sf-im-mailbox-full</span></li><li><i class="sf-im-notepad"></i><span class="icon-name">sf-im-notepad</span></li><li><i class="sf-im-computer"></i><span class="icon-name">sf-im-computer</span></li><li><i class="sf-im-laptop"></i><span class="icon-name">sf-im-laptop</span></li><li><i class="sf-im-monitor-2"></i><span class="icon-name">sf-im-monitor-2</span></li><li><i class="sf-im-monitor-5"></i><span class="icon-name">sf-im-monitor-5</span></li><li><i class="sf-im-monitor-phone"></i><span class="icon-name">sf-im-monitor-phone</span></li><li><i class="sf-im-phone-2"></i><span class="icon-name">sf-im-phone-2</span></li><li><i class="sf-im-smartphone-4"></i><span class="icon-name">sf-im-smartphone-4</span></li><li><i class="sf-im-tablet-3"></i><span class="icon-name">sf-im-tablet-3</span></li><li><i class="sf-im-aa"></i><span class="icon-name">sf-im-aa</span></li><li><i class="sf-im-brush"></i><span class="icon-name">sf-im-brush</span></li><li><i class="sf-im-fountain-pen"></i><span class="icon-name">sf-im-fountain-pen</span></li><li><i class="sf-im-idea"></i><span class="icon-name">sf-im-idea</span></li><li><i class="sf-im-marker"></i><span class="icon-name">sf-im-marker</span></li><li><i class="sf-im-note"></i><span class="icon-name">sf-im-note</span></li><li><i class="sf-im-pantone"></i><span class="icon-name">sf-im-pantone</span></li><li><i class="sf-im-pencil"></i><span class="icon-name">sf-im-pencil</span></li><li><i class="sf-im-scissor"></i><span class="icon-name">sf-im-scissor</span></li><li><i class="sf-im-vector-3"></i><span class="icon-name">sf-im-vector-3</span></li><li><i class="sf-im-address-book"></i><span class="icon-name">sf-im-address-book</span></li><li><i class="sf-im-megaphone"></i><span class="icon-name">sf-im-megaphone</span></li><li><i class="sf-im-newspaper"></i><span class="icon-name">sf-im-newspaper</span></li><li><i class="sf-im-wifi"></i><span class="icon-name">sf-im-wifi</span></li><li><i class="sf-im-download-fromcloud"></i><span class="icon-name">sf-im-download-fromcloud</span></li><li><i class="sf-im-upload-tocloud"></i><span class="icon-name">sf-im-upload-tocloud</span></li><li><i class="sf-im-blouse"></i><span class="icon-name">sf-im-blouse</span></li><li><i class="sf-im-boot"></i><span class="icon-name">sf-im-boot</span></li><li><i class="sf-im-bow-2"></i><span class="icon-name">sf-im-bow-2</span></li><li><i class="sf-im-bra"></i><span class="icon-name">sf-im-bra</span></li><li><i class="sf-im-cap"></i><span class="icon-name">sf-im-cap</span></li><li><i class="sf-im-coat"></i><span class="icon-name">sf-im-coat</span></li><li><i class="sf-im-dress"></i><span class="icon-name">sf-im-dress</span></li><li><i class="sf-im-hanger"></i><span class="icon-name">sf-im-hanger</span></li><li><i class="sf-im-heels"></i><span class="icon-name">sf-im-heels</span></li><li><i class="sf-im-jacket"></i><span class="icon-name">sf-im-jacket</span></li><li><i class="sf-im-jeans"></i><span class="icon-name">sf-im-jeans</span></li><li><i class="sf-im-shirt"></i><span class="icon-name">sf-im-shirt</span></li><li><i class="sf-im-suit"></i><span class="icon-name">sf-im-suit</span></li><li><i class="sf-im-sunglasses-w3"></i><span class="icon-name">sf-im-sunglasses-w3</span></li><li><i class="sf-im-t-shirt"></i><span class="icon-name">sf-im-t-shirt</span></li><li><i class="sf-im-present"></i><span class="icon-name">sf-im-present</span></li><li><i class="sf-im-tactic"></i><span class="icon-name">sf-im-tactic</span></li><li><i class="sf-im-bar-chart3"></i><span class="icon-name">sf-im-bar-chart3</span></li><li><i class="sf-im-calculator-2"></i><span class="icon-name">sf-im-calculator-2</span></li><li><i class="sf-im-calendar-4"></i><span class="icon-name">sf-im-calendar-4</span></li><li><i class="sf-im-credit-card2"></i><span class="icon-name">sf-im-credit-card2</span></li><li><i class="sf-im-diamond"></i><span class="icon-name">sf-im-diamond</span></li><li><i class="sf-im-financial"></i><span class="icon-name">sf-im-financial</span></li><li><i class="sf-im-handshake"></i><span class="icon-name">sf-im-handshake</span></li><li><i class="sf-im-line-chart4"></i><span class="icon-name">sf-im-line-chart4</span></li><li><i class="sf-im-money-2"></i><span class="icon-name">sf-im-money-2</span></li><li><i class="sf-im-pie-chart3"></i><span class="icon-name">sf-im-pie-chart3</span></li><li><i class="sf-im-home"></i><span class="icon-name">sf-im-home</span></li><li><i class="sf-im-bones"></i><span class="icon-name">sf-im-bones</span></li><li><i class="sf-im-brain"></i><span class="icon-name">sf-im-brain</span></li><li><i class="sf-im-ear"></i><span class="icon-name">sf-im-ear</span></li><li><i class="sf-im-eye-visible"></i><span class="icon-name">sf-im-eye-visible</span></li><li><i class="sf-im-face-style"></i><span class="icon-name">sf-im-face-style</span></li><li><i class="sf-im-fingerprint-2"></i><span class="icon-name">sf-im-fingerprint-2</span></li><li><i class="sf-im-heart"></i><span class="icon-name">sf-im-heart</span></li><li><i class="sf-im-arrow-downincircle"></i><span class="icon-name">sf-im-arrow-downincircle</span></li><li><i class="sf-im-arrow-left"></i><span class="icon-name">sf-im-arrow-left</span></li><li><i class="sf-im-arrow-right"></i><span class="icon-name">sf-im-arrow-right</span></li><li><i class="sf-im-arrow-up"></i><span class="icon-name">sf-im-arrow-up</span></li><li><i class="sf-im-download"></i><span class="icon-name">sf-im-download</span></li><li><i class="sf-im-fit-to"></i><span class="icon-name">sf-im-fit-to</span></li><li><i class="sf-im-full-screen"></i><span class="icon-name">sf-im-full-screen</span></li><li><i class="sf-im-full-screen2"></i><span class="icon-name">sf-im-full-screen2</span></li><li><i class="sf-im-left"></i><span class="icon-name">sf-im-left</span></li><li><i class="sf-im-repeat-2"></i><span class="icon-name">sf-im-repeat-2</span></li><li><i class="sf-im-right"></i><span class="icon-name">sf-im-right</span></li><li><i class="sf-im-up"></i><span class="icon-name">sf-im-up</span></li><li><i class="sf-im-upload"></i><span class="icon-name">sf-im-upload</span></li><li><i class="sf-im-arrow-around"></i><span class="icon-name">sf-im-arrow-around</span></li><li><i class="sf-im-arrow-loop"></i><span class="icon-name">sf-im-arrow-loop</span></li><li><i class="sf-im-arrow-outleft"></i><span class="icon-name">sf-im-arrow-outleft</span></li><li><i class="sf-im-arrow-outright"></i><span class="icon-name">sf-im-arrow-outright</span></li><li><i class="sf-im-arrow-shuffle"></i><span class="icon-name">sf-im-arrow-shuffle</span></li><li><i class="sf-im-maximize"></i><span class="icon-name">sf-im-maximize</span></li><li><i class="sf-im-minimize"></i><span class="icon-name">sf-im-minimize</span></li><li><i class="sf-im-resize"></i><span class="icon-name">sf-im-resize</span></li><li><i class="sf-im-bird"></i><span class="icon-name">sf-im-bird</span></li><li><i class="sf-im-cat"></i><span class="icon-name">sf-im-cat</span></li><li><i class="sf-im-dog"></i><span class="icon-name">sf-im-dog</span></li><li><i class="sf-im-align-center"></i><span class="icon-name">sf-im-align-center</span></li><li><i class="sf-im-align-left"></i><span class="icon-name">sf-im-align-left</span></li><li><i class="sf-im-align-right"></i><span class="icon-name">sf-im-align-right</span></li>';
-
+			
+			
+			// NUCLEO INTERFACE
+			$nucleo_interface = array(
+				'e910' => 'sf-icon-audio-player', 
+				'e911' => 'sf-icon-video-player', 
+				'e95c' => 'sf-icon-fail', 
+				'e95d' => 'sf-icon-success', 
+				'e960' => 'sf-icon-video-player-fill', 
+				'e952' => 'sf-icon-settings', 
+				'e912' => 'sf-icon-lightbox', 
+				'e951' => 'sf-icon-portfolio', 
+				'e913' => 'sf-icon-external-link-big', 
+				'e914' => 'sf-icon-text-big', 
+				'e95a' => 'sf-icon-video-big', 
+				'e956' => 'sf-icon-down-arrow-big', 
+				'e955' => 'sf-icon-up-arrow-big', 
+				'e954' => 'sf-icon-left-arrow-big', 
+				'e915' => 'sf-icon-right-arrow-big', 
+				'e916' => 'sf-icon-flags-france', 
+				'e917' => 'sf-icon-flags-germany', 
+				'e918' => 'sf-icon-flags-greece', 
+				'e919' => 'sf-icon-flags-italy', 
+				'e91a' => 'sf-icon-flags-japan', 
+				'e91b' => 'sf-icon-flags-netherlands', 
+				'e91c' => 'icon-russia', 
+				'e94b' => 'sf-icon-flags-sweden', 
+				'e94c' => 'sf-icon-flags-portugal', 
+				'e94d' => 'sf-icon-flags-spain', 
+				'e94e' => 'sf-icon-flags-usa', 
+				'e94f' => 'sf-icon-flags-uk', 
+				'e953' => 'sf-icon-quote-big', 
+				'e962' => 'sf-icon-loader', 
+				'e964' => 'sf-icon-loader-gap', 
+				'e965' => 'sf-icon-dollar', 
+				'e966' => 'sf-icon-euro', 
+				'e967' => 'sf-icon-pound', 
+				'e968' => 'sf-icon-yen', 
+				'e961' => 'sf-icon-checkout', 
+				'10ffff' => 'sf-icon-variable', 
+				'e003' => 'sf-icon-preferences', 
+				'e90d' => 'sf-icon-quote', 
+				'e900' => 'sf-icon-download', 
+				'e901' => 'sf-icon-enlarge', 
+				'e902' => 'sf-icon-down-triangle', 
+				'e903' => 'sf-icon-up-triangle', 
+				'e904' => 'sf-icon-left-arrow', 
+				'e905' => 'sf-icon-right-arrow', 
+				'e906' => 'sf-icon-left-chevron', 
+				'e907' => 'sf-icon-right-chevron', 
+				'e908' => 'sf-icon-down-chevron', 
+				'e909' => 'sf-icon-up-chevron', 
+				'e90a' => 'sf-icon-read-more', 
+				'e90b' => 'sf-icon-share', 
+				'e0101' => 'sf-icon-node', 
+				'e90c' => 'sf-icon-project', 
+				'e004' => 'sf-icon-speech', 
+				'e90e' => 'sf-icon-archive', 
+				'e90f' => 'sf-icon-like', 
+				'e91d' => 'sf-icon-pause', 
+				'e91e' => 'sf-icon-play', 
+				'e91f' => 'sf-icon-image', 
+				'e920' => 'sf-icon-gallery', 
+				'e921' => 'sf-icon-volume', 
+				'e922' => 'sf-icon-audio', 
+				'e923' => 'sf-icon-cart', 
+				'e924' => 'sf-icon-categories', 
+				'e925' => 'sf-icon-tags', 
+				'e926' => 'sf-icon-dribbble', 
+				'e927' => 'sf-icon-fb', 
+				'e928' => 'sf-icon-instagram', 
+				'e929' => 'sf-icon-twitter', 
+				'e92a' => 'sf-icon-video', 
+				'e92b' => 'sf-icon-check', 
+				'e92c' => 'sf-icon-subject', 
+				'e92d' => 'sf-icon-reply', 
+				'e95f' => 'sf-icon-menu-chevron-right', 
+				'e92f' => 'sf-icon-quickview', 
+				'e005' => 'sf-icon-noview', 
+				'e930' => 'sf-icon-filter', 
+				'e931' => 'sf-icon-add-big', 
+				'e932' => 'sf-icon-remove-big', 
+				'e933' => 'sf-icon-trash', 
+				'e934' => 'sf-icon-supersearch', 
+				'e935' => 'sf-icon-search', 
+				'e936' => 'sf-icon-warning', 
+				'e937' => 'sf-icon-question', 
+				'e938' => 'sf-icon-info', 
+				'e939' => 'sf-icon-sort', 
+				'e93a' => 'sf-icon-comments', 
+				'e93b' => 'sf-icon-wishlist', 
+				'e93c' => 'sf-icon-star-fill', 
+				'e93d' => 'sf-icon-view-default', 
+				'e93e' => 'sf-icon-view-gallery', 
+				'e93f' => 'sf-icon-external-link', 
+				'e940' => 'sf-icon-menu', 
+				'e941' => 'sf-icon-text', 
+				'e942' => 'sf-icon-view-list', 
+				'e943' => 'sf-icon-add', 
+				'e944' => 'sf-icon-delete', 
+				'e945' => 'sf-icon-remove', 
+				'e946' => 'sf-icon-date', 
+				'e947' => 'sf-icon-star-stroke', 
+				'e948' => 'sf-icon-half-star', 
+				'e949' => 'sf-icon-account', 
+				'e94a' => 'sf-icon-name', 
+				'e950' => 'sf-icon-sticky-post', 
+				'e957' => 'sf-icon-phone', 
+				'e958' => 'sf-icon-down-arrow', 
+				'e959' => 'sf-icon-up-arrow', 
+				'e95b' => 'sf-icon-tick', 
+				'e95e' => 'sf-icon-menu-chevron', 
+				'e92e' => 'sf-icon-email',
+			);
+			
+			// NUCLEO GENERAL
+			$nucleo_general = array(
+				'e97d' => 'nucleo-icon-add', 
+				'e983' => 'nucleo-icon-alert-help', 
+				'e984' => 'nucleo-icon-alert-info', 
+				'e99a' => 'nucleo-icon-alert-square', 
+				'e982' => 'nucleo-icon-alert-warning', 
+				'e957' => 'nucleo-icon-anchor', 
+				'e922' => 'nucleo-icon-app', 
+				'e985' => 'nucleo-icon-archive', 
+				'e934' => 'nucleo-icon-archive-content', 
+				'e90f' => 'nucleo-icon-arrow-circle-right', 
+				'e907' => 'nucleo-icon-arrow-left', 
+				'e908' => 'nucleo-icon-arrow-right', 
+				'e90e' => 'nucleo-icon-arrow-square-right', 
+				'e909' => 'nucleo-icon-arrow-up', 
+				'e975' => 'nucleo-icon-attach', 
+				'e913' => 'nucleo-icon-award', 
+				'e914' => 'nucleo-icon-badge', 
+				'e95c' => 'nucleo-icon-bag', 
+				'e95d' => 'nucleo-icon-bag-add', 
+				'e95e' => 'nucleo-icon-bag-remove', 
+				'e917' => 'nucleo-icon-barchart', 
+				'e976' => 'nucleo-icon-bell', 
+				'e92f' => 'nucleo-icon-board', 
+				'e915' => 'nucleo-icon-briefcase', 
+				'e94c' => 'nucleo-icon-brightness', 
+				'e923' => 'nucleo-icon-brush', 
+				'e916' => 'nucleo-icon-bulb', 
+				'e94d' => 'nucleo-icon-camera', 
+				'e971' => 'nucleo-icon-capitalize', 
+				'e988' => 'nucleo-icon-chat-fill', 
+				'e987' => 'nucleo-icon-chat-stroke', 
+				'e979' => 'nucleo-icon-check', 
+				'e977' => 'nucleo-icon-check-small', 
+				'e978' => 'nucleo-icon-check-square', 
+				'e919' => 'nucleo-icon-cheque', 
+				'e90c' => 'nucleo-icon-chevron-down', 
+				'e90a' => 'nucleo-icon-chevron-left', 
+				'e90b' => 'nucleo-icon-chevron-right', 
+				'e90d' => 'nucleo-icon-chevron-up', 
+				'e999' => 'nucleo-icon-clock', 
+				'e900' => 'nucleo-icon-cloud-download', 
+				'e9a3' => 'nucleo-icon-cloud-fog', 
+				'e9a4' => 'nucleo-icon-cloud-hail', 
+				'e9a5' => 'nucleo-icon-cloud-light', 
+				'e901' => 'nucleo-icon-cloud-upload', 
+				'e939' => 'nucleo-icon-coffee', 
+				'e924' => 'nucleo-icon-command', 
+				'e94e' => 'nucleo-icon-countdown', 
+				'e95f' => 'nucleo-icon-credit-card', 
+				'e925' => 'nucleo-icon-crop', 
+				'e93a' => 'nucleo-icon-cutlery', 
+				'e960' => 'nucleo-icon-delivery', 
+				'e926' => 'nucleo-icon-design', 
+				'e965' => 'nucleo-icon-desktop', 
+				'e989' => 'nucleo-icon-disk', 
+				'e932' => 'nucleo-icon-dislike', 
+				'e91a' => 'nucleo-icon-dollar', 
+				'e902' => 'nucleo-icon-download', 
+				'e93b' => 'nucleo-icon-drag', 
+				'e97a' => 'nucleo-icon-edit-box', 
+				'e927' => 'nucleo-icon-eraser', 
+				'e91b' => 'nucleo-icon-euro', 
+				'e97b' => 'nucleo-icon-eye', 
+				'e937' => 'nucleo-icon-file', 
+				'e936' => 'nucleo-icon-file-blank', 
+				'e938' => 'nucleo-icon-files', 
+				'e97c' => 'nucleo-icon-filter', 
+				'e945' => 'nucleo-icon-flag', 
+				'e944' => 'nucleo-icon-flag-diagonal', 
+				'e963' => 'nucleo-icon-flag-finish', 
+				'e94f' => 'nucleo-icon-flash', 
+				'e935' => 'nucleo-icon-folder', 
+				'e950' => 'nucleo-icon-frame', 
+				'e903' => 'nucleo-icon-fullscreen', 
+				'e93c' => 'nucleo-icon-gestures', 
+				'e961' => 'nucleo-icon-gift', 
+				'e958' => 'nucleo-icon-globe', 
+				'e91f' => 'nucleo-icon-goal', 
+				'e949' => 'nucleo-icon-gps', 
+				'e98c' => 'nucleo-icon-grid', 
+				'e98d' => 'nucleo-icon-grid-small', 
+				'e991' => 'nucleo-icon-hamburger', 
+				'e966' => 'nucleo-icon-headphones', 
+				'e98a' => 'nucleo-icon-heart', 
+				'e941' => 'nucleo-icon-heartbeat', 
+				'e99b' => 'nucleo-icon-help-square', 
+				'e920' => 'nucleo-icon-hierarchy', 
+				'e951' => 'nucleo-icon-image', 
+				'e99c' => 'nucleo-icon-info-square', 
+				'e959' => 'nucleo-icon-key', 
+				'e98e' => 'nucleo-icon-lab', 
+				'e967' => 'nucleo-icon-laptop', 
+				'e952' => 'nucleo-icon-layers', 
+				'e933' => 'nucleo-icon-like', 
+				'e98f' => 'nucleo-icon-link', 
+				'e990' => 'nucleo-icon-link-broken', 
+				'e973' => 'nucleo-icon-list-bullet', 
+				'e946' => 'nucleo-icon-map', 
+				'e92e' => 'nucleo-icon-medal', 
+				'e992' => 'nucleo-icon-menu', 
+				'e94b' => 'nucleo-icon-mic', 
+				'e929' => 'nucleo-icon-mouse', 
+				'e969' => 'nucleo-icon-navigation', 
+				'e956' => 'nucleo-icon-note', 
+				'e92a' => 'nucleo-icon-paint', 
+				'e931' => 'nucleo-icon-paper', 
+				'e993' => 'nucleo-icon-paragraph', 
+				'e92b' => 'nucleo-icon-copy', 
+				'e92c' => 'nucleo-icon-pen', 
+				'e92d' => 'nucleo-icon-phone', 
+				'e918' => 'nucleo-icon-piechart', 
+				'e947' => 'nucleo-icon-pin', 
+				'e93d' => 'nucleo-icon-pinch', 
+				'e953' => 'nucleo-icon-player', 
+				'e921' => 'nucleo-icon-plug', 
+				'e91c' => 'nucleo-icon-pound', 
+				'e96b' => 'nucleo-icon-print', 
+				'e942' => 'nucleo-icon-pulse', 
+				'e974' => 'nucleo-icon-quote', 
+				'e911' => 'nucleo-icon-refresh', 
+				'e97e' => 'nucleo-icon-remove', 
+				'e93e' => 'nucleo-icon-rotate', 
+				'e994' => 'nucleo-icon-share', 
+				'e912' => 'nucleo-icon-share-diagnol', 
+				'e905' => 'nucleo-icon-share-right', 
+				'e904' => 'nucleo-icon-share-up', 
+				'e906' => 'nucleo-icon-shuffle', 
+				'e986' => 'nucleo-icon-signal', 
+				'e995' => 'nucleo-icon-small-add', 
+				'e996' => 'nucleo-icon-small-delete', 
+				'e997' => 'nucleo-icon-small-remove', 
+				'e95a' => 'nucleo-icon-spaceship', 
+				'e930' => 'nucleo-icon-speech', 
+				'e98b' => 'nucleo-icon-star', 
+				'e943' => 'nucleo-icon-steps', 
+				'e93f' => 'nucleo-icon-stretch', 
+				'e95b' => 'nucleo-icon-support', 
+				'e96c' => 'nucleo-icon-tablet', 
+				'e96d' => 'nucleo-icon-tablet-reader', 
+				'e962' => 'nucleo-icon-tag', 
+				'e940' => 'nucleo-icon-tap', 
+				'e9a1' => 'nucleo-icon-team', 
+				'e972' => 'nucleo-icon-text', 
+				'e998' => 'nucleo-icon-tile', 
+				'e97f' => 'nucleo-icon-trash', 
+				'e96e' => 'nucleo-icon-tv', 
+				'e910' => 'nucleo-icon-undo', 
+				'e9a2' => 'nucleo-icon-user', 
+				'e964' => 'nucleo-icon-user-run', 
+				'e99d' => 'nucleo-icon-users-add', 
+				'e99e' => 'nucleo-icon-users-badge', 
+				'e99f' => 'nucleo-icon-users-circle', 
+				'e9a0' => 'nucleo-icon-users-delete', 
+				'e954' => 'nucleo-icon-video', 
+				'e96f' => 'nucleo-icon-watch', 
+				'e970' => 'nucleo-icon-wifi', 
+				'e948' => 'nucleo-icon-world', 
+				'e91d' => 'nucleo-icon-yen', 
+				'e981' => 'nucleo-icon-zoom', 
+				'e980' => 'nucleo-icon-zoom-in', 
+			);
+			
+			
             // OUTPUT
             if ( $type == "font-awesome" || $type == "" ) {
-                $icon_list .= $fa_list;
+                $icon_list .= sf_icon_format_output( $fontawesome, "font-awesome", $format );
             }
             if ( sf_theme_supports('gizmo-icon-font') && ($type == "gizmo" || $type == "") ) {
                 $icon_list .= $gizmo_list;
@@ -2009,12 +3009,63 @@
             if ( sf_theme_supports('icon-mind-font') && ($type == "icon-mind" || $type == "") ) {
                 $icon_list .= $icon_mind_list;
             }
-
+            if ( sf_theme_supports('nucleo-interface-font') && ($type == "nucleo-interface" || $type == "") ) {
+                $icon_list .= sf_icon_format_output( $nucleo_interface, "nucleo-interface", $format );
+            }
+            if ( sf_theme_supports('nucleo-general-font') && ($type == "nucleo-general" || $type == "") ) {
+                $icon_list .= sf_icon_format_output( $nucleo_general, "nucleo-general", $format );
+            }
+            
+            if ( $type == "fontello" || $type == "" ) {
+	            $fontello_icons = get_option('sf_fontello_icon_codes');
+	            
+	            if ( $fontello_icons ) {
+		            $fontello_list = '';
+			
+		            foreach ( $fontello_icons as $icon) {
+		                $fontello_list .= '<li><i class="icon-' . $icon . '"></i><span class="icon-name">' . $icon . '</span></li>';
+		            }
+		      
+		            $icon_list .= $fontello_list;
+				}
+			}
+			
             // APPLY FILTERS
             $icon_list = apply_filters( 'sf_icons_list', $icon_list );
 
             return $icon_list;
         }
+    }
+    
+    /* ICON FORMAT OUTPUT
+    ================================================== */
+    if ( ! function_exists( 'sf_icon_format_output' ) ) {
+    	function sf_icon_format_output($font_array, $type = "", $format = "list") {
+    		
+    		$return = "";
+    		
+    		if ( $format == "list" ) {
+    			
+    			foreach ( $font_array as $code => $class ) {		
+		            $return .= "<li>";
+		            $return .= "    <i class='{$class}'></i>";
+		            $return .= "	<span class='icon-name'>{$class}</span>";
+		            $return .= "</li>";
+		        }
+    		
+    		} else if ( $format == "mega-menu" ) {
+    			
+    			foreach ( $font_array as $code => $class ) {
+		            $code = "&#x" . $code . "";    					    					
+		            $return .= "<div class='{$type}'>";
+		            $return .= "    <input class='radio' id='{$class}' type='radio' name='settings[icon]' value='{$class}' />";
+		            $return .= "    <label rel='{$code}' for='{$class}'></label>";
+		            $return .= "</div>";
+		        }
+    		}
+    		
+    		return $return;
+    	}
     }
 
 	/* ANIMATIONS LIST
@@ -2246,6 +3297,31 @@
         function sf_admin_css() {
             ?>
             <style type="text/css" media="screen">
+            
+            #cboxContent .menu_icon .icon_selector .font-awesome input.radio ~ label {
+            	font-family: 'FontAwesome';
+            	font-size: 16px;
+            }
+            #cboxContent .menu_icon .icon_selector .font-awesome label:before {
+            	text-align: center;
+            	line-height: 24px;
+            }
+            #cboxContent .menu_icon .icon_selector .nucleo-interface input.radio ~ label {
+            	font-family: 'nucleo-interface';
+            	font-size: 16px;
+            }
+            #cboxContent .menu_icon .icon_selector .nucleo-interface label:before {
+            	text-align: center;
+            	line-height: 24px;
+            }
+            #cboxContent .menu_icon .icon_selector .nucleo-general input.radio ~ label {
+            	font-family: 'nucleo-general';
+            	font-size: 16px;
+            }
+            #cboxContent .menu_icon .icon_selector .nucleo-general label:before {
+            	text-align: center;
+            	line-height: 24px;
+            }
 
             #adminmenu #toplevel_page_admin-import-swiftdemo .wp-menu-image img {
                 padding: 7px 0 0;
@@ -2406,6 +3482,17 @@
                 width: 100%;
                 height: 100%;
             }
+            
+            .redux-container .ui-buttonset .ui-button {
+            	height: 34px;
+        	    padding: 0 15px;
+        	    line-height: 34px;
+            }
+            
+            .redux-container .ui-buttonset .ui-button > span {
+            	padding: 0;
+            	line-height: 30px;
+            }
 
             .redux_field_th .scheme-buttons {
                 margin-top: 20px;
@@ -2422,7 +3509,8 @@
                 margin-right: 8px !important;
             }
 
-            #header_left_config_enabled, #header_left_config_disabled, #header_right_config_enabled, #header_right_config_disabled {
+            #header_left_config_enabled, #header_left_config_disabled, #header_right_config_enabled, #header_right_config_disabled,
+            #nav_left_config_enabled, #nav_left_config_disabled, #nav_right_config_enabled, #nav_right_config_disabled {
                 width: 90%;
                 margin: 0 0 20px 0;
             }
@@ -2468,6 +3556,8 @@
 
             .rwmb-meta-box div:first-child h2.meta-box-section {
                 margin-top: 0 !important;
+                padding: 10px 0!important;
+                margin-bottom: 20px!important;
             }
 
             /* META BOX TABS */

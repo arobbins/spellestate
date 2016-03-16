@@ -34,7 +34,7 @@
         'allow_sub_menu' => TRUE,
         'menu_title' => 'Options',
         'page_parent' => 'swift-framework',
-        'customizer' => TRUE,
+        'customizer' => FALSE,
         'admin_bar'  => FALSE,
         'dev_mode'  => FALSE,
         'default_mark' => '*',
@@ -153,6 +153,26 @@
                 'default' => '0'
                 ),
             array(
+                'id' => 'spb_color_scheme',
+                'type' => 'select',
+                'title' => __('Page Builder Color', 'swiftframework'),
+                'subtitle' => "Choose the color for the Page Builder.",
+                'options' => array(
+                            'spb-black'       => 'Black',
+                            'spb-blue'        => 'Blue ',
+                            'spb-blue-grey'   => 'Blue Grey',
+                            'spb-cyan'        => 'Cyan',
+                            'spb-grey'        => 'Grey',
+                            'spb-indigo'      => 'Indigo',
+                            'spb-light-green' => 'Light Green',
+                            'spb-orange'      => 'Orange',
+                            'spb-pink'        => 'Pink', 
+                            'spb-teal'        => 'Teal',
+                        ),
+                'desc' => '',
+                'default' => 'spb-blue'
+                ),
+            array(
                 'id'        => 'spb-post-types',
                 'type'      => 'select',
                 'data'      => 'post_types',
@@ -161,8 +181,23 @@
                 'title'     => __('Page Builder Post Types', 'swiftframework'),
                 'desc'      => __('Select here which post types you would like to enable the page builder for.', 'swiftframework'),
             ),
+            array(
+                'id' => 'show_textblock_text',
+                'type' => 'button_set',
+                'title' => __('Show Text Block Text', 'swiftframework'),
+                'subtitle' => __('Enable/Disable the display of text block text on the text block elements in the builder.', 'swiftframework'),
+                'desc' => '',
+                'options' => array('1' => 'Enabled','0' => 'Disabled'),
+                'default' => '0'
+                ),
+            array(
+                 'id' => 'shortcode_mapper_field',
+                 'type' => 'shortcode_mapper',
+                 'title' => __('Shortcode Mapper', 'swiftframework'),
+                 'subtitle' => __('The shortcode mapper allows you to include custom shortcodes in the Swift Page Builder.', 'swiftframework')
+            ),
         )
-    ) );
+    ) ); 
 
     Redux::setSection( $opt_name, array(
         'type' => 'divide',

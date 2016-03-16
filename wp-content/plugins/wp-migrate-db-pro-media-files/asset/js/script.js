@@ -5,6 +5,8 @@ wpmdb.mediaFiles = {
 
 (function( $, wpmdb ) {
 	var remote_max_upload_size = 0;
+	var $mf_select_subsites_section = $( '#mf-select-subsites-section' );
+	var $mf_select_subsites = $( '#mf-select-subsites' );
 
 	// .length doesn't work on JS "associative arrays" i.e. objects with key/value elements, this does
 	Object.size = function( obj ) {
@@ -61,6 +63,17 @@ wpmdb.mediaFiles = {
 				$_mf_selected_subsites.remove();
 			}
 			wpmdb.multisite.update_multiselect( '#mf-selected-subsites', subsites, selected_subsites );
+
+			var enable_select_subsites = $.wpmdb.apply_filters( 'wpmdbmf_enable_select_subsites', true );
+
+			if ( enable_select_subsites ) {
+				$mf_select_subsites_section.show();
+			} else {
+				$mf_select_subsites.prop( 'checked', false );
+				$mf_select_subsites_section.hide();
+			}
+			$mf_select_subsites.change();
+
 			maybe_show_data_and_files_differ_notice();
 		}
 
@@ -513,7 +526,7 @@ wpmdb.mediaFiles = {
 		if ( 'savefile' !== wpmdb_migration_type() && $( '#media-files' ).is( ':checked' ) ) {
 
 			// Check that at least one subsite is selected if using limit to selected subsites option.
-			if ( 'true' === wpmdb_data.is_multisite && $( '#mf-select-subsites' ).is( ':checked' ) ) {
+			if ( 'true' === wpmdb_data.is_multisite && $mf_select_subsites.is( ':checked' ) ) {
 				if ( null === $( '#mf-selected-subsites' ).val() ) {
 					alert( wpmdbmf_strings.please_select_a_subsite );
 					value = false;
@@ -552,7 +565,7 @@ wpmdb.mediaFiles = {
 		var selected_tables = $.wpmdb.apply_filters( 'wpmdb_get_tables_to_migrate', null, null );
 
 		if ( 'true' === wpmdb_data.is_multisite &&
-			$( '#mf-select-subsites' ).is( ':checked' ) &&
+			$mf_select_subsites.is( ':checked' ) &&
 			undefined !== selected_subsites &&
 			null !== selected_subsites &&
 			undefined !== selected_tables &&
@@ -595,6 +608,10 @@ wpmdb.mediaFiles = {
 		$.wpmdb.add_action( 'verify_connection_to_remote_site', function( connection_data ) {
 			wpmdb.mediaFiles.remote_connection_data = connection_data;
 			wpmdb.mediaFiles.remote_media_files_unavailable = ( 'undefined' === typeof connection_data.media_files_available );
+			hide_show_options( wpmdb.mediaFiles.remote_media_files_unavailable );
+		} );
+
+		$.wpmdb.add_action( 'wpmdbmst_select_subsite_changed', function() {
 			hide_show_options( wpmdb.mediaFiles.remote_media_files_unavailable );
 		} );
 

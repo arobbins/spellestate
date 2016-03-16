@@ -55,7 +55,7 @@
 	                    $post_format = 'standard';
 	                }
 	                ?>
-	                <li <?php post_class( 'blog-item ' . $item_class . ' format-' . $post_format ); ?>>
+	                <li <?php post_class( 'blog-item ' . $item_class . ' format-' . $post_format ); ?> itemscope itemtype="http://schema.org/BlogPosting">
 	                    <?php echo sf_get_post_item( $post->ID, $blog_type, "yes", "yes", "yes", "20", $content_output, $show_read_more ); ?>
 	                </li>
 	

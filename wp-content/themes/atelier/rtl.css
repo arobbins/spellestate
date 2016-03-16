@@ -55,6 +55,18 @@ select {
 .page-heading-breadcrumbs #breadcrumbs {
 	float: left;
 }
+.page-heading-breadcrumbs.fancy-heading .heading-text[data-textalign="left"] h1 {
+	float: right;
+    margin-right: 15px;
+    margin-left: 0;
+}
+.page-heading-breadcrumbs.fancy-heading .heading-text[data-textalign="left"] #breadcrumbs {
+	float: left;
+	left: 0;
+	right: auto;
+	margin-right: 0;
+	margin-left: 30px;
+}
 .pagination-wrap ul {
 	float: right;
 }
@@ -205,6 +217,10 @@ figcaption .thumb-info-alt > i {
 	right: auto;
 	left: 0;
 }
+.ajax-search-wrap .ajax-loading {
+	left: 30px;
+	right: auto;
+}
 .full-center .ajax-search-wrap:after {
 	right: auto;
 	left: 15px;
@@ -342,6 +358,11 @@ li.menu-item.sf-mega-menu > ul.sub-menu > li ul {
 nav.std-menu ul.menu > li.menu-item > a > i {
 	margin-right: 0;
 	margin-left: 6px;
+}
+nav.std-menu ul.sub-menu > li.parent:after {
+	right: auto;
+	left: 15px;
+	content: "\f104";
 }
 .menu-left #main-navigation {
 	padding-left: 0;
@@ -631,9 +652,36 @@ a.sf-button.sf-icon-reveal.large:hover span.text {
 	WOOCOMMERCE STYLES
 -------------------------------------------- */
 
+.woocommerce-count-wrap {
+	float: right;
+}
+.woocommerce .woocommerce-ordering, .woocommerce-page .woocommerce-ordering {
+	float: left;
+}
+.shop-layout-opts {
+	float: right;
+	margin-right: 0;
+	margin-left: 10px;
+}
+.sf-mobile-shop-filters-link {
+	float: right;
+	margin-left: 0;
+	margin-right: 20px;
+}
 .variable-image-wrapper .img-wrap {
 	left: auto;
 	right: 15%;
+}
+.woocommerce .products .product figure .badge-wrap {
+	right: auto;
+	left: 0;
+}
+.woocommerce span.onsale, .woocommerce .wc-new-badge, .woocommerce .out-of-stock-badge, .woocommerce .free-badge {
+	right: auto!important;
+	left: 25px!important;
+}
+.products .product figure figcaption .thumb-info h4, .products .product figure figcaption .thumb-info h5, .products .product figure figcaption .thumb-info h6 {
+	text-align: right;
 }
 .products .product figure figcaption .thumb-info h5, .woocommerce .products .preview-slider-item-wrapper .product-details h3, .products .product figure figcaption .thumb-info h4, .products .product figure figcaption .thumb-info h6, .products .product figure figcaption .thumb-info .gm-hover-price-wrap {
 	max-width: 100%;
@@ -641,6 +689,9 @@ a.sf-button.sf-icon-reveal.large:hover span.text {
 .products .product.size-large figure figcaption .thumb-info h4, .products .product.size-large figure figcaption .thumb-info h5, .products .product.size-large figure figcaption .thumb-info h6, .products .product.size-large figure figcaption .thumb-info .gm-hover-price-wrap {
 	padding-left: 0;
 	padding-right: 10px;
+}
+.products .product .product-details {
+	text-align: right;
 }
 .woocommerce .bag-summary span, .woocommerce-page .bag-summary span {
 	float: right;
@@ -766,7 +817,7 @@ ul.my-account-nav > li a:before {
 	float: right!important;
 }
 .product .cart-overlay .shop-actions .jckqvBtn {
-	text-align: 9999px;
+	direction: ltr;
 }
 .product figure .cart-overlay .yith-wcwl-add-to-wishlist {
 	float: left;
@@ -794,6 +845,7 @@ ul.my-account-nav > li a:before {
 .woocommerce form.cart .yith-wcwl-add-to-wishlist, .yith-wcwl-add-to-wishlist.oos {
 	margin-left: 0;
 	margin-right: 20px;
+	float: right;
 }
 .woocommerce div.product div.summary {
 	padding-left: 0;
@@ -918,7 +970,16 @@ p.comment-form-rating label {
 	margin-left: 15px;
 	margin-right: 0;
 }
-
+.woocommerce table.shop_attributes td {
+	text-align: left;
+}
+.woocommerce #reviews #comments ol.commentlist li .comment-details {
+	float: right;
+}
+.woocommerce #reviews #comments ol.commentlist li .comment-text {
+	margin-left: 0;
+	margin-right: 200px;
+}
 
 /* --------------------------------------------
 	BUDDYPRESS STYLES

@@ -62,9 +62,11 @@
         if ( redux.fields.hasOwnProperty( "editor" ) ) {
             $.each(
                 redux.fields.editor, function( $key, $index ) {
-                    var editor = tinyMCE.get( $key );
-                    if ( editor ) {
-                        editor.save();
+                    if (typeof(tinyMCE) !== 'undefined') {
+                        var editor = tinyMCE.get( $key );
+                        if ( editor ) {
+                            editor.save();
+                        }
                     }
                 }
             );
@@ -609,6 +611,11 @@
 
             }
         );
+
+        if (redux.last_tab !== undefined) {
+            $( '#' + redux.last_tab + '_section_group_li_a' ).click();
+            return;
+        }
 
         var tab = decodeURI( (new RegExp( 'tab' + '=' + '(.+?)(&|$)' ).exec( location.search ) || [, ''])[1] );
 

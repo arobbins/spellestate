@@ -7,7 +7,7 @@
 
     /* DEFINITIONS
     ================================================== */
-    define( 'SPB_VERSION', '3.0' );
+    define( 'SPB_VERSION', '4.0' );
     define( 'SPB_PATH', dirname( __FILE__ ) );
     $spb_settings = Array(
         'SPB_ROOT'       => SPB_PATH . '/',
@@ -24,6 +24,7 @@
     /* INCLUDE INC FILES
     ================================================== */
     require_once( $inc_dir . 'abstract.php' );
+    require_once( $inc_dir . 'asset-functions.php' );
     require_once( $inc_dir . 'helpers.php' );
     require_once( $inc_dir . 'mapper.php' );
     require_once( $inc_dir . 'shortcodes.php' );

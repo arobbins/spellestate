@@ -11,7 +11,7 @@
 
     class sf_flickr_widget extends WP_Widget {
 
-        function sf_flickr_widget() {
+        function __construct() {
             $widget_ops = array(
                 'classname'   => 'flickr-widget',
                 'description' => 'Show off your favorite Flickr photos'

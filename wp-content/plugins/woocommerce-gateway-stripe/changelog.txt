@@ -1,5 +1,45 @@
 *** Stripe Changelog ***
 
+2016.02.29 - version 2.6.9
+* Tweak - Allow mechanism to override Stripe JS error handler. See https://gist.github.com/gedex/240492f479c7443e4780
+  for an example to override error handler with simple alert.
+
+2016.02.11 - version 2.6.8
+* Tweak - Include card brand in saved cards radio label class
+* Tweak - Add action when deleting card
+* Tweak - Add actions for add_card and add_customer
+* Tweak - Add support for automatic localisation in Stripe Checkout modal
+* Fix - Check for Stripe error code emptiness before returning the WP_Error
+
+2015.12.17 - version 2.6.7
+* Fix is_available SSL check to also work properly on hosts that always serve HTTPS
+
+2015.12.03 - version 2.6.6
+* Fix a JavaScript bug introduced in 2.6.4 that caused checkout with a saved card to fail
+
+2015.12.02 - version 2.6.5
+* Do not require a card id when updating a subscription payment method
+
+2015.11.20 - version 2.6.4
+* Fix a JavaScript bug that caused the Stripe Checkout popup to be blocked on Chrome for iOS
+
+2015.11.12 - version 2.6.3
+* Add metadata to subscription payments in stripe dashboard to indicate whether it is the initial or a recurring payment
+
+2015.11.06 - version 2.6.2
+* Fix bug that would cause multiple subscriptions to not be supported under certain circumstances
+
+2015.09.15 - version 2.6.1
+* Unset source if not set during pre-order release payments.
+* Store customer ID if not logged in for pre-order payments.
+
+2015.09.02 - version 2.6.0
+* Subscriptions 2.0 support.
+
+2015.08.11 - version 2.5.4
+* Tweak - Terms and conditions error styling when required
+* Tweak - Account password error styling when required
+
 2015.7.28 - version 2.5.3
 * Added - Filter to prevent Stripe from sending its own receipts "wc_stripe_send_stripe_receipt"
 

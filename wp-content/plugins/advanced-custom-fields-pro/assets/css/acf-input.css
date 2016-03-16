@@ -47,6 +47,8 @@
   color: #fff;
   margin: 0 0 10px;
   display: inline-block;
+  border-radius: 3px;
+  border-left: none;
 }
 .acf-field .acf-error-message:after {
   content: "";
@@ -78,12 +80,8 @@
   padding: 15px 12px;
   border-top: #EEEEEE solid 1px;
   position: relative;
-}
-.acf-fields > .acf-field:after {
-  content: "";
-  display: block;
-  line-height: 0;
-  clear: both;
+  clear: left;
+  /* used to clear floating widths */
 }
 .acf-fields > .acf-field:first-child {
   border-top-width: 0;
@@ -99,6 +97,12 @@ td.acf-fields {
 .acf-fields.-left > .acf-field {
   margin: 0;
   padding: 0;
+}
+.acf-fields.-left > .acf-field:after {
+  content: "";
+  display: block;
+  line-height: 0;
+  clear: both;
 }
 .acf-fields.-left > .acf-field:before {
   content: "";
@@ -458,53 +462,64 @@ html[dir="rtl"] input.acf-is-prepended.acf-is-appended {
 }
 /*---------------------------------------------------------------------------------------------
 *
-*  Select2
+*  Select2 (v3)
 *
 *---------------------------------------------------------------------------------------------*/
-.acf-select2-container .select2-choices {
+.select2-container.-acf .select2-choices {
   background: #fff;
-  border: 1px solid #ddd;
+  border-color: #ddd;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07) inset;
   min-height: 31px;
 }
-.acf-select2-container .select2-choices .select2-search-choice {
+.select2-container.-acf .select2-choices .select2-search-choice {
   margin: 5px 0 5px 5px;
   padding: 3px 5px 3px 18px;
   border-color: #bbb;
   background: #f9f9f9;
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.25) inset;
 }
-.acf-select2-container .select2-choices .select2-search-choice-focus {
+.select2-container.-acf .select2-choices .select2-search-choice-focus {
   border-color: #999;
 }
-.acf-select2-container .select2-choices .select2-search-field input {
+.select2-container.-acf .select2-choices .select2-search-field input {
   height: 31px;
   line-height: 22px;
   margin: 0;
   padding: 5px 5px 5px 7px;
 }
-.acf-select2-container .select2-search-choice-close {
-  top: 3px;
+.select2-container.-acf .select2-search-choice-close {
+  margin-top: -1px;
 }
 /* open */
-.acf-select2-container.select2-container-active .select2-choices,
-.acf-select2-container.select2-dropdown-open .select2-choices {
+.select2-container.-acf.select2-container-active .select2-choices,
+.select2-container.-acf.select2-dropdown-open .select2-choices {
   border-color: #5B9DD9;
   border-radius: 3px 3px 0 0;
 }
 /* single */
-.acf-select2-container .select2-choice {
+.select2-container.-acf .select2-choice {
   border-color: #BBBBBB;
 }
-.acf-select2-container .select2-choice .select2-arrow {
+.select2-container.-acf .select2-choice .select2-arrow {
   background: transparent;
   border-left-color: #DFDFDF;
   padding-left: 1px;
 }
 /* single open */
-.acf-select2-container.select2-dropdown-open .select2-choice {
+.select2-container.-acf.select2-dropdown-open .select2-choice {
   background: #fff;
   border-color: #5B9DD9;
+}
+/*---------------------------------------------------------------------------------------------
+*
+*  Select2 (v4)
+*
+*---------------------------------------------------------------------------------------------*/
+.select2-selection.-acf li {
+  margin-bottom: 0;
+}
+.select2-selection.-acf input {
+  box-shadow: none;
 }
 /*---------------------------------------------------------------------------------------------
 *
@@ -544,11 +559,18 @@ ul.acf-checkbox-list li label {
 ul.acf-radio-list li input[type="text"] {
   width: auto;
 }
+/* attachment sidebar fix*/
+ul.acf-radio-list li span,
+ul.acf-checkbox-list li span {
+  float: none;
+}
 /* rtl */
 html[dir="rtl"] ul.acf-radio-list li input,
 html[dir="rtl"] ul.acf-checkbox-list li input {
   margin-left: 4px;
   margin-right: 0;
+  padding: 0;
+  margin: 0;
 }
 /*--------------------------------------------------------------------------
 *
@@ -596,36 +618,36 @@ html[dir="rtl"] ul.acf-checkbox-list li input {
   height: 400px;
 }
 /* default is focused */
-.acf-google-map .title .acf-icon-location {
+.acf-google-map .title .acf-icon.-location {
   display: block;
 }
-.acf-google-map .title .acf-icon-cancel {
+.acf-google-map .title .acf-icon.-cancel {
   display: none;
 }
-.acf-google-map .title .acf-icon-search {
+.acf-google-map .title .acf-icon.-search {
   display: none;
 }
 /* -search */
-.acf-google-map.-search .title .acf-icon-location {
+.acf-google-map.-search .title .acf-icon.-location {
   display: none;
 }
-.acf-google-map.-search .title .acf-icon-cancel {
+.acf-google-map.-search .title .acf-icon.-cancel {
   display: block;
 }
-.acf-google-map.-search .title .acf-icon-search {
+.acf-google-map.-search .title .acf-icon.-search {
   display: block;
 }
 /* -value */
 .acf-google-map.-value .title .search {
   font-weight: bold;
 }
-.acf-google-map.-value .title .acf-icon-location {
+.acf-google-map.-value .title .acf-icon.-location {
   display: none;
 }
-.acf-google-map.-value .title .acf-icon-cancel {
+.acf-google-map.-value .title .acf-icon.-cancel {
   display: block;
 }
-.acf-google-map.-value .title .acf-icon-search {
+.acf-google-map.-value .title .acf-icon.-search {
   display: none;
 }
 /* -loading */
@@ -1179,7 +1201,7 @@ html[dir="rtl"] .form-table > tbody > tr.acf-tab-wrap .acf-tab-group {
   padding: 0;
   width: 100%;
 }
-.acf-oembed .canvas .acf-icon-picture {
+.acf-oembed .canvas .acf-icon.-picture {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -1327,6 +1349,7 @@ html[dir="rtl"] .acf-image-uploader .view {
   display: block;
   padding: 0;
   margin: 0;
+  max-width: 48px;
 }
 .acf-file-uploader .file-info {
   padding: 10px;
@@ -1341,20 +1364,18 @@ html[dir="rtl"] .acf-image-uploader .view {
 .acf-file-uploader .file-info a {
   text-decoration: none;
 }
-/*
-*  Hover
-*/
-.acf-file-uploader .acf-soh-target {
+.acf-file-uploader .file-info ul {
   position: absolute;
   top: 5px;
   right: 5px;
+  /* rtl */
 }
-html[dir="rtl"] .acf-file-uploader .acf-soh-target {
+.acf-file-uploader .file-info ul li {
+  margin: 0 0 0 4px;
+}
+html[dir="rtl"] .acf-file-uploader .file-info ul {
   right: auto;
   left: 5px;
-}
-.acf-file-uploader .acf-soh-target li {
-  margin: 0 0 0 4px;
 }
 /*---------------------------------------------------------------------------------------------
 *
@@ -1622,11 +1643,6 @@ html[dir="rtl"] .acf-taxonomy-field[data-type="select"] .acf-icon {
   padding-top: 8px;
   word-wrap: break-word;
   white-space: pre-wrap;
-}
-/* image select button fix */
-.media-frame a.acf-button {
-  border: 1px solid #bbbbbb;
-  color: #333;
 }
 /*---------------------------------------------------------------------------------------------
 *

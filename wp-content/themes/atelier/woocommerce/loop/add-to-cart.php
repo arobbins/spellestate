@@ -4,7 +4,7 @@
  *
  * @author 		WooThemes
  * @package 	WooCommerce/Templates
- * @version     2.1.0
+ * @version     2.5.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -56,7 +56,7 @@ $tooltip_text = "";
 					$link['url'] 	= apply_filters( 'add_to_cart_url', esc_url( $product->add_to_cart_url() ) );
 					$link['icon_class'] = 'sf-icon-add-to-cart';
 					$link['label'] 	= apply_filters( 'add_to_cart_icon', '<i class="sf-icon-add-to-cart"></i>' ) . '<span>' . apply_filters( 'add_to_cart_text', __( 'Add to cart', 'swiftframework' ) ) . '</span>';
-					$link['class']  = apply_filters( 'add_to_cart_class', 'add_to_cart_button' );
+					$link['class']  = apply_filters( 'add_to_cart_class', 'add_to_cart_button ajax_add_to_cart' );
 					$tooltip_text = __("Add to cart", "swiftframework");
 				} else {
 					$link['url'] 	= apply_filters( 'not_purchasable_url', get_permalink( $product->id ) );

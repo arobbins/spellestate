@@ -5,7 +5,7 @@
     *	Swift Page Builder - Revolution Slider Shortcode
     *	------------------------------------------------
     *	Swift Framework
-    * 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+    * 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     */
 
@@ -54,8 +54,8 @@
     SPBMap::map( 'spb_slider', array(
         "name"   => __( "Rev/Layer/Master Slider", 'swift-framework-plugin' ),
         "base"   => "spb_slider",
-        "class"  => "spb_revslider",
-        "icon"   => "spb-icon-revslider",
+        "class"  => "spb_revslider spb_tab_media",
+        "icon"   => "icon-slider",
         "params" => array(
             array(
                 "type"        => "textfield",
@@ -86,6 +86,7 @@
                     __( 'Yes', 'swift-framework-plugin' ) => "yes",
                     __( 'No', 'swift-framework-plugin' )  => "no"
                 ),
+                "buttonset_on"  => "yes",
                 "description" => __( "Select if you'd like the slide to be full width (edge to edge). NOTE: only possible on pages without sidebars.", 'swift-framework-plugin' )
             ),
             array(

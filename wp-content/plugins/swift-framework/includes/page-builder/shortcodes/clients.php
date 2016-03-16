@@ -5,7 +5,7 @@
     *	Swift Page Builder - Cleints Shortcode
     *	------------------------------------------------
     *	Swift Framework
-    * 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+    * 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     */
 
@@ -62,8 +62,8 @@
 
             global $column_width;
 
+            $img_scale  = apply_filters( 'sf_client_img_scale', 1 );
             $client_width  = 300;
-            $client_height = 300;
 
             if ( $item_columns == "5" ) {
                 $item_class = 'col-sm-sf-5';
@@ -72,18 +72,18 @@
             } else if ( $item_columns == "3" ) {
                 $item_class    = 'col-sm-4';
                 $client_width  = 400;
-                $client_height = 400;
             }
             if ( $item_columns == "2" ) {
                 $item_class    = 'col-sm-6';
                 $client_width  = 600;
-                $client_height = 600;
             }
+
+            $client_height = $client_width * $img_scale;
 
             if ( $carousel == "yes" ) {
                 $items .= '<div id="carousel-' . $sf_carouselID . '" class="clients-items carousel-items clearfix" data-columns="' . $item_columns . '">';
             } else {
-                $items .= '<div class="clients-items row clearfix">';
+                $items .= '<div class="clients-items clearfix">';
             }
 
             // CLIENTS LOOP
@@ -169,7 +169,7 @@
         "name"   => __( "Clients", 'swift-framework-plugin' ),
         "base"   => "spb_clients",
         "class"  => "clients",
-        "icon"   => "spb-icon-clients",
+        "icon"   => "icon-clients",
         "params" => array(
             array(
                 "type"        => "textfield",
@@ -214,6 +214,7 @@
                     __( "Yes", 'swift-framework-plugin' ) => "yes",
                     __( "No", 'swift-framework-plugin' )  => "no"
                 ),
+                "buttonset_on"  => "yes",
                 "description" => __( "Enable carousel functionality.", 'swift-framework-plugin' )
             ),
             array(

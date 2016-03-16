@@ -4,7 +4,18 @@ class AIOWPSecurity_General_Init_Tasks
 {
     function __construct(){
         global $aio_wp_security;
-        
+
+        add_action( 'permalink_structure_changed', array(&$this, 'refresh_firewall_rules' ), 10, 2);
+
+        if ($aio_wp_security->configs->get_value('aiowps_enable_autoblock_spam_ip') == '1') {
+            AIOWPSecurity_Blocking::check_visitor_ip_and_perform_blocking();
+
+            //add_action( 'spammed_comment', array(&$this, 'process_spammed_comment' )); //this hook gets fired when admin marks comment as spam
+            //add_action( 'akismet_submit_spam_comment', array(&$this, 'process_akismet_submit_spam_comment' ), 10, 2); //this hook gets fired when akismet marks a comment as spam
+            add_action( 'comment_post', array(&$this, 'spam_detect_process_comment_post' ), 10, 2); //this hook gets fired just after comment is saved to DB
+            add_action( 'transition_comment_status', array(&$this, 'process_transition_comment_status' ), 10, 3); //this hook gets fired when a comment's status changes
+        }
+
         if ($aio_wp_security->configs->get_value('aiowps_enable_rename_login_page') == '1') {
             add_action( 'widgets_init', array(&$this, 'remove_standard_wp_meta_widget' ));
             add_filter( 'retrieve_password_message', array(&$this, 'decode_reset_pw_msg'), 10, 4); //Fix for non decoded html entities in password reset link
@@ -42,6 +53,11 @@ class AIOWPSecurity_General_Init_Tasks
                 AIOWPSecurity_Utility::set_cookie_value($bfcf_secret_word, "1");
                 AIOWPSecurity_Utility::redirect_to_url(AIOWPSEC_WP_URL."/wp-admin");
             }
+        }
+        
+        //Stop users enumeration feature
+        if( $aio_wp_security->configs->get_value('aiowps_prevent_users_enumeration') == 1) {
+            include_once(AIO_WP_SECURITY_PATH.'/other-includes/wp-security-stop-users-enumeration.php');
         }
         
         //For user unlock request feature
@@ -164,11 +180,68 @@ class AIOWPSecurity_General_Init_Tasks
         if($aio_wp_security->configs->get_value('aiowps_enable_404_logging') == '1'){
             add_action('wp_head', array(&$this, 'check_404_event'));
         }
-        
+
         //Add more tasks that need to be executed at init time
         
     }
-    
+
+    /**
+     * Refreshes the firewall rules in .htaccess file
+     * eg: if permalink settings changed and white list enabled
+     * @param $old_permalink_structure
+     * @param $permalink_structure
+     */
+    function refresh_firewall_rules($old_permalink_structure, $permalink_structure){
+        global $aio_wp_security;
+        //If white list enabled need to re-adjust the .htaccess rules
+        if ($aio_wp_security->configs->get_value('aiowps_enable_whitelisting') == '1') {
+            $write_result = AIOWPSecurity_Utility_Htaccess::write_to_htaccess(); //now let's write to the .htaccess file
+            if ($write_result == -1)
+            {
+                $this->show_msg_error(__('The plugin was unable to write to the .htaccess file. Please edit file manually.','all-in-one-wp-security-and-firewall'));
+                $aio_wp_security->debug_logger->log_debug("AIOWPSecurity_whitelist_Menu - The plugin was unable to write to the .htaccess file.");
+            }
+        }
+    }
+
+    function spam_detect_process_comment_post($comment_id, $comment_approved)
+    {
+        if($comment_approved == 'spam'){
+            $this->block_comment_ip($comment_id);
+        }
+
+    }
+
+    function process_transition_comment_status($new_status, $old_status, $comment)
+    {
+        if($new_status == 'spam'){
+            $this->block_comment_ip($comment->comment_ID);
+        }
+
+    }
+
+    /**
+     * Will check auto-spam blocking settings and will add IP to blocked table accordingly
+     * @param $comment_id
+     */
+    function block_comment_ip($comment_id)
+    {
+        global $aio_wp_security, $wpdb;
+        $comment_obj = get_comment( $comment_id );
+        $comment_ip = $comment_obj->comment_author_IP;
+        //Get number of spam comments from this IP
+        $sql = $wpdb->prepare("SELECT * FROM $wpdb->comments
+                WHERE comment_approved = 'spam'
+                AND comment_author_IP = %s
+                ", $comment_ip);
+        $comment_data = $wpdb->get_results($sql, ARRAY_A);
+        $spam_count = count($comment_data);
+        $min_comment_before_block = $aio_wp_security->configs->get_value('aiowps_spam_ip_min_comments_block');
+        if(!empty($min_comment_before_block) && $spam_count >= ($min_comment_before_block - 1)){
+            AIOWPSecurity_Blocking::add_ip_to_block_list($comment_ip, 'spam');
+        }
+    }
+
     function remove_standard_wp_meta_widget()
     {
         unregister_widget('WP_Widget_Meta');

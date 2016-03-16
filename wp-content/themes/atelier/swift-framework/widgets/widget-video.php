@@ -11,7 +11,7 @@
 
     class sf_video_widget extends WP_Widget {
 
-        function sf_video_widget() {
+        function __construct() {
             $widget_ops  = array(
                 'classname'   => 'widget-video',
                 'description' => 'Embedded video from YouTube, Vimeo, etc'

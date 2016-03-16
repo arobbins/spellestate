@@ -36,3 +36,7 @@
 <?php } else { ?>
 	<ul id="products" class="products <?php echo esc_attr($list_class); ?> gutters row clearfix">
 <?php } ?>
+
+		<?php if ( $product_multi_masonry ) { ?>
+    		<div class="clearfix product col-sm-3 grid-sizer"></div>
+    	<?php } ?>

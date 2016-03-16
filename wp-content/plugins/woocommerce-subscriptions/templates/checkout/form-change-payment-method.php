@@ -17,9 +17,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<table class="shop_table">
 		<thead>
 			<tr>
-				<th class="product-name"><?php esc_html_e( 'Product', 'woocommerce-subscriptions' ); ?></th>
-				<th class="product-quantity"><?php esc_html_e( 'Qty', 'woocommerce-subscriptions' ); ?></th>
-				<th class="product-total"><?php esc_html_e( 'Totals', 'woocommerce-subscriptions' ); ?></th>
+				<th class="product-name"><?php echo esc_html_x( 'Product', 'table headings in notification email', 'woocommerce-subscriptions' ); ?></th>
+				<th class="product-quantity"><?php echo esc_html_x( 'Quantity', 'table headings in notification email', 'woocommerce-subscriptions' ); ?></th>
+				<th class="product-total"><?php echo esc_html_x( 'Totals', 'table headings in notification email', 'woocommerce-subscriptions' ); ?></th>
 			</tr>
 		</thead>
 		<tfoot>
@@ -52,16 +52,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</table>
 
 	<div id="payment">
-			<?php if ( $available_gateways = WC()->payment_gateways->get_available_payment_gateways() ) { ?>
+		<?php $pay_order_button_text = apply_filters( 'woocommerce_change_payment_button_text', _x( 'Change Payment Method', 'text on button on checkout page', 'woocommerce-subscriptions' ) );
+
+		if ( $available_gateways = WC()->payment_gateways->get_available_payment_gateways() ) { ?>
 		<ul class="payment_methods methods">
 			<?php
+
 			if ( sizeof( $available_gateways ) ) {
 				current( $available_gateways )->set_current();
 			}
 
 			foreach ( $available_gateways as $gateway ) { ?>
 				<li>
-					<input id="payment_method_<?php echo esc_attr( $gateway->id ); ?>" type="radio" class="input-radio" name="payment_method" value="<?php echo esc_attr( $gateway->id ); ?>" <?php checked( $gateway->chosen, true ); ?> data-order_button_text="<?php echo esc_attr( $gateway->order_button_text ); ?>" />
+					<input id="payment_method_<?php echo esc_attr( $gateway->id ); ?>" type="radio" class="input-radio" name="payment_method" value="<?php echo esc_attr( $gateway->id ); ?>" <?php checked( $gateway->chosen, true ); ?> data-order_button_text="<?php echo esc_attr( apply_filters( 'wcs_gateway_change_payment_button_text', $pay_order_button_text, $gateway ) ); ?>" />
 					<label for="payment_method_<?php echo esc_attr( $gateway->id ); ?>"><?php echo esc_html( $gateway->get_title() ); ?> <?php echo wp_kses_post( $gateway->get_icon() ); ?></label>
 					<?php
 					if ( $gateway->has_fields() || $gateway->get_description() ) {
@@ -83,11 +86,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php if ( $available_gateways ) : ?>
 		<div class="form-row">
 			<?php wp_nonce_field( 'wcs_change_payment_method', '_wcsnonce', true, true ); ?>
-			<?php
-				$pay_order_button_text = apply_filters( 'woocommerce_change_payment_button_text', __( 'Change Payment Method', 'woocommerce-subscriptions' ) );
-
-				echo wp_kses( apply_filters( 'woocommerce_change_payment_button_html', '<input type="submit" class="button alt" id="place_order" value="' . esc_attr( $pay_order_button_text ) . '" data-value="' . esc_attr( $pay_order_button_text ) . '" />' ), array( 'input' => array( 'type' => array(), 'class' => array(), 'id' => array(), 'value' => array(), 'data-value' => array() ) ) );
-			?>
+			<?php echo wp_kses( apply_filters( 'woocommerce_change_payment_button_html', '<input type="submit" class="button alt" id="place_order" value="' . esc_attr( $pay_order_button_text ) . '" data-value="' . esc_attr( $pay_order_button_text ) . '" />' ), array( 'input' => array( 'type' => array(), 'class' => array(), 'id' => array(), 'value' => array(), 'data-value' => array() ) ) ); ?>
 			<input type="hidden" name="woocommerce_change_payment" value="<?php echo esc_attr( $subscription->id ); ?>" />
 		</div>
 		<?php endif; ?>

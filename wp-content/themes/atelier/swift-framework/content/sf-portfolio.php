@@ -73,15 +73,24 @@
             } else {
                 $paged = 1;
             }
+            
+            $categories = explode(",", $category_slug);
+            $translated_categories = '';
+            foreach ($categories as $key => $category_slug) {
+                $category_id_by_slug = get_term_by('slug', $category_slug, 'portfolio-category');
+                $translated_slug_id = apply_filters('wpml_object_id', $category_id_by_slug->term_id, 'custom taxonomy', true);
+                $translated_slug = get_term_by('id', $translated_slug_id, 'portfolio-category');
+                $translated_categories = $translated_categories.($key < count($categories)-1 ? $translated_slug->slug.',': $translated_slug->slug );
+            }
 
             $portfolio_args = array(
-                'post_type'          => $post_type,
-                'post_status'        => 'publish',
-                'paged'              => $paged,
-                'portfolio-category' => $category_slug,
-                'posts_per_page'     => $item_count,
-                'order'         	 => $order,
-                'orderby'        	 => $order_by,
+                'post_type' => $post_type,
+                'post_status' => 'publish',
+                'paged' => $paged,
+                'portfolio-category' => $translated_categories,
+                'posts_per_page' => $item_count,
+                'order' => $order,
+                'orderby' => $order_by,
             );
 
             $portfolio_items = new WP_Query( $portfolio_args );
@@ -225,8 +234,10 @@
 
                 /* DISPLAY TYPE CONFIG
                 ================================================== */
-                if ( $display_type == "masonry" || $display_type == "masonry-gallery" ) {
+                if ( $display_type == "masonry") {
                     $item_class .= "masonry-item masonry-gallery-item";
+                } else if ( $display_type == "masonry-gallery" ) {
+                	$item_class .= "masonry-item masonry-gallery-item gallery-item";
                 } else if ( $display_type == "gallery" ) {
                     $item_class .= "gallery-item ";
                 } else if ( $display_type == "multi-size-masonry" ) {
@@ -234,6 +245,7 @@
                 } else {
                     $item_class .= "standard ";
                 }
+                $item_class = apply_filters( 'sf_portfolio_item_class', $item_class );
 
 
                 /* LINK TYPE CONFIG
@@ -247,6 +259,8 @@
 
 				$portfolio_items_output .= apply_filters( 'sf_before_portfolio_item_thumb' , '');
 
+				$portfolio_items_output .= '<div class="portfolio-item-wrap">' . "\n";
+								
                 /* THUMBNAIL CONFIG
                 ================================================== */
                 if ( $thumb_type != "none" ) {
@@ -254,7 +268,9 @@
                 }
 
                 $portfolio_items_output .= apply_filters( 'sf_after_portfolio_item_thumb' , '');
-
+				$port_title_tag = apply_filters( 'sf_portfolio_item_title_tag' , 'h3');
+				$port_subtitle_tag = apply_filters( 'sf_portfolio_item_subtitle_tag' , 'h5');
+				
                 if ( $display_type != "gallery" && $display_type != "masonry-gallery" && $display_type != "multi-size-masonry" ) {
 
                     $portfolio_items_output .= '<div class="portfolio-item-details">' . "\n";
@@ -267,10 +283,10 @@
                         }
                         $portfolio_items_output .= '</div>';
 
-                        $portfolio_items_output .= '<h3 class="portfolio-item-title" itemprop="name headline"><a ' . $item_link['config'] . '>' . $item_title . '</a></h3>' . "\n";
+                        $portfolio_items_output .= '<'.$port_title_tag.' class="portfolio-item-title" itemprop="name headline"><a ' . $item_link['config'] . '>' . $item_title . '</a></'.$port_title_tag.'>' . "\n";
                     }
                     if ( $show_subtitle == "yes" && $item_subtitle ) {
-                        $portfolio_items_output .= '<h5 class="portfolio-subtitle" itemprop="name alternativeHeadline">' . $item_subtitle . '</h5>' . "\n";
+                        $portfolio_items_output .= '<'.$port_subtitle_tag.' class="portfolio-subtitle" itemprop="name alternativeHeadline">' . $item_subtitle . '</'.$port_subtitle_tag.'>' . "\n";
                     }
                     if ( $show_excerpt == "yes" ) {
                         $portfolio_items_output .= '<div class="portfolio-item-excerpt" itemprop="description">' . $post_excerpt . '</div>' . "\n";
@@ -279,7 +295,9 @@
                     $portfolio_items_output .= '</div>' . "\n";
 
                 }
-
+	
+				$portfolio_items_output .= '</div>' . "\n";
+				
                 $portfolio_items_output .= '</li>' . "\n";
 
                 $count ++;
@@ -291,11 +309,31 @@
 
             $portfolio_items_output .= '</ul>' . "\n";
 
-
-            /* PAGINATION OUTPUT
+			
+			/* PAGINATION OUTPUT
             ================================================== */
-            if ( $pagination == "yes" ) {
-                if ( $display_type == "masonry" || $display_type == "masonry-gallery" ) {
+            if ( $pagination == "infinite-scroll" ) {
+
+                global $sf_include_infscroll;
+                $sf_include_infscroll = true;
+
+                $portfolio_items_output .= '<div class="pagination-wrap hidden">';
+                $portfolio_items_output .= pagenavi( $portfolio_items );
+                $portfolio_items_output .= '</div>';
+
+            } else if ( $pagination == "load-more" ) {
+
+                global $sf_include_infscroll;
+                $sf_include_infscroll = true;
+
+                $portfolio_items_output .= '<a href="#" class="load-more-btn">' . __( 'Load More', 'swiftframework' ) . '</a>';
+
+                $portfolio_items_output .= '<div class="pagination-wrap load-more hidden">';
+                $portfolio_items_output .= pagenavi( $portfolio_items );
+                $portfolio_items_output .= '</div>';
+
+            } else if ( $pagination == "standard" || $pagination == "yes" ) {
+                if ( $display_type == "masonry" ) {
                     $portfolio_items_output .= '<div class="pagination-wrap masonry-pagination">';
                 } else {
                     $portfolio_items_output .= '<div class="pagination-wrap">';
@@ -303,7 +341,7 @@
                 $portfolio_items_output .= pagenavi( $portfolio_items );
                 $portfolio_items_output .= '</div>';
             }
-
+			            
 
             /* FUNCTION OUTPUT
             ================================================== */
@@ -335,7 +373,7 @@
 
 		    $filter_output .= '<div class="filter-wrap clearfix">'. "\n";
 		    $filter_output .= '<ul class="post-filter-tabs filtering clearfix">'. "\n";
-		    $filter_output .= '<li class="all selected"><a data-filter="*" href="#"><i class="'.$show_all_icon.'"></i><span class="item-name">'. __("Show all", "swiftframework").'</span></a></li>'. "\n";
+		    $filter_output .= '<li class="all selected"><a data-filter="*" href="#"><i class="'.$show_all_icon.'"></i><span class="item-name">'. apply_filters( 'sf_portfolio_filter_show_all_text', __("Show all", "swiftframework") ).'</span></a></li>'. "\n";
 			foreach ($tax_terms as $tax_term) {
 				$term = get_term_by('name', $tax_term, $taxonomy_name);
 				$term_meta = $term_icon = "";
@@ -463,14 +501,28 @@
             $port_hover_text_color    = sf_get_post_meta( $post->ID, 'sf_port_hover_text_color', true );
 
             if ( $port_hover_bg_color != "" ) {
-                $overlay_opacity = $sf_options['overlay_opacity'];
-                if ( $overlay_opacity == 100 ) {
-                    $overlay_opacity = '1';
-                } else {
-                    $overlay_opacity = '0.' . $overlay_opacity;
+            	if ( isset( $sf_options['overlay_opacity'] ) ) {
+                	$overlay_opacity = $sf_options['overlay_opacity'];
+                	if ( $overlay_opacity == 100 ) {
+                	    $overlay_opacity = '1';
+                	} else {
+                	    $overlay_opacity = '0.' . $overlay_opacity;
+                	}
+                	$port_hover_bg_rgb = sf_hex2rgb( $port_hover_bg_color );
+                	$port_hover_style  = 'style="background-color:rgba(' . $port_hover_bg_rgb['red'] . ',' . $port_hover_bg_rgb['green'] . ',' . $port_hover_bg_rgb['blue'] . ',' . $overlay_opacity . ');"';
+                } else if ( isset( $sf_options['overlay_opacity_top'] ) ) {
+                	$overlay_opacity_top   = $sf_options['overlay_opacity_top'];
+                	$overlay_opacity_bottom = $sf_options['overlay_opacity_bottom'];
+                	$port_hover_bg_rgb = sf_hex2rgb( $port_hover_bg_color );
+                	if ( $overlay_opacity_top < 100 || $overlay_opacity_bottom < 100 ) {
+                		$overlay_opacity_top = ($overlay_opacity_top < 100 ? '0.' . $overlay_opacity_top : '1.0');
+                		$overlay_opacity_bottom = ($overlay_opacity_bottom < 100 ? '0.' . $overlay_opacity_bottom : '1.0');
+                	    $port_hover_style = 'style="background: -webkit-gradient(linear,left top,left bottom,color-stop(25%,rgba(' . $port_hover_bg_rgb["red"] . ',' . $port_hover_bg_rgb["green"] . ',' . $port_hover_bg_rgb["blue"] . ', ' . $overlay_opacity_top .')),to(rgba(' . $port_hover_bg_rgb["red"] . ',' . $port_hover_bg_rgb["green"] . ',' . $port_hover_bg_rgb["blue"] . ', ' . $overlay_opacity_bottom . ')));
+                	    	background: -webkit-linear-gradient(top, rgba(' . $port_hover_bg_rgb["red"] . ',' . $port_hover_bg_rgb["green"] . ',' . $port_hover_bg_rgb["blue"] . ', ' . $overlay_opacity_top .') 25%,rgba(' . $port_hover_bg_rgb["red"] . ',' . $port_hover_bg_rgb["green"] . ',' . $port_hover_bg_rgb["blue"] . ', ' . $overlay_opacity_bottom . ') 100%);
+                	    	background: linear-gradient(to bottom, rgba(' . $port_hover_bg_rgb["red"] . ',' . $port_hover_bg_rgb["green"] . ',' . $port_hover_bg_rgb["blue"] . ', ' . $overlay_opacity_top .') 25%, rgba(' . $port_hover_bg_rgb["red"] . ',' . $port_hover_bg_rgb["green"] . ',' . $port_hover_bg_rgb["blue"] . ', ' . $overlay_opacity_bottom . ') 100%);"';
+                	}
+                	
                 }
-                $port_hover_bg_rgb = sf_hex2rgb( $port_hover_bg_color );
-                $port_hover_style  = 'style="background-color:rgba(' . $port_hover_bg_rgb['red'] . ',' . $port_hover_bg_rgb['green'] . ',' . $port_hover_bg_rgb['blue'] . ',' . $overlay_opacity . ');"';
             }
 
             if ( $port_hover_text_color != "" ) {
@@ -541,7 +593,7 @@
                     if ( $display_type == "multi-size-masonry" ) {
                         $portfolio_thumb .= '<div class="multi-masonry-img-wrap"><img itemprop="image" src="' . $image[0] . '" width="' . $image[1] . '" height="' . $image[2] . '" alt="' . $image_alt . '" /></div>' . "\n";
                     } else {
-                        $portfolio_thumb .= '<img itemprop="image" src="' . $image[0] . '" width="' . $image[1] . '" height="' . $image[2] . '" alt="' . $image_alt . '" />' . "\n";
+                        $portfolio_thumb .= '<div class="img-wrap"><img itemprop="image" src="' . $image[0] . '" width="' . $image[1] . '" height="' . $image[2] . '" alt="' . $image_alt . '" /></div>' . "\n";
                     }
 
                     $portfolio_thumb .= '<div class="figcaption-wrap"></div>';
@@ -563,6 +615,13 @@
                                 $portfolio_thumb .= '<div itemprop="description" ' . $port_hover_text_style . '>' . $post_excerpt . '</div>';
                             }
                         } else {
+                        	if ( sf_theme_supports('alt-gallery-hover') ) {
+                        		if ( $item_link['svg_icon'] != "" ) {
+                        			$portfolio_thumb .= $item_link['svg_icon'];
+                        		} else {
+                        			$portfolio_thumb .= '<i class="' . $item_link['icon'] . '"></i>';
+                        		}
+                        	}
                             $portfolio_thumb .= '<h4 itemprop="name headline" ' . $port_hover_text_style . '>' . $item_title . '</h4>';
                             if ( $item_subtitle != "" ) {
                                 $portfolio_thumb .= '<div class="name-divide"></div>';
@@ -570,7 +629,11 @@
                             }
                         }
                     } else {
-                        $portfolio_thumb .= '<i class="' . $item_link['icon'] . '"></i>';
+                        if ( $item_link['svg_icon'] != "" ) {
+                        	$portfolio_thumb .= $item_link['svg_icon'];
+                        } else {
+                        	$portfolio_thumb .= '<i class="' . $item_link['icon'] . '"></i>';
+                        }
                     }
                     $portfolio_thumb .= '</div></figcaption>';
                 }
@@ -588,7 +651,7 @@
     if ( ! function_exists( 'sf_portfolio_item_link' ) ) {
         function sf_portfolio_item_link() {
 
-            $link_config = $item_icon = $thumb_img_url = "";
+            $link_config = $item_icon = $item_svg_icon = $thumb_img_url = "";
 
             global $post, $sf_options;
 
@@ -615,14 +678,17 @@
             if ( $thumb_link_type == "link_to_url" ) {
                 $link_config = 'href="' . $thumb_link_url . '" class="link-to-url"';
                 $item_icon   = apply_filters( 'sf_port_url_icon', "ss-link" );
+                $item_svg_icon   = apply_filters( 'sf_port_url_svg_icon', "" );
             } else if ( $thumb_link_type == "link_to_url_nw" ) {
                 $link_config = 'href="' . $thumb_link_url . '" class="link-to-url" target="_blank"';
                 $item_icon   = apply_filters( 'sf_port_url_icon', "ss-link" );
+                $item_svg_icon   = apply_filters( 'sf_port_url_svg_icon', "" );
             } else if ( $thumb_link_type == "lightbox_thumb" ) {
                 if ( $thumb_img_url != "" ) {
                     $link_config = 'href="' . $thumb_img_url . '" class="lightbox" data-rel="ilightbox[portfolio]"';                    
                 }
                 $item_icon   = apply_filters( 'sf_port_lightbox_icon', "ss-view" );
+                $item_svg_icon   = apply_filters( 'sf_port_lightbox_svg_icon', "" );
             } else if ( $thumb_link_type == "lightbox_image" ) {
                 $lightbox_image_url = '';
                 foreach ( $thumb_lightbox_image as $image ) {
@@ -632,17 +698,21 @@
                     $link_config = 'href="' . $lightbox_image_url . '" class="lightbox" data-rel="ilightbox[portfolio]"';
                 }
                 $item_icon   = apply_filters( 'sf_port_lightbox_icon', "ss-view" );
+                $item_svg_icon   = apply_filters( 'sf_port_lightbox_svg_icon', "" );
             } else if ( $thumb_link_type == "lightbox_video" ) {
                 $link_config = 'data-video="' . $thumb_lightbox_video_url . '" href="#" class="fw-video-link"';
                 $item_icon   = apply_filters( 'sf_port_video_icon', "ss-video" );
+                $item_svg_icon   = apply_filters( 'sf_port_video_svg_icon', "" );
             } else {
                 $link_config = 'href="' . $permalink . '" class="link-to-post"';
                 $item_icon   = apply_filters( 'sf_port_post_icon', "ss-navigateright" );
+                $item_svg_icon   = apply_filters( 'sf_port_post_svg_icon', "" );
             }
 
             $item_link = array(
-                "icon"   => $item_icon,
-                "config" => $link_config
+                "icon"   	=> $item_icon,
+                "svg_icon"  => $item_svg_icon,
+                "config" 	=> $link_config
             );
 
             return $item_link;

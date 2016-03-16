@@ -5,7 +5,7 @@
     *	Swift Page Builder - Latest Tweets Shortcode
     *	------------------------------------------------
     *	Swift Framework
-    * 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+    * 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     */
 
@@ -57,8 +57,8 @@
     SPBMap::map( 'spb_latest_tweets', array(
         "name"   => __( "Tweets", 'swift-framework-plugin' ),
         "base"   => "spb_latest_tweets",
-        "class"  => "spb-latest-tweets",
-        "icon"   => "spb-icon-latest-tweets",
+        "class"  => "spb-latest-tweets spb_tab_media",
+        "icon"   => "icon-latest-tweets",
         "params" => array(
             array(
                 "type"        => "textfield",

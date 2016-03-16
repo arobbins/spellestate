@@ -71,12 +71,8 @@ class WCS_Repair_2_0 {
 			'trial_expiry_date',
 			'expiry_date',
 			'end_date',
-			'recurring_line_total',
-			'recurring_line_tax',
-			'recurring_line_subtotal',
-			'recurring_line_subtotal_tax',
 			) as $meta ) {
-			if ( ! array_key_exists( $meta, $subscription ) || empty( $subscription[ $meta ] ) ) {
+			if ( ! array_key_exists( $meta, $subscription ) || '' === $subscription[ $meta ] ) {
 				$repairs_needed[] = $meta;
 			}
 		}
@@ -130,12 +126,14 @@ class WCS_Repair_2_0 {
 			return $subscription;
 		}
 
-		WCS_Upgrade_Logger::add( sprintf( '-- For order %d: Repairing %s for subscription.', $subscription['order_id'], $subscription_meta_key ) );
-
 		if ( array_key_exists( $item_meta_key, $item_meta ) && ! empty( $item_meta[ $item_meta_key ] ) ) {
-			WCS_Upgrade_Logger::add( sprintf( '-- For order %d: copying %s from item_meta to %s on subscription.', $subscription['order_id'], $item_meta_key, $subscription_meta_key ) );
-			$subscription[ $subscription_meta_key ] = $item_meta[ $item_meta_key ][0];
-		} elseif ( ! array_key_exists( $subscription_meta_key, $subscription ) ) {
+			// only do the copy if the value on item meta is actually different to what the subscription has
+			// otherwise it'd be an extra line in the log file for no actual use
+			if ( ! array_key_exists( $subscription_meta_key, $subscription ) || $item_meta[ $item_meta_key ][0] != $subscription[ $subscription_meta_key ] ) {
+				WCS_Upgrade_Logger::add( sprintf( '-- For order %d: copying %s from item_meta to %s on subscription.', $subscription['order_id'], $item_meta_key, $subscription_meta_key ) );
+				$subscription[ $subscription_meta_key ] = $item_meta[ $item_meta_key ][0];
+			}
+		} elseif ( ! array_key_exists( $item_meta_key, $item_meta ) ) {
 			WCS_Upgrade_Logger::add( sprintf( '-- For order %d: setting an empty %s on old subscription, item meta was not helpful.', $subscription['order_id'], $subscription_meta_key ) );
 			$subscription[ $subscription_meta_key ] = $default_value;
 		}
@@ -395,7 +393,11 @@ class WCS_Repair_2_0 {
 
 		$start_date = get_post_meta( $subscription['order_id'], '_paid_date', true );
 
+		WCS_Upgrade_Logger::add( sprintf( 'Repairing start_date for order %d: Trying to use the _paid date for start date.', $subscription['order_id'] ) );
+
 		if ( empty( $start_date ) ) {
+			WCS_Upgrade_Logger::add( '-- start_date from _paid date failed. Using post_date_gmt' );
+
 			$start_date = $wpdb->get_var( $wpdb->prepare( "SELECT post_date_gmt FROM {$wpdb->posts} WHERE ID = %d", $subscription['order_id'] ) );
 		}
 
@@ -585,20 +587,23 @@ class WCS_Repair_2_0 {
 	 * @return string                   either 0 or mysql date
 	 */
 	private static function maybe_get_date_from_action_scheduler( $type, $subscription ) {
-		$action_scheduler = new ActionScheduler_wpPostStore;
+		$action_args = array(
+			'user_id' => intval( $subscription['user_id'] ),
+			'subscription_key' => $subscription['subscription_key'],
+		);
 
-		$action_id = $action_scheduler->find_action( $type, array( 'subscription_key' => $subscription['subscription_key'] ) );
+		WCS_Upgrade_Logger::add( sprintf( '-- For order %d: Repairing date type "%s" from action scheduler...', $subscription['order_id'], $type ) );
+		WCS_Upgrade_Logger::add( '-- This is the arguments: ' . PHP_EOL . print_r( array( $action_args, 'hook' => $type ), true ) . PHP_EOL );
 
-		if ( is_numeric( $action_id ) ) {
-			try {
-				$date = $action_scheduler->get_date( $action_id );
-				$formatted_date = $date->format( 'Y-m-d H:i:s' );
-			} catch ( Exception $e ) {
-				WCS_Upgrade_Logger::add( sprintf( '-- For order %d: while fetching date from action scheduler, an error occurred. No such action id.', $subscription['order_id'] ) );
-				$formatted_date = 0;
-			}
-		} else {
+		$next_date_timestamp = wc_next_scheduled_action( $type, $action_args );
+
+		if ( false === $next_date_timestamp ) {
+			// set it to 0 as default
 			$formatted_date = 0;
+			WCS_Upgrade_Logger::add( sprintf( '-- For order %d: Repairing date type "%s": fetch of date unsuccessfull: no action present. Date is 0.', $subscription['order_id'], $type ) );
+		} else {
+			$formatted_date = date( 'Y-m-d H:i:s', $next_date_timestamp );
+			WCS_Upgrade_Logger::add( sprintf( '-- For order %d: Repairing date type "%s": fetch of date successfull. New date is %s', $subscription['order_id'], $type, $formatted_date ) );
 		}
 
 		return $formatted_date;

@@ -34,13 +34,13 @@ wc_print_notices();
 		<td><?php echo esc_html( wcs_get_subscription_status_name( $subscription->get_status() ) ); ?></td>
 	</tr>
 	<tr>
-		<td><?php esc_html_e( 'Start Date', 'woocommerce-subscriptions' ); ?></td>
+		<td><?php echo esc_html_x( 'Start Date', 'table heading',  'woocommerce-subscriptions' ); ?></td>
 		<td><?php echo esc_html( $subscription->get_date_to_display( 'start' ) ); ?></td>
 	</tr>
 	<?php foreach ( array(
 		'last_payment' => _x( 'Last Payment Date', 'admin subscription table header', 'woocommerce-subscriptions' ),
 		'next_payment' => _x( 'Next Payment Date', 'admin subscription table header', 'woocommerce-subscriptions' ),
-		'end'          => _x( 'End Date', 'admin subscription table header', 'woocommerce-subscriptions' ),
+		'end'          => _x( 'End Date', 'table heading', 'woocommerce-subscriptions' ),
 		'trial end'    => _x( 'Trial End Date', 'admin subscription table header', 'woocommerce-subscriptions' ),
 		) as $date_type => $date_title ) : ?>
 		<?php $date = $subscription->get_date( $date_type ); ?>
@@ -91,8 +91,8 @@ wc_print_notices();
 			<?php if ( $allow_remove_item ) : ?>
 			<th class="product-remove" style="width: 3em;">&nbsp;</th>
 			<?php endif; ?>
-			<th class="product-name"><?php esc_html_e( 'Product', 'woocommerce-subscriptions' ); ?></th>
-			<th class="product-total"><?php esc_html_e( 'Total', 'woocommerce-subscriptions' ); ?></th>
+			<th class="product-name"><?php echo esc_html_x( 'Product', 'table headings in notification email', 'woocommerce-subscriptions' ); ?></th>
+			<th class="product-total"><?php echo esc_html_x( 'Total', 'table heading', 'woocommerce-subscriptions' ); ?></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -131,8 +131,9 @@ wc_print_notices();
 
 								foreach ( $download_files as $download_id => $file ) {
 									$i++;
-									// translators: placeholder is "number:" or just ":"
-									$links[] = '<small><a href="' . esc_url( $file['download_url'] ) . '">' . sprintf( __( 'Download file%s' , 'woocommerce-subscriptions' ), ( count( $download_files ) > 1 ? ' ' . $i . ': ' : ': ' ) ) . esc_html( $file['name'] ) . '</a></small>';
+									// translators: %1$s is the number of the file (only in plural!), %2$s: the name of the file
+									$link_text = sprintf( _nx( 'Download file: %2$s', 'Download file %1$s: %2$s', count( $download_files ), 'Used as link text in view-subscription template', 'woocommerce-subscriptions' ), $i, $file['name'] );
+									$links[] = '<small><a href="' . esc_url( $file['download_url'] ) . '">' . esc_html( $link_text ) . '</a></small>';
 								}
 
 								echo '<br/>' . wp_kses_post( implode( '<br/>', $links ) );
@@ -195,10 +196,12 @@ wc_print_notices();
 						}
 
 						if ( ! empty( $tax_del_array ) ) {
+							// translators: placeholder is price string, denotes tax included in cart/order total
 							$refunded_tax_del .= ' ' . sprintf( _x( '(Includes %s)', 'includes tax', 'woocommerce-subscriptions' ), implode( ', ', $tax_del_array ) );
 						}
 
 						if ( ! empty( $tax_ins_array ) ) {
+							// translators: placeholder is price string, denotes tax included in cart/order total
 							$refunded_tax_ins .= ' ' . sprintf( _x( '(Includes %s)', 'includes tax', 'woocommerce-subscriptions' ), implode( ', ', $tax_ins_array ) );
 						}
 					}
@@ -239,18 +242,20 @@ wc_print_notices();
 	<h2><?php esc_html_e( 'Customer details', 'woocommerce-subscriptions' ); ?></h2>
 </header>
 <table class="shop_table shop_table_responsive customer_details">
-<?php
-if ( $subscription->billing_email ) {
-	echo '<tr><th>' . esc_html__( 'Email:', 'woocommerce-subscriptions' ) . '</th><td data-title="' . esc_attr__( 'Email', 'woocommerce-subscriptions' ) . '">' . esc_html( $subscription->billing_email ) . '</td></tr>';
-}
+	<?php
+	if ( $subscription->billing_email ) {
+		// translators: there is markup here, hence can't use Email: %s
+		echo '<tr><th>' . esc_html_x( 'Email', 'heading in customer details on subscription detail page', 'woocommerce-subscriptions' ) . '</th><td data-title="' . esc_attr_x( 'Email', 'Used in data attribute for a td tag, escaped.', 'woocommerce-subscriptions' ) . '">' . esc_html( $subscription->billing_email ) . '</td></tr>';
+	}
 
-if ( $subscription->billing_phone ) {
-	echo '<tr><th>' . esc_html__( 'Telephone:', 'woocommerce-subscriptions' ) . '</th><td data-title="' . esc_attr__( 'Telephone', 'woocommerce-subscriptions' ) . '">' . esc_html( $subscription->billing_phone ) . '</td></tr>';
-}
+	if ( $subscription->billing_phone ) {
+		// translators: there is markup here, hence can't use Email: %s
+		echo '<tr><th>' . esc_html_x( 'Tel', 'heading in customer details on subscription detail page', 'woocommerce-subscriptions' ) . '</th><td data-title="' . esc_attr_x( 'Telephone', 'Used in data attribute for a td tag, escaped.', 'woocommerce-subscriptions' ) . '">' . esc_html( $subscription->billing_phone ) . '</td></tr>';
+	}
 
 	// Additional customer details hook
 	do_action( 'woocommerce_order_details_after_customer_details', $subscription );
-?>
+	?>
 </table>
 
 <?php if ( ! wc_ship_to_billing_address_only() && $subscription->needs_shipping_address() && get_option( 'woocommerce_calc_shipping' ) !== 'no' ) : ?>
@@ -267,7 +272,7 @@ if ( $subscription->billing_phone ) {
 		<address>
 			<?php
 			if ( ! $subscription->get_formatted_billing_address() ) {
-				echo esc_html_x( 'N/A', 'no formatted billing address', 'woocommerce-subscriptions' );
+				echo esc_html_x( 'N/A', 'no information about something', 'woocommerce-subscriptions' );
 			} else {
 				echo wp_kses_post( $subscription->get_formatted_billing_address() );
 			}
@@ -286,7 +291,7 @@ if ( $subscription->billing_phone ) {
 		<address>
 			<?php
 			if ( ! $subscription->get_formatted_shipping_address() ) {
-				echo esc_html_x( 'N/A', 'no formatted shipping address', 'woocommerce-subscriptions' );
+				echo esc_html_x( 'N/A', 'no information about something', 'woocommerce-subscriptions' );
 			} else {
 				echo wp_kses_post( $subscription->get_formatted_shipping_address() );
 			}

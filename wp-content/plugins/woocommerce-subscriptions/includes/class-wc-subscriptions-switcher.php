@@ -97,6 +97,12 @@ class WC_Subscriptions_Switcher {
 
 		// Display/indicate whether a cart switch item is a upgrade/downgrade/crossgrade
 		add_filter( 'woocommerce_cart_item_subtotal', __CLASS__ . '::add_cart_item_switch_direction', 10, 3 );
+
+		// Check if the new order was to record a switch request and maybe call a "switch completed" action.
+		add_action( 'subscriptions_created_for_order', __CLASS__ . '::maybe_add_switched_callback', 10, 1 );
+
+		// Revoke download permissions from old switch item
+		add_action( 'woocommerce_subscriptions_switched_item', __CLASS__ . '::remove_download_permissions_after_switch', 10, 3 );
 	}
 
 	/**
@@ -113,9 +119,9 @@ class WC_Subscriptions_Switcher {
 			$subscription = wcs_get_subscription( $_GET['switch-subscription'] );
 
 			// Visiting a switch link for someone elses subscription or if the switch link doesn't contain a valid nonce
-			if ( ! is_object( $subscription ) || ! current_user_can( 'switch_shop_subscription', $subscription->id ) || empty( $_GET['_wcsnonce'] ) || ! wp_verify_nonce( $_GET['_wcsnonce'], 'wcs_switch_request' )  ) {
+			if ( ! is_object( $subscription ) || ! current_user_can( 'switch_shop_subscription', $subscription->id ) || empty( $_GET['_wcsnonce'] ) || ! wp_verify_nonce( $_GET['_wcsnonce'], 'wcs_switch_request' ) || 'no' === get_option( WC_Subscriptions_Admin::$option_prefix . '_allow_switching', 'no' ) ) {
 
-				wp_redirect( remove_query_arg( array( 'switch-subscription', 'auto-switch', 'item' ) ) );
+				wp_redirect( remove_query_arg( array( 'switch-subscription', 'auto-switch', 'item', '_wcsnonce' ) ) );
 				exit();
 
 			} else {
@@ -137,24 +143,21 @@ class WC_Subscriptions_Switcher {
 
 				$subscription = wcs_get_subscription( $switch_item['subscription_id'] );
 
-				if ( ! is_object( $subscription ) || ! current_user_can( 'switch_shop_subscription', $subscription->id ) || ! self::is_product_of_switchable_type( WC()->cart->cart_contents[ $cart_item_key ]['data'] ) ) {
+				if ( ! is_object( $subscription ) || ! current_user_can( 'switch_shop_subscription', $subscription->id ) || ! wcs_is_product_switchable_type( WC()->cart->cart_contents[ $cart_item_key ]['data'] ) ) {
 					WC()->cart->remove_cart_item( $cart_item_key );
 					$removed_item_count++;
 				}
 			}
 
 			if ( $removed_item_count > 0 ) {
-				if ( 1 == $removed_item_count ) {
-					WC_Subscriptions::add_notice( __( 'Your cart contained an invalid subscription switch request. It has been removed.', 'woocommerce-subscriptions' ), 'error' );
-				} else {
-					WC_Subscriptions::add_notice( __( 'Your cart contained invalid subscription switch requests. They have been removed.', 'woocommerce-subscriptions' ), 'error' );
-				}
+				WC_Subscriptions::add_notice( _n( 'Your cart contained an invalid subscription switch request. It has been removed.', 'Your cart contained invalid subscription switch requests. They have been removed.', 	$removed_item_count, 'woocommerce-subscriptions' ), 'error' );
+
 				wp_redirect( WC()->cart->get_cart_url() );
 				exit();
 			}
-		} elseif ( is_product() && $product = get_product( $post ) ) { // Automatically initiate the switch process for limited variable subscriptions
+		} elseif ( is_product() && $product = wc_get_product( $post ) ) { // Automatically initiate the switch process for limited variable subscriptions
 
-			if ( ( $product->is_type( array( 'variable-subscription', 'subscription_variation', 'grouped' ) ) || 0 !== $product->post->post_parent ) && 'no' != $product->limit_subscriptions ) {
+			if ( wcs_is_product_switchable_type( $product ) && 'no' != $product->limit_subscriptions ) {
 
 				// Check if the user has an active subscription for this product, and if so, initiate the switch process
 				$subscriptions = wcs_get_users_subscriptions();
@@ -179,35 +182,52 @@ class WC_Subscriptions_Switcher {
 
 						// For grouped products, we need to check the child products limitations, not the grouped product's (which will have no limitation)
 						if ( $subscription_product_id ) {
-							$child_product = get_product( $subscription_product_id );
+							$child_product = wc_get_product( $subscription_product_id );
 							$limitation    = $child_product->limit_subscriptions;
 						} else {
 							$limitation    = $product->limit_subscriptions;
 						}
 
 						// If the product is limited
-						if ( 'any' == $limitation || $limitation == $subscription->get_status() || ( 'active' == $limitation && 'on-hold' == $subscription->get_status() ) ) {
+						if ( 'any' == $limitation || $subscription->has_status( $limitation ) || ( 'active' == $limitation && $subscription->has_status( 'on-hold' ) ) ) {
+
+							$subscribed_notice = __( 'You have already subscribed to this product and it is limited to one per customer. You can not purchase the product again.', 'woocommerce-subscriptions' );
 
 							// If switching is enabled for this product type, initiate the auto-switch process
-							if ( self::is_product_of_switchable_type( $product ) ) {
+							if ( wcs_is_product_switchable_type( $product ) ) {
 
-								$product_id = ( $subscription_product_id ) ? $subscription_product_id : $product->id;
+								// Don't initiate auto-switching when the subscription requires payment
+								if ( $subscription->needs_payment() ) {
 
-								// Get the matching item
-								foreach ( $subscription->get_items() as $line_item_id => $line_item ) {
-									if ( $line_item['product_id'] == $product_id || $line_item['variation_id'] == $product_id ) {
-										$item_id = $line_item_id;
-										$item    = $line_item;
-										break;
+									$last_order = $subscription->get_last_order( 'all' );
+
+									if ( $last_order->needs_payment() ) {
+										// translators: 1$: is the "You have already subscribed to this product" notice, 2$-4$: opening/closing link tags, 3$: an order number
+										$subscribed_notice = sprintf( __( '%1$s Complete payment on %2$sOrder %3$s%4$s to be able to change your subscription.', 'woocommerce-subscriptions' ), $subscribed_notice, sprintf( '<a href="%s">', $last_order->get_checkout_payment_url() ), $last_order->get_order_number(), '</a>' );
 									}
+
+									WC_Subscriptions::add_notice( $subscribed_notice, 'notice' );
+									break;
+
+								} else {
+
+									$product_id = ( $subscription_product_id ) ? $subscription_product_id : $product->id;
+
+									// Get the matching item
+									foreach ( $subscription->get_items() as $line_item_id => $line_item ) {
+										if ( $line_item['product_id'] == $product_id || $line_item['variation_id'] == $product_id ) {
+											$item_id = $line_item_id;
+											$item    = $line_item;
+											break;
+										}
+									}
+
+									wp_redirect( add_query_arg( 'auto-switch', 'true', self::get_switch_url( $item_id, $item, $subscription ) ) );
+									exit;
 								}
-
-								wp_redirect( add_query_arg( 'auto-switch', 'true', self::get_switch_url( $item_id, $item, $subscription ) ) );
-								exit;
-
 							} else {
 
-								WC_Subscriptions::add_notice( __( 'You have already subscribed to this product and it is limited to one per customer. You can not purchase the product again.', 'woocommerce-subscriptions' ), 'notice' );
+								WC_Subscriptions::add_notice( $subscribed_notice, 'notice' );
 								break;
 							}
 						}
@@ -283,7 +303,7 @@ class WC_Subscriptions_Switcher {
 				'default' => 'no',
 				'type'    => 'select',
 				'options' => array(
-					'no'               => _x( 'Never', 'when to allow switching', 'woocommerce-subscriptions' ),
+					'no'               => _x( 'Never', 'when to allow a setting', 'woocommerce-subscriptions' ),
 					'variable'         => _x( 'Between Subscription Variations', 'when to allow switching', 'woocommerce-subscriptions' ),
 					'grouped'          => _x( 'Between Grouped Subscriptions', 'when to allow switching', 'woocommerce-subscriptions' ),
 					'variable_grouped' => _x( 'Between Both Variations & Grouped Subscriptions', 'when to allow switching', 'woocommerce-subscriptions' ),
@@ -300,7 +320,7 @@ class WC_Subscriptions_Switcher {
 				'default' => 'no',
 				'type'    => 'select',
 				'options' => array(
-					'no'              => _x( 'Never', 'when to prorate recurring fee when switching', 'woocommerce-subscriptions' ),
+					'no'              => _x( 'Never', 'when to allow a setting', 'woocommerce-subscriptions' ),
 					'virtual-upgrade' => _x( 'For Upgrades of Virtual Subscription Products Only', 'when to prorate recurring fee when switching', 'woocommerce-subscriptions' ),
 					'yes-upgrade'     => _x( 'For Upgrades of All Subscription Products', 'when to prorate recurring fee when switching', 'woocommerce-subscriptions' ),
 					'virtual'         => _x( 'For Upgrades & Downgrades of Virtual Subscription Products Only', 'when to prorate recurring fee when switching', 'woocommerce-subscriptions' ),
@@ -334,9 +354,9 @@ class WC_Subscriptions_Switcher {
 				'default' => 'no',
 				'type'    => 'select',
 				'options' => array(
-					'no'                 => _x( 'Never', 'when to prorate subs length when switching', 'woocommerce-subscriptions' ),
-					'virtual'            => _x( 'For Virtual Subscription Products Only', 'when to prorate subs length when switching', 'woocommerce-subscriptions' ),
-					'yes'                => _x( 'For All Subscription Products', 'when to prorate subs length when switching', 'woocommerce-subscriptions' ),
+					'no'                 => _x( 'Never', 'when to allow a setting', 'woocommerce-subscriptions' ),
+					'virtual'            => _x( 'For Virtual Subscription Products Only', 'when to prorate first payment / subscription length', 'woocommerce-subscriptions' ),
+					'yes'                => _x( 'For All Subscription Products', 'when to prorate first payment / subscription length', 'woocommerce-subscriptions' ),
 				),
 				'desc_tip' => true,
 			),
@@ -392,7 +412,7 @@ class WC_Subscriptions_Switcher {
 			$subscription = wcs_get_subscription( $subscription );
 		}
 
-		$product = get_product( $item['product_id'] );
+		$product = wc_get_product( $item['product_id'] );
 
 		// Grouped product
 		if ( 0 !== $product->post->post_parent ) {
@@ -436,7 +456,9 @@ class WC_Subscriptions_Switcher {
 	 */
 	public static function can_item_be_switched( $item, $subscription = null ) {
 
-		if ( 'line_item' == $item['type'] && wcs_is_product_switchable_type( $item['product_id'] ) ) {
+		$product_id = wcs_get_canonical_product_id( $item );
+
+		if ( 'line_item' == $item['type'] && wcs_is_product_switchable_type( $product_id ) ) {
 			$is_product_switchable = true;
 		} else {
 			$is_product_switchable = false;
@@ -500,7 +522,7 @@ class WC_Subscriptions_Switcher {
 
 		if ( false !== $switches ) {
 			foreach ( $switches as $switch_details ) {
-				update_post_meta( $order_id, '_subscription_switch', $switch_details['subscription_id'] );
+				add_post_meta( $order_id, '_subscription_switch', $switch_details['subscription_id'] );
 			}
 		}
 	}
@@ -661,7 +683,7 @@ class WC_Subscriptions_Switcher {
 					$old_item_name = wcs_get_order_item_name( $existing_item, array( 'attributes' => true ) );
 					$new_item_name = wcs_get_cart_item_name( $cart_item, array( 'attributes' => true ) );
 
-					// translators: 1$: old item, 2$: new item when switching
+					// translators: 1$: old item name, 2$: new item name when switching
 					$subscription->add_order_note( sprintf( _x( 'Customer switched from: %1$s to %2$s.', 'used in order notes', 'woocommerce-subscriptions' ), $old_item_name, $new_item_name ) );
 
 					// Change the shipping
@@ -699,7 +721,13 @@ class WC_Subscriptions_Switcher {
 			wc_update_order_item( $shipping_method_id, array( 'order_item_type' => 'shipping_switched' ) );
 		}
 
+		// Then zero the order_shipping total so we have a clean slate to add to
+		$subscription->order_shipping = 0;
+
 		WC_Subscriptions_Checkout::add_shipping( $subscription, $recurring_cart );
+
+		// Now update subscription object order_shipping to reflect updated values so it doesn't stay 0
+		$subscription->order_shipping = get_post_meta( $subscription->id, '_order_shipping', true );
 	}
 
 	/**
@@ -829,7 +857,7 @@ class WC_Subscriptions_Switcher {
 
 				// If the switch is for a grouped product, we need to check the other products grouped with this one
 				if ( 0 !== $product->post->post_parent ) {
-					$switch_product_ids = array_unique( array_merge( $switch_product_ids, get_product( $product->post->post_parent )->get_children() ) );
+					$switch_product_ids = array_unique( array_merge( $switch_product_ids, wc_get_product( $product->post->post_parent )->get_children() ) );
 				} else {
 					$switch_product_ids[] = $switch_product->id;
 				}
@@ -846,6 +874,9 @@ class WC_Subscriptions_Switcher {
 	 * @since 1.4
 	 */
 	public static function validate_switch_request( $is_valid, $product_id, $quantity, $variation_id = '' ) {
+
+		$error_message = '';
+
 		try {
 
 			if ( ! isset( $_GET['switch-subscription'] ) ) {
@@ -863,8 +894,7 @@ class WC_Subscriptions_Switcher {
 			// Check if the chosen variation's attributes are different to the existing subscription's attributes (to support switching between a "catch all" variation)
 			if ( empty( $item ) ) {
 
-				wc_add_notice( __( 'We can not find your old subscription item.', 'woocommerce-subscriptions' ), 'error' );
-				$is_valid = false;
+				throw new Exception( __( 'We can not find your old subscription item.', 'woocommerce-subscriptions' ) );
 
 			} else {
 
@@ -878,8 +908,7 @@ class WC_Subscriptions_Switcher {
 				}
 
 				if ( $product_id == $item['product_id'] && ( empty( $variation_id ) || ( $variation_id == $item['variation_id'] && true == $identical_attributes ) ) && $quantity == $item['qty'] ) {
-					wc_add_notice( __( 'You can not switch to the same subscription.', 'woocommerce-subscriptions' ), 'error' );
-					$is_valid = false;
+					throw new Exception( __( 'You can not switch to the same subscription.', 'woocommerce-subscriptions' ) );
 				}
 
 				// Also remove any existing items in the cart for switching this item (but don't make the switch invalid)
@@ -897,11 +926,17 @@ class WC_Subscriptions_Switcher {
 				}
 			}
 		} catch ( Exception $e ) {
-			wc_add_notice( __( 'We can not find your old subscription item.', 'woocommerce-subscriptions' ), 'error' );
+			$error_message = $e->getMessage();
+		}
+
+		$error_message = apply_filters( 'woocommerce_subscriptions_switch_error_message', $error_message, $product_id, $quantity, $variation_id, $subscription, $item );
+
+		if ( ! empty( $error_message ) ) {
+			wc_add_notice( $error_message, 'error' );
 			$is_valid = false;
 		}
 
-		return apply_filters( 'woocommerce_subscriptions_is_switch_valid', $is_valid, $product_id, $quantity, $variation_id );
+		return apply_filters( 'woocommerce_subscriptions_is_switch_valid', $is_valid, $product_id, $quantity, $variation_id, $subscription, $item );
 	}
 
 	/**
@@ -929,9 +964,9 @@ class WC_Subscriptions_Switcher {
 			$item = wcs_get_order_item( absint( $_GET['item'] ), $subscription );
 
 			// Else it's a valid switch
-			$product = get_product( $item['product_id'] );
+			$product = wc_get_product( $item['product_id'] );
 
-			$child_products = ( 0 !== $product->post->post_parent ) ? get_product( $product->post->post_parent )->get_children() : array();
+			$child_products = ( 0 !== $product->post->post_parent ) ? wc_get_product( $product->post->post_parent )->get_children() : array();
 
 			if ( $product_id != $item['product_id'] && ! in_array( $item['product_id'], $child_products ) ) {
 				return $cart_item_data;
@@ -1055,7 +1090,7 @@ class WC_Subscriptions_Switcher {
 
 			$item_data          = $cart_item['data'];
 			$product_id         = wcs_get_canonical_product_id( $cart_item );
-			$product            = get_product( $product_id );
+			$product            = wc_get_product( $product_id );
 			$is_virtual_product = $product->is_virtual();
 
 			// Set when the first payment and end date for the new subscription should occur
@@ -1075,6 +1110,7 @@ class WC_Subscriptions_Switcher {
 				}
 
 				WC()->cart->cart_contents[ $cart_item_key ]['data']->subscription_sign_up_fee = max( $sign_up_fee_due - $sign_up_fee_paid, 0 );
+				WC()->cart->cart_contents[ $cart_item_key ]['data']->subscription_sign_up_fee_prorated = WC()->cart->cart_contents[ $cart_item_key ]['data']->subscription_sign_up_fee;
 
 			} elseif ( 'no' == $apportion_sign_up_fee ) { // $0 the initial sign-up fee
 
@@ -1135,7 +1171,7 @@ class WC_Subscriptions_Switcher {
 
 				WC()->cart->cart_contents[ $cart_item_key ]['subscription_switch']['upgraded_or_downgraded'] = 'upgraded';
 
-			} elseif ( $old_price_per_day > $new_price_per_day && $new_price_per_day > 0 ) {
+			} elseif ( $old_price_per_day > $new_price_per_day && $new_price_per_day >= 0 ) {
 
 				WC()->cart->cart_contents[ $cart_item_key ]['subscription_switch']['upgraded_or_downgraded'] = 'downgraded';
 
@@ -1351,7 +1387,7 @@ class WC_Subscriptions_Switcher {
 	 * @return bool
 	 */
 	public static function is_purchasable( $is_purchasable, $product ) {
-		if ( false === $is_purchasable && self::is_product_of_switchable_type( $product ) && WC_Subscriptions_Product::is_subscription( $product->id ) && 'no' != $product->limit_subscriptions && is_user_logged_in() && wcs_user_has_subscription( 0, $product->id, $product->limit_subscriptions ) ) {
+		if ( false === $is_purchasable && wcs_is_product_switchable_type( $product ) && WC_Subscriptions_Product::is_subscription( $product->id ) && 'no' != $product->limit_subscriptions && is_user_logged_in() && wcs_user_has_subscription( 0, $product->id, $product->limit_subscriptions ) ) {
 
 			// Adding to cart from the product page
 			if ( isset( $_GET['switch-subscription'] ) ) {
@@ -1387,9 +1423,21 @@ class WC_Subscriptions_Switcher {
 	public static function subscription_switch_autocomplete( $new_order_status, $order_id ) {
 
 		if ( 'processing' == $new_order_status && wcs_order_contains_switch( $order_id ) ) {
-			$order = wc_get_order( $order_id );
-			if ( 1 == count( $order->get_items() ) && 0 == $order->get_total() ) { // Can't use $order->get_item_count() because it takes quantity into account
-				$new_order_status = 'completed';
+			$order        = wc_get_order( $order_id );
+			$all_switched = true;
+
+			if ( 0 == $order->get_total() ) {
+
+				foreach ( $order->get_items() as $item ) {
+					if ( ! isset( $item['switched_subscription_price_prorated'] ) ) {
+						$all_switched = false;
+						break;
+					}
+				}
+
+				if ( $all_switched || 1 == count( $order->get_items() ) ) {
+					$new_order_status = 'completed';
+				}
 			}
 		}
 
@@ -1428,6 +1476,8 @@ class WC_Subscriptions_Switcher {
 	 * @since 1.5.21
 	 */
 	public static function is_product_of_switchable_type( $product ) {
+
+		_deprecated_function( __METHOD__, '2.0.7', 'wcs_is_product_switchable_type' );
 
 		$allow_switching = false;
 		$switch_setting  = get_option( WC_Subscriptions_Admin::$option_prefix . '_allow_switching', 'no' );
@@ -1544,6 +1594,56 @@ class WC_Subscriptions_Switcher {
 		}
 
 		return $product_subtotal;
+	}
+
+	/**
+	 * Creates a 2.0 updated version of the "subscriptions_switched" callback for developers to hook onto.
+	 *
+	 * The subscription passed to the new `woocommerce_subscriptions_switched_item` callback is strictly the subscription
+	 * to which the `$new_order_item` belongs to; this may be a new or the original subscription.
+	 *
+	 * @since 2.0.5
+	 * @param WC_Order $order
+	 */
+	public static function maybe_add_switched_callback( $order ) {
+		if ( wcs_order_contains_switch( $order ) ) {
+
+			$subscriptions = wcs_get_subscriptions_for_order( $order );
+
+			foreach ( $subscriptions as $subscription ) {
+				foreach ( $subscription->get_items() as $new_order_item ) {
+					if ( isset( $new_order_item['switched_subscription_item_id'] ) ) {
+
+						$product_id = wcs_get_canonical_product_id( $new_order_item );
+						// we need to check if the switch order contains the line item that has just been switched so that we don't call the hook on items that were previously switched in another order
+						foreach ( $order->get_items() as $order_item ) {
+							if ( wcs_get_canonical_product_id( $order_item ) == $product_id ) {
+								do_action( 'woocommerce_subscriptions_switched_item', $subscription, $new_order_item, WC_Subscriptions_Order::get_item_by_id( $new_order_item['switched_subscription_item_id'] ) );
+								break;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	* Revoke download permissions granted on the old switch item.
+	*
+	* @since 2.0.9
+	* @param WC_Subscription $subscription
+	* @param array $new_item
+	* @param array $old_item
+	*/
+	public static function remove_download_permissions_after_switch( $subscription, $new_item, $old_item ) {
+
+		if ( ! is_object( $subscription ) ) {
+			$subscription = wcs_get_subscription( $subscription );
+		}
+
+		$product_id = wcs_get_canonical_product_id( $old_item );
+		WCS_Download_Handler::revoke_downloadable_file_permission( $product_id, $subscription->id, $subscription->customer_user );
 	}
 
 	/** Deprecated Methods **/
@@ -1726,7 +1826,7 @@ class WC_Subscriptions_Switcher {
 		_deprecated_function( __METHOD__, '2.0' );
 
 		if ( 'switched' === strtolower( $status_string ) ) {
-			$status_string = __( 'Switched', 'woocommerce-subscriptions' );
+			$status_string = _x( 'Switched', 'Subscription status', 'woocommerce-subscriptions' );
 		}
 
 		return $status_string;

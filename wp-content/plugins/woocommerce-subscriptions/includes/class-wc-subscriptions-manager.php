@@ -41,8 +41,8 @@ class WC_Subscriptions_Manager {
 		// Expire a user's subscription
 		add_action( 'woocommerce_scheduled_subscription_end_of_prepaid_term', __CLASS__ . '::subscription_end_of_prepaid_term', 10, 1 );
 
-		// Subscription Trial End
-		add_action( 'woocommerce_scheduled_subscription_trial_end', __CLASS__ . '::subscription_trial_end', 0, 2 );
+		// Check if the subscription needs to use the failed payment process to repair its status
+		add_action( 'woocommerce_scheduled_subscription_payment', __CLASS__ . '::maybe_process_failed_renewal_for_repair', 0, 1 );
 
 		// Whenever a renewal payment is due, put the subscription on hold and create a renewal order before anything else, in case things don't go to plan
 		add_action( 'woocommerce_scheduled_subscription_payment', __CLASS__ . '::prepare_renewal', 1, 1 );
@@ -51,14 +51,14 @@ class WC_Subscriptions_Manager {
 		add_action( 'wp_trash_post', __CLASS__ . '::maybe_trash_subscription', 10 );
 
 		// When a user is being deleted from the site, via standard WordPress functions, make sure their subscriptions are cancelled
-		add_action( 'delete_user', __CLASS__ . '::cancel_users_subscriptions' );
+		add_action( 'delete_user', __CLASS__ . '::trash_users_subscriptions' );
 
 		// Do the same thing for WordPress networks
-		add_action( 'wpmu_delete_user', __CLASS__ . '::cancel_users_subscriptions_for_network' );
+		add_action( 'wpmu_delete_user', __CLASS__ . '::trash_users_subscriptions_for_network' );
 
 		// make sure a subscription is cancelled before it is trashed/deleted
 		add_action( 'wp_trash_post', __CLASS__ . '::maybe_cancel_subscription', 10, 1 );
-		add_action( 'wp_delete_post', __CLASS__ . '::maybe_cancel_subscription', 10, 1 );
+		add_action( 'before_delete_post', __CLASS__ . '::maybe_cancel_subscription', 10, 1 );
 
 		// set correct status to restore after a subscription is trashed/deleted
 		add_action( 'trashed_post', __CLASS__ . '::fix_trash_meta_status' );
@@ -91,7 +91,7 @@ class WC_Subscriptions_Manager {
 		if ( 0 == $subscription->get_total() || $subscription->is_manual() || empty( $subscription->payment_method ) || ! $subscription->payment_method_supports( 'gateway_scheduled_payments' ) ) {
 
 			// Always put the subscription on hold in case something goes wrong while trying to process renewal
-			$subscription->update_status( 'on-hold', __( 'Subscription renewal payment due:', 'woocommerce-subscriptions' ) );
+			$subscription->update_status( 'on-hold', _x( 'Subscription renewal payment due:', 'used in order note as reason for why subscription status changed', 'woocommerce-subscriptions' ) );
 
 			// Generate a renewal order for payment gateways to use to record the payment (and determine how much is due)
 			$renewal_order = wcs_create_renewal_order( $subscription );
@@ -129,9 +129,6 @@ class WC_Subscriptions_Manager {
 		}
 
 		$subscription->update_status( 'expired' );
-
-		// Backward compatibility
-		do_action( 'subscription_expired', $subscription->get_user_id(), wcs_get_old_subscription_key( $subscription ) );
 	}
 
 	/**
@@ -150,28 +147,6 @@ class WC_Subscriptions_Manager {
 		}
 
 		$subscription->update_status( 'cancelled' );
-
-		// Backward compatibility
-		do_action( 'subscription_end_of_prepaid_term', $subscription->get_user_id(), wcs_get_old_subscription_key( $subscription ) ); // Backward compatibility
-	}
-
-	/**
-	 * Fires when the trial period for a subscription has completed.
-	 *
-	 * @param int $subscription_id The ID of a 'shop_subscription' post
-	 * @since 1.0
-	 */
-	public static function subscription_trial_end( $subscription_id, $deprecated = null ) {
-
-		if ( null !== $deprecated ) {
-			_deprecated_argument( __METHOD__, '2.0', 'The subscription key is deprecated. Use a subscription post ID' );
-			$subscription = wcs_get_subscription_from_key( $deprecated );
-		} else {
-			$subscription = wcs_get_subscription( $subscription_id );
-		}
-
-		// Backward compatibility
-		do_action( 'subscription_trial_end', $subscription->get_user_id(), wcs_get_old_subscription_key( $subscription ) ); // Backward compatibility
 	}
 
 	/**
@@ -286,7 +261,8 @@ class WC_Subscriptions_Manager {
 				try {
 					$subscription->update_status( 'active' );
 				} catch ( Exception $e ) {
-					$subscription->add_order_note( sprintf( __( 'Failed to activate subscription status for order #%s: %s', 'woocommerce-subscriptions' ), is_object( $order ) ? $order->get_order_number() : $order, $e->getMessage() ) );
+					// translators: $1: order number, $2: error message
+					$subscription->add_order_note( sprintf( __( 'Failed to activate subscription status for order #%1$s: %2$s', 'woocommerce-subscriptions' ), is_object( $order ) ? $order->get_order_number() : $order, $e->getMessage() ) );
 				}
 			}
 
@@ -302,7 +278,7 @@ class WC_Subscriptions_Manager {
 	 */
 	public static function put_subscription_on_hold_for_order( $order ) {
 
-		$subscriptions = wcs_get_subscriptions_for_order( $order );
+		$subscriptions = wcs_get_subscriptions_for_order( $order, array( 'order_type' => 'parent' ) );
 
 		if ( ! empty( $subscriptions ) ) {
 
@@ -313,7 +289,8 @@ class WC_Subscriptions_Manager {
 						$subscription->update_status( 'on-hold' );
 					}
 				} catch ( Exception $e ) {
-					$subscription->add_order_note( sprintf( __( 'Failed to update subscription status after order #%s was put on-hold: %s', 'woocommerce-subscriptions' ), is_object( $order ) ? $order->get_order_number() : $order, $e->getMessage() ) );
+					// translators: $1: order number, $2: error message
+					$subscription->add_order_note( sprintf( __( 'Failed to update subscription status after order #%1$s was put on-hold: %2$s', 'woocommerce-subscriptions' ), is_object( $order ) ? $order->get_order_number() : $order, $e->getMessage() ) );
 				}
 			}
 
@@ -329,7 +306,7 @@ class WC_Subscriptions_Manager {
 	 */
 	public static function cancel_subscriptions_for_order( $order ) {
 
-		$subscriptions = wcs_get_subscriptions_for_order( $order );
+		$subscriptions = wcs_get_subscriptions_for_order( $order, array( 'order_type' => 'parent' ) );
 
 		if ( ! empty( $subscriptions ) ) {
 
@@ -340,7 +317,8 @@ class WC_Subscriptions_Manager {
 						$subscription->cancel_order();
 					}
 				} catch ( Exception $e ) {
-					$subscription->add_order_note( sprintf( __( 'Failed to cancel subscription after order #%s was cancelled: %s', 'woocommerce-subscriptions' ), is_object( $order ) ? $order->get_order_number() : $order, $e->getMessage() ) );
+					// translators: $1: order number, $2: error message
+					$subscription->add_order_note( sprintf( __( 'Failed to cancel subscription after order #%1$s was cancelled: %2$s', 'woocommerce-subscriptions' ), is_object( $order ) ? $order->get_order_number() : $order, $e->getMessage() ) );
 				}
 			}
 
@@ -367,7 +345,8 @@ class WC_Subscriptions_Manager {
 						$subscription->update_status( 'expired' );
 					}
 				} catch ( Exception $e ) {
-					$subscription->add_order_note( sprintf( __( 'Failed to set subscription as expired for order #%s: %s', 'woocommerce-subscriptions' ), is_object( $order ) ? $order->get_order_number() : $order, $e->getMessage() ) );
+					// translators: $1: order number, $2: error message
+					$subscription->add_order_note( sprintf( __( 'Failed to set subscription as expired for order #%1$s: %2$s', 'woocommerce-subscriptions' ), is_object( $order ) ? $order->get_order_number() : $order, $e->getMessage() ) );
 				}
 			}
 
@@ -383,7 +362,7 @@ class WC_Subscriptions_Manager {
 	 */
 	public static function failed_subscription_sign_ups_for_order( $order ) {
 
-		$subscriptions = wcs_get_subscriptions_for_order( $order );
+		$subscriptions = wcs_get_subscriptions_for_order( $order, array( 'order_type' => 'parent' ) );
 
 		if ( ! empty( $subscriptions ) ) {
 
@@ -402,7 +381,8 @@ class WC_Subscriptions_Manager {
 					$subscription->payment_failed();
 
 				} catch ( Exception $e ) {
-					$subscription->add_order_note( sprintf( __( 'Failed to process failed payment on subscription for order #%s: %s', 'woocommerce-subscriptions' ), is_object( $order ) ? $order->get_order_number() : $order, $e->getMessage() ) );
+					// translators: $1: order number, $2: error message
+					$subscription->add_order_note( sprintf( __( 'Failed to process failed payment on subscription for order #%1$s: %2$s', 'woocommerce-subscriptions' ), is_object( $order ) ? $order->get_order_number() : $order, $e->getMessage() ) );
 				}
 			}
 
@@ -470,6 +450,10 @@ class WC_Subscriptions_Manager {
 				'customer_note'    => $order->customer_note,
 			) );
 
+			if ( is_wp_error( $subscription ) ) {
+				throw new Exception( __( 'Error: Unable to create subscription. Please try again.', 'woocommerce-subscriptions' ) );
+			}
+
 			$item_id = $subscription->add_product(
 				$product,
 				1,
@@ -486,7 +470,7 @@ class WC_Subscriptions_Manager {
 			);
 
 			if ( ! $item_id ) {
-				throw new Exception( __( 'Error: Unable to create subscription. Please try again.', 'woocommerce-subscriptions' ) );
+				throw new Exception( __( 'Error: Unable to add product to created subscription. Please try again.', 'woocommerce-subscriptions' ) );
 			}
 		}
 
@@ -697,7 +681,9 @@ class WC_Subscriptions_Manager {
 		if ( ! empty( $subscriptions ) ) {
 
 			foreach ( $subscriptions as $subscription ) {
-				$subscription->update_status( 'cancelled' );
+				if ( $subscription->can_be_updated_to( 'cancelled' ) ) {
+					$subscription->update_status( 'cancelled' );
+				}
 			}
 
 			do_action( 'cancelled_users_subscriptions', $user_id );
@@ -817,6 +803,47 @@ class WC_Subscriptions_Manager {
 	}
 
 	/**
+	 * Takes a user ID and trashes any subscriptions that user has.
+	 *
+	 * @param int $user_id The ID of the user whose subscriptions will be trashed
+	 * @since 2.0
+	 */
+	public static function trash_users_subscriptions( $user_id ) {
+
+		$subscriptions = wcs_get_users_subscriptions( $user_id );
+
+		if ( ! empty( $subscriptions ) ) {
+
+			foreach ( $subscriptions as $subscription ) {
+				wp_delete_post( $subscription->id );
+			}
+		}
+	}
+
+	/**
+	 * Takes a user ID and trashes any subscriptions that user has on any site in a WordPress network
+	 *
+	 * @param int $user_id The ID of the user whose subscriptions will be trashed
+	 * @since 2.0
+	 */
+	public static function trash_users_subscriptions_for_network( $user_id ) {
+
+		$sites = get_blogs_of_user( $user_id );
+
+		if ( ! empty( $sites ) ) {
+
+			foreach ( $sites as $site ) {
+
+				switch_to_blog( $site->userblog_id );
+
+				self::trash_users_subscriptions( $user_id );
+
+				restore_current_blog();
+			}
+		}
+	}
+
+	/**
 	 * Trigger action hook after a subscription has been deleted.
 	 *
 	 * @param int $post_id
@@ -930,23 +957,23 @@ class WC_Subscriptions_Manager {
 
 		switch ( $status ) {
 			case 'active' :
-				$status_string = __( 'Active', 'woocommerce-subscriptions' );
+				$status_string = _x( 'Active', 'Subscription status', 'woocommerce-subscriptions' );
 				break;
 			case 'cancelled' :
-				$status_string = __( 'Cancelled', 'woocommerce-subscriptions' );
+				$status_string = _x( 'Cancelled', 'Subscription status', 'woocommerce-subscriptions' );
 				break;
 			case 'expired' :
-				$status_string = __( 'Expired', 'woocommerce-subscriptions' );
+				$status_string = _x( 'Expired', 'Subscription status', 'woocommerce-subscriptions' );
 				break;
 			case 'pending' :
-				$status_string = __( 'Pending', 'woocommerce-subscriptions' );
+				$status_string = _x( 'Pending', 'Subscription status', 'woocommerce-subscriptions' );
 				break;
 			case 'failed' :
-				$status_string = __( 'Failed', 'woocommerce-subscriptions' );
+				$status_string = _x( 'Failed', 'Subscription status', 'woocommerce-subscriptions' );
 				break;
 			case 'on-hold' :
 			case 'suspend' : // Backward compatibility
-				$status_string = __( 'On-hold', 'woocommerce-subscriptions' );
+				$status_string = _x( 'On-hold', 'Subscription status', 'woocommerce-subscriptions' );
 				break;
 			default :
 				$status_string = apply_filters( 'woocommerce_subscriptions_custom_status_string', ucfirst( $status ), $subscription_key, $user_id );
@@ -1539,7 +1566,13 @@ class WC_Subscriptions_Manager {
 
 		$subscription_id = wcs_get_subscription_id_from_key( $subscription_key );
 
-		return apply_filters( 'woocommerce_subscriptions_users_action_link', wcs_get_users_change_status_link( $subscription_id, $status ), $subscription_key, $status );
+		$current_status = '';
+		$subscription = wcs_get_subscription( $subscription_id );
+		if ( $subscription instanceof WC_Subscription ) {
+			$current_status = $subscription->get_status();
+		}
+
+		return apply_filters( 'woocommerce_subscriptions_users_action_link', wcs_get_users_change_status_link( $subscription_id, $status, $current_status ), $subscription_key, $status );
 	}
 
 	/**
@@ -1713,36 +1746,36 @@ class WC_Subscriptions_Manager {
 		if ( $args['include_buttons'] ) {
 			$touch_time .= '<p>';
 			$touch_time .= '<a href="#edit_timestamp" class="save-timestamp hide-if-no-js button">' . __( 'Change', 'woocommerce-subscriptions' ) . '</a>';
-			$touch_time .= '<a href="#edit_timestamp" class="cancel-timestamp hide-if-no-js">' . __( 'Cancel', 'woocommerce-subscriptions' ) . '</a>';
+			$touch_time .= '<a href="#edit_timestamp" class="cancel-timestamp hide-if-no-js">' . _x( 'Cancel', 'an action on a subscription', 'woocommerce-subscriptions' ) . '</a>';
 			$touch_time .= '</p>';
 		}
 
 		$allowed_html = array(
-		    'select' => array(
-		        'id' => array(),
-		        'name' => array(),
-		        'tabindex' => array(),
-		    ),
-		    'option' => array(
-		        'value' => array(),
-		        'selected' => array(),
-		    ),
-		    'input' => array(
-		    	'type' => array(),
-		    	'id' => array(),
-		    	'name' => array(),
-		        'value' => array(),
-		        'size' => array(),
-		        'tabindex' => array(),
-		        'maxlength' => array(),
-		        'autocomplete' => array(),
-		    ),
-		    'p' => array(),
-		    'a' => array(
-		        'href' => array(),
-		        'title' => array(),
-		        'class' => array(),
-		    ),
+			'select' => array(
+				'id' => array(),
+				'name' => array(),
+				'tabindex' => array(),
+			),
+			'option' => array(
+				'value' => array(),
+				'selected' => array(),
+			),
+			'input' => array(
+				'type' => array(),
+				'id' => array(),
+				'name' => array(),
+				'value' => array(),
+				'size' => array(),
+				'tabindex' => array(),
+				'maxlength' => array(),
+				'autocomplete' => array(),
+			),
+			'p' => array(),
+			'a' => array(
+				'href' => array(),
+				'title' => array(),
+				'class' => array(),
+			),
 		);
 
 		if ( $args['echo'] ) {
@@ -1766,7 +1799,7 @@ class WC_Subscriptions_Manager {
 		_deprecated_function( __METHOD__, '2.0', 'WC_Subscription::update_status()' );
 
 		try {
-			$subscription = wcs_get_subscription_from_key( $deprecated );
+			$subscription = wcs_get_subscription_from_key( $subscription_key );
 
 			if ( $subscription->has_status( 'on-hold' ) ) {
 				return false;
@@ -1777,7 +1810,38 @@ class WC_Subscriptions_Manager {
 
 		// If the subscription is using manual payments, the gateway isn't active or it manages scheduled payments
 		if ( 0 == $subscription->get_total() || $subscription->is_manual() || empty( $subscription->payment_method ) || ! $subscription->payment_method_supports( 'gateway_scheduled_payments' ) ) {
-			$subscription->update_status( 'on-hold', __( 'Subscription renewal payment due:', 'woocommerce-subscriptions' ) );
+			$subscription->update_status( 'on-hold', _x( 'Subscription renewal payment due:', 'used in order note as reason for why subscription status changed', 'woocommerce-subscriptions' ) );
+		}
+	}
+
+	/**
+	 * Check if the subscription needs to use the failed payment process to repair its status after it incorrectly expired due to a date migration
+	 * bug in upgrade process for 2.0.0 of Subscriptions (i.e. not 2.0.1 or newer). See WCS_Repair_2_0_2::maybe_repair_status() for more details.
+	 *
+	 * @param int $subscription_id The ID of a 'shop_subscription' post
+	 * @since 2.0.2
+	 */
+	public static function maybe_process_failed_renewal_for_repair( $subscription_id ) {
+
+		if ( 'true' == get_post_meta( $subscription_id, '_wcs_repaired_2_0_2_needs_failed_payment', true ) ) {
+
+			$subscription = wcs_get_subscription( $subscription_id );
+
+			// Always put the subscription on hold in case something goes wrong while trying to process renewal
+			$subscription->update_status( 'on-hold', _x( 'Subscription renewal payment due:', 'used in order note as reason for why subscription status changed', 'woocommerce-subscriptions' ) );
+
+			// Create a renewal order to record the failed payment which can then be used by the customer to reactivate the subscription
+			$renewal_order = wcs_create_renewal_order( $subscription );
+
+			// Mark the payment as failed so the customer can login to fix up the failed payment
+			$subscription->payment_failed();
+
+			// Only force the failed payment once
+			update_post_meta( $subscription_id, '_wcs_repaired_2_0_2_needs_failed_payment', 'false' );
+
+			// We've already processed the renewal
+			remove_action( 'woocommerce_scheduled_subscription_payment', __CLASS__ . '::prepare_renewal' );
+			remove_action( 'woocommerce_scheduled_subscription_payment', 'WC_Subscriptions_Payment_Gateways::gateway_scheduled_subscription_payment', 10, 1 );
 		}
 	}
 
@@ -2250,7 +2314,7 @@ class WC_Subscriptions_Manager {
 					// translators: placeholder is human time diff (e.g. "3 weeks")
 					$date_to_display = sprintf( __( 'In %s', 'woocommerce-subscriptions' ), human_time_diff( gmdate( 'U' ), $new_payment_timestamp ) );
 				} else {
-					$date_to_display = date_i18n( woocommerce_date_format(), $new_payment_timestamp_user_time );
+					$date_to_display = date_i18n( wc_date_format(), $new_payment_timestamp_user_time );
 				}
 
 				$response['status']        = 'success';
@@ -2261,7 +2325,7 @@ class WC_Subscriptions_Manager {
 			}
 		}
 
-		echo json_encode( $response );
+		echo wcs_json_encode( $response );
 
 		exit();
 	}
@@ -2319,6 +2383,17 @@ class WC_Subscriptions_Manager {
 				do_action( 'rescheduled_subscription_payment', $user_id, $subscription_key );
 			}
 		}
+	}
+
+	/**
+	 * Fires when the trial period for a subscription has completed.
+	 *
+	 * @param int $subscription_id The ID of a 'shop_subscription' post
+	 * @since 1.0
+	 * @deprecated 2.0
+	 */
+	public static function subscription_trial_end( $subscription_id, $deprecated = null ) {
+		_deprecated_function( __METHOD__, '2.0' );
 	}
 }
 

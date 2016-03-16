@@ -9,8 +9,6 @@
 function wc_get_shipping_zone( $package ) {
 	global $wpdb;
 
-	$country         = $package['destination']['country'];
-	$state           = $country . ':' . $package['destination']['state'];
 	$postcode        = $package['destination']['postcode'];
 	$valid_postcodes = array( '*', $postcode );
 	$valid_zone_ids  = array();
@@ -60,8 +58,14 @@ function wc_get_shipping_zone( $package ) {
 		}
 	}
 
+	// Escape
+	$country         = esc_sql( $package['destination']['country'] );
+	$state           = esc_sql( $country . ':' . $package['destination']['state'] );
+	$valid_postcodes = array_map( 'esc_sql', $valid_postcodes );
+	$valid_zone_ids  = array_map( 'esc_sql', $valid_zone_ids );
+
 	// Get matching zones
-	$matching_zone = $wpdb->get_var( $wpdb->prepare( "
+	$matching_zone_sql  = "
 		SELECT zones.zone_id FROM {$wpdb->prefix}woocommerce_shipping_zones as zones
 		LEFT JOIN {$wpdb->prefix}woocommerce_shipping_zone_locations as locations ON zones.zone_id = locations.zone_id
 		WHERE
@@ -69,16 +73,16 @@ function wc_get_shipping_zone( $package ) {
 			(
 				zone_type = 'countries'
 				AND location_type = 'country'
-				AND location_code = %s
+				AND location_code = '{$country}'
 			)
 			OR
 			(
 				zone_type = 'states'
 				AND
 				(
-					( location_type = 'state' AND location_code = %s )
+					( location_type = 'state' AND location_code = '{$state}' )
 					OR
-					( location_type = 'country' AND location_code = %s )
+					( location_type = 'country' AND location_code = '{$country}' )
 				)
 			)
 			OR
@@ -86,9 +90,9 @@ function wc_get_shipping_zone( $package ) {
 				zone_type = 'postcodes'
 				AND
 				(
-					( location_type = 'state' AND location_code = %s )
+					( location_type = 'state' AND location_code = '{$state}' )
 					OR
-					( location_type = 'country' AND location_code = %s )
+					( location_type = 'country' AND location_code = '{$country}' )
 				)
 				AND
 				(
@@ -104,7 +108,9 @@ function wc_get_shipping_zone( $package ) {
 		AND zone_enabled = 1
 		ORDER BY zone_order ASC
 		LIMIT 1
-	", $country, $state, $country, $state, $country ) );
+	";
+
+	$matching_zone = $wpdb->get_var( $matching_zone_sql );
 
 	return new WC_Shipping_Zone( $matching_zone ? $matching_zone : 0 );
 }

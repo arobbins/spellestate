@@ -2,8 +2,8 @@
 Contributors: SwiftIdeas
 Tags: swift framework
 Requires at least: 3.6
-Tested up to: 4.3
-Stable tag: 4.3
+Tested up to: 4.4.2
+Stable tag: 4.4.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,6 +16,74 @@ The Swift Framework plugin provides the Custom Post Types, Swift Slider, and Swi
 Supported Themes: Atelier, Cardinal, JOYN
 
 == Changelog ==
+
+= 2.0.3 =
+- FRONT-END: reverted button changes to use previous parameter names.
+- BACKEND: Removed empty page builder animation
+- BACKEND: Added most used functionality, allowing you to quickly access your most used elements
+- BACKEND: Alert Asset fixes
+- BACKEND: Fixed Scroll bar in the Edit modal that couldn’t be selected
+- BACKEND: The sizes (height) of the resize handle was changed to avoid resize conflicts in elements inside each others (like in tabs, accordions, tours, Row).
+- BACKEND: Fixed issues with dragging elements to the bottom of the page builder area. Was fixed in Row, Tour, Tabs, Accordions
+- BACKEND: Fixed issues with elements added to the tabs, Accordions, tours
+
+= 2.0.2 =
+- FRONTEND: further icon box fixes
+- FRONTEND: Added compatibility for Portfolio WPML duplication
+- BACKEND: Added option to show text block text within the element preview, like in older versions
+- BACKEND: Fixed issue with Toggle display
+- BACKEND: Fixed issue with responsive visibility dropdown being cut off
+- BACKEND: Fixed issue with Widget Area element
+- BACKEND: Fixed issue with products element
+
+= 2.0.1 =
+* FRONTEND: Fixed issue with button output
+* FRONTEND: Fixed issue with icon box image display
+* FRONTEND: Fixed issue with icon box width
+* BACKEND: Fixed issue with product category select
+* BACKEND: Fixed PHP7 issue which prevented edit fields from loading data
+* BACKEND: Fixed resize issue
+* BACKEND: Fixed image banner element styling to match image element
+* BACKEND: Fixed issue with dragging and dropping resized elements
+
+= 2.0.0 =
+* Completely overhauled the Swift Page Builder, now much slicker, quicker and easier to use!
+* If you have any issues with the new builder, please log a support topic related to your specific theme at http://swiftideas.com/support
+
+= 1.7.7 =
+* SPB Search now can set post type to Any or Products
+* Minor fixes
+
+= 1.7.6 =
+* Fixed missing content overview on page builder assets
+
+= 1.7.5 =
+* Added support for PHP7
+* Added Animated Headline page builder asset
+* Added ordering options for Directory page builder asset
+* Updated Redux framework
+* Fixed compatibility issue with Visual Composer
+* Fixed WPML duplication issue with Swift Slider
+
+= 1.7.0 =
+* Minor fixes
+
+= 1.66 =
+* Migrated to new plugin update hosting.
+* Added post type override option to recent posts page builder asset.
+* Fixed issue with product category setting in products page builder asset.
+* Fixed issue where lightbox icon would show on galleries where no lightbox image was present.
+
+= 1.65 =
+* Temporary fix for image caption, reverted to a textfield input until html input is resolved 
+
+= 1.64 =
+* Fixed progress bar styling
+* Fixed stroke-to-fill button styling
+* Fixed issue with page builder options not showing when certain requirements were met
+* Fixed bootstrap conflict
+* Fixed issue with image caption formatting
+* Removed unecessary admin script from loading
 
 = 1.63 =
 * Updated Redux framework

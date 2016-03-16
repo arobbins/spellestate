@@ -37,8 +37,11 @@
 	================================================== */
 	require_once(SF_INCLUDES_PATH . '/plugins/aq_resizer.php');
 	include_once(SF_INCLUDES_PATH . '/plugin-includes.php');
-	require_once(SF_INCLUDES_PATH . '/wp-updates-theme.php');
-	new WPUpdatesThemeUpdater_1273( 'http://wp-updates.com/api/2/theme', basename( get_template_directory() ) );
+	require_once(SF_INCLUDES_PATH . '/theme_update_check.php');
+	$AtelierUpdateChecker = new ThemeUpdateChecker(
+	    'atelier',
+	    'https://kernl.us/api/v1/theme-updates/564c90177ad3303b210d6b47/'
+	);
 	
 	/* THEME SETUP
 	================================================== */
@@ -72,12 +75,21 @@
 				'mobile-shop-filters' 		=> true,
 				'mobile-logo-override'		=> true,
 				'product-multi-masonry'		=> true,
+				'product-preview-slider'	=> true,
 				'super-search-config'		=> true,
 				'advanced-row-styling'		=> true,
 				'gizmo-icon-font'			=> false,
 				'icon-mind-font'			=> true,
+				'nucleo-general-font'		=> false,
+				'nucleo-interface-font'		=> false,
 				'menu-new-badge'			=> true,
-				'advanced-map-styles'		=> true
+				'advanced-map-styles'		=> true,
+				'minimal-team-hover'		=> false,
+				'pushnav-menu'				=> false,
+				'split-nav-menu'			=> false,
+				'max-mega-menu'				=> false,
+				'page-heading-woo-description' => false,
+				'header-aux-modals'			=> false,
 			) );
 
 			/* THUMBNAIL SIZES
@@ -183,9 +195,15 @@
 			$enable_min_styles = $sf_options['enable_min_styles'];
 			$enable_responsive = $sf_options['enable_responsive'];
 			$enable_rtl = $sf_options['enable_rtl'];
+            //$upload_dir = wp_upload_dir();
+
+            //FONTELLO ICONS 
+//            if ( get_option('sf_fontello_icon_codes') && get_option('sf_fontello_icon_codes') != '' ){
+//				wp_register_style('sf-fontello',  $upload_dir['baseurl'] . '/redux/custom-icon-fonts/fontello_css/fontello-embedded.css', array(), NULL, 'all');
+//				wp_enqueue_style('sf-fontello');
+//		    }
 
 		    wp_register_style('sf-style', get_stylesheet_directory_uri() . '/style.css', array(), NULL, 'all');
-
 		    wp_register_style('bootstrap', SF_LOCAL_PATH . '/css/bootstrap.min.css', array(), NULL, 'all');
 		    wp_register_style('fontawesome', SF_LOCAL_PATH .'/css/font-awesome.min.css', array(), NULL, 'all');
 		    wp_register_style('sf-main', SF_LOCAL_PATH . '/css/main.css', array(), NULL, 'all');
@@ -253,7 +271,7 @@
 			if ( $post ) {
 				$page_has_map      = sf_get_post_meta( $post->ID, 'sf_page_has_map', true );
 			}
-			if ( is_page_template('template-directory-submit.php') ) {
+			if ( is_page_template('template-directory-submit.php') || ( isset( $post ) && get_post_type( $post->ID ) == 'directory' ) ) {
 				$page_has_map = true;	
 			}
 
@@ -336,6 +354,14 @@
 	function sf_admin_scripts() {
 	    wp_register_script('admin-functions', get_template_directory_uri() . '/js/sf-admin.js', 'jquery', '1.0', TRUE);
 		wp_enqueue_script('admin-functions');
+        $upload_dir = wp_upload_dir();
+		
+		//FONTELLO ICONS 
+        if ( get_option('sf_fontello_icon_codes') && get_option('sf_fontello_icon_codes') != '' ){
+			wp_register_style('sf-fontello',  $upload_dir['baseurl'] . '/redux/custom-fonts/fontello_css/fontello-embedded.css', array(), NULL, 'all');
+			wp_enqueue_style('sf-fontello');
+		}
+			
 	}
 	add_action('admin_enqueue_scripts', 'sf_admin_scripts');
 

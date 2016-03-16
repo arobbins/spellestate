@@ -1,5 +1,12 @@
 *** Table Rate Shipping Changelog ***
 
+2015.11.20 - version 2.9.2
+* Fix - Escape postcodes passed to queries.
+
+2015.11.18 - version 2.9.1
+* Fix - No matching rates when table rate has 'No Class' rule.
+* Fix - Coupons not taken into account when looping through shipping methods.
+
 2015.05.12 - version 2.9.0
 * Removed legacy notice code.
 * Reorganised options

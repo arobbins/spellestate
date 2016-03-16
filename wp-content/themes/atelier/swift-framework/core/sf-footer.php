@@ -17,7 +17,6 @@
     *	sf_option_parameters()
     *	sf_countdown_shortcode_locale()
     *	sf_loveit_locale()
-    *	sf_tracking()
     *
     */
 
@@ -143,7 +142,7 @@
             if ( $enable_footer ) {
                 ?>
                 <!--// OPEN #footer //-->
-                <section id="footer" class="<?php echo $footer_class; ?>">
+                <footer id="footer" class="<?php echo $footer_class; ?>">
                     <div class="container">
                         <div id="footer-widgets" class="row clearfix">
                             <?php if ( $footer_config == "footer-1" ) { ?>
@@ -154,17 +153,17 @@
                                 </div>
                                 <div class="col-sm-3">
                                     <?php if ( function_exists( 'dynamic_sidebar' ) ) { ?>
-                                        <?php dynamic_sidebar( 'Footer Column 2' ); ?>
+                                        <?php dynamic_sidebar( 'footer-column-2' ); ?>
                                     <?php } ?>
                                 </div>
                                 <div class="col-sm-3">
                                     <?php if ( function_exists( 'dynamic_sidebar' ) ) { ?>
-                                        <?php dynamic_sidebar( 'Footer Column 3' ); ?>
+                                        <?php dynamic_sidebar( 'footer-column-3' ); ?>
                                     <?php } ?>
                                 </div>
                                 <div class="col-sm-3">
                                     <?php if ( function_exists( 'dynamic_sidebar' ) ) { ?>
-                                        <?php dynamic_sidebar( 'Footer Column 4' ); ?>
+                                        <?php dynamic_sidebar( 'footer-column-4' ); ?>
                                     <?php } ?>
                                 </div>
 
@@ -172,17 +171,17 @@
 
                                 <div class="col-sm-6">
                                     <?php if ( function_exists( 'dynamic_sidebar' ) ) { ?>
-                                        <?php dynamic_sidebar( 'Footer Column 1' ); ?>
+                                        <?php dynamic_sidebar( 'footer-column-1' ); ?>
                                     <?php } ?>
                                 </div>
                                 <div class="col-sm-3">
                                     <?php if ( function_exists( 'dynamic_sidebar' ) ) { ?>
-                                        <?php dynamic_sidebar( 'Footer Column 2' ); ?>
+                                        <?php dynamic_sidebar( 'footer-column-2' ); ?>
                                     <?php } ?>
                                 </div>
                                 <div class="col-sm-3">
                                     <?php if ( function_exists( 'dynamic_sidebar' ) ) { ?>
-                                        <?php dynamic_sidebar( 'Footer Column 3' ); ?>
+                                        <?php dynamic_sidebar( 'footer-column-3' ); ?>
                                     <?php } ?>
                                 </div>
 
@@ -190,17 +189,17 @@
 
                                 <div class="col-sm-3">
                                     <?php if ( function_exists( 'dynamic_sidebar' ) ) { ?>
-                                        <?php dynamic_sidebar( 'Footer Column 1' ); ?>
+                                        <?php dynamic_sidebar( 'footer-column-1' ); ?>
                                     <?php } ?>
                                 </div>
                                 <div class="col-sm-3">
                                     <?php if ( function_exists( 'dynamic_sidebar' ) ) { ?>
-                                        <?php dynamic_sidebar( 'Footer Column 2' ); ?>
+                                        <?php dynamic_sidebar( 'footer-column-2' ); ?>
                                     <?php } ?>
                                 </div>
                                 <div class="col-sm-6">
                                     <?php if ( function_exists( 'dynamic_sidebar' ) ) { ?>
-                                        <?php dynamic_sidebar( 'Footer Column 3' ); ?>
+                                        <?php dynamic_sidebar( 'footer-column-3' ); ?>
                                     <?php } ?>
                                 </div>
 
@@ -208,12 +207,12 @@
 
                                 <div class="col-sm-6">
                                     <?php if ( function_exists( 'dynamic_sidebar' ) ) { ?>
-                                        <?php dynamic_sidebar( 'Footer Column 1' ); ?>
+                                        <?php dynamic_sidebar( 'footer-column-1' ); ?>
                                     <?php } ?>
                                 </div>
                                 <div class="col-sm-6">
                                     <?php if ( function_exists( 'dynamic_sidebar' ) ) { ?>
-                                        <?php dynamic_sidebar( 'Footer Column 2' ); ?>
+                                        <?php dynamic_sidebar( 'footer-column-2' ); ?>
                                     <?php } ?>
                                 </div>
 
@@ -221,17 +220,17 @@
 
                                 <div class="col-sm-4">
                                     <?php if ( function_exists( 'dynamic_sidebar' ) ) { ?>
-                                        <?php dynamic_sidebar( 'Footer Column 1' ); ?>
+                                        <?php dynamic_sidebar( 'footer-column-1' ); ?>
                                     <?php } ?>
                                 </div>
                                 <div class="col-sm-4">
                                     <?php if ( function_exists( 'dynamic_sidebar' ) ) { ?>
-                                        <?php dynamic_sidebar( 'Footer Column 2' ); ?>
+                                        <?php dynamic_sidebar( 'footer-column-2' ); ?>
                                     <?php } ?>
                                 </div>
                                 <div class="col-sm-4">
                                     <?php if ( function_exists( 'dynamic_sidebar' ) ) { ?>
-                                        <?php dynamic_sidebar( 'Footer Column 3' ); ?>
+                                        <?php dynamic_sidebar( 'footer-column-3' ); ?>
                                     <?php } ?>
                                 </div>
 
@@ -239,12 +238,12 @@
 
                                 <div class="col-sm-8">
                                     <?php if ( function_exists( 'dynamic_sidebar' ) ) { ?>
-                                        <?php dynamic_sidebar( 'Footer Column 1' ); ?>
+                                        <?php dynamic_sidebar( 'footer-column-1' ); ?>
                                     <?php } ?>
                                 </div>
                                 <div class="col-sm-4">
                                     <?php if ( function_exists( 'dynamic_sidebar' ) ) { ?>
-                                        <?php dynamic_sidebar( 'Footer Column 2' ); ?>
+                                        <?php dynamic_sidebar( 'footer-column-2' ); ?>
                                     <?php } ?>
                                 </div>
 
@@ -252,12 +251,12 @@
 
                                 <div class="col-sm-4">
                                     <?php if ( function_exists( 'dynamic_sidebar' ) ) { ?>
-                                        <?php dynamic_sidebar( 'Footer Column 1' ); ?>
+                                        <?php dynamic_sidebar( 'footer-column-1' ); ?>
                                     <?php } ?>
                                 </div>
                                 <div class="col-sm-8">
                                     <?php if ( function_exists( 'dynamic_sidebar' ) ) { ?>
-                                        <?php dynamic_sidebar( 'Footer Column 2' ); ?>
+                                        <?php dynamic_sidebar( 'footer-column-2' ); ?>
                                     <?php } ?>
                                 </div>
 
@@ -265,17 +264,17 @@
 
                                 <div class="col-sm-3">
                                     <?php if ( function_exists( 'dynamic_sidebar' ) ) { ?>
-                                        <?php dynamic_sidebar( 'Footer Column 1' ); ?>
+                                        <?php dynamic_sidebar( 'footer-column-1' ); ?>
                                     <?php } ?>
                                 </div>
                                 <div class="col-sm-6">
                                     <?php if ( function_exists( 'dynamic_sidebar' ) ) { ?>
-                                        <?php dynamic_sidebar( 'Footer Column 2' ); ?>
+                                        <?php dynamic_sidebar( 'footer-column-2' ); ?>
                                     <?php } ?>
                                 </div>
                                 <div class="col-sm-3">
                                     <?php if ( function_exists( 'dynamic_sidebar' ) ) { ?>
-                                        <?php dynamic_sidebar( 'Footer Column 3' ); ?>
+                                        <?php dynamic_sidebar( 'footer-column-3' ); ?>
                                     <?php } ?>
                                 </div>
 
@@ -283,7 +282,7 @@
 
                                 <div class="col-sm-12">
                                     <?php if ( function_exists( 'dynamic_sidebar' ) ) { ?>
-                                        <?php dynamic_sidebar( 'Footer Column 1' ); ?>
+                                        <?php dynamic_sidebar( 'footer-column-1' ); ?>
                                     <?php } ?>
 
                                 </div>
@@ -295,7 +294,7 @@
                     <?php do_action( 'sf_footer_wrap_after' ); ?>
 
                     <!--// CLOSE #footer //-->
-                </section>
+                </footer>
             <?php
             }
 
@@ -429,8 +428,8 @@
                 <!--// INFINITE SCROLL PARAMS //-->
                 <div id="inf-scroll-params"
                      data-loadingimage="<?php echo get_template_directory_uri(); ?>/images/loader.gif"
-                     data-msgtext="<?php _e( "Loading", "swiftframework" );
-                     ?>" data-finishedmsg="<?php _e( "All posts loaded", "swiftframework" ); ?>"></div>
+                     data-msgtext="<?php _e( "Loading...", "swiftframework" );
+                     ?>" data-finishedmsg="<?php _e( "All items loaded", "swiftframework" ); ?>"></div>
             <?php
             }
         }
@@ -503,11 +502,16 @@
                  data-product-slider-thumbs-pos="<?php echo esc_attr($product_slider_thumbs_pos); ?>"
                  data-product-slider-vert-height="<?php echo esc_attr($vertical_product_slider_height); ?>"
                  data-quickview-text="<?php echo esc_attr($quickview_text); ?>"
-	             data-cart-notification="<?php echo esc_attr($cart_notification); ?>"></div>
+	             data-cart-notification="<?php echo esc_attr($cart_notification); ?>"
+	             data-username-placeholder="<?php _e( "Username", "swiftframework" ); ?>"
+	             data-email-placeholder="<?php _e( "Email", "swiftframework" ); ?>"
+	             data-password-placeholder="<?php _e( "Password", "swiftframework" ); ?>"
+	             data-username-or-email-placeholder="<?php _e( "Username or email address", "swiftframework" ); ?>"
+	             data-order-id-placeholder="<?php _e( "Order ID", "swiftframework" ); ?>"
+	             data-billing-email-placeholder="<?php _e( "Billing Email", "swiftframework" ); ?>"></div>
 
         <?php
         }
-
         add_action( 'sf_after_page_container', 'sf_option_parameters', 60 );
     }
 
@@ -559,40 +563,6 @@
         }
 
         add_action( 'sf_after_page_container', 'sf_loveit_locale', 80 );
-    }
-
-
-    /* TRACKING
-    ================================================== */
-    if ( ! function_exists( 'sf_tracking' ) ) {
-        function sf_tracking() {
-            global $sf_options;
-
-            if ( $sf_options['google_analytics'] != "" ) {
-                echo $sf_options['google_analytics'];
-            }
-        }
-
-        add_action( 'sf_after_page_container', 'sf_tracking', 90 );
-    }
-
-
-    /* SYSTEM INFO
-    ================================================== */
-    if ( ! function_exists( 'sf_system_info' ) ) {
-        function sf_system_info() {
-            if ( isset( $_GET['sf_debug'] ) && $_GET['sf_debug'] == true ) {
-                require_once 'debug/sysinfo.php';
-                $system_info = new Simple_System_Info();
-
-                echo '<div id="sf-debug">';
-                echo '<h3>Debug</h3>';
-                echo $system_info->get( true );
-                echo '</div>';
-            }
-        }
-
-        add_action( 'sf_after_page_container', 'sf_system_info', 100 );
     }
 
 ?>

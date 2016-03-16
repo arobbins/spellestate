@@ -46,7 +46,7 @@
         <?php
             /**
              * @hooked - sf_output_container_row_open - 5 (if media display is set to "split")
-             * @hooked - sf_post_detail_media - 10
+             * @hooked - sf_post_detail_media - 20
              **/
             do_action( 'sf_portfolio_article_start' );
         ?>

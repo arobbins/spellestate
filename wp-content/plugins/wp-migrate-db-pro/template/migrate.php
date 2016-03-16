@@ -170,7 +170,7 @@ $breadcrumbs_params = array(
 							<span class="sort-handle"></span>
 						</td>
 						<td class="old-replace-col">
-							<input type="text" size="40" name="replace_old[]" class="code" id="old-path" placeholder="Old file path" value="<?php echo esc_attr( $this->absolute_root_file_path ); ?>" autocomplete="off" />
+							<input type="text" size="40" name="replace_old[]" class="code" id="old-path" placeholder="Old file path" value="<?php echo esc_attr( $this->get_absolute_root_file_path() ); ?>" autocomplete="off" />
 						</td>
 						<td class="arrow-col" title="Copy Find to Replace">
 							<span class="right-arrow">&rarr;</span>
@@ -271,6 +271,12 @@ $breadcrumbs_params = array(
 							<?php _e( 'Compatible with older versions of MySQL (pre-5.5)', 'wp-migrate-db' ); ?>
 						</label>
 					</li>
+					<li class="pause-before-finalize">
+						<label for="pause-before-finalize">
+							<input id="pause-before-finalize" type="checkbox" value="1" autocomplete="off" name="pause_before_finalize"<?php $this->maybe_checked( $loaded_profile['pause_before_finalize'] ); ?> />
+							<?php _e( 'Pause before replacing migrated tables', 'wp-migrate-db' ); ?>
+						</label>
+					</li>
 					<?php $this->template_part( array( 'exclude_post_revisions' ), $loaded_profile ); ?>
 				</ul>
 
@@ -344,8 +350,8 @@ $breadcrumbs_params = array(
 
 		<p class="migrate-db">
 			<input type="hidden" class="remote-json-data" name="remote_json_data" autocomplete="off"/>
-			<input class="button-primary migrate-db-button" type="submit" value="Migrate" name="Submit" autocomplete="off"/>
-			<input class="button save-settings-button" type="submit" value="Save Profile" name="submit_save_profile" autocomplete="off"/>
+			<input class="button-primary migrate-db-button" type="submit" value="<?php echo esc_attr_x( 'Export', 'Download a copy of the database', 'wp-migrate-db' ); ?>" name="Submit" autocomplete="off"/>
+			<input class="button save-settings-button" type="submit" value="<?php echo esc_attr_x( 'Save Profile', 'Save current migration settings', 'wp-migrate-db' ); ?>" name="submit_save_profile" autocomplete="off"/>
 		</p>
 
 	</div>

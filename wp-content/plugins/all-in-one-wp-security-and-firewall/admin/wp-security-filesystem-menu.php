@@ -58,13 +58,14 @@ class AIOWPSecurity_Filesystem_Menu extends AIOWPSecurity_Admin_Menu
      */
     function render_menu_page() 
     {
+        echo '<div class="wrap">';
+        echo '<h2>'.__('Filesystem Security','all-in-one-wp-security-and-firewall').'</h2>';//Interface title
         $this->set_menu_tabs();
         $tab = $this->get_current_tab();
-        ?>
-        <div class="wrap">
+        $this->render_menu_tabs();
+        ?>        
         <div id="poststuff"><div id="post-body">
         <?php 
-        $this->render_menu_tabs();
         //$tab_keys = array_keys($this->menu_tabs);
         call_user_func(array(&$this, $this->menu_tabs_handler[$tab]));
         ?>
@@ -115,7 +116,7 @@ class AIOWPSecurity_Filesystem_Menu extends AIOWPSecurity_Admin_Menu
         </div>
 
         <div class="postbox">
-        <h3><label for="title"><?php _e('WP Directory and File Permissions Scan Results', 'all-in-one-wp-security-and-firewall'); ?></label></h3>
+        <h3 class="hndle"><label for="title"><?php _e('WP Directory and File Permissions Scan Results', 'all-in-one-wp-security-and-firewall'); ?></label></h3>
         <div class="inside">
         <?php
         //Display security info badge
@@ -209,7 +210,7 @@ class AIOWPSecurity_Filesystem_Menu extends AIOWPSecurity_Admin_Menu
         </div>
 
         <div class="postbox">
-        <h3><label for="title"><?php _e('Disable PHP File Editing', 'all-in-one-wp-security-and-firewall'); ?></label></h3>
+        <h3 class="hndle"><label for="title"><?php _e('Disable PHP File Editing', 'all-in-one-wp-security-and-firewall'); ?></label></h3>
         <div class="inside">
         <?php
         //Display security info badge
@@ -286,7 +287,7 @@ class AIOWPSecurity_Filesystem_Menu extends AIOWPSecurity_Admin_Menu
         </div>
 
         <div class="postbox">
-        <h3><label for="title"><?php _e('Prevent Access to Default WP Files', 'all-in-one-wp-security-and-firewall'); ?></label></h3>
+        <h3 class="hndle"><label for="title"><?php _e('Prevent Access to Default WP Files', 'all-in-one-wp-security-and-firewall'); ?></label></h3>
         <div class="inside">
         <?php
         //Display security info badge
@@ -316,7 +317,7 @@ class AIOWPSecurity_Filesystem_Menu extends AIOWPSecurity_Admin_Menu
         
         if (isset($_POST['aiowps_system_log_file'])){
             if ($_POST['aiowps_system_log_file'] != NULL){
-                $sys_log_file = sanitize_text_field($_POST['aiowps_system_log_file']);
+                $sys_log_file = esc_html($_POST['aiowps_system_log_file']);
                 $aio_wp_security->configs->set_value('aiowps_system_log_file',$sys_log_file);
             }else{
                 $sys_log_file = 'error_log';
@@ -339,13 +340,13 @@ class AIOWPSecurity_Filesystem_Menu extends AIOWPSecurity_Admin_Menu
         </div>
 
         <div class="postbox">
-        <h3><label for="title"><?php _e('View System Logs', 'all-in-one-wp-security-and-firewall'); ?></label></h3>
+        <h3 class="hndle"><label for="title"><?php _e('View System Logs', 'all-in-one-wp-security-and-firewall'); ?></label></h3>
         <div class="inside">
             <p>Please click the button below to view the latest system logs:</p>
             <form action="" method="POST">
                 <?php wp_nonce_field('aiowpsec-view-system-logs-nonce'); ?>
                 <div><?php _e('Enter System Log File Name', 'all-in-one-wp-security-and-firewall')?>:
-                <input type="text" size="25" name="aiowps_system_log_file" value="<?php echo sanitize_text_field($sys_log_file); ?>" />
+                <input type="text" size="25" name="aiowps_system_log_file" value="<?php echo esc_html($sys_log_file); ?>" />
                 <span class="description"><?php _e('Enter your system log file name. (Defaults to error_log)', 'all-in-one-wp-security-and-firewall'); ?></span>
                 </div>
                 <div class="aio_spacer_15"></div>

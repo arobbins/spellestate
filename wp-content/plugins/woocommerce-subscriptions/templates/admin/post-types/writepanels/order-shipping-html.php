@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<p class="first">
 		<select name="recurring_shipping_method[<?php echo $item_id ? esc_attr( $item_id ) : 'new][]'; ?>]" class="first">
 			<optgroup label="<?php esc_html_e( 'Shipping Method', 'woocommerce-subscriptions' ); ?>">
-				<option value=""><?php echo esc_html_x( 'N/A', 'no shipping method', 'woocommerce-subscriptions' ); ?></option>
+				<option value=""><?php echo esc_html_x( 'N/A', 'no information about something', 'woocommerce-subscriptions' ); ?></option>
 				<?php
 				$found_method 	= false;
 

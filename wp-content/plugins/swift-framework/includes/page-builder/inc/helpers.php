@@ -5,7 +5,7 @@
     *	Swift Page Builder - Helpers Class
     *	------------------------------------------------
     *	Swift Framework
-    * 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+    * 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     */
 
@@ -15,7 +15,7 @@
         function sf_theme_supports( $feature ) {
             $supports = get_theme_support( 'swiftframework' );
             $supports = $supports[0];
-            if ($supports[ $feature ] == "") {
+            if ( !isset( $supports[ $feature ] ) || $supports[ $feature ] == "") {
                 return false;
             } else {
                 return isset( $supports[ $feature ] );
@@ -74,6 +74,27 @@
         }
     }
 
+    /* GET NINJA FORMS LIST
+    ================================================== */
+    if ( ! function_exists( 'sf_ninjaforms_list' ) ) {
+        function sf_ninjaforms_list() {
+
+            if ( !is_admin() || !sf_ninjaforms_activated() ) {
+                return;
+            }
+
+            $forms       = ninja_forms_get_all_forms();
+            $forms_array = array();
+
+            if ( ! empty( $forms ) ) {
+                foreach ( $forms as $form ):
+                    $forms_array[ $form['id'] ] = $form['data']['form_title'];
+                endforeach;
+            }
+
+            return $forms_array;
+        }
+    }
 
     /* CHECK GP PRICING IS ACTIVE
     ================================================== */
@@ -84,6 +105,50 @@
             } else {
                 return false;
             }
+        }
+    }
+
+    /* GET GRAVITY FORMS LIST
+    ================================================== */
+    if ( ! function_exists( 'sf_gravityforms_list' ) ) {
+        function sf_gravityforms_list() {
+
+            if ( !is_admin() ) {
+                return;
+            }
+
+            $forms       = RGFormsModel::get_forms( null, 'title' );
+            $forms_array = array();
+
+            if ( ! empty( $forms ) ) {
+                foreach ( $forms as $form ):
+                    $forms_array[ $form->id ] = $form->title;
+                endforeach;
+            }
+
+            return $forms_array;
+        }
+    }
+
+    /* GET GO PRICING TABLES LIST
+    ================================================== */
+    if ( ! function_exists( 'sf_gopricing_list' ) ) {
+        function sf_gopricing_list() {
+
+            if ( !is_admin() || !defined( 'GW_GO_PREFIX') ) {
+                return;
+            }
+
+            $pricing_tables = get_option( GW_GO_PREFIX . 'tables' );
+            $ptables_array  = array();
+
+            if ( ! empty( $pricing_tables ) ) {
+                foreach ( $pricing_tables as $pricing_table ) {
+                    $ptables_array[ $pricing_table['table-id'] ] = esc_attr( $pricing_table['table-name'] );
+                }
+            }
+
+            return $ptables_array;
         }
     }
 
@@ -235,44 +300,47 @@
                         'full'
                     ) ) )
         ) {
-            //$thumbnail = get_the_post_thumbnail( $post_id, $thumb_size );
+           
             $thumbnail = wp_get_attachment_image( $attach_id, $thumb_size );
             //TODO APPLY FILTER
         }
+
+        $p_img = $p_img_small = "";
 
         if ( $thumbnail == '' && $attach_id ) {
             if ( is_string( $thumb_size ) ) {
                 $thumb_size = str_replace( array( 'px', ' ', '*', '&times;' ), array( '', '', 'x', 'x' ), $thumb_size );
                 $thumb_size = explode( "x", $thumb_size );
             }
-            $p_img = "";
+
             // Resize image to custom size
-            if ( isset( $thumb_size[0] ) && isset( $thumb_size[1] ) ) {
+            if ( $attach_id != "" && isset( $thumb_size[0] ) && isset( $thumb_size[1] ) ) {
                 $p_img = spb_resize( $attach_id, null, $thumb_size[0], $thumb_size[1], true );
             }
             $alt = trim(strip_tags( get_post_meta($attach_id, '_wp_attachment_image_alt', true) ));
 
             if ( empty($alt) ) {
                 $attachment = get_post($attach_id);
-                $alt = trim(strip_tags( $attachment->post_excerpt )); // If not, Use the Caption
+                if ( $attachment ) {
+                    $alt = trim(strip_tags( $attachment->post_excerpt )); // If not, Use the Caption
+                }
             }
             if ( empty($alt) ) {
-                $alt = trim(strip_tags( $attachment->post_title )); // Finally, use the title
-			}
-
-            /*if ( spb_debug() ) {
-                  var_dump($p_img);
-              }*/
-            if ( $p_img != "" ) {
-                $img_class = '';
-                //if ( $grid_layout == 'thumbnail' ) $img_class = ' no_bottom_margin'; class="'.$img_class.'"
-                $thumbnail = '<img src="' . $p_img['url'] . '" width="' . $p_img['width'] . '" height="' . $p_img['height'] . '" alt="'.$alt.'" />';
-                //TODO: APPLY FILTER
+                if ( $attachment ) {
+                    $alt = trim(strip_tags( $attachment->post_title )); // Finally, use the title
+                }
             }
-        }
-        $p_img_large = wp_get_attachment_image_src( $attach_id, 'large' );
 
-        return array( 'thumbnail' => $thumbnail, 'p_img_large' => $p_img_large );
+        }
+       
+        if ( $p_img != '' ){
+            $p_img_small = '<img src="' . $p_img['url'] . '" width="66" height="66"  class="attachment-thumbnail" />';
+        }
+      
+        $p_img_large = wp_get_attachment_image_src( $attach_id, 'large' );
+      //   var_dump( $p_img );
+
+        return array( 'thumbnail' => $thumbnail, 'p_img_large' => $p_img_large, 'p_img_small' => $p_img_small );
     }
 
 
@@ -569,10 +637,13 @@
 	/* CAROUSEL ARROW OUTPUT
 	================================================== */
 	if ( ! function_exists( 'spb_carousel_arrows' ) ) {
-		function spb_carousel_arrows() {
-
-			$carousel_arrows = apply_filters('spb_carousel_arrows_html', '<div class="carousel-arrows"><a href="#" class="carousel-prev"><i class="ss-navigateleft"></i></a><a href="#" class="carousel-next"><i class="ss-navigateright"></i></a></div>');
-
+		function spb_carousel_arrows( $nowrap = false ) {
+            $carousel_arrows = "";
+            if ( $nowrap ) {
+                $carousel_arrows = apply_filters('spb_carousel_arrows_nowrap_html', '<a href="#" class="carousel-prev"><i class="ss-navigateleft"></i></a><a href="#" class="carousel-next"><i class="ss-navigateright"></i></a>');
+            } else {
+                $carousel_arrows = apply_filters('spb_carousel_arrows_html', '<div class="carousel-arrows"><a href="#" class="carousel-prev"><i class="ss-navigateleft"></i></a><a href="#" class="carousel-next"><i class="ss-navigateright"></i></a></div>');
+            }
 			return $carousel_arrows;
 
 		}
@@ -648,14 +719,533 @@
 		    $categories = get_terms('product_cat');
 			$categories_array = array();
 
-			$categories_array[] = "";
 			foreach ($categories as $category) {
-			      $categories_array[$category->term_id] = $category->name;
+			      $categories_array[$category->slug] = $category->name;
 			}
 
 		    return $categories_array;
 		}
 	}
+
+    /* GET PRODUCT CATEGORIES
+    ================================================== */
+    if ( ! function_exists( 'spb_get_svg_icons' ) ) {
+        function spb_get_svg_icons() {
+
+            if ( !sf_theme_supports('nucleo-svg-icons') ) {
+                return '';
+            }
+
+            $coloured_svg_icons = array(
+                'arrows-color-1_cloud-download-95' => 'arrows-color-1_cloud-download-95', 
+                'arrows-color-1_cloud-upload-96' => 'arrows-color-1_cloud-upload-96', 
+                'arrows-color-2_file-download-87' => 'arrows-color-2_file-download-87', 
+                'arrows-color-2_file-upload-86' => 'arrows-color-2_file-upload-86', 
+                'arrows-color-2_lines' => 'arrows-color-2_lines', 
+                'arrows-color-2_replay' => 'arrows-color-2_replay', 
+                'arrows-color-3_cloud-refresh' => 'arrows-color-3_cloud-refresh', 
+                'business-color_agenda' => 'business-color_agenda', 
+                'business-color_award-48' => 'business-color_award-48', 
+                'business-color_award-49' => 'business-color_award-49', 
+                'business-color_badge' => 'business-color_badge', 
+                'business-color_board-28' => 'business-color_board-28', 
+                'business-color_board-29' => 'business-color_board-29', 
+                'business-color_board-30' => 'business-color_board-30', 
+                'business-color_briefcase-26' => 'business-color_briefcase-26', 
+                'business-color_building' => 'business-color_building', 
+                'business-color_bulb-63' => 'business-color_bulb-63', 
+                'business-color_business-contact-85' => 'business-color_business-contact-85', 
+                'business-color_business-contact-86' => 'business-color_business-contact-86', 
+                'business-color_business-contact-87' => 'business-color_business-contact-87', 
+                'business-color_business-contact-88' => 'business-color_business-contact-88', 
+                'business-color_businessman-03' => 'business-color_businessman-03', 
+                'business-color_calculator' => 'business-color_calculator', 
+                'business-color_cheque' => 'business-color_cheque', 
+                'business-color_connect' => 'business-color_connect', 
+                'business-color_factory' => 'business-color_factory', 
+                'business-color_globe' => 'business-color_globe', 
+                'business-color_goal-64' => 'business-color_goal-64', 
+                'business-color_gold' => 'business-color_gold', 
+                'business-color_hammer' => 'business-color_hammer', 
+                'business-color_handout' => 'business-color_handout', 
+                'business-color_handshake' => 'business-color_handshake', 
+                'business-color_hierarchy-55' => 'business-color_hierarchy-55', 
+                'business-color_payment' => 'business-color_payment', 
+                'business-color_pig' => 'business-color_pig', 
+                'business-color_pin' => 'business-color_pin', 
+                'business-color_progress' => 'business-color_progress', 
+                'business-color_safe' => 'business-color_safe', 
+                'business-color_signature' => 'business-color_signature', 
+                'emoticons-color_bomb' => 'emoticons-color_bomb', 
+                'emoticons-color_manga-62' => 'emoticons-color_manga-62', 
+                'emoticons-color_sad' => 'emoticons-color_sad', 
+                'emoticons-color_smile' => 'emoticons-color_smile', 
+                'envir-color_recycling' => 'envir-color_recycling', 
+                'envir-color_save-planet' => 'envir-color_save-planet', 
+                'food-color_beer-95' => 'food-color_beer-95', 
+                'food-color_carrot' => 'food-color_carrot', 
+                'food-color_cocktail' => 'food-color_cocktail', 
+                'food-color_cutlery-77' => 'food-color_cutlery-77', 
+                'food-color_donut' => 'food-color_donut', 
+                'food-color_fish' => 'food-color_fish', 
+                'food-color_grape' => 'food-color_grape', 
+                'food-color_moka' => 'food-color_moka', 
+                'food-color_mug' => 'food-color_mug', 
+                'food-color_pizza-slice' => 'food-color_pizza-slice', 
+                'gestures-color_double-tap' => 'gestures-color_double-tap', 
+                'gestures-color_pinch' => 'gestures-color_pinch', 
+                'gestures-color_scroll-horitontal' => 'gestures-color_scroll-horitontal', 
+                'gestures-color_scroll-vertical' => 'gestures-color_scroll-vertical', 
+                'gestures-color_stretch' => 'gestures-color_stretch', 
+                'gestures-color_touch-id' => 'gestures-color_touch-id', 
+                'holidays-color_cockade' => 'holidays-color_cockade', 
+                'holidays-color_gift' => 'holidays-color_gift', 
+                'holidays-color_gift-exchange' => 'holidays-color_gift-exchange', 
+                'holidays-color_message' => 'holidays-color_message', 
+                'location-color_appointment' => 'location-color_appointment', 
+                'location-color_flag-complex' => 'location-color_flag-complex', 
+                'location-color_map-gps' => 'location-color_map-gps', 
+                'location-color_map-pin' => 'location-color_map-pin', 
+                'location-color_treasure-map-40' => 'location-color_treasure-map-40', 
+                'location-color_world-pin' => 'location-color_world-pin', 
+                'media-color-1_action-74' => 'media-color-1_action-74', 
+                'media-color-1_album' => 'media-color-1_album', 
+                'media-color-1_audio-91' => 'media-color-1_audio-91', 
+                'media-color-1_camera-18' => 'media-color-1_camera-18', 
+                'media-color-1_flash-24' => 'media-color-1_flash-24', 
+                'media-color-1_frame-12' => 'media-color-1_frame-12', 
+                'media-color-1_grid' => 'media-color-1_grid', 
+                'media-color-1_image-01' => 'media-color-1_image-01', 
+                'media-color-1_kid' => 'media-color-1_kid', 
+                'media-color-1_layers' => 'media-color-1_layers', 
+                'media-color-1_play-69' => 'media-color-1_play-69', 
+                'media-color-1_polaroid-user' => 'media-color-1_polaroid-user', 
+                'media-color-1_sd' => 'media-color-1_sd', 
+                'media-color-1_shake' => 'media-color-1_shake', 
+                'media-color-1_speaker' => 'media-color-1_speaker', 
+                'media-color-1_sport' => 'media-color-1_sport', 
+                'media-color-1_ticket-76' => 'media-color-1_ticket-76', 
+                'media-color-1_touch' => 'media-color-1_touch', 
+                'media-color-1_videocamera-71' => 'media-color-1_videocamera-71', 
+                'media-color-2_guitar' => 'media-color-2_guitar', 
+                'media-color-2_music-cloud' => 'media-color-2_music-cloud', 
+                'media-color-2_note-03' => 'media-color-2_note-03', 
+                'media-color-2_radio' => 'media-color-2_radio', 
+                'media-color-2_remix' => 'media-color-2_remix', 
+                'media-color-2_sound-wave' => 'media-color-2_sound-wave', 
+                'nature-color_chicken' => 'nature-color_chicken', 
+                'nature-color_forest' => 'nature-color_forest', 
+                'nature-color_mountain' => 'nature-color_mountain', 
+                'nature-color_tree-02' => 'nature-color_tree-02', 
+                'objects-color_anchor' => 'objects-color_anchor', 
+                'objects-color_battery' => 'objects-color_battery', 
+                'objects-color_bow' => 'objects-color_bow', 
+                'objects-color_cone' => 'objects-color_cone', 
+                'objects-color_diamond' => 'objects-color_diamond', 
+                'objects-color_globe' => 'objects-color_globe', 
+                'objects-color_key-25' => 'objects-color_key-25', 
+                'objects-color_key-26' => 'objects-color_key-26', 
+                'objects-color_lamp' => 'objects-color_lamp', 
+                'objects-color_leaf-38' => 'objects-color_leaf-38', 
+                'objects-color_planet' => 'objects-color_planet', 
+                'objects-color_puzzle-09' => 'objects-color_puzzle-09', 
+                'objects-color_puzzle-10' => 'objects-color_puzzle-10', 
+                'objects-color_spaceship' => 'objects-color_spaceship', 
+                'objects-color_support-16' => 'objects-color_support-16', 
+                'objects-color_support-17' => 'objects-color_support-17', 
+                'objects-color_umbrella-13' => 'objects-color_umbrella-13', 
+                'tech-color_computer-old' => 'tech-color_computer-old', 
+                'tech-color_headphones' => 'tech-color_headphones', 
+                'tech-color_keyboard-wifi' => 'tech-color_keyboard-wifi', 
+                'tech-color_laptop-front' => 'tech-color_laptop-front', 
+                'tech-color_mobile-button' => 'tech-color_mobile-button', 
+                'tech-color_print' => 'tech-color_print', 
+                'tech-color_tablet' => 'tech-color_tablet', 
+                'tech-color_tv-old' => 'tech-color_tv-old', 
+                'tech-color_watch' => 'tech-color_watch', 
+                'tech-color_webcam-38' => 'tech-color_webcam-38', 
+                'tech-color_wifi' => 'tech-color_wifi', 
+                'text-color_capitalize' => 'text-color_capitalize', 
+                'text-color_caps-all' => 'text-color_caps-all', 
+                'text-color_list-numbers' => 'text-color_list-numbers', 
+                'text-color_quote' => 'text-color_quote', 
+                'ui-color-1_attach-87' => 'ui-color-1_attach-87', 
+                'ui-color-1_calendar-grid-61' => 'ui-color-1_calendar-grid-61', 
+                'ui-color-1_check' => 'ui-color-1_check', 
+                'ui-color-1_dashboard-29' => 'ui-color-1_dashboard-29', 
+                'ui-color-1_dashboard-30' => 'ui-color-1_dashboard-30', 
+                'ui-color-1_edit-72' => 'ui-color-1_edit-72', 
+                'ui-color-1_edit-76' => 'ui-color-1_edit-76', 
+                'ui-color-1_email-83' => 'ui-color-1_email-83', 
+                'ui-color-1_eye-17' => 'ui-color-1_eye-17', 
+                'ui-color-1_eye-ban-18' => 'ui-color-1_eye-ban-18', 
+                'ui-color-1_home-52' => 'ui-color-1_home-52', 
+                'ui-color-1_home-minimal' => 'ui-color-1_home-minimal', 
+                'ui-color-1_lock' => 'ui-color-1_lock', 
+                'ui-color-1_lock-open' => 'ui-color-1_lock-open', 
+                'ui-color-1_notification-70' => 'ui-color-1_notification-70', 
+                'ui-color-1_pencil' => 'ui-color-1_pencil', 
+                'ui-color-1_preferences' => 'ui-color-1_preferences', 
+                'ui-color-1_preferences-rotate' => 'ui-color-1_preferences-rotate', 
+                'ui-color-1_send' => 'ui-color-1_send', 
+                'ui-color-1_settings' => 'ui-color-1_settings', 
+                'ui-color-1_simple-add' => 'ui-color-1_simple-add', 
+                'ui-color-1_simple-remove' => 'ui-color-1_simple-remove', 
+                'ui-color-1_trash' => 'ui-color-1_trash', 
+                'ui-color-1_ui-04' => 'ui-color-1_ui-04', 
+                'ui-color-1_zoom' => 'ui-color-1_zoom', 
+                'ui-color-1_zoom-in' => 'ui-color-1_zoom-in', 
+                'ui-color-1_zoom-out' => 'ui-color-1_zoom-out', 
+                'ui-color-2_archive' => 'ui-color-2_archive', 
+                'ui-color-2_battery-half' => 'ui-color-2_battery-half', 
+                'ui-color-2_battery-low' => 'ui-color-2_battery-low', 
+                'ui-color-2_chat-content' => 'ui-color-2_chat-content', 
+                'ui-color-2_favourite-28' => 'ui-color-2_favourite-28', 
+                'ui-color-2_grid-45' => 'ui-color-2_grid-45', 
+                'ui-color-2_grid-48' => 'ui-color-2_grid-48', 
+                'ui-color-2_hourglass' => 'ui-color-2_hourglass', 
+                'ui-color-2_lab' => 'ui-color-2_lab', 
+                'ui-color-2_layers' => 'ui-color-2_layers', 
+                'ui-color-2_like' => 'ui-color-2_like', 
+                'ui-color-2_link-69' => 'ui-color-2_link-69', 
+                'ui-color-2_paragraph' => 'ui-color-2_paragraph', 
+                'ui-color-2_target' => 'ui-color-2_target', 
+                'ui-color-2_tile-56' => 'ui-color-2_tile-56', 
+                'ui-color-2_time' => 'ui-color-2_time', 
+                'ui-color-2_time-alarm' => 'ui-color-2_time-alarm', 
+                'ui-color-2_time-countdown' => 'ui-color-2_time-countdown', 
+                'ui-color-2_webpage' => 'ui-color-2_webpage', 
+                'ui-color-2_window-add' => 'ui-color-2_window-add', 
+                'ui-color-2_window-delete' => 'ui-color-2_window-delete', 
+                'users-color_badge-13' => 'users-color_badge-13', 
+                'users-color_man-37' => 'users-color_man-37', 
+                'users-color_man-45' => 'users-color_man-45', 
+                'users-color_multiple-11' => 'users-color_multiple-11', 
+                'users-color_parent' => 'users-color_parent', 
+                'users-color_woman-24' => 'users-color_woman-24', 
+                'users-color_woman-46' => 'users-color_woman-46', 
+                'weather-color_celsius' => 'weather-color_celsius', 
+                'weather-color_fahrenheit' => 'weather-color_fahrenheit', 
+                'weather-color_wind' => 'weather-color_wind',
+            );
+
+            $outline_svg_icons = array(
+                'arrows-1_circle-down-40' => 'arrows-1_circle-down-40', 
+                'arrows-1_circle-right-09' => 'arrows-1_circle-right-09', 
+                'arrows-1_cloud-download-93' => 'arrows-1_cloud-download-93', 
+                'arrows-1_cloud-upload-94' => 'arrows-1_cloud-upload-94', 
+                'arrows-1_direction-53' => 'arrows-1_direction-53', 
+                'arrows-1_fullscreen-double-74' => 'arrows-1_fullscreen-double-74', 
+                'arrows-1_loop-82' => 'arrows-1_loop-82', 
+                'arrows-1_minimal-down' => 'arrows-1_minimal-down', 
+                'arrows-1_minimal-left' => 'arrows-1_minimal-left', 
+                'arrows-1_minimal-right' => 'arrows-1_minimal-right', 
+                'arrows-1_minimal-up' => 'arrows-1_minimal-up', 
+                'arrows-1_refresh-69' => 'arrows-1_refresh-69', 
+                'arrows-1_share-91' => 'arrows-1_share-91', 
+                'arrows-1_shuffle-98' => 'arrows-1_shuffle-98', 
+                'arrows-2_file-download-89' => 'arrows-2_file-download-89', 
+                'arrows-2_file-upload-88' => 'arrows-2_file-upload-88', 
+                'arrows-2_lines' => 'arrows-2_lines', 
+                'arrows-2_log-out' => 'arrows-2_log-out', 
+                'business-outline_agenda' => 'business-outline_agenda', 
+                'business-outline_award-48' => 'business-outline_award-48', 
+                'business-outline_award-49' => 'business-outline_award-49', 
+                'business-outline_badge' => 'business-outline_badge', 
+                'business-outline_board-28' => 'business-outline_board-28', 
+                'business-outline_board-29' => 'business-outline_board-29', 
+                'business-outline_board-30' => 'business-outline_board-30', 
+                'business-outline_briefcase-24' => 'business-outline_briefcase-24', 
+                'business-outline_building' => 'business-outline_building', 
+                'business-outline_bulb-63' => 'business-outline_bulb-63', 
+                'business-outline_business-contact-86' => 'business-outline_business-contact-86', 
+                'business-outline_business-contact-88' => 'business-outline_business-contact-88', 
+                'business-outline_businessman-04' => 'business-outline_businessman-04', 
+                'business-outline_calculator' => 'business-outline_calculator', 
+                'business-outline_chart' => 'business-outline_chart', 
+                'business-outline_chart-bar-32' => 'business-outline_chart-bar-32', 
+                'business-outline_chart-pie-35' => 'business-outline_chart-pie-35', 
+                'business-outline_chart-pie-36' => 'business-outline_chart-pie-36', 
+                'business-outline_connect' => 'business-outline_connect', 
+                'business-outline_contacts' => 'business-outline_contacts', 
+                'business-outline_currency-dollar' => 'business-outline_currency-dollar', 
+                'business-outline_currency-euro' => 'business-outline_currency-euro', 
+                'business-outline_currency-pound' => 'business-outline_currency-pound', 
+                'business-outline_currency-yen' => 'business-outline_currency-yen', 
+                'business-outline_factory' => 'business-outline_factory', 
+                'business-outline_globe' => 'business-outline_globe', 
+                'business-outline_goal-64' => 'business-outline_goal-64', 
+                'business-outline_gold' => 'business-outline_gold', 
+                'business-outline_handout' => 'business-outline_handout', 
+                'business-outline_handshake' => 'business-outline_handshake', 
+                'business-outline_hierarchy-55' => 'business-outline_hierarchy-55', 
+                'business-outline_laptop-71' => 'business-outline_laptop-71', 
+                'business-outline_laptop-91' => 'business-outline_laptop-91', 
+                'business-outline_money-12' => 'business-outline_money-12', 
+                'business-outline_notes' => 'business-outline_notes', 
+                'business-outline_pig' => 'business-outline_pig', 
+                'business-outline_pin' => 'business-outline_pin', 
+                'business-outline_plug' => 'business-outline_plug', 
+                'business-outline_scale' => 'business-outline_scale', 
+                'business-outline_sign' => 'business-outline_sign', 
+                'business-outline_signature' => 'business-outline_signature', 
+                'cards-outline_amazon' => 'cards-outline_amazon', 
+                'cards-outline_amex' => 'cards-outline_amex', 
+                'cards-outline_android' => 'cards-outline_android', 
+                'cards-outline_apple' => 'cards-outline_apple', 
+                'cards-outline_mastercard' => 'cards-outline_mastercard', 
+                'cards-outline_paypal' => 'cards-outline_paypal', 
+                'cards-outline_stripe' => 'cards-outline_stripe', 
+                'cards-outline_visa' => 'cards-outline_visa', 
+                'clothes-outline_bag-21' => 'clothes-outline_bag-21', 
+                'clothes-outline_shirt-business' => 'clothes-outline_shirt-business', 
+                'clothes-outline_tie-bow' => 'clothes-outline_tie-bow', 
+                'design-outline_app' => 'design-outline_app', 
+                'design-outline_artboard' => 'design-outline_artboard', 
+                'design-outline_book-open' => 'design-outline_book-open', 
+                'design-outline_brush' => 'design-outline_brush', 
+                'design-outline_bullet-list' => 'design-outline_bullet-list', 
+                'design-outline_code' => 'design-outline_code', 
+                'design-outline_code-editor' => 'design-outline_code-editor', 
+                'design-outline_command' => 'design-outline_command', 
+                'design-outline_compass' => 'design-outline_compass', 
+                'design-outline_copy' => 'design-outline_copy', 
+                'design-outline_crop' => 'design-outline_crop', 
+                'design-outline_design' => 'design-outline_design', 
+                'design-outline_image' => 'design-outline_image', 
+                'design-outline_measure-17' => 'design-outline_measure-17', 
+                'design-outline_mobile-design' => 'design-outline_mobile-design', 
+                'design-outline_mobile-dev' => 'design-outline_mobile-dev', 
+                'design-outline_mouse-10' => 'design-outline_mouse-10', 
+                'design-outline_note-code' => 'design-outline_note-code', 
+                'design-outline_paint-16' => 'design-outline_paint-16', 
+                'design-outline_paint-bucket-40' => 'design-outline_paint-bucket-40', 
+                'design-outline_palette' => 'design-outline_palette', 
+                'design-outline_pantone' => 'design-outline_pantone', 
+                'design-outline_paper-design' => 'design-outline_paper-design', 
+                'design-outline_paper-dev' => 'design-outline_paper-dev', 
+                'design-outline_path-exclude' => 'design-outline_path-exclude', 
+                'design-outline_pen-tool' => 'design-outline_pen-tool', 
+                'design-outline_phone' => 'design-outline_phone', 
+                'design-outline_photo-editor' => 'design-outline_photo-editor', 
+                'design-outline_scissors-dashed' => 'design-outline_scissors-dashed', 
+                'design-outline_tablet-mobile' => 'design-outline_tablet-mobile', 
+                'design-outline_text' => 'design-outline_text', 
+                'design-outline_vector' => 'design-outline_vector', 
+                'design-outline_wand-99' => 'design-outline_wand-99', 
+                'design-outline_webpage' => 'design-outline_webpage', 
+                'design-outline_window-paragraph' => 'design-outline_window-paragraph', 
+                'education-outline_abc' => 'education-outline_abc', 
+                'education-outline_atom' => 'education-outline_atom', 
+                'education-outline_award-55' => 'education-outline_award-55', 
+                'education-outline_backpack-58' => 'education-outline_backpack-58', 
+                'education-outline_board-51' => 'education-outline_board-51', 
+                'education-outline_book-open' => 'education-outline_book-open', 
+                'education-outline_grammar-check' => 'education-outline_grammar-check', 
+                'education-outline_language' => 'education-outline_language', 
+                'education-outline_microscope' => 'education-outline_microscope', 
+                'education-outline_paper' => 'education-outline_paper', 
+                'education-outline_pencil-47' => 'education-outline_pencil-47', 
+                'education-outline_school' => 'education-outline_school', 
+                'emoticons-outline_bomb' => 'emoticons-outline_bomb', 
+                'emoticons-outline_cry-15' => 'emoticons-outline_cry-15', 
+                'emoticons-outline_fist' => 'emoticons-outline_fist', 
+                'emoticons-outline_like' => 'emoticons-outline_like', 
+                'emoticons-outline_manga-62' => 'emoticons-outline_manga-62', 
+                'emoticons-outline_sad' => 'emoticons-outline_sad', 
+                'emoticons-outline_smile' => 'emoticons-outline_smile', 
+                'emoticons-outline_speechless' => 'emoticons-outline_speechless', 
+                'emoticons-outline_surprise' => 'emoticons-outline_surprise', 
+                'envir-outline_recycling' => 'envir-outline_recycling', 
+                'envir-outline_save-planet' => 'envir-outline_save-planet', 
+                'files-2_ai-illustrator' => 'files-2_ai-illustrator', 
+                'files-2_asp' => 'files-2_asp', 
+                'files-2_css' => 'files-2_css', 
+                'files-2_docx' => 'files-2_docx', 
+                'files-2_gif' => 'files-2_gif', 
+                'files-2_html' => 'files-2_html', 
+                'files-2_jpg-jpeg' => 'files-2_jpg-jpeg', 
+                'files-2_js-javascript-jquery' => 'files-2_js-javascript-jquery', 
+                'files-3_pdf' => 'files-3_pdf', 
+                'files-3_php' => 'files-3_php', 
+                'files-3_png' => 'files-3_png', 
+                'files-3_psd-photoshop' => 'files-3_psd-photoshop', 
+                'files-3_sql' => 'files-3_sql', 
+                'files-3_txt' => 'files-3_txt', 
+                'files-3_xml' => 'files-3_xml', 
+                'files-3_zip' => 'files-3_zip', 
+                'files-outline_archive-3d-content' => 'files-outline_archive-3d-content', 
+                'files-outline_paper' => 'files-outline_paper', 
+                'files-outline_single-content-02' => 'files-outline_single-content-02', 
+                'files-outline_single-copies' => 'files-outline_single-copies', 
+                'files-outline_single-copy-04' => 'files-outline_single-copy-04', 
+                'files-outline_single-paragraph' => 'files-outline_single-paragraph', 
+                'files-outline_zip-55' => 'files-outline_zip-55', 
+                'food-outline_beer-95' => 'food-outline_beer-95', 
+                'food-outline_cocktail' => 'food-outline_cocktail', 
+                'food-outline_cutlery-77' => 'food-outline_cutlery-77', 
+                'food-outline_donut' => 'food-outline_donut', 
+                'food-outline_moka' => 'food-outline_moka', 
+                'food-outline_mug' => 'food-outline_mug', 
+                'food-outline_pizza-slice' => 'food-outline_pizza-slice', 
+                'food-outline_tea' => 'food-outline_tea', 
+                'gestures-outline_double-tap' => 'gestures-outline_double-tap', 
+                'gestures-outline_pinch' => 'gestures-outline_pinch', 
+                'gestures-outline_scroll-horitontal' => 'gestures-outline_scroll-horitontal', 
+                'gestures-outline_scroll-vertical' => 'gestures-outline_scroll-vertical', 
+                'gestures-outline_stretch' => 'gestures-outline_stretch', 
+                'gestures-outline_tap-02' => 'gestures-outline_tap-02', 
+                'gestures-outline_touch-id' => 'gestures-outline_touch-id', 
+                'health-outline_apple' => 'health-outline_apple', 
+                'health-outline_brain' => 'health-outline_brain', 
+                'health-outline_dna-27' => 'health-outline_dna-27', 
+                'health-outline_sleep' => 'health-outline_sleep', 
+                'health-outline_steps' => 'health-outline_steps', 
+                'health-outline_wheelchair' => 'health-outline_wheelchair', 
+                'holidays-outline_cockade' => 'holidays-outline_cockade', 
+                'holidays-outline_gift' => 'holidays-outline_gift', 
+                'holidays-outline_gift-exchange' => 'holidays-outline_gift-exchange', 
+                'holidays-outline_message' => 'holidays-outline_message', 
+                'location-outline_flag-complex' => 'location-outline_flag-complex', 
+                'location-outline_map-gps' => 'location-outline_map-gps', 
+                'location-outline_map-pin' => 'location-outline_map-pin', 
+                'location-outline_worl-marker' => 'location-outline_worl-marker', 
+                'location-outline_world' => 'location-outline_world', 
+                'media-1_action-74' => 'media-1_action-74', 
+                'media-1_album' => 'media-1_album', 
+                'media-1_audio-92' => 'media-1_audio-92', 
+                'media-1_countdown-34' => 'media-1_countdown-34', 
+                'media-1_flash-24' => 'media-1_flash-24', 
+                'media-1_frame-12' => 'media-1_frame-12', 
+                'media-1_image-01' => 'media-1_image-01', 
+                'media-1_image-02' => 'media-1_image-02', 
+                'media-1_layers' => 'media-1_layers', 
+                'media-1_movie-62' => 'media-1_movie-62', 
+                'media-1_player' => 'media-1_player', 
+                'media-1_shake' => 'media-1_shake', 
+                'media-1_speaker' => 'media-1_speaker', 
+                'media-1_sport' => 'media-1_sport', 
+                'media-1_touch' => 'media-1_touch', 
+                'media-1_video-66' => 'media-1_video-66', 
+                'media-2_headphones' => 'media-2_headphones', 
+                'media-2_headphones-mic' => 'media-2_headphones-mic', 
+                'media-2_note-03' => 'media-2_note-03', 
+                'media-2_radio' => 'media-2_radio', 
+                'media-2_sound-wave' => 'media-2_sound-wave', 
+                'objects-outline_anchor' => 'objects-outline_anchor', 
+                'objects-outline_bow' => 'objects-outline_bow', 
+                'objects-outline_diamond' => 'objects-outline_diamond', 
+                'objects-outline_dice' => 'objects-outline_dice', 
+                'objects-outline_globe' => 'objects-outline_globe', 
+                'objects-outline_key-26' => 'objects-outline_key-26', 
+                'objects-outline_lamp' => 'objects-outline_lamp', 
+                'objects-outline_planet' => 'objects-outline_planet', 
+                'objects-outline_puzzle-09' => 'objects-outline_puzzle-09', 
+                'objects-outline_puzzle-10' => 'objects-outline_puzzle-10', 
+                'objects-outline_skull' => 'objects-outline_skull', 
+                'objects-outline_spaceship' => 'objects-outline_spaceship', 
+                'objects-outline_support-16' => 'objects-outline_support-16', 
+                'objects-outline_support-17' => 'objects-outline_support-17', 
+                'objects-outline_umbrella-13' => 'objects-outline_umbrella-13', 
+                'shopping-outline_box-3d-50' => 'shopping-outline_box-3d-50', 
+                'shopping-outline_cart' => 'shopping-outline_cart', 
+                'shopping-outline_cart-add' => 'shopping-outline_cart-add', 
+                'shopping-outline_cart-remove' => 'shopping-outline_cart-remove', 
+                'shopping-outline_credit-card' => 'shopping-outline_credit-card', 
+                'shopping-outline_credit-locked' => 'shopping-outline_credit-locked', 
+                'shopping-outline_delivery-fast' => 'shopping-outline_delivery-fast', 
+                'shopping-outline_delivery-time' => 'shopping-outline_delivery-time', 
+                'shopping-outline_discount' => 'shopping-outline_discount', 
+                'shopping-outline_gift' => 'shopping-outline_gift', 
+                'shopping-outline_list' => 'shopping-outline_list', 
+                'shopping-outline_newsletter' => 'shopping-outline_newsletter', 
+                'shopping-outline_tag-content' => 'shopping-outline_tag-content', 
+                'sport-outline_boxing' => 'sport-outline_boxing', 
+                'sport-outline_crown' => 'sport-outline_crown', 
+                'sport-outline_flag-finish' => 'sport-outline_flag-finish', 
+                'sport-outline_podium-trophy' => 'sport-outline_podium-trophy', 
+                'sport-outline_tactic' => 'sport-outline_tactic', 
+                'sport-outline_user-run' => 'sport-outline_user-run', 
+                'tech-outline_computer-old' => 'tech-outline_computer-old', 
+                'tech-outline_desktop-screen' => 'tech-outline_desktop-screen', 
+                'tech-outline_keyboard-mouse' => 'tech-outline_keyboard-mouse', 
+                'tech-outline_laptop-front' => 'tech-outline_laptop-front', 
+                'tech-outline_mobile' => 'tech-outline_mobile', 
+                'tech-outline_player-19' => 'tech-outline_player-19', 
+                'tech-outline_print' => 'tech-outline_print', 
+                'tech-outline_tablet-button' => 'tech-outline_tablet-button', 
+                'tech-outline_tv-old' => 'tech-outline_tv-old', 
+                'tech-outline_watch' => 'tech-outline_watch', 
+                'tech-outline_wifi' => 'tech-outline_wifi', 
+                'text-outline_capitalize' => 'text-outline_capitalize', 
+                'text-outline_caps-all' => 'text-outline_caps-all', 
+                'text-outline_list-numbers' => 'text-outline_list-numbers', 
+                'text-outline_quote' => 'text-outline_quote', 
+                'transportation-outline_bike-sport' => 'transportation-outline_bike-sport', 
+                'transportation-outline_light-traffic' => 'transportation-outline_light-traffic', 
+                'travel-outline_world' => 'travel-outline_world', 
+                'ui-1_attach-87' => 'ui-1_attach-87', 
+                'ui-1_bell-54' => 'ui-1_bell-54', 
+                'ui-1_check-circle-07' => 'ui-1_check-circle-07', 
+                'ui-1_dashboard-29' => 'ui-1_dashboard-29', 
+                'ui-1_drop' => 'ui-1_drop', 
+                'ui-1_email-85' => 'ui-1_email-85', 
+                'ui-1_eye-17' => 'ui-1_eye-17', 
+                'ui-1_eye-ban-18' => 'ui-1_eye-ban-18', 
+                'ui-1_home-52' => 'ui-1_home-52', 
+                'ui-1_lock' => 'ui-1_lock', 
+                'ui-1_lock-open' => 'ui-1_lock-open', 
+                'ui-1_notification-70' => 'ui-1_notification-70', 
+                'ui-1_pencil' => 'ui-1_pencil', 
+                'ui-1_preferences-circle' => 'ui-1_preferences-circle', 
+                'ui-1_preferences-circle-rotate' => 'ui-1_preferences-circle-rotate', 
+                'ui-1_send' => 'ui-1_send', 
+                'ui-1_settings' => 'ui-1_settings', 
+                'ui-1_settings-gear-65' => 'ui-1_settings-gear-65', 
+                'ui-1_trash-simple' => 'ui-1_trash-simple', 
+                'ui-1_ui-04' => 'ui-1_ui-04', 
+                'ui-1_zoom-split' => 'ui-1_zoom-split', 
+                'ui-1_zoom-split-in' => 'ui-1_zoom-split-in', 
+                'ui-1_zoom-split-out' => 'ui-1_zoom-split-out', 
+                'ui-2_alert-!' => 'ui-2_alert-!', 
+                'ui-2_alert-?' => 'ui-2_alert-?', 
+                'ui-2_alert-i' => 'ui-2_alert-i', 
+                'ui-2_archive' => 'ui-2_archive', 
+                'ui-2_chart-bar-53' => 'ui-2_chart-bar-53', 
+                'ui-2_chat-round-content' => 'ui-2_chat-round-content', 
+                'ui-2_disk' => 'ui-2_disk', 
+                'ui-2_favourite-28' => 'ui-2_favourite-28', 
+                'ui-2_favourite-31' => 'ui-2_favourite-31', 
+                'ui-2_grid-48' => 'ui-2_grid-48', 
+                'ui-2_lab' => 'ui-2_lab', 
+                'ui-2_layers' => 'ui-2_layers', 
+                'ui-2_link-69' => 'ui-2_link-69', 
+                'ui-2_menu-34' => 'ui-2_menu-34', 
+                'ui-2_menu-35' => 'ui-2_menu-35', 
+                'ui-2_paragraph' => 'ui-2_paragraph', 
+                'ui-2_share-bold' => 'ui-2_share-bold', 
+                'ui-2_tile-56' => 'ui-2_tile-56', 
+                'ui-2_time' => 'ui-2_time', 
+                'ui-2_time-countdown' => 'ui-2_time-countdown', 
+                'users-outline_man-23' => 'users-outline_man-23', 
+                'users-outline_multiple-11' => 'users-outline_multiple-11', 
+                'users-outline_woman-25' => 'users-outline_woman-25',
+            );
+            $coloured_svg_icons = apply_filters( 'spb_coloured_svg_icons', $coloured_svg_icons );
+            $outline_svg_icons = apply_filters( 'spb_outline_svg_icons', $outline_svg_icons );
+
+            // Output
+            $svg_icon_output = '';
+            foreach ( $coloured_svg_icons as $icon ) {
+                $svg_icon_output .= '<li class="svg-icon" data-icon="'.$icon.'"><i class="svg-icon-picker-item '.$icon.'"></i></li>';
+            }
+            foreach ( $outline_svg_icons as $icon ) {
+                $svg_icon_output .= '<li class="svg-icon" data-icon="'.$icon.'"><i class="svg-icon-picker-item outline-svg '.$icon.'"></i></li>';
+            }
+            
+            return $svg_icon_output;
+        }
+    }
 
 	/* FORMAT CONTENT
 	================================================== */
@@ -692,6 +1282,7 @@
         $output = '';
         foreach ( $att_ids as $th_id ) {
             $thumb_src = wp_get_attachment_image_src( $th_id, 'thumbnail' );
+
             if ( $thumb_src ) {
                 $thumb_src = $thumb_src[0];
                 $output .= '
@@ -807,7 +1398,7 @@
                 // no cache files - let's finally resize it
                 $img_editor = wp_get_image_editor( $actual_file_path );
 
-                if ( is_wp_error( $img_editor->resize( $width, $height, $crop ) ) ) {
+                if ( is_wp_error( $img_editor ) || is_wp_error( $img_editor->resize( $width, $height, $crop ) ) ) {
                     return array(
                         'url'    => '',
                         'width'  => '',

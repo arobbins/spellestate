@@ -93,8 +93,8 @@
 			if ( isset( $sf_options['enable_sticky_topbar'] ) ) {
 				$enable_sticky_tb = $sf_options['enable_sticky_topbar'];	
 			}
-		    $header_left_config  = $sf_options['header_left_config'];
-		    $header_right_config = $sf_options['header_right_config'];
+		    $header_left_config  = __($sf_options['header_left_config'], 'swiftframework');
+		    $header_right_config = __($sf_options['header_right_config'], 'swiftframework');
 			
 		    if ( ( $page_header_type == "naked-light" || $page_header_type == "naked-dark" ) && ( $header_layout == "header-vert" || $header_layout == "header-vert-right" ) ) {
 		        $header_layout = apply_filters( 'sf_naked_default_header', "header-1" );
@@ -190,9 +190,16 @@
     ================================================== */
     if ( ! function_exists( 'sf_header' ) ) {
         function sf_header( $header_layout ) {
-
+			
+			$header = "";
+			
+			$header .= do_action('sf_before_header_layout');
+			
             // Get layout and return output
-            $header = sf_get_header_layout( $header_layout );
+            $header .= sf_get_header_layout( $header_layout );
+            
+            $header .= do_action('sf_after_header_layout');
+            
             return $header;
 
         }
@@ -205,11 +212,13 @@
         function sf_header_aux( $aux ) {
 
             global $sf_options;
-
+			$page_classes       = sf_page_classes();
+			
             $show_cart           = $sf_options['show_cart'];
             $show_wishlist       = $sf_options['show_wishlist'];
-            $header_left_config  = $sf_options['header_left_config'];
-            $header_right_config = $sf_options['header_right_config'];
+            $header_layout      = $page_classes['header-layout'];
+            $header_left_config  = __($sf_options['header_left_config'], 'swiftframework');
+            $header_right_config = __($sf_options['header_right_config'], 'swiftframework');
             $header_left_text    = __( $sf_options['header_left_text'], 'swiftframework' );
             $header_right_text   = __( $sf_options['header_right_text'], 'swiftframework' );
             $fullwidth_header    = $sf_options['fullwidth_header'];
@@ -220,11 +229,15 @@
                 if ( $header_left_config == "social" ) {
                     $header_left_output .= do_shortcode( '[social]' ) . "\n";
                 } else if ( $header_left_config == "aux-links" ) {
-                    $header_left_output .= sf_aux_links( 'header-menu', true, "header-1" ) . "\n";
+                    $header_left_output .= sf_aux_links( 'header-menu', true, $header_layout ) . "\n";
                 } else if ( $header_left_config == "overlay-menu" ) {
                     $header_left_output .= '<a href="#" class="overlay-menu-link"><span>' . __( "Menu", "swiftframework" ) . '</span></a>' . "\n";
                 } else if ( $header_left_config == "contact" ) {
                     $header_left_output .= '<a href="#" class="contact-menu-link">' . $contact_icon . '</a>' . "\n";
+                } else if ( $header_left_config == "currency-switcher" ) {
+                	$aux_output .= '<div class="aux-item aux-currency"><nav class="std-menu currency"><ul class="menu">'. "\n";
+                	$aux_output .= sf_get_currency_switcher();
+                	$aux_output .= '</ul></nav></div>'. "\n";
                 } else if ( $header_left_config == "search" ) {
                     $header_left_output .= '<nav class="std-menu">' . "\n";
                     $header_left_output .= '<ul class="menu">' . "\n";
@@ -241,11 +254,15 @@
                 if ( $header_right_config == "social" ) {
                     $header_right_output .= do_shortcode( '[social]' ) . "\n";
                 } else if ( $header_right_config == "aux-links" ) {
-                    $header_right_output .= sf_aux_links( 'header-menu', true, "header-1" ) . "\n";
+                    $header_right_output .= sf_aux_links( 'header-menu', true, $header_layout ) . "\n";
                 } else if ( $header_right_config == "overlay-menu" ) {
                     $header_right_output .= '<a href="#" class="overlay-menu-link"><span>' . __( "Menu", "swiftframework" ) . '</span></a>' . "\n";
                 } else if ( $header_right_config == "contact" ) {
                     $header_right_output .= '<a href="#" class="contact-menu-link">' . $contact_icon . '</a>' . "\n";
+                } else if ( $header_right_config == "currency-switcher") {
+                	$aux_output .= '<div class="aux-item aux-currency"><nav class="std-menu currency"><ul class="menu">'. "\n";
+                	$aux_output .= sf_get_currency_switcher();
+                	$aux_output .= '</ul></nav></div>'. "\n";
                 } else if ( $header_right_config == "search" ) {
                     $header_right_output .= '<nav class="std-menu">' . "\n";
                     $header_right_output .= '<ul class="menu">' . "\n";
@@ -271,6 +288,7 @@
             //VARIABLES
             global $post, $sf_options;
             $show_cart = false;
+            $sticky_header_transparent = false;
             if ( isset($sf_options['show_cart']) ) {
             $show_cart            = $sf_options['show_cart'];
             }
@@ -281,6 +299,7 @@
             if ( $post && !is_search() ) {
                 $header_type = sf_get_post_meta( $post->ID, 'sf_page_header_type', true );
                 $page_header_alt_logo = sf_get_post_meta( $post->ID, 'sf_page_header_alt_logo', true );
+                $sticky_header_transparent = sf_get_post_meta( $post->ID, 'sf_sticky_header_transparent', true );
             }
             
             // Shop page check
@@ -309,7 +328,7 @@
             if ( isset( $sf_options['light_logo_upload'] ) ) {
                 $light_logo = $sf_options['light_logo_upload'];
             }
-            if ( isset( $light_logo['url'] ) && $light_logo['url'] != "" && $header_type == "naked-light" ) {
+            if ( isset( $light_logo['url'] ) && $light_logo['url'] != "" && ( $header_type == "naked-light" || $header_type == "naked-dark" || $sticky_header_transparent ) ) {
                 $logo_class .= " has-light-logo";
             }
 
@@ -317,7 +336,7 @@
             if ( isset( $sf_options['dark_logo_upload'] ) ) {
                 $dark_logo = $sf_options['dark_logo_upload'];
             }
-            if ( isset( $dark_logo['url'] ) && $dark_logo['url'] != "" && $header_type == "naked-dark" ) {
+            if ( isset( $dark_logo['url'] ) && $dark_logo['url'] != "" && ( $header_type == "naked-light" || $header_type == "naked-dark" || $sticky_header_transparent ) ) {
                 $logo_class .= " has-dark-logo";
             }
 
@@ -343,11 +362,17 @@
             if ( isset( $sf_options['enable_logo_tagline'] ) ) {
                 $enable_logo_tagline = $sf_options['enable_logo_tagline'];
             }
+            
+            // Animation
+            $logo_anim = "";
+            if ( isset( $sf_options['logo_hover_anim'] ) ) {
+                $logo_anim = $sf_options['logo_hover_anim'];
+            }
 
 
             /* LOGO OUTPUT
             ================================================== */
-            $logo_output .= '<div id="' . $logo_id . '" class="' . $logo_class . ' clearfix">' . "\n";
+            $logo_output .= '<div id="' . $logo_id . '" class="' . $logo_class . ' clearfix" data-anim="' . $logo_anim . '">' . "\n";
             $logo_output .= '<a href="' . $logo_link_url . '">' . "\n";
 
             if ( $logo_id == "mobile-logo" && sf_theme_supports('mobile-logo-override') ) {
@@ -412,12 +437,12 @@
 	            }
 
 	            // Light Logo
-	            if ( isset( $light_logo['url'] ) && $light_logo['url'] != "" && $header_type == "naked-light" ) {
+	            if ( isset( $light_logo['url'] ) && $light_logo['url'] != "" && ( $header_type == "naked-light" || $header_type == "naked-dark" || $sticky_header_transparent ) ) {
 	                $logo_output .= '<img class="light-logo" src="' . $light_logo['url'] . '" alt="' . $logo_alt . '" height="' . $light_logo['height'] . '" width="' . $light_logo['width'] . '" />' . "\n";
 	            }
 
 	            // Dark Logo
-	            if ( isset( $dark_logo['url'] ) && $dark_logo['url'] != "" && $header_type == "naked-dark" ) {
+	            if ( isset( $dark_logo['url'] ) && $dark_logo['url'] != "" && ( $header_type == "naked-light" || $header_type == "naked-dark" || $sticky_header_transparent ) ) {
 	                $logo_output .= '<img class="dark-logo" src="' . $dark_logo['url'] . '" alt="' . $logo_alt . '" height="' . $dark_logo['height'] . '" width="' . $dark_logo['width'] . '" />' . "\n";
 	            }
 
@@ -544,8 +569,8 @@
                 $menu_full_output .= '</div>' . "\n";
                 $menu_full_output .= '</div>' . "\n";
 
-                $menu_output = $menu_full_output;
-
+                $menu_output = $menu_full_output;			
+				
             } else if ( $layout == "with-search" ) {
 
                 $menu_with_search_output .= '<nav class="search-nav std-menu">' . "\n";
@@ -554,7 +579,6 @@
                 $menu_with_search_output .= '</ul>' . "\n";
                 $menu_with_search_output .= '</nav>' . "\n";
                 $menu_with_search_output .= $menu_output . "\n";
-
 
                 $menu_output = $menu_with_search_output;
 
@@ -1039,7 +1063,7 @@
 
                     $cart_output .= '</div>';
 
-                    if ( sf_theme_opts_name() == "sf_atelier_options" ) {
+                    if ( sf_theme_opts_name() == "sf_atelier_options" || sf_theme_opts_name() == "sf_uplift_options" ) {
 
 	                    $cart_output .= '<div class="bag-total">';
 	                    if ( class_exists( 'Woocommerce_German_Market' ) ) {
@@ -1056,7 +1080,7 @@
 
                     $cart_output .= '<a class="sf-button standard sf-icon-reveal bag-button" href="' . esc_url( $woocommerce->cart->get_cart_url() ) . '">'.$view_cart_icon.'<span class="text">' . __( 'View cart', 'swiftframework' ) . '</span></a>';
 
-                    $cart_output .= '<a class="sf-button standard sf-icon-reveal checkout-button" href="' . esc_url( $woocommerce->cart->get_checkout_url() ) . '">'.$checkout_icon.'<span class="text">' . __( 'Proceed to checkout', 'swiftframework' ) . '</span></a>';
+                    $cart_output .= '<a class="sf-button standard sf-icon-reveal checkout-button" href="' . esc_url( $woocommerce->cart->get_checkout_url() ) . '">'.$checkout_icon.'<span class="text">' . __( 'Checkout', 'swiftframework' ) . '</span></a>';
 
                     $cart_output .= '</div>';
 
@@ -1110,7 +1134,7 @@
                 $count = 0;
             }
 
-            if ( sf_theme_opts_name() == "sf_atelier_options" ) {
+            if ( sf_theme_opts_name() == "sf_atelier_options" || sf_theme_opts_name() == "sf_uplift_options" ) {
 				$wishlist_output .= '<li class="parent wishlist-item"><a class="wishlist-link" href="' . $yith_wcwl->get_wishlist_url() . '" title="' . __( "View your wishlist", "swiftframework" ) . '"><span class="menu-item-title">' . __( "Wishlist", "swiftframework" ) . '</span> ' . apply_filters( 'sf_wishlist_menu_icon', '<i class="ss-star"></i>' ) . '<span class="count">' . $count . '</span><span class="star"></span></a>';
             } else {
 	            $wishlist_output .= '<li class="parent wishlist-item"><a class="wishlist-link" href="' . $yith_wcwl->get_wishlist_url() . '" title="' . __( "View your wishlist", "swiftframework" ) . '">' . apply_filters( 'sf_wishlist_menu_icon', '<i class="ss-star"></i>' ) . '<span class="count">' . $count . '</span><span class="star"></span></a>';
@@ -1202,9 +1226,6 @@
 
             $wishlist_output .= '</div>';
 
-
-            do_action( 'yith_wcwl_after_wishlist' );
-
             $wishlist_output .= '</div>';
             $wishlist_output .= '</li>';
             $wishlist_output .= '</ul>';
@@ -1214,11 +1235,29 @@
         }
     }
 
+	/* CURRENCY DROPDOWN
+	================================================== */
+	if ( ! function_exists( 'sf_get_currency_switcher' ) ) {
+	    function sf_get_currency_switcher() {
+	    	$currency_switch_output = "";
+	    	if ( class_exists('WCML_Multi_Currency_Support') ) {
+	    		$currency_code = get_option('woocommerce_currency');
+	    		$currency_switch_output .= '<li class="parent currency-switch-item">';
+	    		$currency_switch_output .= '<span class="current-currency">' . get_woocommerce_currency_symbol($currency_code) . '</span>';
+	    		$currency_switch_output .= do_shortcode('[currency_switcher switcher_style="list" format="%code% (%symbol%)"]');
+	    		$currency_switch_output .= '</li>';
+	    		return $currency_switch_output;
+	    	} else {
+	    		$currency_switch_output = '<li><span class="current-currency">&times;</span><ul class="sub-menu"><li><span>WPML + WooCommerce Multilingual plugins are required for this functionality.</span></li></ul></li>';
+	    		return $currency_switch_output;
+	    	}
+	    }
+	}
 
     /* ACCOUNT
     ================================================== */
     if ( ! function_exists( 'sf_get_account' ) ) {
-        function sf_get_account() {
+        function sf_get_account( $aux = "" ) {
 
         	// VARIABLES
             $login_url         = wp_login_url();
@@ -1245,7 +1284,10 @@
             global $sf_options;
 
             $show_sub         = $sf_options['show_sub'];
-            $show_translation = $sf_options['show_translation'];
+            $show_translation = false;
+            if ( isset($sf_options['show_translation']) ) {
+            	$show_translation = $sf_options['show_translation'];
+            }
             $sub_code         = __( $sf_options['sub_code'], 'swiftframework' );
             $account_output = "";
 
@@ -1254,7 +1296,13 @@
             $account_output .= '<nav class="std-menu">' . "\n";
             $account_output .= '<ul class="menu">' . "\n";
             $account_output .= '<li class="parent account-item">' . "\n";
-			$account_output .= '<a href="#"><i class="sf-icon-account"></i></a>' . "\n";
+            
+            if ( $aux == "aux-text" ) {
+            	$account_output .= '<a href="#">' . __( "My Account", "swiftframework" ) . '</a>' . "\n";  
+            } else {
+				$account_output .= '<a href="#"><i class="sf-icon-account"></i></a>' . "\n";            
+            }
+            
 			$account_output .= '<ul class="sub-menu">' . "\n";
             if ( is_user_logged_in() ) {
                 $account_output .= '<li class="menu-item"><a href="' . $my_account_link . '" class="admin-link">' . __( "My Account", "swiftframework" ) . '</a></li>' . "\n";
@@ -1289,10 +1337,41 @@
             // RETURN
             return $account_output;
 
-
         }
     }
+	
+	
+	/* LANGUAGE
+    ================================================== */
+    if ( ! function_exists( 'sf_get_language_aux' ) ) {
+        function sf_get_language_aux( $aux = "" ) {
 
+            $language_output = "";
+
+            $language_output .= '<nav class="std-menu">' . "\n";
+            $language_output .= '<ul class="menu">' . "\n";
+            $language_output .= '<li class="parent language-item">' . "\n";
+            
+            if ( $aux == "aux-text" ) {
+            	$language_output .= '<a href="#">' . __( "Language", "swiftframework" ) . '</a>' . "\n";  
+            } else {
+				$language_output .= '<a href="#"><i class="sf-icon-uk"></i></a>' . "\n";            
+            }
+            
+            $language_output .= '<ul class="header-languages sub-menu">' . "\n";
+            if ( function_exists( 'sf_language_flags' ) ) {
+                $language_output .= sf_language_flags();
+            }
+            $language_output .= '</ul>' . "\n";
+            $language_output .= '</li>' . "\n";
+            $language_output .= '</ul>' . "\n";
+            $language_output .= '</nav>' . "\n";
+
+            // RETURN
+            return $language_output;
+        }
+    }
+    
 
     /* AJAX SEARCH
     ================================================== */
@@ -1360,6 +1439,14 @@
                             $post_format = 'standard';
                         }
                         $post_type = get_post_type( $post );
+                    	$product = array();
+                    
+                    	if ( $post_type == "product" ) {
+                    	    $product = new WC_Product( $post->ID );
+                    	    if (!$product->is_visible()) {
+                    	    	return;
+                    	    }
+                    	}
 
                         if ( $post_type == "post" ) {
                             if ( $post_format == "quote" || $post_format == "status" ) {
@@ -1396,6 +1483,8 @@
                         $image = get_the_post_thumbnail( $post->ID, 'thumbnail' );
 
                         $search_results_ouput .= '<div class="search-result">';
+                        
+                        $search_results_ouput .= '<a href="'.$post_permalink.'" class="search-result-link"></a>';
 
                         if ( $image ) {
                             $search_results_ouput .= '<div class="search-item-img"><a href="' . $post_permalink . '">' . $image . '</div>';
@@ -1406,7 +1495,6 @@
                         $search_results_ouput .= '<div class="search-item-content">';
                         $search_results_ouput .= '<h5><a href="' . $post_permalink . '">' . $post_title . '</a></h5>';
                         if ( $post_type == "product" ) {
-                            $product = new WC_Product( $post->ID );
                             $search_results_ouput .= $product->get_price_html();
                         } else if (!$remove_dates) {
                             $search_results_ouput .= '<time>' . $post_date . '</time>';

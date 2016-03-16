@@ -37,8 +37,8 @@
             $pagenavi_options['page_text']                    = '%PAGE_NUMBER%';
             $pagenavi_options['first_text']                   = __( 'First Page', 'swiftframework' );
             $pagenavi_options['last_text']                    = __( 'Last Page', 'swiftframework' );
-            $pagenavi_options['next_text']                    = __( "Next <i class='ss-navigateright'></i>", "swiftframework" );
-            $pagenavi_options['prev_text']                    = __( "<i class='ss-navigateleft'></i> Previous", "swiftframework" );
+            $pagenavi_options['next_text']                    = apply_filters( 'sf_pagination_next_text', __( "Next <i class='ss-navigateright'></i>", "swiftframework" ) );
+            $pagenavi_options['prev_text']                    = apply_filters( 'sf_pagination_prev_text', __( "<i class='ss-navigateleft'></i> Previous", "swiftframework" ) );
             $pagenavi_options['dotright_text']                = '...';
             $pagenavi_options['dotleft_text']                 = '...';
             $pagenavi_options['num_pages']                    = 5; //continuous block of page numbers

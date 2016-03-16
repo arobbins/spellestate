@@ -5,7 +5,7 @@
     *	Swift Page Builder - Builder Class
     *	------------------------------------------------
     *	Swift Framework
-    * 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+    * 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     */
 
@@ -73,6 +73,11 @@
             $name = 'SwiftPageBuilderShortcode_' . $shortcode['base'];
             if ( class_exists( $name ) && is_subclass_of( $name, 'SwiftPageBuilderShortcode' ) ) {
                 $this->shortcodes[ $shortcode['base'] ] = new $name( $shortcode );
+            }else if ( is_admin() ){
+                
+                $name = 'SwiftPageBuilderShortcode_default';
+                
+                $this->shortcodes[ $shortcode['base'] ] = new $name( $shortcode );
             }
         }
 
@@ -124,6 +129,7 @@
                 echo $output;
             } else {
                 $output = do_shortcode( '[' . $data_element . ']' );
+                //$output = $data_element .'  -  ' . $element;
                 echo $output;
             }
             die();
@@ -135,6 +141,7 @@
             $content = stripslashes( $content );
             $output  = spb_format_content( $content );
             echo $output;
+           
             die();
         }
 
@@ -167,7 +174,7 @@
                 $singular_name = __( "Section", 'swift-framework-plugin' );
             }
 
-            echo '<div class="edit-small-modal"><h2>Edit ' . $element_name . ' Header</h2><div class="edit_form_actions"><a href="#" id="cancel-small-form-background">Cancel</a><a href="#" id="save-small-form" class="spb_save_edit_form button-primary">Save</a></div></div><div class="row-fluid"><div class="span4 spb_element_label">' . $singular_name . ' title</div><div class="span8 edit_form_line"><input name="small_form_title"  value="' . $tab_name . '" class="spb_param_value spb-textinput small_form_title textfield" type="text" value=""><p><span class="description">What text use as Tab title. Leave blank if no title is needed.</span></p></div></div><div class="row-fluid"><div class="span4 spb_element_label">' . $singular_name . ' Icon (FA/Gizmo)</div><div class="span8 edit_form_line"><input name="small_form_icon" class="spb_param_value spb-textinput small_form_icon textfield" type="text" value="' . $icon . '"><p><span class="description">Specify your icon.</span></p></div></div>';
+            echo '<div class="edit-small-modal"><h2>Edit ' . $element_name . ' Header</h2><div class="edit_form_actions"><a href="#" id="cancel-small-form-background">Cancel</a><a href="#" id="save-small-form" class="spb_save_edit_form button-primary">Save</a></div></div><div class="row-fluid"><div class="span4 spb_element_label">' . $singular_name . ' title</div><div class="span8 edit_form_line"><input name="small_form_title"  value="' . $tab_name . '" class="spb_param_value spb-textinput small_form_title textfield" type="text" value=""><p><span class="description">What text use as Tab title. Leave blank if no title is needed.</span></p></div></div><div class="row-fluid"><div class="span4 spb_element_label">' . $singular_name . ' Icon class</div><div class="span8 edit_form_line"><input name="small_form_icon" class="spb_param_value spb-textinput small_form_icon textfield" type="text" value="' . $icon . '"><p><span class="description">Specify your icon.</span></p></div></div>';
 
             die();
         }
@@ -189,28 +196,29 @@
             $option_name     = 'spb_templates';
             $saved_templates = get_option( $option_name );
 
-            /*if ( $saved_templates == false ) {
-                update_option('spb_templates', $template_arr);
-            }*/
-
             $template_id = sanitize_title( $template_name ) . "_" . rand();
             if ( $saved_templates == false ) {
                 $deprecated = '';
                 $autoload   = 'no';
-                //
+                
                 $new_template                 = array();
                 $new_template[ $template_id ] = $template_arr;
-                //
+                
                 add_option( $option_name, $new_template, $deprecated, $autoload );
             } else {
                 $saved_templates[ $template_id ] = $template_arr;
                 update_option( $option_name, $saved_templates );
             }
+            $prebuilt_templates = spb_get_prebuilt_templates();
+            
+            foreach ( $prebuilt_templates as $template ) {
+                $output .= '<li class="sf_prebuilt_template"><a href="#" data-template_id="' . $template['id'] . '"><span class="icon-swift-template"></span>' . $template['name'] . '</a></li>';
+            }
 
-            echo $this->getLayout()->getNavBar()->getTemplateMenu();
+            $output .= $this->getLayout()->getNavBar()->getTemplateMenu();
 
-            //delete_option('spb_templates');
-
+            echo $output;
+            
             die();
         }
 
@@ -230,7 +238,7 @@
 
             $content = $saved_templates[ $template_id ]['template'];
             $content = str_ireplace( '\"', '"', $content );
-            //echo $content;
+         
             echo do_shortcode( $content );
 
             die();
@@ -279,6 +287,76 @@
 
             die();
         }
+
+
+        /* Track most used Elements PB 
+       ---------------------------------------------------------- */
+        public function spb_track_used_elements() {
+            
+            $asset_count = 1;
+            $type = $this->post( 'data_element_type' );
+                                    
+            if ( get_option( 'spb_most_used_elements' ) ){
+                $spb_most_used_elements = get_option( 'spb_most_used_elements' );    
+            }else{
+                $spb_most_used_elements = array();
+            }
+
+            if( isset( $spb_most_used_elements[ $type ] ) ){
+               $asset_count = intval( $spb_most_used_elements[ $type ]) + 1;
+            }
+            
+            $spb_most_used_elements[ $type ] = $asset_count;
+            update_option( 'spb_most_used_elements', $spb_most_used_elements );
+
+            wp_die();
+
+        }
+        
+
+       
+       /* Save PB History 
+       ---------------------------------------------------------- */
+        public function spb_save_pb_history() {
+            
+            $element_name = $this->post( 'data_element' );
+
+            //Not being used. If everyting works fine in testing, remove this lines
+           // $element_type = $this->post( 'data_element_type' );
+            $type = $this->post( 'data_type' );
+            $pb_content = $this->post( 'data_pb_content' );
+            $pb_page_id = $this->post( 'data_page_id' );
+           
+            $op_type = __( $type, 'swift-framework-plugin' );
+            
+            
+            if ( get_option( 'spb_history_'. $pb_page_id ) ){
+                $spb_history_array = get_option( 'spb_history_'. $pb_page_id);    
+            }else{
+                $spb_history_array = array();
+            }
+
+            if(count($spb_history_array) >= 20) {
+                  array_shift($spb_history_array); 
+            } 
+
+            $spb_history_array[ date("Y-m-d H:i:s") . ' - ' . $op_type . ' '.$element_name] = $pb_content;
+            update_option( 'spb_history_'. $pb_page_id, $spb_history_array );
+
+            $history_html = '<li><a href="#">Page Builder History</a></li><li class="divider"></li>';
+
+            $spb_history = get_option( 'spb_history_' . $pb_page_id);
+            $spb_history = array_reverse($spb_history);
+
+            foreach ($spb_history as $history_item => $value) {
+                    $history_html .=  '<li><a href="#" data-revision-value="' .  esc_attr( $value ) . '"><span class="icon-undo"></span>' . $history_item . '</a></li>';
+            }
+
+            echo  $history_html ;
+            wp_die();
+
+        }
+        
 
         /* Save element callback
         ---------------------------------------------------------- */
@@ -358,11 +436,17 @@
 
             $content = $saved_elements[ $element_id ]['element'];
             $content = str_ireplace( '\"', '"', $content );
-
             echo do_shortcode( $content );
-
-            die();
+            
+            die(); 
         }
     }
 
+class SwiftPageBuilderShortcode_default extends SwiftPageBuilderShortcode {
+
+        public function content( $atts, $content = null ) {
+           
+        }
+
+}        
 ?>

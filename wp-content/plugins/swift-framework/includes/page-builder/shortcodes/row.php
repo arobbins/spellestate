@@ -5,7 +5,7 @@
     *	Swift Page Builder - Row Shortcode
     *	------------------------------------------------
     *	Swift Framework
-    * 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+    * 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     */
 
@@ -13,15 +13,17 @@
 
         public function content( $atts, $content = null ) {
 
-            $row_el_class = $width = $row_bg_color = $row_top_style = $row_bottom_style = $row_padding_vertical = $row_padding_horizontal = $row_margin_vertical = $remove_element_spacing = $el_position = $animation_output = '';
+            $row_el_class = $minimize_row = $width = $row_bg_color = $row_top_style = $row_bottom_style = $row_padding_vertical = $row_padding_horizontal = $row_margin_vertical = $remove_element_spacing = $el_position = $animation_output = '';
 
             extract( shortcode_atts( array(
                 'wrap_type'               => 'content-width',
                 'row_bg_color'            => '',
                 'color_row_height'		  => '',
                 'inner_column_height'	  => '',
+                'row_style'               => '',
                 'row_id'                  => '',
                 'row_name'                => '',
+                'row_header_style'        => '',
                 'row_top_style'			  => '',
                 'row_bottom_style'		  => '',
                 'row_padding_vertical'    => '',
@@ -42,7 +44,7 @@
                 'parallax_image_movement' => 'fixed',
                 'parallax_image_speed'    => '0.5',
                 'bg_type'                 => '',
-                'row_expanding'			  => '',
+                'row_expanding'			  => 'no',
                 'row_expading_text_closed' => '',
                 'row_expading_text_open'  => '',
                 'row_animation'        	  => '',
@@ -57,7 +59,9 @@
             $output = $inline_style = $inner_inline_style = $rowId = '';
 
             if ( $row_id != "" ) {
-                $rowId = 'id="' . $row_id . '" data-rowname="' . $row_name . '"';
+                $rowId = 'id="' . $row_id . '" data-rowname="' . $row_name . '" data-header-style="' . $row_header_style . '"';
+            } else {
+                $rowId = 'data-header-style="' . $row_header_style . '"';
             }
 
             if ($row_responsive_vis == "" && $responsive_vis != "") {
@@ -74,9 +78,12 @@
                 $row_el_class .= ' remove-element-spacing';
             }
 
+            // Row background colour
             if ( $row_bg_color != "" ) {
                 $inline_style .= 'background-color:' . $row_bg_color . ';';
             }
+
+            // Row padding/margin
             if ( $row_padding_vertical != "" ) {
                 $inner_inline_style .= 'padding-top:' . $row_padding_vertical . 'px;padding-bottom:' . $row_padding_vertical . 'px;';
             }
@@ -87,25 +94,30 @@
                 $inline_style .= 'margin-top:' . $row_margin_vertical . 'px;margin-bottom:' . $row_margin_vertical . 'px;';
             }
 
+            // Row background image
             if ( $row_bg_type != "color" && isset( $img_url ) && $img_url[0] != "" ) {
                 $inline_style .= 'background-image: url(' . $img_url[0] . ');';
             }
 
+            // Row animation
             if ( $row_animation != "" && $row_animation != "none" ) {
             	$row_el_class .= ' sf-animation';
                 $animation_output = 'data-animation="' . $row_animation . '" data-delay="' . $row_animation_delay . '"';
             }
 
+            // Expanding Row
             if ( $row_expanding == "yes" ) {
             	$row_el_class .= ' spb-row-expanding';
             	$output .= "\n\t\t" . '<a href="#" class="spb-row-expand-text container" data-closed-text="'.$row_expading_text_closed.'" data-open-text="'.$row_expading_text_open.'"><span>'.$row_expading_text_closed.'</span></a>';
             }
 
+            // Inner column height
             $row_el_class .= ' ' . $inner_column_height;
 
-            $data_atts = 'data-v-center="' . $vertical_center . '" data-top-style="' . $row_top_style . '" data-bottom-style="' . $row_bottom_style . '" '.$animation_output;
+            // Data attributes
+            $data_atts = 'data-row-style="'.$row_style.'" data-v-center="' . $vertical_center . '" data-top-style="' . $row_top_style . '" data-bottom-style="' . $row_bottom_style . '" '.$animation_output;
 
-
+            // Row output
             if ( $row_bg_type == "video" ) {
                 if ( $img_url[0] != "" ) {
                     $output .= "\n\t" . '<div class="spb-row-container spb-row-' . $wrap_type . ' spb_parallax_asset sf-parallax sf-parallax-video parallax-' . $parallax_video_height . ' spb_content_element bg-type-' . $bg_type . ' ' . $width . $row_el_class . '" '.$data_atts.' style="' . $inline_style . '">';
@@ -179,12 +191,13 @@
         }
 
         public function contentAdmin( $atts, $content = null ) {
-            $width = $row_el_class = $bg_color = $padding_vertical = '';
+            $width = $row_el_class = $bg_color = $element_name = $minimize_row = $padding_vertical = '';
             extract( shortcode_atts( array(
                 'wrap_type'               => 'content-width',
                 'row_el_class'            => '',
                 'row_bg_color'            => '',
                 'color_row_height'		  => '',
+                'row_style'               => '',
                 'inner_column_height'	  => '',
                 'row_top_style'			  => '',
                 'row_bottom_style'		  => '',
@@ -196,6 +209,7 @@
                 'vertical_center'         => 'true',
                 'row_id'                  => '',
                 'row_name'                => '',
+                'row_header_style'        => '',
                 'row_bg_type'             => '',
                 'bg_image'                => '',
                 'bg_video_mp4'            => '',
@@ -216,15 +230,27 @@
                 'responsive_vis'          => '',
                 'row_responsive_vis'          => '',
                 'el_position'             => '',
+                'element_name'            => '',
+                'minimize_row'            => '',
                 'width'                   => 'span12'
             ), $atts ) );
+
+            if ( $element_name == '' ){
+                $element_name = __( "Row", 'swift-framework-plugin' );
+            }
 
             $output = '';
 
             $output .= '<div data-element_type="spb_row" class="spb_row spb_sortable span12 spb_droppable not-column-inherit">';
             $output .= '<input type="hidden" class="spb_sc_base" name="element_name-spb_row" value="spb_row">';
-            $output .= '<div class="controls sidebar-name"><span class="asset-name">' . __( "Row", 'swift-framework-plugin' ) . '</span><div class="controls_right"><a class="element-save" href="#" title="Save"></a><a class="column_edit" href="#" title="Edit"></a> <a class="column_clone" href="#" title="Clone"></a> <a class="column_delete" href="#" title="Delete"></a></div></div>';
-            $output .= '<div class="spb_element_wrapper">';
+            $output .= '<div class="controls sidebar-name"><span class="asset-name">' . $element_name . '</span><div class="controls_right row_controls"><a class="column_delete" href="#" title="Delete"><span class="icon-delete"></span></a><a class="element-save" href="#" title="Save"><span class="icon-save"></span></a><a class="column_clone" href="#" title="Duplicate"><span class="icon-duplicate"></span></a><a class="column_edit" href="#" title="Edit"><span class="icon-edit"></span></a>';
+
+            if( $minimize_row == 'yes' ){
+                $output .= ' <a class="column_minimize" href="#" title="Minimize" style="display:none;"><i class="fa-minus"></i></a><a class="column_maximize" href="#" title="Maximize"><i class="fa-plus"></i></a></div></div><div class="spb_element_wrapper" style="display:none;">';    
+            }else{
+                $output .= ' <a class="column_minimize" href="#" title="Minimize"><i class="fa-minus"></i></a><a class="column_maximize" href="#" title="Maximize" style="display:none;"><i class="fa-plus"></i></a></div></div><div class="spb_element_wrapper">';
+            }
+            
             $output .= '<div class="row-fluid spb_column_container spb_sortable_container not-column-inherit">';
             $output .= do_shortcode( shortcode_unautop( $content ) );
             $output .= SwiftPageBuilder::getInstance()->getLayout()->getContainerHelper();
@@ -232,7 +258,7 @@
             if ( isset( $this->settings['params'] ) ) {
                 $inner = '';
                 foreach ( $this->settings['params'] as $param ) {
-                    $param_value = isset( $$param['param_name'] ) ? $$param['param_name'] : '';
+                    $param_value = isset( ${$param['param_name']} ) ? ${$param['param_name']} : '';
                     //var_dump($param_value);
                     if ( is_array( $param_value ) ) {
                         // Get first element from the array
@@ -251,13 +277,20 @@
         }
     }
 
-    /* PARAMS
+    /* PARAMS
     ================================================== */
     $params = array(
+         array(
+            "type"       => "section_tab",
+            "param_name" => "general_tab",
+            "heading"    => __( "General", 'swift-framework-plugin' ),
+        ),
         array(
-            "type"       => "section",
-            "param_name" => "section_row_options",
-            "heading"    => __( "Row Type Options", 'swift-framework-plugin' ),
+               "type"        => "textfield",  
+               "heading"     => __( "Element Name", 'swift-framework-plugin' ),
+               "param_name"  => "element_name",
+               "value"       => "",
+               "description" => __( "Element Name. Use it to easily recognize the elements in the page builder mode.", 'swift-framework-plugin' )
         ),
         array(
             "type"        => "dropdown",
@@ -297,6 +330,17 @@
             ),
             "required"       => array("row_bg_type", "=", "color"),
             "description" => __( "If you are using this as a coloured row asset, then please choose whether you'd like asset to sized based on the content height or the window height.", 'swift-framework-plugin' )
+        ),
+        array(
+            "type"        => "dropdown",
+            "heading"     => __( "Row Style", 'swift-framework-plugin' ),
+            "param_name"  => "row_style",
+            "value"       => array(
+                '' => '',
+                __( "Light", 'swift-framework-plugin' ) => "light",
+                __( "Dark", 'swift-framework-plugin' )  => "dark"
+            ),
+            "description" => __( "Set the colour style for the row here, e.g. if set to Light, then inner element titles will be light (for use on dark background rows).", 'swift-framework-plugin' )
         ),
         array(
             "type"       => "section",
@@ -383,7 +427,7 @@
             "value"       => "",
             "required"       => array("row_bg_type", "=", "video"),
             "description" => "Provide a video URL in OGG format to use as the background for the parallax area. You can upload these videos through the WordPress media manager."
-        ),
+        ),  
         array(
             "type"        => "buttonset",
             "heading"     => __( "Background Video Loop", 'swift-framework-plugin' ),
@@ -392,6 +436,7 @@
                 __( "Yes", 'swift-framework-plugin' )  => "yes",
                 __( "No", 'swift-framework-plugin' ) => "no"
             ),
+            "buttonset_on"  => "yes",
             "std"         => 'yes',
             "required"       => array("row_bg_type", "=", "video"),
             "description" => "Choose if you would like the background video to be looped."
@@ -408,11 +453,30 @@
             "description" => __( "If you are using this as a video parallax asset, then please choose whether you'd like asset to sized based on the content height or the video height.", 'swift-framework-plugin' )
         ),
         array(
+            "type"       => "section_tab",
+            "param_name" => "display_options_tab",
+            "heading"    => __( "Display", 'swift-framework-plugin' ),
+        ),/*
+        array(
             "type"       => "section",
             "param_name" => "section_display_options",
             "heading"    => __( "Row Display Options", 'swift-framework-plugin' ),
-        ),
+        ),*/
     );
+
+    if ( sf_theme_supports('transparent-sticky-header') ) {
+        $params[] = array(
+            "type"        => "dropdown",
+            "heading"     => __( "Header Style", 'swift-framework-plugin' ),
+            "param_name"  => "row_header_style",
+            "value"       => array(
+                "" => "",
+                __( "Light", 'swift-framework-plugin' ) => "light",
+                __( "Dark", 'swift-framework-plugin' ) => "dark",
+            ),
+            "description" => __( "If you have the transparent sticky header option enabled in the page meta options, then you can set the header style when scrolling over this row.", 'swift-framework-plugin' )
+        );
+    }
 
     if ( sf_theme_supports('advanced-row-styling') ) {
     	$params[] = array(
@@ -505,6 +569,7 @@
             __( 'No', 'swift-framework-plugin' )  => "no",
             __( 'Yes', 'swift-framework-plugin' ) => "yes"
         ),
+        "buttonset_on"  => "yes",
         "description" => __( "Enable this option if you wish to remove all spacing from the elements within the row.", 'swift-framework-plugin' )
     );
     $params[] = array(
@@ -513,8 +578,9 @@
         "param_name"  => "vertical_center",
         "value"       => array(
             __( 'No', 'swift-framework-plugin' )  => "false",
-            __( 'Yes', 'swift-framework-plugin' ) => "true"
+            __( 'Yes', 'swift-framework-plugin' ) => "true",
         ),
+        "buttonset_on"  => "true", 
         "description" => __( "Enable this option if you wish to center the elements within the row.", 'swift-framework-plugin' )
     );
     $params[] = array(
@@ -528,18 +594,14 @@
         "description" => __( "If you have the Window Height option selected for the row, and would like inner column assets to be 100% height, then please select the Window Height option here.", 'swift-framework-plugin' )
     );
     $params[] = array(
-        "type"       => "section",
-        "param_name" => "section_reveal_options",
-        "heading"    => __( "Row Content Expand Options", 'swift-framework-plugin' ),
-    );
-    $params[] = array(
         "type"        => "buttonset",
         "heading"     => __( "Expanding Row", 'swift-framework-plugin' ),
         "param_name"  => "row_expanding",
         "value"       => array(
             __( "No", 'swift-framework-plugin' )             => "no",
-            __( "Yes", 'swift-framework-plugin' )             => "yes",
+            __( "Yes", 'swift-framework-plugin' )             => "yes"
         ),
+        "buttonset_on"  => "yes",
         "description" => __( "If you would like the content to be hidden on load, and have a text link to expand the content, then select Yes.", 'swift-framework-plugin' )
     );
     $params[] = array(
@@ -547,6 +609,7 @@
         "heading"     => __( "Expanding Link Text (Content Closed)", 'swift-framework-plugin' ),
         "param_name"  => "row_expading_text_closed",
         "value"       => "",
+        "required"       => array("row_expanding", "=", "yes"),
         "description" => __( "This is the text that is shown when the expanding row is closed.", 'swift-framework-plugin' )
     );
     $params[] = array(
@@ -554,12 +617,18 @@
         "heading"     => __( "Expanding Link Text (Content Open)", 'swift-framework-plugin' ),
         "param_name"  => "row_expading_text_open",
         "value"       => "",
+        "required"       => array("row_expanding", "=", "yes"),
         "description" => __( "This is the text that is shown when the expanding row is open.", 'swift-framework-plugin' )
-    );
+    );/*
     $params[] = array(
         "type"       => "section",
         "param_name" => "row_animation_options",
         "heading"    => __( "Animation Options", 'swift-framework-plugin' ),
+    );*/
+    $params[] = array(
+            "type"       => "section_tab",
+            "param_name" => "animation_tab",
+            "heading"    => __( "Animation", 'swift-framework-plugin' ),
     );
     $params[] = array(
         "type"        => "dropdown",
@@ -575,10 +644,16 @@
         "value"       => "0",
         "description" => __( "If you wish to add a delay to the animation, then you can set it here (ms).", 'swift-framework-plugin' )
     );
+    /*
     $params[] = array(
         "type"       => "section",
         "param_name" => "section_misc_options",
         "heading"    => __( "Row Misc/ID Options", 'swift-framework-plugin' ),
+    );*/
+    $params[] = array(
+            "type"       => "section_tab",
+            "param_name" => "row_misc_tab",
+            "heading"    => __( "Misc/ID", 'swift-framework-plugin' ),
     );
     $params[] = array(
         "type"        => "dropdown",
@@ -609,14 +684,27 @@
         "value"       => "",
         "description" => __( "If you wish to style this particular content element differently, then use this field to add a class name and then refer to it in your css file.", 'swift-framework-plugin' )
     );
-
+    $params[] = array(
+            "type"        => "buttonset",
+            "heading"     => __( "Minimize Row", 'swift-framework-plugin' ),
+            "param_name"  => "minimize_row",
+            "value"       => array(
+                        __( "Yes", 'swift-framework-plugin' )  => "yes",
+                        __( "No", 'swift-framework-plugin' ) => "no"
+                          
+            ),
+            "buttonset_on"  => "yes",
+            "description" => "Choose if you would like to minimize the Row inside the Page Builder editing."
+    );
 
 	/* SHORTCODE MAP
 	================================================== */
     SPBMap::map( 'spb_row', array(
         "name"            => __( "Row", 'swift-framework-plugin' ),
         "base"            => "spb_row",
-        "controls"        => "edit_delete",
-        "content_element" => false,
+        "controls"        => "edit_delete", 
+        "class"           => "spb_row spb_tab_layout",
+        "icon"            => "icon-row",
+        "content_element" => true,
         "params"          => $params
     ) );

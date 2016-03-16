@@ -11,6 +11,9 @@ class AIOWPSecurity_Configure_Settings
         global $aio_wp_security;
         $blog_email_address = get_bloginfo('admin_email'); //Get the blog admin email address - we will use as the default value
 
+        //Debug
+        $aio_wp_security->configs->set_value('aiowps_enable_debug','');//Checkbox
+
         //WP Generator Meta Tag feature
         $aio_wp_security->configs->set_value('aiowps_remove_wp_generator_meta_info','');//Checkbox
         
@@ -104,6 +107,8 @@ class AIOWPSecurity_Configure_Settings
         //SPAM Prevention menu
         $aio_wp_security->configs->set_value('aiowps_enable_spambot_blocking','');//Checkbox
         $aio_wp_security->configs->set_value('aiowps_enable_comment_captcha','');//Checkbox
+        $aio_wp_security->configs->set_value('aiowps_enable_autoblock_spam_ip','');//Checkbox
+        $aio_wp_security->configs->set_value('aiowps_spam_ip_min_comments_block','');
         
         //Filescan features
         //File change detection feature
@@ -121,6 +126,8 @@ class AIOWPSecurity_Configure_Settings
         $aio_wp_security->configs->set_value('aiowps_copy_protection','');//Checkbox
         //Prevent others from dislaying your site in iframe
         $aio_wp_security->configs->set_value('aiowps_prevent_site_display_inside_frame','');//Checkbox
+       //Prevent users enumeration
+        $aio_wp_security->configs->set_value('aiowps_prevent_users_enumeration','');//Checkbox
         
                 
         //TODO - keep adding default options for any fields that require it
@@ -133,6 +140,9 @@ class AIOWPSecurity_Configure_Settings
     {
         global $aio_wp_security;
         $blog_email_address = get_bloginfo('admin_email'); //Get the blog admin email address - we will use as the default value
+
+        //Debug
+        $aio_wp_security->configs->add_value('aiowps_enable_debug','');//Checkbox
 
         //WP Generator Meta Tag feature
         $aio_wp_security->configs->add_value('aiowps_remove_wp_generator_meta_info','');//Checkbox
@@ -227,6 +237,9 @@ class AIOWPSecurity_Configure_Settings
         //SPAM Prevention menu
         $aio_wp_security->configs->add_value('aiowps_enable_spambot_blocking','');//Checkbox
         $aio_wp_security->configs->add_value('aiowps_enable_comment_captcha','');//Checkbox
+        $aio_wp_security->configs->add_value('aiowps_enable_autoblock_spam_ip','');//Checkbox
+        $aio_wp_security->configs->add_value('aiowps_spam_ip_min_comments_block','');
+
 
         //Filescan features
         //File change detection feature
@@ -244,6 +257,8 @@ class AIOWPSecurity_Configure_Settings
         $aio_wp_security->configs->add_value('aiowps_copy_protection','');//Checkbox
         //Prevent others from dislaying your site in iframe
         $aio_wp_security->configs->add_value('aiowps_prevent_site_display_inside_frame','');//Checkbox
+        //Prevent users enumeration
+        $aio_wp_security->configs->add_value('aiowps_prevent_users_enumeration','');//Checkbox
 
         
         //TODO - keep adding default options for any fields that require it
@@ -254,6 +269,7 @@ class AIOWPSecurity_Configure_Settings
 
     static function turn_off_all_security_features()
     {
+        global $aio_wp_security;
         AIOWPSecurity_Configure_Settings::set_default_settings();
         
         //Refresh the .htaccess file based on the new settings

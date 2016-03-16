@@ -16,7 +16,8 @@
     }
 
     class sf_recent_portfolio extends WP_Widget {
-        function sf_recent_portfolio() {
+    
+        function __construct() {
             parent::__construct( 'sf_recent_custom_portfolio', $name = 'Swift Framework Recent Portfolio' );
         }
 

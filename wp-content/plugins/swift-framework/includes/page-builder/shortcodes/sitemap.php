@@ -5,7 +5,7 @@
     *	Swift Page Builder - Sitemap Shortcode
     *	------------------------------------------------
     *	Swift Framework
-    * 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+    * 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     */
 
@@ -42,8 +42,8 @@
     SPBMap::map( 'spb_sitemap', array(
         "name"          => __( "Sitemap", 'swift-framework-plugin' ),
         "base"          => "spb_sitemap",
-        "class"         => "",
-        "icon"          => "spb-icon-sitemap",
+        "class"         => "spb_tab_ui",
+        "icon"          => "icon-sitemap",
         "wrapper_class" => "clearfix",
         "controls"      => "full",
         "params"        => array(

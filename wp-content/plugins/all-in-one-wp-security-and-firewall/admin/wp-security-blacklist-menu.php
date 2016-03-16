@@ -51,13 +51,14 @@ class AIOWPSecurity_Blacklist_Menu extends AIOWPSecurity_Admin_Menu
      */
     function render_menu_page() 
     {
+        echo '<div class="wrap">';
+        echo '<h2>'.__('Blacklist Manager','all-in-one-wp-security-and-firewall').'</h2>';//Interface title
         $this->set_menu_tabs();
         $tab = $this->get_current_tab();
-        ?>
-        <div class="wrap">
+        $this->render_menu_tabs();
+        ?>        
         <div id="poststuff"><div id="post-body">
         <?php 
-        $this->render_menu_tabs();
         //$tab_keys = array_keys($this->menu_tabs);
         call_user_func(array(&$this, $this->menu_tabs_handler[$tab]));
         ?>
@@ -151,7 +152,7 @@ class AIOWPSecurity_Blacklist_Menu extends AIOWPSecurity_Admin_Menu
         </div>
 
         <div class="postbox">
-        <h3><label for="title"><?php _e('IP Hosts and User Agent Blacklist Settings', 'all-in-one-wp-security-and-firewall'); ?></label></h3>
+        <h3 class="hndle"><label for="title"><?php _e('IP Hosts and User Agent Blacklist Settings', 'all-in-one-wp-security-and-firewall'); ?></label></h3>
         <div class="inside">
         <?php
         //Display security info badge
@@ -171,7 +172,7 @@ class AIOWPSecurity_Blacklist_Menu extends AIOWPSecurity_Admin_Menu
             <tr valign="top">
                 <th scope="row"><?php _e('Enter IP Addresses:', 'all-in-one-wp-security-and-firewall')?></th>
                 <td>
-                    <textarea name="aiowps_banned_ip_addresses" rows="5" cols="50"><?php echo ($result == -1)?$_POST['aiowps_banned_ip_addresses']:$aio_wp_security->configs->get_value('aiowps_banned_ip_addresses'); ?></textarea>
+                    <textarea name="aiowps_banned_ip_addresses" rows="5" cols="50"><?php echo ($result == -1)?htmlspecialchars($_POST['aiowps_banned_ip_addresses']):htmlspecialchars($aio_wp_security->configs->get_value('aiowps_banned_ip_addresses')); ?></textarea>
                     <br />
                     <span class="description"><?php _e('Enter one or more IP addresses or IP ranges.','all-in-one-wp-security-and-firewall');?></span>
                     <span class="aiowps_more_info_anchor"><span class="aiowps_more_info_toggle_char">+</span><span class="aiowps_more_info_toggle_text"><?php _e('More Info', 'all-in-one-wp-security-and-firewall'); ?></span></span>

@@ -657,6 +657,12 @@ a.swift-slider-prev:hover, a.swift-slider-next:hover {
 	RESPONSIVE
 -------------------------------------------- */
 
+@media only screen and (min-width: 1300px) {
+    .swiper-slide .caption-content {
+        padding: 0 15px;
+    }
+}
+
 @media only screen and (max-width: 1024px) {
     .swift-slider.swift-slider-parallax {
         position: relative;

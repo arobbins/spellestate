@@ -55,8 +55,8 @@ class Groups_Access_Meta_Boxes {
 			add_action( 'save_post', array( __CLASS__, "save_post" ), 10, 2 );
 			add_filter( 'wp_insert_post_empty_content', array( __CLASS__, 'wp_insert_post_empty_content' ), 10, 2 );
 
-			add_action( 'attachment_fields_to_edit', array( __CLASS__, 'attachment_fields_to_edit' ), 10, 2 );
-			add_action( 'attachment_fields_to_save', array( __CLASS__, 'attachment_fields_to_save' ), 10, 2 );
+			add_filter( 'attachment_fields_to_edit', array( __CLASS__, 'attachment_fields_to_edit' ), 10, 2 );
+			add_filter( 'attachment_fields_to_save', array( __CLASS__, 'attachment_fields_to_save' ), 10, 2 );
 		}
 	}
 
@@ -76,7 +76,6 @@ class Groups_Access_Meta_Boxes {
 		if ( $pagenow == 'upload.php' ) {
 			Groups_UIE::enqueue( 'select' );
 		}
-		
 	}
 
 	/**
@@ -251,7 +250,7 @@ class Groups_Access_Meta_Boxes {
 				}
 			}
 			$output .= '</select>';
-			
+
 			$output .= Groups_UIE::render_select( '.select.capability' );
 // 			$output .= '<script type="text/javascript">';
 // 			$output .= 'if (typeof jQuery !== "undefined"){';

@@ -20,11 +20,23 @@
 	*
 	*
 	*	OVERRIDES
-	*	sf_header_wrap()
-	*	sf_get_search()
-	*	sf_header_aux()
-	*	sf_ajaxsearch()
-	*	sf_get_post_details()
+	*	sf_get_thumb_type
+	*	sf_header_wrap
+	*	sf_top_bar
+	*	sf_main_menu
+	*	sf_get_search
+	*	sf_header_aux
+	*	sf_ajaxsearch
+	*	sf_overlay_menu
+	*	sf_mobile_menu
+	*	sf_get_post_details
+	*	sf_get_masonry_post
+	*	sf_product_meta
+	*	sf_product_share
+	*	sf_woo_help_bar
+	*	sf_post_top_author
+	*	sf_post_info
+	*	sf_post_pagination
 	*
 	*/
 	
@@ -428,7 +440,7 @@
 		function sf_sideslideout_config() {
 
 			global $sf_options;
-
+			
 			$header_left_config = $sf_options['header_left_config'];
 			$header_right_config = $sf_options['header_right_config'];
 
@@ -453,42 +465,64 @@
 
 			global $sf_options;
 			$slideout_output = $page_menu = $menu_output = "";
-
-			if ( !class_exists( 'sf_mega_menu_walker' ) ) {
-				return 'Please enable the SwiftFramework plugin';
+			
+			$side_slideout_type = "menu";
+			
+			if ( isset($sf_options['side_slideout_type']) ) {  
+				$side_slideout_type = $sf_options['side_slideout_type'];
 			}
-
-			$slideout_menu_args = array(
-				'echo'           => false,
-				'theme_location' => 'slideout_menu',
-				'walker'         => new sf_alt_menu_walker,
-				'fallback_cb' 	 => '',
-			);
-
-
-			// MENU OUTPUT
-			$menu_output .= '<nav class="std-menu clearfix">'. "\n";
-
-			if(function_exists('wp_nav_menu')) {
-				if (has_nav_menu('slideout_menu')) {
-					$menu_output .= wp_nav_menu( $slideout_menu_args );
+			
+			if ( $side_slideout_type == "sidebar" ) {
+				
+				$side_slideout_sidebar = strtolower($sf_options['side_slideout_sidebar']);
+				
+				// SLIDEOUT OUTPUT
+				$slideout_output .= '<div id="side-slideout-'.$side.'-wrap" class="sf-side-slideout">';
+				$slideout_output .= '<div class="slideout-sidebar">';
+				$slideout_output .= sf_get_dynamic_sidebar( $side_slideout_sidebar );
+				$slideout_output .= '</div>';
+				$slideout_output .= '</div>';
+	
+				return $slideout_output;
+	
+			} else {
+				
+				if ( !class_exists( 'sf_alt_menu_walker' ) ) {
+					return 'Please enable the SwiftFramework plugin';
 				}
-				else {
-					$menu_output .= '<div class="no-menu">'.__("Please assign a menu to the Main Menu in Appearance > Menus", "swiftframework").'</div>';
+	
+				$slideout_menu_args = array(
+					'echo'           => false,
+					'theme_location' => 'slideout_menu',
+					'walker'         => new sf_alt_menu_walker,
+					'fallback_cb' 	 => '',
+				);
+	
+	
+				// MENU OUTPUT
+				$menu_output .= '<nav class="std-menu clearfix">'. "\n";
+	
+				if(function_exists('wp_nav_menu')) {
+					if (has_nav_menu('slideout_menu')) {
+						$menu_output .= wp_nav_menu( $slideout_menu_args );
+					}
+					else {
+						$menu_output .= '<div class="no-menu">'.__("Please assign a menu to the Main Menu in Appearance > Menus", "swiftframework").'</div>';
+					}
 				}
+				$menu_output .= '</nav>'. "\n";
+	
+	
+				// SLIDEOUT OUTPUT
+	
+				$slideout_output .= '<div id="side-slideout-'.$side.'-wrap" class="sf-side-slideout">';
+				$slideout_output .= '<div class="vertical-menu">';
+				$slideout_output .= $menu_output;
+				$slideout_output .= '</div>';
+				$slideout_output .= '</div>';
+	
+				return $slideout_output;
 			}
-			$menu_output .= '</nav>'. "\n";
-
-
-			// SLIDEOUT OUTPUT
-
-			$slideout_output .= '<div id="side-slideout-'.$side.'-wrap" class="sf-side-slideout">';
-			$slideout_output .= '<div class="vertical-menu">';
-			$slideout_output .= $menu_output;
-			$slideout_output .= '</div>';
-			$slideout_output .= '</div>';
-
-			return $slideout_output;
 		}
 	}
 
@@ -820,67 +854,76 @@
 		<?php }
 		add_action('sf_container_start', 'sf_header_wrap', 20);
 	}
-
-	function sf_top_bar( $sticky = false ) {
-		global $sf_options;
-		$fullwidth_header = $sf_options['fullwidth_header'];
-		$tb_left_config = $sf_options['tb_left_config'];
-		$tb_right_config = $sf_options['tb_right_config'];
-		$tb_left_text = __($sf_options['tb_left_text'], 'swiftframework');
-		$tb_right_text = __($sf_options['tb_right_text'], 'swiftframework');
-		$header_left_config = $sf_options['header_left_config'];
-		$header_right_config = $sf_options['header_right_config'];
-
-		$tb_left_output = $tb_right_output = "";
-		if ($tb_left_config == "social") {
-		$tb_left_output .= do_shortcode('[social]'). "\n";
-		} else if ($tb_left_config == "account") {
-		$tb_left_output .= sf_get_account(). "\n";
-		} else if ($tb_left_config == "menu") {
-		$tb_left_output .= sf_top_bar_menu(). "\n";
-		} else if ($tb_left_config == "cart-wishlist") {
-		$tb_left_output .= '<div class="aux-item aux-cart-wishlist"><nav class="std-menu cart-wishlist"><ul class="menu">'. "\n";
-		$tb_left_output .= sf_get_cart();
-		$tb_left_output .= sf_get_wishlist();
-		$tb_left_output .= '</ul></nav></div>'. "\n";
-		} else {
-		$tb_left_output .= '<div class="tb-text">'.do_shortcode($tb_left_text).'</div>'. "\n";
-		}
-
-		if ($tb_right_config == "social") {
-		$tb_right_output .= do_shortcode('[social]'). "\n";
-		} else if ($tb_right_config == "account") {
-		$tb_right_output .= sf_get_account(). "\n";
-		} else if ($tb_right_config == "menu") {
-		$tb_right_output .= sf_top_bar_menu(). "\n";
-		} else if ($tb_right_config == "cart-wishlist") {
-		$tb_right_output .= '<div class="aux-item aux-cart-wishlist"><nav class="std-menu cart-wishlist"><ul class="menu">'. "\n";
-		$tb_right_output .= sf_get_cart();
-		$tb_right_output .= sf_get_wishlist();
-		$tb_right_output .= '</ul></nav></div>'. "\n";
-		} else {
-		$tb_right_output .= '<div class="tb-text">'.do_shortcode($tb_right_text).'</div>'. "\n";
-		}
-
-		$top_bar_class = "";
-		if ($sticky) {
-			$top_bar_class = "sticky-top-bar";
-		}
-		?>
-
-		<div id="top-bar" class="<?php echo $top_bar_class; ?>">
-			<?php if ($fullwidth_header) { ?>
-			<div class="container fw-header">
-			<?php } else { ?>
-			<div class="container">
-			<?php } ?>
-				<div class="col-sm-6 tb-left"><?php echo $tb_left_output; ?></div>
-				<div class="col-sm-6 tb-right"><?php echo $tb_right_output; ?></div>
+	
+	if (!function_exists('sf_top_bar')) {
+		function sf_top_bar( $sticky = false ) {
+			global $sf_options;
+			$fullwidth_header = $sf_options['fullwidth_header'];
+			$tb_left_config = $sf_options['tb_left_config'];
+			$tb_right_config = $sf_options['tb_right_config'];
+			$tb_left_text = __($sf_options['tb_left_text'], 'swiftframework');
+			$tb_right_text = __($sf_options['tb_right_text'], 'swiftframework');
+					
+			$tb_left_output = $tb_right_output = "";
+			if ($tb_left_config == "social") {
+			$tb_left_output .= do_shortcode('[social]'). "\n";
+			} else if ($tb_left_config == "account") {
+			$tb_left_output .= sf_get_account(). "\n";
+			} else if ($tb_left_config == "menu") {
+			$tb_left_output .= sf_top_bar_menu(). "\n";
+			} else if ($tb_left_config == "cart-wishlist") {
+			$tb_left_output .= '<div class="aux-item aux-cart-wishlist"><nav class="std-menu cart-wishlist"><ul class="menu">'. "\n";
+			$tb_left_output .= sf_get_cart();
+			$tb_left_output .= sf_get_wishlist();
+			$tb_left_output .= '</ul></nav></div>'. "\n";
+			} else if ($tb_left_config == "currency-switcher") {
+			$tb_left_output .= '<div class="aux-item aux-currency"><nav class="std-menu currency"><ul class="menu">'. "\n";
+			$tb_left_output .= sf_get_currency_switcher();
+			$tb_left_output .= '</ul></nav></div>'. "\n";
+			} else {
+			$tb_left_output .= '<div class="tb-text">'.do_shortcode($tb_left_text).'</div>'. "\n";
+			}
+	
+			if ($tb_right_config == "social") {
+			$tb_right_output .= do_shortcode('[social]'). "\n";
+			} else if ($tb_right_config == "account") {
+			$tb_right_output .= sf_get_account(). "\n";
+			} else if ($tb_right_config == "menu") {
+			$tb_right_output .= sf_top_bar_menu(). "\n";
+			} else if ($tb_right_config == "cart-wishlist") {
+			$tb_right_output .= '<div class="aux-item aux-cart-wishlist"><nav class="std-menu cart-wishlist"><ul class="menu">'. "\n";
+			$tb_right_output .= sf_get_cart();
+			$tb_right_output .= sf_get_wishlist();
+			$tb_right_output .= '</ul></nav></div>'. "\n";
+			} else if ($tb_right_config == "currency-switcher") {
+			$tb_right_output .= '<div class="aux-item aux-currency"><nav class="std-menu currency"><ul class="menu">'. "\n";
+			$tb_right_output .= sf_get_currency_switcher();
+			$tb_right_output .= '</ul></nav></div>'. "\n";		
+			} else {
+			$tb_right_output .= '<div class="tb-text">'.do_shortcode($tb_right_text).'</div>'. "\n";
+			}
+	
+			$top_bar_class = "";
+			if ($sticky) {
+				$top_bar_class = "sticky-top-bar";
+			}
+			?>
+	
+			<div id="top-bar" class="<?php echo $top_bar_class; ?>">
+				<?php if ($fullwidth_header) { ?>
+				<div class="container fw-header">
+				<?php } else { ?>
+				<div class="container">
+				<?php } ?>
+					<div class="col-sm-6 tb-left"><?php echo $tb_left_output; ?></div>
+					<div class="col-sm-6 tb-right"><?php echo $tb_right_output; ?></div>
+				</div>
 			</div>
-		</div>
-		<?php
+			<?php
+		}
 	}
-
+	
+	
 	/*
 	*	HEADER MENU OVERRIDE
 	*	------------------------------------------------
@@ -1035,6 +1078,7 @@
 
 			$header_left_text = __($sf_options['header_left_text'], 'swiftframework');
 			$header_right_text = __($sf_options['header_right_text'], 'swiftframework');
+			
 			$contact_icon = apply_filters('sf_header_contact_icon', '<i class="ss-mail"></i>');
 			$supersearch_icon = apply_filters('sf_header_supersearch_icon', '<i class="ss-zoomin"></i>');
 			$ajax_url = admin_url('admin-ajax.php');
@@ -1078,6 +1122,10 @@
 						$aux_output .= '<div class="aux-item">'. "\n";
 						$aux_output .= sf_get_account('aux');
 						$aux_output .= '</div>'. "\n";
+					} else if ($item_id == "currency-switcher") {
+						$aux_output .= '<div class="aux-item aux-currency"><nav class="std-menu currency"><ul class="menu">'. "\n";
+						$aux_output .= sf_get_currency_switcher();
+						$aux_output .= '</ul></nav></div>'. "\n";
 					} else if ($item_id == "language") {
 						$aux_output .= '<div class="aux-item aux-language">'. "\n";
 						$aux_output .= '<nav class="std-menu">' . "\n";
@@ -1171,6 +1219,16 @@
 				    }
 
 			        foreach ($type as $post) {
+			        
+			        	$post_type = get_post_type($post);
+			        	$product = array();
+			        
+			        	if ( $post_type == "product" ) {
+			        	    $product = new WC_Product( $post->ID );
+			        	    if (!$product->is_visible()) {
+			        	    	return;
+			        	    }
+			        	}
 
 			        	$post_title = get_the_title($post->ID);
 			        	$post_date = get_the_time(get_option('date_format'), $post->ID);
@@ -1184,7 +1242,9 @@
 			        	} else {
 			        		$search_results_ouput .= '<div class="search-result">';
 			        	}
-
+						
+						$search_results_ouput .= '<a href="'.$post_permalink.'" class="search-result-link"></a>';
+						
 			            $search_results_ouput .= '<div class="search-item-content">';
 
 			            if ($header_search_type == "fs-search-on") {
@@ -1193,8 +1253,7 @@
 			            	$search_results_ouput .= '<h5><a href="'.$post_permalink.'">'.$post_title.'</a></h5>';
 			            }
 
-			            if (get_post_type($post) == "product") {
-			            	$product = new WC_Product( $post->ID );
+			            if ($post_type == "product") {
 				            $search_results_ouput .= $product->get_price_html();
 			            } else {
 			            	$search_results_ouput .= '<time>'.$post_date.'</time>';
@@ -1446,6 +1505,120 @@
 	    	return $post_details;
 	    }
 	}
+	
+	/*
+	*	GET MASONRY POST OVERRIDE
+	*	------------------------------------------------
+	*	@original - /swift-framework/content/sf-post-formats.php
+	*
+	================================================== */
+	if ( ! function_exists( 'sf_get_masonry_post' ) ) {
+		function sf_get_masonry_post( $postID, $thumb_type, $fullwidth, $show_title, $show_excerpt, $show_details, $show_read_more, $content_output, $excerpt_length ) {
+			
+			global $sf_options;
+			
+			// Get Post Object
+			$post_object = sf_build_post_object( $postID , $content_output, $excerpt_length );
+			
+			// Link config			
+		    $post_links_match_thumb = false;
+		    if ( isset( $sf_options['post_links_match_thumb'] ) ) {
+		    	$post_links_match_thumb = $sf_options['post_links_match_thumb'];	
+		    }
+		
+		    $post_permalink_config = 'href="' . $post_object['permalink'] . '" class="link-to-post"';
+		    if ( $post_links_match_thumb ) {
+		    	$link_config = sf_post_item_link();
+		    	$post_permalink_config = $link_config['config'];
+		    }
+		    
+			// Variable setup
+			$post_item = "";			
+			
+			// THUMBNAIL MEDIA TYPE SETUP
+			$post_item .= apply_filters( 'sf_before_masonry_post_thumb' , '');
+			
+			$item_figure = "";
+			if ( $thumb_type != "none" ) {
+			    $item_figure .= sf_post_thumbnail( "masonry", $fullwidth );
+			}
+		    if ( $item_figure != "" ) {
+		        $post_item .= $item_figure;
+		    }
+		
+			// Start Output
+		    $post_item .= '<div class="details-wrap">';
+		    $post_item .= '<a ' . $post_permalink_config . '></a>';
+			
+			// Title
+		    if ( $post_object['type'] == "post" ) {
+		        if ( $post_object['format'] == "standard" ) {
+		            $post_item .= '<h6>' . __( "Article", "swiftframework" ) . '</h6>';
+		        } else {
+		            $post_item .= '<h6>' . $post_object['format'] . '</h6>';
+		        }
+		    } else {
+		        $post_item .= '<h6>' . $post_object['type'] . '</h6>';
+		    }
+		    if ( $show_title == "yes" && $post_object['format'] != "quote" && $post_object['format'] != "link" ) {
+		        $post_item .= '<h2 itemprop="name headline">' . $post_object['title'] . '</h2>';
+		    } else if ( $post_object['format'] == "quote" ) {
+		        $post_item .= '<div class="quote-excerpt" itemprop="name headline">' . $post_object['excerpt'] . '</div>';
+		    } else if ( $post_object['format'] == "link" ) {
+		        $post_item .= '<h3 itemprop="name headline">' . $post_object['title'] . '</h3>';
+		    }
+		
+				
+			// Details		
+	        if ( $show_details == "yes" ) {
+	        	$post_item .= sf_get_post_details($postID);
+			}
+			
+			// Excerpt
+	    	if ( $show_excerpt == "yes" && $post_object['format'] != "quote" ) {
+	            $post_item .= '<div class="excerpt" itemprop="description">' . $post_object['excerpt'] . '</div>';
+	        }
+	
+			// Read More
+			if ( $show_read_more == "yes" ) {
+			    if ( $post_object['download_button'] ) {
+			        if ( $post_object['download_shortcode'] != "" ) {
+			            $post_item .= do_shortcode( $post_object['download_shortcode'] );
+			        } else {
+			            $post_item .= '<a href="' . wp_get_attachment_url( $post_object['download_file'] ) . '" class="download-button read-more-button">' . $post_object['download_text'] . '</a>';
+			        }
+			    }
+			    $post_item .= '<a class="read-more-button" href="' . $post_object['permalink'] . '">' . __( "Read more", "swiftframework" ) . '</a>';
+			}
+			
+			// Comments / Likes
+	        if ( $show_details == "yes" ) {
+	            $post_item .= '<div class="comments-likes">';
+	            if ( comments_open() ) {
+	                $post_item .= '<div class="comments-wrapper"><a href="' . $post_object['permalink'] . '#comment-area">
+	                <svg version="1.1" class="comments-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	                	 width="30px" height="30px" viewBox="0 0 30 30" enable-background="new 0 0 30 30" xml:space="preserve">
+	                <path fill="none" class="stroke" stroke="#252525" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+	                	M13.958,24H2.021C1.458,24,1,23.541,1,22.975V2.025C1,1.459,1.458,1,2.021,1h25.957C28.542,1,29,1.459,29,2.025v20.949
+	                	C29,23.541,28.542,24,27.979,24H21v5L13.958,24z"/>
+	                </svg>
+	                <span>' . $post_object['comments'] . '</span></a></div>';
+	            }
+	
+	            if ( function_exists( 'lip_love_it_link' ) ) {
+	                $post_item .= lip_love_it_link( $postID, false );
+	            }
+	            $post_item .= '</div>';
+	        }
+				
+			// Close Output
+		    $post_item .= '</div>';
+			
+			// Return 
+			return $post_item;
+		}
+    }
+    
 
 	/*
 	*	PRODUCT META OVERRIDE

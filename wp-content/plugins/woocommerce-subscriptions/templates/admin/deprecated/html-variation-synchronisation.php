@@ -36,7 +36,7 @@ global $wp_locale;
 			'class'         => 'wc_input_subscription_payment_sync',
 			'wrapper_class' => '_subscription_payment_sync_field',
 			'label'         => WC_Subscriptions_Synchroniser::$sync_field_label,
-			'placeholder'   => _x( 'Day', 'used in sync settings on product', 'woocommerce-subscriptions' ),
+			'placeholder'   => _x( 'Day', 'input field placeholder for day field for annual subscriptions', 'woocommerce-subscriptions' ),
 			'value'         => $payment_day,
 			'type'          => 'number',
 			'custom_attributes' => array(

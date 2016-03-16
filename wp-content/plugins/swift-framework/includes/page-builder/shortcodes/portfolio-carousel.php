@@ -5,7 +5,7 @@
     *	Swift Page Builder - Portfolio Carousel Shortcode
     *	------------------------------------------------
     *	Swift Framework
-    * 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+    * 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     */
 
@@ -62,10 +62,19 @@
                 $sf_carouselID ++;
             }
 
+            $categories = explode(",", $category_slug);
+            $translated_categories = '';
+            foreach ($categories as $key => $category_slug) {
+                $category_id_by_slug = get_term_by('slug', $category_slug, 'portfolio-category');
+                $translated_slug_id = apply_filters('wpml_object_id', $category_id_by_slug->term_id, 'custom taxonomy', true);
+                $translated_slug = get_term_by('id', $translated_slug_id, 'portfolio-category');
+                $translated_categories = $translated_categories.($key < count($categories)-1 ? $translated_slug->slug.',': $translated_slug->slug );
+            }
+
             $portfolio_args = array(
                 'post_type'          => 'portfolio',
                 'post_status'        => 'publish',
-                'portfolio-category' => $category_slug,
+                'portfolio-category' => $translated_categories,
                 'posts_per_page'     => $item_count,
                 'no_found_rows'      => 1
             );
@@ -99,106 +108,14 @@
                 $list_class .= ' gutters'; 
             }
 
+            $portfolio_carousel_item_class = apply_filters( 'spb_portfolio_carousel_item_class', '' );
+
             $items .= '<div id="carousel-' . $sf_carouselID . '" class="portfolio-items carousel-items clearfix ' . $list_class . '" data-columns="' . $item_columns . '" data-auto="false">';
 
             while ( $portfolio_items->have_posts() ) : $portfolio_items->the_post();
 
-                $port_hover_style = $port_hover_text_style = '';
-                $item_title               = get_the_title();
-                $thumb_type               = sf_get_post_meta( $post->ID, 'sf_thumbnail_type', true );
-                $thumb_image              = rwmb_meta( 'sf_thumbnail_image', 'type=image&size=full' );
-                $thumb_video              = sf_get_post_meta( $post->ID, 'sf_thumbnail_video_url', true );
-                $thumb_gallery            = rwmb_meta( 'sf_thumbnail_gallery', 'type=image&size=thumb-image' );
-                $thumb_link_type          = sf_get_post_meta( $post->ID, 'sf_thumbnail_link_type', true );
-                $thumb_link_url           = sf_get_post_meta( $post->ID, 'sf_thumbnail_link_url', true );
-                $thumb_lightbox_thumb     = rwmb_meta( 'sf_thumbnail_image', 'type=image&size=large' );
-                $thumb_lightbox_image     = rwmb_meta( 'sf_thumbnail_link_image', 'type=image&size=large' );
-                $thumb_lightbox_video_url = sf_get_post_meta( $post->ID, 'sf_thumbnail_link_video_url', true );
-                $thumb_lightbox_video_url = sf_get_embed_src( $thumb_lightbox_video_url );
-                $port_hover_bg_color      = sf_get_post_meta( $post->ID, 'sf_port_hover_bg_color', true );
-                $port_hover_text_color    = sf_get_post_meta( $post->ID, 'sf_port_hover_text_color', true );
-
-                foreach ( $thumb_image as $detail_image ) {
-                    $thumb_img_url = $detail_image['url'];
-                    break;
-                }
-
-                if ( ! $thumb_image ) {
-                    $thumb_image   = get_post_thumbnail_id();
-                    $thumb_img_url = wp_get_attachment_url( $thumb_image, 'full' );
-                }
-
-                $thumb_lightbox_img_url = wp_get_attachment_url( $thumb_lightbox_image, 'full' );
-
-                $item_title    = get_the_title();
-                $item_subtitle = sf_get_post_meta( $post->ID, 'sf_portfolio_subtitle', true );
-                $permalink     = get_permalink();
-                $item_link     = sf_portfolio_item_link();
-
-                if ( $port_hover_bg_color != "" ) {
-                    $overlay_opacity = $sf_options['overlay_opacity'];
-                    if ( $overlay_opacity == 100 ) {
-                        $overlay_opacity = '1';
-                    } else {
-                        $overlay_opacity = '0.' . $overlay_opacity;
-                    }
-                    $port_hover_bg_rgb = sf_hex2rgb( $port_hover_bg_color );
-                    $port_hover_style  = 'style="background-color:rgba(' . $port_hover_bg_rgb['red'] . ',' . $port_hover_bg_rgb['green'] . ',' . $port_hover_bg_rgb['blue'] . ',' . $overlay_opacity . ');"';
-                }
-
-                if ( $port_hover_text_color != "" ) {
-                    $port_hover_text_style = 'style="color: ' . $port_hover_text_color . ';"';
-                }
-
-                $items .= '<div itemscope data-id="id-' . $count . '" class="clearfix carousel-item portfolio-item">';
-
-                $items .= '<figure class="animated-overlay overlay-style">';
-
-                // THUMBNAIL MEDIA TYPE SETUP
-
-                if ( $thumb_type == "video" ) {
-
-                    $video = sf_video_embed( $thumb_video, $figure_width, $figure_height );
-
-                    $items .= $video;
-
-                } else if ( $thumb_type == "slider" ) {
-
-                    $items .= '<div class="flexslider thumb-slider"><ul class="slides">';
-
-                    foreach ( $thumb_gallery as $image ) {
-                        $alt = $image['alt'];
-                        if ( ! $alt ) {
-                            $alt = $image['title'];
-                        }
-                        $items .= "<li><a " . $item_link['config'] . "><img src='{$image['url']}' width='{$image['width']}' height='{$image['height']}' alt='{$alt}' /></a></li>";
-                    }
-
-                    $items .= '</ul></div>';
-
-                } else {
-
-                    if ( $thumb_type == "image" && $thumb_img_url == "" ) {
-                        $thumb_img_url = "default";
-                    }
-
-                    $image = sf_aq_resize( $thumb_img_url, $figure_width, $figure_height, true, false );
-
-                    if ( $image ) {
-                        $items .= '<img itemprop="image" src="' . $image[0] . '" width="' . $image[1] . '" height="' . $image[2] . '" alt="' . $item_title . '" />';
-                        $items .= '<a ' . $item_link['config'] . '></a>';
-                        $items .= '<figcaption ' . $port_hover_style . '><div class="thumb-info">';
-                        $items .= '<h4 ' . $port_hover_text_style . '>' . $item_title . '</h4>';
-                        if ( $item_subtitle != "" ) {
-                            $items .= '<div class="name-divide"></div>';
-                            $items .= '<h5 ' . $port_hover_text_style . '>' . $item_subtitle . '</h5>';
-                        }
-                        $items .= '</div></figcaption>';
-                    }
-                }
-
-                $items .= '</figure>';
-
+                $items .= '<div itemscope data-id="id-' . $count . '" class="clearfix carousel-item portfolio-item ' . $portfolio_carousel_item_class . '">';
+                $items .= sf_portfolio_thumbnail( "gallery", "", "1/1", $item_columns, "no", 0, $gutters, $fullwidth );
                 $items .= '</div>';
                 $count ++;
 
@@ -214,7 +131,11 @@
 
             $output .= "\n\t" . '<div class="spb_portfolio_carousel_widget carousel-asset spb_content_element ' . $width . $el_class . '">';
             $output .= "\n\t\t" . '<div class="spb-asset-content">';
-            $output .= "\n\t\t" . '<div class="title-wrap clearfix">';
+            if ( $fullwidth == "yes" ) {
+                $output .= "\n\t\t" . '<div class="title-wrap container clearfix">';
+            } else {
+                $output .= "\n\t\t" . '<div class="title-wrap clearfix">';
+            }
             if ( $title != '' ) {
                 $output .= '<h3 class="spb-heading"><span>' . $title . '</span></h3>';
             }
@@ -279,6 +200,7 @@
                 __( 'Yes', 'swift-framework-plugin' ) => "yes",
                 __( 'No', 'swift-framework-plugin' )  => "no"
             ),
+            "buttonset_on"  => "yes",
             "std"         => 'no',
             "description" => __( "Select if you'd like the asset to be full width (edge to edge). NOTE: only possible on pages without sidebars.", 'swift-framework-plugin' )
         ),
@@ -290,6 +212,7 @@
                 __( 'Yes', 'swift-framework-plugin' ) => "yes",
                 __( 'No', 'swift-framework-plugin' )  => "no"
             ),
+            "buttonset_on"  => "yes",
             "std"         => 'yes',
             "description" => __( "Select if you'd like spacing between the items, or not.", 'swift-framework-plugin' )
         ),
@@ -331,8 +254,8 @@
     SPBMap::map( 'spb_portfolio_carousel', array(
         "name"   => __( "Portfolio Carousel", 'swift-framework-plugin' ),
         "base"   => "spb_portfolio_carousel",
-        "class"  => "spb_portfolio_carousel spb_carousel",
-        "icon"   => "spb-icon-portfolio-carousel",
+        "class"  => "spb_portfolio_carousel spb_carousel spb_tab_media",
+        "icon"   => "icon-portfolio-carousel",
         "params" => $params
     ) );
 

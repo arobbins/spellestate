@@ -27,7 +27,7 @@
                         $post_format = 'standard';
                     }
                     ?>
-                    <li <?php post_class( 'blog-item ' . $blog_classes['item'] . ' format-' . $post_format ); ?>>
+                    <li <?php post_class( 'blog-item ' . $blog_classes['item'] . ' format-' . $post_format ); ?> itemscope itemtype="http://schema.org/BlogPosting">
                         <?php echo sf_get_post_item( $post->ID, $blog_type ); ?>
                     </li>
                 <?php } ?>

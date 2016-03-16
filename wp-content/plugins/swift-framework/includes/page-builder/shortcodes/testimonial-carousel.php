@@ -5,7 +5,7 @@
     *	Swift Page Builder - Testimonial Carousel Shortcode
     *	------------------------------------------------
     *	Swift Framework
-    * 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+    * 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     */
 
@@ -21,6 +21,7 @@
                 'order'       => '',
                 'category'    => 'all',
                 'pagination'  => 'no',
+                'showcase'    => 'no',
                 'page_link'   => '',
                 'el_class'    => '',
                 'el_position' => '',
@@ -28,6 +29,19 @@
             ), $atts ) );
 
             $output = '';
+
+            /* SIDEBAR CONFIG
+            ================================================== */
+            global $sf_sidebar_config, $sf_options;
+
+            $sidebars = '';
+            if ( ( $sf_sidebar_config == "left-sidebar" ) || ( $sf_sidebar_config == "right-sidebar" ) ) {
+                $sidebars = 'one-sidebar';
+            } else if ( $sf_sidebar_config == "both-sidebars" ) {
+                $sidebars = 'both-sidebars';
+            } else {
+                $sidebars = 'no-sidebars';
+            }
 
             // CATEGORY SLUG MODIFICATION
             if ( $category == "All" ) {
@@ -74,7 +88,19 @@
                 $sidebars = 'no-sidebars';
             }
 
-            $items .= '<div id="carousel-' . $sf_carouselID . '" class="testimonials carousel-items clearfix" data-columns="1" data-auto="false">';
+            $columns = 1;
+            $fw_mode = false;
+            $list_class = '';
+            if ( $showcase == "yes" && $width == "1/1" && $sidebars == "no-sidebars" ) {
+                $columns = 3;
+                $fw_mode = true;
+                $el_class .= ' showcase_testimonial_widget';
+                $list_class = "showcase-carousel";
+                $items .= '<div class="testimonial-carousel carousel-wrap">';
+                $items .= spb_carousel_arrows(true);
+                $items .= '<div class="container">';
+            } 
+            $items .= '<div id="carousel-' . $sf_carouselID . '" class="testimonials carousel-items clearfix ' . $list_class . '" data-columns="' . $columns . '" data-auto="false">';
 
             // TESTIMONIAL LOOP
 
@@ -102,9 +128,9 @@
                 $items .= '<div class="testimonial-cite">';
                 if ( $testimonial_image ) {
                     $items .= '<img src="' . $testimonial_image[0] . '" width="' . $testimonial_image[1] . '" height="' . $testimonial_image[2] . '" alt="' . $testimonial_cite . '" />';
-                    $items .= '<div class="cite-text has-cite-image"><span class="cite-name">' . $testimonial_cite . '</span><span>' . $testimonial_cite_subtext . '</span></div>';
+                    $items .= '<div class="cite-text has-cite-image"><span class="cite-name">' . $testimonial_cite . '</span><span class="cite-subtext">' . $testimonial_cite_subtext . '</span></div>';
                 } else {
-                    $items .= '<div class="cite-text"><span class="cite-name">' . $testimonial_cite . '</span><span>' . $testimonial_cite_subtext . '</span></div>';
+                    $items .= '<div class="cite-text"><span class="cite-name">' . $testimonial_cite . '</span><span class="cite-subtext">' . $testimonial_cite_subtext . '</span></div>';
                 }
                 $items .= '</div>';
                 $items .= '</li>';
@@ -114,14 +140,18 @@
             wp_reset_query();
             wp_reset_postdata();
 
-            $items .= '</div>';
+            if ( $showcase == "yes" ) { 
+                $items .= '</div></div></div>';
+            } else {
+                $items .= '</div>';    
+            }
 
             if ( $page_link == "yes" ) {
                 global $sf_options;
                 $testimonials_page = __( $sf_options['testimonial_page'], 'swift-framework-plugin' );
-
+                $testimonial_link_icon = apply_filters( 'spb_testimonial_view_all_icon', '<i class="ssnavigate-right"></i>' );
                 if ( $testimonials_page ) {
-                    $items .= '<a href="' . get_permalink( $testimonials_page ) . '" class="read-more">' . __( "More", 'swift-framework-plugin' ) . '<i class="ssnavigate-right"></i></a>';
+                    $items .= '<a href="' . get_permalink( $testimonials_page ) . '" class="read-more"><span>' . __( "More", 'swift-framework-plugin' ) . '</span>' . $testimonial_link_icon . '</a>';
                 }
             }
 
@@ -132,18 +162,26 @@
 
             $output .= "\n\t" . '<div class="spb_testimonial_carousel_widget carousel-asset spb_content_element ' . $width . $el_class . '">';
             $output .= "\n\t\t" . '<div class="spb-asset-content">';
-            $output .= "\n\t\t" . '<div class="title-wrap clearfix">';
-            if ( $title != '' ) {
+            if ( $showcase == "yes" ) { 
+                $output .= "\n\t\t" . '<div class="title-wrap center-title clearfix">';
+            } else {
+                $output .= "\n\t\t" . '<div class="title-wrap clearfix">';
+            }
+            if ( $title != '' && $showcase == "yes" ) {
+                $output .= '<h2 class="spb-heading"><span>' . $title . '</span></h2>';
+            } else if ( $title != '' ) {
                 $output .= '<h3 class="spb-heading"><span>' . $title . '</span></h3>';
             }
+            if ( $showcase == "no" ) { 
             $output .= spb_carousel_arrows();
+            }
             $output .= '</div>';
 
             $output .= "\n\t\t\t\t" . $items;
             $output .= "\n\t\t" . '</div> ' . $this->endBlockComment( '.spb_wrapper' );
             $output .= "\n\t" . '</div> ' . $this->endBlockComment( $width );
 
-            $output = $this->startRow( $el_position ) . $output . $this->endRow( $el_position );
+            $output = $this->startRow( $el_position, '', $fw_mode ) . $output . $this->endRow( $el_position, '', $fw_mode );
 
             global $sf_include_carousel, $sf_include_isotope;
             $sf_include_carousel = true;
@@ -153,13 +191,10 @@
         }
     }
 
-    SPBMap::map( 'spb_testimonial_carousel', array(
-        "name"          => __( "Testimonials Carousel", 'swift-framework-plugin' ),
-        "base"          => "spb_testimonial_carousel",
-        "class"         => "spb_testimonial_carousel spb_carousel",
-        "icon"          => "spb-icon-testimonial_carousel",
-        "wrapper_class" => "clearfix",
-        "params"        => array(
+
+    /* PARAMS
+    ================================================== */
+    $params = array(
             array(
                 "type"        => "textfield",
                 "heading"     => __( "Widget title", 'swift-framework-plugin' ),
@@ -200,14 +235,42 @@
                     __( 'No', 'swift-framework-plugin' )  => "no",
                     __( 'Yes', 'swift-framework-plugin' ) => "yes"
                 ),
+                "buttonset_on"  => "yes",
                 "description" => __( "Include a link to the testimonials page (which you must choose in the theme options).", 'swift-framework-plugin' )
-            ),
-            array(
-                "type"        => "textfield",
-                "heading"     => __( "Extra class", 'swift-framework-plugin' ),
-                "param_name"  => "el_class",
-                "value"       => "",
-                "description" => __( "If you wish to style this particular content element differently, then use this field to add a class name and then refer to it in your css file.", 'swift-framework-plugin' )
             )
-        )
+    );
+
+    if ( spb_get_theme_name() == "uplift" ) {
+        $params[] = array(
+            "type"        => "buttonset",
+            "heading"     => __( "Showcase Mode", 'swift-framework-plugin' ),
+            "param_name"  => "showcase",
+            "value"       => array(
+                __( 'No', 'swift-framework-plugin' )  => "no",
+                __( 'Yes', 'swift-framework-plugin' ) => "yes"
+            ),
+            "buttonset_on"  => "yes",
+            "std"         => 'no',
+            "description" => __( "If you enable this option, then the carousel will show 3 at once. The asset is required to be set to 1/1 width and no sidebar on the page.", 'swift-framework-plugin' )
+        );
+    }
+
+    $params[] = array(
+            "type"        => "textfield",
+            "heading"     => __( "Extra class", 'swift-framework-plugin' ),
+            "param_name"  => "el_class",
+            "value"       => "",
+            "description" => __( "If you wish to style this particular content element differently, then use this field to add a class name and then refer to it in your css file.", 'swift-framework-plugin' )
+        );
+
+
+    /* SPBMap
+    ================================================== */
+    SPBMap::map( 'spb_testimonial_carousel', array(
+        "name"          => __( "Testimonials Carousel", 'swift-framework-plugin' ),
+        "base"          => "spb_testimonial_carousel",
+        "class"         => "spb_testimonial_carousel spb_carousel",
+        "icon"          => "icon-testimonials-carousel",
+        "wrapper_class" => "clearfix",
+        "params"        => $params
     ) );

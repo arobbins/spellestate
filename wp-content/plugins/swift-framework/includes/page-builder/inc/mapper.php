@@ -5,7 +5,7 @@
     *	Swift Page Builder Shortcode Mapper
     *	------------------------------------------------
     *	Swift Framework
-    * 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+    * 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     */
 
@@ -35,7 +35,29 @@
 
                 if ( ! empty( $attributes['params'] ) ) {
                     $attributes_keys = Array();
-                    foreach ( $attributes['params'] as $attribute ) {
+
+                    if ( $name != 'spb_row' ){
+                        $asset_name =   array(
+                            "type"        => "textfield",  
+                            "heading"     => __( "Element Name", 'swift-framework-plugin' ),
+                            "param_name"  => "element_name",
+                            "value"       => "",
+                            "description" => __( "Element Name. Use it to easily recognize the elements in the page builder mode.", 'swift-framework-plugin' )
+                        );
+
+                        array_unshift($attributes['params'], $asset_name);
+
+                         $asset_name =  array(
+                             "type"       => "section_tab",
+                             "param_name" => "general_tab",
+                             "heading"    => __( "General", 'swift-framework-plugin' ),
+                             "value"      =>  "" );
+                        
+                        array_unshift($attributes['params'], $asset_name);                        
+                    }
+                
+
+                foreach ( $attributes['params'] as $attribute ) {
                         $key = array_search( $attribute['param_name'], $attributes_keys );
                         if ( $key === false ) {
                             $attributes_keys[]             = $attribute['param_name'];
@@ -109,7 +131,7 @@
                 }
             }
 
-            var_dump( array_keys( $a ) );
+            //var_dump( array_keys( $a ) );
 
         }
 

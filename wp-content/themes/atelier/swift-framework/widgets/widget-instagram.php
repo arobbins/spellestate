@@ -11,7 +11,7 @@
 
     class sf_instagram_widget extends WP_Widget {
 
-        function sf_instagram_widget() {
+        function __construct() {
             $widget_ops = array(
                 'classname'   => 'instagram-widget',
                 'description' => 'Show off your favorite Instagram photos'

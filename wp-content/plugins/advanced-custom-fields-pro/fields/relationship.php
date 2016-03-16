@@ -640,7 +640,7 @@ class acf_field_relationship extends acf_field {
 								<input type="hidden" name="<?php echo $field['name']; ?>[]" value="<?php echo $post->ID; ?>" />
 								<span data-id="<?php echo $post->ID; ?>" class="acf-rel-item">
 									<?php echo $this->get_post_title( $post, $field ); ?>
-									<a href="#" class="acf-icon acf-icon-minus small dark" data-name="remove_item"></a>
+									<a href="#" class="acf-icon -minus small dark" data-name="remove_item"></a>
 								</span>
 							</li><?php
 							

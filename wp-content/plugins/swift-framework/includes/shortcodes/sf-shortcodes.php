@@ -5,7 +5,7 @@
 	*	Swift Shortcodes & Generator Class
 	*	------------------------------------------------
 	*	Swift Framework
-	* 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+	* 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
 	*
 	*/
 
@@ -74,6 +74,7 @@
                 "type"       => "default",
                 "link"       => "#",
                 "target"     => '_self',
+                "rounded"     => '',
                 "dropshadow" => '',
                 "icon"       => '',
                 "extraclass" => ''
@@ -89,8 +90,16 @@
 
             $button_class = 'sf-button ' . $size . ' ' . $colour . ' ' . $type_class . ' ' . $extraclass;
 
+            if ( $rounded == "yes" ) {
+                $button_class .= ' sf-button-rounded';
+            }
+
             if ( $dropshadow == "yes" ) {
                 $button_class .= " dropshadow";
+            }
+
+            if ( $icon != "" ) {
+                $button_class .= " sf-button-has-icon";
             }
 
             if ( $type == "sf-icon-reveal" || $type == "sf-icon-stroke" ) {
@@ -108,6 +117,9 @@
                 } else {
                     $button_output .= '<span class="text">' . do_shortcode( $content ) . '</span>';
                 }
+                if ( $icon != "" ) {
+                    $button_output .= '<i class="' . $icon . '"></i>';
+                }
                 $button_output .= '</a>';
             }
 
@@ -124,6 +136,8 @@
                 "size"      => "",
                 "icon"      => "",
                 "image"     => "",
+                "svg"       => "",
+                "animate_svg" => "",
                 "character" => "",
                 "cont"      => "",
                 "float"     => "",
@@ -142,10 +156,32 @@
                 $character = substr( $character, 0, 1 );
             }
 
+            global $sf_svg_icon_id;
+            if ( $sf_svg_icon_id == "" ) {
+                $sf_svg_icon_id = 1;
+            } else {
+                $sf_svg_icon_id ++;
+            }
+
             $icon_output = "";
 
             if ( $image != "" ) {
-                $icon_output .= '<span class="sf-icon-image sf-icon-float-' . $float . '"><img src="' . $image . '" alt="icon box image"/></span>';
+                $icon_output .= '<span class="sf-icon image-display sf-icon-float-' . $float . '"><img src="' . $image . '" alt="icon box image"/></span>';
+            } else if ( $svg != "" ) {
+                $svg_el_class = '';
+                if ( $color != "" ) {
+                    $svg_el_class = 'has-color';
+                }
+                $svg_class = $svg;
+                $svg = str_replace('svg-icon-picker-item ', '', $svg);
+                $svg = str_replace('outline-svg ', '', $svg);
+
+                $directory = get_template_directory_uri() . '/images/svgs/';
+                if ( $animate_svg == "yes" ) {
+                    $icon_output .= '<div id="sf-svg-'.$sf_svg_icon_id.'" class="sf-svg-icon-holder sf-svg-icon-animate ' . $svg_class . ' '.$svg_el_class.'" data-svg-src="' . $directory . $svg . '.svg" data-anim-type="delayed" data-path-timing="ease-in" data-anim-timing="ease-out" style="stroke: '.$color.';"></div>';
+                } else {
+                    $icon_output .= '<div id="sf-svg-'.$sf_svg_icon_id.'" class="sf-svg-icon-holder sf-svg-icon-animate animation-disabled ' . $svg_class . ' '.$svg_el_class.'" data-svg-src="' . $directory . $svg . '.svg" data-anim-type="delayed" data-path-timing="ease-in" data-anim-timing="ease-out" style="stroke: '.$color.';"></div>';
+                }
             } else {
                 if ( $cont == "yes" ) {
                     if ( $character != "" ) {
@@ -170,6 +206,7 @@
             return $icon_output;
         }
         add_shortcode( 'icon', 'sf_icon' );
+        add_shortcode( 'sf_icon', 'sf_icon' );
     }
 
 
@@ -179,9 +216,12 @@
         function sf_iconbox( $atts, $content = null ) {
             extract( shortcode_atts( array(
                 "type"            => "",
+                "icon_type"       => "",
                 "icon"            => "",
                 "image"           => "",
                 "character"       => "",
+                "svg"             => "",
+                "animate_svg"     => "",
                 "color"           => "",
                 "bg_color"        => "",
                 "text_color"      => "",
@@ -189,6 +229,8 @@
                 "icon_bg_color"   => "",
                 'flip_text_color' => "",
                 'flip_bg_color'   => "",
+                "animated_box_style" => "",
+                "animated_box_rounded" => "",
                 "title"           => "",
                 "animation"       => "",
                 "animation_delay" => "",
@@ -196,18 +238,45 @@
                 "target"          => "_self",
             ), $atts ) );
 
-            if ( substr( $image, 0, 3 ) === "ss-" || substr( $image, 0, 3 ) === "fa-" || substr( $image, 0, 3 ) === "sf-" ) {
+            $icon_box = $extra_class = "";
+
+            if ( $icon_type == "svg" ) {
+                $image = "";
+                $icon = "";
+                $character = "";
+            } else if ( $icon_type == "icon" ) {
+                $image = "";
+                $svg = "";
+                $character = "";
+            } else if ( $icon_type == "character" ) {
+                $image = "";
+                $icon = "";
+                $svg = "";
+            } else if ( $icon_type == "image" ) {
+                $svg = "";
+                $icon = "";
+                $character = "";
+            }
+
+            if ( $type == "animated-alt" && $animated_box_style == "stroke" ) {
+                $bg_color = "";
+                $extra_class = "animated-stroke-style";
+            }
+
+            if ( $type == "animated-alt" && $animated_box_rounded == "no" ) {
+                $extra_class = "animated-no-rounded";
+            }
+
+            if ( substr( $image, 0, 3 ) === "ss-" || substr( $image, 0, 3 ) === "fa-" || substr( $image, 0, 3 ) === "sf-" || substr( $image, 0, 5 ) === "icon-" ) {
                 $icon  = $image;
                 $image = "";
             }
-
-            $icon_box = $extra_class = "";
 
             if ( substr( $image, 0, 4 ) === "http" ) {
                 $extra_class = 'has-image';
             }
 
-            if ( $animation != "" && $type != "animated" ) {
+            if ( $animation != "" && $type != "animated" && $type != "animated-alt" ) {
                 $icon_box .= '<div class="sf-icon-box sf-icon-box-' . $type . ' sf-animation sf-icon-' . $color . ' ' . $extra_class . '" data-animation="' . $animation . '" data-delay="' . $animation_delay . '" style="background-color:' . $bg_color . ';">';
             } else {
                 $icon_box .= '<div class="sf-icon-box sf-icon-box-' . $type . ' ' . $extra_class . '">';
@@ -219,29 +288,57 @@
                 }
                 $icon_box .= '<div class="inner">';
                 $icon_box .= '<div class="front" style="background-color:' . $bg_color . ';">';
-                $icon_box .= do_shortcode( '[icon size="large" icon="' . $icon . '" character="' . $character . '" image="' . $image . '" float="none" cont="no" color="' . $icon_color . '" bgcolor="'. $icon_bg_color .'"]' );
+                $icon_box .= do_shortcode( '[sf_icon size="large" icon="' . $icon . '" character="' . $character . '" image="' . $image . '" float="none" cont="no" color="' . $icon_color . '" bgcolor="'. $icon_bg_color .'"]' );
+            }
+
+            if ( $type == "animated-alt" ) {
+                if ( $link != "" ) {
+                    $icon_box .= '<a class="box-link" href="' . $link . '" target="' . $target . '"></a>';
+                }
+                $icon_box .= '<div class="height-adjust"></div>';
+                $icon_box .= '<div class="inner" style="background-color:' . $bg_color . ';">';
+                $icon_box .= '<div class="front" style="background-color:' . $bg_color . ';">';
+                $icon_box .= '<div class="front-inner-wrap">';
+                $icon_box .= do_shortcode( '[sf_icon icon="' . $icon . '" character="' . $character . '" image="' . $image . '" svg="' . $svg . '" animate_svg="' . $animate_svg . '" float="none" cont="no" color="' . $icon_color . '" bgcolor="'. $icon_bg_color .'" link="' . $link . '" target="' . $target . '"]' );
             }
 
             if ( $type == "standard" && sf_current_theme() == "joyn" ) {
-                $icon_box .= do_shortcode( '[icon size="large" icon="' . $icon . '" character="' . $character . '" image="' . $image . '" float="none" cont="no" color="' . $icon_color . '" bgcolor="'. $icon_bg_color .'" link="' . $link . '" target="' . $target . '"]' );
+                $icon_box .= do_shortcode( '[sf_icon size="large" icon="' . $icon . '" character="' . $character . '" image="' . $image . '" float="none" cont="no" color="' . $icon_color . '" bgcolor="'. $icon_bg_color .'" link="' . $link . '" target="' . $target . '"]' );
             } else if ( $type == "standard" ) {
-                $icon_box .= do_shortcode( '[icon size="large" icon="' . $icon . '" character="' . $character . '" image="' . $image . '" float="none" cont="yes" color="' . $icon_color . '" bgcolor="'. $icon_bg_color .'" link="' . $link . '" target="' . $target . '"]' );
+                $icon_box .= do_shortcode( '[sf_icon size="large" icon="' . $icon . '" character="' . $character . '" image="' . $image . '" float="none" cont="yes" color="' . $icon_color . '" bgcolor="'. $icon_bg_color .'" link="' . $link . '" target="' . $target . '"]' );
             } else if ( $type == "left-icon" ) {
-                $icon_box .= do_shortcode( '[icon size="small" icon="' . $icon . '" character="' . $character . '" image="' . $image . '" float="none" cont="yes" color="' . $icon_color . '" bgcolor="'. $icon_bg_color .'" link="' . $link . '" target="' . $target . '"]' );
+                $icon_box .= do_shortcode( '[sf_icon size="small" icon="' . $icon . '" character="' . $character . '" image="' . $image . '" float="none" cont="yes" color="' . $icon_color . '" bgcolor="'. $icon_bg_color .'" link="' . $link . '" target="' . $target . '"]' );
             } else if ( $type == "left-icon-alt" ) {
-                $icon_box .= do_shortcode( '[icon size="medium" icon="' . $icon . '" character="' . $character . '" image="' . $image . '" float="none" cont="no" color="' . $icon_color . '" bgcolor="'. $icon_bg_color .'" link="' . $link . '" target="' . $target . '"]' );
+                $icon_box .= do_shortcode( '[sf_icon size="medium" icon="' . $icon . '" character="' . $character . '" image="' . $image . '" float="none" cont="no" color="' . $icon_color . '" bgcolor="'. $icon_bg_color .'" link="' . $link . '" target="' . $target . '"]' );
+            } else if ( $type == "standard-center" ) {
+                $icon_box .= do_shortcode( '[sf_icon icon="' . $icon . '" character="' . $character . '" image="' . $image . '" svg="' . $svg . '" animate_svg="' . $animate_svg . '" float="none" cont="no" color="' . $icon_color . '" bgcolor="'. $icon_bg_color .'" link="' . $link . '" target="' . $target . '"]' );
+            } else if ( $type == "standard-center-contained" ) {
+                $icon_box .= do_shortcode( '[sf_icon icon="' . $icon . '" character="' . $character . '" image="' . $image . '" svg="' . $svg . '" animate_svg="' . $animate_svg . '" float="none" cont="yes" color="' . $icon_color . '" bgcolor="'. $icon_bg_color .'" link="' . $link . '" target="' . $target . '"]' );
+            } else if ( $type == "standard-left" ) {
+                $icon_box .= do_shortcode( '[sf_icon icon="' . $icon . '" character="' . $character . '" image="' . $image . '" svg="' . $svg . '" animate_svg="' . $animate_svg . '" float="none" cont="no" color="' . $icon_color . '" bgcolor="'. $icon_bg_color .'" link="' . $link . '" target="' . $target . '"]' );
+            } else if ( $type == "standard-left-contained" ) {
+                $icon_box .= do_shortcode( '[sf_icon icon="' . $icon . '" character="' . $character . '" image="' . $image . '" svg="' . $svg . '" animate_svg="' . $animate_svg . '" float="none" cont="yes" color="' . $icon_color . '" bgcolor="'. $icon_bg_color .'" link="' . $link . '" target="' . $target . '"]' );
+            } else if ( $type == "vertical" ) {
+                $icon_box .= '<div class="icon-wrap">';
+                $icon_box .= do_shortcode( '[sf_icon icon="' . $icon . '" character="' . $character . '" image="' . $image . '" svg="' . $svg . '" animate_svg="' . $animate_svg . '" float="none" cont="no" color="' . $icon_color . '" bgcolor="'. $icon_bg_color .'" link="' . $link . '" target="' . $target . '"]' );
+                $icon_box .= '</div>';
+            } else if ( $type == "vertical-contained" ) {
+                $icon_box .= '<div class="icon-wrap">';
+                $icon_box .= do_shortcode( '[sf_icon icon="' . $icon . '" character="' . $character . '" image="' . $image . '" svg="' . $svg . '" animate_svg="' . $animate_svg . '" float="none" cont="yes" color="' . $icon_color . '" bgcolor="'. $icon_bg_color .'" link="' . $link . '" target="' . $target . '"]' );
+                $icon_box .= '</div>';
             } else if ( $type == "boxed-one" || $type == "boxed-three" ) {
-                $icon_box .= do_shortcode( '[icon size="medium" icon="' . $icon . '" character="' . $character . '" image="' . $image . '" float="none" cont="yes" color="' . $icon_color . '" bgcolor="'. $icon_bg_color .'" link="' . $link . '" target="' . $target . '"]' );
-            } else if ( $type != "boxed-two" && $type != "boxed-four" && $type != "standard-title" && $type != "animated" ) {
-                $icon_box .= do_shortcode( '[icon size="large" icon="' . $icon . '" character="' . $character . '" image="' . $image . '" float="none" cont="no" color="' . $icon_color . '" bgcolor="'. $icon_bg_color .'" link="' . $link . '" target="' . $target . '"]' );
+                $icon_box .= do_shortcode( '[sf_icon size="medium" icon="' . $icon . '" character="' . $character . '" image="' . $image . '" float="none" cont="yes" color="' . $icon_color . '" bgcolor="'. $icon_bg_color .'" link="' . $link . '" target="' . $target . '"]' );
+            } else if ( $type != "boxed-two" && $type != "boxed-four" && $type != "standard-title" && $type != "animated" && $type != "animated-alt" ) {
+                $icon_box .= do_shortcode( '[sf_icon size="large" icon="' . $icon . '" character="' . $character . '" image="' . $image . '" float="none" cont="no" color="' . $icon_color . '" bgcolor="'. $icon_bg_color .'" link="' . $link . '" target="' . $target . '"]' );
             }
+
             if ( $type == "boxed-one" || $type == "boxed-two" || $type == "boxed-three" || $type == "boxed-four" ) {
                 $icon_box .= '<div class="sf-icon-box-content-wrap clearfix" style="background-color:' . $bg_color . ';">';
             } else {
                 $icon_box .= '<div class="sf-icon-box-content-wrap clearfix">';
             }
             if ( $type == "boxed-two" ) {
-                $icon_box .= do_shortcode( '[icon size="medium" icon="' . $icon . '" character="' . $character . '" image="' . $image . '" float="none" cont="no" color="' . $icon_color . '" bgcolor="'. $icon_bg_color .'" link="' . $link . '" target="' . $target . '"]' );
+                $icon_box .= do_shortcode( '[sf_icon size="medium" icon="' . $icon . '" character="' . $character . '" image="' . $image . '" float="none" cont="no" color="' . $icon_color . '" bgcolor="'. $icon_bg_color .'" link="' . $link . '" target="' . $target . '"]' );
             }
 
             if ( $type == "boxed-four" || $type == "standard-title" ) {
@@ -266,7 +363,7 @@
                 }
             }
 
-            if ( $type != "animated" && $type != "bold" ) {
+            if ( $type != "animated" && $type != "animated-alt" && $type != "bold" ) {
                 $icon_box .= '<div class="sf-icon-box-content" style="color:' . $text_color . ';">' . do_shortcode( $content ) . '</div>';
             }
 
@@ -285,6 +382,17 @@
                 $icon_box .= '</div>';
             }
 
+            if ( $type == "animated-alt" ) {
+                $icon_box .= '</div>';
+                $icon_box .= '</div>';
+                $icon_box .= '<div class="back" style="background-color:' . $flip_bg_color . ';">';
+                $icon_box .= '<div class="back-inner-wrap">';
+                $icon_box .= '<div class="sf-icon-box-content" style="color:' . $flip_text_color . ';">' . do_shortcode( $content ) . '</div>';
+                $icon_box .= '</div>';
+                $icon_box .= '</div>';
+                $icon_box .= '</div>';
+            }
+
             $icon_box .= '</div>';
 
             return $icon_box;
@@ -294,7 +402,7 @@
     }
 
 
-    /* IMAGE BANNER SHORTCODE
+    /* IMAGE BANNER SHORTCODE
 	================================================== */
 	if ( ! function_exists( 'sf_imagebanner' ) ) {
 	    function sf_imagebanner( $atts, $content = null ) {
@@ -316,7 +424,7 @@
 	        $image_banner .= '<div class="sf-image-banner ' . $extraclass . '">';
 
 	        if ( $href != "" ) {
-		        if ( sf_current_theme() == "atelier" ) {
+		        if ( sf_current_theme() == "atelier" || sf_current_theme() == "uplift" ) {
 					$image_banner .= '<figure class="animated-overlay">';
 				}
 	            $image_banner .= '<a class="sf-image-banner-link" href="' . $href . '" target="' . $target . '"></a>';
@@ -332,7 +440,7 @@
 	        	$image_banner .= '<img src="' . $image . '" alt="'. $image_alt .'" />';
 			}
 
-			if ( $href != "" && sf_current_theme() == "atelier" ) {
+			if ( $href != "" && sf_current_theme() == "atelier" || sf_current_theme() == "uplift" ) {
 				$image_banner .= '<figcaption></figcaption>';
 				$image_banner .= '</figure>';
 			}
@@ -1094,17 +1202,21 @@
                 $type = "standard";
             }
 
+            if ( $name == "" ) {
+                $name = " ";
+            }
+
             $service_bar_output = '';
 
             $service_bar_output .= '<div class="progress-bar-wrap progress-' . $type . '">' . "\n";
             if ( $colour != "" ) {
-                $service_bar_output .= '<div class="bar-text"><span class="bar-name">' . $name . ':</span> <span class="progress-value" style="color:' . $colour . '!important;">' . $value . '</span></div>' . "\n";
+                $service_bar_output .= '<div class="bar-text"><span class="bar-name">' . $name . '</span> <span class="progress-value" style="color:' . $colour . '!important;">' . $value . '</span></div>' . "\n";
                 $service_bar_output .= '<div class="progress ' . $type . '">' . "\n";
-                $service_bar_output .= '<div class="bar" data-value="' . $percentage . '" style="background-color:' . $colour . '!important;">' . "\n";
+                $service_bar_output .= '<div class="bar" aria-valuenow="' . $percentage . '" aria-valuemin="0" aria-valuemax="100" data-value="' . $percentage . '" style="background-color:' . $colour . '!important;">' . "\n";
             } else {
-                $service_bar_output .= '<div class="bar-text"><span class="bar-name">' . $name . ':</span> <span class="progress-value">' . $value . '</span></div>' . "\n";
+                $service_bar_output .= '<div class="bar-text"><span class="bar-name">' . $name . '</span> <span class="progress-value">' . $value . '</span></div>' . "\n";
                 $service_bar_output .= '<div class="progress ' . $type . '">' . "\n";
-                $service_bar_output .= '<div class="bar" data-value="' . $percentage . '">' . "\n";
+                $service_bar_output .= '<div class="bar" aria-valuenow="' . $percentage . '" aria-valuemin="0" aria-valuemax="100" data-value="' . $percentage . '">' . "\n";
             }
             $service_bar_output .= '</div>' . "\n";
             $service_bar_output .= '</div>' . "\n";
@@ -1116,6 +1228,7 @@
             return $service_bar_output;
         }
         add_shortcode( 'progress_bar', 'sf_progress_bar' );
+        add_shortcode( 'sf_progress_bar', 'sf_progress_bar' );
     }
 
     /* CHART SHORTCODE
@@ -1128,7 +1241,7 @@
                 "barcolour"   => '',
                 "trackcolour" => '',
                 "content"     => '',
-                "linewidth"   => '',
+                "linewidth"   => '3',
                 "align"       => ''
             ), $atts ) );
 
@@ -1141,16 +1254,16 @@
                 $trackcolour = '#f2f2f2';
             }
 
-            if ( $size == "70" && $linewidth == "" ) {
-                $linewidth = "3";
-            }
-            if ( $size == "170" && $linewidth == "" ) {
-                $linewidth = "3";
+            // LINE WIDTH
+            $linewidth = apply_filters( 'sf_chart_shortcode_width', $linewidth );
+            if ( sf_current_theme() == "uplift" ) {
+                $linewidth = apply_filters( 'sf_chart_shortcode_width', '2' );
             }
 
+            // SHORTCODE OUTPUT
             $chart_output .= '<div class="chart-shortcode chart-' . $size . ' chart-' . $align . '" data-linewidth="' . $linewidth . '" data-percent="0" data-animatepercent="' . $percentage . '" data-size="' . $size . '" data-barcolor="' . $barcolour . '" data-trackcolor="' . $trackcolour . '">';
             if ( $content != "" ) {
-                if ( strpos( $content, 'fa-' ) !== false || strpos( $content, 'ss-' ) !== false || strpos( $content, 'sf-im-' ) !== false ) {
+                if ( strpos( $content, 'fa-' ) !== false || strpos( $content, 'ss-' ) !== false || strpos( $content, 'sf-im-' ) !== false || strpos( $content, 'sf-icon-' ) !== false ) {
                     $chart_output .= '<span><i class="' . $content . '"></i></span>';
                 } else {
                     $chart_output .= '<span>' . $content . '</span>';
@@ -1158,12 +1271,15 @@
             }
             $chart_output .= '</div>';
 
+            // UPDATE GLOBAL
             global $sf_has_chart;
             $sf_has_chart = true;
 
+            // RETURN
             return $chart_output;
         }
         add_shortcode( 'chart', 'sf_chart' );
+        add_shortcode( 'sf_chart', 'sf_chart' );
     }
 
 
@@ -1177,7 +1293,7 @@
                 "direction" => 'top'
             ), $atts ) );
 
-            $tooltip_output = '<a href="' . $link . '" rel="tooltip" data-original-title="' . $title . '" data-placement="' . $direction . '">' . do_shortcode( $content ) . '</a>';
+            $tooltip_output = '<a href="' . $link . '" rel="tooltip" data-toggle="tooltip" data-original-title="' . $title . '" data-placement="' . $direction . '">' . do_shortcode( $content ) . '</a>';
 
             return $tooltip_output;
         }
@@ -1370,6 +1486,7 @@
                 "prefix"    => '',
                 "suffix"    => '',
                 "commas"    => 'false',
+                "icon"      => '',
                 "subject"   => '',
                 "textstyle" => '',
                 "color"     => ''
@@ -1386,7 +1503,11 @@
 
             $count_output .= '<div class="sf-count-asset" style="color: ' . $color . ';">';
             $count_output .= '<div class="count-number" data-from="' . $from . '" data-to="' . $to . '" data-speed="' . $speed . '" data-refresh-interval="' . $refresh . '" data-prefix="' . $prefix . '" data-suffix="' . $suffix . '" data-with-commas="' . $commas . '"></div>';
-            $count_output .= '<div class="count-divider"><span></span></div>';
+            if ( $icon != "" ) {
+                $count_output .= '<div class="count-divider has-icon"><span class="icon-divide" style="background-color: ' . $color . ';"></span><i class="' . $icon . '"></i><span class="icon-divide" style="background-color: ' . $color . ';"></span></div>';
+            } else {
+                $count_output .= '<div class="count-divider"><span></span></div>';
+            }
             if ( $textstyle == "h3" ) {
                 $count_output .= '<h3 class="count-subject">' . $subject . '</h3>';
             } else if ( $textstyle == "h6" ) {
@@ -1453,9 +1574,9 @@
                 } else {
                     $share_output .= '<div class="sf-share-counts">';         
                     $share_output .= '<h3 class="share-text">'.__("Share", 'swift-framework-plugin').'</h3>';
-                    $share_output .= '<a href="https://www.facebook.com/sharer/sharer.php?u='.$page_permalink.'&height=640&width=660&resizable=0&toolbar=0&menubar=0&status=0&location=0&scrollbars=0" class="sf-share-link sf-share-fb"><i class="fa-facebook"></i><span class="count">0</span></a>';
-                    $share_output .= '<a href="http://twitter.com/share?text='.$page_title.'&url='.$page_permalink.'&height=640&width=660&resizable=0&toolbar=0&menubar=0&status=0&location=0&scrollbars=0" class="sf-share-link sf-share-twit"><i class="fa-twitter"></i><span class="count">0</span></a>';
-                    $share_output .= '<a href="http://pinterest.com/pin/create/button/?url='.$page_permalink.'&media='.$page_thumb_url.'&description='.$page_title.'&height=640&width=660&resizable=0&toolbar=0&menubar=0&status=0&location=0&scrollbars=0" class="sf-share-link sf-share-pin"><i class="fa-pinterest"></i><span class="count">0</span></a>';
+                    $share_output .= '<a href="https://www.facebook.com/sharer/sharer.php?u='.$page_permalink.'" onclick="javascript:window.open(this.href, \'\', \'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=440,width=660\');return false;" class="sf-share-link sf-share-fb"><i class="fa-facebook"></i><span class="count">0</span></a>';
+                    $share_output .= '<a href="http://twitter.com/share?text='.$page_title.'&url='.$page_permalink.'" onclick="javascript:window.open(this.href, \'\', \'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=440,width=660\');return false;" class="sf-share-link sf-share-twit"><i class="fa-twitter"></i><span class="count">0</span></a>';
+                    $share_output .= '<a href="http://pinterest.com/pin/create/button/?url='.$page_permalink.'&media='.$page_thumb_url.'&description='.$page_title.'" onclick="javascript:window.open(this.href, \'\', \'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=690,width=750\');return false;" class="sf-share-link sf-share-pin"><i class="fa-pinterest"></i><span class="count">0</span></a>';
                     $share_output .= '</div>';
                 }
                 return $share_output;
@@ -1469,7 +1590,7 @@
     	            $share_output = '<div class="article-share" data-buttontext="' . __( "Share this", 'swift-framework-plugin' ) . '" data-image="' . $image . '"></div>';
     	        }
 
-    	        return $share_output;
+    	        return apply_filters( 'sf_social_share_output', $share_output);
             }
 	    }
 
@@ -1479,9 +1600,9 @@
     /* SWIFT SUPER SEARCH SHORTCODE
 	================================================= */
     if ( !function_exists('sf_supersearch') ) {
-        function sf_supersearch() {
+        function sf_supersearch( $contained = "" ) {
             if ( function_exists( 'sf_super_search' ) ) {
-                return sf_super_search();
+                return sf_super_search($contained);
             } else {
                 return "";
             }

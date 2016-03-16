@@ -5,6 +5,49 @@
 
     $icon_list = sf_get_icons_list();
     $animatons_list = sf_get_animations_list();
+    $upload_dir = wp_upload_dir();     
+    $fontello_icons_path = $upload_dir['baseurl'] . '/redux/custom-icon-fonts/fontello_css/fontello-embedded.css';
+    
+    $button_types = array(
+    	'standard' => __('Standard', 'swiftframework'),
+    	'bordered' => __('Bordered', 'swiftframework'),
+    	'rotate-3d' => __('3D Rotate', 'swiftframework'),
+    	'stroke-to-fill' => __('Stroke To Fill', 'swiftframework'),
+    	'sf-icon-reveal' => __('Icon Reveal', 'swiftframework'),
+    	'sf-icon-stroke' => __('Icon', 'swiftframework'),
+    );
+    
+    if (!sf_theme_supports( '3drotate-button' )) {
+    	unset($button_types['rotate-3d']);
+    }
+    if (!sf_theme_supports( 'bordered-button' )) {
+        unset($button_types['bordered']);
+    }
+    
+    $button_sizes = array(
+    	'standard' => __('Standard', 'swiftframework'),
+    	'large'	=> __('Large', 'swiftframework'),
+    );
+    
+    $button_colours = array(
+    	'accent' => __('Accent', 'swiftframework'),
+    	'black'	=> __('Black', 'swiftframework'),
+    	'white'	=> __('White', 'swiftframework'),
+    	'blue'	=> __('Blue', 'swiftframework'),
+    	'grey'	=> __('Grey', 'swiftframework'),
+    	'lightgrey'	=> __('Light Grey', 'swiftframework'),
+    	'orange'	=> __('Orange', 'swiftframework'),
+    	'green'	=> __('Green', 'swiftframework'),
+    	'pink'	=> __('Pink', 'swiftframework'),
+    	'gold'	=> __('Gold', 'swiftframework'),
+    	'transparent-light'	=> __('Transparent - Light', 'swiftframework'),
+    	'transparent-dark'	=> __('Transparent - Dark', 'swiftframework'),
+    );
+    
+    $button_types = apply_filters( 'sf_shortcode_button_types', $button_types );
+    $button_sizes = apply_filters( 'sf_shortcode_button_sizes', $button_sizes );
+    $button_colours = apply_filters( 'sf_shortcode_button_colours', $button_colours );
+         
 ?>
 
 <!-- Swift Framework Shortcode Panel -->
@@ -31,6 +74,10 @@
             src="<?php echo get_option( 'siteurl' ) ?>/wp-includes/js/tinymce/tiny_mce_popup.js"></script>
 
     <base target="_self"/>
+    
+    <?php if ( sf_theme_supports('nucleo-interface-font') || sf_theme_supports('nucleo-general-font') ) { ?>
+    <link href="<?php echo get_template_directory_uri() ?>/css/iconfont.css" rel="stylesheet" type="text/css"/>
+    <?php } ?>
     <?php if ( sf_theme_supports('icon-mind-font') ) { ?>
     <link href="<?php echo get_template_directory_uri() ?>/css/iconmind.css" rel="stylesheet" type="text/css"/>
     <?php } ?>
@@ -38,6 +85,10 @@
     <link href="<?php echo get_template_directory_uri() ?>/css/ss-gizmo.css" rel="stylesheet" type="text/css"/>
     <?php } ?>
     <link href="<?php echo get_template_directory_uri() ?>/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+   
+    <link href="<?php echo $fontello_icons_path ?>" rel="stylesheet"
+          type="text/css"/>
+   
     <link href="<?php echo get_template_directory_uri() ?>/swift-framework/shortcodes/base.css" rel="stylesheet"
           type="text/css"/>
     <link href="<?php echo get_template_directory_uri() ?>/swift-framework/shortcodes/sf-shortcodes-style.css"
@@ -66,7 +117,7 @@
     <label for="shortcode-select"><?php _e( 'Shortcode', 'swiftframework' ); ?></label>
     <select id="shortcode-select" name="shortcode-select">
         <option value="0"></option>
-        <?php if ( sf_woocommerce_activated() && sf_theme_opts_name() == "sf_atelier_options" ) { ?>
+        <?php if ( sf_woocommerce_activated() ) { ?>
         <option value="shortcode-addtocart-button"><?php _e( 'Add to Cart Button', 'swiftframework' ); ?></option>
         <?php } ?>
         <option value="shortcode-buttons"><?php _e( 'Button', 'swiftframework' ); ?></option>
@@ -146,47 +197,31 @@
     <div class="option">
         <label for="button-size"><?php _e( 'Button size', 'swiftframework' ); ?></label>
         <select id="button-size" name="button-size">
-            <option value="standard"><?php _e( 'Standard', 'swiftframework' ); ?></option>
-            <option value="large"><?php _e( 'Large', 'swiftframework' ); ?></option>
+            <?php foreach ($button_sizes as $size_val => $size_name ) {
+            	echo '<option value="' . $size_val . '">' . $size_name . '</option>';
+            } ?>
         </select>
     </div>
     <div class="option">
         <label for="button-colour"><?php _e( 'Button colour', 'swiftframework' ); ?></label>
         <select id="button-colour" name="button-colour">
-            <option value="accent"><?php _e( 'Accent', 'swiftframework' ); ?></option>
-            <option value="black"><?php _e( 'Black', 'swiftframework' ); ?></option>
-            <option value="white"><?php _e( 'White', 'swiftframework' ); ?></option>
-            <option value="blue"><?php _e( 'Blue', 'swiftframework' ); ?></option>
-            <option value="grey"><?php _e( 'Grey', 'swiftframework' ); ?></option>
-            <option value="lightgrey"><?php _e( 'Light Grey', 'swiftframework' ); ?></option>
-            <option value="orange"><?php _e( 'Orange', 'swiftframework' ); ?></option>
-            <option value="turquoise"><?php _e( 'Turquoise', 'swiftframework' ); ?></option>
-            <option value="green"><?php _e( 'Green', 'swiftframework' ); ?></option>
-            <option value="pink"><?php _e( 'Pink', 'swiftframework' ); ?></option>
-            <option value="gold"><?php _e( 'Gold', 'swiftframework' ); ?></option>
-            <option
-                value="transparent-light"><?php _e( 'Transparent - Light (For use on images/dark backgrounds)', 'swiftframework' ); ?></option>
-            <option value="transparent-dark"><?php _e( 'Transparent - Dark', 'swiftframework' ); ?></option>
+        	<?php foreach ($button_colours as $colour_val => $colour_name ) {
+        		echo '<option value="' . $colour_val . '">' . $colour_name . '</option>';
+        	} ?>
         </select>
     </div>
     <div class="option">
         <label for="button-type"><?php _e( 'Button type', 'swiftframework' ); ?></label>
         <select id="button-type" name="button-type">
-            <option value="standard"><?php _e( 'Standard', 'swiftframework' ); ?></option>
-            <?php if (sf_theme_supports( 'bordered-button' )) { ?>
-                <option value="bordered"><?php _e( 'Bordered', 'swiftframework' ); ?></option>
-            <?php } ?>
-            <?php if (sf_theme_supports( '3drotate-button' )) { ?>
-                <option value="rotate-3d"><?php _e( '3D Rotate', 'swiftframework' ); ?></option>
-            <?php } ?>
-            <?php if (sf_theme_supports( 'rounded-button' )) { ?>
-                <option value="rounded"><?php _e( 'Rounded', 'swiftframework' ); ?></option>
-                <option value="rounded bordered"><?php _e( 'Rounded Bordered', 'swiftframework' ); ?></option>
-            <?php } ?>
-            <option value="stroke-to-fill"><?php _e( 'Stroke To Fill', 'swiftframework' ); ?></option>
-            <option value="sf-icon-reveal"><?php _e( 'Icon Reveal', 'swiftframework' ); ?></option>
-            <option value="sf-icon-stroke"><?php _e( 'Icon', 'swiftframework' ); ?></option>
+        	<?php foreach ($button_types as $button_val => $button_name ) {
+        		echo '<option value="' . $button_val . '">' . $button_name . '</option>';
+        	} ?>
         </select>
+    </div>
+    <div class="option">
+        <label for="button-rounded"
+               class="for-checkbox"><?php _e( 'Button rounded', 'swiftframework' ); ?></label>
+        <input id="button-rounded" class="checkbox" name="button-rounded" type="checkbox"/>
     </div>
     <div class="option">
         <label for="button-dropshadow"
@@ -797,13 +832,6 @@
         <input id="countdown-day" name="countdown-day" type="text" value=""/>
 
         <p class="info">Enter the day for which you want the countdown to count to (e.g. 24).</p>
-    </div>
-    <div class="option">
-        <label for="countdown-fontsize"><?php _e( 'Countdown Font Size', 'swiftframework' ); ?></label>
-        <select id="countdown-fontsize" name="countdown-fontsize">
-            <option value="small"><?php _e( 'Small', 'swiftframework' ); ?></option>
-            <option value="large"><?php _e( 'Large', 'swiftframework' ); ?></option>
-        </select>
     </div>
     <div class="option">
         <label for="countdown-displaytext"><?php _e( 'Display Text', 'swiftframework' ); ?></label>

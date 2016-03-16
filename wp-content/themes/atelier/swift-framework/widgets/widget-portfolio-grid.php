@@ -16,7 +16,8 @@
     }
 
     class sf_portfolio_grid extends WP_Widget {
-        function sf_portfolio_grid() {
+    
+        function __construct() {
             parent::__construct( 'sf_custom_portfolio_grid', $name = 'Swift Framework Portfolio Grid' );
         }
 

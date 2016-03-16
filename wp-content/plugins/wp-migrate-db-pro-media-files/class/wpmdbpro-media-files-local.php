@@ -119,6 +119,8 @@ class WPMDBPro_Media_Files_Local extends WPMDBPro_Media_Files_Base {
 				return $response;
 			}
 
+			$response = apply_filters( 'wpmdbmf_get_remote_attachment_batch_response', $response, 'pull', $this );
+
 			if ( '1' == $this->state_data['copy_entire_media'] ) {
 				// skip comparison
 				$return = $this->queue_all_attachments( $response['blogs'], $response['remote_attachments'], $this->state_data['determine_progress'] );
@@ -214,11 +216,12 @@ class WPMDBPro_Media_Files_Local extends WPMDBPro_Media_Files_Base {
 
 		$errors = array();
 		foreach ( $files_to_download as $file_to_download ) {
-			$temp_file_path = $this->download_url( $remote_uploads_url . $file_to_download );
+			$remote_url     = $remote_uploads_url . apply_filters( 'wpmdbmf_file_to_download', $file_to_download, 'pull', $this );
+			$temp_file_path = $this->download_url( $remote_url );
 
 			if ( is_wp_error( $temp_file_path ) ) {
 				$download_error = $temp_file_path->get_error_message();
-				$errors[]       = sprintf( __( 'Could not download file: %1$s - %2$s', 'wp-migrate-db-pro-media-files' ), $remote_uploads_url . $file_to_download, $download_error );
+				$errors[]       = sprintf( __( 'Could not download file: %1$s - %2$s', 'wp-migrate-db-pro-media-files' ), $remote_url, $download_error );
 
 				continue;
 			}
@@ -485,8 +488,8 @@ class WPMDBPro_Media_Files_Local extends WPMDBPro_Media_Files_Base {
 			}
 
 			// compare received batch of files with local filesystem
-			$files_to_remove = $this->get_files_not_on_local( $remote_media_files['files'] );
-			$return_offset = $remote_media_files['last_attachment_id'];
+			$files_to_remove = $this->get_files_not_on_local( $remote_media_files['files'], 'push' );
+			$return_offset   = $remote_media_files['last_attachment_id'];
 		} else {
 			$remote_media_files = $response['local_media_files'];
 
@@ -495,7 +498,7 @@ class WPMDBPro_Media_Files_Local extends WPMDBPro_Media_Files_Base {
 			}
 
 			$files_to_remove = $remote_media_files;
-			$return_offset = end( $remote_media_files );
+			$return_offset   = end( $remote_media_files );
 		}
 
 		// send files not found on local to the remote for deletion

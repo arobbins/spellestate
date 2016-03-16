@@ -5,7 +5,7 @@
     *	Swift Page Builder - Recent Posts Shortcode
     *	------------------------------------------------
     *	Swift Framework
-    * 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+    * 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     */
 
@@ -15,7 +15,7 @@
 
             global $sf_options;
 
-            $title = $width = $excerpt_length = $item_class = $offset = $el_class = $output = $items = $el_position = '';
+            $title = $width = $wrap_class = $title_class = $excerpt_length = $item_class = $offset = $el_class = $output = $items = $el_position = '';
 
             extract( shortcode_atts( array(
                 'title'          => '',
@@ -30,13 +30,15 @@
                 'fullwidth'      => 'no',
                 'gutters'        => 'yes',
                 'button_enabled' => 'no',
+                'pagination'     => 'no',
+                'post_type'      => 'post',
                 'el_position'    => '',
                 'width'          => '1/1',
                 'el_class'       => ''
             ), $atts ) );
 
             $view_all_icon = apply_filters( 'sf_view_all_icon' , '<i class="ss-layergroup"></i>' );
-
+            $pagination_view_icon = apply_filters( 'sf_pagination_view_icon' , '<i class="sf-icon-quickview"></i>' );
 
             /* CATEGORY SLUG MODIFICATION
             ================================================== */
@@ -76,7 +78,7 @@
             }
 
             $recent_post_args = array(
-                'post_type'      => 'post',
+                'post_type'      => $post_type,
                 'post_status'    => 'publish',
                 'category_name'  => $category_slug,
                 'posts_per_page' => $item_count,
@@ -86,12 +88,13 @@
 
             $recent_posts = new WP_Query( $recent_post_args );
 
-
             $count        = 0;
             $image_width  = 270;
             $image_height = 270;
 
             if ( $item_columns == "1" ) {
+                $image_width  = 720;
+                $image_height = 720;
                 $item_class = 'col-sm-12';
             } else if ( $item_columns == "2" ) {
                 $image_width  = 540;
@@ -115,8 +118,28 @@
 
             $list_class = 'posts-type-' . $display_type;
 
+            if ( $display_type == "standard" || ( $display_type == "standard-row" && $carousel == "no" ) ) {
+                $list_class .= ' row';
+            }
+
             if ( $gutters == "no" ) {
                 $list_class .= ' no-gutters';
+            }
+
+            if ( $display_type == "showcase" ) {
+                $carousel = "yes";
+                $list_class .= ' staged-carousel';
+                if ( $pagination == "yes" ) {
+                    $wrap_class = "has-pagination ";
+                }
+                $title_class = "center-title";
+                if ( $sidebars == "no-sidebars" ) {
+                    $fullwidth = "yes";
+                }
+            }
+
+            if ( $display_type == "list" ) {
+                $carousel = "no";
             }
 
             if ( $carousel == "yes" ) {
@@ -134,11 +157,20 @@
             }
 
             if ( $carousel == "yes" ) {
-                $items .= '<div class="posts-carousel carousel-wrap"><div id="carousel-' . $sf_carouselID . '" class="recent-posts carousel-items ' . $list_class . ' clearfix" data-columns="' . $item_columns . '" data-auto="false">';
+                $items .= '<div class="posts-carousel carousel-wrap">';
+                if ( $display_type == "showcase" ) {
+                    $items .= spb_carousel_arrows(true);
+                }
+                $items .= '<div id="carousel-' . $sf_carouselID . '" class="recent-posts carousel-items ' . $list_class . ' clearfix" data-columns="' . $item_columns . '" data-auto="false" data-pagination="'.$pagination.'">';
             } else {
-                $items .= '<div class="recent-posts ' . $list_class . ' row clearfix">';
+                $items .= '<div class="recent-posts ' . $list_class . ' clearfix">';
             }
             while ( $recent_posts->have_posts() ) : $recent_posts->the_post();
+
+                $count++;
+                if ( $count > $item_count ) {
+                    break;
+                }
 
                 $items .= sf_get_recent_post_item( $post, $display_type, $excerpt_length, $item_class );
 
@@ -157,16 +189,18 @@
             $width    = spb_translateColumnWidthToSpan( $width );
 
             $has_button  = false;
-            $page_button = $title_wrap_class = "";
+            $page_button = $title_wrap_class = $view_all = "";
             $blog_page   = __( $sf_options['blog_page'], 'swift-framework-plugin' );
             if ( $category_slug != "" ) {
                 $has_button    = true;
                 $category_id   = get_cat_ID( $category_slug );
                 $category_link = get_category_link( $category_id );
                 $page_button   = '<a class="sf-button medium white sf-icon-stroke " href="' . esc_url( $category_link ) . '">' . $view_all_icon . '<span class="text">' . __( "VIEW ALL ARTICLES", 'swift-framework-plugin' ) . '</span></a>';
+                $view_all = '<a class="view-all hidden" href="' . esc_url( $category_link ) . '">' . $pagination_view_icon . '</a>';
             } else if ( $blog_page != "" ) {
                 $has_button  = true;
                 $page_button = '<a class="sf-button medium white sf-icon-stroke " href="' . get_permalink( $blog_page ) . '">' . $view_all_icon . '<span class="text">' . __( "VIEW ALL ARTICLES", 'swift-framework-plugin' ) . '</span></a>';
+                $view_all = '<a class="view-all hidden" href="' . get_permalink( $blog_page ) . '">' . $pagination_view_icon . '</a>';
             }
             if ( $has_button && $button_enabled == "yes" ) {
                 $title_wrap_class .= 'has-button ';
@@ -175,14 +209,17 @@
                 $title_wrap_class .= 'container ';
             }
 
-            $output .= "\n\t" . '<div class="spb_recent_posts_widget spb_content_element ' . $width . $el_class . '">';
+            $output .= "\n\t" . '<div class="spb_recent_posts_widget spb_content_element ' . $wrap_class . $width . $el_class . '">';
+            if ( $display_type == "showcase" && $pagination == "yes" ) {
+                $output .= "\n\t\t" . $view_all;
+            }
             $output .= "\n\t\t" . '<div class="spb-asset-content">';
 
             if ( spb_get_theme_name() == "joyn" ) {
 
                 if ( $title != '' ) {
                     $output .= "\n\t\t" . '<div class="title-wrap clearfix ' . $title_wrap_class . '">';
-                    $output .= '<h3 class="spb-heading"><span>' . $title . '</span></h3>';
+                    $output .= '<h3 class="spb-heading '.$title_class.'"><span>' . $title . '</span></h3>';
                     $output .= '</div>';
                 }
 
@@ -190,9 +227,9 @@
 
                 $output .= "\n\t\t" . '<div class="title-wrap clearfix ' . $title_wrap_class . '">';
                 if ( $title != '' ) {
-                    $output .= '<h3 class="spb-heading"><span>' . $title . '</span></h3>';
+                    $output .= '<h3 class="spb-heading '.$title_class.'"><span>' . $title . '</span></h3>';
                 }
-                if ( $carousel == "yes" ) {
+                if ( $carousel == "yes" && $display_type != "showcase" ) {
                     $output .= spb_carousel_arrows();
                 }
                 if ( $has_button && $button_enabled == "yes" ) {
@@ -202,8 +239,7 @@
 
             }
 
-
-            $output .= "\n\t\t" . $items;
+            $output .= "\n\t\t\t" . $items;
             $output .= "\n\t\t" . '</div>';
             $output .= "\n\t" . '</div> ' . $this->endBlockComment( $width );
 
@@ -241,12 +277,18 @@
     	);
     }
 
-    SPBMap::map( 'spb_recent_posts', array(
-        "name"   => __( "Recent Posts", 'swift-framework-plugin' ),
-        "base"   => "spb_recent_posts",
-        "class"  => "spb_recent_posts",
-        "icon"   => "spb-icon-recent-posts",
-        "params" => array(
+    if ( sf_theme_supports('posts-showcase') ) {
+        $display_types = array(
+            __( 'Standard', 'swift-framework-plugin' )   => "standard",
+            __( 'Standard Row', 'swift-framework-plugin' )   => "standard-row",
+            __( 'Post List', 'swift-framework-plugin' )  => "list",
+            __( 'Post Showcase', 'swift-framework-plugin' )  => "showcase",
+        );
+    }
+
+    /* PARAMS
+    ================================================== */
+    $params = array(
             array(
                 "type"        => "textfield",
                 "heading"     => __( "Widget title", 'swift-framework-plugin' ),
@@ -269,7 +311,9 @@
                     __( 'No', 'swift-framework-plugin' )  => "no",
                     __( 'Yes', 'swift-framework-plugin' ) => "yes"
                 ),
-                "required"       => array("display_type", "or", "standard,bold,standard-row"),
+                "buttonset_on"  => "yes",
+                "std"         => "no",
+                "required"    => array("display_type", "or", "standard,bold,standard-row"),
                 "description" => __( "Enables carousel funcitonality in the asset.", 'swift-framework-plugin' )
             ),
             array(
@@ -334,6 +378,7 @@
                     __( 'No', 'swift-framework-plugin' )  => "no",
                     __( 'Yes', 'swift-framework-plugin' ) => "yes"
                 ),
+                "buttonset_on"  => "yes",
                 "description" => __( "Select if you'd like the asset to be full width (edge to edge). NOTE: only possible on pages without sidebars.", 'swift-framework-plugin' )
             ),
             array(
@@ -344,6 +389,7 @@
                     __( 'Yes', 'swift-framework-plugin' ) => "yes",
                     __( 'No', 'swift-framework-plugin' )  => "no"
                 ),
+                "buttonset_on"  => "yes",
                 "description" => __( "Select if you'd like spacing between the items, or not.", 'swift-framework-plugin' )
             ),
             array(
@@ -354,14 +400,44 @@
                     __( 'No', 'swift-framework-plugin' )  => "no",
                     __( 'Yes', 'swift-framework-plugin' ) => "yes"
                 ),
+                "buttonset_on"  => "yes",
                 "description" => __( "Select if you'd like to include a button in the title bar to link through to all blog posts. The page is set in Theme Options > Custom Post Type Options, unless you have selected a category above, in which case it will link to that category.", 'swift-framework-plugin' )
             ),
             array(
+                "type"        => "dropdown",
+                "heading"     => __( "Post Type Override", 'swift-framework-plugin' ),
+                "param_name"  => "post_type",
+                "value"       => spb_get_post_types(),
+                "description" => __( "If you'd like to override the post type for which the content is of this asset is made up of, then you can select it here.", 'swift-framework-plugin' )
+            ),
+        );
+
+        $params[] = array(
+            "type"        => "buttonset",
+            "heading"     => __( "Include Pagination", 'swift-framework-plugin' ),
+            "param_name"  => "pagination",
+            "value"       => array(
+                __( "Yes", 'swift-framework-plugin' )             => "yes",
+                __( "No", 'swift-framework-plugin' )             => "no"
+            ),
+            "required"       => array("display_type", "=", "showcase"),
+            "description" => __( "If you would like to include pagination on the showcase asset, then enable it here.", 'swift-framework-plugin' )
+        );
+    
+        $params[] = array(
                 "type"        => "textfield",
                 "heading"     => __( "Extra class", 'swift-framework-plugin' ),
                 "param_name"  => "el_class",
                 "value"       => "",
                 "description" => __( "If you wish to style this particular content element differently, then use this field to add a class name and then refer to it in your css file.", 'swift-framework-plugin' )
-            )
-        )
+        );
+
+    /* SHORTCODE MAP
+    ================================================== */
+    SPBMap::map( 'spb_recent_posts', array(
+        "name"   => __( "Recent Posts", 'swift-framework-plugin' ),
+        "base"   => "spb_recent_posts",
+        "class"  => "spb_recent_posts spb_tab_media",
+        "icon"   => "icon-recent-posts",
+        "params" => $params
     ) );

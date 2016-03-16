@@ -88,9 +88,14 @@
                 $directory_item                = array();
                 $directory_item["pin_title"]   = $result->post_title;
                 $directory_item["pin_content"] = $result->post_content;
+                $directory_excerpt = $result->sf_custom_excerpt;
 
                 //Get the excerpt
-                $content        = $result->post_content;
+                if ( $directory_excerpt != '' && $excerpt_length > 0 ) 
+                   $content = $directory_excerpt;
+                else
+                   $content = $result->post_content;
+
                 $words          = explode( ' ', $content, $excerpt_length + 1 );
                 $categories     = wp_get_post_terms( $result->ID, "directory-category" );
                 $locations      = wp_get_post_terms( $result->ID, "directory-location" );
@@ -228,7 +233,7 @@
 	  /* DIRECTORY ITEMS
     ================================================== */
     if ( ! function_exists( 'sf_directory_items' ) ) {
-        function sf_directory_items($excerpt_length, $pagination, $item_count, $directory_cat){
+        function sf_directory_items($excerpt_length, $pagination, $item_count, $directory_cat, $order = "standard") {
 
             /* OUTPUT VARIABLE
             ================================================== */
@@ -256,6 +261,9 @@
                 $order_by   = "date";
             } else if ( $order == "date-asc" ) {
                 $order_mode = "ASC";
+                $order_by   = "date";
+            } else if ( $order == "date-desc" ) {
+                $order_mode = "DESC";
                 $order_by   = "date";
             } else if ( $order == "title-desc" ) {
                 $order_mode = "DESC";

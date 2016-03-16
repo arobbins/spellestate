@@ -20,7 +20,7 @@
             global $wp_query, $post, $sf_options;
             
             $shop_page  = false;
-            $page_title = $page_subtitle = $page_title_style = $page_title_overlay_effect = $fancy_title_image_url = $article_heading_bg = $article_heading_text = $page_heading_el_class = $page_design_style = $extra_styles = $page_title_text_align = "";
+            $page_title = $page_subtitle = $page_title_style = $page_title_overlay_effect = $fancy_title_image_url = $article_heading_bg = $article_heading_text = $page_heading_el_class = $page_heading_wrap_el_class = $page_design_style = $extra_styles = $page_title_text_align = $woo_category_desc = "";
 
             $show_page_title    = apply_filters( 'sf_page_heading_ns_pagetitle', 1 );
             $remove_breadcrumbs = apply_filters( 'sf_page_heading_ns_removebreadcrumbs', 0 );
@@ -29,8 +29,10 @@
             	$breadcrumb_in_heading = $sf_options['breadcrumb_in_heading'];
             }
             $page_title_height  = 300;
+            $heading_img_width = 0;
+            $heading_img_height = 0;
             $page_title_style   = "standard";
-
+			$page_title_text_align = "center";
             $next_icon = apply_filters( 'sf_next_icon', '<i class="ss-navigateright"></i>' );
             $prev_icon = apply_filters( 'sf_prev_icon', '<i class="ss-navigateleft"></i>' );
 
@@ -99,15 +101,30 @@
                 	$hero_id = get_woocommerce_term_meta( $category->term_id, 'hero_id', true  );
                 	if ( $hero_id != "" && $hero_id != 0 ) {
                 		$fancy_title_image_url = wp_get_attachment_url($hero_id, 'full');
+                		$fancy_title_image_meta = wp_get_attachment_metadata( $hero_id );
+                		$heading_img_width = isset($fancy_title_image_meta['width']) ? $fancy_title_image_meta['width'] : 0;
+                		$heading_img_height = isset($fancy_title_image_meta['height']) ? $fancy_title_image_meta['height'] : 0;
+                	}
+                	if ( $fancy_title_image_url != '' ) {
+                		//$page_title_style = "fancy";
+                	}
+                	if ( sf_theme_supports( 'page-heading-woo-description' ) ) {
+                		if ( $page_title_height == 300 ) {
+                			$page_title_height = 400;
+                		}
+                		$woo_category_desc = sf_woo_get_product_category_description( $category, true );
                 	}
                 }
             }
-            if ( function_exists( 'is_product' ) && is_product() ) {
+            if ( function_exists( 'is_product' ) && is_product() && sf_theme_opts_name( 'sf_uplift_options' ) ) {
                 $product_layout = sf_get_post_meta( $post->ID, 'sf_product_layout', true );
                 if ( $product_layout == "fw-split" ) {
                     return;
                 }
             }
+            
+            // Page Title Style Filter
+            $page_title_style = apply_filters( 'sf_page_title_style', $page_title_style );
 
             // Page Title
             if ( $show_page_title == "" ) {
@@ -125,18 +142,24 @@
                 foreach ( $fancy_title_image as $detail_image ) {
                     if ( isset( $detail_image['url'] ) ) {
                         $fancy_title_image_url = $detail_image['url'];
+                        $heading_img_width = isset($detail_image['width']) ? $detail_image['width'] : 0;
+                        $heading_img_height = isset($detail_image['height']) ? $detail_image['height'] : 0;
                         break;
                     }
                 }
                 if ( ! $fancy_title_image ) {
                     $fancy_title_image     = get_post_thumbnail_id();
                     $fancy_title_image_url = wp_get_attachment_url( $fancy_title_image, 'full' );
+                    $fancy_title_image_meta = wp_get_attachment_metadata( $hero_id );
+                    $heading_img_width = isset($fancy_title_image_meta['width']) ? $fancy_title_image_meta['width'] : 0;
+                    $heading_img_height = isset($fancy_title_image_meta['height']) ? $fancy_title_image_meta['height'] : 0;
                 }
             }
 
             // Page Title Hidden
             if ( ! $show_page_title ) {
                 $page_heading_el_class = "page-heading-hidden";
+                $page_heading_wrap_el_class = "page-heading-wrap-hidden";
             }
 
             // Breadcrumb in heading
@@ -177,7 +200,7 @@
                 ?>
                 <?php if ( $page_title_style == "fancy" || $page_title_style == "fancy-tabbed" ) { ?>
 
-                    <div class="fancy-heading-wrap <?php echo esc_attr($page_title_style); ?>-style">
+                    <div class="fancy-heading-wrap <?php echo $page_heading_wrap_el_class; ?> <?php echo esc_attr($page_title_style); ?>-style">
 
                     <?php if ( $fancy_title_image_url != ""  ) {
 						
@@ -189,12 +212,14 @@
         	            
         	            if ( !$bg_color_title ) {
         	                $bg_color_title = "transparent";
-        	                $bg_opacity_title = "0";
+        	                $bg_opacity_title = 0;
         	            }
+        	            
+        	            $bg_opacity_title = ($bg_opacity_title < 100 ? '0.' . $bg_opacity_title : '1.0');
 
                     ?>
-                        <div class="page-heading fancy-heading clearfix <?php echo esc_attr($page_title_text_style); ?>-style fancy-image <?php echo esc_attr($page_heading_el_class); ?>" style="background-image: url(<?php echo esc_url($fancy_title_image_url); ?>);<?php echo $extra_styles; ?>" data-height="<?php echo esc_attr($page_title_height); ?>">
-                        	<span class="media-overlay" style="background-color:<?php echo $bg_color_title; ?>;opacity:<?php echo ( $bg_opacity_title/100); ?>;"></span>
+                        <div class="page-heading fancy-heading clearfix <?php echo esc_attr($page_title_text_style); ?>-style fancy-image <?php echo esc_attr($page_heading_el_class); ?>" style="background-image: url(<?php echo esc_url($fancy_title_image_url); ?>);<?php echo $extra_styles; ?>" data-height="<?php echo esc_attr($page_title_height); ?>" data-img-width="<?php echo $heading_img_width; ?>" data-img-height="<?php echo $heading_img_height; ?>">
+                        	<span class="media-overlay" style="background-color:<?php echo $bg_color_title; ?>;opacity:<?php echo $bg_opacity_title; ?>;"></span>
 
                     <?php } else { ?>
                         <div class="page-heading fancy-heading <?php echo esc_attr($page_heading_el_class); ?> clearfix" data-height="<?php echo esc_attr($page_title_height); ?>" <?php echo $article_heading_bg; ?>>
@@ -213,7 +238,7 @@
 
                             <?php if ( is_product() ) { ?>
 
-                                <h1 class="entry-title" <?php echo $article_heading_text;; ?>><?php echo esc_attr($page_title); ?></h1>
+                                <h1 class="entry-title" <?php echo $article_heading_text; ?>><?php echo $page_title; ?></h1>
 
                             <?php } else { ?>
 
@@ -223,13 +248,18 @@
 
                         <?php } else { ?>
 
-                            <h1 class="entry-title"><?php echo $page_title; ?></h1>
+                            <h1 class="entry-title" <?php echo $article_heading_text; ?>><?php echo $page_title; ?></h1>
 
                         <?php } ?>
 
                         <?php if ( $page_subtitle ) { ?>
-                            <h3><?php echo $page_subtitle; ?></h3>
+                            <h3 <?php echo $article_heading_text; ?>><?php echo $page_subtitle; ?></h3>
                         <?php } ?>
+                        
+                        <?php if ( $woo_category_desc != "" ) { ?>
+                        	<div class="category-desc" <?php echo $article_heading_text; ?>><?php echo $woo_category_desc; ?></div>
+                        <?php } ?>
+               
 
 						<?php if ( !$remove_breadcrumbs && $breadcrumb_in_heading ) {
 							echo sf_breadcrumbs( true );
@@ -275,13 +305,28 @@
                         <div class="page-heading <?php echo esc_attr($page_heading_el_class); ?> clearfix" <?php echo $article_heading_bg; ?>>
                     <?php } ?>
                     <div class="container">
+                    	
+                    	<?php if ( is_singular( 'portfolio' ) && sf_theme_opts_name() == "sf_uplift_options" ) {
+                    			$portfolio_page = __($sf_options['portfolio_page'], 'swiftframework');
+                    			$index_icon = apply_filters( 'sf_index_icon', '<i class="sf-icon-portfolio"></i>' );
+                    		?>                    			
+                			<div class="post-nav">
+                				<?php if ( isset($portfolio_page) ) { ?>
+                				<div class="view-all"><a href="<?php echo get_permalink($portfolio_page); ?>"><?php echo $index_icon; ?></a></div>
+                				<div class="divide"></div>
+                				<?php } ?>
+                				<div class="prev-item" <?php echo $article_heading_text; ?>><?php next_post_link( '%link', $prev_icon, $enable_category_navigation, '', 'portfolio-category' ); ?></div>
+                				<div class="next-item" <?php echo $article_heading_text; ?>><?php previous_post_link( '%link', $next_icon, $enable_category_navigation, '', 'portfolio-category' ); ?></div>		
+                			</div>
+                    	<?php } ?>
+                    	
                         <div class="heading-text">
 
                             <?php if ( sf_woocommerce_activated() && is_woocommerce() ) { ?>
 
                                 <?php if ( is_product() ) { ?>
 
-                                    <h1 class="entry-title" <?php echo $article_heading_text; ?>><?php echo esc_attr($page_title); ?></h1>
+                                    <h1 class="entry-title" <?php echo $article_heading_text; ?>><?php echo $page_title; ?></h1>
 
                                 <?php } else { ?>
 
@@ -306,7 +351,14 @@
                             <?php } else if ( is_category() ) { ?>
 
                                 <h1 <?php echo $article_heading_text; ?>><?php single_cat_title(); ?></h1>
-
+							
+							<?php } else if ( is_tax() ) {	
+								global $wp_query;
+								$term = $wp_query->get_queried_object();
+								var_dump($term);
+							?>
+								<h1 <?php echo $article_heading_text; ?><?php echo $term->name; ?></h1>
+								
                             <?php } else if ( is_archive() ) { ?>
 
                                 <?php /* If this is a tag archive */
@@ -353,9 +405,9 @@
 
                         </div>
 
-                        <?php if ( is_singular( 'portfolio' ) && ! ( sf_theme_opts_name() == "sf_joyn_options" && $pagination_style == "fs-arrow" ) ) { ?>
-                            <div class="next-item" <?php echo $article_heading_text; ?>><?php previous_post_link( '%link', $next_icon, $enable_category_navigation, '', 'portfolio-category' ); ?></div>
-                            <div class="prev-item" <?php echo $article_heading_text; ?>><?php next_post_link( '%link', $prev_icon, $enable_category_navigation, '', 'portfolio-category' ); ?></div>
+                        <?php if ( is_singular( 'portfolio' ) && ! ( sf_theme_opts_name() == "sf_joyn_options" && $pagination_style == "fs-arrow" ) && sf_theme_opts_name() != "sf_uplift_options" ) { ?>
+	                    	<div class="next-item" <?php echo $article_heading_text; ?>><?php previous_post_link( '%link', $next_icon, $enable_category_navigation, '', 'portfolio-category' ); ?></div>
+	                        <div class="prev-item" <?php echo $article_heading_text; ?>><?php next_post_link( '%link', $prev_icon, $enable_category_navigation, '', 'portfolio-category' ); ?></div>
                         <?php } ?>
 
                         <?php if ( is_singular( 'galleries' ) && ! ( sf_theme_opts_name() == "sf_joyn_options" && $pagination_style == "fs-arrow" ) ) { ?>

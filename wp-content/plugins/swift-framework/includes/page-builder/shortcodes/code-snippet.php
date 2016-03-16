@@ -5,7 +5,7 @@
     *	Swift Page Builder - Code-Snipper Shortcode
     *	------------------------------------------------
     *	Swift Framework
-    * 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+    * 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     */
 
@@ -46,7 +46,7 @@
         "name"   => __( "Code Snippet", 'swift-framework-plugin' ),
         "base"   => "spb_codesnippet",
         "class"  => "spb_codesnippet",
-        "icon"   => "spb-icon-code-snippet",
+        "icon"   => "icon-code-snippet",
         "params" => array(
             array(
                 "type"        => "textfield",

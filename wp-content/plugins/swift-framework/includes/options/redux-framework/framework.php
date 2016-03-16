@@ -20,16 +20,6 @@
         exit;
     }
 
-// Fix for the GT3 page builder: http://www.gt3themes.com/wordpress-gt3-page-builder-plugin/
-    /** @global string $pagenow */
-    if ( has_action( 'ecpt_field_options_' ) ) {
-        global $pagenow;
-        if ( $pagenow === 'admin.php' ) {
-
-            remove_action( 'admin_init', 'pb_admin_init' );
-        }
-    }
-
     if ( ! class_exists( 'ReduxFrameworkInstances' ) ) {
         // Instance Container
         require_once dirname( __FILE__ ) . '/inc/class.redux_instances.php';
@@ -56,6 +46,8 @@
         require_once dirname( __FILE__ ) . '/inc/class.redux_functions.php';
         require_once dirname( __FILE__ ) . '/inc/class.p.php';
 
+        require_once dirname( __FILE__ ) . '/inc/class.thirdparty.fixes.php';
+
         require_once dirname( __FILE__ ) . '/inc/class.redux_filesystem.php';
 
         require_once dirname( __FILE__ ) . '/inc/class.redux_admin_notices.php';
@@ -77,7 +69,7 @@
             // Please update the build number with each push, no matter how small.
             // This will make for easier support when we ask users what version they are using.
 
-            public static $_version = '3.5.7.5';
+            public static $_version = '3.5.9.4';
             public static $_dir;
             public static $_url;
             public static $_upload_dir;
@@ -184,6 +176,8 @@
             public $lang = "";
             public $dev_mode_forced = false;
             public $reload_fields = array();
+            public $omit_share_icons = false;
+            public $omit_admin_items = false;
 
             /**
              * Class Constructor. Defines the args for the theme options class
@@ -259,6 +253,8 @@
                     $this->args['save_defaults'] = false;
                 }
 
+                $this->change_demo_defaults();
+                
                 if ( ! empty ( $this->args['opt_name'] ) ) {
                     /**
                      * SHIM SECTION
@@ -412,13 +408,14 @@
 
                     if ( $this->args['dev_mode'] == true || Redux_Helpers::isLocalHost() == true ) {
                         require_once 'core/dashboard.php';
+                        new reduxDashboardWidget($this);
 
                         if ( ! isset ( $GLOBALS['redux_notice_check'] ) ) {
                             require_once 'core/newsflash.php';
 
                             $params = array(
                                 'dir_name'    => 'notice',
-                                'server_file' => 'http://www.reduxframework.com/' . 'wp-content/uploads/redux/redux_notice.json',
+                                'server_file' => 'http://reduxframework.com/wp-content/uploads/redux/redux_notice.json',
                                 'interval'    => 3,
                                 'cookie_id'   => 'redux_blast',
                             );
@@ -443,7 +440,7 @@
             private function set_redux_content() {
                 $upload_dir        = wp_upload_dir();
                 self::$_upload_dir = $upload_dir['basedir'] . '/redux/';
-                self::$_upload_url = $upload_dir['baseurl'] . '/redux/';
+                self::$_upload_url = str_replace( array( 'https://', 'http://' ), '//', $upload_dir['baseurl'] . '/redux/' );
             }
 
             private function set_default_args() {
@@ -623,14 +620,21 @@
                  * @param string     The locale of the blog or from the 'locale' hook
                  * @param string     'redux-framework'  text domain
                  */
-                $locale = apply_filters( "redux/textdomain/{$this->args['opt_name']}", get_locale(), 'redux-framework' );
-
-                if ( strpos( $locale, '_' ) === false ) {
-                    if ( file_exists( self::$_dir . 'languages/' . strtolower( $locale ) . '_' . strtoupper( $locale ) . '.mo' ) ) {
-                        $locale = strtolower( $locale ) . '_' . strtoupper( $locale );
-                    }
-                }
-                load_textdomain( 'redux-framework', self::$_dir . 'languages/' . $locale . '.mo' );
+//                $locale = apply_filters( "redux/textdomain/{$this->args['opt_name']}", get_locale(), 'redux-framework' );
+//
+//                if ( strpos( $locale, '_' ) === false ) {
+//                    if ( file_exists( self::$_dir . 'languages/' . strtolower( $locale ) . '_' . strtoupper( $locale ) . '.mo' ) ) {
+//                        $locale = strtolower( $locale ) . '_' . strtoupper( $locale );
+//                    }
+//                }
+                
+                $basename = basename(__FILE__);
+                $basepath = plugin_basename(__FILE__);
+                $basepath = str_replace($basename, '', $basepath);
+                
+                $basepath = apply_filters( "redux/textdomain/basepath/{$this->args['opt_name']}", $basepath );
+                
+                load_plugin_textdomain( 'redux-framework', false, $basepath . 'languages');
             }
 // _internationalization()
 
@@ -935,7 +939,7 @@
                             $taxonomies = $args['taxonomies'];
                             unset ( $args['taxonomies'] );
                             $terms = get_terms( $taxonomies, $args ); // this will get nothing
-                            if ( ! empty ( $terms ) && !is_a($terms, 'WP_Error') ) {
+                            if ( ! empty ( $terms ) && ! is_a( $terms, 'WP_Error' ) ) {
                                 foreach ( $terms as $term ) {
                                     $data[ $term->term_id ] = $term->name;
                                 }
@@ -1060,7 +1064,16 @@
                                 $args = array( $args );
                             }
                             $data = call_user_func( $args[0] );
-                        }
+                        } else if ( $type == "users" || $type == "users" ) {
+                            $users = get_users( $args );
+                            if ( ! empty ( $users ) ) {
+                                foreach ( $users as $user ) {
+                                    $data[ $user->ID ] = $user->display_name;
+                                }
+                                //foreach
+                            }
+                            //if
+                        } 
                         //if
                     }
                     //if
@@ -1144,7 +1157,7 @@
                         if ( is_array( $field['data'] ) && ! empty( $field['data'] ) ) {
                             foreach ( $field['data'] as $key => $data ) {
                                 if ( ! empty( $data ) ) {
-                                    if ( ! isset ( $this->field['args'][ $key ] ) ) {
+                                    if ( ! isset ( $field['args'][ $key ] ) ) {
                                         $field['args'][ $key ] = array();
                                     }
                                     $field['options'][ $key ] = $this->get_wordpress_data( $data, $field['args'][ $key ] );
@@ -1214,7 +1227,7 @@
 
                                 if ( $field['type'] == "section" && isset ( $field['indent'] ) && $field['indent'] == "true" ) {
                                     $field['class'] = isset ( $field['class'] ) ? $field['class'] : '';
-                                    $field['class'] .= "redux-section-indent-start";
+                                    $field['class'] .= " redux-section-indent-start";
                                     $this->sections[ $sk ]['fields'][ $k ] = $field;
                                 }
                                 $this->field_default_values( $field );
@@ -1505,6 +1518,10 @@
                     // Let's deal with external links
                     if ( isset ( $this->args['admin_bar_links'] ) ) {
 
+                        if (!$this->args['dev_mode'] && $this->omit_admin_items) {
+                            return;
+                        }
+                        
                         // Group for Main Root Menu (External Group)
                         $wp_admin_bar->add_node( array(
                             'id'     => $this->args["page_slug"] . '-external',
@@ -1723,7 +1740,7 @@
 
                     $curTab = '0';
                     if ( isset ( $_GET['tab'] ) ) {
-                        $curTab = $_GET['tab'];
+                        $curTab = esc_attr($_GET['tab']);
                     }
 
                     // Default url values for enabling hints.
@@ -1905,9 +1922,11 @@
                         // Set show_hints flag to true, so helptab will be displayed.
                         $this->show_hints = true;
 
+                        $hint = apply_filters( 'redux/hints/html', $hint, $field, $this->args );
+                        
                         // Get user pref for displaying hints.
                         $metaVal = get_user_meta( $current_user->ID, 'ignore_hints', true );
-                        if ( 'true' == $metaVal || empty ( $metaVal ) ) {
+                        if ( 'true' == $metaVal || empty ( $metaVal ) && empty( $hint )  ) {
 
                             // Set hand cursor for clickable hints
                             $pointer = '';
@@ -2041,7 +2060,7 @@
                     }
 
                     if ( isset ( $section['customizer_only'] ) && $section['customizer_only'] == true ) {
-                        $section['panel'] = false;
+                        $section['panel']     = false;
                         $this->sections[ $k ] = $section;
                     }
 
@@ -2440,11 +2459,12 @@
                     $class_file = apply_filters( "redux/extension/{$this->args['opt_name']}/$folder", "$path/$folder/extension_{$folder}.php", $class_file );
 
                     if ( $class_file ) {
+                        
                         if ( file_exists( $class_file ) ) {
                             require_once $class_file;
+                            
+                            $this->extensions[ $folder ] = new $extension_class ( $this );
                         }
-
-                        $this->extensions[ $folder ] = new $extension_class ( $this );
                     }
                 }
 
@@ -2759,19 +2779,19 @@
                         'status' => __( 'Invalid security credential.  Please reload the page and try again.', 'redux-framework' ),
                         'action' => ''
                     ) );
-                    
+
                     die();
                 }
-                
-                if (!current_user_can ( $this->args['page_permissions'] )) {
+
+                if ( ! current_user_can( $this->args['page_permissions'] ) ) {
                     echo json_encode( array(
                         'status' => __( 'Invalid user capability.  Please reload the page and try again.', 'redux-framework' ),
                         'action' => ''
                     ) );
-                    
+
                     die();
                 }
-                
+
                 $redux = ReduxFrameworkInstances::get_instance( $_POST['opt_name'] );
 
                 if ( ! empty ( $_POST['data'] ) && ! empty ( $redux->args['opt_name'] ) ) {
@@ -2793,27 +2813,18 @@
                     //    unset($process);
                     //}
                     $_POST['data'] = stripslashes( $_POST['data'] );
-                    parse_str( $_POST['data'], $values );
+                    
+                    // Old method of saving, in case we need to go back! - kp
+                    //parse_str( $_POST['data'], $values );
+                    
+                    // New method to avoid input_var nonesense.  Thanks @harunbasic
+                    $values = $this->redux_parse_str( $_POST['data'] );
+                    
                     $values = $values[ $redux->args['opt_name'] ];
-
 
                     if ( function_exists( 'get_magic_quotes_gpc' ) && get_magic_quotes_gpc() ) {
                         $values = array_map( 'stripslashes_deep', $values );
                     }
-
-                    //$beforeDeep = $values;
-                    //// Ace editor hack for < PHP 5.4. Oy
-                    //if ( isset( $this->fields['ace_editor'] ) ) {
-                    //    if ( function_exists( 'get_magic_quotes_gpc' ) && get_magic_quotes_gpc() ) {
-                    //        foreach ( $this->fields['ace_editor'] as $id => $v ) {
-                    //            if ( version_compare( phpversion(), '5.4', '<' ) ) {
-                    //                $values[ $id ] = stripslashes( $beforeDeep[ $id ] );
-                    //            } else {
-                    //                $values[ $id ] = $beforeDeep[ $id ];
-                    //            }
-                    //        }
-                    //    }
-                    //}
 
                     if ( ! empty ( $values ) ) {
 
@@ -2824,17 +2835,17 @@
                             $redux->set_options( $redux->_validate_options( $values ) );
 
                             $do_reload = false;
-                            if (isset($this->reload_fields) && !empty($this->reload_fields)) {
-                                if (!empty($this->transients['changed_values'])) {
-                                    foreach ($this->reload_fields as $idx => $val) {
-                                        if (  array_key_exists ( $val, $this->transients['changed_values'] )) {
+                            if ( isset( $this->reload_fields ) && ! empty( $this->reload_fields ) ) {
+                                if ( ! empty( $this->transients['changed_values'] ) ) {
+                                    foreach ( $this->reload_fields as $idx => $val ) {
+                                        if ( array_key_exists( $val, $this->transients['changed_values'] ) ) {
                                             $do_reload = true;
                                         }
                                     }
                                 }
                             }
-                            
-                            if ( $do_reload || ( isset ( $values['defaults'] ) && ! empty ( $values['defaults'] ) ) || ( isset ( $values['defaults-section'] ) && ! empty ( $values['defaults-section'] ) )) {
+
+                            if ( $do_reload || ( isset ( $values['defaults'] ) && ! empty ( $values['defaults'] ) ) || ( isset ( $values['defaults-section'] ) && ! empty ( $values['defaults-section'] ) ) ) {
                                 echo json_encode( array( 'status' => 'success', 'action' => 'reload' ) );
                                 die ();
                             }
@@ -3114,9 +3125,9 @@
                 }
 
                 $string = "";
-                if ( ( ( isset ( $this->args['icon_type'] ) && $this->args['icon_type'] == 'image' ) || ( isset ( $section['icon_type'] ) && $section['icon_type'] == 'image' ) ) || ( isset($section['icon'])  && strpos( $section['icon'], '/' ) !== false ) ) {
+                if ( ( ( isset ( $this->args['icon_type'] ) && $this->args['icon_type'] == 'image' ) || ( isset ( $section['icon_type'] ) && $section['icon_type'] == 'image' ) ) || ( isset( $section['icon'] ) && strpos( $section['icon'], '/' ) !== false ) ) {
                     //if( !empty( $this->args['icon_type'] ) && $this->args['icon_type'] == 'image' ) {
-                    $icon = ( ! isset ( $section['icon'] ) ) ? '' : '<img class="image_icon_type" src="' . $section['icon'] . '" /> ';
+                    $icon = ( ! isset ( $section['icon'] ) ) ? '' : '<img class="image_icon_type" src="' . esc_url( $section['icon'] ) . '" /> ';
                 } else {
                     if ( ! empty ( $section['icon_class'] ) ) {
                         $icon_class = ' ' . $section['icon_class'];
@@ -3125,7 +3136,7 @@
                     } else {
                         $icon_class = '';
                     }
-                    $icon = ( ! isset ( $section['icon'] ) ) ? '<i class="el el-cog' . $icon_class . '"></i> ' : '<i class="' . $section['icon'] . $icon_class . '"></i> ';
+                    $icon = ( ! isset ( $section['icon'] ) ) ? '<i class="el el-cog' . esc_attr( $icon_class ) . '"></i> ' : '<i class="' . esc_attr( $section['icon'] ) . esc_attr( $icon_class ) . '"></i> ';
                 }
                 if ( strpos( $icon, 'el-icon-' ) !== false ) {
                     $icon = str_replace( 'el-icon-', 'el el-', $icon );
@@ -3143,7 +3154,7 @@
                 }
 
                 if ( isset ( $section['type'] ) && $section['type'] == "divide" ) {
-                    $string .= '<li class="divide' . $section['class'] . '">&nbsp;</li>';
+                    $string .= '<li class="divide' . esc_attr( $section['class'] ) . '">&nbsp;</li>';
                 } else if ( ! isset ( $section['subsection'] ) || $section['subsection'] != true ) {
 
                     // DOVY! REPLACE $k with $section['ID'] when used properly.
@@ -3152,14 +3163,14 @@
                     $subsectionsClass = $subsections ? ' hasSubSections' : '';
                     $subsectionsClass .= ( ! isset ( $section['fields'] ) || empty ( $section['fields'] ) ) ? ' empty_section' : '';
                     $extra_icon = $subsections ? '<span class="extraIconSubsections"><i class="el el-chevron-down">&nbsp;</i></span>' : '';
-                    $string .= '<li id="' . $k . $suffix . '_section_group_li" class="redux-group-tab-link-li' . $hide_section . $section['class'] . $subsectionsClass . '">';
-                    $string .= '<a href="javascript:void(0);" id="' . $k . $suffix . '_section_group_li_a" class="redux-group-tab-link-a" data-key="' . $k . '" data-rel="' . $k . $suffix . '">' . $extra_icon . $icon . '<span class="group_title">' . $section['title'] . '</span></a>';
+                    $string .= '<li id="' . esc_attr( $k . $suffix ) . '_section_group_li" class="redux-group-tab-link-li' . esc_attr( $hide_section ) . esc_attr( $section['class'] ) . esc_attr( $subsectionsClass ) . '">';
+                    $string .= '<a href="javascript:void(0);" id="' . esc_attr( $k . $suffix ) . '_section_group_li_a" class="redux-group-tab-link-a" data-key="' . esc_attr( $k ) . '" data-rel="' . esc_attr( $k . $suffix ) . '">' . $extra_icon . $icon . '<span class="group_title">' . wp_kses_post( $section['title'] ) . '</span></a>';
 
                     $nextK = $k;
 
                     // Make sure you can make this a subsection
                     if ( $subsections ) {
-                        $string .= '<ul id="' . $nextK . $suffix . '_section_group_li_subsections" class="subsection">';
+                        $string .= '<ul id="' . esc_attr( $nextK . $suffix ) . '_section_group_li_subsections" class="subsection">';
                         $doLoop = true;
 
                         while ( $doLoop ) {
@@ -3186,7 +3197,7 @@
 
                                 if ( ( isset ( $this->args['icon_type'] ) && $this->args['icon_type'] == 'image' ) || ( isset ( $sections[ $nextK ]['icon_type'] ) && $sections[ $nextK ]['icon_type'] == 'image' ) ) {
                                     //if( !empty( $this->args['icon_type'] ) && $this->args['icon_type'] == 'image' ) {
-                                    $icon = ( ! isset ( $sections[ $nextK ]['icon'] ) ) ? '' : '<img class="image_icon_type" src="' . $sections[ $nextK ]['icon'] . '" /> ';
+                                    $icon = ( ! isset ( $sections[ $nextK ]['icon'] ) ) ? '' : '<img class="image_icon_type" src="' . esc_url( $sections[ $nextK ]['icon'] ) . '" /> ';
                                 } else {
                                     if ( ! empty ( $sections[ $nextK ]['icon_class'] ) ) {
                                         $icon_class = ' ' . $sections[ $nextK ]['icon_class'];
@@ -3195,15 +3206,15 @@
                                     } else {
                                         $icon_class = '';
                                     }
-                                    $icon = ( ! isset ( $sections[ $nextK ]['icon'] ) ) ? '' : '<i class="' . $sections[ $nextK ]['icon'] . $icon_class . '"></i> ';
+                                    $icon = ( ! isset ( $sections[ $nextK ]['icon'] ) ) ? '' : '<i class="' . esc_attr( $sections[ $nextK ]['icon'] ) . esc_attr( $icon_class ) . '"></i> ';
                                 }
                                 if ( strpos( $icon, 'el-icon-' ) !== false ) {
                                     $icon = str_replace( 'el-icon-', 'el el-', $icon );
                                 }
 
                                 $section[ $nextK ]['class'] = isset ( $section[ $nextK ]['class'] ) ? $section[ $nextK ]['class'] : '';
-                                $string .= '<li id="' . $nextK . $suffix . '_section_group_li" class="redux-group-tab-link-li ' . $hide_sub . $section[ $nextK ]['class'] . ( $icon ? ' hasIcon' : '' ) . '">';
-                                $string .= '<a href="javascript:void(0);" id="' . $nextK . $suffix . '_section_group_li_a" class="redux-group-tab-link-a" data-key="' . $nextK . '" data-rel="' . $nextK . $suffix . '">' . $icon . '<span class="group_title">' . $sections[ $nextK ]['title'] . '</span></a>';
+                                $string .= '<li id="' . esc_attr( $nextK . $suffix ) . '_section_group_li" class="redux-group-tab-link-li ' . esc_attr( $hide_sub ) . esc_attr( $section[ $nextK ]['class'] ) . ( $icon ? ' hasIcon' : '' ) . '">';
+                                $string .= '<a href="javascript:void(0);" id="' . esc_attr( $nextK . $suffix ) . '_section_group_li_a" class="redux-group-tab-link-a" data-key="' . esc_attr( $nextK ) . '" data-rel="' . esc_attr( $nextK . $suffix ) . '">' . $icon . '<span class="group_title">' . wp_kses_post( $sections[ $nextK ]['title'] ) . '</span></a>';
                                 $string .= '</li>';
                             }
                         }
@@ -3675,8 +3686,6 @@
                                     }
                                 } else {
                                     if ( $val == $checkValue ) {
-                                        echo $val . '<br>';
-                                        echo $checkValue;
                                         $return = true;
                                     }
                                 }
@@ -3877,6 +3886,129 @@
                 }
 
                 return $data_string;
+            }
+
+            /**
+             * Parses the string into variables without the max_input_vars limitation.
+             *
+             * @since   3.5.7.11
+             * @author  harunbasic
+             * @access  public
+             *
+             * @param   string $string
+             *
+             * @return  array $result
+             */
+            function redux_parse_str( $string ) {
+                if ( '' == $string ) {
+                    return false;
+                }
+
+                $result = array();
+                $pairs  = explode( '&', $string );
+
+                foreach ( $pairs as $key => $pair ) {
+                    // use the original parse_str() on each element
+                    parse_str( $pair, $params );
+
+                    $k = key( $params );
+
+                    if ( ! isset( $result[ $k ] ) ) {
+                        $result += $params;
+                    } else {
+                        $result[ $k ] = $this->redux_array_merge_recursive_distinct( $result[ $k ], $params[ $k ] );
+                    }
+                }
+
+                return $result;
+            }
+
+
+            /**
+             * Merge arrays without converting values with duplicate keys to arrays as array_merge_recursive does.
+             * As seen here http://php.net/manual/en/function.array-merge-recursive.php#92195
+             *
+             * @since   3.5.7.11
+             * @author  harunbasic
+             * @access  public
+             *
+             * @param   array $array1
+             * @param   array $array2
+             *
+             * @return  array $merged
+             */
+            function redux_array_merge_recursive_distinct( array $array1, array $array2 ) {
+                $merged = $array1;
+                
+                foreach ( $array2 as $key => $value ) {
+                    if ( is_array( $value ) && isset( $merged[$key] ) && is_array( $merged[$key] ) ) {
+                        $merged[$key] = $this->redux_array_merge_recursive_distinct( $merged[$key], $value );
+                    } else if ( is_numeric( $key ) && isset( $merged[$key] ) ) {
+                        $merged[] = $value;  
+                    } else {
+                        $merged[$key] = $value;
+                    }
+                }
+
+                return $merged;
+            }
+            
+            private function change_demo_defaults() {
+                if ($this->args['dev_mode'] == true || Redux_Helpers::isLocalHost() == true) {
+                    if (!empty($this->args['admin_bar_links'])) {
+                        foreach($this->args['admin_bar_links'] as $idx => $arr) {
+                            if (is_array($arr) && !empty($arr)) {
+                                foreach($arr as $x => $y) {
+                                    if (strpos(strtolower($y), 'redux') >= 0) {
+                                        $msg = __('<strong>Redux Framework Notice: </strong>There are references to the Redux Framework support site in your config\'s <code>admin_bar_links</code> argument.  This is sample data.  Please change or remove this data before shipping your product.', 'redux-framework');
+                                        $this->display_arg_change_notice('admin', $msg);
+                                        $this->omit_admin_items = true;
+                                        continue;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
+                    if (!empty($this->args['share_icons'])) {
+                        foreach($this->args['share_icons'] as $idx => $arr) {
+                            if (is_array($arr) && !empty($arr)) {
+                                foreach($arr as $x => $y) {
+                                    if (strpos(strtolower($y), 'redux') >= 0) {
+                                        $msg = __('<strong>Redux Framework Notice: </strong>There are references to the Redux Framework support site in your config\'s <code>share_icons</code> argument.  This is sample data.  Please change or remove this data before shipping your product.', 'redux-framework');
+                                        $this->display_arg_change_notice('share', $msg);
+                                        $this->omit_share_icons = true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
+                }
+            }
+            
+            private function display_arg_change_notice($mode, $msg = '') {
+                if ($mode == 'admin') {
+                    if (!$this->omit_admin_items) {
+                        $this->admin_notices[] = array(
+                            'type'    => 'error',
+                            'msg'     => $msg,
+                            'id'      => 'admin_config',
+                            'dismiss' => true,
+                        );                    
+                    }
+                }
+                
+                if ($mode == 'share') {
+                    if (!$this->omit_share_icons) {
+                        $this->admin_notices[] = array(
+                            'type'    => 'error',
+                            'msg'     => $msg,
+                            'id'      => 'share_config',
+                            'dismiss' => true,
+                        );                    
+                    }
+                }
             }
         }
 

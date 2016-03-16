@@ -3,7 +3,7 @@
 Plugin Name: WooCommerce Stripe Gateway
 Plugin URI: http://www.woothemes.com/products/stripe/
 Description: A payment gateway for Stripe (https://stripe.com/). A Stripe account and a server with Curl, SSL support, and a valid SSL certificate is required (for security reasons) for this gateway to function. Requires WC 2.1+
-Version: 2.5.3
+Version: 2.6.9
 Author: Mike Jolley
 Author URI: http://mikejolley.com
 
@@ -39,7 +39,7 @@ class WC_Stripe {
 	 * Constructor
 	 */
 	public function __construct() {
-		define( 'WC_STRIPE_VERSION', '2.5.3' );
+		define( 'WC_STRIPE_VERSION', '2.6.9' );
 		define( 'WC_STRIPE_TEMPLATE_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) . '/templates/' );
 		define( 'WC_STRIPE_PLUGIN_URL', untrailingslashit( plugins_url( basename( plugin_dir_path( __FILE__ ) ), basename( __FILE__ ) ) ) );
 		define( 'WC_STRIPE_MAIN_FILE', __FILE__ );
@@ -82,7 +82,13 @@ class WC_Stripe {
 		include_once( 'includes/class-wc-gateway-stripe-saved-cards.php' );
 
 		if ( class_exists( 'WC_Subscriptions_Order' ) || class_exists( 'WC_Pre_Orders_Order' ) ) {
+
 			include_once( 'includes/class-wc-gateway-stripe-addons.php' );
+
+			// Support for WooCommerce Subscriptions 1.n
+			if ( ! function_exists( 'wcs_create_renewal_order' ) ) {
+				include_once( 'includes/deprecated/class-wc-gateway-stripe-addons-deprecated.php' );
+			}
 		}
 
 		// Localisation
@@ -94,7 +100,12 @@ class WC_Stripe {
 	 */
 	public function register_gateway( $methods ) {
 		if ( class_exists( 'WC_Subscriptions_Order' ) || class_exists( 'WC_Pre_Orders_Order' ) ) {
-			$methods[] = 'WC_Gateway_Stripe_Addons';
+			// Support for WooCommerce Subscriptions 1.n
+			if ( class_exists( 'WC_Subscriptions_Order' ) && ! function_exists( 'wcs_create_renewal_order' ) ) {
+				$methods[] = 'WC_Gateway_Stripe_Addons_Deprecated';
+			} else {
+				$methods[] = 'WC_Gateway_Stripe_Addons';
+			}
 		} else {
 			$methods[] = 'WC_Gateway_Stripe';
 		}
@@ -108,7 +119,7 @@ class WC_Stripe {
 	 * @param  int $order_id
 	 */
 	public function capture_payment( $order_id ) {
-		$order = new WC_Order( $order_id );
+		$order = wc_get_order( $order_id );
 
 		if ( $order->payment_method == 'stripe' ) {
 			$charge   = get_post_meta( $order_id, '_stripe_charge_id', true );
@@ -146,7 +157,7 @@ class WC_Stripe {
 	 * @param  int $order_id
 	 */
 	public function cancel_payment( $order_id ) {
-		$order = new WC_Order( $order_id );
+		$order = wc_get_order( $order_id );
 
 		if ( $order->payment_method == 'stripe' ) {
 			$charge   = get_post_meta( $order_id, '_stripe_charge_id', true );

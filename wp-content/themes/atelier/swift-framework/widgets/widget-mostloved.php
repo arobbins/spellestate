@@ -6,7 +6,7 @@
     class lip_most_loved_widget extends WP_Widget {
 
         /** constructor */
-        function lip_most_loved_widget() {
+        function __construct() {
             parent::__construct( false, $name = __( 'Most Loved Items', 'swiftframework' ), array( 'description' => __( 'Show the most loved items', 'swiftframework' ) ) );
         }
 

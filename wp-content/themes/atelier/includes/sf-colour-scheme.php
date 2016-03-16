@@ -387,7 +387,7 @@
 	
 		global $sf_customize_item_array;
 		
-		$schema_name = $_REQUEST['schema_name'];
+		$schema_name = esc_url( $_REQUEST['schema_name'] );
 		$new_schema = array();
 		
 		if ( $schema_name ) {

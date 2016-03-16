@@ -242,6 +242,7 @@
 			    'asset_type'     => '',
 			    'category'       => '',
 			    'products'		 => '',
+			    'display_layout' => '',
 			    'display_type'	 => '',
 			    'carousel'       => '',
 			    'multi_masonry'	 => '',
@@ -255,7 +256,7 @@
 			    'width'          => '',
 			), $atts ) );
 			
-            global $woocommerce, $woocommerce_loop, $sf_sidebar_config, $sf_carouselID, $sf_options, $sf_product_multimasonry;
+            global $woocommerce, $woocommerce_loop, $sf_sidebar_config, $sf_carouselID, $sf_options, $sf_product_multimasonry, $sf_product_display_layout;
 
             if ( $sf_carouselID == "" ) {
                 $sf_carouselID = 1;
@@ -287,6 +288,10 @@
 			} else {
 				$sf_product_multimasonry = false;
 			}
+			
+			if ( $display_layout != '' ) {
+				$sf_product_display_layout = $display_layout;
+			}
 
             if ( $carousel == "no" && $multi_masonry == "no" ) {
                 $list_class .= 'product-grid ';
@@ -298,8 +303,8 @@
 
 			$args = array();
 
-            $sf_prev_icon = apply_filters( 'sf_prev_icon', '<i class="ss-navigateleft"></i>' );
-            $sf_next_icon = apply_filters( 'sf_next_icon', '<i class="ss-navigateright"></i>' );
+            $sf_prev_icon = apply_filters( 'sf_carousel_prev_icon', '<i class="ss-navigateleft"></i>' );
+            $sf_next_icon = apply_filters( 'sf_carousel_next_icon', '<i class="ss-navigateright"></i>' );
 
             // CATEGORY ASSET OUTPUT
         	if ($asset_type == "categories") {
@@ -309,8 +314,9 @@
         		$hide_empty = 1;
 				$category_id = '';
 				
-				if ( $category != "" ) {	
-        			$category_term = get_term_by('name', $category, 'product_cat');
+				if ( $category != "" ) {
+					$category = str_replace( "0,", "", $category );
+        			$category_term = get_term_by('slug', $category, 'product_cat');
         			$category_id = $category_term->term_id;
         		}
         		
@@ -342,7 +348,7 @@
 
 	                    <div class="product-carousel carousel-wrap <?php echo $list_class; ?>">
 
-	                        <ul class="products list-<?php echo $asset_type; ?> carousel-items" id="carousel-<?php echo $sf_carouselID; ?>" data-columns="<?php echo $columns; ?>">
+	                        <ul class="products list-<?php echo $asset_type; ?> carousel-items gutters" id="carousel-<?php echo $sf_carouselID; ?>" data-columns="<?php echo $columns; ?>">
 
 	                            <?php
 
@@ -543,10 +549,9 @@
 
                 <?php if ( $carousel == "yes" ) { ?>
 
-                    <ul class="product-carousel carousel-wrap <?php echo $list_class; ?>">
+                    <div class="product-carousel carousel-wrap <?php echo $list_class; ?>">
 
-                        <div class="products list-<?php echo $asset_type; ?> carousel-items"
-                             id="carousel-<?php echo $sf_carouselID; ?>" data-columns="<?php echo $columns; ?>">
+                        <ul class="products list-<?php echo $asset_type; ?> carousel-items gutters" id="carousel-<?php echo $sf_carouselID; ?>" data-columns="<?php echo $columns; ?>">
 
                             <?php while ( $products->have_posts() ) : $products->the_post(); ?>
 
@@ -554,7 +559,7 @@
 
                             <?php endwhile; // end of the loop. ?>
 
-                        </div>
+                        </ul>
 
                         <?php if ( sf_theme_opts_name() != "sf_atelier_options" ) { ?>
 
@@ -563,7 +568,7 @@
 
 						<?php } ?>
 
-                    </ul>
+                    </div>
 
                 <?php } else { ?>
 
@@ -587,14 +592,19 @@
 
             <?php
             }
-
+			
+			// Get contents and then clean output
             $product_list_output = ob_get_contents();
             ob_end_clean();
-
+		
+			// Reset query
             wp_reset_query();
             wp_reset_postdata();
             remove_filter( 'posts_clauses', array( $woocommerce->query, 'order_by_rating_post_clauses' ) );
-
+			
+			// Reset global
+			$sf_product_display_layout = "";
+			
             return $product_list_output;
 
         }

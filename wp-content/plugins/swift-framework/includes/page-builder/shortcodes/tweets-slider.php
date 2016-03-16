@@ -5,7 +5,7 @@
     *	Swift Page Builder - Tweets Slider Shortcode
     *	------------------------------------------------
     *	Swift Framework
-    * 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+    * 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     */
 
@@ -82,8 +82,8 @@
     SPBMap::map( 'spb_tweets_slider', array(
         "name"          => __( "Tweets Slider", 'swift-framework-plugin' ),
         "base"          => "spb_tweets_slider",
-        "class"         => "spb-tweets-slider",
-        "icon"          => "spb-icon-tweets-slider",
+        "class"         => "spb-tweets-slider spb_tab_media",
+        "icon"          => "icon-tweet-slider",
         "wrapper_class" => "clearfix",
         "params"        => array(
             array(
@@ -116,6 +116,7 @@
                     __( 'Yes', 'swift-framework-plugin' ) => "yes",
                     __( 'No', 'swift-framework-plugin' )  => "no"
                 ),
+                "buttonset_on"  => "yes",
                 "description" => __( "Select if you want the slider to autoplay or not.", 'swift-framework-plugin' )
             ),
             array(

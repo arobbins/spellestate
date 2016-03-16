@@ -1,19 +1,19 @@
 <?php
 /**
  * groups-admin-groups-remove.php
- * 
+ *
  * Copyright (c) "kento" Karim Rahimpur www.itthinx.com
- * 
+ *
  * This code is released under the GNU General Public License.
  * See COPYRIGHT.txt and LICENSE.txt.
- * 
+ *
  * This code is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * This header and all notices must be kept intact.
- * 
+ *
  * @author Karim Rahimpur
  * @package groups
  * @since groups 1.1.0
@@ -28,33 +28,31 @@ if ( !defined( 'ABSPATH' ) ) {
  * @param int $group_id group id
  */
 function groups_admin_groups_remove( $group_id ) {
-	
+
 	global $wpdb;
-	
+
 	if ( !current_user_can( GROUPS_ADMINISTER_GROUPS ) ) {
 		wp_die( __( 'Access denied.', GROUPS_PLUGIN_DOMAIN ) );
 	}
-	
+
 	$group = Groups_Group::read( intval( $group_id ) );
-	
+
 	if ( empty( $group ) ) {
 		wp_die( __( 'No such group.', GROUPS_PLUGIN_DOMAIN ) );
 	}
-	
+
 	$group_table = _groups_get_tablename( 'group' );
 
 	$current_url = ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 	$current_url = remove_query_arg( 'action', $current_url );
 	$current_url = remove_query_arg( 'group_id', $current_url );
-	
+
 	$output =
-		'<div class="manage-groups">' .
-		'<div>' .
-		'<h2>' .
+		'<div class="manage-groups wrap">' .
+		'<h1>' .
 		__( 'Remove a group', GROUPS_PLUGIN_DOMAIN ) .
-		'</h2>' .
-		'</div>' .
-		'<form id="remove-group" action="' . $current_url . '" method="post">' .
+		'</h1>' .
+		'<form id="remove-group" action="' . esc_url( $current_url ) . '" method="post">' .
 		'<div class="group remove">' .
 		'<input id="group-id-field" name="group-id-field" type="hidden" value="' . esc_attr( intval( $group->group_id ) ) . '"/>' .
 		'<ul>' .
@@ -63,34 +61,32 @@ function groups_admin_groups_remove( $group_id ) {
 		wp_nonce_field( 'groups-remove', GROUPS_ADMIN_GROUPS_NONCE, true, false ) .
 		'<input class="button button-primary" type="submit" value="' . __( 'Remove', GROUPS_PLUGIN_DOMAIN ) . '"/>' .
 		'<input type="hidden" value="remove" name="action"/>' .
-		'<a class="cancel button" href="' . $current_url . '">' . __( 'Cancel', GROUPS_PLUGIN_DOMAIN ) . '</a>' .
+		'<a class="cancel button" href="' . esc_url( $current_url ) . '">' . __( 'Cancel', GROUPS_PLUGIN_DOMAIN ) . '</a>' .
 		'</div>' .
 		'</div>' . // .group.remove
 		'</form>' .
 		'</div>'; // .manage-groups
-	
+
 	echo $output;
-	
-	Groups_Help::footer();
 } // function groups_admin_groups_remove
 
 /**
  * Handle remove form submission.
  */
 function groups_admin_groups_remove_submit() {
-	
+
 	global $wpdb;
-	
+
 	$result = false;
-	
+
 	if ( !current_user_can( GROUPS_ADMINISTER_GROUPS ) ) {
 		wp_die( __( 'Access denied.', GROUPS_PLUGIN_DOMAIN ) );
 	}
-	
+
 	if ( !wp_verify_nonce( $_POST[GROUPS_ADMIN_GROUPS_NONCE], 'groups-remove' ) ) {
 		wp_die( __( 'Access denied.', GROUPS_PLUGIN_DOMAIN ) );
 	}
-	
+
 	$group_id = isset( $_POST['group-id-field'] ) ? $_POST['group-id-field'] : null;
 	$group = Groups_Group::read( $group_id );
 	if ( $group ) {
@@ -134,12 +130,10 @@ function groups_admin_groups_bulk_remove() {
 	$current_url = remove_query_arg( 'action', $current_url );
 	$current_url = remove_query_arg( 'group_id', $current_url );
 
-	$output .= '<div class="manage-groups">';
-	$output .= '<div>';
-	$output .= '<h2>';
+	$output .= '<div class="manage-groups wrap">';
+	$output .= '<h1>';
 	$output .= __( 'Remove groups', GROUPS_PLUGIN_DOMAIN );
-	$output .= '</h2>';
-	$output .= '</div>';
+	$output .= '</h1>';
 
 	$output .= '<form id="groups-action" method="post" action="">';
 	$output .= '<div class="group remove">';
@@ -157,7 +151,7 @@ function groups_admin_groups_bulk_remove() {
 		$output .= '</ul>';
 	}
 	$output .= '<input class="button button-primary" type="submit" name="bulk" value="' . __( "Remove", GROUPS_PLUGIN_DOMAIN ) . '"/>';
-	$output .= '<a class="cancel button" href="' . $current_url . '">' . __( 'Cancel', GROUPS_PLUGIN_DOMAIN ) . '</a>';
+	$output .= '<a class="cancel button" href="' . esc_url( $current_url ) . '">' . __( 'Cancel', GROUPS_PLUGIN_DOMAIN ) . '</a>';
 
 	$output .= '<input type="hidden" name="action" value="groups-action"/>';
 	$output .= '<input type="hidden" name="bulk-action" value="remove-group"/>';
@@ -169,8 +163,6 @@ function groups_admin_groups_bulk_remove() {
 	$output .= '</div>';
 
 	echo $output;
-
-	Groups_Help::footer();
 } // function groups_admin_groups_bulk_remove
 
 /**

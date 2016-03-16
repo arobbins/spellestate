@@ -5,7 +5,7 @@
     *	Swift Page Builder - Portfolio Shortcode
     *	------------------------------------------------
     *	Swift Framework
-    * 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+    * 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     */
 
@@ -120,6 +120,13 @@
 
     /* PARAMS
     ================================================== */
+    $pagination_types = array(
+        __( 'None', 'swift-framework-plugin' ) => "none",
+        __( 'Standard', 'swift-framework-plugin' )  => "standard"
+    );
+
+    $pagination_types = apply_filters( 'spb_portfolio_pagination_types', $pagination_types );
+    
     $params = array(
         array(
             "type"        => "textfield",
@@ -154,9 +161,10 @@
             "heading"     => __( "Full Width", 'swift-framework-plugin' ),
             "param_name"  => "fullwidth",
             "value"       => array(
-                __( 'Yes', 'swift-framework-plugin' ) => "yes",
-                __( 'No', 'swift-framework-plugin' )  => "no"
+                __( 'No', 'swift-framework-plugin' )  => "no",
+                __( 'Yes', 'swift-framework-plugin' ) => "yes"
             ),
+            "buttonset_on"  => "yes",
             "description" => __( "Select if you'd like the asset to be full width (edge to edge). NOTE: only possible on pages without sidebars.", 'swift-framework-plugin' )
         ),
         array(
@@ -167,6 +175,7 @@
                 __( 'Yes', 'swift-framework-plugin' ) => "yes",
                 __( 'No', 'swift-framework-plugin' )  => "no"
             ),
+            "buttonset_on"  => "yes",
             "description" => __( "Select if you'd like spacing between the items, or not.", 'swift-framework-plugin' )
         ),
         array(
@@ -185,6 +194,7 @@
                 __( 'Yes', 'swift-framework-plugin' ) => "yes",
                 __( 'No', 'swift-framework-plugin' )  => "no"
             ),
+            "buttonset_on"  => "yes",
             "required"       => array("display_type", "or", "standard,masonry"),
             "description" => __( "Show the item title text.", 'swift-framework-plugin' )
         ),
@@ -196,6 +206,7 @@
                 __( 'Yes', 'swift-framework-plugin' ) => "yes",
                 __( 'No', 'swift-framework-plugin' )  => "no"
             ),
+            "buttonset_on"  => "yes",
             "required"       => array("display_type", "or", "standard,masonry"),
             "description" => __( "Show the item subtitle text.", 'swift-framework-plugin' )
         ),
@@ -207,6 +218,7 @@
                 __( 'Yes', 'swift-framework-plugin' ) => "yes",
                 __( 'No', 'swift-framework-plugin' )  => "no"
             ),
+            "buttonset_on"  => "yes",
             "required"       => array("display_type", "or", "standard,masonry"),
             "description" => __( "Show the item excerpt text.", 'swift-framework-plugin' )
         ),
@@ -218,6 +230,7 @@
                 __( 'Yes', 'swift-framework-plugin' ) => "yes",
                 __( 'No', 'swift-framework-plugin' )  => "no"
             ),
+            "buttonset_on"  => "yes",
             "std"         => "no",
             "required"       => array("display_type", "or", "gallery,masonry-gallery,multi-size-masonry"),
             "description" => __( "Show the item excerpt on hover, instead of the arrow button.", 'swift-framework-plugin' )
@@ -275,16 +288,14 @@
                 __( 'Yes', 'swift-framework-plugin' ) => "yes",
                 __( 'No', 'swift-framework-plugin' )  => "no"
             ),
+            "buttonset_on"  => "yes",
             "description" => __( "Show the portfolio category filter above the items.", 'swift-framework-plugin' )
         ),
         array(
-            "type"        => "buttonset",
+            "type"        => "dropdown",
             "heading"     => __( "Pagination", 'swift-framework-plugin' ),
             "param_name"  => "pagination",
-            "value"       => array(
-                __( 'Yes', 'swift-framework-plugin' ) => "yes",
-                __( 'No', 'swift-framework-plugin' )  => "no"
-            ),
+            "value"       => $pagination_types,
             "description" => __( "Show portfolio pagination.", 'swift-framework-plugin' )
         ),
         array(
@@ -292,9 +303,10 @@
             "heading"     => __( "Portfolio Page Button", 'swift-framework-plugin' ),
             "param_name"  => "button_enabled",
             "value"       => array(
-                __( 'No', 'swift-framework-plugin' )  => "no",
-                __( 'Yes', 'swift-framework-plugin' ) => "yes"
+                __( 'Yes', 'swift-framework-plugin' ) => "yes",
+                __( 'No', 'swift-framework-plugin' )  => "no"
             ),
+            "buttonset_on"  => "yes",
             "required"       => array("portfolio_filter", "=", "yes"),
             "description" => __( "Select if you'd like to include a button in the title bar to link through to all portfolio items. The page is set in Theme Options > Custom Post Type Options.", 'swift-framework-plugin' )
         )
@@ -343,7 +355,7 @@
     SPBMap::map( 'spb_portfolio', array(
         "name"   => __( "Portfolio", 'swift-framework-plugin' ),
         "base"   => "spb_portfolio",
-        "class"  => "spb_portfolio",
-        "icon"   => "spb-icon-portfolio",
+        "class"  => "spb_portfolio spb_tab_media",
+        "icon"   => "icon-portfolio",
         "params" => $params
     ) );

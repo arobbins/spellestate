@@ -78,6 +78,8 @@
 			    'twitter_username'   => '',
 			    'instagram_id'       => '',
 			    'instagram_token'    => '',
+			    'insta_item_count'	 => '',
+			    'tweet_item_count'	 => '',
 			    'blog_filter'        => '',
 			    'alt_styling'		 => '',
 			    'hover_style'        => '',
@@ -176,8 +178,8 @@
                 $list_class .= 'mini-items';
             } else if ( $blog_type == "timeline" ) {
                 $list_class .= 'timeline-items';
-                if ( $sidebar_config == "no-sidebars" ) {
-                    $wrap_class .= 'col-sm-8 col-sm-offset-2';
+                if ( $sf_sidebar_config == "no-sidebars" ) {
+                    $wrap_class .= apply_filters('sf_timeline_blog_nosidebars_wrap_class', 'col-sm-8 col-sm-offset-2');
                 }
             } else {
                 $list_class .= 'standard-items row';
@@ -272,6 +274,13 @@
                     $tweet_count = $tweet_count * 2;
                 } else if ( $twitter_username == "" ) {
                     $instagram_count = $instagram_count * 2;
+                }
+                
+                if ( $insta_item_count != "" ) {
+                	$instagram_count = $insta_item_count;
+                }
+                if ( $tweet_item_count != "" ) {
+                	$tweet_count = $tweet_item_count;
                 }
 
                 /* TWEETS

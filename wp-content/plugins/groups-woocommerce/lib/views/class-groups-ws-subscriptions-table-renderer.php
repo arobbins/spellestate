@@ -92,7 +92,14 @@ class Groups_WS_Subscriptions_Table_Renderer {
 				( $options['include_refunded_orders'] == 'yes' )
 		);
 
-		$results = WC_Subscriptions_Manager::get_users_subscriptions( $user->ID );
+		if ( function_exists( 'wcs_get_users_subscriptions' ) ) {
+			$results = array();
+			foreach ( wcs_get_users_subscriptions( $user->ID ) as $subscription ) {
+				$results[ wcs_get_old_subscription_key( $subscription ) ] = wcs_get_subscription_in_deprecated_structure( $subscription );
+			}
+		} else {
+			$results = WC_Subscriptions_Manager::get_users_subscriptions( $user->ID );
+		}
 
 		// pre-filter by status
 		$_results = array();
@@ -181,65 +188,67 @@ class Groups_WS_Subscriptions_Table_Renderer {
 				foreach( $results as $result_key => $result ) {
 
 					$order = Groups_WS_Helper::get_order( $result['order_id'] );
-					$order_item = WC_Subscriptions_Order::get_item_by_product_id( $order, $result['product_id'] );
-					$product    = $order->get_product_from_item( $order_item );
-
-					$output .= '<tr class="' . ( $i % 2 == 0 ? 'even' : 'odd' ) . '">';
-
-					foreach( $column_display_names as $column_key => $column_title ) {
-						$output .= sprintf( '<td class="%s">', $column_key );
-						switch( $column_key ) {
-							case 'status' :
-								$output .=  WC_Subscriptions_Manager::get_status_to_display( $result['status'], $result_key, $user->ID );
-								break;
-							case 'title' :
-								$output .= WC_Subscriptions_Order::get_item_name( $result['order_id'], $result['product_id'] );
-								if ( isset( $product->variation_data ) ) {
-									$column_content .= '<br />' . woocommerce_get_formatted_variation( $product->variation_data, true );
-								}
-								break;
-							case 'start_date' :
-							case 'expiry_date' :
-							case 'end_date' :
-								if ( $column_key == 'expiry_date' && $result[$column_key] == 0 ) {
-									$output .= __( 'Never', GROUPS_WS_PLUGIN_DOMAIN );
-								} else if ( $column_key == 'end_date' && $result[$column_key] == 0 ) {
-									$output .= __( 'Not yet ended', GROUPS_WS_PLUGIN_DOMAIN );
-								} else {
-									$user_timestamp = strtotime( $result[$column_key] ) + ( get_option( 'gmt_offset' ) * 3600 );
-									$output .= sprintf( '<time title="%s">%s</time>', esc_attr( $user_timestamp ), date_i18n( get_option( 'date_format' ), $user_timestamp ) );
-								}
-								break;
-							case 'trial_expiry_date' :
-								$trial_expiration = WC_Subscriptions_Manager::get_trial_expiration_date( $result_key, $user->ID, 'timestamp' );
-								if ( empty( $trial_expiration ) ) {
-									$output .= '-';
-								} else {
-									$trial_expiration = $trial_expiration + ( get_option( 'gmt_offset' ) * 3600 );
-									$output .= sprintf( '<time title="%s">%s</time>', esc_attr( $trial_expiration ), date_i18n( get_option( 'date_format' ), $trial_expiration ) );
-								}
-								break;
-							case 'groups' :
-								if ( $product_groups = get_post_meta( $result['product_id'], '_groups_groups', false ) ) {
-									if ( count( $product_groups )  > 0 ) {
-										$output .= '<ul>';
-										foreach( $product_groups as $group_id ) {
-											if ( $group = Groups_Group::read( $group_id ) ) {
-												$output .= '<li>' . wp_filter_nohtml_kses( $group->name ) . '</li>';
-											}
-										}
-										$output .= '</ul>';
+					if ( $order ) {
+						$order_item = WC_Subscriptions_Order::get_item_by_product_id( $order, $result['product_id'] );
+						$product    = $order->get_product_from_item( $order_item );
+	
+						$output .= '<tr class="' . ( $i % 2 == 0 ? 'even' : 'odd' ) . '">';
+	
+						foreach( $column_display_names as $column_key => $column_title ) {
+							$output .= sprintf( '<td class="%s">', $column_key );
+							switch( $column_key ) {
+								case 'status' :
+									$output .=  WC_Subscriptions_Manager::get_status_to_display( $result['status'], $result_key, $user->ID );
+									break;
+								case 'title' :
+									$output .= WC_Subscriptions_Order::get_item_name( $result['order_id'], $result['product_id'] );
+									if ( isset( $product->variation_data ) ) {
+										$column_content .= '<br />' . woocommerce_get_formatted_variation( $product->variation_data, true );
 									}
-								}
-								break;
-							case 'order_id' :
-								$output .= sprintf( __( 'Order %d', GROUPS_WS_PLUGIN_DOMAIN ), $result['order_id'] );
-								break;
+									break;
+								case 'start_date' :
+								case 'expiry_date' :
+								case 'end_date' :
+									if ( $column_key == 'expiry_date' && $result[$column_key] == 0 ) {
+										$output .= __( 'Never', GROUPS_WS_PLUGIN_DOMAIN );
+									} else if ( $column_key == 'end_date' && $result[$column_key] == 0 ) {
+										$output .= __( 'Not yet ended', GROUPS_WS_PLUGIN_DOMAIN );
+									} else {
+										$user_timestamp = strtotime( $result[$column_key] ) + ( get_option( 'gmt_offset' ) * 3600 );
+										$output .= sprintf( '<time title="%s">%s</time>', esc_attr( $user_timestamp ), date_i18n( get_option( 'date_format' ), $user_timestamp ) );
+									}
+									break;
+								case 'trial_expiry_date' :
+									$trial_expiration = WC_Subscriptions_Manager::get_trial_expiration_date( $result_key, $user->ID, 'timestamp' );
+									if ( empty( $trial_expiration ) ) {
+										$output .= '-';
+									} else {
+										$trial_expiration = $trial_expiration + ( get_option( 'gmt_offset' ) * 3600 );
+										$output .= sprintf( '<time title="%s">%s</time>', esc_attr( $trial_expiration ), date_i18n( get_option( 'date_format' ), $trial_expiration ) );
+									}
+									break;
+								case 'groups' :
+									if ( $product_groups = get_post_meta( $result['product_id'], '_groups_groups', false ) ) {
+										if ( count( $product_groups )  > 0 ) {
+											$output .= '<ul>';
+											foreach( $product_groups as $group_id ) {
+												if ( $group = Groups_Group::read( $group_id ) ) {
+													$output .= '<li>' . wp_filter_nohtml_kses( $group->name ) . '</li>';
+												}
+											}
+											$output .= '</ul>';
+										}
+									}
+									break;
+								case 'order_id' :
+									$output .= sprintf( __( 'Order %d', GROUPS_WS_PLUGIN_DOMAIN ), $result['order_id'] );
+									break;
+							}
+							$output .= '</td>';
 						}
-						$output .= '</td>';
+						$output .= '</tr>';
+						$i++;
 					}
-					$output .= '</tr>';
-					$i++;
 				}
 				$output .= '</tbody>';
 				$output .= '</table>';

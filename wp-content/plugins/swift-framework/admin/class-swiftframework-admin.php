@@ -74,20 +74,40 @@ class SwiftFramework_Admin {
 		<h2 class="nav-tab-wrapper">
 			<a class="nav-tab nav-tab-active" href="<?php echo admin_url() ?>/index.php?page=swift-framework">About</a>
 			<a class="nav-tab" href="<?php echo admin_url() ?>/admin.php?page=swift_framework_opts_options">Options</a>
+			<a class="nav-tab" href="http://pagebuilder.swiftideas.com/documentation/" target="_blank">Swift Page Builder Documentation</a>
 		</h2>
 
 		<div class="about-content">
-			<h3>Latest Update (v1.63)</h3>
 			<p></p>
+			<h3>Coming Soon</h3>
 			<ul>
-				<li>Updated Redux framework</li>
+				<li><strong>Page Builder</strong> - Design tab. Allowing you to control padding/margin/borders on elements, as well as colours.</li>
+				<li><strong>Page Builder</strong> - responsive & touch device usability improvements.</li>
 			</ul>
-			<h3>Previous Update (v1.62)</h3>
+			<div class="divide"></div>
+			<h3>Latest Update (v2.0.3)</h3>
 			<p></p>
 			<ul>
-				<li>Team gallery display images are now clickable on mobile</li>
-				<li>Updated minified files after previous update</li>
-				<li>Updated Redux framework</li>
+				<li>FRONT-END: reverted button changes to use previous parameter names..</li>
+				<li>BACKEND: Removed empty page builder animation.</li>
+				<li>BACKEND: Added most used functionality, allowing you to quickly access your most used elements.</li>
+				<li>BACKEND: Alert Asset fixes.</li>
+				<li>BACKEND: Fixed Scroll bar in the Edit modal that couldn’t be selected.</li>
+				<li>BACKEND: The sizes (height) of the resize handle was changed to avoid resize conflicts in elements inside each others (like in tabs, accordions, tours, Row).</li>
+				<li>BACKEND: Fixed issues with dragging elements to the bottom of the page builder area. Was fixed in Row, Tour, Tabs, Accordions.</li>
+				<li>BACKEND: Fixed issues with elements added to the tabs, Accordions, tours.</li>
+			</ul>
+			<div class="divide"></div>
+			<h3>Previous Update (v2.0.2)</h3>
+			<p></p>
+			<ul>
+				<li>FRONTEND: further icon box fixes.</li>
+				<li>FRONTEND: Added compatibility for Portfolio WPML duplication.</li>
+				<li>BACKEND: Added option to show text block text within the element preview, like in older versions.</li>
+				<li>BACKEND: Fixed issue with Toggle display.</li>
+				<li>BACKEND: Fixed issue with responsive visibility dropdown being cut off.</li>
+				<li>BACKEND: Fixed issue with Widget Area element.</li>
+				<li>BACKEND: Fixed issue with products element.</li>
 			</ul>
 			<p></p>
 		</div>
@@ -138,7 +158,7 @@ class SwiftFramework_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->SwiftFramework, plugin_dir_url( __FILE__ ) . 'js/swiftframework-admin.js', array( 'jquery' ), $this->version, false );
+		//wp_enqueue_script( $this->SwiftFramework, plugin_dir_url( __FILE__ ) . 'js/swiftframework-admin.js', array( 'jquery' ), $this->version, false );
 
 	}
 

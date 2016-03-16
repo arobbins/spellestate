@@ -80,7 +80,7 @@ class woocommerce_store_pricing_rules_admin {
 				    'category' => array(
 					array(
 					    'title' => __( 'Category Pricing', 'wc_pricing' ),
-					    'description' => 'Use bulk category pricing to configure bulk price adjustments based on a product\'s category.  Bulk category pricing will take precedence over role pricing.',
+					    'description' => 'Use bulk category pricing to configure bulk price adjustments based on a product\'s category. Category pricing rules will apply before Membership (role-based pricing discounts), and will be cumulative with any Membership rules by default.   The cumulative filter can be used to change this behavior.',
 					    'function' => 'basic_category_tab'
 					),
 					array(
@@ -185,6 +185,8 @@ class woocommerce_store_pricing_rules_admin {
 			$data = array();
 		}
 
+		$this->clear_transients();
+
 		return $data;
 	}
 
@@ -193,6 +195,8 @@ class woocommerce_store_pricing_rules_admin {
 		if ( !isset( $data['free_shipping'] ) ) {
 			$data['free_shipping'] = 'no';
 		}
+
+		$this->clear_transients();
 
 		return $data;
 	}
@@ -265,6 +269,8 @@ class woocommerce_store_pricing_rules_admin {
 			$data = array();
 		}
 
+		$this->clear_transients();
+
 		return $data;
 	}
 
@@ -279,7 +285,7 @@ class woocommerce_store_pricing_rules_admin {
 				$valid = true;
 
 				foreach ( $rule_set['rules'] as $rule ) {
-					if ( isset( $rule['to'] ) && !empty( $rule['to'] ) && isset( $rule['from'] ) && isset( $rule['amount'] ) && !empty( $rule['from'] ) && !empty( $rule['amount'] ) ) {
+					if ( isset( $rule['to'] ) && !empty( $rule['to'] ) && isset( $rule['from'] ) && isset( $rule['amount'] ) && (!empty( $rule['from'] ) || $rule['from'] === '0') && !empty( $rule['amount'] ) ) {
 
 						if ( $rule['from'] != '*' && $rule['to'] != '*' && intval( $rule['to'] ) < intval( $rule['from'] ) ) {
 							$valid = $valid & false;
@@ -314,7 +320,16 @@ class woocommerce_store_pricing_rules_admin {
 			$data = array();
 		}
 
+		$this->clear_transients();
+
 		return $data;
+	}
+
+	public function clear_transients() {
+		global $wpdb;
+		$wpdb->query( "DELETE FROM $wpdb->options WHERE option_name LIKE '_transient_wc_var_prices%'" );
+		$wpdb->query( "DELETE FROM $wpdb->options WHERE option_name LIKE '_transient_timeout_wc_var_prices%'" );
+		wp_cache_flush();
 	}
 
 	private function selected( $value, $compare, $arg = true ) {

@@ -1,5 +1,24 @@
 *** Groups WooCommerce ***
 
+2015.12.21 - version 1.9.3
+* Fixed PHP notices when no order is related to a subscription
+  which is activated, suspended, etc.
+
+2015.11.29 - version 1.9.2
+* Added a new handler for switched subscriptions to support
+  changes in WC Subscriptions 2.x
+
+2015.10.23 - version 1.9.1
+* Fixed a fatal error which could occur in circumstances where an order can't be obtained
+  while trying to render subscription information.
+
+2015.10.11 - version 1.9.0
+* Compatible with WooCommerce Subscriptions 2.x
+
+2015.08.12 - version 1.8.2
+* Added support for saving group assignments through the Save Changes button
+  of the Variations tab for WC 2.4
+
 2015.07.13 - version 1.8.1
 * Added Give Products compatibility.
 * Guarded GROUPS_WS_LOG so it can be defined in e.g. wp-config.php

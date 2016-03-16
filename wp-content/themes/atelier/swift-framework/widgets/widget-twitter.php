@@ -28,9 +28,7 @@
 
     class Twitter_Widget extends WP_Widget {
 
-
-        function Twitter_Widget() {
-
+		function __construct() {
             // Widget settings
             $widget_ops = array( 'classname' => 'twitter-widget', 'description' => 'Display your latest tweets.' );
 

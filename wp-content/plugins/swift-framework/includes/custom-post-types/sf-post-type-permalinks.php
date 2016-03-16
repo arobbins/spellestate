@@ -5,7 +5,7 @@
     *	Swift Framework Permalinks Class
     *	------------------------------------------------
     *	Swift Framework v2.0
-    * 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+    * 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     */
 
@@ -541,7 +541,7 @@
 
                     $faqs_permalinks = get_option( 'sf_faqs_permalinks' );
                     if ( ! $faqs_permalinks ) {
-                        $$faqs_permalinks = array();
+                        $faqs_permalinks = array();
                     }
                     $faqs_permalinks['category_base'] = untrailingslashit( $sf_faqs_category_slug );
 

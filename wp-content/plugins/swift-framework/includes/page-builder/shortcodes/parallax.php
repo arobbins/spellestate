@@ -5,7 +5,7 @@
     *	Swift Page Builder - Parallax Shortcode
     *	------------------------------------------------
     *	Swift Framework
-    * 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+    * 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     */
 
@@ -111,8 +111,8 @@
     SPBMap::map( 'spb_parallax', array(
         "name"          => __( "Parallax", 'swift-framework-plugin' ),
         "base"          => "spb_parallax",
-        "class"         => "",
-        "icon"          => "spb-icon-parallax",
+        "class"         => "spb_tab_media",
+        "icon"          => "icon-parallax",
         "wrapper_class" => "clearfix",
         "controls"      => "full",
         "params"        => array(

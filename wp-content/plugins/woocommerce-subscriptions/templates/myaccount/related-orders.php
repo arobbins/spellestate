@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<th class="order-number"><span class="nobr"><?php esc_html_e( 'Order', 'woocommerce-subscriptions' ); ?></span></th>
 			<th class="order-date"><span class="nobr"><?php esc_html_e( 'Date', 'woocommerce-subscriptions' ); ?></span></th>
 			<th class="order-status"><span class="nobr"><?php esc_html_e( 'Status', 'woocommerce-subscriptions' ); ?></span></th>
-			<th class="order-total"><span class="nobr"><?php esc_html_e( 'Total', 'woocommerce-subscriptions' ); ?></span></th>
+			<th class="order-total"><span class="nobr"><?php echo esc_html_x( 'Total', 'table heading', 'woocommerce-subscriptions' ); ?></span></th>
 			<th class="order-actions">&nbsp;</th>
 		</tr>
 	</thead>
@@ -35,7 +35,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			?><tr class="order">
 				<td class="order-number" data-title="<?php esc_attr_e( 'Order Number', 'woocommerce-subscriptions' ); ?>">
 					<a href="<?php echo esc_url( $order->get_view_order_url() ); ?>">
-						#<?php echo esc_html( $order->get_order_number() ); ?>
+						<?php echo sprintf( esc_html_x( '#%s', 'hash before order number', 'woocommerce-subscriptions' ), esc_html( $order->get_order_number() ) ); ?>
 					</a>
 				</td>
 				<td class="order-date" data-title="<?php esc_attr_e( 'Date', 'woocommerce-subscriptions' ); ?>">
@@ -44,10 +44,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<td class="order-status" data-title="<?php esc_attr_e( 'Status', 'woocommerce-subscriptions' ); ?>" style="text-align:left; white-space:nowrap;">
 					<?php echo esc_html( wc_get_order_status_name( $order->get_status() ) ); ?>
 				</td>
-				<td class="order-total" data-title="<?php esc_attr_e( 'Total', 'woocommerce-subscriptions' ); ?>">
+				<td class="order-total" data-title="<?php echo esc_attr_x( 'Total', 'Used in data attribute. Escaped', 'woocommerce-subscriptions' ); ?>">
 					<?php
-					// translators: price for number of items
-					echo wp_kses_post( sprintf( _n( '%s for %s item', '%s for %s items', $item_count, 'woocommerce-subscriptions' ), $order->get_formatted_order_total(), $item_count ) );
+					// translators: $1: formatted order total for the order, $2: number of items bought
+					echo wp_kses_post( sprintf( _n( '%1$s for %2$d item', '%1$s for %2$d items', $item_count, 'woocommerce-subscriptions' ), $order->get_formatted_order_total(), $item_count ) );
 					?>
 				</td>
 				<td class="order-actions">
@@ -63,7 +63,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					if ( in_array( $order->get_status(), apply_filters( 'woocommerce_valid_order_statuses_for_cancel', array( 'pending', 'failed' ), $order ) ) ) {
 						$actions['cancel'] = array(
 							'url'  => $order->get_cancel_order_url( wc_get_page_permalink( 'myaccount' ) ),
-							'name' => esc_html_x( 'Cancel', 'cancel subscription', 'woocommerce-subscriptions' ),
+							'name' => esc_html_x( 'Cancel', 'an action on a subscription', 'woocommerce-subscriptions' ),
 						);
 					}
 

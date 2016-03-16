@@ -40,12 +40,12 @@ class WCS_Meta_Box_Subscription_Data extends WC_Meta_Box_Order_Data {
 		</style>
 		<div class="panel-wrap woocommerce">
 			<input name="post_title" type="hidden" value="<?php echo empty( $post->post_title ) ? esc_attr( get_post_type_object( $subscription->post->post_type )->labels->singular_name ) : esc_attr( $post->post_title ); ?>" />
-			<input name="post_status" type="hidden" value="<?php echo esc_attr( $subscription->get_status() ); ?>" />
+			<input name="post_status" type="hidden" value="<?php echo esc_attr( 'wc-' . $subscription->get_status() ); ?>" />
 			<div id="order_data" class="panel">
 
 				<h2><?php
 				// translators: placeholder is the ID of the subscription
-				printf( esc_html_x( 'Subscription %s details', 'edit subscription header', 'woocommerce-subscriptions' ), esc_html( $subscription->get_order_number() ) ); ?></h2>
+				printf( esc_html_x( 'Subscription #%s details', 'edit subscription header', 'woocommerce-subscriptions' ), esc_html( $subscription->get_order_number() ) ); ?></h2>
 
 				<div class="order_data_column_container">
 					<div class="order_data_column">
@@ -189,7 +189,7 @@ class WCS_Meta_Box_Subscription_Data extends WC_Meta_Box_Order_Data {
 						}
 
 						if ( apply_filters( 'woocommerce_enable_order_notes_field', 'yes' == get_option( 'woocommerce_enable_order_comments', 'yes' ) ) && $post->post_excerpt ) {
-							echo '<p><strong>' . esc_html__( 'Customer Note', 'woocommerce-subscriptions' ) . ':</strong> ' . wp_kses_post( nl2br( $post->post_excerpt ) ) . '</p>';
+							echo '<p><strong>' . esc_html__( 'Customer Note:', 'woocommerce-subscriptions' ) . '</strong> ' . wp_kses_post( nl2br( $post->post_excerpt ) ) . '</p>';
 						}
 
 						echo '</div>';
@@ -271,8 +271,8 @@ class WCS_Meta_Box_Subscription_Data extends WC_Meta_Box_Order_Data {
 				$subscription->update_status( $_POST['order_status'], '', true );
 			}
 		} catch ( Exception $e ) {
-			// translators: placeholder is error message from by payment gateway
-			wcs_add_admin_notice( sprintf( __( 'Unable to change payment method: %s', 'woocommerce-subscriptions' ), $e->getMessage() ), 'error' );
+			// translators: placeholder is error message from the payment gateway or subscriptions when updating the status
+			wcs_add_admin_notice( sprintf( __( 'Error updating subscription: %s', 'woocommerce-subscriptions' ), $e->getMessage() ), 'error' );
 		}
 
 		do_action( 'woocommerce_process_shop_subscription_meta', $post_id, $post );

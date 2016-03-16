@@ -126,7 +126,7 @@ SPBMap::map( 'spb_faqs', array(
     "name"		=> __("FAQs", 'swift-framework-plugin'),
     "base"		=> "spb_faqs",
     "class"		=> "",
-    "icon"      => "spb-icon-faqs",
+    "icon"      => "icon-faqs",
     "wrapper_class" => "clearfix",
     "controls"	=> "full",
     "params"	=> array(

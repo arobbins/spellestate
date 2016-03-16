@@ -64,7 +64,7 @@ if ( isset( $sf_options['disable_product_slider'] ) ) {
 			
 					} else {
 			
-						echo apply_filters( 'woocommerce_single_product_image_html', sprintf( '<img src="%s" alt="%s" />', wc_placeholder_img_src(), __( 'Placeholder', 'woocommerce' ) ), $post->ID );
+						echo apply_filters( 'woocommerce_single_product_image_html', sprintf( '<img src="%s" alt="%s" />', wc_placeholder_img_src(), __( 'Placeholder', 'swiftframework' ) ), $post->ID );
 			
 					}
 				?>

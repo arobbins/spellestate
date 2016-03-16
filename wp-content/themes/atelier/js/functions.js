@@ -60,9 +60,9 @@ var SWIFT = SWIFT || {};
 				SWIFT.recentPosts.init();
 			}
 
-			if (jQuery('.sf-share-counts').length > 0) {
-				SWIFT.page.shareCounts();
-			}
+//			if (jQuery('.sf-share-counts').length > 0) {
+//				SWIFT.page.shareCounts();
+//			}
 
 			// MOVE MODALS TO BOTTOM OF PAGE
 			SWIFT.page.moveModals();
@@ -209,6 +209,17 @@ var SWIFT = SWIFT || {};
 					SWIFT.page.fsNextPrev();
 				});
 			}
+			
+			// HASH CHECK
+				setTimeout(function() {
+			     var urlHash = document.location.toString();
+					if (urlHash.match('#')) {
+					    var hash = urlHash.split('#')[1];
+					    if ( jQuery(hash).length > 0 ) {
+					        SWIFT.page.onePageNavGoTo(hash);
+					    }
+					}
+			}, 200);
 		},
 		browserCheck: function() {
 			jQuery.browser = {};
@@ -359,7 +370,7 @@ var SWIFT = SWIFT || {};
 			
 			var parent = ".page-content";
 			
-			if ( body.hasClass('page') || body.hasClass('archive') ) {
+			if ( body.hasClass('page') || body.hasClass('archive') || body.hasClass('blog') ) {
 				parent = ".inner-page-wrap";
 			}	
 			
@@ -747,14 +758,16 @@ var SWIFT = SWIFT || {};
 
 			if (jQuery('#wpadminbar').length > 0) {
 				adjustment = jQuery('#wpadminbar').height();
+				console.log(adjustment);
 			}
 
 			if (body.hasClass('sticky-header-enabled')) {
-				adjustment = jQuery('.sticky-header').height() > 0 ? adjustment + jQuery('.sticky-header').height() : adjustment + jQuery('#header-section').height();
+				adjustment += jQuery('.sticky-header').height() > 0 ? jQuery('.sticky-header').height() : jQuery('#header-section').height();
+				console.log(adjustment);
 			}
 
 			if (jQuery('.sticky-top-bar').length > 0) {
-				adjustment += jQuery('.sticky-top-bar').height() > 0 ? adjustment + jQuery('.sticky-top-bar').height() : adjustment + jQuery('#top-bar').height();
+				adjustment += jQuery('.sticky-top-bar').height() > 0 ? jQuery('.sticky-top-bar').height() : jQuery('#top-bar').height();
 			}
 
 			SWIFT.isScrolling = true;
@@ -1802,7 +1815,7 @@ var SWIFT = SWIFT || {};
 					}, 150);
 				},
 				success: function(response) {
-					if (response === 0) {
+					if (response === 0 || response == "0") {
 						response = "";
 					} else {
 						results.html(response);
@@ -2089,21 +2102,7 @@ var SWIFT = SWIFT || {};
 							}
 						}, 400);
 					} else {
-						if (jQuery('.sticky-header').length > 0) {
-							headerHeight = jQuery('.sticky-header').height() > 0 ? jQuery('.sticky-header').height() : jQuery('#header-section').height();
-						}
-						if (jQuery('#wpadminbar').length > 0) {
-							headerHeight = headerHeight + jQuery('#wpadminbar').height();
-						}
-						if ( jQuery('.sticky-top-bar').length > 0 ) {
-							headerHeight += jQuery('.sticky-top-bar').outerHeight();
-						}
-
-						if (jQuery(linkHref).length > 0) {
-							jQuery('html, body').stop().animate({
-								scrollTop: jQuery(linkHref).offset().top - headerHeight + 2
-							}, 1000, 'easeInOutExpo');
-						}
+						SWIFT.page.onePageNavGoTo(linkHref);
 					}
 					e.preventDefault();
 				} else {
@@ -2122,6 +2121,9 @@ var SWIFT = SWIFT || {};
 			if (currentLanguage !== "") {
 				jQuery('li.aux-languages > a').html(currentLanguage);
 			}
+			jQuery('li.aux-languages > a').animate({
+				'opacity': 1
+			}, 400, 'easeOutQuart');
 
 			// Set menu state on resize
 			$window.smartresize( function() {
@@ -2704,7 +2706,11 @@ var SWIFT = SWIFT || {};
 				e.preventDefault();
 
 			});
-
+			
+			// Currency Switcher
+			if ( jQuery('ul.wcml_currency_switcher').length > 0 ) {
+				jQuery('ul.wcml_currency_switcher').addClass('sub-menu');
+			}
 		},
 		load: function() {
 
@@ -3163,20 +3169,22 @@ var SWIFT = SWIFT || {};
 				SWIFT.woocommerce.pslUpdatePrice(container, 0);
 		
 				// update slider when user clicks one of the dots
-				sliderDots.on('click', function() {
-					var selectedDot = jQuery(this);
-					if ( !selectedDot.hasClass('selected') ) {
-						var selectedPosition = selectedDot.index(),
-							activePosition = container.find('.variable-image-wrapper .selected').index();
-						if ( activePosition < selectedPosition ) {
-							SWIFT.woocommerce.pslNextSlide(container, sliderDots, selectedPosition);
-						} else {
-							SWIFT.woocommerce.pslPrevSlide(container, sliderDots, selectedPosition);
+				if (sliderDots) {
+					sliderDots.on('click', function() {
+						var selectedDot = jQuery(this);
+						if ( !selectedDot.hasClass('selected') ) {
+							var selectedPosition = selectedDot.index(),
+								activePosition = container.find('.variable-image-wrapper .selected').index();
+							if ( activePosition < selectedPosition ) {
+								SWIFT.woocommerce.pslNextSlide(container, sliderDots, selectedPosition);
+							} else {
+								SWIFT.woocommerce.pslPrevSlide(container, sliderDots, selectedPosition);
+							}
+							SWIFT.woocommerce.pslUpdatePrice(container, selectedPosition);
 						}
-						SWIFT.woocommerce.pslUpdatePrice(container, selectedPosition);
-					}
-				});
-		
+					});
+				}
+				
 				// update slider on swipeleft
 				container.find('.variable-image-wrapper').swipe({
 					swipeLeft:function() {
@@ -3225,7 +3233,7 @@ var SWIFT = SWIFT || {};
 		pslCreateDots: function(container) {
 			
 			if ( container.find('.variable-image-wrapper .img-wrap').length <= 1) {
-				return;
+				return false;
 			}
 			
 			var dotsWrapper = jQuery('<ol class="preview-slider-dots"></ol>').insertAfter(container.find('.variable-image-wrapper'));
@@ -3499,7 +3507,6 @@ var SWIFT = SWIFT || {};
 		},
 		standardSetup: function(portfolioInstance) {
 			portfolioInstance.imagesLoaded(function () {
-				SWIFT.portfolio.setItemHeight();
 				SWIFT.sliders.thumb();
 				portfolioInstance.animate({opacity: 1}, 800);
 				portfolioInstance.isotope({
@@ -3508,6 +3515,8 @@ var SWIFT = SWIFT || {};
 					isOriginLeft: !isRTL
 				});
 				setTimeout(function() {
+					SWIFT.portfolio.setItemHeight();
+					$window.trigger('resize');
 					portfolioInstance.isotope('layout');
 				}, 500);
 			});
@@ -3901,7 +3910,7 @@ var SWIFT = SWIFT || {};
 							if (data.data[i].caption) {
 								caption = data.data[i].caption.text;
 							}
-							instagrams.append("<li class='blog-item instagram-item "+itemClass+"' data-date='"+data.data[i].created_time+"'><a class='timestamp inst-icon' target='_blank' href='" + data.data[i].link +"'><i class='fa-instagram'></i></a><div class='inst-overlay'><a target='_blank' href='" + data.data[i].link +"'></a><h6>"+instagrams.data('title')+"</h6><h2>"+caption+"</h2><div class='name-divide'></div><data class='date timeago' title='"+data.data[i].created_time+"' value=''>"+data.data[i].created_time+"</data></div><img class='instagram-image' src='" + data.data[i].images.low_resolution.url +"' width='306px' height='306px' /></li>");
+							instagrams.append("<li class='blog-item instagram-item "+itemClass+"' data-date='"+data.data[i].created_time+"'><a class='timestamp inst-icon' target='_blank' href='" + data.data[i].link +"'><i class='fa-instagram'></i></a><div class='inst-overlay'><a target='_blank' href='" + data.data[i].link +"'></a><h6>"+instagrams.data('title')+"</h6><h2>"+caption+"</h2><div class='name-divide'></div><data class='date timeago' title='"+data.data[i].created_time+"' value=''>"+data.data[i].created_time+"</data></div><img class='instagram-image' src='" + data.data[i].images.standard_resolution.url +"' width='306px' height='306px' /></li>");
 						}
 					}
 					jQuery("data.timeago").timeago();
@@ -4736,28 +4745,28 @@ var SWIFT = SWIFT || {};
 
 			return false;
 		},
-		introAnimations: function() {
-			
-			if ( isSafari ) {
+		introAnimations: function() {		
+			if ( !(isMobileAlt && body.hasClass('disable-mobile-animations')) ) {
 				jQuery('.sf-animation').each(function() {
-					var itemAnimation = jQuery(this).data('animation');
-					jQuery(this).addClass(itemAnimation + ' sf-animate');
-				});
-			} else if ( !(isMobileAlt && body.hasClass('disable-mobile-animations')) ) {
-				jQuery('.sf-animation').appear(function() {
 					var animatedItem = jQuery(this);
-					SWIFT.widgets.animateItem(animatedItem);
-					
-				}, {accX: 0, accY: -150}, 'easeInCubic');
+					animatedItem.waypoint(function(direction) {
+						var itemAnimation = animatedItem.data('animation'),
+						itemDelay = animatedItem.data('delay');
+						
+						setTimeout(function() {
+							animatedItem.addClass(itemAnimation + ' sf-animate');
+							if ( isSafari ) {
+								animatedItem.animate({
+									'opacity' : 1
+								}, 600, 'easeOutCubic');
+							}
+						}, itemDelay);
+					}, {
+					    offset: '90%',
+					    triggerOnce: true
+					});
+				});
 			}
-		},
-		animateItem: function(animatedItem) {
-			var itemAnimation = animatedItem.data('animation'),
-			itemDelay = animatedItem.data('delay');
-			
-			setTimeout(function() {
-				animatedItem.addClass(itemAnimation + ' sf-animate');
-			}, itemDelay);
 		},
 		iconBoxes: function() {
 			if (isMobileAlt) {
@@ -4879,6 +4888,7 @@ var SWIFT = SWIFT || {};
 		}
 	};
 
+
 	/////////////////////////////////////////////
 	// RELATED POSTS FUNCTION
 	/////////////////////////////////////////////
@@ -4902,6 +4912,7 @@ var SWIFT = SWIFT || {};
 			});
 		}
 	};
+	
 
 	/////////////////////////////////////////////
 	// PARALLAX FUNCTION
@@ -4964,7 +4975,7 @@ var SWIFT = SWIFT || {};
 		load: function() {
 			jQuery.stellar({
 				horizontalScrolling: false,
-				verticalOffset: 200,
+				verticalOffset: 0,
 			});
 		},
 		videoScroll: function(asset) {
@@ -5206,8 +5217,7 @@ var SWIFT = SWIFT || {};
 	// MAP FUNCTIONS
 	/////////////////////////////////////////////
 
-	var infowindow, bounds, directory_bounds, mapTypeIdentifier = "", mapType, mapColor, mapSaturation, mapCenterLat, mapCenterLng, companyPos = "", isDraggable = true, latitude, longitude, mapCoordinates, markersArray = [], pinTitle, pinContent, pinLink, address, pinButtonText, pinLogoURL = "";
-
+	var mapsArray =[], boundsArray = [], infowindow, bounds, directory_bounds, mapTypeIdentifier = "", mapType, mapColor, mapSaturation, mapCenterLat, mapCenterLng, companyPos = "", isDraggable = true, latitude, longitude, mapCoordinates, markersArray = [], pinTitle, pinContent, pinLink, address, pinButtonText, pinLogoURL = "";
 
 	SWIFT.map = {
 		init:function() {
@@ -5355,14 +5365,22 @@ var SWIFT = SWIFT || {};
 
 			var mapInstance = new google.maps.Map(mapContainer, options);
 			var pincount = targetMap.parent().find('.pin_location').length;
+            
+            mapsArray.push( mapInstance );
 
 			//Resize Window Responsiveness
 			google.maps.event.addDomListener(window, 'resize', function() {
-				mapInstance.fitBounds(bounds);
-				mapInstance.setZoom(parseInt(mapZoom, 10));
+				jQuery.each( mapsArray, function( i, val ) {
+	                val.fitBounds(boundsArray[i]);
+	                val.setZoom(parseInt(mapZoom, 10));
+
+				});
+
 			});
 
 			bounds = new google.maps.LatLngBounds();
+			boundsArray.push( bounds );
+
 			targetMap.parent().find('.pin_location').each(function(i, element) {
 
 				pinLogoURL = element.getAttribute('data-pinimage');
@@ -6093,7 +6111,7 @@ var SWIFT = SWIFT || {};
 			if (sfIncluded.hasClass('has-blog')) {
 			SWIFT.blog.init();
 			}
-			if (sfIncluded.hasClass('has-infscroll') && !isMobile) {
+			if (sfIncluded.hasClass('has-infscroll')) {
 			SWIFT.blog.infiniteScroll();
 			}
 			if (sfIncluded.hasClass('has-galleries')) {
@@ -6162,7 +6180,8 @@ var SWIFT = SWIFT || {};
 })(jQuery);
 
 window.onpageshow = function(event) {
-    if (event.persisted) {
+    if ( event.persisted && jQuery('body').hasClass("sf-preloader") ) {
         window.location.reload();
     }
 };
+

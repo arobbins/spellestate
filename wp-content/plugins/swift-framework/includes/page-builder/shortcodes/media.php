@@ -5,7 +5,7 @@
     *	Swift Page Builder - Media Shortcodes
     *	------------------------------------------------
     *	Swift Framework
-    * 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+    * 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     */
 
@@ -63,8 +63,8 @@
     SPBMap::map( 'spb_video', array(
         "name"   => __( "Video Player", 'swift-framework-plugin' ),
         "base"   => "spb_video",
-        "class"  => "",
-        "icon"   => "spb-icon-film-youtube",
+        "class"  => " spb_tab_media ",
+        "icon"   => "icon-video",
         "params" => array(
             array(
                 "type"        => "textfield",
@@ -92,9 +92,10 @@
                 "heading"     => __( "Full width", 'swift-framework-plugin' ),
                 "param_name"  => "full_width",
                 "value"       => array(
-                    __( 'No', 'swift-framework-plugin' )  => "no",
-                    __( 'Yes', 'swift-framework-plugin' ) => "yes"
+                    __( 'Yes', 'swift-framework-plugin' ) => "yes",
+                    __( 'No', 'swift-framework-plugin' )  => "no"
                 ),
+                "buttonset_on"  => "yes",
                 "description" => __( "Select this if you want the video to be the full width of the page container (leave the above size blank).", 'swift-framework-plugin' )
             ),
             array(
@@ -133,12 +134,15 @@
                 'caption'         => '',
                 'caption_pos'     => 'hover',
                 'fullwidth'       => 'no',
+                'remove_rounded'  => '',
                 'el_position'     => '',
                 'el_class'        => ''
             ), $atts ) );
 
 			$link_icon = apply_filters( 'sf_link_icon' , '<i class="ss-link"></i>' );
-			$view_icon = apply_filters( 'sf_view_icon' , '<i class="ss-view"></i>' );
+            $view_icon = apply_filters( 'sf_view_icon' , '<i class="ss-view"></i>' );
+            $link_icon_svg = apply_filters( 'sf_link_icon_svg' , '' );
+            $view_icon_svg = apply_filters( 'sf_view_icon_svg' , '' );
 
             $caption = html_entity_decode($caption);
             
@@ -172,6 +176,14 @@
                 $el_class .= ' thumbnail-' . $hover_style;
             }
 
+            if ( $caption_pos == "hover" && $caption != "" ) {
+                $el_class .= ' gallery-item';
+            }
+
+            if ( $remove_rounded == "yes" ) {
+                $el_class .= ' square-corners';
+            } 
+
             if ( $intro_animation != "none" ) {
                 $output .= "\n\t" . '<div class="spb_content_element spb_image sf-animation ' . $frame . ' ' . $width . $el_class . '" data-animation="' . $intro_animation . '" data-delay="' . $animation_delay . '">';
             } else {
@@ -193,10 +205,17 @@
                 $output .= '<figcaption>';
                 if ( $caption_pos == "hover" ) {
                     $output .= '<div class="thumb-info">';
+                    if ( $view_icon_svg != "" ) {
+                        $output .= $view_icon_svg;
+                    }
                     $output .= '<h4>' . $caption . '</h4>';
                 } else {
                     $output .= '<div class="thumb-info thumb-info-alt">';
-                    $output .= $link_icon;
+                    if ( $link_icon_svg != "" ) {
+                        $output .= $link_icon_svg;
+                    } else {
+                        $output .= $link_icon;
+                    }
                 }
                 $output .= '</div></figcaption>';
             } else if ( $lightbox == "yes" ) {
@@ -209,14 +228,25 @@
                 if ( $caption_pos == "hover" ) {
                     if ( $caption != "" ) {
                         $output .= '<div class="thumb-info">';
+                        if ( $view_icon_svg != "" ) {
+                            $output .= $view_icon_svg;
+                        }
                         $output .= '<h4>' . $caption . '</h4>';
                     } else {
                         $output .= '<div class="thumb-info thumb-info-alt">';
-                        $output .= $view_icon;
+                        if ( $view_icon_svg != "" ) {
+                            $output .= $view_icon_svg;
+                        } else {
+                            $output .= $view_icon;
+                        }
                     }
                 } else {
                     $output .= '<div class="thumb-info thumb-info-alt">';
-                    $output .= $view_icon;
+                    if ( $view_icon_svg != "" ) {
+                        $output .= $view_icon_svg;
+                    } else {
+                        $output .= $view_icon;
+                    }
                 }
                 $output .= '</div></figcaption>';
             } else {
@@ -225,6 +255,9 @@
                 if ( $caption_pos == "hover" && $caption != "" ) {
                     $output .= '<figcaption>';
                     $output .= '<div class="thumb-info">';
+                    if ( $link_icon_svg != "" ) {
+                        $output .= $link_icon_svg;
+                    }
                     $output .= '<h4>' . $caption . '</h4>';
                     $output .= '</div></figcaption>';
                 }
@@ -284,8 +317,8 @@
                     $img = spb_getImageBySize( array(
                         'attach_id'  => (int) preg_replace( '/[^\d]/', '', $value ),
                         'thumb_size' => 'thumbnail'
-                    ) );
-                    $output .= ( $img ? $img['thumbnail'] : '<img width="150" height="150" src="' . SwiftPageBuilder::getInstance()->assetURL( 'img/blank_f7.gif' ) . '" class="attachment-thumbnail" alt="" title="" />' ) . '<a href="#" class="column_edit_trigger' . ( $img && ! empty( $img['p_img_large'][0] ) ? ' image-exists' : '' ) . '"><i class="spb-icon-single-image"></i>' . __( 'No image yet! Click here to select it now.', 'swift-framework-plugin' ) . '</a>';
+                    ) ); 
+                    $output .= ( $img ? $img['thumbnail'] : '<img width="66" height="66" src="' . SwiftPageBuilder::getInstance()->assetURL( 'img/blank_f7.gif' ) . '" class="attachment-thumbnail" alt="" title="" />' ) . '<a href="#" class="column_edit_trigger' . ( $img && ! empty( $img['p_img_large'][0] ) ? ' image-exists' : '' ) . '"><i class="spb-icon-single-image"></i>' . __( 'No image yet! Click here to select it now.', 'swift-framework-plugin' ) . '</a>';
                 }
             } else {
                 $output .= '<' . $param['holder'] . ' class="spb_param_value ' . $param_name . ' ' . $type . ' ' . $class . '" name="' . $param_name . '">' . $value . '</' . $param['holder'] . '>';
@@ -298,8 +331,8 @@
     SPBMap::map( 'spb_image', array(
         "name"   => __( "Image", 'swift-framework-plugin' ),
         "base"   => "spb_image",
-        "class"  => "spb_image_widget",
-        "icon"   => "spb-icon-image",
+        "class"  => "spb_image_widget spb_tab_media",
+        "icon"   => "icon-image",
         "params" => array(
             array(
                 "type"        => "textfield",
@@ -351,58 +384,7 @@
                 "description" => __( "Select a frame for the image.", 'swift-framework-plugin' )
             ),
             array(
-                "type"        => "dropdown",
-                "heading"     => __( "Intro Animation", 'swift-framework-plugin' ),
-                "param_name"  => "intro_animation",
-                "value"       => spb_animations_list(),
-                "description" => __( "Select an intro animation for the image that will show it when it appears within the viewport.", 'swift-framework-plugin' )
-            ),
-            array(
                 "type"        => "textfield",
-                "heading"     => __( "Animation Delay", 'swift-framework-plugin' ),
-                "param_name"  => "animation_delay",
-                "value"       => "200",
-                "description" => __( "If you wish to add a delay to the animation, then you can set it here (default 200) (ms).", 'swift-framework-plugin' )
-            ),
-            array(
-                "type"        => "buttonset",
-                "heading"     => __( "Full width", 'swift-framework-plugin' ),
-                "param_name"  => "fullwidth",
-                "value"       => array(
-                    __( "No", 'swift-framework-plugin' )  => "no",
-                    __( "Yes", 'swift-framework-plugin' ) => "yes"
-                ),
-                "description" => __( "Select if you want the image to be the full width of the page. (Make sure the element width is 1/1 too).", 'swift-framework-plugin' )
-            ),
-            array(
-                "type"        => "buttonset",
-                "heading"     => __( "Enable lightbox link", 'swift-framework-plugin' ),
-                "param_name"  => "lightbox",
-                "value"       => array(
-                    __( "Yes", 'swift-framework-plugin' ) => "yes",
-                    __( "No", 'swift-framework-plugin' )  => "no"
-                ),
-                "description" => __( "Select if you want the image to open in a lightbox on click", 'swift-framework-plugin' )
-            ),
-            array(
-                "type"        => "textfield",
-                "heading"     => __( "Add link to image", 'swift-framework-plugin' ),
-                "param_name"  => "image_link",
-                "value"       => "",
-                "description" => __( "If you would like the image to link to a URL, then enter it here. NOTE: this will override the lightbox functionality if you have enabled it.", 'swift-framework-plugin' )
-            ),
-            array(
-                "type"        => "dropdown",
-                "heading"     => __( "Link opens in new window?", 'swift-framework-plugin' ),
-                "param_name"  => "link_target",
-                "value"       => array(
-                    __( "Self", 'swift-framework-plugin' )       => "_self",
-                    __( "New Window", 'swift-framework-plugin' ) => "_blank"
-                ),
-                "description" => __( "Select if you want the link to open in a new window", 'swift-framework-plugin' )
-            ),
-            array(
-                "type"        => "textfield_html",
                 "heading"     => __( "Image Caption", 'swift-framework-plugin' ),
                 "param_name"  => "caption",
                 "value"       => "",
@@ -419,12 +401,88 @@
                 "description" => __( "Choose if you would like the caption to appear on the hover, or below the image. If you leave the caption field above blank then no caption will be shown.", 'swift-framework-plugin' )
             ),
             array(
+                "type"        => "buttonset",
+                "heading"     => __( "Remove rounded corners", 'swift-framework-plugin' ),
+                "param_name"  => "remove_rounded",
+                "value"       => array(
+                    __( "Yes", 'swift-framework-plugin' ) => "yes",
+                    __( "No", 'swift-framework-plugin' )  => "no"
+                ),
+                "buttonset_on"  => "yes",
+                "description" => __( "Select if you want to remove rounded corners from the image.", 'swift-framework-plugin' )
+            ),
+            array(
+                "type"        => "buttonset",
+                "heading"     => __( "Full width", 'swift-framework-plugin' ),
+                "param_name"  => "fullwidth",
+                "value"       => array(
+                    __( "No", 'swift-framework-plugin' )  => "no",
+                    __( "Yes", 'swift-framework-plugin' ) => "yes",
+                ),
+                "buttonset_on"  => "yes",
+                "description" => __( "Select if you want the image to be the full width of the page. (Make sure the element width is 1/1 too).", 'swift-framework-plugin' )
+            ),
+            array(
                 "type"        => "textfield",
                 "heading"     => __( "Extra class", 'swift-framework-plugin' ),
                 "param_name"  => "el_class",
                 "value"       => "",
                 "description" => __( "If you wish to style this particular content element differently, then use this field to add a class name and then refer to it in your css file.", 'swift-framework-plugin' )
-            )
+            ),
+            array(
+                "type"       => "section_tab",
+                "param_name" => "link_options_tab",
+                "heading"    => __( "Link", 'swift-framework-plugin' ),
+            ),
+            array(
+                "type"        => "textfield",
+                "heading"     => __( "Image Link URL", 'swift-framework-plugin' ),
+                "param_name"  => "image_link",
+                "value"       => "",
+                "required"       => array("lightbox", "=", "no"),
+                "description" => __( "If you would like the image to link to a URL, then enter it here. NOTE: this will override the lightbox functionality if you have enabled it.", 'swift-framework-plugin' )
+            ),
+            array(
+                "type"        => "dropdown",
+                "heading"     => __( "Link target", 'swift-framework-plugin' ),
+                "param_name"  => "link_target",
+                "value"       => array(
+                    __( "Self", 'swift-framework-plugin' )       => "_self",
+                    __( "New Window", 'swift-framework-plugin' ) => "_blank"
+                ),
+                "required"       => array("lightbox", "=", "no"),
+                "description" => __( "Select if you want the link to open in a new window", 'swift-framework-plugin' )
+            ),
+            array(
+                "type"        => "buttonset",
+                "heading"     => __( "Enable lightbox link", 'swift-framework-plugin' ),
+                "param_name"  => "lightbox",
+                "value"       => array(
+                    __( "Yes", 'swift-framework-plugin' ) => "yes",
+                    __( "No", 'swift-framework-plugin' )  => "no"
+                ),
+                "buttonset_on"  => "yes",
+                "description" => __( "Select if you want the image to open in a lightbox on click", 'swift-framework-plugin' )
+            ),
+            array(
+                "type"       => "section_tab",
+                "param_name" => "animation_options_tab",
+                "heading"    => __( "Animation", 'swift-framework-plugin' ),
+            ),
+            array(
+                "type"        => "dropdown",
+                "heading"     => __( "Intro Animation", 'swift-framework-plugin' ),
+                "param_name"  => "intro_animation",
+                "value"       => spb_animations_list(),
+                "description" => __( "Select an intro animation for the image that will show it when it appears within the viewport.", 'swift-framework-plugin' )
+            ),
+            array(
+                "type"        => "textfield",
+                "heading"     => __( "Animation Delay", 'swift-framework-plugin' ),
+                "param_name"  => "animation_delay",
+                "value"       => "200",
+                "description" => __( "If you wish to add a delay to the animation, then you can set it here (default 200) (ms).", 'swift-framework-plugin' )
+            ),
         )
     ) );
 
@@ -463,7 +521,7 @@
             $iner = '';
             foreach ( $this->settings['params'] as $param ) {
                 $custom_markup = '';
-                $param_value   = isset( $$param['param_name'] ) ? $$param['param_name'] : null;
+                $param_value   = isset( ${$param['param_name']} ) ? ${$param['param_name']} : null;
 
                 if ( is_array( $param_value ) ) {
                     // Get first element from the array
@@ -639,6 +697,7 @@
     	                    __( "Yes", 'swift-framework-plugin' ) => "yes",
     	                    __( "No", 'swift-framework-plugin' )        => "no",
     	                ),
+                        "buttonset_on"  => "yes",
     	                "description" => __( "Set whether you would like to show the default Google Maps controls UI.", 'swift-framework-plugin' )
     	            );
     	$params[] = array(
@@ -646,9 +705,11 @@
     	                "heading"     => __( "Advanced Styling", 'swift-framework-plugin' ),
     	                "param_name"  => "advanced_styling",
     	                "value"       => array(
-    	                    __( "No", 'swift-framework-plugin' )        => "no",
-    	                    __( "Yes", 'swift-framework-plugin' ) => "yes",
+                            __( "Yes", 'swift-framework-plugin' ) => "yes",
+    	                    __( "No", 'swift-framework-plugin' )        => "no"
+    	                    
     	                ),
+                        "buttonset_on"  => "no",
     	                "description" => __( "Set whether you would like to use the advanced map styling option.", 'swift-framework-plugin' )
     	            );
     	$params[] = array(
@@ -684,9 +745,11 @@
                     "heading"     => __( "Fullscreen Display", 'swift-framework-plugin' ),
                     "param_name"  => "fullscreen",
                     "value"       => array(
-                        __( "No", 'swift-framework-plugin' )  => "no",
-                        __( "Yes", 'swift-framework-plugin' ) => "yes"
+                        __( "Yes", 'swift-framework-plugin' ) => "yes",
+                        __( "No", 'swift-framework-plugin' )  => "no"
+                        
                     ),
+                    "buttonset_on"  => "no",
                     "description" => __( "If yes, the map will be displayed from screen edge to edge.", 'swift-framework-plugin' )
                 );
 	$params[] = array(
@@ -705,24 +768,22 @@
         "base"            => "spb_gmaps",
         "controls"        => "full",
         "class"           => "spb_gmaps",
-        "icon"            => "spb-icon-map-pin",
+        "icon"            => "icon-map",
         //"wrapper_class" => "clearfix",
         "params"          => $params,
         "custom_markup"   => '
-        	<div class="tab_controls">
-        		<button class="add_tab">' . __( "Add New Pin", 'swift-framework-plugin' ) . '</button>
-        	</div>
-
         	<div class="spb_tabs_holder">
         		%content%
-        	</div>',
-            'default_content' => '
+        	</div>
+            <div class="container-helper"><a href="#" class="add-pin-to-map btn-floating waves-effect waves-light"><span class="icon-add"></span></a></div>',
+             'default_content' => '
 
-        			[spb_map_pin pin_title="' . __( "First Pin", 'swift-framework-plugin' ) . '" width="1/1"]' . __( 'This is a map pin. Click the edit button to change it.', 'swift-framework-plugin' ) . '[/spb_map_pin]',
+            [spb_map_pin pin_title="' . __( "First Pin", 'swift-framework-plugin' ) . '" width="1/1"]' . __( 'This is a map pin. Click the edit button to change it.', 'swift-framework-plugin' ) . '[/spb_map_pin]
+        ',
+            
         "js_callback"     => array( "init" => "spbTabsInitCallBack" )
     	)
     );
-
 
     /* MAP PIN ASSET
     ================================================== */
@@ -754,7 +815,7 @@
 
             $iner = '';
             foreach ( $this->settings['params'] as $param ) {
-                $param_value = isset( $$param['param_name'] ) ? $$param['param_name'] : null;
+                $param_value = isset( ${$param['param_name']} ) ? ${$param['param_name']} : null;
 
                 if ( is_array( $param_value ) ) {
                     // Get first element from the array
@@ -822,12 +883,12 @@
             "name"     => __( "Map Pin", 'swift-framework-plugin' ),
             "base"     => "spb_map_pin",
             "class"    => "",
-            "icon"     => "spb-icon-map-pin",
+            "icon"     => "icon-map",
             "controls" => "delete_edit",
             "params"   => array(
                 array(
                     "type"        => "textfield",
-                    "holder"      => "div",
+                   // "holder"      => "div",
                     "heading"     => __( "Title", 'swift-framework-plugin' ),
                     "param_name"  => "pin_title",
                     "value"       => "",
@@ -835,7 +896,7 @@
                 ),
                 array(
                     "type"        => "textfield",
-                    "holder"      => "div",
+                    //"holder"      => "div",
                     "heading"     => __( "Address", 'swift-framework-plugin' ),
                     "param_name"  => "address",
                     "value"       => __( 'Click the edit button to change the map pin details.', 'swift-framework-plugin' ),
@@ -896,12 +957,15 @@
 
         protected function content( $atts, $content = null ) {
 
+            global $wp_rewrite;
+
             $title = $address = $img_file_url = $pin_image = $size = $zoom = $directory_category = $directory_map_filter = $directory_map_results = $directory_map_filter_pos = $color = $saturation = $type = $el_position = $width = $pagination = $item_count = $excerpt_length = $el_class = '';
 
             extract( shortcode_atts( array(
                 'title'                    => '',
                 'address'                  => '',
                 'directory_category'       => '',
+                'order'                    => '',
                 'directory_map_filter'     => '',
                 'directory_map_filter_pos' => '',
                 'directory_map_results'    => '',
@@ -969,12 +1033,21 @@
 					$dir_location_val = "";
 				}
 
+                //Directory Category
+                if ( isset($_POST['dir-category-id']) ) {
+                    //$dir_location_val = $_POST['dir-category-id'];
+                    $directory_category = $_POST['dir-category-id'];
+                } else {
+                    $dir_location_val = "";
+                }
+
+  
             	//Map Filter
-				$output .= '<form action="" method="post" class="directory-search-form">';
+				$output .= '<form action="" method="post" class="directory-search-form" data-url="' . $current_url . '" data-page-base="' . $wp_rewrite->pagination_base . '">';
             	$output .= '<div class="filter-search-container">';
 				$output .= '<input type="text" name="dir-search-value" id="dir-search-value" value="' . $dir_search_val . '" placeholder="'.$dir_placeholder.'"></div>';
 				$output .= '<div class="directory-filter">'. sf_directory_location_filter() . '</div>';
-				$output .= '<div class="directory-filter"> ' . sf_directory_category_filter( $category_term ) . '</div>';
+				$output .= '<div class="directory-filter"> ' . sf_directory_category_filter( $category_term,  $directory_category ) . '</div>';
 				$output .= '<div class="directory-search-container"><a class="btn read-more-button directorySearch" name="directory-search-button" id="directory-search-button">' . __( "Search", 'swift-framework-plugin' ) . '</a></div>';
 				$output .= '</form>';
 				$output .= '</div>' . $this->endBlockComment( $width );
@@ -1005,17 +1078,20 @@
 					$dir_location_val = "";
 				}
 
-            	//Map Filter
-				$output .= '<form action="" method="post" class="directory-search-form">';
+                
+            	$current_url = home_url(add_query_arg(array(),$wp->request));
+
+                //Map Filter
+				$output .= '<form action="" method="post" class="directory-search-form" data-url="' . $current_url . '" data-page-base="' . $wp_rewrite->pagination_base . '">';
             	$output .= '<div class="filter-search-container">';
 				$output .= '<input type="text" name="dir-search-value" id="dir-search-value" value="' . $dir_search_val . '" placeholder="'.$dir_placeholder.'"></div>';
 				$output .= '<div class="directory-filter">'. sf_directory_location_filter() . '</div>';
-				$output .= '<div class="directory-filter"> ' . sf_directory_category_filter( $category_term ) . '</div>';
+				$output .= '<div class="directory-filter"> ' . sf_directory_category_filter( $category_term, $directory_category ) . '</div>';
 				$output .= '<div class="directory-search-container"><a class="btn read-more-button directorySearch" name="directory-search-button" id="directory-search-button">' . __( "Search", 'swift-framework-plugin' ) . '</a></div>';
 				$output .= '</form>';
                 $output .= '</div></div>' . $this->endBlockComment( $width );
 
-            }
+            } 
 
             if ( $fullscreen ) {
 			$output .= "\n\t\t" . '<div class="directory-results container">';
@@ -1026,7 +1102,7 @@
             if ( $directory_map_results != 'map' ) {
 
 				// ITEMS OUTPUT
-            	$items = sf_directory_items($excerpt_length, $pagination, $item_count, $directory_category);
+            	$items = sf_directory_items($excerpt_length, $pagination, $item_count, $directory_category, $order);
 				$output .= $items;
 
             }
@@ -1053,7 +1129,7 @@
         "base"     => "spb_directory",
         "controls" => "full",
         "class"    => "spb_directory",
-        "icon"     => "spb-icon-map-pin",
+        "icon"     => "icon-directory-map",
         "params"   => array(
             array(
                 "type"        => "textfield",
@@ -1077,13 +1153,29 @@
                 "description" => __( "Choose the category from which you'd like to show the directory items.", 'swift-framework-plugin' )
             ),
             array(
+                "type"        => "dropdown",
+                "heading"     => __( "Order", 'swift-framework-plugin' ),
+                "param_name"  => "order",
+                "std"         => "date",
+                "value"       => array(
+                    __( 'Default', 'swift-framework-plugin' ) => "standard",
+                    __( 'Date (Ascending)', 'swift-framework-plugin' )  => "date-asc",
+                    __( 'Date (Descending)', 'swift-framework-plugin' )  => "date-desc",
+                    __( 'Title (Ascending)', 'swift-framework-plugin' )  => "title-asc",
+                    __( 'Title (Descending)', 'swift-framework-plugin' )  => "title-desc",
+                ),
+                "description" => __( "Select how you'd like the items to be ordered.", 'swift-framework-plugin' )
+            ),
+            array(
                 "type"        => "buttonset",
                 "heading"     => __( "Map Filter", 'swift-framework-plugin' ),
                 "param_name"  => "directory_map_filter",
                 "value"       => array(
-                    __( "No", 'swift-framework-plugin' )  => "no",
-                    __( "Yes", 'swift-framework-plugin' ) => "yes"
+                    __( "Yes", 'swift-framework-plugin' ) => "yes",
+                    __( "No", 'swift-framework-plugin' )  => "no"
+                    
                 ),
+                "buttonset_on"  => "yes",
                 "description" => __( "If yes, will be added a filter to refine the results.", 'swift-framework-plugin' )
             ),
             array(
@@ -1195,9 +1287,10 @@
                 "heading"     => __( "Fullscreen Display", 'swift-framework-plugin' ),
                 "param_name"  => "fullscreen",
                 "value"       => array(
-                    __( "No", 'swift-framework-plugin' )  => "no",
-                    __( "Yes", 'swift-framework-plugin' ) => "yes"
+                    __( "Yes", 'swift-framework-plugin' ) => "yes",
+                    __( "No", 'swift-framework-plugin' )  => "no"
                 ),
+                "buttonset_on"  => "no",
                 "description" => __( "If yes, the map will be displayed from screen edge to edge.", 'swift-framework-plugin' )
             ),
             array(

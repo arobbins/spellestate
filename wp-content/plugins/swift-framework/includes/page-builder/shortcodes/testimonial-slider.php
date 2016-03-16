@@ -5,7 +5,7 @@
     *	Swift Page Builder - Testimonial Slider Shortcode
     *	------------------------------------------------
     *	Swift Framework
-    * 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+    * 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     */
 
@@ -74,12 +74,49 @@
 
                 $items .= '<li class="testimonial">';
                 $items .= '<div class="slide-content-wrap">';
-                $items .= '<div class="testimonial-text text-' . $text_size . '">' . do_shortcode( $testimonial_text ) . '</div>';
-                if ( $testimonial_cite_subtext != "" ) {
-                    $items .= '<cite>' . $testimonial_cite . '<span>' . $testimonial_cite_subtext . '</span></cite>';
+
+                if ( sf_current_theme() == "uplift" ) {
+
+                    // Testimonial Image setup
+                    $testimonial_image        = rwmb_meta( 'sf_testimonial_cite_image', 'type=image', $post->ID );
+                    foreach ( $testimonial_image as $detail_image ) {
+                        $testimonial_image_url = $detail_image['url'];
+                        break;
+                    }
+                    if ( ! $testimonial_image ) {
+                        $testimonial_image     = get_post_thumbnail_id();
+                        $testimonial_image_url = wp_get_attachment_url( $testimonial_image, 'full' );
+                    }
+                    $testimonial_image = sf_aq_resize( $testimonial_image_url, 70, 70, true, false );
+
+                    // Testimonial Image
+                    if ( $testimonial_image ) {
+                        $items .= '<div class="cite-image"><img src="' . $testimonial_image[0] . '" width="' . $testimonial_image[1] . '" height="' . $testimonial_image[2] . '" alt="' . $testimonial_cite . '" /></div>';
+                    }
+
+                    // Testimonial Cite
+                    if ( $testimonial_cite_subtext != "" ) {
+                        $items .= '<cite>' . $testimonial_cite . '<span>' . $testimonial_cite_subtext . '</span></cite>';
+                    } else {
+                        $items .= '<cite>' . $testimonial_cite . '</cite>';
+                    }
+
+                    // Testimonial Text
+                    $items .= '<div class="testimonial-text text-' . $text_size . '">' . do_shortcode( $testimonial_text ) . '</div>';
+
                 } else {
-                    $items .= '<cite>' . $testimonial_cite . '</cite>';
+
+                    // Testimonial Text
+                    $items .= '<div class="testimonial-text text-' . $text_size . '">' . do_shortcode( $testimonial_text ) . '</div>';
+
+                    // Testimonial Cite
+                    if ( $testimonial_cite_subtext != "" ) {
+                        $items .= '<cite>' . $testimonial_cite . '<span>' . $testimonial_cite_subtext . '</span></cite>';
+                    } else {
+                        $items .= '<cite>' . $testimonial_cite . '</cite>';
+                    }
                 }
+
                 $items .= '</div>';
                 $items .= '</li>';
 
@@ -137,7 +174,7 @@
         "name"          => __( "Testimonials Slider", 'swift-framework-plugin' ),
         "base"          => "spb_testimonial_slider",
         "class"         => "spb_testimonial_slider",
-        "icon"          => "spb-icon-testimonial_slider",
+        "icon"          => "icon-testimonials-slider",
         "wrapper_class" => "clearfix",
         "params"        => array(
             array(
@@ -190,6 +227,7 @@
                     __( 'Yes', 'swift-framework-plugin' ) => "yes",
                     __( 'No', 'swift-framework-plugin' )  => "no"
                 ),
+                "buttonset_on"  => "yes",
                 "description" => __( "Select if you want the slider to autoplay or not.", 'swift-framework-plugin' )
             ),
             array(

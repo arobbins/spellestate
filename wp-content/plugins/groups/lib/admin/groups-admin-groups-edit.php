@@ -1,19 +1,19 @@
 <?php
 /**
  * groups-admin-groups-edit.php
- * 
+ *
  * Copyright (c) "kento" Karim Rahimpur www.itthinx.com
- * 
+ *
  * This code is released under the GNU General Public License.
  * See COPYRIGHT.txt and LICENSE.txt.
- * 
+ *
  * This code is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * This header and all notices must be kept intact.
- * 
+ *
  * @author Karim Rahimpur
  * @package groups
  * @since groups 1.1.0
@@ -63,16 +63,14 @@ function groups_admin_groups_edit( $group_id ) {
 
 	$name_readonly = ( $name !== Groups_Registered::REGISTERED_GROUP_NAME ) ? "" : ' readonly="readonly" ';
 
-	$output .= '<div class="manage-groups">';
-	$output .= '<div>';
-	$output .= '<h2>';
+	$output .= '<div class="manage-groups wrap">';
+	$output .= '<h1>';
 	$output .= __( 'Edit a group', GROUPS_PLUGIN_DOMAIN );
-	$output .= '</h2>';
-	$output .= '</div>';
+	$output .= '</h1>';
 
 	$output .= Groups_Admin::render_messages();
 
-	$output .= '<form id="edit-group" action="' . $current_url . '" method="post">';
+	$output .= '<form id="edit-group" action="' . esc_url( $current_url ) . '" method="post">';
 	$output .= '<div class="group edit">';
 	$output .= '<input id="group-id-field" name="group-id-field" type="hidden" value="' . esc_attr( intval( $group_id ) ) . '"/>';
 
@@ -153,19 +151,19 @@ function groups_admin_groups_edit( $group_id ) {
 		$output .= '</div>';
 	}
 
+	$output .= apply_filters( 'groups_admin_groups_edit_form_after_fields', '', $group_id );
+
 	$output .= '<div class="field">';
 	$output .= wp_nonce_field( 'groups-edit', GROUPS_ADMIN_GROUPS_NONCE, true, false );
 	$output .= '<input class="button button-primary" type="submit" value="' . __( 'Save', GROUPS_PLUGIN_DOMAIN ) . '"/>';
 	$output .= '<input type="hidden" value="edit" name="action"/>';
-	$output .= '<a class="cancel button" href="' . $current_url . '">' . __( 'Cancel', GROUPS_PLUGIN_DOMAIN ) . '</a>';
+	$output .= '<a class="cancel button" href="' . esc_url( $current_url ) . '">' . __( 'Cancel', GROUPS_PLUGIN_DOMAIN ) . '</a>';
 	$output .= '</div>';
 	$output .= '</div>'; // .group.edit
 	$output .= '</form>';
 	$output .= '</div>'; // .manage-groups
 
 	echo $output;
-
-	Groups_Help::footer();
 } // function groups_admin_groups_edit
 
 /**
@@ -212,7 +210,6 @@ function groups_admin_groups_edit_submit() {
 		}
 
 		$group_id = Groups_Group::update( compact( "group_id", "name", "parent_id", "description" ) );
-
 		if ( $group_id ) {
 			$capability_table       = _groups_get_tablename( "capability" );
 			$group_capability_table = _groups_get_tablename( "group_capability" );
@@ -241,6 +238,7 @@ function groups_admin_groups_edit_submit() {
 					Groups_Group_Capability::create( array( 'group_id' => $group_id, 'capability_id' => $cap ) );
 				}
 			}
+			do_action( 'groups_admin_groups_edit_submit_success', $group_id );
 		}
 		return $group_id;
 	} else {

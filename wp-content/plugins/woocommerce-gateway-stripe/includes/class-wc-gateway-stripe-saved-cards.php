@@ -46,6 +46,8 @@ class WC_Gateway_Stripe_Saved_Cards {
 
 		delete_transient( 'stripe_cards_' . $customer_id );
 
+		do_action( 'wc_stripe_delete_card', $customer_id, $result );
+
 		if ( is_wp_error( $result ) ) {
 			wc_add_notice( __( 'Unable to delete card.', 'woocommerce-gateway-stripe' ), 'error' );
 		} else {

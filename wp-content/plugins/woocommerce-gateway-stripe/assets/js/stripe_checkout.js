@@ -2,17 +2,32 @@ jQuery( function( $ ) {
 
 	var stripe_submit = false;
 
-	$( 'form.checkout' ).on( 'checkout_place_order_stripe', function() {
-		return stripeFormHandler();
-    });
+	// We need to bind directly to the click (and not checkout_place_order_stripe) to avoid popup blockers
+	// especially on mobile devices (like on Chrome for iOS) from blocking StripeCheckout.open from opening a tab
+	$( 'form.checkout' ).on( 'click', '#place_order', function( event ) {
+		var result = stripeFormHandler();
+		return result;
+	} );
 
-    $( 'form#order_review' ).submit( function() {
-		return stripeFormHandler();
-    });
+	// WooCommerce lets us return a false on checkout_place_order_{gateway} to keep the form from submitting
+	$( 'form.checkout' ).on( 'checkout_place_order_stripe', { preserve_stripe_submit_value : true }, possiblyAllowFormSubmit );
 
-	function stripeFormHandler() {
+	$( 'form#order_review' ).submit( function() {
+		var result = stripeFormHandler();
+		return result;
+	} );
+
+	// Evaluates whether the form submittal should be allowed to proceed
+	// Returns true to allow form submittal, false to block it
+	function possiblyAllowFormSubmit( event ) {
+
+		// If this submit is a result of the stripe request callback firing, let submit proceed by returning true immediately
 		if ( stripe_submit ) {
-			stripe_submit = false;
+			if ( 'undefined' !== typeof event && 'undefined' !== typeof event.data ) {
+				if ( 'undefined' !== typeof event.data.preserve_stripe_submit_value && ! event.data.preserve_stripe_submit_value ) {
+					stripe_submit = false;
+				}
+			}
 			return true;
 		}
 
@@ -25,17 +40,13 @@ jQuery( function( $ ) {
 		}
 
 		if ( $( 'input#terms' ).size() === 1 && $( 'input#terms:checked' ).size() === 0 ) {
-			alert( wc_stripe_params.i18n_terms );
-
-			return false;
+			return true;
 		}
 
 		if ( $( '#createaccount' ).is( ':checked' ) && $( '#account_password' ).length && $( '#account_password' ).val() === '' ) {
-			alert( wc_stripe_params.i18n_required_fields );
-
-			return false;
+			return true;
 		}
-		
+
 		// check to see if we need to validate shipping address
 		if ( $( '#ship-to-different-address-checkbox' ).is( ':checked' ) ) {
 			$required_inputs = $( '.woocommerce-billing-fields .validate-required, .woocommerce-shipping-fields .validate-required' );
@@ -45,7 +56,7 @@ jQuery( function( $ ) {
 
 		if ( $required_inputs.size() ) {
 			var required_error = false;
-			
+
 			$required_inputs.each( function() {
 				if ( $( this ).find( 'input.input-text, select' ).not( $( '#account_password, #account_username' ) ).val() === '' ) {
 					required_error = true;
@@ -57,6 +68,16 @@ jQuery( function( $ ) {
 			}
 		}
 
+		return false;
+	}
+
+	function stripeFormHandler() {
+
+		if ( possiblyAllowFormSubmit() ) {
+			return true; // don't interrupt submittal - allow it to proceed
+		}
+
+		// Capture submittal and open stripecheckout
 		var $form            = $( 'form.checkout, form#order_review' ),
 			$stripe_new_card = $( '.stripe_new_card' ),
 			token            = $form.find( 'input.stripe_token' );
@@ -71,18 +92,18 @@ jQuery( function( $ ) {
 		};
 
 		StripeCheckout.open({
-			key:         wc_stripe_params.key,
-			address:     false,
-			amount:      $stripe_new_card.data( 'amount' ),
-			name:        $stripe_new_card.data( 'name' ),
-			description: $stripe_new_card.data( 'description' ),
-			panelLabel:  $stripe_new_card.data( 'label' ),
-			currency:    $stripe_new_card.data( 'currency' ),
-			image:       $stripe_new_card.data( 'image' ),
-			bitcoin:     $stripe_new_card.data( 'bitcoin' ),
+			key:                wc_stripe_params.key,
+			address:            false,
+			amount:             $stripe_new_card.data( 'amount' ),
+			name:               $stripe_new_card.data( 'name' ),
+			description:        $stripe_new_card.data( 'description' ),
+			currency:           $stripe_new_card.data( 'currency' ),
+			image:              $stripe_new_card.data( 'image' ),
+			bitcoin:            $stripe_new_card.data( 'bitcoin' ),
+			locale:             $stripe_new_card.data( 'locale' ),
 			refund_mispayments: true, // for bitcoin payments let Stripe handle refunds if too little is paid
-			email: 		 $( '#billing_email' ).val(),
-			token:       token_action
+			email:              $( '#billing_email' ).val(),
+			token:              token_action
 		});
 
 		return false;

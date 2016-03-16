@@ -94,8 +94,8 @@ class SwiftPageBuilderShortcode_spb_image_banner extends SwiftPageBuilderShortco
 SPBMap::map( 'spb_image_banner', array(
     "name"   => __( "Image Banner", 'swift-framework-plugin' ),
     "base"   => "spb_image_banner",
-    "class"  => "spb_image_banner_widget",
-    "icon"   => "spb-icon-image-banner",
+    "class"  => "spb_image_banner_widget spb_tab_media",
+    "icon"   => "icon-image-banner",
     "params" => array(
         array(
             "type"        => "attach_image",
@@ -175,7 +175,7 @@ SPBMap::map( 'spb_image_banner', array(
         ),
         array(
             "type"        => "dropdown",
-            "heading"     => __( "Link opens in new window?", 'swift-framework-plugin' ),
+            "heading"     => __( "Link target", 'swift-framework-plugin' ),
             "param_name"  => "link_target",
             "value"       => array(
                 __( "Self", 'swift-framework-plugin' )       => "_self",

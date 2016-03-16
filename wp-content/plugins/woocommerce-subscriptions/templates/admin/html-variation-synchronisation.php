@@ -29,7 +29,7 @@ global $wp_locale;
 			<label for="variable_subscription_payment_sync_date_day[<?php esc_attr( $loop ); ?>]">
 				<?php echo esc_html( WC_Subscriptions_Synchroniser::$sync_field_label ); ?>: <a class="tips" data-tip="<?php echo esc_attr( WC_Subscriptions_Synchroniser::$sync_description_year ); ?>" href="#">[?]</a>
 			</label>
-			<input type="number" class="wc_input_subscription_payment_sync wc_input_subscription_payment_sync_day" name="variable_subscription_payment_sync_date_day[<?php echo esc_attr( $loop ); ?>]" value="<?php echo esc_attr( $payment_day ); ?>" placeholder="<?php esc_attr_e( 'Day', 'woocommerce-subscriptions' ); ?>" step="1" min="0" max="31">
+			<input type="number" class="wc_input_subscription_payment_sync wc_input_subscription_payment_sync_day" name="variable_subscription_payment_sync_date_day[<?php echo esc_attr( $loop ); ?>]" value="<?php echo esc_attr( $payment_day ); ?>" placeholder="<?php echo esc_attr_x( 'Day', 'input field placeholder for day field for annual subscriptions', 'woocommerce-subscriptions' ); ?>" step="1" min="0" max="31">
 			<select name="variable_subscription_payment_sync_date_month[<?php echo esc_attr( $loop ); ?>]" class="wc_input_subscription_payment_sync wc_input_subscription_payment_sync_month">
 			<?php foreach ( $wp_locale->month as $key => $value ) : ?>
 				<option value="<?php echo esc_attr( $key ); ?>" <?php selected( $key, $payment_month ); ?>><?php echo esc_html( $value ); ?></option>

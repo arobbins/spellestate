@@ -82,7 +82,9 @@ if ( !class_exists( "Redux_Framework_options_config" ) ) {
 
 		function change_arguments($args){
 		    //$args['dev_mode'] = true;
-
+			
+			$args['google_update_weekly'] = true;
+			
 		    return $args;
 		}
 
@@ -1192,6 +1194,7 @@ if ( !class_exists( "Redux_Framework_options_config" ) ) {
 								'social'  => 'Social Icons',
 								'menu'      => 'Top Bar Menu',
 								'cart-wishlist'      => 'Cart/Wishlist',
+								'currency-switcher'	=> 'Currency Switcher'
 								),
 							'desc' => '',
 							'default' => 'text'
@@ -1220,6 +1223,7 @@ if ( !class_exists( "Redux_Framework_options_config" ) ) {
 								'social'  => 'Social Icons',
 								'menu'      => 'Top Bar Menu',
 								'cart-wishlist'      => 'Cart/Wishlist',
+								'currency-switcher'	=> 'Currency Switcher'
 							),
 							'desc' => '',
 							'default' => 'text'
@@ -1300,7 +1304,8 @@ if ( !class_exists( "Redux_Framework_options_config" ) ) {
 						        	'cart-wishlist'	=> 'Cart / Wishlist',
 						        	'supersearch'	=> 'Super Search',
 						        	'account'	=> 'Account',
-						        	'language'	=> 'Language Switcher'
+						        	'language'	=> 'Language Switcher',
+						        	'currency-switcher'	=> 'Currency Switcher'
 						        ),
 						    ),
 //						    'limits' => array(
@@ -1335,7 +1340,8 @@ if ( !class_exists( "Redux_Framework_options_config" ) ) {
 						        	'cart-wishlist'	=> 'Cart / Wishlist',
 						        	'supersearch'	=> 'Super Search',
 						        	'account'	=> 'Account',
-						        	'language'	=> 'Language Switcher'
+						        	'language'	=> 'Language Switcher',
+						        	'currency-switcher'	=> 'Currency Switcher'
 						        ),
 						    ),
 //						    'limits' => array(
@@ -1361,6 +1367,25 @@ if ( !class_exists( "Redux_Framework_options_config" ) ) {
 							'default' => '',
 							'args' => array()
 							),
+//						array(
+//							'id' => 'side_slideout_type',
+//							'type' => 'button_set',
+//							'title' => __('Side Slideout Content', 'swiftframework'),
+//							'subtitle' => __('Choose if you would like to show a menu or sidebar (widget area) in the side slideout.', 'swiftframework'),
+//							'desc' => '',
+//							'options' => array('menu' => 'Menu','sidebar' => 'Sidebar (Widget Area)'),
+//							'default' => 'menu'
+//							),
+//						array(
+//							'id' => 'side_slideout_sidebar',
+//							'type' => 'select',
+//							'required'  => array('side_slideout_type', '=', 'sidebar'),
+//							'title' => __('Side Slideout Sidebar', 'swiftframework'),
+//							'subtitle' => "Choose the sidebar for the side slideout",
+//							'data'      => 'sidebars',
+//							'desc' => '',
+//							'default' => 'sidebar-1'
+//							),
 						array(
 							'id' => 'header_divide_0',
 							'type' => 'divide'
@@ -2112,9 +2137,10 @@ if ( !class_exists( "Redux_Framework_options_config" ) ) {
 						'text-align'=>false,
 						'color'=>false,
 						'letter-spacing'=>true,
+						'text-transform'  => true,
 						'all_styles' => true, // Enable all Google Font style/weight variations to be added to the page
-						'output' => array('body,p'), // An array of CSS selectors to apply this font style to dynamically
-						'compiler' => array('body,p'), // An array of CSS selectors to apply this font style to dynamically
+						'output' => array('body,p, nav .shopping-bag'), // An array of CSS selectors to apply this font style to dynamically
+						'compiler' => array('body,p, nav .shopping-bag'), // An array of CSS selectors to apply this font style to dynamically
 						'units'=>'px', // Defaults to px
 						'default' => array(
 							'font-size'=>'14px',
@@ -2133,6 +2159,7 @@ if ( !class_exists( "Redux_Framework_options_config" ) ) {
 						'text-align'=>false,
 						'color'=>false,
 						'letter-spacing'=>true,
+						'text-transform'  => true,
 						'all_styles' => true, // Enable all Google Font style/weight variations to be added to the page
 						'output' => array('h1,.impact-text,.impact-text > p,.impact-text-large,.impact-text-large > p,h3.countdown-subject, .swiper-slide .caption-content > h2, #jckqv h1'), // An array of CSS selectors to apply this font style to dynamically
 						'compiler' => array('h1,.impact-text,.impact-text > p,.impact-text-large,.impact-text-large > p,h3.countdown-subject,.swiper-slide .caption-content > h2, #jckqv h1'), // An array of CSS selectors to apply this font style to dynamically
@@ -2154,6 +2181,7 @@ if ( !class_exists( "Redux_Framework_options_config" ) ) {
 						'text-align'=>false,
 						'color'=>false,
 						'letter-spacing'=>true,
+						'text-transform'  => true,
 						'all_styles' => true, // Enable all Google Font style/weight variations to be added to the page
 						'output' => array('h2,.blog-item .quote-excerpt'), // An array of CSS selectors to apply this font style to dynamically
 						'compiler' => array('h2,.blog-item .quote-excerpt'), // An array of CSS selectors to apply this font style to dynamically
@@ -2175,6 +2203,7 @@ if ( !class_exists( "Redux_Framework_options_config" ) ) {
 						'text-align'=>false,
 						'color'=>false,
 						'letter-spacing'=>true,
+						'text-transform'  => true,
 						'all_styles' => true, // Enable all Google Font style/weight variations to be added to the page
 						'output' => array('h3,.spb-row-expand-text,.woocommerce div.product .woocommerce-tabs ul.tabs li a, .single_variation_wrap .single_variation span.price'), // An array of CSS selectors to apply this font style to dynamically
 						'compiler' => array('h3,.spb-row-expand-text,.woocommerce div.product .woocommerce-tabs ul.tabs li a, .single_variation_wrap .single_variation span.price'), // An array of CSS selectors to apply this font style to dynamically
@@ -2196,6 +2225,7 @@ if ( !class_exists( "Redux_Framework_options_config" ) ) {
 						'text-align'=>false,
 						'color'=>false,
 						'letter-spacing'=>true,
+						'text-transform'  => true,
 						'all_styles' => true, // Enable all Google Font style/weight variations to be added to the page
 						'output' => array('h4'), // An array of CSS selectors to apply this font style to dynamically
 						'compiler' => array('h4'), // An array of CSS selectors to apply this font style to dynamically
@@ -2217,6 +2247,7 @@ if ( !class_exists( "Redux_Framework_options_config" ) ) {
 						'text-align'=>false,
 						'color'=>false,
 						'letter-spacing'=>true,
+						'text-transform'  => true,
 						'all_styles' => true, // Enable all Google Font style/weight variations to be added to the page
 						'output' => array('h5'), // An array of CSS selectors to apply this font style to dynamically
 						'compiler' => array('h5'), // An array of CSS selectors to apply this font style to dynamically
@@ -2238,6 +2269,7 @@ if ( !class_exists( "Redux_Framework_options_config" ) ) {
 						'text-align'=>false,
 						'color'=>false,
 						'letter-spacing'=>true,
+						'text-transform'  => true,
 						'all_styles' => true, // Enable all Google Font style/weight variations to be added to the page
 						'output' => array('h6'), // An array of CSS selectors to apply this font style to dynamically
 						'compiler' => array('h6'), // An array of CSS selectors to apply this font style to dynamically
@@ -2260,6 +2292,7 @@ if ( !class_exists( "Redux_Framework_options_config" ) ) {
 						'line-height'=>false,
 						'color'=>false,
 						'letter-spacing'=>true,
+						'text-transform'  => true,
 						'output' => array('#main-nav, #header nav, .vertical-menu nav, .header-9#header-section #main-nav, #overlay-menu nav, #mobile-menu, #one-page-nav li .hover-caption, .mobile-search-form input[type="text"]'), // An array of CSS selectors to apply this font style to dynamically
 						'compiler' => array('#main-nav, #header nav, .vertical-menu nav, .header-9#header-section #main-nav, #overlay-menu nav, #mobile-menu, #one-page-nav li .hover-caption, .mobile-search-form input[type="text"]'), // An array of CSS selectors to apply this font style to dynamically
 						'units'=> 'px', // Defaults to px
@@ -2271,6 +2304,17 @@ if ( !class_exists( "Redux_Framework_options_config" ) ) {
 						),
 				),
 			);
+
+//			$this->sections[] = array(
+//				'icon' => 'el-icon-fontsize',
+//				'title' => __('Icon Fonts', 'swiftframework'),
+//				'fields' => array(
+//					array(
+//						'id' => 'custom_icon_fonts',
+//						'type' => 'custom_icon_fonts'
+//					)
+//				),
+//			);
 
 			$this->sections[] = array(
 				'type' => 'divide',
@@ -2957,7 +3001,7 @@ if ( !class_exists( "Redux_Framework_options_config" ) ) {
 						'id' => 'product_details_alignment',
 						'type' => 'button_set',
 						'title' => __('Product Details Alignment', 'swiftframework'),
-						'subtitle' => __('Choose if you would like to show shadows behind product images.', 'swiftframework'),
+						'subtitle' => __('Choose the alignment of the product details on the shop index.', 'swiftframework'),
 						'desc' => '',
 						'options' => array('left' => 'Left','center' => 'Center','right' => 'Right'),
 						'default' => 'left'
@@ -3136,6 +3180,107 @@ if ( !class_exists( "Redux_Framework_options_config" ) ) {
 							),
 						'desc' => '',
 						'default' => 'light'
+						),
+					array(
+						'id' => 'woo_shop_divide_1',
+						'type' => 'divide'
+						),
+					array(
+						'id' => 'woo_shop_slider',
+						'type' => 'button_set',
+						'title' => __('Shop Slider', 'swiftframework'),
+						'subtitle' => __('Show slider on the shop page.', 'swiftframework'),
+						'desc' => '',
+						'options' => array('swift-slider' => 'Swift Slider', '0' => 'Off'),
+						'default' => '0'
+						),
+					array(
+						'id' => 'woo_shop_category',
+						'required'  => array('woo_shop_slider', '=', 'swift-slider'),
+						'type' => 'select',
+						'title' => __('Shop Slider Category', 'swiftframework'),
+						'subtitle' => __('Choose the category of slide that you would like to show, or all.', 'swiftframework'),
+						'desc' => '',
+						'data' => 'terms',
+						'args' => array( 'taxonomies' => 'swift-slider-category' ),
+						'default' => ''
+						),	
+						
+					array(
+						'id' => 'woo_shop_slider_slides',
+						'required'  => array('woo_shop_slider', '=', 'swift-slider'),
+						'type' => 'text',
+						'title' => __('Shop Slider Slides', 'swiftframework'),
+						'subtitle' => __('Set the number of slides to show. If blank then all will show.', 'swiftframework'),
+						'desc' => '',
+						'default' => '5'
+						),
+					array(
+						'id' => 'woo_shop_slider_maxheight',
+						'required'  => array('woo_shop_slider', '=', 'swift-slider'),
+						'type' => 'text',
+						'title' => __('Shop Slider Max Height', 'swiftframework'),
+						'subtitle' => __('Set the maximum height that the Swift Slider should display at (optional) (no px).', 'swiftframework'),
+						'desc' => '',
+						'default' => '600'
+						),
+					array(
+						'id' => 'woo_shop_slider_random',
+						'required'  => array('woo_shop_slider', '=', 'swift-slider'),
+						'type' => 'button_set',
+						'title' => __('Shop Slider Random', 'swiftframework'),
+						'subtitle' => __('Choose if you would like the slider to show slides in random order.', 'swiftframework'),
+						'desc' => '',
+						'options' => array('1' => 'On', '0' => 'Off'),
+						'default' => '0'
+						),
+					array(
+						'id' => 'woo_shop_slider_auto',
+						'required'  => array('woo_shop_slider', '=', 'swift-slider'),
+						'type' => 'text',
+						'title' => __('Shop Slider Autoplay', 'swiftframework'),
+						'subtitle' => __('If you would like the slider to auto-rotate, then set the autoplay rotate time in ms here. I.e. you would enter "5000" for the slider to rotate every 5 seconds.', 'swiftframework'),
+						'desc' => '',
+						'default' => ''
+						),
+					array(
+						'id' => 'woo_shop_slider_loop',
+						'required'  => array('woo_shop_slider', '=', 'swift-slider'),
+						'type' => 'text',
+						'title' => __('Shop Slider Loop', 'swiftframework'),
+						'subtitle' => __('Choose if you would like the slider to loop.', 'swiftframework'),
+						'desc' => '',
+						'default' => ''
+						),
+					array(
+						'id' => 'woo_shop_slider_transition',
+						'required'  => array('woo_shop_slider', '=', 'swift-slider'),
+						'type' => 'button_set',
+						'title' => __('Shop Slider Transition', 'swiftframework'),
+						'subtitle' => __('Choose the transition type for the slider.', 'swiftframework'),
+						'desc' => '',
+						'options' => array('slide' => 'Slide', 'fade' => 'Fade'),
+						'default' => 'slide'
+						),
+					array(
+						'id' => 'woo_shop_slider_nav',
+						'required'  => array('woo_shop_slider', '=', 'swift-slider'),
+						'type' => 'button_set',
+						'title' => __('Shop Slider Navigation', 'swiftframework'),
+						'subtitle' => __('Choose if you would like to display the left/right arrows on the slider (only if slider type is set to "Slider")', 'swiftframework'),
+						'desc' => '',
+						'options' => array('1' => 'On', '0' => 'Off'),
+						'default' => '1'
+						),
+					array(
+						'id' => 'woo_shop_slider_pagination',
+						'required'  => array('woo_shop_slider', '=', 'swift-slider'),
+						'type' => 'button_set',
+						'title' => __('Shop Slider Pagination', 'swiftframework'),
+						'subtitle' => __('Choose if you would like to display the slider pagination.', 'swiftframework'),
+						'desc' => '',
+						'options' => array('1' => 'On', '0' => 'Off'),
+						'default' => '1'
 						),
 				),
 			);

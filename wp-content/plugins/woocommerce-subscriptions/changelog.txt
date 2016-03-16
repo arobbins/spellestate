@@ -1,5 +1,190 @@
 *** WooCommerce Subscriptions Changelog ***
 
+2016.03.03 - version 2.0.11
+ * Fix: activation issue with v2.0.10 on some sites due to get_editable_roles() function not being defined
+ * Tweak: don't allow subscribers to cancel subscriptions with pending cancellation status
+
+2016.02.27 - version 2.0.10
+ * Tweak: large improvements to internationalisation of strings after a full audit of all strings made available for localisation. Subscriptions now makes use of string context more often, uses numbered placeholders for strings passed through sprintf/printf, consolidated strings with same context and added more comments for translators.
+ * Tweak: display details of product, shipping and tax line items at PayPal for subscription sign-ups via Express Checkout Reference Transactions instead of only displaying the billing agreement description.
+ * Tweak: add new wcs_get_address_type_to_display() method to have a single source for all localised address type display names
+ * Tweak: a number of small security improvements around validation of printing strings
+ * Tweak: new 'woocommerce_subscription_use_pending_cancel' filter to allow stores to switch off the use of the Pending Cancellation status applied until the end of any prepaid term on a subscription once it has been cancelled
+ * Tweak: use wp_json_encode() when possible (with WordPress v4.1 and newer) instead of PHP's json_encode(), the use of which is discouraged
+ * Tweak: move user role filter to after the default roles section and introduce wcs_get_new_user_role_names() to allow custom code to more easily customise the role assigned to a user for subscription events.
+ * Fix: Product add-on incompatibility: make sure product add-ons are only applied once for manual renewal payments for a previously failed automatic renewal payment.
+ * Fix: Checkout Add-ons incompatibility: add subscription fee line items to the cart for manual renewal and resubscribe to make sure Checkout Add-ons are applied to manual renewals and resubscribes
+ * Fix: compatibility with remote updaters, like WP Remote, Jetpack Manage by activating subscriptions on 'init' not 'admin_init' because remote udpaters won't trigger that hook.
+ * Fix: apply recurring coupons to manual renewals by making sure they are set in the cart at the time of renewal. Introduces the use of the following new psuedo coupons for carrying over recurring coupons to renewals: 'renewal_fee', 'renewal_percent' & 'renewal_cart'.
+ * Fix: make sure it is possible to link a subscription with a parent order by passing a 'order_id' argument when creating or updating a subscription via the REST API endpoints (i.e. /wc-api/v4/subscriptions/)
+ * Fix: don't show synchronisation fields on the Edit Product screen for a subscription that renews daily when toggling the downloadable or virtual checkboxes
+ * Fix: make sure you can bulk edit variations before a variable product is saved with WooCommerce v2.5 by using the product type field
+ * Fix: don't incorrectly log the "Free trial commenced for subscription" order note on a subscription when applying coupons to make the initial payment free. Instead, log the more general "Sign-up complete" order note whenever a subscription without an initial payment receives the first payment complete function call.
+ * Fix: don't allow resubscribing to subscriptions with a $0 / period price, because generally, this is done to charge the full cost of the subscription in the sign-up fee, and we don't charge sign-up fees on a resubscribe.
+ * Fix: occassional error when updating a subscription via the Edit Subscription screen: "Error updating subscription: A valid PayPal Billing Agreement ID value is required" caused by using disabled payment method meta fields (Subscriptions now uses readonly fields).
+ * Fix: send cancelled subscription emails to store managers when a subscription is deleted early in the process of deletion to ensure billing meta fields are still available to include in the email.
+ * Fix: log correct next payment date when processing a PayPal IPN payment request for a subscription that has a payment in the future. Also fixes an undefined index notice for these IPN requests for subscriptions with no free trial.
+ * Fix: allow disabled payment gateways that are still active as plugins to be treated as a valid payment method when saving a subscription via the Edit Subscription screen to avoid switching the subscription to use Manual renewals.
+ * Fix: always display order numbers not IDs to improve compatibility with plugins like Sequential Order numbers
+ * Fix: when a switch order's status is changed, don't cancel, suspend or mark the corresponding subscription as failed. Only do that on those status changes for the original order.
+ * Fix: display all subscriptions on the Subscriptions list table when filtering by payment method (previously the default posts per page value would be used, which is 5).
+ * Fix: leap year issues when creating subscription terms with PayPal Standard that can lead to prolonged free trial or subscription duration for subscripions that have an annual free trial or billing period.
+ * Fix: set correct subscription length options for subscription variations on the Edit Product screen when first loading the page (affects subscriptions with a billing interval other than 1)
+ * Fix: duplicate PayPal IPN blocking on sites running PHP prior to version 5.4.0.
+
+2016.01.30 - version 2.0.9
+ * Notice: if you have customisations to the /add-to-cart/variable.php template you wish to apply to variable subscription products, you will need to create a new /add-to-cart/variable-subscription.php template in your theme as this version introduces a new template specifically for variable subscription products
+ * Tweak: display customer as recipient on WooCommerce > Settings > Email screen with WooCommerce 2.5+
+ * Tweak: automatically cancel a subscription with the 'pending-cancellation' status if the last renewal order is refunded
+ * Tweak: flush rewrite rules on activation / deactivation rather than just on upgrade to ensure /view-subscription/ rewrites are always available
+ * Tweak: use variation ID to test if a subscription's product line item can be switched (helps extensions, like Name Your Price, override if specific variations can be switched)
+ * Tweak: delete subscriptions on user deletion instead of simply trashing them
+ * Tweak: new filters for 3rd party developers to use for renewal/resubscribe: 'wcs_cart_contains_renewal', 'wcs_cart_contains_failed_renewal_order_payment', 'wcs_users_resubscribe_link_for_product', 'wcs_cart_contains_resubscribe'
+ * Tweak: display a notice on limited variable subscription products that can not be switched by introducing a new variable subscription template
+ * Fix: after the last payment a subscription with an end date, clear the next payment date instead of leaving it as the date of the last payment
+ * Fix: only display resubscribe notice if a subscription resubscribe was added to cart successfully
+ * Fix: remove download permissions when product line items are switched to make sure customer only has access to line items of the product they are currently subscribed to
+ * Fix: when checking whether to apply a discount, only call is_valid_for_product() with WooCommerce 2.5+ because it will always return false in prior versions
+ * Fix: make sure subscriptions are cancelled before being deleted by using the correct hook name (they were already being correctly cancelled when trashed)
+ * Fix: do not redirect for auto-switching on limited subscriptions if switching has been disabled in the store
+ * Fix: always create a failed renewal order for PayPal IPN messages relating to a failure when the subscription is active because PayPal may send the subscription suspended message before the payment failed message and therefore, we'd mark the old renewal order as failed instead of a new renewal order
+ * Fix: make sure resubscribe orders do not incorrectly charge signup fees after a failed or pending payment on the resubscribe order
+ * Fix: ignore suspended payment PayPal IPN messages for subscriptions with any status other than 'active' to avoid exceptions when attempting to suspend a subscription pending-cancellation or custom status that can't be suspended
+ * Fix: display the # symbol before subscription numbers/IDs in all places where WooCommerce displays the # symbol before the order number/ID
+ * Fix: make sure subscriptions created with PayPal Standard are correctly cancelled when changing the customer changes the payment method to PayPal but the store now supports PayPal Reference Transactions
+ * Fix: set the correct end date for a synchronised subscription by ensuring that no mock trial period in included in its date
+ * Fix: make sure correct totals are used for manual renewals (and manual payments for failed automatic renewals) when store is using tax inclusive pricing (by making sure the correct tax amount is added to the renewal item's price)
+
+2016.01.07 - version 2.0.8
+ * Happy new year!
+ * Tweak: WooCommerce 2.5 email template compatibility
+ * Tweak: Use "Change Payment Method" as the default button text on the customer facing Change Payment method form instead of the payment gateways's order button text as often gateways will use something like "Place Order".
+ * Tweak: Move hardcoded # symbols used for Subscription ID inside translation functions so they can be localised.
+ * Fix: Display PayPal Subscription Profile ID for PayPal Standard Subscriptions on the Edit Subscription administration screen (but disable the input so that it is not editable by default).
+ * Fix: When changing a subscription's payment method via the Edit Subscription administration screen, make sure the status updated hook is trigger for the old payment method to allow gateways to cancel/suspend it as needed.
+ * Fix: When changing a subscription's payment method from PayPal to a different gateway via the Edit Subscription administration screen, suspend the existing subscription at PayPal to ensure no future payments are processed on it.
+ * Fix: Apply recurring cart discount coupons to products not excluded from that coupon even if the cart contains other products which are excluded from that coupon. Requires WooCommerce 2.5.
+ * Fix: Remove renewal/resubscribe cart items from cart when the renewal/resubscribe order or original subscription has been deleted to prevent errors.
+ * Fix: Correctly cache a subscriptions payment gateway rather than instantiating it again every time it is accessed for a small performance improvement.
+ * Fix: Display the View Subscription page when My Account page is set as the site's front page.
+ * Fix: Allow unlimited subscription suspension by customer from their My Account page
+ * Fix: Display "Total" row heading for My Subscriptions table on small displays
+
+2015.12.16 - version 2.0.7
+* New: Add a payment gateway filter to the dashboard admin subscriptions table
+* New: Implement soft caching for get_related_orders()
+* Tweak: Better "Name Your Price" extension switching compatibility 
+* Tweak: Trash a user's subscriptions when a user is deleted
+* Tweak: Limit the `wcs_do_subscriptions_exist()` query to 1 result
+* Tweak: Mention subscription string methods in code comments/doc to help avoid some confusion
+* Fix: Fix for limiting and paging with the /subscriptions/ API endpoint
+* Fix: Use `esc_url_raw()` for redirect url instead of `esc_url()`. Fixes an issue where the return from paypal displays checkout page again instead of order received/details
+* Fix: Replaces `parse_str()` with `wp_parse_str()` to fix an issue with incorrectly escaped responses from PayPal in early PHP versions
+* Fix: Prevent renewal orders being cancelled when clicking the "Cancel and return to .." link from PayPal
+* Fix: Check whether an order needs payment before processing initial payments. Prevents a difficult to reproduce scenario where initial payments were processed multiple times
+* Fix: Check if a cart contains a subscription AND the subtotal is 0 before removing any non subscriptions coupons if there is nothing for the coupon to be applied to. Fixes a compatibility issue with extensions like URL coupons.
+* Fix: Fixes some php errors when a switch order fails
+* Fix: Removes subscriptions from being calculated in reports. Fixes an issue where failed parent orders were incorrectly showing up in reports
+* Fix: Filter needs_payment when processing change payment method requests. Fixes an issue with some payment gateways displaying duplicate fields on the change payment method form
+* Fix: Paypal IPN tweaks for slow servers & popular stores - port of existing 1.5.x fixes
+* Fix: Add additional cart item data when setting up resubscribe and renewal carts so that subscriptions with multiple line items of the same product don't get merged into the one line item with an incorrect quantity. Fixes an issue where if a subscription had 2 line items for the same product, on resubscribe, one of them would disappear
+* Fix: Check if $this->payment_gateway property exists. Fixes an issue when subscriptions used on sites served using HHVM
+* Fix: Prevent partially paying for a renewal order if not all renewal items are added to cart
+* Fix: Changes the $subscription->needs_payment() function to also include switch order meta in the get get_posts query so the latest switch order or renewal order is checked if it needs payment. Fixes customer self reactivating subscription after prorated switch
+* Fix: Zero the subscription order shipping value so that we have a clean slate to add to when we add_shipping() when switching. Fixes incorrect/double shipping order tax when switching
+* Fix: Other minor misc spelling fixes and fixes to incorrect variable names
+
+2015.11.16 - version 2.0.6
+ * New: Add a new `woocommerce_subscriptions_switched_item` callback for switching
+ * Tweak: Move `subscription_expired` and `subscription_end_of_prepaid_term` to the action deprecator
+ * Tweak: Deprecate WC_Subscriptions_Manager::subscription_trial_end()
+ * Fix: Add the correct `subscription_switch` meta to all subscription switches when there are multiple switches in the same order
+ * Fix: Allow autocomplete of orders that have multiple switches in the same order. Fixes an issue where switch emails were not being sent when multiple switched items were processed in the same order
+ * Fix: Adjust logic around switch label so that switching to $0 per period displays "Downgrade". Fixes an issue where "Crossgrade" was incorrectly displayed when downgrading to $0 per period
+ * Fix: Don't initiate auto-switch when a subscription needs payment 
+ * Fix: Use the 'wc-pending' status rather than 'pending' (default WordPress) status when manually creating a subscription. Fixes an issue with display of pending subscriptions on the admin subscription list table
+ * Fix: Replace use of `__DIR__` with `dirname( __FILE__ )` to maintain compatibility with PHP 5.2.4
+ * Fix: Fix the logic checking for sync day in future by comparing the full date not just the day then the month/year if that day is after the current day. This ensures we don't see a day in the future with a month and year in the past or same as today as being a date in the future
+ * Fix: Display the resubscribe relationship in the admin edit order and subscription related orders table
+ * Fix: Directly access the `$_REQUEST['action']` variables instead of using `$wp_list_table->current_action()`. Fixes an issue where while filtering the admin subscriptions list table by customer, attempting to update a subscription status using the provided suspend, cancel and reactivate actions wouldn't actually update the status
+ * Fix: Honour previous filters applied to the admin subscription list table after updating an individual subscription status using the provided actions
+
+2015.11.07 - version 2.0.5
+ * Tweak: the "Suspend" button is no longer displayed on a store manager's View Subscription page when 0 suspensions are allowed, to avoid confusion (store managers can always suspend subscriptions from the Manage Subscriptions screen)
+ * Tweak: use both order status and paid date meta data to find the completed payment count on a subscription because some payment gateways don't set the paid date and some stores may run custom code or 3rd party plugins using a custom order status other than "completed"
+ * Tweak: add new 'woocommerce_subscriptions_switch_error_message' filter and improve params on 'woocommerce_subscriptions_is_switch_valid' to allow 3rd party code, like Name Your Price, to allow their products to be switched
+ * Tweak: add new 'woocommerce_subscriptions_paid_order_statuses' filter for 3rd party code to declare what custom order status should be considered as marking an order as paid
+ * Fix: update the trial, next payment and end dates as well as the start date when changing the status of a order used to purchase a subscription (for stores which use manual payment methods which can take days before payment is received)
+ * Fix: incorrect tax calculation when resubscribing or manually renewing to a subscription when prices are tax inclusive
+ * Fix: always setting subscription start date to 1 minute in past when manually adding a subscription via the Edit Subscription screen (by updating the post cache)
+ * Fix: handling of 'recurring_payment_suspended_due_to_max_failed_payment' and 'recurring_payment_suspended' PayPal IPN requests which send a PayPal Express Checkout IPN payload for PayPal Standard Subscriptions
+ * Fix: incorrectly removing any non-Subscriptions role from a user when purchasing or deactivating a subscription (by removing and adding only the default role)
+ * Fix: PHP notice about undefined index 'txn_type' for PayPal IPNs relating to a refund
+ * Fix: errors relating to an order awaiting payment that has been set to false or deleted instead of being unset in the WooCommerce session
+ * Fix: incorrect transition of orders (including renewal orders) for $0 amounts to "completed", instead make sure they are transitioned to the default completed status (i.e. "processing")
+
+2015.11.02 - version 2.0.4
+ * Tweak: cache available subscription lengths to improve performance of the WooCommerce > Subscriptions list table page
+ * Tweak: add safeguards to prevent a next payment within 2 hours when activating a subscription, or a new next payment date be calculated within 2 hours in the future. Works around issues with 3rd party code using date_default_timezone_set() and a daylight savings bug that will be fixed in a future release
+ * Tweak: add new filters to allow 3rd party extensions to make their product types switchable (specifically to allow Name Your Price products to be switchable without any changes other than price). Props @helgatheviking
+ * Tweak: display subscription details on customer facing change payment method process for gateways which use the Checkout > Pay page a 2nd time
+ * Tweak: when deleting a user, make a note on the subscriptions that user was associated with (which will automatically be cancelled)
+ * Fix: accumulated proration of sign-up fees when the customer switches a subscription multiple times (e.g. when sign-up fee proration is enabled and a customer upgrade from a product with a $100 fee to a $200 fee, then again to a $300 fee, only charge a $100 sign-up fee, not $200)
+ * Fix: don't suspend then reactivate subscriptions at PayPal on a renewal (introduced with 2.0.3) because store manager don't like the extra status change entries logged at PayPal and also PayPal doesn't sent a Subscription reactivated IPN, but does send a Subscription suspended IPN, which could lead to subscriptions remaining on-hold incorrectly if IPN handling code for PayPal Express Checkout/Digital Goods was handling it
+ * Fix: customer facing change payment method process for gateways which need to use the Checkout > Pay page a 2nd time, for example, to collect credit card details
+ * Fix: JavaScript pop-up notices relatd to invalid billing schedule modifications on the Edit Subscription screen, broken with v2.0.3
+ * Fix: don't attempt to cancel an expired, trashed or cancelled subscription when deleting a user (the subscription has already been deleted)
+ * Fix: don't record failed payment twice on a subscription with code calling WC_Subscription->payment_failed() with an unpaid renewal order
+ * Fix: handling of PayPal IPN for first payment that is sent before the payment is due for a subscription with a free trial date
+ * Fix: handling of PayPal IPN for subscription failure for a subscription has has previously been cancelled (not sure why PayPal sends this IPN when the subscriptoin has already been cancelled)
+ * Fix: don't send Customer Invoice email when using the the "Create Pending Renewal Order" action from the Edit Subscription screen for a subscription that uses manual renewals
+ * Fix: don't automatically complete a pending renewal order for $0 when using the "Create Pending Renewal Order" action from the Edit Subscription screen
+ * Fix: fix PHP notices dislpayed when removing multiple cart items from the cart which relate to a failed initial payment
+ * Fix: don't prorate sign-up fees for synchronised subscriptions when proration is enabled for the first renewal payment
+ * Fix: allow customers to pay failed parent orders which contain a subscription product limited to one of any status
+ * Fix: fatal errors when 3rd party code is calling WC_Subscriptions_Product::is_subscription() on a deleted product
+ * Fix: don't generate subscription renewal order for subsc_failed PayPal IPN messages
+ * Fix: increase PayPal IPN logging to help diagnose issues faster
+ * Fix: download links in the "download your files" email
+
+2015.10.27 - version 2.0.3
+ * New: One Time Shipping feature: https://docs.woothemes.com/document/subscriptions/store-manager-guide/#one-time-shipping
+ * Tweak: redirect to View Subscription page after changing payment method for payment methods redirecting back to My Account page
+ * Fix: reactivation of subscriptions using PayPal Standard as the payment method after a subscription renewal payment IPN message is sent (introduced with 2.0.2)
+ * Fix: use of start date in based on current GMT/UTC offset instead of GMT/UTC offset at the time the subscription was created to handle daylight savings time and changes to a site's timezone
+ * Fix: notices when saving a manually added subscription with the pending status via the WooCommerce > Add Subscription administration interface
+ * Fix: increase specificity of JS selector on Edit Product screen to make sure subscription pricing fields are only inserted once, even when other code is adding additional pricing sections
+ * Fix: return estimated subscription length instead of null for 3rd party code calling deprecated API functions
+ * Fix: always use WC_API_Subscriptions->get_subscription() to construct the API response for WC-API endpoints
+
+2015.10.21 - version 2.0.2
+ * New: create pending renewal order action from the Edit Subscriptions screen
+ * New: process renewal action from the Edit Subscriptions screen
+ * New: 'woocommerce_subscriptions_validate_coupon_type' filter to improve compatibility with Free Gift Coupons extension
+ * Tweak: display HTTP errors that occur during upgrade
+ * Tweak: always allow a store manager to change a subscription to use "Manual" renewal method on the Edit Subscription screen, even if manual renewals are not enabled for checkout
+ * Fix: repair data not migrated correctly from Subscriptions 1.n, especially important for repairing incorrect dates for stores that upgraded with 2.0.0. Data repaired is dates, customer notes and line tax data.
+ * Fix: repair subscrpitions incorrectly expired due to incorrect expirate date set during the 2.0.0 upgrade process
+ * Fix: bug in upgrade process preventing line tax date being copied correctly
+ * Fix: bug in upgrade process preventing customer notes on subscription orders being copied to subscriptions
+ * Fix: bug in upgrade process where incorrect dates could be set on subscriptions (only affecting upgrades run with 2.0.0 not 2.0.1 and dates will be repaired on upgrade to this version)
+ * Fix: infinite loop during upgrade process if store had subscription order item meta data but the corresponding order item had been deleted
+ * Fix: call deprecated status change hooks: 'activated_subscription', 'suspended_subscription', 'subscription_put_on-hold', 'cancelled_subscription' and 'reactivated_subscription' to improve compatibility with plugins that have not been updated for Subscriptions 2.0 yet
+ * Fix: hide refund button on Edit Subscriptions screen: subscriptions can not be refunded, only orders
+ * Fix: handling of PayPal IPN recurring_payment_suspended_due_to_max_failed_payment messages - correctly create renewal order on failure instead of simply suspending the subscription
+ * Fix: occassional "Invalid argument supplied for foreach" notices on cart page when attempting to get shipping methods
+ * Fix: do not show "Free!" for grouped products with a free trial on the grouped product's page when product is in the cart
+ * Fix: paying for renewal of a limited subscription product
+ * Fix: customer changing payment method with PayPal RT
+ * Fix: [subscriptions] shortcode
+
+2015.10.09 - version 2.0.1
+ * Tweak: add a log entry when processing an IPN request completes
+ * Fix: PayPal IPN handling for subscriptions purchased with older versions of WooCommerce
+ * Fix: renewal failure on stores running code attached to the deprecated 'woocommerce_subscriptions_renewal_order_created' hook and not returning the renewal order (which wasn't required previously because it was an action)
+ * Fix: checkout errors on stores running code calling the deprecated WC_Subscriptions_Order::get_recurring_total_tax() method
+ * Fix: upgrade error when upgrading a sync'd subscription that has been trashed for a product that has been permanently deleted
+
 2015.10.05 - version 2.0.0
  * New: purchase different subscription products in the same transaction: https://docs.woothemes.com/document/subscriptions/version-2/#section-2
  * New: administration interface for Adding or Editing a subscription: https://docs.woothemes.com/document/subscriptions/version-2/#section-3

@@ -13,17 +13,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 echo $email_heading . "\n\n";
 
 if ( $order->status == 'pending' ) {
-	echo sprintf( __( 'An invoice has been created for you to renew your subscription with %s. To pay for this order please use the following link: %s', 'woocommerce-subscriptions' ), get_bloginfo( 'name' ), $order->get_checkout_payment_url() ) . "\n\n";
+	// translators: %1$s: name of the blog, %2$s: link to checkout payment url, note: no full stop due to url at the end
+	printf( esc_html_x( 'An invoice has been created for you to renew your subscription with %1$s. To pay for this invoice please use the following link: %2$s', 'In customer renewal invoice email', 'woocommerce-subscriptions' ), esc_html( get_bloginfo( 'name' ) ), esc_attr( $order->get_checkout_payment_url() ) ) . "\n\n";
 } elseif ( 'failed' == $order->status ) {
-	echo sprintf( __( 'The automatic payment to renew your subscription with %s has failed. To reactivate the subscription, please login and pay for the renewal from you account page: %s', 'woocommerce-subscriptions' ), get_bloginfo( 'name' ), $order->get_checkout_payment_url() );
+	// translators: %1$s: name of the blog, %2$s: link to checkout payment url, note: no full stop due to url at the end
+	printf( esc_html_x( 'The automatic payment to renew your subscription with %1$s has failed. To reactivate the subscription, please login and pay for the renewal from your account page: %2$s', 'In customer renewal invoice email', 'woocommerce-subscriptions' ), esc_html( get_bloginfo( 'name' ) ), esc_attr( $order->get_checkout_payment_url() ) );
 }
 
 echo "****************************************************\n\n";
 
 do_action( 'woocommerce_email_before_order_table', $order, false, true );
 
-echo sprintf( __( 'Order number: %s', 'woocommerce-subscriptions' ), $order->get_order_number() ) . "\n";
-echo sprintf( __( 'Order date: %s', 'woocommerce-subscriptions' ), date_i18n( woocommerce_date_format(), strtotime( $order->order_date ) ) ) . "\n";
+printf( __( 'Order number: %s', 'woocommerce-subscriptions' ), $order->get_order_number() ) . "\n";
+printf( __( 'Order date: %s', 'woocommerce-subscriptions' ), date_i18n( wc_date_format(), strtotime( $order->order_date ) ) ) . "\n";
 
 do_action( 'woocommerce_email_order_meta', $order, false, true );
 
@@ -31,13 +33,34 @@ echo "\n";
 
 switch ( $order->status ) {
 	case 'completed' :
-		echo $order->email_order_items_table( $order->is_download_permitted(), false, true, '', '', true );
+		echo WC_Subscriptions_Email::email_order_items_table( $order, array(
+			'show_download_links' => $order->is_download_permitted(),
+			'show_sku'            => false,
+			'show_purchase_note'  => true,
+			'show_image'          => '',
+			'image_size'          => '',
+			'plain_text'          => true,
+			) );
 	break;
 	case 'processing' :
-		echo $order->email_order_items_table( $order->is_download_permitted(), true, true, '', '', true );
+		echo WC_Subscriptions_Email::email_order_items_table( $order, array(
+			'show_download_links' => $order->is_download_permitted(),
+			'show_sku'            => true,
+			'show_purchase_note'  => true,
+			'show_image'          => '',
+			'image_size'          => '',
+			'plain_text'          => true,
+			) );
 	break;
 	default :
-		echo $order->email_order_items_table( $order->is_download_permitted(), true, false, '', '', true );
+		echo WC_Subscriptions_Email::email_order_items_table( $order, array(
+			'show_download_links' => $order->is_download_permitted(),
+			'show_sku'            => true,
+			'show_purchase_note'  => false,
+			'show_image'          => '',
+			'image_size'          => '',
+			'plain_text'          => true,
+			) );
 	break;
 }
 

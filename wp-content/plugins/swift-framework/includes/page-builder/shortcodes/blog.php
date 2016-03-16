@@ -2,10 +2,10 @@
 
     /*
     *
-    *	Swift Page Builder - Blog Shortcode
-    *	------------------------------------------------
-    *	Swift Framework
-    * 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+    *   Swift Page Builder - Blog Shortcode
+    *   ------------------------------------------------
+    *   Swift Framework
+    *   Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     */
 
@@ -26,7 +26,7 @@
                 'show_details'       => 'yes',
                 'offset'             => '0',
                 'order_by'           => 'date',
-                'order'        		 => 'DESC',
+                'order'              => 'DESC',
                 'excerpt_length'     => '20',
                 'show_read_more'     => 'yes',
                 'item_count'         => '5',
@@ -38,10 +38,10 @@
                 'instagram_id'       => '',
                 'instagram_token'    => '',
                 'blog_filter'        => '',
-                'alt_styling'		 => 'no',
+                'alt_styling'        => 'no',
                 'hover_style'        => 'default',
                 'content_output'     => 'excerpt',
-                'post_type'			 => 'post',
+                'post_type'          => 'post',
                 'el_position'        => '',
                 'width'              => '1/1',
                 'el_class'           => ''
@@ -67,9 +67,9 @@
 
             /* BLOG AUX
             ================================================== */
-//	        if ($show_blog_aux == "yes" && $sidebars == "no-sidebars") {
-//	        	$blog_aux = sf_blog_aux($width);
-//	        }
+//          if ($show_blog_aux == "yes" && $sidebars == "no-sidebars") {
+//              $blog_aux = sf_blog_aux($width);
+//          }
 
 
             /* BLOG ITEMS
@@ -128,13 +128,24 @@
     );
 
     if ( spb_get_theme_name() == "atelier" ) {
-    	$blog_types = array(
-    	    __( 'Standard', 'swift-framework-plugin' ) => "standard",
-    	    __( 'Bold', 'swift-framework-plugin' )     => "bold",
-    	    __( 'Mini', 'swift-framework-plugin' )     => "mini",
-    	    __( 'Masonry', 'swift-framework-plugin' )  => "masonry",
-    	);
+        $blog_types = array(
+            __( 'Standard', 'swift-framework-plugin' ) => "standard",
+            __( 'Bold', 'swift-framework-plugin' )     => "bold",
+            __( 'Mini', 'swift-framework-plugin' )     => "mini",
+            __( 'Masonry', 'swift-framework-plugin' )  => "masonry",
+        );
     }
+
+    if ( spb_get_theme_name() == "uplift" ) {
+        $blog_types = array(
+            __( 'Standard', 'swift-framework-plugin' ) => "standard",
+            __( 'Timeline', 'swift-framework-plugin' ) => "timeline",
+            __( 'Masonry', 'swift-framework-plugin' )  => "masonry",
+        );
+    }
+
+    $blog_types = apply_filters( 'spb_blog_display_types', $blog_types );
+    
 
     /* PARAMS
     ================================================== */
@@ -162,6 +173,7 @@
                 __( 'Yes', 'swift-framework-plugin' ) => "yes",
                 __( 'No', 'swift-framework-plugin' )  => "no"
             ),
+            "buttonset_on"  => "yes",
             "required"       => array("blog_type", "=", "masonry"),
             "description" => __( "Select if you'd like spacing between the items, or not (Masonry type only).", 'swift-framework-plugin' )
         ),
@@ -183,6 +195,7 @@
                 __( 'Yes', 'swift-framework-plugin' ) => "yes",
                 __( 'No', 'swift-framework-plugin' )  => "no"
             ),
+            "buttonset_on"  => "yes",
             "description" => __( "Select if you'd like the asset to be full width (edge to edge). NOTE: only possible on pages without sidebars.", 'swift-framework-plugin' )
         ),
         array(
@@ -208,29 +221,29 @@
             "description" => __( "The offset for the start of the posts that are displayed, e.g. enter 5 here to start from the 5th post.", 'swift-framework-plugin' )
         ),
         array(
-        	    "type"        => "dropdown",
-        	    "heading"     => __( "Order by", 'swift-framework-plugin' ),
-        	    "param_name"  => "order_by",
-        	    "std"         => "date",
-        	    "value"       => array(
-        	        __( 'None', 'swift-framework-plugin' ) => "none",
-        	        __( 'ID', 'swift-framework-plugin' )  => "ID",
-        	        __( 'Title', 'swift-framework-plugin' )  => "title",
-        	        __( 'Date', 'swift-framework-plugin' )  => "date",
-        	        __( 'Random', 'swift-framework-plugin' )  => "rand",
-        	    ),
-        	    "description" => __( "Select how you'd like the items to be ordered.", 'swift-framework-plugin' )
+                "type"        => "dropdown",
+                "heading"     => __( "Order by", 'swift-framework-plugin' ),
+                "param_name"  => "order_by",
+                "std"         => "date",
+                "value"       => array(
+                    __( 'None', 'swift-framework-plugin' ) => "none",
+                    __( 'ID', 'swift-framework-plugin' )  => "ID",
+                    __( 'Title', 'swift-framework-plugin' )  => "title",
+                    __( 'Date', 'swift-framework-plugin' )  => "date",
+                    __( 'Random', 'swift-framework-plugin' )  => "rand",
+                ),
+                "description" => __( "Select how you'd like the items to be ordered.", 'swift-framework-plugin' )
         ),
         array(
-        	    "type"        => "dropdown",
-        	    "heading"     => __( "Order", 'swift-framework-plugin' ),
-        	    "param_name"  => "order",
-        	    "std"         => "DESC",
-        	    "value"       => array(
-        	        __( "Ascending", 'swift-framework-plugin' )  => "ASC",
-        	        __( "Descending", 'swift-framework-plugin' ) => "DESC"
-        	    ),
-        	    "description" => __( "Select if you'd like the items to be ordered in ascending or descending order.", 'swift-framework-plugin' )
+                "type"        => "dropdown",
+                "heading"     => __( "Order", 'swift-framework-plugin' ),
+                "param_name"  => "order",
+                "std"         => "DESC",
+                "value"       => array(
+                    __( "Ascending", 'swift-framework-plugin' )  => "ASC",
+                    __( "Descending", 'swift-framework-plugin' ) => "DESC"
+                ),
+                "description" => __( "Select if you'd like the items to be ordered in ascending or descending order.", 'swift-framework-plugin' )
         ),
         array(
             "type"        => "buttonset",
@@ -241,17 +254,19 @@
                 __( "Yes", 'swift-framework-plugin' ) => "yes",
                 __( "No", 'swift-framework-plugin' )  => "no"
             ),
+            "buttonset_on"  => "yes",
             "description" => __( "Show the item title text.", 'swift-framework-plugin' )
         ),
         array(
             "type"        => "buttonset",
             "heading"     => __( "Show item excerpt", 'swift-framework-plugin' ),
             "param_name"  => "show_excerpt",
-            "std"         => "no",
+            "std"         => "yes",
             "value"       => array(
                 __( "Yes", 'swift-framework-plugin' ) => "yes",
                 __( "No", 'swift-framework-plugin' )  => "no"
             ),
+            "buttonset_on"  => "yes",
             "required"       => array("blog_type", "!=", "bold"),
             "description" => __( "Show the item excerpt text.", 'swift-framework-plugin' )
         ),
@@ -259,11 +274,12 @@
             "type"        => "buttonset",
             "heading"     => __( "Show item details", 'swift-framework-plugin' ),
             "param_name"  => "show_details",
-            "std"         => "no",
+            "std"         => "yes",
             "value"       => array(
                 __( "Yes", 'swift-framework-plugin' ) => "yes",
                 __( "No", 'swift-framework-plugin' )  => "no"
             ),
+            "buttonset_on"  => "yes",
             "description" => __( "Show the item details.", 'swift-framework-plugin' )
         ),
         array(
@@ -293,12 +309,13 @@
                 __( "Yes", 'swift-framework-plugin' ) => "yes",
                 __( "No", 'swift-framework-plugin' )  => "no"
             ),
+            "buttonset_on"  => "yes",
             "description" => __( "Show a read more link below the excerpt. NOTE: Not used in Bold or Masonry types.", 'swift-framework-plugin' )
         ),
         array(
-            "type"       => "section",
-            "param_name" => "social_integration_options",
-            "heading"    => __( "Social Integration Options", 'swift-framework-plugin' ),
+            "type"       => "section_tab",
+            "param_name" => "social_options_tab",
+            "heading"    => __( "Social Integration", 'swift-framework-plugin' ),
         ),
         array(
             "type"        => "buttonset",
@@ -309,6 +326,7 @@
                 __( "Yes", 'swift-framework-plugin' ) => "yes",
                 __( "No", 'swift-framework-plugin' )  => "no"
             ),
+            "buttonset_on"  => "yes",
             "description" => __( "Enable social integration within the blog posts (only on Masonry blog types). NOTE: This will only integrate Twitter/Instagram posts to the first page of your blog, and won't be included in any further pages, or content loaded via infinite scroll or AJAX. It therefore works best when you show a high number of blog posts on a single page, and pagination MUST be set to none.", 'swift-framework-plugin' )
         ),
         array(
@@ -316,6 +334,7 @@
             "heading"     => __( "Twitter Username", 'swift-framework-plugin' ),
             "param_name"  => "twitter_username",
             "value"       => "",
+            "required"       => array("social_integration", "=", "yes"),
             "description" => __( "Enter your twitter username here to include tweets in the blog grid. Ensure you have the Twitter oAuth plugin installed and your details added.", 'swift-framework-plugin' )
         ),
         array(
@@ -323,6 +342,7 @@
             "heading"     => __( "Instagram ID", 'swift-framework-plugin' ),
             "param_name"  => "instagram_id",
             "value"       => "",
+            "required"       => array("social_integration", "=", "yes"),
             "description" => __( "Enter your Instagram ID here to include your instagrams in the blog grid. You can find your instagram ID here - <a href='http://jelled.com/instagram/lookup-user-id' target='_blank'>http://jelled.com/instagram/lookup-user-id</a> You will also need to enter your token below.", 'swift-framework-plugin' )
         ),
         array(
@@ -330,12 +350,31 @@
             "heading"     => __( "Instagram Token", 'swift-framework-plugin' ),
             "param_name"  => "instagram_token",
             "value"       => "",
+            "required"       => array("social_integration", "=", "yes"),
             "description" => __( "Enter your Instagram Token here to include your instagrams in the blog grid. You can generate your instagram access token here - <a href='http://www.pinceladasdaweb.com.br/instagram/access-token/' target='_blank'>http://www.pinceladasdaweb.com.br/instagram/access-token/</a>. NOTE: This is REQUIRED.", 'swift-framework-plugin' )
         ),
         array(
-            "type"       => "section",
-            "param_name" => "aux_options",
-            "heading"    => __( "Aux Options", 'swift-framework-plugin' ),
+            "type"        => "textfield",
+            "class"       => "",
+            "heading"     => __( "Number of Instagram items", 'swift-framework-plugin' ),
+            "param_name"  => "insta_item_count",
+            "value"       => "",
+            "required"       => array("social_integration", "=", "yes"),
+            "description" => __( "The number of instagram items to show.", 'swift-framework-plugin' )
+        ),
+        array(
+            "type"        => "textfield",
+            "class"       => "",
+            "heading"     => __( "Number of Tweets", 'swift-framework-plugin' ),
+            "param_name"  => "tweet_item_count",
+            "value"       => "",
+            "required"       => array("social_integration", "=", "yes"),
+            "description" => __( "The number of tweets to show.", 'swift-framework-plugin' )
+        ),
+        array(
+            "type"       => "section_tab",
+            "param_name" => "aux_options_tab",
+            "heading"    => __( "Aux", 'swift-framework-plugin' ),
         ),
         array(
             "type"        => "buttonset",
@@ -346,6 +385,7 @@
                 __( 'No', 'swift-framework-plugin' )  => "no",
                 __( 'Yes', 'swift-framework-plugin' ) => "yes"
             ),
+            "buttonset_on"  => "yes",
             "description" => __( "Show the blog category filter above the items.", 'swift-framework-plugin' )
         ),
         array(
@@ -363,11 +403,11 @@
     );
 
     if ( spb_get_theme_name() == "atelier" ) {
-    	$params[] = array(
-    	    "type"       => "section",
-    	    "param_name" => "styling_options",
-    	    "heading"    => __( "Styling Options", 'swift-framework-plugin' ),
-    	);
+        $params[] = array(
+            "type"       => "section_tab",
+            "param_name" => "styling_options_tab",
+            "heading"    => __( "Styling", 'swift-framework-plugin' ),
+        );
         $params[] = array(
             "type"        => "buttonset",
             "heading"     => __( "Alt Styling", 'swift-framework-plugin' ),
@@ -376,16 +416,17 @@
                 __( 'No', 'swift-framework-plugin' )  => "no",
                 __( 'Yes', 'swift-framework-plugin' ) => "yes",
             ),
+            "buttonset_on"  => "yes",
             "description" => __( "Select 'Yes' if you'd like the standard blog item content to be boxed.", 'swift-framework-plugin' )
         );
     }
 
     if ( spb_get_theme_name() == "joyn" ) {
-    	$params[] = array(
-    	    "type"       => "section",
-    	    "param_name" => "styling_options",
-    	    "heading"    => __( "Styling Options", 'swift-framework-plugin' ),
-    	);
+        $params[] = array(
+            "type"       => "section_tab",
+            "param_name" => "styling_options_tab",
+            "heading"    => __( "Styling", 'swift-framework-plugin' ),
+        );
         $params[] = array(
             "type"        => "dropdown",
             "heading"     => __( "Thumbnail Hover Style", 'swift-framework-plugin' ),
@@ -400,9 +441,9 @@
     }
 
     $params[] = array(
-        "type"       => "section",
-        "param_name" => "advanced_options",
-        "heading"    => __( "Advanced Options", 'swift-framework-plugin' ),
+        "type"       => "section_tab",
+        "param_name" => "advanced_options_tab",
+        "heading"    => __( "Advanced", 'swift-framework-plugin' ),
     );
 
     $params[] = array(
@@ -427,7 +468,7 @@
     SPBMap::map( 'spb_blog', array(
         "name"   => __( "Blog", 'swift-framework-plugin' ),
         "base"   => "spb_blog",
-        "class"  => "spb_blog",
-        "icon"   => "spb-icon-blog",
+        "class"  => "spb_blog spb_tab_media",
+        "icon"   => "icon-blog",
         "params" => $params
     ) );

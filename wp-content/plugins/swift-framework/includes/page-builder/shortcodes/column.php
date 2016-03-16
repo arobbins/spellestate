@@ -5,7 +5,7 @@
     *	Swift Page Builder - Column Shortcode
     *	------------------------------------------------
     *	Swift Framework
-    * 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+    * 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     */
 
@@ -107,6 +107,7 @@
             $output = '';
 
             $column_controls = $this->getColumnControls( 'column' );
+          
 
             if ( $width == 'column_14' || $width == '1/4' ) {
                 $width = array( 'span3' );
@@ -153,7 +154,7 @@
                 if ( isset( $this->settings['params'] ) ) {
                     $inner = '';
                     foreach ( $this->settings['params'] as $param ) {
-                        $param_value = isset( $$param['param_name'] ) ? $$param['param_name'] : '';
+                        $param_value = isset( ${$param['param_name']} ) ? ${$param['param_name']} : '';
                         //var_dump($param_value);
                         if ( is_array( $param_value ) ) {
                             // Get first element from the array
@@ -177,7 +178,9 @@
         "name"            => __( "Column", 'swift-framework-plugin' ),
         "base"            => "spb_column",
         "controls"        => "full-column",
-        "content_element" => false,
+        "class"           => "spb_column spb_tab_layout",
+        "icon"           => "icon-column",
+    //    "content_element" => true,
         "params"          => array(
             array(
                 "type"       => "section",

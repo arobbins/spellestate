@@ -16,7 +16,8 @@
     }
 
     class sf_recent_comments extends WP_Widget {
-        function sf_recent_comments() {
+        
+        function __construct() {
             parent::__construct( 'sf_recent_custom_comments', $name = 'Swift Framework Recent Comments' );
         }
 

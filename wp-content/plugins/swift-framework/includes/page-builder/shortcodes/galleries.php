@@ -5,7 +5,7 @@
     *	Swift Page Builder - Galleries Shortcode
     *	------------------------------------------------
     *	Swift Framework
-    * 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+    * 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     */
 
@@ -75,7 +75,7 @@
             if ( $title != '' || $gallery_filter == "yes" ) {
                 $output .= "\n\t\t" . '<div class="title-wrap clearfix ' . $title_wrap_class . '">';
                 if ( $title != '' ) {
-                    $output .= '<h2 class="spb-heading"><span>' . $title . '</span></h2>';
+                    $output .= '<h3 class="spb-heading"><span>' . $title . '</span></h3>';
                 }
                 if ( $gallery_filter == "yes" ) {
                     $output .= sf_gallery_filter( '', $category );
@@ -141,6 +141,7 @@
                 __( 'Yes', 'swift-framework-plugin' ) => "yes",
                 __( 'No', 'swift-framework-plugin' )  => "no"
             ),
+            "buttonset_on"  => "yes",
             "description" => __( "Select if you'd like the asset to be full width (edge to edge). NOTE: only possible on pages without sidebars.", 'swift-framework-plugin' )
         ),
         array(
@@ -151,6 +152,7 @@
                 __( 'Yes', 'swift-framework-plugin' ) => "yes",
                 __( 'No', 'swift-framework-plugin' )  => "no"
             ),
+            "buttonset_on"  => "yes",
             "description" => __( "Select if you'd like spacing between the items, or not.", 'swift-framework-plugin' )
         ),
         array(
@@ -168,6 +170,7 @@
                 __( 'Yes', 'swift-framework-plugin' ) => "yes",
                 __( 'No', 'swift-framework-plugin' )  => "no"
             ),
+            "buttonset_on"  => "yes",
             "required"       => array("display_type", "or", "standard,masonry"),
             "description" => __( "Show the item title text.", 'swift-framework-plugin' )
         ),
@@ -179,6 +182,7 @@
                 __( 'Yes', 'swift-framework-plugin' ) => "yes",
                 __( 'No', 'swift-framework-plugin' )  => "no"
             ),
+            "buttonset_on"  => "yes",
             "required"       => array("display_type", "or", "standard,masonry"),
             "description" => __( "Show the item subtitle text.", 'swift-framework-plugin' )
         ),
@@ -187,9 +191,10 @@
             "heading"     => __( "Show excerpt", 'swift-framework-plugin' ),
             "param_name"  => "show_excerpt",
             "value"       => array(
-                __( 'No', 'swift-framework-plugin' )  => "no",
-                __( 'Yes', 'swift-framework-plugin' ) => "yes"
+                 __( 'Yes', 'swift-framework-plugin' ) => "yes",
+                __( 'No', 'swift-framework-plugin' )  => "no"          
             ),
+            "buttonset_on"  => "yes",
             "required"       => array("display_type", "or", "standard,masonry"),
             "description" => __( "Show the excerpt text.", 'swift-framework-plugin' )
         ),
@@ -224,6 +229,7 @@
                 __( 'Yes', 'swift-framework-plugin' ) => "yes",
                 __( 'No', 'swift-framework-plugin' )  => "no"
             ),
+            "buttonset_on"  => "yes",
             "description" => __( "Show the gallery category filter above the items.", 'swift-framework-plugin' )
         ),
         array(
@@ -234,6 +240,7 @@
                 __( 'Yes', 'swift-framework-plugin' ) => "yes",
                 __( 'No', 'swift-framework-plugin' )  => "no"
             ),
+            "buttonset_on"  => "yes",
             "description" => __( "Show pagination.", 'swift-framework-plugin' )
         )
     );
@@ -266,7 +273,7 @@
     SPBMap::map( 'spb_galleries', array(
         "name"   => __( "Galleries", 'swift-framework-plugin' ),
         "base"   => "spb_galleries",
-        "class"  => "spb_galleries",
-        "icon"   => "spb-icon-galleries",
+        "class"  => "spb_galleries spb_tab_media",
+        "icon"   => "icon-galleries",
         "params" => $params
     ) );

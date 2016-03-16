@@ -25,7 +25,7 @@
             <div class="gallery-share">
                 <div class="article-divider"></div>
                 <div class="article-share" data-buttontext="<?php echo esc_attr($share_text); ?>"
-                     data-image="<?php echo esc_url($image); ?>"></div>
+                     data-image="<?php echo esc_url($image); ?>"><share-button class="share-button"></share-button></div>
                 <?php if ( function_exists( 'lip_love_it_link' ) ) {
                     lip_love_it_link( get_the_ID(), true, 'text' );
                 } ?>

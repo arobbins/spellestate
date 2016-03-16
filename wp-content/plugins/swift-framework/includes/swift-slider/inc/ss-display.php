@@ -4,7 +4,7 @@
     *	Swift Slider - Display
     *	------------------------------------------------
     *	Swift Framework
-    * 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+    * 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     */
 
@@ -22,6 +22,7 @@
             "nav"         => '1',
             "pagination"  => 'yes',
             "continue"    => 'true',
+            "random"	  => '0',
         ), $atts ) );
 
         /* GLOBAL VARIABLES
@@ -40,12 +41,16 @@
         /* SLIDE QUERY
         ================================================== */
         $slide_count         = intval( $slide_count );
+
+        $slide_order_by = $random == '1' ? 'rand' : 'post_date';
         $ss_args             = array(
             'post_type'             => 'swift-slider',
             'post_status'           => 'publish',
             'swift-slider-category' => $slide_category,
             'posts_per_page'        => $slide_count,
+            'orderby'				=> $slide_order_by,
         );
+
         $swift_slider_slides = new WP_Query( $ss_args );
         $slides_count        = $swift_slider_slides->found_posts;
         if ( $slides_count < $slide_count ) {
@@ -182,7 +187,7 @@
 
                 if ( $bg_image_url != "" ) {
 
-                    $swift_slider_output .= '<div class="swiper-slide ' . $bg_type . '-slide" data-slide-id="' . $slide_ID . '" data-slide-title="' . $slide_title . '" style="background-image: url(' . $bg_image_url . ');background-color: ' . $bg_color . '" data-bg-size="' . $background_size . '" data-bg-align="' . $background_valign . '" data-bg-horiz-align="' . $background_halign . '" data-slide-img="' . $bg_image_url . '" data-style="' . $slide_style . '">';
+                    $swift_slider_output .= '<div class="swiper-slide ' . $bg_type . '-slide dynamic-header-change" data-slide-id="' . $slide_ID . '" data-slide-title="' . $slide_title . '" style="background-image: url(' . $bg_image_url . ');background-color: ' . $bg_color . '" data-bg-size="' . $background_size . '" data-bg-align="' . $background_valign . '" data-bg-horiz-align="' . $background_halign . '" data-slide-img="' . $bg_image_url . '" data-style="' . $slide_style . '" data-header-style="' . $slide_style . '">';
 
                     if ( ! empty( $bg_opacity ) && $bg_opacity > 0 ) {
                         $bg_opacity_d = $bg_opacity / 100; // Decimal value
@@ -193,7 +198,7 @@
 
                 } else {
 
-                    $swift_slider_output .= '<div class="swiper-slide ' . $bg_type . '-slide" data-slide-id="' . $slide_ID . '" data-slide-title="' . $slide_title . '" style="background-color: ' . $bg_color . '" data-style="' . $slide_style . '">';
+                    $swift_slider_output .= '<div class="swiper-slide ' . $bg_type . '-slide dynamic-header-change" data-slide-id="' . $slide_ID . '" data-slide-title="' . $slide_title . '" style="background-color: ' . $bg_color . '" data-style="' . $slide_style . '" data-header-style="' . $slide_style . '">';
 
                 }
 

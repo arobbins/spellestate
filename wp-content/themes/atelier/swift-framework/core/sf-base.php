@@ -23,7 +23,7 @@
             $left_sidebar          = $sidebar_var['left'];
             $right_sidebar         = $sidebar_var['right'];
             $page_wrap_class       = $sidebar_var['page_wrap_class'];
-            $remove_bottom_spacing = $remove_top_spacing = "";
+            $remove_bottom_spacing = $remove_top_spacing = $sidebar_progress_menu = "";
 			$pb_fw_mode = true;
 			$pb_active = false;
 			if ( $post ) {
@@ -33,9 +33,10 @@
 				$pb_fw_mode = false;
 			}
 
-            if ( $post && !is_search() ) {
+            if ( $post && !is_search() && is_singular() ) {
                 $remove_bottom_spacing = sf_get_post_meta( $post->ID, 'sf_no_bottom_spacing', true );
                 $remove_top_spacing    = sf_get_post_meta( $post->ID, 'sf_no_top_spacing', true );
+            	$sidebar_progress_menu = sf_get_post_meta( $post->ID, 'sf_sidebar_progress_menu', true );
             }
 
             if ( $remove_bottom_spacing ) {
@@ -44,7 +45,10 @@
             if ( $remove_top_spacing ) {
                 $page_wrap_class .= ' no-top-spacing';
             }
-
+            if ( $sidebar_progress_menu == "left-sidebar" || $sidebar_progress_menu == "right-sidebar" ) {
+            	$pb_fw_mode = false;
+            }
+            
             $cont_width = $sidebar_width = "";
 			if ($sf_options['sidebar_width'] == "reduced") {
 				$cont_width = apply_filters("sf_base_layout_cont_width_reduced", "col-sm-9");
@@ -58,9 +62,9 @@
 
         <?php if ( !$remove_top_spacing ) {
 	        	if ($pb_fw_mode || $sidebar_config != "no-sidebars") { ?>
-					<div class="content-divider-wrap container"><div class="content-divider"></div></div>
+					<div class="content-divider-wrap container"><div class="content-divider sf-elem-bb"></div></div>
 				<?php } else { ?>
-					<div class="content-divider-wrap"><div class="content-divider"></div></div>
+					<div class="content-divider-wrap"><div class="content-divider sf-elem-bb"></div></div>
 				<?php }
 			} ?>
 
@@ -89,6 +93,7 @@
                     <aside class="sidebar left-sidebar col-sm-4">
 
                         <?php do_action( 'sf_before_sidebar' ); ?>
+                        <?php do_action( 'sf_before_left_sidebar' ); ?>
 
                         <div class="sidebar-widget-wrap sticky-widget">
                             <?php dynamic_sidebar( $left_sidebar ); ?>
@@ -117,6 +122,7 @@
                 <aside class="sidebar left-sidebar <?php echo esc_attr($sidebar_width); ?>">
 
                     <?php do_action( 'sf_before_sidebar' ); ?>
+                    <?php do_action( 'sf_before_left_sidebar' ); ?>
 
                     <div class="sidebar-widget-wrap sticky-widget">
                         <?php dynamic_sidebar( $left_sidebar ); ?>
@@ -131,6 +137,7 @@
                 <aside class="sidebar right-sidebar <?php echo esc_attr($sidebar_width); ?>">
 
                     <?php do_action( 'sf_before_sidebar' ); ?>
+                    <?php do_action( 'sf_before_right_sidebar' ); ?>
 
                     <div class="sidebar-widget-wrap sticky-widget">
                         <?php dynamic_sidebar( $right_sidebar ); ?>
@@ -146,6 +153,7 @@
                 <aside class="sidebar right-sidebar col-sm-3">
 
                     <?php do_action( 'sf_before_sidebar' ); ?>
+                    <?php do_action( 'sf_before_right_sidebar' ); ?>
 
                     <div class="sidebar-widget-wrap sticky-widget">
                         <?php dynamic_sidebar( $right_sidebar ); ?>
@@ -178,7 +186,7 @@
             $default_right_sidebar  = $sf_options['default_right_sidebar'];
             $buddypress             = sf_is_buddypress();
             $bbpress                = sf_is_bbpress();
-            $sidebar_config         = $left_sidebar = $right_sidebar = "";
+            $sidebar_config         = $left_sidebar = $right_sidebar = $sidebar_progress_menu = "";
 
             // ARCHIVE / CATEGORY SIDEBAR CONFIG
             if ( is_search() || is_archive() || is_author() || is_category() || is_home() ) {
@@ -221,6 +229,7 @@
                 $sidebar_config = sf_get_post_meta( $post->ID, 'sf_sidebar_config', true );
                 $left_sidebar   = sf_get_post_meta( $post->ID, 'sf_left_sidebar', true );
                 $right_sidebar  = sf_get_post_meta( $post->ID, 'sf_right_sidebar', true );
+                $sidebar_progress_menu = sf_get_post_meta( $post->ID, 'sf_sidebar_progress_menu', true );
             }
 
             if ( is_404() ) {
@@ -254,6 +263,22 @@
             	$left_sidebar = "events-sidebar-left";
             	$right_sidebar = "events-sidebar-right";
             }
+            
+            // Sidebar Progress Menu
+            if ( $sidebar_progress_menu == "left-sidebar" && !( $sidebar_config == "left-sidebar" || $sidebar_config == "both-sidebars" ) ) {
+            	$sidebar_config = "left-sidebar";
+            }
+            if ( $sidebar_progress_menu == "right-sidebar" && !( $sidebar_config == "right-sidebar" || $sidebar_config == "both-sidebars" ) ) {
+            	$sidebar_config = "right-sidebar";
+            }
+            if ( $sidebar_progress_menu == "left-sidebar" ) {
+            	$left_sidebar = "";
+            	add_action( 'sf_before_left_sidebar', 'sf_side_progress_menu' );
+            }
+            if ( $sidebar_progress_menu == "right-sidebar" ) {
+            	$right_sidebar = "";
+            	add_action( 'sf_before_right_sidebar', 'sf_side_progress_menu' );
+            }
 
             // SET SIDEBAR GLOBAL
             sf_set_sidebar_global( $sidebar_config );
@@ -269,6 +294,10 @@
             } else {
                 $page_wrap_class = 'has-no-sidebar';
             }
+            
+            if ( $sidebar_progress_menu == "left-sidebar" || $sidebar_progress_menu == "right-sidebar" ) {
+            	$page_wrap_class .= ' has-progress-menu progress-menu-' . $sidebar_progress_menu;
+            }
 
             if ( is_singular( 'post' ) || is_singular( 'portfolio' ) || is_singular( 'team' ) ) {
                 $sidebar_config = "no-sidebar";
@@ -277,8 +306,8 @@
             // RETURN
             $sidebar_var                    = array();
             $sidebar_var['config']          = $sidebar_config;
-            $sidebar_var['left']            = $left_sidebar;
-            $sidebar_var['right']           = $right_sidebar;
+           	$sidebar_var['left']            = strtolower($left_sidebar);
+            $sidebar_var['right']           = strtolower($right_sidebar);
             $sidebar_var['page_wrap_class'] = $page_wrap_class;
 
             return $sidebar_var;
@@ -290,10 +319,10 @@
     ================================================== */
     function sf_page_borders() {
 	    ?>
-	    <div class="sf-top-border"></div>
-	    <div class="sf-bottom-border"></div>
-	    <div class="sf-left-border"></div>
-	    <div class="sf-right-border"></div>
+	    <div class="sf-site-top-border"></div>
+	    <div class="sf-site-bottom-border"></div>
+	    <div class="sf-site-left-border"></div>
+	    <div class="sf-site-right-border"></div>
     <?php
     }
     //add_action('sf_before_page_container', 'sf_page_borders', 2);

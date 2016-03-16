@@ -5,7 +5,7 @@
     *	Swift Page Builder - Gravity Forms Shortcode
     *	------------------------------------------------
     *	Swift Framework
-    * 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+    * 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     */
 
@@ -64,6 +64,7 @@
                     __( 'Yes', 'swift-framework-plugin' ) => "true",
                     __( 'No', 'swift-framework-plugin' )  => "false"
                 ),
+                "buttonset_on"  => "yes",
                 "description" => __( "Show the form's title", 'swift-framework-plugin' )
             ),
             array(
@@ -74,16 +75,18 @@
                     __( 'Yes', 'swift-framework-plugin' ) => "true",
                     __( 'No', 'swift-framework-plugin' )  => "false"
                 ),
+                "buttonset_on"  => "yes",
                 "description" => __( "Show the form's description", 'swift-framework-plugin' )
             ),
             array(
-                "type"        => "buttonset",
+                "type"        => "buttonset",  
                 "heading"     => __( "Enable AJAX", 'swift-framework-plugin' ),
                 "param_name"  => "ajax",
                 "value"       => array(
                     __( 'Yes', 'swift-framework-plugin' ) => "true",
                     __( 'No', 'swift-framework-plugin' )  => "false"
                 ),
+                "buttonset_on"  => "yes",
                 "description" => __( "Enable AJAX functionality for the form.", 'swift-framework-plugin' )
             ),
             array(

@@ -1,10 +1,10 @@
 === Groups ===
-Contributors: itthinx
+Contributors: itthinx, proaktion
 Donate link: http://www.itthinx.com/plugins/groups
 Tags: access, access control, capability, capabilities, content, download, downloads, file, file access, files, group, groups, member, members, membership, memberships, paypal, permission, permissions, subscription, subscriptions, woocommerce
 Requires at least: 4.0
-Tested up to: 4.3
-Stable tag: 1.7.2
+Tested up to: 4.4.2
+Stable tag: 1.10.1
 License: GPLv3
 
 Groups is an efficient and powerful solution, providing group-based user membership management, group-based capabilities and content access control.
@@ -180,6 +180,46 @@ See also [Groups](http://www.itthinx.com/plugins/groups/)
 8. More options.
 
 == Changelog ==
+
+= 1.10.1 =
+* Fixed the French translation which introduced incorrect markup breaking the help button.
+* Added the groups_admin_groups_add_form_after_fields filter.
+* Added the groups_admin_groups_add_submit_success action.
+* Added the groups_admin_groups_edit_form_after_fields filter.
+* Added the groups_admin_groups_edit_submit_success action.
+* Fixed some code formatting (tabs).
+
+= 1.10.0 =
+* Adjusted the Groups and Capabilities screens' UI elements.
+* Reduced the filters section footprint on the Groups screen.
+* Reduced the filters section footprint on the Capabilities screen.
+* Fixed use of deprecated constructor in the Groups_Pagination class.
+* Fixed sorting by description and the sorting indicator on the Groups screen.
+* Fixed sorting by description and the sorting indicator on the Capabilities screen.
+* Fixed some code formatting issues including superfluous whitespace.
+* Improved the footer rendering and footprint.
+
+= 1.9.1 =
+* WordPress 4.4 compatible.
+* Updated selectize.js to 0.12.1 (standalone).
+* Fixed a representation issue for the lower group selector on the Users screen.
+* Updated the page headings to use h1 instead of h2.
+* Added the is_member method to Groups_User.
+* Updated the footer.
+
+= 1.9.0 =
+* Added own cache encapsulation to guard against flaws in outdated cache implementations.
+* Added new user group property to obtain hierarchical groups.
+* Improved user properties to use own caching.
+* Fixed media field filters wrongly declared as actions.
+* Fixed the version comparison operation.
+
+= 1.8.1 =
+* Fixed potential XSS vulnerabilities related to the unescaped use of the $_SERVER['REQUEST_URI'] in some forms.
+
+= 1.8.0 =
+* WordPress 4.3.1 compatibility tested.
+* Add-ons section added.
 
 = 1.7.2 =
 * WordPress 4.3 compatibility tested.
@@ -483,5 +523,5 @@ Some installations wouldn't work correctly, showing no capabilities and making i
 
 == Upgrade Notice ==
 
-= 1.7.2 =
-This release has been tested with WordPress 4.3 and contains minor internal changes related to the Groups menu, Groups and Capabilities screens.
+= 1.10.1 =
+This release fixes the French translation and adds some administrative actions and filters.

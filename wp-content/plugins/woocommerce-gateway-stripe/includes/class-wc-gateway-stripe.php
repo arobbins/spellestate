@@ -14,13 +14,13 @@ class WC_Gateway_Stripe extends WC_Payment_Gateway {
 	 * Constructor
 	 */
 	public function __construct() {
-		$this->id		    = 'stripe';
-		$this->method_title 	    = __( 'Stripe', 'woocommerce-gateway-stripe' );
+		$this->id                   = 'stripe';
+		$this->method_title         = __( 'Stripe', 'woocommerce-gateway-stripe' );
 		$this->method_description   = __( 'Stripe works by adding credit card fields on the checkout and then sending the details to Stripe for verification.', 'woocommerce-gateway-stripe' );
-		$this->has_fields 	    = true;
-		$this->api_endpoint	    = 'https://api.stripe.com/';
+		$this->has_fields           = true;
+		$this->api_endpoint         = 'https://api.stripe.com/';
 		$this->view_transaction_url = 'https://dashboard.stripe.com/payments/%s';
-		$this->supports 	    = array(
+		$this->supports             = array(
 			'subscriptions',
 			'products',
 			'refunds',
@@ -28,8 +28,11 @@ class WC_Gateway_Stripe extends WC_Payment_Gateway {
 			'subscription_reactivation',
 			'subscription_suspension',
 			'subscription_amount_changes',
-			'subscription_payment_method_change',
+			'subscription_payment_method_change', // Subs 1.n compatibility
+			'subscription_payment_method_change_customer',
+			'subscription_payment_method_change_admin',
 			'subscription_date_changes',
+			'multiple_subscriptions',
 			'pre-orders'
 		);
 
@@ -45,18 +48,19 @@ class WC_Gateway_Stripe extends WC_Payment_Gateway {
 			$accept_bitcoin = false;
 		}
 
-		// Get setting values
-		$this->title                 = $this->get_option( 'title' );
-		$this->description           = $this->get_option( 'description' );
-		$this->enabled               = $this->get_option( 'enabled' );
-		$this->testmode              = $this->get_option( 'testmode' ) === 'yes' ? true : false;
-		$this->capture               = $this->get_option( 'capture', 'yes' ) === 'yes' ? true : false;
-		$this->stripe_checkout       = $this->get_option( 'stripe_checkout' ) === 'yes' ? true : false;
-		$this->stripe_checkout_image = $this->get_option( 'stripe_checkout_image', '' );
-		$this->saved_cards           = $this->get_option( 'saved_cards' ) === 'yes' ? true : false;
-		$this->secret_key            = $this->testmode ? $this->get_option( 'test_secret_key' ) : $this->get_option( 'secret_key' );
-		$this->publishable_key       = $this->testmode ? $this->get_option( 'test_publishable_key' ) : $this->get_option( 'publishable_key' );
-		$this->bitcoin               = $accept_bitcoin;
+		// Get setting values.
+		$this->title                  = $this->get_option( 'title' );
+		$this->description            = $this->get_option( 'description' );
+		$this->enabled                = $this->get_option( 'enabled' );
+		$this->testmode               = $this->get_option( 'testmode' ) === 'yes' ? true : false;
+		$this->capture                = $this->get_option( 'capture', 'yes' ) === 'yes' ? true : false;
+		$this->stripe_checkout        = $this->get_option( 'stripe_checkout' ) === 'yes' ? true : false;
+		$this->stripe_checkout_locale = $this->get_option( 'stripe_checkout_locale' );
+		$this->stripe_checkout_image  = $this->get_option( 'stripe_checkout_image', '' );
+		$this->saved_cards            = $this->get_option( 'saved_cards' ) === 'yes' ? true : false;
+		$this->secret_key             = $this->testmode ? $this->get_option( 'test_secret_key' ) : $this->get_option( 'secret_key' );
+		$this->publishable_key        = $this->testmode ? $this->get_option( 'test_publishable_key' ) : $this->get_option( 'publishable_key' );
+		$this->bitcoin                = $accept_bitcoin;
 
 		if ( $this->stripe_checkout ) {
 			$this->order_button_text = __( 'Continue to payment', 'woocommerce-gateway-stripe' );
@@ -166,7 +170,7 @@ class WC_Gateway_Stripe extends WC_Payment_Gateway {
 	 */
 	public function is_available() {
 		if ( $this->enabled == "yes" ) {
-			if ( ! is_ssl() && ! $this->testmode ) {
+			if ( ! $this->testmode && is_checkout() && ! is_ssl() ) {
 				return false;
 			}
 			// Required fields check
@@ -247,6 +251,25 @@ class WC_Gateway_Stripe extends WC_Payment_Gateway {
 				'description' => __( 'If enabled, this option shows a "pay" button and modal credit card form on the checkout, instead of credit card fields directly on the page.', 'woocommerce-gateway-stripe' ),
 				'default'     => 'no'
 			),
+			'stripe_checkout_locale' => array(
+				'title'       => __( 'Stripe Checkout locale', 'woocommerce-gateway-stripe' ),
+				'type'        => 'select',
+				'class'       => 'wc-enhanced-select',
+				'description' => __( 'Language to display in Stripe Checkout modal. Specify Auto to display Checkout in the user\'s preferred language, if available. English will be used by default.', 'woocommerce-gateway-stripe' ),
+				'default'     => 'en',
+				'desc_tip'    => true,
+				'options'     => array(
+					'auto' => __( 'Auto', 'woocommerce-gateway-stripe' ),
+					'zh'   => __( 'Simplified Chinese', 'woocommerce-gateway-stripe' ),
+					'nl'   => __( 'Dutch', 'woocommerce-gateway-stripe' ),
+					'en'   => __( 'English', 'woocommerce-gateway-stripe' ),
+					'fr'   => __( 'French', 'woocommerce-gateway-stripe' ),
+					'de'   => __( 'German', 'woocommerce-gateway-stripe' ),
+					'it'   => __( 'Italian', 'woocommerce-gateway-stripe' ),
+					'ja'   => __( 'Japanese', 'woocommerce-gateway-stripe' ),
+					'es'   => __( 'Spanish', 'woocommerce-gateway-stripe' ),
+				),
+			),
 			'stripe_bitcoin' => array(
 				'title'       => __( 'Bitcoin Currency', 'woocommerce-gateway-stripe' ),
 				'label'       => __( 'Enable Bitcoin Currency', 'woocommerce-gateway-stripe' ),
@@ -279,16 +302,16 @@ class WC_Gateway_Stripe extends WC_Payment_Gateway {
 		<fieldset>
 			<?php
 				$allowed = array(
-				    'a' => array(
-				        'href' => array(),
-				        'title' => array()
-				    ),
-				    'br' => array(),
-				    'em' => array(),
-				    'strong' => array(),
-				    'span'	=> array(
-				    	'class' => array(),
-				    ),
+					'a' => array(
+						'href'  => array(),
+						'title' => array()
+					),
+					'br'     => array(),
+					'em'     => array(),
+					'strong' => array(),
+					'span'   => array(
+						'class' => array(),
+					),
 				);
 				if ( $this->description ) {
 					echo apply_filters( 'wc_stripe_description', wpautop( wp_kses( $this->description, $allowed ) ) );
@@ -303,7 +326,7 @@ class WC_Gateway_Stripe extends WC_Payment_Gateway {
 									continue;
 								}
 								?>
-								<label for="stripe_card_<?php echo $card->id; ?>">
+								<label for="stripe_card_<?php echo $card->id; ?>" class="brand-<?php echo esc_attr( strtolower( $card->brand ) ); ?>">
 									<input type="radio" id="stripe_card_<?php echo $card->id; ?>" name="stripe_card_id" value="<?php echo $card->id; ?>" <?php checked( $checked, 1 ) ?> />
 									<?php printf( __( '%s card ending in %s (Expires %s/%s)', 'woocommerce-gateway-stripe' ), $card->brand, $card->last4, $card->exp_month, $card->exp_year ); ?>
 								</label>
@@ -321,10 +344,10 @@ class WC_Gateway_Stripe extends WC_Payment_Gateway {
 				data-description=""
 				data-amount="<?php echo esc_attr( $this->get_stripe_amount( WC()->cart->total ) ); ?>"
 				data-name="<?php echo esc_attr( sprintf( __( '%s', 'woocommerce-gateway-stripe' ), get_bloginfo( 'name' ) ) ); ?>"
-				data-label="<?php esc_attr_e( 'Confirm and Pay', 'woocommerce-gateway-stripe' ); ?>"
 				data-currency="<?php echo esc_attr( strtolower( get_woocommerce_currency() ) ); ?>"
 				data-image="<?php echo esc_attr( $this->stripe_checkout_image ); ?>"
 				data-bitcoin="<?php echo esc_attr( $this->bitcoin ? 'true' : 'false' ); ?>"
+				data-locale="<?php echo esc_attr( $this->stripe_checkout_locale ? $this->stripe_checkout_locale : 'en' ); ?>"
 				>
 				<?php if ( ! $this->stripe_checkout ) : ?>
 					<?php $this->credit_card_form( array( 'fields_have_names' => false ) ); ?>
@@ -379,16 +402,17 @@ class WC_Gateway_Stripe extends WC_Payment_Gateway {
 		}
 
 		$stripe_params = array(
-			'key'                  => $this->publishable_key,
-			'i18n_terms'           => __( 'Please accept the terms and conditions first', 'woocommerce-gateway-stripe' ),
-			'i18n_required_fields' => __( 'Please fill in required checkout fields first', 'woocommerce-gateway-stripe' ),
+			'key'                    => $this->publishable_key,
+			'i18n_terms'             => __( 'Please accept the terms and conditions first', 'woocommerce-gateway-stripe' ),
+			'i18n_required_fields'   => __( 'Please fill in required checkout fields first', 'woocommerce-gateway-stripe' ),
+			'error_response_handler' => 'stripeErrorHandler',
 		);
 
 		// If we're on the pay page we need to pass stripe.js the address of the order.
 		if ( is_checkout_pay_page() && isset( $_GET['order'] ) && isset( $_GET['order_id'] ) ) {
 			$order_key = urldecode( $_GET['order'] );
 			$order_id  = absint( $_GET['order_id'] );
-			$order     = new WC_Order( $order_id );
+			$order     = wc_get_order( $order_id );
 
 			if ( $order->id == $order_id && $order->order_key == $order_key ) {
 				$stripe_params['billing_first_name'] = $order->billing_first_name;
@@ -402,14 +426,14 @@ class WC_Gateway_Stripe extends WC_Payment_Gateway {
 			}
 		}
 
-		wp_localize_script( 'woocommerce_stripe', 'wc_stripe_params', $stripe_params );
+		wp_localize_script( 'woocommerce_stripe', 'wc_stripe_params', apply_filters( 'wc_stripe_params', $stripe_params ) );
 	}
 
 	/**
 	 * Process the payment
 	 */
 	public function process_payment( $order_id, $retry = true ) {
-		$order        = new WC_Order( $order_id );
+		$order        = wc_get_order( $order_id );
 		$stripe_token = isset( $_POST['stripe_token'] ) ? wc_clean( $_POST['stripe_token'] ) : '';
 		$card_id      = isset( $_POST['stripe_card_id'] ) ? wc_clean( $_POST['stripe_card_id'] ) : '';
 		$customer_id  = is_user_logged_in() ? get_user_meta( get_current_user_id(), '_stripe_customer_id', true ) : 0;
@@ -446,6 +470,7 @@ class WC_Gateway_Stripe extends WC_Payment_Gateway {
 
 			// Use token
 			else {
+
 				// Save token if logged in
 				if ( is_user_logged_in() && $this->saved_cards ) {
 					if ( ! $customer_id ) {
@@ -605,7 +630,7 @@ class WC_Gateway_Stripe extends WC_Payment_Gateway {
 	 * @return int|WP_ERROR
 	 */
 	public function add_customer( $order, $stripe_token ) {
-		if ( $stripe_token && is_user_logged_in() ) {
+		if ( $stripe_token ) {
 			$response = $this->stripe_request( array(
 				'email'       => $order->billing_email,
 				'description' => 'Customer: ' . $order->billing_first_name . ' ' . $order->billing_last_name,
@@ -615,11 +640,16 @@ class WC_Gateway_Stripe extends WC_Payment_Gateway {
 			if ( is_wp_error( $response ) ) {
 				return $response;
 			} elseif ( ! empty( $response->id ) ) {
-				// Store the ID on the user account
-				update_user_meta( get_current_user_id(), '_stripe_customer_id', $response->id );
+
+				// Store the ID on the user account if logged in
+				if ( is_user_logged_in() ) {
+					update_user_meta( get_current_user_id(), '_stripe_customer_id', $response->id );
+				}
 
 				// Store the ID in the order
 				update_post_meta( $order->id, '_stripe_customer_id', $response->id );
+
+				do_action( 'wc_stripe_add_customer', $order, $stripe_token, $response );
 
 				return $response->id;
 			}
@@ -641,6 +671,8 @@ class WC_Gateway_Stripe extends WC_Payment_Gateway {
 			), 'customers/' . $customer_id . '/sources' );
 
 			delete_transient( 'stripe_cards_' . $customer_id );
+
+			do_action( 'wc_stripe_add_card', $customer_id, $stripe_token, $response );
 
 			if ( is_wp_error( $response ) ) {
 				return $response;
@@ -685,7 +717,7 @@ class WC_Gateway_Stripe extends WC_Payment_Gateway {
 
 		// Handle response
 		if ( ! empty( $parsed_response->error ) ) {
-			return new WP_Error( isset( $parsed_response->error->param ) ? $parsed_response->error->param : 'stripe_error', $parsed_response->error->message );
+			return new WP_Error( ! empty( $parsed_response->error->code ) ? $parsed_response->error->code : 'stripe_error', $parsed_response->error->message );
 		} else {
 			return $parsed_response;
 		}

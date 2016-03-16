@@ -13,19 +13,23 @@ jQuery(document).ready(function($){
 		} else if('true'==wcs_update_script_data.upgrade_to_1_5){
 			wcs_ajax_update_products();
 			wcs_ajax_update_hooks();
-		} else {
+		} else if('true'==wcs_update_script_data.upgrade_to_2_0){
 			wcs_ajax_update_subscriptions();
+		} else if('true'==wcs_update_script_data.repair_2_0){
+			wcs_ajax_repair_subscriptions();
+		} else {
+			wcs_ajax_update_complete();
 		}
 		e.preventDefault();
 	});
 	function wcs_ajax_update_really_old_version(){
 		$.ajax({
-			url:	wcs_update_script_data.ajax_url,
-			type:	'POST',
-			data:	{
-				action:			'wcs_upgrade',
-				upgrade_step:	'really_old_version',
-				nonce:          wcs_update_script_data.upgrade_nonce
+			url:  wcs_update_script_data.ajax_url,
+			type: 'POST',
+			data: {
+				action:       'wcs_upgrade',
+				upgrade_step: 'really_old_version',
+				nonce:         wcs_update_script_data.upgrade_nonce
 			},
 			success: function(results) {
 				$('#update-messages ol').append($('<li />').text(results.message));
@@ -39,12 +43,12 @@ jQuery(document).ready(function($){
 	}
 	function wcs_ajax_update_products(){
 		$.ajax({
-			url:	wcs_update_script_data.ajax_url,
-			type:	'POST',
-			data:	{
-				action:			'wcs_upgrade',
-				upgrade_step:	'products',
-				nonce:          wcs_update_script_data.upgrade_nonce
+			url:  wcs_update_script_data.ajax_url,
+			type: 'POST',
+			data: {
+				action:       'wcs_upgrade',
+				upgrade_step: 'products',
+				nonce:         wcs_update_script_data.upgrade_nonce
 			},
 			success: function(results) {
 				$('#update-messages ol').append($('<li />').text(results.message));
@@ -57,12 +61,12 @@ jQuery(document).ready(function($){
 	function wcs_ajax_update_hooks() {
 		var start_time = new Date();
 		$.ajax({
-			url:	wcs_update_script_data.ajax_url,
-			type:	'POST',
-			data:	{
-				action:			'wcs_upgrade',
-				upgrade_step:	'hooks',
-				nonce:          wcs_update_script_data.upgrade_nonce
+			url:  wcs_update_script_data.ajax_url,
+			type: 'POST',
+			data: {
+				action:       'wcs_upgrade',
+				upgrade_step: 'hooks',
+				nonce:         wcs_update_script_data.upgrade_nonce
 			},
 			success: function(results) {
 				if(results.message){
@@ -89,12 +93,12 @@ jQuery(document).ready(function($){
 		}
 
 		$.ajax({
-			url:	wcs_update_script_data.ajax_url,
-			type:	'POST',
-			data:	{
-				action:			'wcs_upgrade',
-				upgrade_step:	'subscriptions',
-				nonce:          wcs_update_script_data.upgrade_nonce
+			url:  wcs_update_script_data.ajax_url,
+			type: 'POST',
+			data: {
+				action:       'wcs_upgrade',
+				upgrade_step: 'subscriptions',
+				nonce:         wcs_update_script_data.upgrade_nonce
 			},
 			success: function(results) {
 				if('success'==results.status){
@@ -116,7 +120,49 @@ jQuery(document).ready(function($){
 				}
 			},
 			error: function(results,status,errorThrown){
-				wcs_ajax_update_error();
+				$('<br/><span>Error: ' + results.status + ' ' + errorThrown + '</span>').appendTo('#update-error p');
+				wcs_ajax_update_error( $('#update-error p').html() );
+			}
+		});
+	}
+	function wcs_ajax_repair_subscriptions() {
+		var start_time = new Date();
+
+		if ( null === upgrade_start_time ) {
+			upgrade_start_time = start_time;
+		}
+
+		$.ajax({
+			url:  wcs_update_script_data.ajax_url,
+			type: 'POST',
+			data: {
+				action:       'wcs_upgrade',
+				upgrade_step: 'subscription_dates_repair',
+				nonce:         wcs_update_script_data.upgrade_nonce
+			},
+			success: function(results) {
+				if('success'==results.status){
+					var end_time = new Date(),
+						execution_time = Math.ceil( ( end_time.getTime() - start_time.getTime() ) / 1000 );
+
+					$('#update-messages ol').append($('<li />').text(results.message.replace('{execution_time}',execution_time)));
+
+					wcs_update_script_data.subscription_count -= results.repaired_count;
+					wcs_update_script_data.subscription_count -= results.unrepaired_count;
+
+					if( parseInt(wcs_update_script_data.subscription_count) <= 0 ) {
+						wcs_ajax_update_complete();
+					} else {
+						wcs_ajax_update_estimated_time(results.time_message);
+						wcs_ajax_repair_subscriptions();
+					}
+				} else {
+					wcs_ajax_update_error(results.message);
+				}
+			},
+			error: function(results,status,errorThrown){
+				$('<br/><span>Error: ' + results.status + ' ' + errorThrown + '</span>').appendTo('#update-error p');
+				wcs_ajax_update_error( $('#update-error p').html() );
 			}
 		});
 	}
@@ -136,12 +182,12 @@ jQuery(document).ready(function($){
 	}
 	function wcs_ajax_update_estimated_time(message) {
 		var total_updated = total_subscriptions - wcs_update_script_data.subscription_count,
-		    now = new Date(),
-		    execution_time,
-		    time_per_update,
-		    time_left,
-		    time_left_minutes,
-		    time_left_seconds;
+			now = new Date(),
+			execution_time,
+			time_per_update,
+			time_left,
+			time_left_minutes,
+			time_left_seconds;
 
 		execution_time = Math.ceil( ( now.getTime() - upgrade_start_time.getTime() ) / 1000 );
 		time_per_update = execution_time / total_updated;
@@ -153,8 +199,8 @@ jQuery(document).ready(function($){
 		$('#estimated_time').html(message.replace( '{time_left}', time_left_minutes + ":" + zeropad(time_left_seconds) ));
 	}
 	function zeropad(number) {
-	    var pad_char = 0,
-	        pad = new Array(3).join(pad_char);
-	    return (pad + number).slice(-pad.length);
+		var pad_char = 0,
+			pad = new Array(3).join(pad_char);
+		return (pad + number).slice(-pad.length);
 	}
 });

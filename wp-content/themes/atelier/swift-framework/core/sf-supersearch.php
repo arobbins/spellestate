@@ -12,7 +12,7 @@
     /* SUPER SEARCH
     ================================================== */
     if ( ! function_exists( 'sf_super_search' ) ) {
-        function sf_super_search() {
+        function sf_super_search($contained = "") {
 
             global $sf_options;
 
@@ -97,13 +97,22 @@
                 } else {
                     $super_search .= '<div id="super-search-' . $sf_supersearchcount . '" class="sf-super-search clearfix">';
                 }
-                $super_search .= '<div class="search-options col-sm-9">';
-                $super_search .= $search_text;
-                $super_search .= '</div>';
-                $super_search .= '<div class="search-go col-sm-3">';
-                $super_search .= '<a href="#" class="super-search-go sf-button accent" data-home_url="' . get_home_url() . '" data-shop_url="' . $shop_url . '"><span class="text">' . $ss_button_text . '</span></a>';
-                $super_search .= '<a class="super-search-close" href="#">'.$close_icon.'</a>';
-                $super_search .= '</div>';
+                
+                if ( $contained ) {
+                	$super_search .= '<div class="container">';
+                }
+	                $super_search .= '<div class="search-options col-sm-9">';
+	                $super_search .= $search_text;
+	                $super_search .= '</div>';
+	                $super_search .= '<div class="search-go col-sm-3">';
+	                $super_search .= '<a href="#" class="super-search-go sf-button accent" data-home_url="' . get_home_url() . '" data-shop_url="' . $shop_url . '"><span class="text">' . $ss_button_text . '</span></a>';
+	                $super_search .= '<a class="super-search-close" href="#">'.$close_icon.'</a>';
+	                $super_search .= '</div>';
+				
+				if ( $contained ) {
+					$super_search .= '</div>';
+				}
+				
                 $super_search .= '</div><!-- close #super-search -->';
 
                 if ( $sf_supersearchcount >= 0 ) {

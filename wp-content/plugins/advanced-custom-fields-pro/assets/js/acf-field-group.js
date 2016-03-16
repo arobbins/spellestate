@@ -8,7 +8,7 @@
 		$options: null,
 		
 		actions: {
-			'ready':	'init'
+			'ready': 'init'
 		},
 		
 		filters: {
@@ -16,9 +16,10 @@
 		},
 		
 		events: {
-			'submit #post':			'submit',
-			'click a[href="#"]':	'preventDefault',
-			'click .submitdelete': 	'trash'
+			'submit #post':					'submit',
+			'click a[href="#"]':			'preventDefault',
+			'click .submitdelete': 			'trash',
+			'mouseenter .acf-field-list': 	'sortable'
 		},
 		
 		
@@ -45,11 +46,58 @@
 			
 			// disable validation
 			acf.validation.active = 0;
-			
-			
-			// sort fields
-			this.sort_fields( $('.acf-field-list:first') );
 		    
+		},
+		
+		
+		/*
+		*  sortable
+		*
+		*  This function will add sortable to the feild group list
+		*  sortable is added on mouseover to speed up page load
+		*
+		*  @type	function
+		*  @date	28/10/2015
+		*  @since	5.3.2
+		*
+		*  @param	$post_id (int)
+		*  @return	$post_id (int)
+		*/
+		
+		sortable: function( e ){
+			
+			// bail early if already sortable
+			if( e.$el.hasClass('ui-sortable') ) {
+				
+				return;
+				
+			}
+			
+			
+			// vars
+			var self = this;
+			
+			
+			// sortable
+			e.$el.sortable({
+				handle: '.acf-sortable-handle',
+				connectWith: '.acf-field-list',
+				update: function(event, ui){
+					
+					// vars
+					var $el = ui.item;
+					
+					
+					// render
+					self.render_fields();
+					
+					
+					// actions
+					acf.do_action('sortstop', $el);
+					
+				}
+			});
+			
 		},
 		
 		
@@ -95,47 +143,6 @@
 		
 		
 		/*
-		*  sort_fields
-		*
-		*  This function will add sortable to a field list
-		*
-		*  @type	function
-		*  @date	8/04/2014
-		*  @since	5.0.0
-		*
-		*  @param	$el
-		*  @return	n/a
-		*/
-		
-		sort_fields: function( $el ){
-			
-			// vars
-			var self = this;
-			
-			
-			$el.sortable({
-				handle: '.acf-icon',
-				connectWith: '.acf-field-list',
-				update: function(event, ui){
-					
-					// vars
-					var $el = ui.item;
-					
-					
-					// render
-					self.render_fields();
-					
-					
-					// actions
-					acf.do_action('sortstop', $el);
-					
-				}
-			});
-			
-		},
-		
-		
-		/*
 		*  render_fields
 		*
 		*  This function is triggered by a change in field order, and will update the field icon number
@@ -149,8 +156,6 @@
 		*/
 		
 		render_fields: function(){
-			
-			//console.log('render_fields');
 			
 			// reference
 			var self = this;

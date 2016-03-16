@@ -5,7 +5,7 @@
     *	Swift Page Builder - Swift Slider Shortcode
     *	------------------------------------------------
     *	Swift Framework
-    * 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+    * 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     */
 
@@ -58,8 +58,8 @@
     SPBMap::map( 'spb_swift_slider', array(
         "name"   => __( "Swift Slider", 'swift-framework-plugin' ),
         "base"   => "spb_swift_slider",
-        "class"  => "spb_swiftslider",
-        "icon"   => "spb-icon-swiftslider",
+        "class"  => "spb_swiftslider spb_tab_media",
+        "icon"   => "icon-swift-slider",
         "params" => array(
             array(
                 "type"        => "buttonset",
@@ -69,6 +69,7 @@
                     __( 'Yes', 'swift-framework-plugin' ) => "true",
                     __( 'No', 'swift-framework-plugin' )  => "false"
                 ),
+                "buttonset_on"  => "true",
                 "description" => __( "Choose if you would like the slider to be window height.", 'swift-framework-plugin' )
             ),
             array(
@@ -117,6 +118,7 @@
                     __( 'Yes', 'swift-framework-plugin' ) => "true",
                     __( 'No', 'swift-framework-plugin' )  => "false"
                 ),
+                "buttonset_on"  => "true",
                 "description" => __( "Select if you'd like the slider to loop.", 'swift-framework-plugin' )
             ),
             array(
@@ -127,6 +129,7 @@
                     __( 'Yes', 'swift-framework-plugin' ) => "true",
                     __( 'No', 'swift-framework-plugin' )  => "false"
                 ),
+                "buttonset_on"  => "true",
                 "description" => __( 'Choose if you would like to display the left/right arrows on the slider.', 'swift-framework-plugin' )
             ),
             array(
@@ -137,6 +140,7 @@
                     __( 'Yes', 'swift-framework-plugin' ) => "true",
                     __( 'No', 'swift-framework-plugin' )  => "false"
                 ),
+                "buttonset_on"  => "true",
                 "description" => __( "Choose if you would like to display the slider pagination.", 'swift-framework-plugin' )
             ),
             array(
@@ -147,6 +151,7 @@
                     __( 'Yes', 'swift-framework-plugin' ) => "true",
                     __( 'No', 'swift-framework-plugin' )  => "false"
                 ),
+                "buttonset_on"  => "true",
                 "description" => __( "Choose if you would like to display the continue button on the slider to progress to the content. If you want to only display the slider on the page, and no content, then make sure you set this to NO.", 'swift-framework-plugin' )
             ),
             array(
@@ -157,6 +162,7 @@
                     __( 'Yes', 'swift-framework-plugin' ) => "yes",
                     __( 'No', 'swift-framework-plugin' )  => "no"
                 ),
+                "buttonset_on"  => "yes",
                 "description" => __( "Select if you'd like the slider to be full width (edge to edge). NOTE: only possible on pages without sidebars.", 'swift-framework-plugin' )
             ),
             array(

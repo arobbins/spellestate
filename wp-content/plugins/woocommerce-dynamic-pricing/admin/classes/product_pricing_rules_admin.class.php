@@ -317,6 +317,7 @@ class woocommerce_product_pricing_rules_admin {
 			</select>
 
 			<div class="variations" style="<?php echo $div_style; ?>">
+				<?php  sort($all_variations); ?>
 				<?php $chunks = array_chunk( $all_variations, ceil( count( $all_variations ) / 3 ), true ); ?>
 
 				<?php foreach ( $chunks as $chunk ) : ?>
@@ -327,7 +328,7 @@ class woocommerce_product_pricing_rules_admin {
 							<?php $variation_checked = (isset( $condition['args']['variations'] ) && is_array( $condition['args']['variations'] ) && in_array( $variation_id, $condition['args']['variations'] )) ? 'checked="checked"' : ''; ?>
 							<li>
 								<label for="variation_<?php echo $variation_id; ?>_<?php echo $name; ?>" class="selectit">
-									<input <?php echo $variation_checked; ?> type="checkbox" id="variation_<?php echo $variation_id; ?>_<?php echo $name; ?>" name="pricing_rules[<?php echo $name; ?>][variation_rules][args][variations][]" value="<?php echo $variation_id; ?>" /><?php echo get_the_title( $variation_id ); ?>
+									<input <?php echo $variation_checked; ?> type="checkbox" id="variation_<?php echo $variation_id; ?>_<?php echo $name; ?>" name="pricing_rules[<?php echo $name; ?>][variation_rules][args][variations][]" value="<?php echo $variation_id; ?>" /><?php _e('Variation ID:', 'wc_pricing'); ?> <?php echo  $variation_id; ?>
 								</label>
 							</li>
 						<?php endforeach; ?>
@@ -559,18 +560,7 @@ class woocommerce_product_pricing_rules_admin {
 				});
 
 
-				$('#woocommerce-pricing-rules-wrap').delegate('.float_pricing_rule', 'keydown', function (event) {
-					// Allow only backspace, delete and tab
-					if (event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 190) {
-						// let it happen, don't do anything
-					}
-					else {
-						// Ensure that it is a number and stop the keypress
-						if ((event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105)) {
-							event.preventDefault();
-						}
-					}
-				});
+				
 
 				$("#woocommerce-pricing-rules-wrap").sortable(
 					{

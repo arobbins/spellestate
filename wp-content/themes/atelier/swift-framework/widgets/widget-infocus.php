@@ -16,13 +16,16 @@
     }
 
     class sf_infocus extends WP_Widget {
-        function sf_infocus() {
+    
+      	function __construct() {
             parent::__construct( 'sf_infocus_widget', $name = 'Swift Framework In Focus' );
         }
 
         function widget( $args, $instance ) {
-            global $post;
+            global $post, $sf_options;
             extract( $args );
+            
+            $remove_dates  = $sf_options['remove_dates'];
 
             // Widget Options
             $title   = apply_filters( 'widget_title', $instance['title'] ); // Title
@@ -95,6 +98,15 @@
 						<h4><a href="<?php echo $post_permalink; ?>"
                            title="<?php echo $post_title; ?>"><?php echo $post_title; ?></a></h4>
 
+					<?php } else if ( sf_theme_opts_name() == "sf_uplift_options" ) { ?>
+						
+						<h5><a href="<?php echo $post_permalink; ?>"
+						   title="<?php echo $post_title; ?>"><?php echo $post_title; ?></a></h5>
+						  
+						<?php if ( ! $remove_dates ) {
+						    echo '<div class="blog-item-details">' . sprintf( __( '<time datetime="%1$s">%2$s</time>', 'swiftframework' ), get_the_date('Y-m-d'), get_the_date() ) . '</div>';
+						} ?>
+						   
 	                <?php } else { ?>
 
 	                    <h5><a href="<?php echo $post_permalink; ?>"

@@ -1,19 +1,19 @@
 <?php
 /**
  * groups-admin-groups-add.php
- * 
+ *
  * Copyright (c) "kento" Karim Rahimpur www.itthinx.com
- * 
+ *
  * This code is released under the GNU General Public License.
  * See COPYRIGHT.txt and LICENSE.txt.
- * 
+ *
  * This code is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * This header and all notices must be kept intact.
- * 
+ *
  * @author Karim Rahimpur
  * @package groups
  * @since groups 1.1.0
@@ -42,7 +42,7 @@ function groups_admin_groups_add() {
 	$current_url = remove_query_arg( 'group_id', $current_url );
 
 	$parent_id   = isset( $_POST['parent-id-field'] ) ? $_POST['parent-id-field'] : '';
-	$name		= isset( $_POST['name-field'] ) ? $_POST['name-field'] : '';
+	$name        = isset( $_POST['name-field'] ) ? $_POST['name-field'] : '';
 	$description = isset( $_POST['description-field'] ) ? $_POST['description-field'] : '';
 
 	$group_table = _groups_get_tablename( 'group' );
@@ -54,16 +54,14 @@ function groups_admin_groups_add() {
 	}
 	$parent_select .= '</select>';
 
-	$output .= '<div class="manage-groups">';
-	$output .= '<div>';
-	$output .= '<h2>';
+	$output .= '<div class="manage-groups wrap">';
+	$output .= '<h1>';
 	$output .= __( 'Add a new group', GROUPS_PLUGIN_DOMAIN );
-	$output .= '</h2>';
-	$output .= '</div>';
+	$output .= '</h1>';
 
 	$output .= Groups_Admin::render_messages();
 
-	$output .= '<form id="add-group" action="' . $current_url . '" method="post">';
+	$output .= '<form id="add-group" action="' . esc_url( $current_url ) . '" method="post">';
 	$output .= '<div class="group new">';
 
 	$output .= '<div class="field">';
@@ -114,19 +112,19 @@ function groups_admin_groups_add() {
 	$output .= Groups_UIE::render_select( '.select.capability' );
 	$output .= '</div>';
 
+	$output .= apply_filters( 'groups_admin_groups_add_form_after_fields', '' );
+
 	$output .= '<div class="field">';
 	$output .= wp_nonce_field( 'groups-add', GROUPS_ADMIN_GROUPS_NONCE, true, false );
 	$output .= '<input class="button button-primary" type="submit" value="' . __( 'Add', GROUPS_PLUGIN_DOMAIN ) . '"/>';
 	$output .= '<input type="hidden" value="add" name="action"/>';
-	$output .= '<a class="cancel button" href="' . $current_url . '">' . __( 'Cancel', GROUPS_PLUGIN_DOMAIN ) . '</a>';
+	$output .= '<a class="cancel button" href="' . esc_url( $current_url ) . '">' . __( 'Cancel', GROUPS_PLUGIN_DOMAIN ) . '</a>';
 	$output .= '</div>';
 	$output .= '</div>'; // .group.new
 	$output .= '</form>';
 	$output .= '</div>'; // .manage-groups
 
 	echo $output;
-
-	Groups_Help::footer();
 } // function groups_admin_groups_add
 
 /**
@@ -152,7 +150,6 @@ function groups_admin_groups_add_submit() {
 	$name        = isset( $_POST['name-field'] ) ? $_POST['name-field'] : null;
 
 	$group_id = Groups_Group::create( compact( "creator_id", "datetime", "parent_id", "description", "name" ) );
-
 	if ( $group_id ) {
 		if ( !empty( $_POST['capability_ids'] ) ) {
 			$caps = $_POST['capability_ids'];
@@ -160,6 +157,7 @@ function groups_admin_groups_add_submit() {
 				Groups_Group_Capability::create( array( 'group_id' => $group_id, 'capability_id' => $cap ) );
 			}
 		}
+		do_action( 'groups_admin_groups_add_submit_success', $group_id );
 	} else {
 		if ( !$name ) {
 			Groups_Admin::add_message( __( 'The name must not be empty.', GROUPS_PLUGIN_DOMAIN ), 'error' );

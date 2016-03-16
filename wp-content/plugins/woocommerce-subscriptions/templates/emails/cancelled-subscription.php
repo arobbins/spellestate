@@ -13,15 +13,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <?php do_action( 'woocommerce_email_header', $email_heading ); ?>
 
-<p><?php printf( esc_html__( 'A subscription belonging to %s has been cancelled. The subscription\'s details are as follows:', 'woocommerce-subscriptions' ), esc_html( $subscription->billing_first_name ) . ' ' . esc_html( $subscription->billing_last_name ) ); ?></p>
+<p>
+	<?php
+	// translators: $1: customer's billing first name, $2: customer's billing last name
+	printf( esc_html__( 'A subscription belonging to %1$s %2$s has been cancelled. Their subscription\'s details are as follows:', 'woocommerce-subscriptions' ), esc_html( $subscription->billing_first_name ), esc_html( $subscription->billing_last_name ) );
+	?>
+</p>
 
 <table cellspacing="0" cellpadding="6" style="width: 100%; border: 1px solid #eee;" border="1" bordercolor="#eee">
 	<thead>
 		<tr>
 			<th scope="col" style="text-align:left; border: 1px solid #eee;"><?php esc_html_e( 'Subscription', 'woocommerce-subscriptions' ); ?></th>
-			<th scope="col" style="text-align:left; border: 1px solid #eee;"><?php esc_html_e( 'Price', 'woocommerce-subscriptions' ); ?></th>
-			<th scope="col" style="text-align:left; border: 1px solid #eee;"><?php esc_html_e( 'Last Payment', 'woocommerce-subscriptions' ); ?></th>
-			<th scope="col" style="text-align:left; border: 1px solid #eee;"><?php esc_html_e( 'End of Prepaid Term', 'woocommerce-subscriptions' ); ?></th>
+			<th scope="col" style="text-align:left; border: 1px solid #eee;"><?php echo esc_html_x( 'Price', 'table headings in notification email', 'woocommerce-subscriptions' ); ?></th>
+			<th scope="col" style="text-align:left; border: 1px solid #eee;"><?php echo esc_html_x( 'Last Payment', 'table heading', 'woocommerce-subscriptions' ); ?></th>
+			<th scope="col" style="text-align:left; border: 1px solid #eee;"><?php echo esc_html_x( 'End of Prepaid Term', 'table headings in notification email', 'woocommerce-subscriptions' ); ?></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -46,24 +51,26 @@ if ( ! defined( 'ABSPATH' ) ) {
 <table cellspacing="0" cellpadding="6" style="width: 100%; border: 1px solid #eee;" border="1" bordercolor="#eee">
 	<thead>
 		<tr>
-			<th scope="col" style="text-align:left; border: 1px solid #eee;"><?php esc_html_e( 'Product', 'woocommerce-subscriptions' ); ?></th>
-			<th scope="col" style="text-align:left; border: 1px solid #eee;"><?php esc_html_e( 'Qty', 'woocommerce-subscriptions' ); ?></th>
-			<th scope="col" style="text-align:left; border: 1px solid #eee;"><?php esc_html_e( 'Amount', 'woocommerce-subscriptions' ); ?></th>
+			<th scope="col" style="text-align:left; border: 1px solid #eee;"><?php echo esc_html_x( 'Product', 'table headings in notification email', 'woocommerce-subscriptions' ); ?></th>
+			<th scope="col" style="text-align:left; border: 1px solid #eee;"><?php echo esc_html_x( 'Quantity', 'table headings in notification email', 'woocommerce-subscriptions' ); ?></th>
+			<th scope="col" style="text-align:left; border: 1px solid #eee;"><?php echo esc_html_x( 'Price', 'table headings in notification email', 'woocommerce-subscriptions' ); ?></th>
 		</tr>
 	</thead>
 	<tbody>
-	<?php echo wp_kses_post( $subscription->email_order_items_table( false, true ) ); ?>
+	<?php echo wp_kses_post( WC_Subscriptions_Email::email_order_items_table( $subscription, array( 'show_download_links' => false, 'show_sku' => true ) ) ); ?>
 	</tbody>
 	<tfoot>
 		<?php
 		if ( $totals = $subscription->get_order_item_totals() ) {
 			$i = 0;
 			foreach ( $totals as $total ) {
-				$i++; ?>
+				$i++;
+				?>
 				<tr>
 					<th scope="row" colspan="2" style="text-align:left; border: 1px solid #eee; <?php if ( 1 == $i ) { echo 'border-top-width: 4px;'; } ?>"><?php echo wp_kses_post( $total['label'] ); ?></th>
 					<td style="text-align:left; border: 1px solid #eee; <?php if ( 1 == $i ) { echo 'border-top-width: 4px;'; } ?>"><?php echo wp_kses_post( $total['value'] ); ?></td>
-				</tr><?php
+				</tr>
+				<?php
 			}
 		}
 		?>

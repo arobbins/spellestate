@@ -33,6 +33,9 @@
 	/* Remove totals from cart collaterals */
 	remove_action( 'woocommerce_cart_collaterals', 'woocommerce_cart_totals', 10 );
 	
+	/* Remove default product item link */
+	remove_action( 'woocommerce_before_shop_loop_item', 'woocommerce_template_loop_product_link_open', 10 );
+	
 	
 	/* REMOVE UNESSECARY WOOCOMMERCE SCRIPTS
     ================================================== */
@@ -74,13 +77,10 @@
 				wp_dequeue_script( 'wc-cart-fragments' );
 				wp_dequeue_script( 'wc-add-to-cart-variation' );
 
-				// JCK Quickview
-				wp_dequeue_style( 'jckqv-minstyles' );
-				wp_dequeue_style( 'jckqv-styles' );
-				wp_dequeue_script( 'jckqv-script' );
-
 				// Yith Wishlist
-				wp_dequeue_script( 'jquery-yith-wcwl' );
+				if ( !defined( 'YITH_WCWL_PREMIUM' ) ) {
+					wp_dequeue_script( 'jquery-yith-wcwl' );
+				}
 
 			}
 
@@ -95,7 +95,9 @@
 				wp_dequeue_script( 'jckqv-script' );
 
 				// Yith Wishlist
-				wp_dequeue_script( 'jquery-yith-wcwl' );
+				if ( !defined( 'YITH_WCWL_PREMIUM' ) ) {
+					wp_dequeue_script( 'jquery-yith-wcwl' );
+				}
 
 			}
 
@@ -119,12 +121,6 @@
 			wp_dequeue_style( 'woocommerce_prettyPhoto_css' );
 			wp_dequeue_script( 'prettyPhoto' );
 			wp_dequeue_script( 'prettyPhoto-init' );
-
-			// Yith Wishlist Scripts
-			wp_dequeue_style( 'yith-wcwl-main' );
-			wp_dequeue_style( 'yith-wcwl-font-awesome' );
-			wp_dequeue_style( 'jquery-selectBox' );
-			wp_dequeue_script( 'jquery-selectBox' );
 
 		}
 		add_action( 'wp_enqueue_scripts', 'sf_remove_woo_scripts', 99 );
@@ -196,6 +192,15 @@
     ================================================== */
     if ( ! function_exists( 'woocommerce_taxonomy_archive_description' ) ) {
         function woocommerce_taxonomy_archive_description() {
+        	
+        	if ( sf_theme_supports( 'page-heading-woo-description' ) ) {
+        		global $sf_options;
+        		$page_title_style = $sf_options['woo_page_heading_style'];
+        		if ( $page_title_style != "standard" ) {
+        			return;
+        		}
+        	}
+        	
             if ( is_tax( array( 'product_cat', 'product_tag' ) ) && get_query_var( 'paged' ) == 0 ) {
                 $description = apply_filters( 'the_content', term_description() );
                 if ( $description ) {
@@ -235,7 +240,7 @@
 
 			    	} else if ($product->is_on_sale()) {
 
-			    		echo apply_filters('woocommerce_sale_flash', '<span class="onsale">'.__( 'Sale!', 'swiftframework' ).'</span>', $post, $product);
+			    		echo apply_filters('woocommerce_sale_flash', '<span class="onsale">'.__( 'Sale', 'swiftframework' ).'</span>', $post, $product);
 
 			    	} else if ( ( time() - ( 60 * 60 * 24 * $newness ) ) < $postdatestamp ) {
 
@@ -666,7 +671,7 @@
 
                                 </div>
 
-                                <?php if ( sf_theme_opts_name() == "sf_atelier_options" ) { ?>
+                                <?php if ( sf_theme_opts_name() == "sf_atelier_options" || sf_theme_opts_name() == "sf_uplift_options" ) { ?>
 
 				                    <div class="bag-total">
 				                    	<?php if ( class_exists( 'Woocommerce_German_Market' ) ) { ?>
@@ -688,7 +693,7 @@
 
                                     <a class="sf-button standard sf-icon-reveal checkout-button" href="<?php echo esc_url( $woocommerce->cart->get_checkout_url() ); ?>">
                                     	<?php echo $checkout_icon; ?>
-                                    	<span class="text"><?php _e( 'Proceed to checkout', 'swiftframework' ); ?></span>
+                                    	<span class="text"><?php _e( 'Checkout', 'swiftframework' ); ?></span>
                                     </a>
 
                                 </div>
@@ -751,8 +756,9 @@
 				}
 
                 $classes = get_option( 'yith_wcwl_use_button' ) == 'yes' ? 'class="add_to_wishlist single_add_to_wishlist button alt"' : 'class="add_to_wishlist"';
-
-                $html = '<div class="yith-wcwl-add-to-wishlist '.$extra_class.'" data-toggle="tooltip" data-placement="top" title="'.$tooltip.'">';
+				
+				$html = '<div class="yith-wcwl-divide"></div>';
+                $html .= '<div class="yith-wcwl-add-to-wishlist '.$extra_class.'" data-toggle="tooltip" data-placement="top" title="'.$tooltip.'">';
                 $html .= '<div class="yith-wcwl-add-button';  // the class attribute is closed in the next row
 
                 $html .= $exists ? ' hide" style="display:none;"' : ' show"';
@@ -781,18 +787,24 @@
 
     /* SHOW PRODUCTS COUNT URL PARAMETER
     ================================================== */
-    $options           = get_option( sf_theme_opts_name() );
-    $products_per_page = $options['products_per_page'];
-    if ( isset( $_GET['show_products'] ) ) {
-        if ( $_GET['show_products'] == "all" ) {
-            add_filter( 'loop_shop_per_page', create_function( '$cols', 'return -1;' ) );
-        } else {
-            add_filter( 'loop_shop_per_page', create_function( '$cols', 'return ' . $_GET['show_products'] . ';' ) );
-        }
-    } else {
-        add_filter( 'loop_shop_per_page', create_function( '$cols', 'return  ' . $products_per_page . ';' ) );
-    }
-   
+    if ( !function_exists('sf_product_shop_count') ) {
+		function sf_product_shop_count() {
+			$options           = get_option( sf_theme_opts_name() );
+			$default_count = $products_per_page = $options['products_per_page'];;
+
+			$count = isset($_GET['show_products']) ? $_GET['show_products'] : $default_count;
+
+			if ( $count === 'all' ) {
+				$count = -1;
+			} else if ( !is_numeric($count) ) {
+				$count = $default_count;
+			}
+
+			return $count;
+		}	
+	}
+	add_filter( 'loop_shop_per_page', 'sf_product_shop_count');   
+	
     
     /* CROSS SELLS COLUMNS
     ================================================== */
@@ -892,8 +904,10 @@
 			?>
 
 			<div class="sf-mobile-shop-filters row">
-				<?php if ( function_exists( 'dynamic_sidebar' ) ) { ?>
+				<?php if ( function_exists( 'dynamic_sidebar' ) && sf_is_sidebar_active( 'mobile-woocommerce-filters' ) ) { ?>
                     <?php dynamic_sidebar( 'mobile-woocommerce-filters' ); ?>
+                <?php } else { ?>
+                	<h5 class="no-widgets container"><?php _e( "Please add widgets to the WooCommerce Filters widget area in Appearance > Widgets", "swiftframework" ); ?></h5>
                 <?php } ?>
 			</div>
 
@@ -909,6 +923,7 @@
     remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_title', 5 );
     remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_price', 10 );
     remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_excerpt', 20 );
+    
     remove_action( 'woocommerce_before_single_product_summary', 'woocommerce_show_product_sale_flash', 10 );
     remove_action( 'woocommerce_product_tabs', 'woocommerce_product_description_tab', 10 );
     remove_action( 'woocommerce_product_tab_panels', 'woocommerce_product_description_panel', 10 );
@@ -916,6 +931,35 @@
 	if ( sf_theme_supports( 'product-summary-tabs' ) ) {
 	    remove_action( 'woocommerce_after_single_product_summary', 'woocommerce_output_product_data_tabs', 10 );
 		add_action( 'woocommerce_single_product_summary', 'woocommerce_output_product_data_tabs', 35 );
+	}
+
+	
+	/* WOO SINGLE PRODUCT PRICE/RATING
+	================================================== */
+	if ( ! function_exists( 'sf_product_price_rating' ) ) {
+	    function sf_product_price_rating() {
+	    	global $post, $product, $sf_catalog_mode, $wpdb;
+	   	    ?>
+			<div class="product-price-wrap clearfix">
+				<div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+
+					<h3 class="price"><?php echo $product->get_price_html(); ?></h3>
+					
+					<meta itemprop="price" content="<?php echo $product->get_price(); ?>" />
+					<meta itemprop="priceCurrency" content="<?php echo get_woocommerce_currency(); ?>" />
+
+					<?php if (!$sf_catalog_mode) { ?><link itemprop="availability" href="http://schema.org/<?php echo $product->is_in_stock() ? 'InStock' : 'OutOfStock'; ?>" /><?php } ?>
+
+				</div>
+				
+				<?php if ( 'open' == $post->comment_status && $rating_html = $product->get_rating_html() ) : ?>
+					<?php echo $rating_html; ?>
+				 <?php endif; ?>
+				
+			</div>
+			<?php
+		}
+		add_action( 'woocommerce_single_product_summary', 'sf_product_price_rating', 10 );
 	}
 
 
@@ -941,7 +985,7 @@
             }
         }
 
-        add_action( 'woocommerce_single_product_summary', 'sf_product_short', 0 );
+        add_action( 'woocommerce_single_product_summary', 'sf_product_short', 20 );
     }
 
 
@@ -953,7 +997,7 @@
             $image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), false, '' );
             ?>
             <div class="article-share product-share" data-buttontext="<?php _e( "Share this", "swiftframework" ); ?>"
-                 data-image="<?php echo esc_url($image[0]); ?>"></div>
+                 data-image="<?php echo esc_url($image[0]); ?>"><share-button class="share-button"></share-button></div>
         <?php
         }
 
@@ -963,12 +1007,14 @@
     
     /* WOO PRODUCT PAGE BUILDER CONTENT
     ================================================== */
-    function sf_woo_product_page_builder_content() {
-	?>
-		<div id="product-display-area" class="clearfix">
-			<?php the_content(); ?>		
-		</div>
-	<?php }
+    if ( ! function_exists( 'sf_woo_product_page_builder_content' ) ) {
+	    function sf_woo_product_page_builder_content() {
+		?>
+			<div id="product-display-area" class="clearfix">
+				<?php the_content(); ?>		
+			</div>
+		<?php }
+	}
 	
 
     /* WOO PRODUCT META
@@ -1202,10 +1248,11 @@
 		global $product;
 		$loading_text = __( 'Adding...', 'swiftframework' );
 		$added_text = __( 'Item added', 'swiftframework' );
+		$icon_class = apply_filters( 'sf_add_to_cart_icon_class', 'sf-icon-add-to-cart' );
 		?>
 		<div class="variations_button">
 			<?php woocommerce_quantity_input( array( 'input_value' => isset( $_POST['quantity'] ) ? wc_stock_amount( $_POST['quantity'] ) : 1 ) ); ?>
-			<button type="submit" data-product_id="<?php echo esc_attr($product->id); ?>" data-quantity="1" data-default_text="<?php echo esc_attr($product->single_add_to_cart_text()); ?>" data-default_icon="sf-icon-add-to-cart" data-loading_text="<?php echo esc_attr($loading_text); ?>" data-added_text="<?php echo esc_attr($added_text); ?>" class="single_add_to_cart_button button alt"><?php echo apply_filters('sf_add_to_cart_icon', '<i class="sf-icon-add-to-cart"></i>'); ?><span><?php echo esc_attr($product->single_add_to_cart_text()); ?></span></button>
+			<button type="submit" data-product_id="<?php echo esc_attr($product->id); ?>" data-quantity="1" data-default_text="<?php echo esc_attr($product->single_add_to_cart_text()); ?>" data-default_icon="<?php echo $icon_class; ?>" data-loading_text="<?php echo esc_attr($loading_text); ?>" data-added_text="<?php echo esc_attr($added_text); ?>" class="single_add_to_cart_button button alt"><i class="<?php echo $icon_class; ?>"></i><span><?php echo esc_attr($product->single_add_to_cart_text()); ?></span></button>
 			<input type="hidden" name="add-to-cart" value="<?php echo absint( $product->id ); ?>" />
 			<input type="hidden" name="product_id" value="<?php echo absint( $product->id ); ?>" />
 			<input type="hidden" name="variation_id" class="variation_id" value="" />
@@ -1214,5 +1261,18 @@
 		<?php
 	}
 	add_action( 'woocommerce_single_variation', 'sf_single_variation_add_to_cart_button', 20 );
-
-?>
+	
+	
+	/* WOO GET CATEGORY DESC
+	================================================== */
+	function sf_woo_get_product_category_description ($category, $return = false) {
+		$cat_id        =    $category->term_id;
+		$prod_term    =    get_term($cat_id,'product_cat');
+		$description=    $prod_term->description;
+		
+		if ( $return ) {
+			return $description;
+		} else {
+			echo $description;
+		}
+	}

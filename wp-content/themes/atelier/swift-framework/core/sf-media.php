@@ -124,7 +124,9 @@
             } else {
                 $url          = str_replace( 'https://', 'http://', $url );
                 $video_id     = sf_get_vimeoid( $url );
-                $vimeo_params = apply_filters( 'sf_vimeo_embed_src_params', '?title=0&amp;byline=0&amp;portrait=0&amp;autoplay=1' );
+                $time_stamp = explode('#',$url);
+                $video_id  = (!empty($time_stamp[1]))?$video_id.'#'.$time_stamp[1]:$video_id;
+                $vimeo_params = apply_filters( 'sf_vimeo_embed_src_params', '?title=0&byline=0&portrait=0&autoplay=1' );
                 if ( is_ssl() ) {
                     if ( $video_id != "" ) {
                         return 'https://player.vimeo.com/video/' . $video_id . $vimeo_params;

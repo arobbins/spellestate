@@ -11,11 +11,17 @@ function sf_aq_resize( $url, $width, $height = null, $crop = null, $single = tru
 		$debug_mode = $_GET['sf_debug'];
 	}
 
+	/* WPML Fix for Image issue in Different domain per language */
+	if ( defined( 'ICL_SITEPRESS_VERSION' )){
+		global $sitepress;
+		$url = $sitepress->convert_url($url,$sitepress->get_default_language());
+	}
+	
 	//validate inputs
 	if ( !$url OR !$width ) return false;
 
 	if ( $url == "default" ) {
-		$url = apply_filters( 'sf_placeholder_image_src', get_template_directory_uri()."/images/default-thumb.png" );
+		$url = get_template_directory_uri()."/images/default-thumb.png";
 		$image = array (
 			0 => $url,
 			1 => '1600',

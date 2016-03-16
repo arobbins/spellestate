@@ -249,7 +249,8 @@
 		},
 		
 		events: {
-			'change .acf-field[data-name="layout"] input':	'render',
+			'change .acf-field[data-name="layout"] input':		'render',
+			'focus .acf-field[data-name="collapsed"] select':	'focus',
 		},
 		
 		event: function( e ){
@@ -270,22 +271,56 @@
 			
 			
 			// vars
-			var $radio = $el.find('.acf-field[data-name="layout"] input:checked'),
+			// may seem slow using '>' but is actually ~ 3x faster!
+			var $layout = $el.find('> .settings > table > tbody > [data-name="layout"] input:checked'),
 				$fields = $el.find('.acf-field-list:first');
 			
 			
+			
 			// update data
-			$fields.attr('data-layout', $radio.val());
+			$fields.attr('data-layout', $layout.val());
 			
 			
-			// sortable
-			if( !$fields.hasClass('ui-sortable') ) {
+			// trigger focus and populate collapsed select
+			this.focus( $el );
 			
-				acf.field_group.sort_fields( $fields );
+		},
+		
+		focus: function( $el ){
+			
+			// vars
+			var $collapsed = $el.find('> .settings > table > tbody > [data-name="collapsed"] select'),
+				$fields = $el.find('.acf-field-list:first');
+			
+			
+			// collapsed
+			var choices = [];
+			
+			choices.push({
+				'label': $collapsed.find('option[value=""]').text(),
+				'value': ''
+			});
+			
+			
+			$fields.children('.acf-field-object').not('[data-id="acfcloneindex"]').each(function(){
 				
-			}
+				// vars
+				var $field = $(this);
+				
+				
+				// append
+				choices.push({
+					'label': $field.find('.field-label:first').val(),
+					'value': $field.attr('data-key')
+				});
+				
+			});
 			
-		}		
+			
+			// render
+			acf.render_select( $collapsed, choices );
+			
+		}
 		
 	});
 	
@@ -417,14 +452,6 @@
 			$fields.attr('data-layout', $display.val());
 			
 			
-			// sortable
-			if( !$fields.hasClass('ui-sortable') ) {
-			
-				acf.field_group.sort_fields( $fields );
-				
-			}
-			
-			
 			// update meta
 			var layout_key = $el.attr('data-id');
 			
@@ -534,27 +561,12 @@
 			$el2 = acf.duplicate( $el );
 			
 			
-			// vars
-			var $fields = $el2.find('.acf-field-object').not('[data-id="acfcloneindex"]');
-				
-			$fields.each(function(){
-				
-				// wipe
-				acf.field_group.wipe_field( $(this) );
-				
-				
-				// save
-				acf.field_group.save_field( $(this) );
-				
-			});
-			
-			
-			// fix conditional logic rules
-			acf.field_group_pro.fix_conditional_logic( $fields );
-			
-			
 			// add new tr
 			$el.after( $el2 );
+			
+			
+			// fire action 'duplicate_field' and allow acf.pro logic to clean sub fields
+			acf.do_action('duplicate_field', $el2);
 			
 			
 			// render layout

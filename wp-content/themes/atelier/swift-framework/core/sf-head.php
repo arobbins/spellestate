@@ -8,6 +8,7 @@
     *
     *	sf_head_meta()
     *	sf_page_classes()
+    *	sf_tracking()
     *
     */
 
@@ -75,23 +76,6 @@
 
     /* SOCIAL META
     ================================================== */
-
-    //Adding the Open Graph in the Language Attributes
-    function sf_add_opengraph_doctype( $output ) {
-        global $sf_options;
-        $disable_social_meta = false;
-        if ( isset( $sf_options['disable_social_meta'] ) ) {
-            $disable_social_meta = $sf_options['disable_social_meta'];
-        }
-        if ( $disable_social_meta ) {
-            return $output;
-        }
-
-        return $output . ' xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://www.facebook.com/2008/fbml"';
-    }
-
-    add_filter( 'language_attributes', 'sf_add_opengraph_doctype' );
-
     if ( ! function_exists( 'sf_social_meta' ) ) {
         function sf_social_meta() {
             global $post, $sf_options;
@@ -203,7 +187,7 @@
             $enable_rtl   = $sf_options['enable_rtl'];
             $design_style = sf_get_option( 'design_style_type', 'minimal' );
 
-            $page_header_type = $page_slider = $page_header_alt_logo = $page_style = $page_design_style = "";
+            $page_header_type = $page_slider = $page_header_alt_logo = $page_style = $page_design_style = $app_header_style = $sticky_header_transparent = "";
             $header_layout    = $sf_options['header_layout'];
             if ( isset( $_GET['header'] ) ) {
                 $header_layout = $_GET['header'];
@@ -257,6 +241,8 @@
                 $page_slider          = sf_get_post_meta( $post->ID, 'sf_page_slider', true );
                 $page_design_style 	  = sf_get_post_meta( $post->ID, 'sf_page_design_style', true );
 				$enable_newsletter_sub_bar_page = sf_get_post_meta($post->ID, 'sf_enable_newsletter_bar', true);
+				$app_header_style	  = sf_get_post_meta( $post->ID, 'sf_page_header_app_style', true );
+				$sticky_header_transparent = sf_get_post_meta( $post->ID, 'sf_sticky_header_transparent', true );
             }
             if ( isset($sf_options['enable_newsletter_sub_bar_globally']) ) {
             	$enable_newsletter_sub_bar_page  = $sf_options['enable_newsletter_sub_bar_globally'];
@@ -391,6 +377,16 @@
             if ( $page_header_type != "" ) {
                 $page_class .= 'header-' . $page_header_type . ' ';
             }
+            
+            // Header Style
+            if ( $enable_mini_header && $app_header_style && ! ( $header_layout == "header-vert" || $header_layout == "header-vert-right" ) ) {
+            	$page_class .= 'app-header ';
+            }
+            
+            // Transparent sticky header
+            if ( $enable_mini_header && $sticky_header_transparent && !$app_header_style && ! ( $header_layout == "header-vert" || $header_layout == "header-vert-right" ) ) {
+            	$page_class .= 'sticky-header-transparent ';
+            }
 
             // Page Header Logo
             if ( $page_header_alt_logo ) {
@@ -401,7 +397,8 @@
                 $post_header_type = sf_get_post_meta( $post->ID, 'sf_page_header_type', true );
                 $fw_media_display = sf_get_post_meta( $post->ID, 'sf_fw_media_display', true );
                 $page_title_style = sf_get_post_meta( $post->ID, 'sf_page_title_style', true );
-
+				$page_title_style = apply_filters( 'sf_page_title_style', $page_title_style );
+				
                 if ( $page_title_style == "fancy" || $fw_media_display == "fw-media-title" || $fw_media_display == "fw-media" ) {
                     $page_class .= 'header-' . $post_header_type . ' ';
                 }
@@ -437,6 +434,7 @@
                 $show_page_title       = sf_get_post_meta( $post->ID, 'sf_page_title', true );
                 $remove_breadcrumbs    = sf_get_post_meta( $post->ID, 'sf_no_breadcrumbs', true );
                 $page_title_style      = sf_get_post_meta( $post->ID, 'sf_page_title_style', true );
+                $page_title_style 	   = apply_filters( 'sf_page_title_style', $page_title_style );
                 if ( function_exists( 'is_product' ) && is_product() && sf_theme_supports( 'product-inner-heading' ) && $page_title_style == "fancy-tabbed" ) {
                 	$page_title_style = "fancy";
                 }
@@ -452,6 +450,7 @@
             if ( $shop_page ) {
             	$show_page_title       = $sf_options['woo_show_page_heading'];
             	$page_title_style      = $sf_options['woo_page_heading_style'];
+            	$page_title_style 	   = apply_filters( 'sf_page_title_style', $page_title_style );
             	if ( $show_page_title ) {
             		$page_class .= 'page-heading-' . $page_title_style . ' ';
             	}
@@ -483,6 +482,17 @@
 	        		$page_class .= 'woo-global-filters-enabled ';
 	        	}
 	        }
+	        
+	        
+	        // Check for Quickview
+	        if ( class_exists( 'jckqv' ) ) {
+	        	$quickview_opts = get_option('jckqvsettings_settings');
+	        	$quickview_pos = $quickview_opts['trigger_position_position'];
+	        	
+	        	if ( $quickview_pos == "afteritem" ) {
+	        		$page_class .= 'has-quickview-hover-btn ';
+	        	}
+	        }
 
             // Return array of classes
             $class_array = array(
@@ -496,5 +506,20 @@
 
             return $class_array;
         }
+    }
+		
+
+    /* TRACKING
+    ================================================== */
+    if ( ! function_exists( 'sf_tracking' ) ) {
+        function sf_tracking() {
+            global $sf_options;
+
+            if ( $sf_options['google_analytics'] != "" ) {
+                echo $sf_options['google_analytics'];
+            }
+        }
+
+        add_action( 'wp_head', 'sf_tracking', 90 );
     }
 ?>
