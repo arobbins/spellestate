@@ -2681,7 +2681,7 @@ body.woocommerce p.stars a:hover:after {
 }
 
 .woocommerce-cart .cart-totals-wrap .cart_totals .shipping {
-  display: none;
+  //display: none;
 }
 
 .page-shadow #container {
@@ -2732,4 +2732,18 @@ body.woocommerce p.stars a:hover:after {
 .owl-wrapper-outer,
 .variable-image-wrapper .img-wrap {
   height: auto !important;
+}
+
+/* New styles -- 3/21/16 */
+.badge-wrap .onsale {
+  display: none;
+}
+
+.woocommerce .my-account-right table.shop_table th,
+.woocommerce-page .my-account-right table.shop_table th {
+  text-align: left;
+}
+
+.bag-product .bag-product-details {
+  font-family: "Julius Sans One";
 }
