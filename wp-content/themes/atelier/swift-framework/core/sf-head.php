@@ -296,6 +296,11 @@
             if ( $header_layout == "header-3" || $header_layout == "header-4" || $header_layout == "header-5" || $header_layout == "header-7" || $header_layout == "header-8" || $header_layout == "header-split" || $header_layout == "header-4-alt" ) {
                 $header_wrap_class .= " full-header-stick";
             }
+            if ( sf_theme_opts_name() == "sf_uplift_options" ) {
+            	if ( $header_layout == "header-1" || $header_layout == "header-2" ) {
+            	    $header_wrap_class .= " full-header-stick";
+            	}
+            }
 
             // Mobile Header Layout
             $page_class .= "mobile-header-" . $mobile_header_layout . " ";
@@ -486,8 +491,8 @@
 	        
 	        // Check for Quickview
 	        if ( class_exists( 'jckqv' ) ) {
-	        	$quickview_opts = get_option('jckqvsettings_settings');
-	        	$quickview_pos = $quickview_opts['trigger_position_position'];
+	        	$quickview_opts = get_option('jckqv_settings');
+	        	$quickview_pos = $quickview_opts['position_position'];
 	        	
 	        	if ( $quickview_pos == "afteritem" ) {
 	        		$page_class .= 'has-quickview-hover-btn ';

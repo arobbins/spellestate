@@ -464,7 +464,7 @@
 
             /* Saved Elements */ 
             $output .= '<div class="page_builder_saved_elements"><div class="spb_saved_el_tab active_tab" >' . __( "Saved Elements", 'swift-framework-plugin' ) . '</div><div class="spb_saved_pages_el_tab">' . __( "Page Templates", 'swift-framework-plugin' ) . '</div><div class="vert-divider-wrapper"><div class="vert-divider-asset"></div></div><div class="elements_controls_tab"><span class="icon-search"></span><input type="text" class="rwmb-text" name="sf_search_saved_elements" id="sf_search_saved_elements" value="" placeholder="Search" ></div><div class="tab_closing"><span class="icon-close"></div></div></div>';
-	        $output .= '<ul class="spb-content-elements clearfix spb-item-slideout">' . $this->getContentLayouts("media") . '</ul>';
+	        $output .= '<div class="spb-elements-no-results"><h2>' . __( "No results found.", 'swift-framework-plugin' ) . '</h2></div><ul class="spb-content-elements clearfix spb-item-slideout">' . $this->getContentLayouts("media") . '</ul>';
             $output .= '<ul class="spb-most-used-elements clearfix spb-item-slideout">' . $this->getContentLayouts("most_used_elements") . '</ul>';
             $output .= '<ul class="spb-content-elements-ui clearfix spb-item-slideout">' . $this->getContentLayouts("ui") . '</ul>';
             $output .= '<ul class="spb-content-elements-misc clearfix spb-item-slideout">' . $this->getContentLayouts("misc") . '</ul>';

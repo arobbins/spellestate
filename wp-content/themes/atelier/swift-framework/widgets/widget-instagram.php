@@ -121,7 +121,7 @@
                     					if (data.data[i].caption) {
                     						caption = data.data[i].caption.text;
                     					}
-                    					instagrams.append("<li class='instagram-item' data-date='"+data.data[i].created_time+"'><figure class='animated-overlay'><a target='_blank' href='" + data.data[i].link +"'></a><img class='instagram-image' src='" + data.data[i].images.low_resolution.url +"' width='306px' height='306px' /><figcaption><div class='thumb-info'><i class='fa-instagram'></i></div></figcaption></figure></li>");  
+                    					instagrams.append("<li class='instagram-item' data-date='"+data.data[i].created_time+"'><figure class='animated-overlay'><a target='_blank' href='" + data.data[i].link +"'></a><div class='img-wrap'><img class='instagram-image' src='" + data.data[i].images.low_resolution.url +"' width='306px' height='306px' /></div><figcaption><div class='thumb-info'><i class='fa-instagram'></i></div></figcaption></figure></li>");  
                     				} 
                     			}
                     		}

@@ -56,7 +56,7 @@
     remove_action( 'sf_post_after_article', 'sf_post_comments', 20 );
 ?>
 
-<?php if ( have_posts() ) : the_post(); ?>
+<?php while (have_posts()) : the_post(); ?>
 
     <!-- OPEN article -->
     <article <?php post_class( 'clearfix single-directory' ); ?> id="<?php the_ID(); ?>">
@@ -136,4 +136,4 @@
     </section>
    
 
-<?php endif; ?>
+<?php endwhile; ?>

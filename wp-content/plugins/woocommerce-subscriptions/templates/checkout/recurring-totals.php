@@ -50,18 +50,8 @@ $display_th = true;
 				<?php $display_th = true; ?>
 			<?php endforeach; ?>
 
-		<?php if ( WC()->cart->needs_shipping() && WC()->cart->show_shipping() && ! empty( $shipping_methods ) ) : ?>
-
-			<?php foreach ( $shipping_methods as $recurring_cart_key => $shipping_method ) : ?>
-			<tr class="shipping recurring-total">
-				<?php if ( $display_th ) : $display_th = false; ?>
-					<th rowspan="<?php echo esc_attr( count( $shipping_methods ) ); ?>"><?php echo esc_html( sprintf( __( 'Shipping via %s', 'woocommerce-subscriptions' ), $shipping_method->label ) ); ?></th>
-				<?php endif; ?>
-				<td><?php echo wp_kses_post( wcs_cart_totals_shipping_method( $shipping_method, $recurring_carts[ $recurring_cart_key ] ) ); ?></td>
-			</tr>
-			<?php endforeach; ?>
-			<?php $display_th = true; ?>
-
+		<?php if ( WC()->cart->needs_shipping() && WC()->cart->show_shipping() ) : ?>
+			<?php wcs_cart_totals_shipping_html(); ?>
 		<?php endif; ?>
 
 		<?php if ( WC()->cart->tax_display_cart === 'excl' ) : ?>

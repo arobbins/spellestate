@@ -46,8 +46,8 @@
             }
 
             // Register Styles
-            wp_register_style( 'spb-frontend', $this->frontendAssetURL( 'css/spb-styles.css' ), false, SPB_VERSION, 'all' );
-            wp_register_style( 'spb-frontend-min', $this->frontendAssetURL( 'css/spb-styles.min.css' ), false, SPB_VERSION, 'all' );
+            wp_register_style( 'spb-frontend', $this->frontendAssetURL( 'css/spb-styles.css' ), false, NULL, 'all' );
+            wp_register_style( 'spb-frontend-min', $this->frontendAssetURL( 'css/spb-styles.min.css' ), false, NULL, 'all' );
 
             // Enqueue Style
             if ( $enable_min_styles && !$is_IE ) {
@@ -105,6 +105,10 @@
             $this->swift_page_builder->addAction( 'wp_ajax_spb_save_pb_history', 'spb_save_pb_history' );
             $this->swift_page_builder->addAction( 'wp_ajax_spb_track_used_elements', 'spb_track_used_elements' );
 
+            /* Add dynamic admin css */
+            $this->addAction( 'admin_footer-post.php', 'spb_admin_css' );
+            $this->addAction( 'admin_footer-post-new.php', 'spb_admin_css' );
+
             /* Add specific CSS class by filter */
             $this->addFilter( 'body_class', 'spb_body_class' );
             $this->addFilter( 'admin_body_class', 'spb_admin_body_class' );
@@ -140,6 +144,23 @@
             return $classes;
         }
 
+        public function spb_admin_css(  ) {
+            global $sf_opts;
+            $spb_edit_modal_width = "";
+            if ( isset($sf_opts['spb_edit_modal_width']) ) {
+                $spb_edit_modal_width = $sf_opts['spb_edit_modal_width'];
+            }
+            ?>
+            
+            <style type="text/css" media="screen">
+                <?php if ( $spb_edit_modal_width != "" ) {
+                    echo '.spb_edit_form_elements {width: '.$spb_edit_modal_width.'px;}';
+                } ?>
+            </style>
+
+            <?php
+        }
+
         public function spb_js_forcesend( $args ) {
             $args['send'] = true;
 
@@ -147,7 +168,7 @@
         }
 
         public function spb_scripts() {
-
+  
             $enable_min_scripts = true;
 
             // Styles
@@ -197,10 +218,12 @@
             wp_enqueue_script( 'ilightbox-js' );
             wp_enqueue_script( 'spb-maps' );
             wp_enqueue_style( 'swift-pb-font' );   
+            wp_enqueue_script( 'touch-punch' );
             
         }
 
         public function spb_register_js() {
+            wp_register_script( 'touch-punch', $this->assetURL( 'js/jquery.ui.touch-punch.js'), 'jquery' , null, true );
             wp_register_script( 'jquery-ui', $this->assetURL( 'js/jquery-ui.min.js'), 'jquery' , null, true );
             wp_register_script( 'materialize', $this->assetURL( 'materialize/js/materialize.js' ), array( 'jquery' ), SPB_VERSION, true );
             wp_register_script( 'page-builder', $this->assetURL( 'js/page-builder.js' ), array( 'jquery' ), SPB_VERSION, true );

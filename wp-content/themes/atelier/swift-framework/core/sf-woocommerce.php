@@ -89,11 +89,6 @@
 				// WooCommerce Scripts
 				wp_dequeue_script( 'wc-add-to-cart-variation' );
 
-				// JCK Quickview
-				wp_dequeue_style( 'jckqv-minstyles' );
-				wp_dequeue_style( 'jckqv-styles' );
-				wp_dequeue_script( 'jckqv-script' );
-
 				// Yith Wishlist
 				if ( !defined( 'YITH_WCWL_PREMIUM' ) ) {
 					wp_dequeue_script( 'jquery-yith-wcwl' );
@@ -223,7 +218,7 @@
 
 
     /* PRODUCT BADGE
-    ================================================== */
+    ================================================== */
     if ( ! function_exists( 'sf_woo_product_badge' ) ) {
 	    function sf_woo_product_badge() {
 	    	global $product, $post, $sf_options;
@@ -258,7 +253,7 @@
 
 
     /* ADD HERO IMAGE TO PRODUCT CATEGORY
-    ================================================== */
+    ================================================== */
     function sf_product_cat_add_hero_image() {
     	// this will add the custom meta field to the add new term page
     	?>
@@ -604,12 +599,12 @@
 
                     <a class="cart-contents" href="<?php echo esc_url($woocommerce->cart->get_cart_url()); ?>"
                        title="<?php _e( 'View your shopping cart', 'swiftframework' ); ?>">
-                       <?php echo apply_filters( 'sf_header_cart_icon', '<i class="ss-cart"></i>' ); ?><?php echo $cart_total; ?><span class="num-items cart-count-enabled"><?php echo $cart_count_text_alt; ?></span></a>
+                       <?php echo apply_filters( 'sf_header_cart_icon', '<i class="ss-cart"></i>' ); ?><span class="cart-text"><?php _e( "Cart", "swiftframework" ); ?></span><?php echo $cart_total; ?><span class="num-items cart-count-enabled"><?php echo $cart_count_text_alt; ?></span></a>
 
                 <?php } else { ?>
 
                     <a class="cart-contents" href="<?php echo esc_url($woocommerce->cart->get_cart_url()); ?>"
-                       title="<?php _e( 'View your shopping cart', 'swiftframework' ); ?>"><?php echo apply_filters( 'sf_header_cart_icon', '<i class="ss-cart"></i>' ); ?><?php echo $cart_total; ?><span class="num-items"><?php echo $cart_count_text_alt; ?></span></a>
+                       title="<?php _e( 'View your shopping cart', 'swiftframework' ); ?>"><?php echo apply_filters( 'sf_header_cart_icon', '<i class="ss-cart"></i>' ); ?><span class="cart-text"><?php _e( "Cart", "swiftframework" ); ?></span><?php echo $cart_total; ?><span class="num-items"><?php echo $cart_count_text_alt; ?></span></a>
 
                 <?php } ?>
 

@@ -1,5 +1,11 @@
 *** Dynamic Pricing Changelog ***
-2012.12.07 - version 2.10.11
+2016.04.01 - version 2.10.13
+	* Update:  Disallow coupon use when an item is discounted with Dynamic Pricing and a coupon is set to exclude sale price items. 
+	
+2016.01.05 - version 2.10.12
+	* Update:  Allow stacking of order total rules using the filter:  add_filter('wc_dynamic_pricing_stack_order_totals', '__return_true');
+
+2015.12.07 - version 2.10.11
 	* Update:  Correct issue when using simple modules and the result price is 0. Will correctly display "Free" now. 
 
 2015.11.30 - version 2.10.10

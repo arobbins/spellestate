@@ -548,7 +548,7 @@
 
                 if ( $thumb_img_url != "" ) {
                     if ( $image ) {
-                        $item_figure .= '<img src="' . $image[0] . '" width="' . $image[1] . '" height="' . $image[2] . '" alt="' . $image_alt . '" />';
+                        $item_figure .= '<div class="img-wrap"><img src="' . $image[0] . '" width="' . $image[1] . '" height="' . $image[2] . '" alt="' . $image_alt . '" /></div>';
                     }
                     $item_figure .= '<a ' . $item_link['config'] . '></a>';
                     $item_figure .= '<div class="figcaption-wrap"></div>';

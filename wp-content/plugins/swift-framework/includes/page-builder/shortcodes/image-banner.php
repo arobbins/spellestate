@@ -58,7 +58,7 @@ class SwiftPageBuilderShortcode_spb_image_banner extends SwiftPageBuilderShortco
 
         $output .= "\n\t" . '<div class="spb_content_element spb_image_banner ' . $width . $el_class . '">';
         $output .= "\n\t\t" . '<div class="spb-asset-content">';
-        $output .= "\n\t\t" . do_shortcode( '[sf_imagebanner image="'.$img_url.'" image_width="'.$image_width.'" image_height="'.$image_height.'" image_alt="'.$image_alt.'" animation="'.$animation.'" contentpos="'.$content_pos.'" textalign="'.$content_textalign.'" href="'.$image_link.'" target="'.$link_target.'"]'.$content.'[/sf_imagebanner]' );
+        $output .= "\n\t\t" . do_shortcode( '[sf_imagebanner image_id="'.$image_id.'" image_size="'.$image_size.'" image="'.$img_url.'" image_width="'.$image_width.'" image_height="'.$image_height.'" image_alt="'.$image_alt.'" animation="'.$animation.'" contentpos="'.$content_pos.'" textalign="'.$content_textalign.'" href="'.$image_link.'" target="'.$link_target.'"]'.$content.'[/sf_imagebanner]' );
         $output .= "\n\t\t" . '</div>';
         $output .= "\n\t" . '</div> ' . $this->endBlockComment( $width );
 

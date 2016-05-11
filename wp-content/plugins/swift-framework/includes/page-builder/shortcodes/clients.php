@@ -67,6 +67,8 @@
 
             if ( $item_columns == "5" ) {
                 $item_class = 'col-sm-sf-5';
+            } else if ( $item_columns == "6" ) {
+                $item_class = 'col-sm-2';
             } else if ( $item_columns == "4" ) {
                 $item_class = 'col-sm-3';
             } else if ( $item_columns == "3" ) {
@@ -194,7 +196,8 @@
                     __( '2', 'swift-framework-plugin' ) => "2",
                     __( '3', 'swift-framework-plugin' ) => "3",
                     __( '4', 'swift-framework-plugin' ) => "4",
-                    __( '5', 'swift-framework-plugin' ) => "5"
+                    __( '5', 'swift-framework-plugin' ) => "5",
+                    __( '6', 'swift-framework-plugin' ) => "6"
                 ),
                 "std"         => '4',
                 "description" => __( "Choose the amount of columns you would like for the clients asset.", 'swift-framework-plugin' )

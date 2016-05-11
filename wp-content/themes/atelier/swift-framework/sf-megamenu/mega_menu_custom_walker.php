@@ -30,6 +30,8 @@
             $loggedoutvis    = empty( $item->loggedoutvis ) ? "" : "sf-menu-item-loggedout";
             $newbadge	     = empty( $item->newbadge ) ? "" : "sf-menu-item-new-badge";
             $menuitembtn     = empty( $item->menuitembtn ) ? "" : "sf-menu-item-btn";
+            $buttontype	     = empty( $item->buttontype ) ? "" : $item->buttontype;
+            $buttoncolour	 = empty( $item->buttoncolour ) ? "" : $item->buttoncolour;
             $hashtmlcontent  = empty( $item->htmlcontent ) ? "" : "sf-menu-item-html";
 					
             $class_names = join( ' ', apply_filters( 'nav_menu_css_class', array_filter( $classes ), $item ) );
@@ -46,9 +48,16 @@
             $attributes .= ! empty( $item->target ) ? ' target="' . esc_attr( $item->target ) . '"' : '';
             $attributes .= ! empty( $item->xfn ) ? ' rel="' . esc_attr( $item->xfn ) . '"' : '';
             $attributes .= ! empty( $item->url ) ? ' href="' . esc_attr( $item->url ) . '"' : '';
-
-            $prepend = '<span class="menu-item-text">';
-            $append  = '</span>';
+			
+			if ( $menuitembtn != "" && sf_theme_supports('menu-button-advanced') ) {
+				if ( $buttontype == "rounded-bordered" ) {
+					$buttontype = "rounded bordered";
+				}
+				$attributes .= ' class="sf-button ' . $buttoncolour . ' ' . $buttontype . '"';
+			}
+			
+           	$prepend = '<span class="menu-item-text">';
+           	$append  = '</span>';
             //$append = '<span class="nav-line"></span>';
 
             $description = ! empty( $item->description ) ? '<span class="menu-item-desc">' . esc_attr( $item->description ) . '</span>' : '';

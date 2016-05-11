@@ -1044,6 +1044,9 @@ li.product .add-to-cart-wrap .variations_form {
 .product figure .cart-overlay .shop-actions > * {
 	background: #fff;
 }
+.product .cart-overlay .shop-actions script {
+	display: none!important;
+}
 .product figure .cart-overlay .shop-actions > .tooltip {
 	background: transparent;
 }
@@ -2729,6 +2732,10 @@ nav.woocommerce-pagination ul li:first-child {
 .product_meta a.inline {
 	border-bottom: 1px dotted #e4e4e4;
 }
+.product_meta .wcml_currency_switcher {
+	margin-bottom: 20px;
+	height: 48px;
+}
 .product-share {
 	margin-top: 30px;
 	text-align: left;
@@ -4141,6 +4148,9 @@ ul.my-account-nav > li a:before {
 }
 .woocommerce table.wishlist_table td.product-stock-status {
 	width: 21%;
+}
+.woocommerce table.wishlist_table .product-add-to-cart .yith-wcwl-add-to-wishlist {
+	display: none;
 }
 .woocommerce table.wishlist_table {
 	border-top: 0;

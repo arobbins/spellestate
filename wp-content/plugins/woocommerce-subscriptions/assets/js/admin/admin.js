@@ -19,6 +19,7 @@ jQuery(document).ready(function($){
 				$('.options_group.pricing ._regular_price_field').hide();
 				$('#sale-price-period').show();
 				$('.hide_if_subscription').hide();
+				$( 'input#_manage_stock' ).change();
 
 				if('day' == $('#_subscription_period').val()) {
 					$('.subscription_sync').hide();
@@ -31,7 +32,6 @@ jQuery(document).ready(function($){
 		showHideVariableSubscriptionMeta: function(){
 			if ($('select#product-type').val()=='variable-subscription') {
 
-				$( 'input#_manage_stock' ).change();
 				$( 'input#_downloadable' ).prop( 'checked', false );
 				$( 'input#_virtual' ).removeAttr( 'checked' );
 
@@ -39,6 +39,7 @@ jQuery(document).ready(function($){
 				$('.hide_if_variable').hide();
 				$('.show_if_variable-subscription').show();
 				$('.hide_if_variable-subscription').hide();
+				$( 'input#_manage_stock' ).change();
 
 				// Make the sale price row full width
 				if ('true' !== WCSubscriptions.isWCPre23) {

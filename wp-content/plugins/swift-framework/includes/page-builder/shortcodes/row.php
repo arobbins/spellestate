@@ -2,10 +2,10 @@
 
     /*
     *
-    *	Swift Page Builder - Row Shortcode
-    *	------------------------------------------------
-    *	Swift Framework
-    * 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
+    *   Swift Page Builder - Row Shortcode
+    *   ------------------------------------------------
+    *   Swift Framework
+    *   Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     */
 
@@ -13,19 +13,19 @@
 
         public function content( $atts, $content = null ) {
 
-            $row_el_class = $minimize_row = $width = $row_bg_color = $row_top_style = $row_bottom_style = $row_padding_vertical = $row_padding_horizontal = $row_margin_vertical = $remove_element_spacing = $el_position = $animation_output = '';
+            $row_el_class = $el_class = $minimize_row = $width = $row_bg_color = $row_top_style = $row_bottom_style = $row_padding_vertical = $row_padding_horizontal = $row_margin_vertical = $remove_element_spacing = $el_position = $animation_output = $custom_css = '';
 
             extract( shortcode_atts( array(
                 'wrap_type'               => 'content-width',
                 'row_bg_color'            => '',
-                'color_row_height'		  => '',
-                'inner_column_height'	  => '',
+                'color_row_height'        => '',
+                'inner_column_height'     => '',
                 'row_style'               => '',
                 'row_id'                  => '',
                 'row_name'                => '',
                 'row_header_style'        => '',
-                'row_top_style'			  => '',
-                'row_bottom_style'		  => '',
+                'row_top_style'           => '',
+                'row_bottom_style'        => '',
                 'row_padding_vertical'    => '',
                 'row_padding_horizontal'  => '',
                 'row_margin_vertical'     => '30',
@@ -44,19 +44,23 @@
                 'parallax_image_movement' => 'fixed',
                 'parallax_image_speed'    => '0.5',
                 'bg_type'                 => '',
-                'row_expanding'			  => 'no',
+                'row_expanding'           => 'no',
                 'row_expading_text_closed' => '',
                 'row_expading_text_open'  => '',
-                'row_animation'        	  => '',
-                'row_animation_delay'  	  => '',
+                'row_animation'           => '',
+                'row_animation_delay'     => '',
                 'responsive_vis'          => '',
                 'row_responsive_vis'      => '',
                 'row_el_class'            => '',
                 'el_position'             => '',
-                'width'                   => '1/1'
+                'width'                   => '1/1',
+                'custom_css'              => '',
+                'el_class'                => ''
             ), $atts ) );
 
             $output = $inline_style = $inner_inline_style = $rowId = '';
+            
+            
 
             if ( $row_id != "" ) {
                 $rowId = 'id="' . $row_id . '" data-rowname="' . $row_name . '" data-header-style="' . $row_header_style . '"';
@@ -65,10 +69,15 @@
             }
 
             if ($row_responsive_vis == "" && $responsive_vis != "") {
-            	$row_responsive_vis = $responsive_vis;
+                $row_responsive_vis = $responsive_vis;
             }
 
             $responsive_vis = str_replace( "_", " ", $row_responsive_vis );
+
+            if(   $el_class != '' ) {
+                $row_el_class = $el_class;
+            }
+
             $row_el_class   = $this->getExtraClass( $row_el_class ) . ' ' . $responsive_vis;
             $orig_width     = $width;
             $width          = spb_translateColumnWidthToSpan( $width );
@@ -82,33 +91,42 @@
             if ( $row_bg_color != "" ) {
                 $inline_style .= 'background-color:' . $row_bg_color . ';';
             }
+            if ( $custom_css != "" ) {
+                $inline_style .= $custom_css;
+                // Row background image
+                if ( $row_bg_type != "color" && isset( $img_url ) && $img_url[0] != "" ) {
+                    $inline_style .= 'background-image: url(' . $img_url[0] . ');';
+                }    
+                $inner_inline_style = "";
+            } else {
 
-            // Row padding/margin
-            if ( $row_padding_vertical != "" ) {
-                $inner_inline_style .= 'padding-top:' . $row_padding_vertical . 'px;padding-bottom:' . $row_padding_vertical . 'px;';
-            }
-            if ( $row_padding_horizontal != "" ) {
-            	$inline_style .= 'padding-left:' . $row_padding_horizontal . '%;padding-right:' . $row_padding_horizontal . '%;';
-            }
-            if ( $row_margin_vertical != "" ) {
-                $inline_style .= 'margin-top:' . $row_margin_vertical . 'px;margin-bottom:' . $row_margin_vertical . 'px;';
-            }
+                // Row padding/margin
+                if ( $row_padding_vertical != "" ) {
+                    $inner_inline_style .= 'padding-top:' . $row_padding_vertical . 'px;padding-bottom:' . $row_padding_vertical . 'px;';
+                }
+                if ( $row_padding_horizontal != "" ) {
+                    $inline_style .= 'padding-left:' . $row_padding_horizontal . '%;padding-right:' . $row_padding_horizontal . '%;';
+                }
+                if ( $row_margin_vertical != "" ) {
+                    $inline_style .= 'margin-top:' . $row_margin_vertical . 'px;margin-bottom:' . $row_margin_vertical . 'px;';
+                }
 
-            // Row background image
-            if ( $row_bg_type != "color" && isset( $img_url ) && $img_url[0] != "" ) {
-                $inline_style .= 'background-image: url(' . $img_url[0] . ');';
+                // Row background image
+                if ( $row_bg_type != "color" && isset( $img_url ) && $img_url[0] != "" ) {
+                    $inline_style .= 'background-image: url(' . $img_url[0] . ');';
+                }    
             }
-
+            
             // Row animation
             if ( $row_animation != "" && $row_animation != "none" ) {
-            	$row_el_class .= ' sf-animation';
+                $row_el_class .= ' sf-animation';
                 $animation_output = 'data-animation="' . $row_animation . '" data-delay="' . $row_animation_delay . '"';
             }
 
             // Expanding Row
             if ( $row_expanding == "yes" ) {
-            	$row_el_class .= ' spb-row-expanding';
-            	$output .= "\n\t\t" . '<a href="#" class="spb-row-expand-text container" data-closed-text="'.$row_expading_text_closed.'" data-open-text="'.$row_expading_text_open.'"><span>'.$row_expading_text_closed.'</span></a>';
+                $row_el_class .= ' spb-row-expanding';
+                $output .= "\n\t\t" . '<a href="#" class="spb-row-expand-text container" data-closed-text="'.$row_expading_text_closed.'" data-open-text="'.$row_expading_text_open.'"><span>'.$row_expading_text_closed.'</span></a>';
             }
 
             // Inner column height
@@ -135,11 +153,15 @@
                     $output .= "\n\t" . '<div class="spb-row-container spb-row-' . $wrap_type . ' spb_parallax_asset sf-parallax parallax-' . $parallax_image_height . ' spb_content_element bg-type-' . $bg_type . ' ' . $width . $row_el_class . '" '.$data_atts.' style="' . $inline_style . '">';
                 }
             } else {
-            	if ($color_row_height == "window-height") {
-            		$output .= "\n\t" . '<div class="spb-row-container spb-row-' . $wrap_type . ' spb_parallax_asset sf-parallax parallax-window-height ' . $width . $row_el_class . '" '.$data_atts.' style="' . $inline_style . '">';
-            	} else {
-                	$output .= "\n\t" . '<div class="spb-row-container spb-row-' . $wrap_type . ' ' . $width . $row_el_class . '" '.$data_atts.' style="' . $inline_style . '">';
-            	}
+                if ($color_row_height == "window-height") {
+                    $output .= "\n\t" . '<div class="spb-row-container spb-row-' . $wrap_type . ' spb_parallax_asset sf-parallax parallax-window-height ' . $width . $row_el_class . '" '.$data_atts.' style="' . $inline_style . '">';
+                } else {
+                    $output .= "\n\t" . '<div class="spb-row-container spb-row-' . $wrap_type . ' ' . $width . $row_el_class . '" '.$data_atts.' style="' . $inline_style . '">';
+                }
+            }
+
+            if ( $row_top_style == "slant-ltr" || $row_top_style == "slant-rtl" ) {
+                $output .= "\n\t\t" . '<div class="spb_row_slant_spacer"></div>';
             }
 
             $output .= "\n\t\t" . '<div class="spb_content_element" style="' . $inner_inline_style . '">';
@@ -175,7 +197,11 @@
                 $opacity = intval( $row_overlay_opacity, 10 ) / 100;
                 $output .= '<div class="row-overlay" style="background-color:' . $row_bg_color . ';opacity:' . $opacity . ';"></div>';
             } else if ( $row_overlay_opacity != "0" ) {
-	            $output .= '<div class="row-overlay overlay-' . $parallax_video_overlay . '"></div>';
+                $output .= '<div class="row-overlay overlay-' . $parallax_video_overlay . '"></div>';
+            }
+
+            if ( $row_bottom_style == "slant-ltr" || $row_bottom_style == "slant-rtl" ) {
+                $output .= "\n\t\t" . '<div class="spb_row_slant_spacer"></div>';
             }
 
             $output .= "\n\t" . '</div>';
@@ -191,16 +217,16 @@
         }
 
         public function contentAdmin( $atts, $content = null ) {
-            $width = $row_el_class = $bg_color = $element_name = $minimize_row = $padding_vertical = '';
+            $width = $row_el_class = $el_class = $bg_color = $element_name = $minimize_row = $row_responsive_vis = $padding_vertical = '';
             extract( shortcode_atts( array(
                 'wrap_type'               => 'content-width',
                 'row_el_class'            => '',
                 'row_bg_color'            => '',
-                'color_row_height'		  => '',
+                'color_row_height'        => '',
                 'row_style'               => '',
-                'inner_column_height'	  => '',
-                'row_top_style'			  => '',
-                'row_bottom_style'		  => '',
+                'inner_column_height'     => '',
+                'row_top_style'           => '',
+                'row_bottom_style'        => '',
                 'row_padding_vertical'    => '',
                 'row_padding_horizontal'  => '',
                 'row_margin_vertical'     => '',
@@ -222,17 +248,24 @@
                 'parallax_image_movement' => 'fixed',
                 'parallax_image_speed'    => '0.5',
                 'bg_type'                 => '',
-                'row_expanding'			  => '',
+                'row_expanding'           => '',
                 'row_expading_text_closed' => '',
                 'row_expading_text_open'  => '',
-                'row_animation'        	  => '',
-                'row_animation_delay'  	  => '',
+                'row_animation'           => '',
+                'row_animation_delay'     => '',
                 'responsive_vis'          => '',
-                'row_responsive_vis'          => '',
+                'row_responsive_vis'      => '',
                 'el_position'             => '',
                 'element_name'            => '',
                 'minimize_row'            => '',
-                'width'                   => 'span12'
+                'width'                   => 'span12',
+                'custom_css'              => '',
+                'simplified_controls'     => '',
+                'border_color_global'     => '',
+                'border_styling_global'   => '',
+                'back_color_global'       => '',
+                'border_styling_global'   => '',
+                'el_class'                => ''
             ), $atts ) );
 
             if ( $element_name == '' ){
@@ -243,7 +276,9 @@
 
             $output .= '<div data-element_type="spb_row" class="spb_row spb_sortable span12 spb_droppable not-column-inherit">';
             $output .= '<input type="hidden" class="spb_sc_base" name="element_name-spb_row" value="spb_row">';
-            $output .= '<div class="controls sidebar-name"><span class="asset-name">' . $element_name . '</span><div class="controls_right row_controls"><a class="column_delete" href="#" title="Delete"><span class="icon-delete"></span></a><a class="element-save" href="#" title="Save"><span class="icon-save"></span></a><a class="column_clone" href="#" title="Duplicate"><span class="icon-duplicate"></span></a><a class="column_edit" href="#" title="Edit"><span class="icon-edit"></span></a>';
+            $output .= '<div class="controls sidebar-name"><span class="asset-name">' . $element_name . '</span>';
+            $output .=  $this->getResponsiveIndicatorHtml( $row_responsive_vis );
+            $output .= '<div class="controls_right row_controls"><a class="column_delete" href="#" title="Delete"><span class="icon-delete"></span></a><a class="element-save" href="#" title="Save"><span class="icon-save"></span></a><a class="column_clone" href="#" title="Duplicate"><span class="icon-duplicate"></span></a><a class="column_edit" href="#" title="Edit"><span class="icon-edit"></span></a>';
 
             if( $minimize_row == 'yes' ){
                 $output .= ' <a class="column_minimize" href="#" title="Minimize" style="display:none;"><i class="fa-minus"></i></a><a class="column_maximize" href="#" title="Maximize"><i class="fa-plus"></i></a></div></div><div class="spb_element_wrapper" style="display:none;">';    
@@ -479,28 +514,28 @@
     }
 
     if ( sf_theme_supports('advanced-row-styling') ) {
-    	$params[] = array(
-    	    "type"        => "dropdown",
-    	    "heading"     => __( "Row top style", 'swift-framework-plugin' ),
-    	    "param_name"  => "row_top_style",
-    	    "value"       => array(
-    	        __( "None", 'swift-framework-plugin' )             => "none",
-    	        __( "Slant Left-to-right", 'swift-framework-plugin' ) => "slant-ltr",
-    	        __( "Slant Right-to-left", 'swift-framework-plugin' ) => "slant-rtl",
-    	    ),
-    	    "description" => __( "Choose the top style for the row, or none.", 'swift-framework-plugin' )
-    	);
-    	$params[] = array(
-    	    "type"        => "dropdown",
-    	    "heading"     => __( "Row bottom style", 'swift-framework-plugin' ),
-    	    "param_name"  => "row_bottom_style",
-    	    "value"       => array(
-    	        __( "None", 'swift-framework-plugin' )             => "none",
-    	        __( "Slant Left-to-right", 'swift-framework-plugin' ) => "slant-ltr",
-    	        __( "Slant Right-to-left", 'swift-framework-plugin' ) => "slant-rtl",
-    	    ),
-    	    "description" => __( "Choose the bottom style for the row, or none.", 'swift-framework-plugin' )
-    	);
+        $params[] = array(
+            "type"        => "dropdown",
+            "heading"     => __( "Row top style", 'swift-framework-plugin' ),
+            "param_name"  => "row_top_style",
+            "value"       => array(
+                __( "None", 'swift-framework-plugin' )             => "none",
+                __( "Slant Left-to-right", 'swift-framework-plugin' ) => "slant-ltr",
+                __( "Slant Right-to-left", 'swift-framework-plugin' ) => "slant-rtl",
+            ),
+            "description" => __( "Choose the top style for the row, or none.", 'swift-framework-plugin' )
+        );
+        $params[] = array(
+            "type"        => "dropdown",
+            "heading"     => __( "Row bottom style", 'swift-framework-plugin' ),
+            "param_name"  => "row_bottom_style",
+            "value"       => array(
+                __( "None", 'swift-framework-plugin' )             => "none",
+                __( "Slant Left-to-right", 'swift-framework-plugin' ) => "slant-ltr",
+                __( "Slant Right-to-left", 'swift-framework-plugin' ) => "slant-rtl",
+            ),
+            "description" => __( "Choose the bottom style for the row, or none.", 'swift-framework-plugin' )
+        );
     }
 
     $params[] = array(
@@ -542,16 +577,16 @@
     );
 
     if ( sf_theme_supports('advanced-row-styling') ) {
-    	$params[] = array(
-    	    "type"        => "uislider",
-    	    "heading"     => __( "Padding - Horizontal", 'swift-framework-plugin' ),
-    	    "param_name"  => "row_padding_horizontal",
-    	    "value"       => "0",
-    	    "min"         => "0",
-    	    "step"        => "1",
-    	    "max"         => "20",
-    	    "description" => __( "Adjust the horizontal padding for the row. (%)", 'swift-framework-plugin' )
-    	);
+        $params[] = array(
+            "type"        => "uislider",
+            "heading"     => __( "Padding - Horizontal", 'swift-framework-plugin' ),
+            "param_name"  => "row_padding_horizontal",
+            "value"       => "0",
+            "min"         => "0",
+            "step"        => "1",
+            "max"         => "20",
+            "description" => __( "Adjust the horizontal padding for the row. (%)", 'swift-framework-plugin' )
+        );
     }
 
     $params[] = array(
@@ -619,12 +654,7 @@
         "value"       => "",
         "required"       => array("row_expanding", "=", "yes"),
         "description" => __( "This is the text that is shown when the expanding row is open.", 'swift-framework-plugin' )
-    );/*
-    $params[] = array(
-        "type"       => "section",
-        "param_name" => "row_animation_options",
-        "heading"    => __( "Animation Options", 'swift-framework-plugin' ),
-    );*/
+    );
     $params[] = array(
             "type"       => "section_tab",
             "param_name" => "animation_tab",
@@ -644,12 +674,6 @@
         "value"       => "0",
         "description" => __( "If you wish to add a delay to the animation, then you can set it here (ms).", 'swift-framework-plugin' )
     );
-    /*
-    $params[] = array(
-        "type"       => "section",
-        "param_name" => "section_misc_options",
-        "heading"    => __( "Row Misc/ID Options", 'swift-framework-plugin' ),
-    );*/
     $params[] = array(
             "type"       => "section_tab",
             "param_name" => "row_misc_tab",
@@ -677,9 +701,9 @@
         "value"       => "",
         "description" => __( "This is used for the one page navigation, to identify the row. If this is left blank, then the row will be left off of the one page navigation.", 'swift-framework-plugin' )
     );
-    $params[] = array(
+    $params[] = array(  
         "type"        => "textfield",
-        "heading"     => __( "Extra class", 'swift-framework-plugin' ),
+        "heading"     => __( "Row Extra Class", 'swift-framework-plugin' ),
         "param_name"  => "row_el_class",
         "value"       => "",
         "description" => __( "If you wish to style this particular content element differently, then use this field to add a class name and then refer to it in your css file.", 'swift-framework-plugin' )
@@ -697,8 +721,8 @@
             "description" => "Choose if you would like to minimize the Row inside the Page Builder editing."
     );
 
-	/* SHORTCODE MAP
-	================================================== */
+    /* SHORTCODE MAP
+    ================================================== */
     SPBMap::map( 'spb_row', array(
         "name"            => __( "Row", 'swift-framework-plugin' ),
         "base"            => "spb_row",

@@ -47,7 +47,7 @@ if ( isset( $sf_options['disable_product_slider'] ) ) {
 						$image_title 	= esc_attr( get_the_title( get_post_thumbnail_id() ) );
 						$image_caption 	= get_post( get_post_thumbnail_id() )->post_excerpt;
 						$image_link  	= wp_get_attachment_url( get_post_thumbnail_id() );
-						$image       	= get_the_post_thumbnail( $post->ID, apply_filters( 'single_product_large_thumbnail_size', 'shop_single' ), array(
+						$image         = get_the_post_thumbnail( $post->ID, apply_filters( 'single_product_large_thumbnail_size', 'shop_single' ), array(
 							'title'	=> $image_title,
 							'alt'	=> $image_title
 							) );
@@ -61,7 +61,7 @@ if ( isset( $sf_options['disable_product_slider'] ) ) {
 						}
 			
 						echo apply_filters( 'woocommerce_single_product_image_html', sprintf( '<a href="%s" itemprop="image" class="woocommerce-main-image zoom" title="%s" data-rel="prettyPhoto' . $gallery . '">%s</a>', $image_link, $image_caption, $image ), $post->ID );
-			
+									
 					} else {
 			
 						echo apply_filters( 'woocommerce_single_product_image_html', sprintf( '<img src="%s" alt="%s" />', wc_placeholder_img_src(), __( 'Placeholder', 'swiftframework' ) ), $post->ID );
@@ -81,27 +81,29 @@ if ( isset( $sf_options['disable_product_slider'] ) ) {
 			<ul class="slides">
 				<?php
 					if ( has_post_thumbnail() ) {
-	
-						$image_id			= get_post_thumbnail_id();
-						$image_object		= get_the_post_thumbnail( $post->ID, 'full' );
-						$image_meta 		= sf_get_attachment_meta( $image_id );
-	
+						
 						$image_caption = $image_alt = $image_title = $caption_html = "";
+						$image_id			= get_post_thumbnail_id();
+						$image_meta 		= sf_get_attachment_meta( $image_id );
+						
 						if ( isset($image_meta) ) {
 							$image_caption 		= esc_attr( $image_meta['caption'] );
 							$image_title 		= esc_attr( $image_meta['title'] );
 							$image_alt 			= esc_attr( $image_meta['alt'] );
 						}
 						$image_link  		= wp_get_attachment_url( $image_id, apply_filters( 'single_product_large_thumbnail_size', 'shop_single' ) );
-						$thumb_image = wp_get_attachment_url( $image_id, apply_filters( 'single_product_small_thumbnail_size', 'shop_thumbnail' ) );
+						$image         		= get_the_post_thumbnail( $post->ID, apply_filters( 'single_product_large_thumbnail_size', 'shop_single' ), array(
+							'title'	=> $image_title,
+							'alt'	=> $image_title,
+							'class' => 'product-slider-image',
+							'data-zoom-image' => $image_link
+						) );							
 	
 						if ( $image_caption != "" ) {
 							$caption_html = '<div class="img-caption">' . $image_caption . '</div>';
 						}
-	
-						$image_html = '<img class="product-slider-image" data-zoom-image="'.$image_link.'" src="'.$image_link.'" alt="'.$image_alt.'" title="'.$image_title.'" />';
-					
-						echo apply_filters( 'woocommerce_single_product_image_html', sprintf( '<a href="%s" itemprop="image" class="woocommerce-main-image zoom" title="%s" data-data-rel="ilightbox[product]">%s</a>', $image_link, $image_caption, $image_html ), $post->ID );
+						
+						echo apply_filters( 'woocommerce_single_product_image_html', sprintf( '<a href="%s" itemprop="image" class="woocommerce-main-image zoom" title="%s" data-data-rel="ilightbox[product]">%s</a>', $image_link, $image_caption, $image ), $post->ID );
 	
 					}
 	
@@ -126,26 +128,31 @@ if ( isset( $sf_options['disable_product_slider'] ) ) {
 	
 							if ( ! $image_link )
 								continue;
-	
-							$thumb_image = wp_get_attachment_url( $attachment_id, apply_filters( 'single_product_small_thumbnail_size', 'shop_thumbnail' ) );
-	
-							$image_class = esc_attr( implode( ' ', $classes ) );
-							$image_meta  = sf_get_attachment_meta( $attachment_id );
-	
+							
 							$image_caption = $image_alt = $image_title = $caption_html = "";
+							$image_id = $attachment_id;
+							$image_meta = sf_get_attachment_meta( $image_id );
+							
 							if ( isset($image_meta) ) {
 								$image_caption 		= esc_attr( $image_meta['caption'] );
 								$image_title 		= esc_attr( $image_meta['title'] );
 								$image_alt 			= esc_attr( $image_meta['alt'] );
 							}
-	
+							
+							$thumb_image = wp_get_attachment_url( $attachment_id, apply_filters( 'single_product_small_thumbnail_size', 'shop_thumbnail' ) );
+							$image       = wp_get_attachment_image( $attachment_id, apply_filters( 'single_product_large_thumbnail_size', 'shop_single' ), false, array(
+								'title'	=> $image_title,
+								'alt'	=> $image_title,
+								'class' => 'product-slider-image',
+								'data-zoom-image' => $image_link
+							) );
+							$image_class = esc_attr( implode( ' ', $classes ) );						
+		
 							if ( $image_caption != "" ) {
 								$caption_html = '<div class="img-caption">' . $image_caption . '</div>';
 							}
-	
-							$image_html = '<img class="product-slider-image" data-zoom-image="'.$image_link.'" src="'.$image_link.'" alt="'.$image_alt.'" title="'.$image_title.'" />';
-	
-							echo apply_filters( 'woocommerce_single_product_image_thumbnail_html', sprintf( '<li data-thumb="%s">%s%s<a href="%s" class="%s lightbox" data-rel="ilightbox[product]" data-caption="%s" title="%s" alt="%s"><i class="fa-search-plus"></i></a></li>', $thumb_image, $caption_html, $image_html, $image_link, $image_class, $image_caption, $image_title, $image_alt ), $attachment_id, $post->ID, $image_class );
+		
+							echo apply_filters( 'woocommerce_single_product_image_thumbnail_html', sprintf( '<li data-thumb="%s">%s%s<a href="%s" class="%s lightbox" data-rel="ilightbox[product]" data-caption="%s" title="%s" alt="%s"><i class="fa-search-plus"></i></a></li>', $thumb_image, $caption_html, $image, $image_link, $image_class, $image_caption, $image_title, $image_alt ), $attachment_id, $post->ID, $image_class );
 	
 							$loop++;
 						}

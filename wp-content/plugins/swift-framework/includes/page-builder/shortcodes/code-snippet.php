@@ -30,7 +30,7 @@
 
             $output .= "\n\t" . '<div class="spb_codesnippet_element ' . $width . $el_class . '">';
             $output .= "\n\t\t" . '<div class="spb-asset-content">';
-            $output .= ( $title != '' ) ? "\n\t\t\t" . $this->spb_title( $widget_title, '' ) : '';
+            $output .= ( $title != '' ) ? "\n\t\t\t" . $this->spb_title( $title, '' ) : '';
             $output .= "\n\t\t" . '<pre><code class="code-block language-'.$language.'">' . spb_format_content( $content ) . '</code></pre>';
             $output .= "\n\t\t" . '</div>';
             $output .= "\n\t" . '</div> ' . $this->endBlockComment( $width );

@@ -199,7 +199,11 @@
         function sf_post_left_sidebar() {
             global $post, $sf_options;
             $left_sidebar  = strtolower(sf_get_post_meta( $post->ID, 'sf_left_sidebar', true ));
-
+			$default_left_sidebar   = $sf_options['default_post_left_sidebar'];
+			if ( $left_sidebar == "" ) {
+				$left_sidebar = $default_left_sidebar;
+			}
+			          
             $sidebar_width = "";
             if ($sf_options['sidebar_width'] == "reduced") {
             	$sidebar_width = apply_filters( 'sf_post_sidebar_width', 'col-sm-3' );
@@ -233,6 +237,10 @@
         function sf_post_right_sidebar() {
             global $post, $sf_options;
             $right_sidebar = strtolower(sf_get_post_meta( $post->ID, 'sf_right_sidebar', true ));
+            $default_right_sidebar   = $sf_options['default_post_right_sidebar'];
+			if ( $right_sidebar == "" ) {
+				$right_sidebar = $default_right_sidebar;
+			}
             $sidebar_width = "";
             if ($sf_options['sidebar_width'] == "reduced") {
             	$sidebar_width = apply_filters( 'sf_post_sidebar_width', 'col-sm-3' );
@@ -579,6 +587,9 @@
             $related_articles_class = apply_filters( 'sf_post_related_articles_wrap_class', 'container' );
 			$related_articles_display_type = apply_filters( 'sf_related_articles_display_type', 'bold' );
 			$related_articles_excerpt_length = apply_filters( 'sf_related_articles_excerpt_length', 20 );
+			$related_articles_count = apply_filters( 'sf_related_posts_count', 4 );
+			$related_articles_item_class = apply_filters( 'sf_related_posts_item_class', 'col-sm-3' );
+			
 			$list_class = 'posts-type-'.$related_articles_display_type;
 
 			if ($related_articles_display_type == "bold") {
@@ -600,7 +611,7 @@
                 $args = array(
                     'tag__in'             => $tag_ids,
                     'post__not_in'        => array( $post->ID ),
-                    'posts_per_page'      => 4, // Number of related posts to display.
+                    'posts_per_page'      => $related_articles_count, // Number of related posts to display.
                     'ignore_sticky_posts' => 1
                 );
             } else if ( ! empty( $categories ) ) {
@@ -612,7 +623,7 @@
                 $args = array(
                     'category__in'   => $category_ids,
                     'post__not_in'   => array( $post->ID ),
-                    'posts_per_page' => apply_filters( 'sf_related_posts_count', 4 ), // Number of related posts that will be shown.
+                    'posts_per_page' => $related_articles_count, // Number of related posts that will be shown.
                     'orderby'        => 'rand'
                 );
             }
@@ -622,10 +633,10 @@
                 echo '<div class="related-wrap">';
                 echo '<div class="related-articles ' . $related_articles_class . '">';
                 echo '<div class="title-wrap"><h3 class="spb-heading"><span>' . __( "Related Articles", "swiftframework" ) . '</span></h3></div>';
-                echo '<div class="related-items recent-posts '.$list_class.' clearfix">';
+                echo '<div class=" recent-posts '.$list_class.' clearfix">';
 
                 while ( $related_posts_query->have_posts() ) : $related_posts_query->the_post();
-                    echo sf_get_recent_post_item( $post, $related_articles_display_type, $related_articles_excerpt_length, 'col-sm-3' );
+                    echo sf_get_recent_post_item( $post, $related_articles_display_type, $related_articles_excerpt_length, $related_articles_item_class );
                 endwhile;
 
                 echo '</div>';

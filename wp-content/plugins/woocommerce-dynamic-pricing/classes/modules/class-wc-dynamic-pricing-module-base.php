@@ -12,7 +12,7 @@ abstract class WC_Dynamic_Pricing_Module_Base {
 
 	public abstract function adjust_cart( $cart );
 
-	public function get_price_to_discount( $cart_item, $cart_item_key ) {
+	public function get_price_to_discount( $cart_item, $cart_item_key, $stack_rules = false ) {
 		global $woocommerce;
 
 		$result = false;
@@ -22,7 +22,7 @@ abstract class WC_Dynamic_Pricing_Module_Base {
 			$filter_cart_item = $woocommerce->cart->cart_contents[$cart_item_key];
 
 			if ( isset( $woocommerce->cart->cart_contents[$cart_item_key]['discounts'] ) ) {
-				if ( $this->is_cumulative( $cart_item, $cart_item_key ) ) {
+				if ( $this->is_cumulative( $cart_item, $cart_item_key ) || $stack_rules ) {
 					$result = $woocommerce->cart->cart_contents[$cart_item_key]['discounts']['price_adjusted'];
 				} else {
 					$result = $woocommerce->cart->cart_contents[$cart_item_key]['discounts']['price_base'];

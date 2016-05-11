@@ -1,5 +1,15 @@
 *** Groups WooCommerce ***
 
+2016.03.18 - version 1.9.5
+* Updated to register WCS 2.x deprecated action only on WCS < 2.x
+* Added new action handler for woocommerce_scheduled_subscription_end_of_prepaid_term.
+
+2016.03.16 - version 1.9.4
+* Fixed undefined value returned in unused method.
+* Fixed use of deprecated function woocommerce_get_formatted_variation().
+* Fixed undefined variable used in hook when subscription is trashed.
+* Guarded against notice of undefined variable $subscription when using wcs_get_subscription_from_key() in  Groups_WS_Handler::get_subscription_by_subscription_key().
+
 2015.12.21 - version 1.9.3
 * Fixed PHP notices when no order is related to a subscription
   which is activated, suspended, etc.

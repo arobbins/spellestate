@@ -1,5 +1,36 @@
 *** WooCommerce Subscriptions Changelog ***
 
+2016.04.22 - version 2.0.13
+ * Tweak: make recurring shipping packages globally available by storing them in WC()->shipping->packages. (PR#1294)
+ * Tweak: add new 'use_per_slash' param in wcs_price_string() function to allow code calling wcs_price_string() to choose whether to use a "/" or longer from "every" for subscriptions which renew each period. (PR#1297)
+ * Tweak: improve performance of POST requets to /wc-api/subscriptions/ to create a new subscription by only calculating customer's total spent amount once, instead of when creating the order and subscription. (PR#1316)
+ * Tweak: improve performance when loading the front-end product page for a variable subscription product that is limited for logged in users with a subscription to one of the variations of that product. (PR#1324)
+ * Fix: compatibility with Local Pickup Plus. (PR#1291 PR#1292 PR#1293 PR#1329)
+ * Fix: only modify shipping packages when cart contains a subscription. Fixes display of shipping methods selection fields when a customer attempts to pay for a failed or manual renewal order that contains a synced subscription product. (PR#1291)
+ * Fix: pass correct shipping package key to callbacks on the 'woocommerce_add_shipping_order_item' hook for recurring shipping fields (PR#1292)
+ * Fix: pass the recurring package key as index value to the cart-recurring-shipping.php template to fix compatibility with shipping extensions that hook into that, namely Local Pickup Plus. (PR#1293)
+ * Fix: incorrect tax rate applied to recurring totals when using Local Pickup Plus as the shipping method. (PR#1329)
+ * Fix: incorrect admin email being sent when paying for a failed renewal order. (PR#1310)
+ * Fix: make sure translations are ready before attempting to use them. Also load plugin text domain on 'init' instead of 'plugins_loaded' to improve compatibility with localisation extension. (PR#1303)
+ * Fix: display of inventory settings on the Edit Product admin screen when loading or changing to a subscription product type. (PR#1322)
+ * Fix: ensure sign up fee paid includes the paid tax if tax includsive so that it is consistent with the sign up fee due amount and the prorated sign-up fee amount is calculated correctly when upgrading/downgrading. (PR#1312)
+ * Fix: do not discount sign-up fees with recurring coupons. (PR#1325)
+ * Fix: allow end date for a subscription to be the same as the last payment date. Fixes subscriptions with an abandonded PayPal order being able to be suspended/activated if that pending order is cancelled. (PR#1330)
+ * Fix: calculate correct end date for synchronised subscription products with a free trial. (PR#1327)
+ * Fix: prorated upgrade/downgrade amount when switching a synchronised subscription before the first payment date. (PR#1308)
+ * Fix: set correct number of installments when signing up for a synchronised subscription with an end date at PayPal Standard. (PR#1313)
+ * Fix: only allow one variation of a limited variable product to be added to the cart to avoid the customer being able to buy multiple variations of a limited product. (PR#1332)
+ * Fix: "The next_payment date must occur after the trial end date" error notice sometimes dislpayed on checkout when purchasing a synchronised product with a free trial period. (PR#1324)
+ * Fix: add fees applied to a renewal, initial order or subscription to the cart when paying for renewal, an initial sign-up or resubscribe. (PR#1334)
+
+2016.03.18 - version 2.0.12
+ * Tweak: new 'woocommerce_my_subscriptions_actions' hook in the My Subscriptions table
+ * Fix: shipping bug when the packages for recurring orders were different to those for the initial order. Fixes compatibility with Table Rate shipping and occasional issues with manual renewals for products with a free trial or synchronised renewal date. Refactoring of shipping selection required to address the issue: shipping method selection fields are now displayed on checkout in the Recurring Totals section when the available recurring shipping rates are different to the rates for the initial order (either because the methods are different, the costs are different, or the package contents is different).
+ * Fix: error on WooCommerce > Edit Subscription admin screen for subscriptions with recurring coupons caused by attempting to use WC()->session on backend/admin requests
+ * Fix: search customer/user email address when searching via the WooCommerce > Subscriptions administration screen
+ * Fix: 404's of the "My Account > View Subscription" page after updating WooCommerce
+ * Fix: include up-to-date pot file
+
 2016.03.03 - version 2.0.11
  * Fix: activation issue with v2.0.10 on some sites due to get_editable_roles() function not being defined
  * Tweak: don't allow subscribers to cancel subscriptions with pending cancellation status

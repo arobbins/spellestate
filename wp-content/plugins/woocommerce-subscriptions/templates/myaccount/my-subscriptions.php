@@ -54,6 +54,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</td>
 			<td class="subscription-actions order-actions">
 				<a href="<?php echo esc_url( $subscription->get_view_order_url() ) ?>" class="button view"><?php echo esc_html_x( 'View', 'view a subscription', 'woocommerce-subscriptions' ); ?></a>
+				<?php do_action( 'woocommerce_my_subscriptions_actions', $subscription ); ?>
 			</td>
 		</tr>
 	<?php endforeach; ?>

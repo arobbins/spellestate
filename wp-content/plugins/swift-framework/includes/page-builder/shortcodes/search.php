@@ -58,7 +58,7 @@
         "name"   => __( "Search", 'swift-framework-plugin' ),
         "base"   => "spb_search",
         "class"  => "spb_search spb_tab_ui",
-        "icon"   => "icon-search",
+        "icon"   => "icon-search-element",
         "params" => array(
             array(
                 "type"        => "textfield",

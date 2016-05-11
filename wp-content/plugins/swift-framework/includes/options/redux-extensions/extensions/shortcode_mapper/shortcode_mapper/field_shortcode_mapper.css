@@ -56,14 +56,14 @@
 }
 .redux-container-shortcode_mapper .redux-shortcodemapper-add {
   float: right;
-  margin-right: 10%;
+  margin-right: 0;
   display: block;
   margin-bottom: 10px;
 }
 .redux-container-shortcode_mapper .redux-shortcodemapper-remove {
   color: #ef521d !important;
   float: right;
-  margin-top: 5px;
+  margin-top: 10px;
 }
 .redux-container-shortcode_mapper .redux-shortcodemapper-header {
   font-weight: bold;
@@ -90,8 +90,10 @@
 }
 .short_param_row {
     width: 100%;
-    height: 170px;
+    height: auto;
     background-color: #F3F3EE;
-    padding: 10px;
+    padding: 10px 20px 20px;
     margin-top: 5px;
+    box-sizing: border-box;
+    overflow: hidden;
 }

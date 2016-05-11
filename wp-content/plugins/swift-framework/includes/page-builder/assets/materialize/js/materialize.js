@@ -720,7 +720,7 @@ if ($) {
         });
       }
 
-      $modal.find(".modal-close").on('click.close', function(e) {
+      $modal.find(".spb-modal-close").on('click.close', function(e) {
         $modal.closeModal(options);
       });
 
@@ -783,7 +783,7 @@ if ($) {
       // Disable scrolling
       $('body').css('overflow', '');
 
-      $modal.find('.modal-close').off('click.close');
+      $modal.find('.spb-modal-close').off('click.close');
       $(document).off('keyup.leanModal' + overlayID);
 
       $overlay.velocity( { opacity: 0}, {duration: options.out_duration, queue: false, ease: "easeOutQuart"});
@@ -2867,6 +2867,7 @@ $(document).ready(function(){
           if ($('ul.select-dropdown').not(options[0]).is(':visible')) {
             $('input.select-dropdown').trigger('close');
           }
+          
           if (!options.is(':visible')) {
             $(this).trigger('open', ['focus']);
             var label = $(this).val();

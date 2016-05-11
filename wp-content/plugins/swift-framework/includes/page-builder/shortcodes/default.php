@@ -16,7 +16,7 @@
 
         public function content( $atts, $content = null ) {
 
-            $title = $el_class = $width = $el_position = $inline_style = $form_content = '';
+            $title = $el_class = $width = $el_position = $inline_style = $form_content = $custom_css = $bk_image_global = '';
 
             extract( shortcode_atts( array(
                 'title'              => '',
@@ -28,7 +28,9 @@
                 'el_class'           => '',
                 'el_position'        => '',
                 'form_content'       => '',
-                'width'              => '1/2'
+                'width'              => '1/2',
+                'custom_css'         => '',
+                'bk_image_global'    => '',
             ), $atts ) );
 
             if ( $form_content != '' ){
@@ -42,11 +44,29 @@
 
             $el_class .= ' spb_text_column';
 
-            if ( $padding_vertical != "" ) {
-                $inline_style .= 'padding-top:' . $padding_vertical . '%;padding-bottom:' . $padding_vertical . '%;';
-            }
-            if ( $padding_horizontal != "" ) {
-                $inline_style .= 'padding-left:' . $padding_horizontal . '%;padding-right:' . $padding_horizontal . '%;';
+            
+            if( $custom_css != "" ){
+                
+                $pos = strpos( $custom_css, 'margin-bottom' );
+                if ($pos !== false) { 
+                    $el_class .= ' mt0 mb0';        
+                 }
+            
+
+                $inline_style .= $custom_css;
+                $img_url = wp_get_attachment_image_src( $bk_image_global, 'full' );
+
+                if( isset( $img_url ) && $img_url[0] != "" ) {
+                    $inline_style .= 'background-image: url(' . $img_url[0] . ');';
+                }
+            }else{
+
+                if ( $padding_vertical != "" ) {
+                    $inline_style .= 'padding-top:' . $padding_vertical . '%;padding-bottom:' . $padding_vertical . '%;';
+                }
+                if ( $padding_horizontal != "" ) {
+                    $inline_style .= 'padding-left:' . $padding_horizontal . '%;padding-right:' . $padding_horizontal . '%;';
+                }
             }
 
             $icon_output = "";
@@ -131,43 +151,11 @@
                     "description" => __( "If you wish to add a delay to the animation, then you can set it here (ms).", 'swift-framework-plugin' )
                 ),
                 array(
-                    "type"       => "section_tab",
-                    "param_name" => "styling_options_tab",
-                    "heading"    => __( "Styling", 'swift-framework-plugin' ),
-                ),
-                array(
-                    "type"        => "uislider",
-                    "heading"     => __( "Padding - Vertical", 'swift-framework-plugin' ),
-                    "param_name"  => "padding_vertical",
-                    "value"       => "0",
-                    "step"        => "1",
-                    "min"         => "0",
-                    "max"         => "20",
-                    "description" => __( "Adjust the vertical padding for the text block (percentage).", 'swift-framework-plugin' )
-                ),
-                array(
-                    "type"        => "uislider",
-                    "heading"     => __( "Padding - Horizontal", 'swift-framework-plugin' ),
-                    "param_name"  => "padding_horizontal",
-                    "value"       => "0",
-                    "step"        => "1",
-                    "min"         => "0",
-                    "max"         => "20",
-                    "description" => __( "Adjust the horizontal padding for the text block (percentage).", 'swift-framework-plugin' )
-                ),
-                array(
                     "type"        => "textfield",
                     "heading"     => __( "Data Form Content", 'swift-framework-plugin' ),
                     "param_name"  => "form_content",
                     "value"       => "",
                     "description" => __( "This is a hidden field that is used to save the content when using forms inside the content.", 'swift-framework-plugin' )
-                ),
-                array(
-                    "type"        => "textfield",
-                    "heading"     => __( "Extra class", 'swift-framework-plugin' ),
-                    "param_name"  => "el_class",
-                    "value"       => "",
-                    "description" => __( "If you wish to style this particular content element differently, then use this field to add a class name and then refer to it in your css file.", 'swift-framework-plugin' )
                 )
             )
         )
@@ -189,7 +177,7 @@
                 'custom_bg_colour'   => '',
                 'custom_text_colour' => '',
                 'box_link'           => '',
-                'box_link_target'    => '',
+                'box_link_target'    => '_self',
                 'padding_vertical'   => '0',
                 'padding_horizontal' => '0',
                 'el_class'           => '',

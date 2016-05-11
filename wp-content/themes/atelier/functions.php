@@ -90,6 +90,7 @@
 				'max-mega-menu'				=> false,
 				'page-heading-woo-description' => false,
 				'header-aux-modals'			=> false,
+				'hamburger-css' 			=> false
 			) );
 
 			/* THUMBNAIL SIZES
@@ -133,18 +134,17 @@
 	include_once( SF_FRAMEWORK_PATH . '/widgets/widget-comments.php' );
 	include_once( SF_FRAMEWORK_PATH . '/widgets/widget-mostloved.php' );
 	require_once(SF_INCLUDES_PATH . '/overrides/sf-theme-overrides.php');
-
+	
+	include_once(SF_INCLUDES_PATH . '/meta-box/meta-box.php');
+	include_once(SF_INCLUDES_PATH . '/meta-boxes.php');
+	
 	if (!function_exists('sf_include_framework')) {
 		function sf_include_framework() {
 			require_once(SF_INCLUDES_PATH . '/overrides/sf-theme-functions.php');
 			require_once(SF_INCLUDES_PATH . '/sf-customizer-options.php');
 			include_once(SF_INCLUDES_PATH . '/sf-custom-styles.php');
 			include_once(SF_INCLUDES_PATH . '/sf-styleswitcher/sf-styleswitcher.php');
-			require_once(SF_FRAMEWORK_PATH . '/swift-framework.php');
-
-			define( 'RWMB_URL', SF_LOCAL_PATH . '/includes/meta-box/' );
-			include_once(SF_INCLUDES_PATH . '/meta-box/meta-box.php');
-			include_once(SF_INCLUDES_PATH . '/meta-boxes.php');
+			require_once(SF_FRAMEWORK_PATH . '/swift-framework.php');			
 			include_once(SF_INCLUDES_PATH . '/overrides/sf-framework-overrides.php');
 		}
 		add_action('init', 'sf_include_framework', 5);

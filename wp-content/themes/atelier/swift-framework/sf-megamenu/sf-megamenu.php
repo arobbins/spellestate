@@ -49,6 +49,33 @@
         		$built_in_mega = false;
         	}
         	
+        	$button_colours = array(
+    	        'accent' => __('Accent', 'swiftframework'),
+    	        'black' => __('Black', 'swiftframework'),
+    	        'white' => __('White', 'swiftframework'),
+    	        'blue'  => __('Blue', 'swiftframework'),
+    	        'grey'  => __('Grey', 'swiftframework'),
+    	        'lightgrey' => __('Light Grey', 'swiftframework'),
+    	        'orange'    => __('Orange', 'swiftframework'),
+    	        'green' => __('Green', 'swiftframework'),
+    	        'pink'  => __('Pink', 'swiftframework'),
+    	        'gold'  => __('Gold', 'swiftframework'),
+    	        'purple'  => __('Purple', 'swiftframework'),
+    	        'midnight'  => __('Midnight', 'swiftframework'),
+    	        'transparent-light' => __('Transparent - Light', 'swiftframework'),
+    	        'transparent-dark'  => __('Transparent - Dark', 'swiftframework'),
+    	    );
+    	    
+        	$button_types = array(
+        		"standard" => __("Standard", "swiftframework"),
+        		"bordered"	 => __("Bordered", "swiftframework"),
+        		"rounded"  => __("Rounded", "swiftframework"),
+        		"rounded-bordered"  => __("Rounded Bordered", "swiftframework"),
+        	);
+        	
+        	$button_colours = apply_filters( 'sf_menu_button_colours', $button_colours );
+        	$button_types = apply_filters( 'sf_menu_button_types', $button_types );
+        	
         ?>
         	<div class="sf-menu-options">
 
@@ -164,11 +191,47 @@
                                    value="1" <?php echo checked( ! empty( $item->menuitembtn ), 1, false ); ?> />
                         </label>
                     </p>
-
+					
+					<?php if ( sf_theme_supports('menu-button-advanced') ) { ?>
+					
+					<p class="field-custom description description-wide">
+					    <label
+					        for="edit-menu-buttontype-<?php echo esc_attr($item_id); ?>"><?php _e( 'Button Type', 'swiftframework' ); ?></label>
+					    <select class="fat" id="edit-menu-buttontype-<?php echo esc_attr($item_id); ?>"
+					            name="menu-buttontype[<?php echo esc_attr($item_id); ?>]">
+					        <?php foreach ( $button_types as $button_type => $button_type_name ) {
+					            if ( $button_type == $item->buttontype ) {
+					                echo '<option selected="selected" value="'.$button_type.'">'.$button_type_name.'</option>';
+					            } else {
+					                echo '<option value="'.$button_type.'">'.$button_type_name.'</option>';
+					            }
+					        }
+					        ?>
+					    </select>
+					</p>
+						
+					<p class="field-custom description description-wide">
+					    <label
+					        for="edit-menu-buttoncolour-<?php echo esc_attr($item_id); ?>"><?php _e( 'Button Colour', 'swiftframework' ); ?></label>
+					    <select class="fat" id="edit-menu-buttoncolour-<?php echo esc_attr($item_id); ?>"
+					            name="menu-buttoncolour[<?php echo esc_attr($item_id); ?>]">
+					        <?php foreach ( $button_colours as $button_colour => $button_colour_name ) {
+					            if ( $button_colour == $item->buttoncolour ) {
+					                echo '<option selected="selected" value="'.$button_colour.'">'.$button_colour_name.'</option>';
+					            } else {
+					                echo '<option value="'.$button_colour.'">'.$button_colour_name.'</option>';
+					            }
+					        }
+					        ?>
+					    </select>
+					</p>
+					
+					<?php } ?>
+					
                 <?php } ?>
                 
                 <?php if ( $built_in_mega ) { ?>
-
+              	
                 <p class="field-custom description description-thin"
                    style="height: auto;overflow: hidden;width: 50%;float: none;">
                     <label
@@ -250,6 +313,8 @@
             $menu_item->loggedoutvis    = get_post_meta( $menu_item->ID, '_menu_loggedoutvis', true );
             $menu_item->newbadge   		= get_post_meta( $menu_item->ID, '_menu_newbadge', true );
             $menu_item->menuitembtn     = get_post_meta( $menu_item->ID, '_menu_menuitembtn', true );
+            $menu_item->buttontype      = get_post_meta( $menu_item->ID, '_menu_buttontype', true );
+            $menu_item->buttoncolour    = get_post_meta( $menu_item->ID, '_menu_buttoncolour', true );
             $menu_item->megatitle       = get_post_meta( $menu_item->ID, '_menu_megatitle', true );
             $menu_item->menuicon        = get_post_meta( $menu_item->ID, '_menu_item_icon', true );
             $menu_item->menuwidth       = get_post_meta( $menu_item->ID, '_menu_item_width', true );
@@ -305,6 +370,16 @@
             } else {
                 update_post_meta( $menu_item_db_id, '_menu_menuitembtn', 0 );
             }
+
+			if ( isset( $_REQUEST['menu-buttontype'][ $menu_item_db_id ] ) ) {
+			    $buttontype_value = $_REQUEST['menu-buttontype'][ $menu_item_db_id ];
+			    update_post_meta( $menu_item_db_id, '_menu_buttontype', $buttontype_value );
+			}
+			
+			if ( isset( $_REQUEST['menu-buttoncolour'][ $menu_item_db_id ] ) ) {
+			    $buttoncolour_value = $_REQUEST['menu-buttoncolour'][ $menu_item_db_id ];
+			    update_post_meta( $menu_item_db_id, '_menu_buttoncolour', $buttoncolour_value );
+			}
 
             if ( isset( $_REQUEST['menu-loggedinvis'][ $menu_item_db_id ] ) ) {
                 update_post_meta( $menu_item_db_id, '_menu_loggedinvis', 1 );

@@ -51,42 +51,7 @@ class Groups_WS_Handler {
 		add_action( 'woocommerce_order_status_pending',    array( __CLASS__, 'order_status_pending' ) );
 
 		// give products
-
 		add_action( 'woocommerce_order_given', array( __CLASS__, 'order_status_completed' ) );
-
-		// subscriptions
-
-		// >= 2.x
-
-		// do_action( 'woocommerce_subscription_status_updated', $this, $new_status, $old_status );
-		add_action( 'woocommerce_subscription_status_updated', array( __CLASS__, 'woocommerce_subscription_status_updated' ), 10, 3 );
-
-		// do_action( 'woocommerce_subscription_trashed', $post_id );
-		add_action( 'woocommerce_subscription_trashed', array( __CLASS__, 'woocommerce_subscription_trashed' ), 10, 1 );
-		// do_action( 'woocommerce_subscriptions_switched_item', $subscription, $new_order_item, WC_Subscriptions_Order::get_item_by_id( $new_order_item['switched_subscription_item_id'] ) );
-		add_action( 'woocommerce_subscriptions_switched_item', array( __CLASS__, 'woocommerce_subscriptions_switched_item' ), 10, 3 );
-
-		// < 2.x
-
-		// do_action( 'activated_subscription', $user_id, $subscription_key );
-		add_action( 'activated_subscription', array( __CLASS__, 'activated_subscription' ), 10, 2 );
-		// do_action( 'cancelled_subscription', $user_id, $subscription_key );
-		add_action( 'cancelled_subscription', array( __CLASS__, 'cancelled_subscription' ), 10, 2 );
-		// do_action( 'subscription_end_of_prepaid_term', $user_id, $subscription_key );
-		add_action( 'subscription_end_of_prepaid_term', array( __CLASS__, 'subscription_end_of_prepaid_term' ), 10, 2 );
-		// do_action( 'subscription_trashed', $user_id, $subscription_key );
-		add_action( 'subscription_trashed', array( __CLASS__, 'subscription_trashed' ), 10, 2 );
-		// do_action( 'subscription_expired', $user_id, $subscription_key );
-		add_action( 'subscription_expired', array( __CLASS__, 'subscription_expired' ), 10, 2 );
-		// do_action( 'switched_subscription', $original_order->customer_user, $original_subscription_key, $new_subscriptions_key );
-		add_action( 'switched_subscription', array( __CLASS__, 'switched_subscription' ), 10, 3 );
-
-		if ( $remove_on_hold ) {
-			// do_action( 'subscription_put_on-hold', $user_id, $subscription_key );
-			add_action( 'subscription_put_on-hold', array( __CLASS__, 'subscription_put_on_hold' ), 10, 2 );
-			// do_action( 'reactivated_subscription', $user_id, $subscription_key );
-			add_action( 'reactivated_subscription', array( __CLASS__, 'reactivated_subscription' ), 10, 2 );
-		}
 
 		// scheduled expirations
 		add_action( 'groups_ws_subscription_expired', array( __CLASS__, 'subscription_expired' ), 10, 2 );
@@ -99,6 +64,47 @@ class Groups_WS_Handler {
 		add_filter( 'option_woocommerce_enable_guest_checkout', array( __CLASS__, 'option_woocommerce_enable_guest_checkout' ) );
 		add_filter( 'option_woocommerce_enable_signup_and_login_from_checkout', array( __CLASS__, 'option_woocommerce_enable_signup_and_login_from_checkout' ) );
 
+		// subscriptions
+		// >= 2.x
+
+		// do_action( 'woocommerce_subscription_status_updated', $this, $new_status, $old_status );
+		add_action( 'woocommerce_subscription_status_updated', array( __CLASS__, 'woocommerce_subscription_status_updated' ), 10, 3 );
+		// do_action( 'woocommerce_subscription_trashed', $post_id );
+		add_action( 'woocommerce_subscription_trashed', array( __CLASS__, 'woocommerce_subscription_trashed' ), 10, 1 );
+		// do_action( 'woocommerce_subscriptions_switched_item', $subscription, $new_order_item, WC_Subscriptions_Order::get_item_by_id( $new_order_item['switched_subscription_item_id'] ) );
+		add_action( 'woocommerce_subscriptions_switched_item', array( __CLASS__, 'woocommerce_subscriptions_switched_item' ), 10, 3 );
+
+		add_action( 'woocommerce_scheduled_subscription_end_of_prepaid_term', array( __CLASS__, 'woocommerce_scheduled_subscription_end_of_prepaid_term' ), 10, 1 );
+
+		add_action( 'init', array( __CLASS__, 'wp_init' ) );
+
+	}
+
+	/**
+	 * Old action handlers (moved out on init to be able to check for class presence).
+	 */
+	public static function wp_init() {
+		// subscriptions < 2.x
+		if ( !class_exists( 'WCS_Action_Deprecator' ) ) {
+			// do_action( 'activated_subscription', $user_id, $subscription_key );
+			add_action( 'activated_subscription', array( __CLASS__, 'activated_subscription' ), 10, 2 );
+			// do_action( 'cancelled_subscription', $user_id, $subscription_key );
+			add_action( 'cancelled_subscription', array( __CLASS__, 'cancelled_subscription' ), 10, 2 );
+			// do_action( 'subscription_end_of_prepaid_term', $user_id, $subscription_key );
+			add_action( 'subscription_end_of_prepaid_term', array( __CLASS__, 'subscription_end_of_prepaid_term' ), 10, 2 );
+			// do_action( 'subscription_expired', $user_id, $subscription_key );
+			add_action( 'subscription_expired', array( __CLASS__, 'subscription_expired' ), 10, 2 );
+			if ( $remove_on_hold ) {
+				// do_action( 'subscription_put_on-hold', $user_id, $subscription_key );
+				add_action( 'subscription_put_on-hold', array( __CLASS__, 'subscription_put_on_hold' ), 10, 2 );
+				// do_action( 'reactivated_subscription', $user_id, $subscription_key );
+				add_action( 'reactivated_subscription', array( __CLASS__, 'reactivated_subscription' ), 10, 2 );
+			}
+			// do_action( 'subscription_trashed', $user_id, $subscription_key );
+			add_action( 'subscription_trashed', array( __CLASS__, 'subscription_trashed' ), 10, 2 );
+			// do_action( 'switched_subscription', $original_order->customer_user, $original_subscription_key, $new_subscriptions_key );
+			add_action( 'switched_subscription', array( __CLASS__, 'switched_subscription' ), 10, 3 );
+		}
 	}
 
 	/**
@@ -566,6 +572,11 @@ class Groups_WS_Handler {
 	public static function woocommerce_subscription_trashed( $post_id ) {
 		if ( $subscription = wcs_get_subscription( $post_id ) ) {
 			self::subscription_status_expired( $subscription );
+			if ( method_exists( $subscription, 'get_user_id' ) ) {
+				$user_id = $subscription->get_user_id();
+			} else {
+				$user_id = $subscription->user_id;
+			}
 			// unschedule pending expiration if any
 			wp_clear_scheduled_hook(
 				'groups_ws_subscription_expired',
@@ -866,6 +877,23 @@ class Groups_WS_Handler {
 	}
 
 	/**
+	 * Immediately remove the user from the subscription product's related groups.
+	 * This is called when a cancelled subscription paid up period ends.
+	 * The cancelled_subscription hook cannot be used because subscription is
+	 * already cleared when the action is triggered and the
+	 * get_next_payment_date() method will not return a payment date that
+	 * we could use.
+	 * 
+	 * @param int $subscription_id
+	 * @since 1.9.5
+	 */
+	public static function woocommerce_scheduled_subscription_end_of_prepaid_term( $subscription_id ) {
+		if ( $subscription = wcs_get_subscription( $subscription_id ) ) {
+			self::subscription_status_expired( $subscription );
+		}
+	}
+
+	/**
 	 * Trashed subscriptions expire immediately.
 	 * @param int $user_id
 	 * @param string $subscription_key
@@ -941,13 +969,18 @@ class Groups_WS_Handler {
 	 * @return array subscription
 	 */
 	private static function get_subscription_by_subscription_key( $subscription_key ) {
+		$subscription = array();
 		if (
 			function_exists( 'wcs_get_subscription_from_key' ) &&
 			function_exists( 'wcs_get_subscription_in_deprecated_structure' )
 		) {
 			try {
-				$subscription = wcs_get_subscription_from_key( $subscription_key );
-				$subscription = wcs_get_subscription_in_deprecated_structure( $subscription );
+				$subscription_id = wcs_get_subscription_id_from_key( $subscription_key );
+				if ( null !== $subscription_id && is_numeric( $subscription_id ) ) {
+					if ( $subscription = wcs_get_subscription_from_key( $subscription_key ) ) {
+						$subscription = wcs_get_subscription_in_deprecated_structure( $subscription );
+					}
+				}
 			} catch ( Exception $e ) {
 				$subscription = array();
 			}

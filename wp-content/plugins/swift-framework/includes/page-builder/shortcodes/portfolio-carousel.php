@@ -66,9 +66,11 @@
             $translated_categories = '';
             foreach ($categories as $key => $category_slug) {
                 $category_id_by_slug = get_term_by('slug', $category_slug, 'portfolio-category');
-                $translated_slug_id = apply_filters('wpml_object_id', $category_id_by_slug->term_id, 'custom taxonomy', true);
-                $translated_slug = get_term_by('id', $translated_slug_id, 'portfolio-category');
-                $translated_categories = $translated_categories.($key < count($categories)-1 ? $translated_slug->slug.',': $translated_slug->slug );
+                if ( isset( $category_id_by_slug->term_id ) ) {
+                    $translated_slug_id = apply_filters('wpml_object_id', $category_id_by_slug->term_id, 'custom taxonomy', true);
+                    $translated_slug = get_term_by('id', $translated_slug_id, 'portfolio-category');
+                    $translated_categories = $translated_categories.($key < count($categories)-1 ? $translated_slug->slug.',': $translated_slug->slug );
+                }
             }
 
             $portfolio_args = array(

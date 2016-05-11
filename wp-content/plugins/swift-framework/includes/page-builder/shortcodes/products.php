@@ -132,6 +132,7 @@
                 'category'       => '',
                 'products'		 => '',
                 'display_type'	 => '',
+                'display_layout' => '',
                 'carousel'       => 'no',
                 'multi_masonry'	 => 'no',
                 'fullwidth'      => 'no',
@@ -174,6 +175,11 @@
 
             /* OUTPUT
             ================================================== */
+            global $sf_product_display_layout;
+            if ( $display_layout != "" ) {
+                $sf_product_display_layout = $display_layout;
+            }
+
             $el_class = $this->getExtraClass( $el_class );
             $width    = spb_translateColumnWidthToSpan( $width );
             $page_button   = $title_wrap_class = "";
@@ -247,7 +253,14 @@
             );
     }
 
+    $product_display_layout = array(
+                __( 'Standard', 'swift-framework-plugin' )  => "standard",
+                __( 'Grid', 'swift-framework-plugin' )   => "grid",
+                __( 'List', 'swift-framework-plugin' )   => "list",
+            );
+
     $product_display_type = apply_filters( 'spb_product_display_types', $product_display_type );
+    $product_display_layout = apply_filters( 'spb_product_display_layouts', $product_display_layout );
 
     $params = array(
         array(
@@ -294,6 +307,15 @@
         "param_name"  => "display_type",
         "value"       => $product_display_type
     );
+
+    if ( sf_theme_supports('product-layout-opts') ) {
+        $params[] = array(
+            "type"        => "dropdown",
+            "heading"     => __( "Product display layout", 'swift-framework-plugin' ),
+            "param_name"  => "display_layout",
+            "value"       => $product_display_layout
+        );
+    }
 
     if ( sf_theme_supports('product-multi-masonry') ) {
     	$params[] = array(

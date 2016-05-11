@@ -203,7 +203,12 @@ class Groups_WS_Subscriptions_Table_Renderer {
 								case 'title' :
 									$output .= WC_Subscriptions_Order::get_item_name( $result['order_id'], $result['product_id'] );
 									if ( isset( $product->variation_data ) ) {
-										$column_content .= '<br />' . woocommerce_get_formatted_variation( $product->variation_data, true );
+										$column_content .= '<br />';
+										if ( function_exists( 'wc_get_formatted_variation' ) ) {
+											$column_content .= wc_get_formatted_variation( $product->variation_data, true );
+										} else {
+											$column_content .= woocommerce_get_formatted_variation( $product->variation_data, true );
+										}
 									}
 									break;
 								case 'start_date' :

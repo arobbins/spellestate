@@ -61,7 +61,7 @@ class Groups_WS_Admin_Product {
 				'orderby' => 'meta_value'
 			) );
 		}
-		return $vars;
+		return $query_vars;
 	}
 
 	/**

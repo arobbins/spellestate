@@ -1,10 +1,10 @@
 @font-face {
     font-family: 'swift-pb';
-    src:    url('fonts/swift-pb.eot?m23cj9');
-    src:    url('fonts/swift-pb.eot?m23cj9#iefix') format('embedded-opentype'),
-        url('fonts/swift-pb.ttf?m23cj9') format('truetype'),
-        url('fonts/swift-pb.woff?m23cj9') format('woff'),
-        url('fonts/swift-pb.svg?m23cj9#swift-pb') format('svg');
+    src:    url('fonts/swift-pb.eot?m23cj9a');
+    src:    url('fonts/swift-pb.eot?m23cj9a#iefix') format('embedded-opentype'),
+        url('fonts/swift-pb.ttf?m23cj9a') format('truetype'),
+        url('fonts/swift-pb.woff?m23cj9a') format('woff'),
+        url('fonts/swift-pb.svg?m23cj9a#swift-pb') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -24,6 +24,15 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-vis-desktop:before {
+    content: "\e935";
+}
+.icon-vis-tablet:before {
+    content: "\e936";
+}
+.icon-vis-phone:before {
+    content: "\e937";
+}
 .icon-icon-default-editor:before {
     content: "\e933";
 }

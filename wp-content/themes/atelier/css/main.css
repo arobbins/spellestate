@@ -6810,6 +6810,9 @@ nav ul.menu > li.menu-item.sf-menu-item-btn > a > span.menu-item-text > i {
 .shopping-bag-item > a {
 	position: relative;
 }
+.shopping-bag-item > a > .cart-text {
+	display: none;
+}
 .shopping-bag-item > a > i {
 	vertical-align: -5px!important;
 	width: 21px;

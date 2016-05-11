@@ -561,7 +561,7 @@
 
                         </ul>
 
-                        <?php if ( sf_theme_opts_name() != "sf_atelier_options" ) { ?>
+                        <?php if ( sf_theme_opts_name() != "sf_atelier_options" && sf_theme_opts_name() != "sf_uplift_options" ) { ?>
 
                         <a href="#" class="carousel-prev"><?php echo $sf_prev_icon; ?></a>
                         <a href="#" class="carousel-next"><?php echo $sf_next_icon; ?></a>

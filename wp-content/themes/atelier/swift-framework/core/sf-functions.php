@@ -425,6 +425,9 @@
 			if ( function_exists( 'is_product_category' ) && is_product_category() && $woo_shop_slider == "swift-slider") {
 				$page_has_swiftslider = true;
 			}
+			if ( is_singular('swift-slider') ) {
+				$page_has_swiftslider = true;
+			}
 			
 			if ( !$page_has_swiftslider && $page_slider != "swift-slider" ) {
 				wp_dequeue_style( 'swift-slider' );
@@ -549,7 +552,8 @@
                     "spb_multilayer_parallax_layer",
                     "spb_image_banner",
                     "spb_icon_box_grid",
-                    "spb_icon_box_grid_element"
+                    "spb_icon_box_grid_element",
+                    "spb_section"
                 ) );
             // opening tag
             $rep = preg_replace( "/(<p>)?\[($block)(\s[^\]]+)?\](<\/p>|<br \/>)?/", "[$2$3]", $content );
@@ -3526,11 +3530,31 @@
             }
 
             /* META BOX CUSTOM */
+            .rwmb-field {
+            	margin: 10px 0;
+            }
+            .rwmb-field > h3 {
+            	margin: 10px 0;
+            	border-bottom: 1px solid #e4e4e4;
+            	padding-bottom: 10px !important;
+            }
+            .rwmb-label label {
+            	padding-right: 10px;
+            	vertical-align: top;
+            }
+            .rwmb-checkbox-wrapper .description {
+            	display: block;
+            	margin: 6px 0 8px;
+            }
             .rwmb-input .rwmb-slider {
                 background: #f7f7f7;
                 border: 1px solid #e3e3e3;
             }
-
+			
+			.meta-box-sortables select, .rwmb-input > input, .rwmb-media-view .rwmb-add-media {
+				margin-bottom: 5px;
+			}
+			
             .rwmb-slider.ui-slider-horizontal .ui-slider-range-min {
                 background: #fe504f!important;
             }

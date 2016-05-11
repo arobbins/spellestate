@@ -35,7 +35,7 @@ class AIOWPSecurity_User_Accounts_Menu extends AIOWPSecurity_Admin_Menu
     function get_current_tab() 
     {
         $tab_keys = array_keys($this->menu_tabs);
-        $tab = isset( $_GET['tab'] ) ? $_GET['tab'] : $tab_keys[0];
+        $tab = isset( $_GET['tab'] ) ? sanitize_text_field($_GET['tab']) : $tab_keys[0];
         return $tab;
     }
 
@@ -261,7 +261,8 @@ class AIOWPSecurity_User_Accounts_Menu extends AIOWPSecurity_Admin_Menu
                         $username_is_admin = FALSE;
                     }
                     //Now let's change the username
-                    $result = $wpdb->query("UPDATE `" . $wpdb->users . "` SET user_login = '" . esc_sql($new_username) . "' WHERE user_login='admin';");
+                    $sql = $wpdb->prepare( "UPDATE `" . $wpdb->users . "` SET user_login = '" . esc_sql($new_username) . "' WHERE user_login=%s", "admin" );
+                    $result = $wpdb->query($sql);
                     if (!$result) {
                         //There was an error updating the users table
                         $user_update_error = __('The database update operation of the user account failed!', 'all-in-one-wp-security-and-firewall');

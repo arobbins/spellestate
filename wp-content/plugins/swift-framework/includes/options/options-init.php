@@ -188,8 +188,18 @@
                 'subtitle' => __('Enable/Disable the display of text block text on the text block elements in the builder.', 'swiftframework'),
                 'desc' => '',
                 'options' => array('1' => 'Enabled','0' => 'Disabled'),
-                'default' => '0'
+                'default' => '1'
                 ),
+            array(
+                'id' => 'spb_edit_modal_width',
+                'type' => 'slider',
+                'title' => __('Element Edit Modal Width', 'swiftframework'),
+                'subtitle' => __("Set the defailt width for the element edit modal, by default this is 620px.", 'swiftframework'),
+                "default" => "620",
+                "min" => "400",
+                "step" => "20",
+                "max" => "2000",
+            ),
             array(
                  'id' => 'shortcode_mapper_field',
                  'type' => 'shortcode_mapper',

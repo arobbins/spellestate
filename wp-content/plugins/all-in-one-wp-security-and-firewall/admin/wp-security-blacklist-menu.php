@@ -26,7 +26,7 @@ class AIOWPSecurity_Blacklist_Menu extends AIOWPSecurity_Admin_Menu
     function get_current_tab() 
     {
         $tab_keys = array_keys($this->menu_tabs);
-        $tab = isset( $_GET['tab'] ) ? $_GET['tab'] : $tab_keys[0];
+        $tab = isset( $_GET['tab'] ) ? sanitize_text_field($_GET['tab']) : $tab_keys[0];
         return $tab;
     }
 
@@ -150,6 +150,16 @@ class AIOWPSecurity_Blacklist_Menu extends AIOWPSecurity_Admin_Menu
             </p>';
             ?>
         </div>
+        <div class="aio_grey_box">
+            <?php
+            $addon_link = '<strong><a href="http://www.site-scanners.com/country-blocking-addon/" target="_blank">Country Blocking Addon</a></strong>';
+            $info_msg = sprintf( __('You may also be interested in our %s.', 'all-in-one-wp-security-and-firewall'), $addon_link);
+            $info_msg2 = __('This addon allows you to automatically block IP addresses based on their country of origin.', 'all-in-one-wp-security-and-firewall');
+
+            echo '<p>'.$info_msg.
+                '<br />'.$info_msg2.'</p>';
+            ?>
+        </div>
 
         <div class="postbox">
         <h3 class="hndle"><label for="title"><?php _e('IP Hosts and User Agent Blacklist Settings', 'all-in-one-wp-security-and-firewall'); ?></label></h3>
@@ -160,7 +170,12 @@ class AIOWPSecurity_Blacklist_Menu extends AIOWPSecurity_Admin_Menu
         $aiowps_feature_mgr->output_feature_details_badge("blacklist-manager-ip-user-agent-blacklisting");
         ?>    
         <form action="" method="POST">
-        <?php wp_nonce_field('aiowpsec-blacklist-settings-nonce'); ?>            
+        <?php wp_nonce_field('aiowpsec-blacklist-settings-nonce'); ?>
+        <div class="aio_orange_box">
+            <p>
+            <?php _e('This feature can lock you out of admin if it doesn\'t work correctly on your site. You <a href="https://www.tipsandtricks-hq.com/wordpress-security-and-firewall-plugin#advanced_features_note" target="_blank">must read this message</a> before activating this feature.', 'all-in-one-wp-security-and-firewall'); ?>
+            </p>
+        </div>            
         <table class="form-table">
             <tr valign="top">
                 <th scope="row"><?php _e('Enable IP or User Agent Blacklisting', 'all-in-one-wp-security-and-firewall')?>:</th>

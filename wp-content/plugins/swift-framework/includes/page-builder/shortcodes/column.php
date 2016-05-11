@@ -13,7 +13,7 @@
 
         public function content( $atts, $content = null ) {
 
-            $col_el_class = $inline_style = $inner_inline_style = $width = $el_position = '';
+            $col_el_class = $inline_style = $inner_inline_style = $width = $el_position = $custom_css ='';
 
             extract( shortcode_atts( array(
                 'col_bg_color'                => '',
@@ -27,7 +27,8 @@
                 'col_responsive_vis'          => '',
                 'col_el_class'                => '',
                 'el_position'                 => '',
-                'width'                       => '1/2'
+                'width'                       => '1/2',
+                'custom_css'                  => '',
             ), $atts ) );
 
             $output = $animation_output = '';
@@ -37,6 +38,10 @@
             $orig_width         = $width;
             $width              = spb_translateColumnWidthToSpan( $width );
             $img_url            = wp_get_attachment_image_src( $col_bg_image, 'full' );
+
+            if( $custom_css != "" ){
+                $inline_style .= $custom_css;
+            }
 
             if ( $col_bg_color != "" ) {
                 $inline_style .= 'background-color:' . $col_bg_color . ';';
@@ -88,7 +93,7 @@
         }
 
         public function contentAdmin( $atts, $content = null ) {
-            $width = '';
+            $width = $col_responsive_vis = '';
             extract( shortcode_atts( array(
                 'width'                       => 'column_12',
                 'col_bg_color'                => '',
@@ -102,11 +107,24 @@
                 'col_responsive_vis'          => '',
                 'el_position'                 => '',
                 'col_el_class'                => '',
+                'custom_css'                  => '',
+                'simplified_controls'         => '',
+                'border_color_global'         => '',
+                'border_styling_global'       => '',
+                'back_color_global'           => '',
+                'border_styling_global'       => '',
+                'padding_horizontal'          => '',
+                'padding_vertical'            => '',
+                'margin_vertical'            => '',
+                'custom_css_percentage'       => '',
+                'custom_css'                  => '',
+                'el_class'                    => ''
+
             ), $atts ) );
 
             $output = '';
 
-            $column_controls = $this->getColumnControls( 'column' );
+            $column_controls = $this->getColumnControls( 'column',  $col_responsive_vis );
           
 
             if ( $width == 'column_14' || $width == '1/4' ) {
@@ -141,6 +159,7 @@
                 $width = array( 'span12' );
             }
 
+          
 
             for ( $i = 0; $i < count( $width ); $i ++ ) {
                 $output .= '<div data-element_type="spb_column" class="spb_column spb_sortable spb_droppable ' . $width[ $i ] . ' not-column-inherit">';
@@ -148,9 +167,12 @@
                 $output .= str_replace( "%column_size%", spb_translateColumnWidthToFractional( $width[ $i ] ), $column_controls );
                 $output .= '<div class="spb_element_wrapper">';
                 $output .= '<div class="row-fluid spb_column_container spb_sortable_container not-column-inherit">';
+
                 $output .= do_shortcode( shortcode_unautop( $content ) );
                 $output .= SwiftPageBuilder::getInstance()->getLayout()->getContainerHelper();
                 $output .= '</div>';
+
+                
                 if ( isset( $this->settings['params'] ) ) {
                     $inner = '';
                     foreach ( $this->settings['params'] as $param ) {
@@ -180,24 +202,49 @@
         "controls"        => "full-column",
         "class"           => "spb_column spb_tab_layout",
         "icon"           => "icon-column",
-    //    "content_element" => true,
         "params"          => array(
+           
             array(
-                "type"       => "section",
-                "param_name" => "section_bg_video_options",
-                "heading"    => __( "Column Background Options", 'swift-framework-plugin' ),
+                "type"        => "dropdown",
+                "heading"     => __( "Intro Animation", 'swift-framework-plugin' ),
+                "param_name"  => "col_animation",
+                "value"       => spb_animations_list(),
+                "description" => __( "Select an intro animation for the column which will show it when it appears within the viewport.", 'swift-framework-plugin' )
             ),
             array(
+                "type"        => "textfield",
+                "heading"     => __( "Animation Delay", 'swift-framework-plugin' ),
+                "param_name"  => "col_animation_delay",
+                "value"       => "0",
+                "description" => __( "If you wish to add a delay to the animation, then you can set it here (ms).", 'swift-framework-plugin' )
+            ),
+           array(
+                "type"        => "dropdown",
+                "heading"     => __( "Responsive Visiblity", 'swift-framework-plugin' ),
+                "param_name"  => "col_responsive_vis",
+                "holder"      => 'indicator',
+                "value"       => spb_responsive_vis_list(),
+                "description" => __( "Set the responsive visiblity for the row, if you would only like it to display on certain display sizes.", 'swift-framework-plugin' )
+            ),
+            array(
+                "type"        => "textfield",
+                "heading"     => __( "Extra class", 'swift-framework-plugin' ),
+                "param_name"  => "col_el_class",
+                "value"       => "",
+                "description" => __( "If you wish to style this particular content element differently, then use this field to add a class name and then refer to it in your css file.", 'swift-framework-plugin' )
+            ),
+            array(
+                 "type"       => "section_tab",
+                 "param_name" => "design_tab",
+                 "heading"    => __( "Design Options", 'swift-framework-plugin' ),
+                 "value"      =>          "" 
+             ),
+             array(
                 "type"        => "colorpicker",
                 "heading"     => __( "Background color", 'swift-framework-plugin' ),
                 "param_name"  => "col_bg_color",
                 "value"       => "",
                 "description" => __( "Select a background colour for the row here.", 'swift-framework-plugin' )
-            ),
-            array(
-                "type"       => "section",
-                "param_name" => "section_bg_image_options",
-                "heading"    => __( "Column Background Image Options", 'swift-framework-plugin' ),
             ),
             array(
                 "type"        => "attach_image",
@@ -227,17 +274,12 @@
                 ),
                 "description" => __( "Choose the type of movement you would like the parallax image to have. Fixed means the background image is fixed on the page, Scroll means the image will scroll will the page, and stellar makes the image move at a seperate speed to the page, providing a layered effect.", 'swift-framework-plugin' )
             ),
-            array(
+            array( 
                 "type"        => "textfield",
                 "heading"     => __( "Parallax Image Speed (Stellar Only)", 'swift-framework-plugin' ),
                 "param_name"  => "col_parallax_image_speed",
                 "value"       => "0.5",
                 "description" => "The speed at which the parallax image moves in relation to the page scrolling. For example, 0.5 would mean the image scrolls at half the speed of the standard page scroll. (Default 0.5)."
-            ),
-            array(
-                "type"       => "section",
-                "param_name" => "section_display_options",
-                "heading"    => __( "Column Display Options", 'swift-framework-plugin' ),
             ),
             array(
                 "type"        => "uislider",
@@ -248,45 +290,10 @@
                 "step"        => "1",
                 "max"         => "20",
                 "description" => __( "Adjust the padding for the column. (%)", 'swift-framework-plugin' )
-            ),
-            array(
-                "type"       => "section",
-                "param_name" => "col_animation_options",
-                "heading"    => __( "Animation Options", 'swift-framework-plugin' ),
-            ),
-            array(
-                "type"        => "dropdown",
-                "heading"     => __( "Intro Animation", 'swift-framework-plugin' ),
-                "param_name"  => "col_animation",
-                "value"       => spb_animations_list(),
-                "description" => __( "Select an intro animation for the column which will show it when it appears within the viewport.", 'swift-framework-plugin' )
-            ),
-            array(
-                "type"        => "textfield",
-                "heading"     => __( "Animation Delay", 'swift-framework-plugin' ),
-                "param_name"  => "col_animation_delay",
-                "value"       => "0",
-                "description" => __( "If you wish to add a delay to the animation, then you can set it here (ms).", 'swift-framework-plugin' )
-            ),
-            array(
-                "type"       => "section",
-                "param_name" => "section_misc_options",
-                "heading"    => __( "Column Misc Options", 'swift-framework-plugin' ),
-            ),
-            array(
-                "type"        => "dropdown",
-                "heading"     => __( "Responsive Visiblity", 'swift-framework-plugin' ),
-                "param_name"  => "col_responsive_vis",
-                "holder"      => 'indicator',
-                "value"       => spb_responsive_vis_list(),
-                "description" => __( "Set the responsive visiblity for the row, if you would only like it to display on certain display sizes.", 'swift-framework-plugin' )
-            ),
-            array(
-                "type"        => "textfield",
-                "heading"     => __( "Extra class", 'swift-framework-plugin' ),
-                "param_name"  => "col_el_class",
-                "value"       => "",
-                "description" => __( "If you wish to style this particular content element differently, then use this field to add a class name and then refer to it in your css file.", 'swift-framework-plugin' )
             )
+
+
+
+
         )
     ) );

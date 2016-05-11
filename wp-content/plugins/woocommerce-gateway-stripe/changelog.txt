@@ -1,5 +1,16 @@
 *** Stripe Changelog ***
 
+2016.04.13 - version 2.6.12
+* Fix - When saved cards option is enabled with no cards on file, CC field was hidden.
+
+2016.04.11 - version 2.6.11
+* Add - Option to set a default card in manage card section and detect previous card paid by subscription.
+* Fix - Admin notice link when key is not added and when addons are present.
+
+2016.03.16 - version 2.6.10
+* Tweak - Add logging mechanism. New 'Logging' option is added in Stripe gateway setting to enable logging.
+* Fix - Allow language files to be located outside of plugin directory
+
 2016.02.29 - version 2.6.9
 * Tweak - Allow mechanism to override Stripe JS error handler. See https://gist.github.com/gedex/240492f479c7443e4780
   for an example to override error handler with simple alert.

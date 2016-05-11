@@ -4,13 +4,13 @@
   Plugin Name: WooCommerce Dynamic Pricing
   Plugin URI: http://www.woothemes.com/woocommerce
   Description: WooCommerce Dynamic Pricing lets you configure dynamic pricing rules for products, categories and members. For WooCommerce 1.4+
-  Version: 2.10.11
+  Version: 2.10.13
   Author: Lucas Stark
   Author URI: http://lucasstark.com
   Requires at least: 3.3
-  Tested up to: 3.5.1
+  Tested up to: 4.4
 
-  Copyright: © 2009-2015 Lucas Stark.
+  Copyright: © 2009-2016 Lucas Stark.
   License: GNU General Public License v3.0
   License URI: http://www.gnu.org/licenses/gpl-3.0.html
  */
@@ -172,11 +172,24 @@ class WC_Dynamic_Pricing {
 
 			add_filter( 'woocommerce_composite_get_price', array($this, 'on_get_price'), 10, 2 );
 			add_filter( 'woocommerce_composite_get_base_price', array($this, 'on_get_price'), 10, 2 );
+			
+			
+			add_filter('woocommerce_coupon_is_valid_for_product', array($this, 'check_coupon_is_valid'), 10, 4);
+			
 		}
 
 		add_filter( 'woocommerce_dynamic_pricing_get_rule_amount', array($this, 'convert_decimals'), 99, 4 );
 	}
 
+	public function check_coupon_is_valid( $valid, $product, $coupon, $values) {
+		
+		if ('yes' === $coupon->exclude_sale_items && isset($values['discounts']) && isset($values['discounts']['applied_discounts']) && !empty($values['discounts']['applied_discounts'])){ 
+			$valid = false;
+		}
+		
+		return $valid;
+	}
+	
 	/**
 	 * Remove the price filter when mini-cart is triggered. 
 	 * @since 2.10.2
@@ -268,7 +281,7 @@ class WC_Dynamic_Pricing {
 					}
 				}
 			}
-			
+
 			if ( $discount_price !== false ) {
 				return $discount_price;
 			} else {

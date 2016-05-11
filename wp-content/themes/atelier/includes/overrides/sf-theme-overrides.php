@@ -384,29 +384,32 @@
 	================================================== */
 	function sf_atelier_single_product_image_html( $html, $post_ID ) {
 		$video_url = get_post_meta( $post_ID, '_video_url', true );
-		$product_image_width = apply_filters('sf_product_image_width', 700);
+		$image_caption = $image_alt = $image_title = $caption_html = "";
 		$image_id			= get_post_thumbnail_id();
 		$image_meta 		= sf_get_attachment_meta( $image_id );
 		
-		$image_caption = $image_alt = $image_title = $caption_html = "";
 		if ( isset($image_meta) ) {
 			$image_caption 		= esc_attr( $image_meta['caption'] );
 			$image_title 		= esc_attr( $image_meta['title'] );
 			$image_alt 			= esc_attr( $image_meta['alt'] );
 		}
 		$image_link  		= wp_get_attachment_url( $image_id, apply_filters( 'single_product_large_thumbnail_size', 'shop_single' ) );
+		$image         		= get_the_post_thumbnail( $post_ID, apply_filters( 'single_product_large_thumbnail_size', 'shop_single' ), array(
+			'title'	=> $image_title,
+			'alt'	=> $image_title,
+			'class' => 'product-slider-image',
+			'data-zoom-image' => $image_link
+		) );							
 		$thumb_image = wp_get_attachment_url( $image_id, apply_filters( 'single_product_small_thumbnail_size', 'shop_thumbnail' ) );
-		
+
 		if ( $image_caption != "" ) {
 			$caption_html = '<div class="img-caption">' . $image_caption . '</div>';
 		}
-
-		$image_html = '<img class="product-slider-image" data-zoom-image="'.$image_link.'" src="'.$image_link.'" alt="'.$image_alt.'" title="'.$image_title.'" />';
 	
 		if ( $video_url != '' ) {
 			return '<div class="video-wrap" data-thumb="' . $thumb_image . '">' . $html . '</div>';
 		} else {
-			return sprintf( '<li itemprop="image" data-thumb="%s">%s%s<a href="%s" itemprop="image" class="woocommerce-main-image zoom lightbox" data-rel="ilightbox[product]" data-caption="%s" title="%s" alt="%s"><i class="fa-search-plus"></i></a></li>', $thumb_image, $caption_html, $image_html, $image_link, $image_caption, $image_title, $image_alt );
+			return sprintf( '<li itemprop="image" data-thumb="%s">%s%s<a href="%s" itemprop="image" class="woocommerce-main-image zoom lightbox" data-rel="ilightbox[product]" data-caption="%s" title="%s" alt="%s"><i class="fa-search-plus"></i></a></li>', $thumb_image, $caption_html, $image, $image_link, $image_caption, $image_title, $image_alt );
 		}
 	}
 	add_filter('woocommerce_single_product_image_html', 'sf_atelier_single_product_image_html', 15, 2);
@@ -415,21 +418,30 @@
 	/* WOOCOMMERCE PRODUCT IMAGE THUMBS HTML
 	================================================== */
 	function sf_atelier_single_product_image_thumbnail_html( $html, $attachment_id, $post_ID, $image_class ) {
-		$image       = wp_get_attachment_image_src( $attachment_id, apply_filters( 'single_product_large_thumbnail_size', 'shop_single' ) );
-		$image_link  = wp_get_attachment_url( $attachment_id, 'full' );
-		$thumb_image = wp_get_attachment_url( $attachment_id, apply_filters( 'single_product_small_thumbnail_size', 'shop_thumbnail' ) );
-		$image_meta 		= sf_get_attachment_meta( $attachment_id );
+		 
 		$image_caption = $image_alt = $image_title = $caption_html = "";
+		$image_id = $attachment_id;
+		$image_meta = sf_get_attachment_meta( $image_id );
+		
 		if ( isset($image_meta) ) {
 			$image_caption 		= esc_attr( $image_meta['caption'] );
 			$image_title 		= esc_attr( $image_meta['title'] );
 			$image_alt 			= esc_attr( $image_meta['alt'] );
 		}
+		
+		$image_link  = wp_get_attachment_url( $attachment_id, apply_filters( 'single_product_large_thumbnail_size', 'shop_single' ) );
+		$thumb_image = wp_get_attachment_url( $attachment_id, apply_filters( 'single_product_small_thumbnail_size', 'shop_thumbnail' ) );
+		$image       = wp_get_attachment_image( $attachment_id, apply_filters( 'single_product_large_thumbnail_size', 'shop_single' ), false, array(
+			'title'	=> $image_title,
+			'alt'	=> $image_title,
+			'class' => 'product-slider-image',
+			'data-zoom-image' => $image_link
+		) );
+	
 		if ( $image_caption != "" ) {
 			$caption_html = '<div class="img-caption">' . $image_caption . '</div>';
 		}
-		$image_html = '<img class="product-slider-image" data-zoom-image="'.$image_link.'" src="'.$image_link.'" alt="'.$image_alt.'" title="'.$image_title.'" />';
-		return '<li itemprop="image" data-thumb="'.$thumb_image.'">' . $image_html . '' . $caption_html . '<a href="'.$image_link.'" itemprop="image" class="woocommerce-main-image zoom lightbox" data-rel="ilightbox[product]" data-caption="'.$image_caption.'" title="'.$image_title.'" alt="'.$image_alt.'"><i class="fa-search-plus"></i></a></li>';
+		return '<li itemprop="image" data-thumb="'.$thumb_image.'">' . $image . '' . $caption_html . '<a href="'.$image_link.'" itemprop="image" class="woocommerce-main-image zoom lightbox" data-rel="ilightbox[product]" data-caption="'.$image_caption.'" title="'.$image_title.'" alt="'.$image_alt.'"><i class="fa-search-plus"></i></a></li>';
 	}
 	add_filter('woocommerce_single_product_image_thumbnail_html', 'sf_atelier_single_product_image_thumbnail_html', 15, 4);
 ?>

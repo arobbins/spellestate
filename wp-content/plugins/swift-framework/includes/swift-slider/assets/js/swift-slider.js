@@ -763,7 +763,7 @@ var SWIFTSLIDER = SWIFTSLIDER || {};
                 numberOfSlides = pagination.find( '.dot' ).length,
                 ssContinue = sliderInstance.data( 'continue' );
 
-            if ( body.hasClass('header-naked-light') || body.hasClass('header-naked-dark') ) {
+            if ( sliderInstance.is(':in-viewport') && ( body.hasClass('header-naked-light') || body.hasClass('header-naked-dark')) && $window.scrollTop() < 1 ) {
                 var slideColour = currentSlide.data('header-style');
                 jQuery('.header-wrap').attr('data-style', slideColour);
             }
@@ -891,7 +891,7 @@ var SWIFTSLIDER = SWIFTSLIDER || {};
                     // animate current slide content
                     if ( slideID === currentSlideID ) {
 
-                        if ( body.hasClass('header-naked-light') || body.hasClass('header-naked-dark') ) {
+                        if ( sliderInstance.is(':in-viewport') && ( body.hasClass('header-naked-light') || body.hasClass('header-naked-dark')) && $window.scrollTop() < 1 ) {
                             jQuery('.header-wrap').attr('data-style', slideColour);
                         }
 

@@ -970,7 +970,7 @@ var SWIFT = SWIFT || {};
 					twitter: true,
 					googleplus: true,
 					pinterest: {
-						source: "https://pinterest.com/pin/create/bookmarklet/?url={URL}",
+						source: "https://pinterest.com/pin/create/button/?url={URL}&media={URL}",
 						text: "Share on Pinterest"
 					}
 				};
@@ -1417,9 +1417,9 @@ var SWIFT = SWIFT || {};
 				if (!parentMenuItem.hasClass('parent')) {
 					SWIFT.header.overlayMenuToggle();
 
-					if (link.indexOf('#') === 0 && link.length > 1) {
+					if (linkHref.indexOf('#') === 0 && linkHref.length > 1) {
 						SWIFT.isScrolling = true;
-						SWIFT.page.onePageNavGoTo(link);
+						SWIFT.page.onePageNavGoTo(linkHref);
 						setTimeout(function() {
 							SWIFT.isScrolling = false;
 						}, 1000);
@@ -2154,14 +2154,19 @@ var SWIFT = SWIFT || {};
 
 			var inview = jQuery('section.row:in-viewport('+adjustment+')').attr('id'),
 				menuItems = jQuery('#main-navigation .menu li a'),
-				link = menuItems.filter('[href=#' + inview + ']');
-
+				link;
+				
+			if ( inview !== "" && typeof inview != 'undefined' ) {
+				link = menuItems.filter('[href="#' + inview + '"]');
+			}
+			
 			menuItems.parent().removeClass('current-scroll-item');
-
-			if (link.length > 0 && !link.hasClass('.current-scroll-item')) {
+	
+			if (typeof inview != 'undefined' && link.length > 0 && !link.hasClass('.current-scroll-item')) {
 				menuItems.parent().removeClass('current-scroll-item');
 				link.parent().addClass('current-scroll-item');
 			}
+			
 		},
 		mobileMenuInit: function() {
 
@@ -2241,9 +2246,9 @@ var SWIFT = SWIFT || {};
 				if (!parentMenuItem.hasClass('parent')) {
 					SWIFT.nav.mobileMenuHideTrigger();
 
-					if (link.indexOf('#') === 0 && link.length > 1) {
+					if (linkHref.indexOf('#') === 0 && linkHref.length > 1) {
 						SWIFT.isScrolling = true;
-						SWIFT.page.onePageNavGoTo(link);
+						SWIFT.page.onePageNavGoTo(linkHref);
 						setTimeout(function() {
 							SWIFT.isScrolling = false;
 						}, 1000);
@@ -2492,6 +2497,9 @@ var SWIFT = SWIFT || {};
 
 			// SMALL PRODUCT CHECK
 			SWIFT.woocommerce.smallProductCheck();
+			$window.smartresize( function() {
+				SWIFT.woocommerce.smallProductCheck();
+			});
 			
 			// PREVIEW SLIDER LAYOUT
 			if ( jQuery('.product-type-preview-slider').length > 0 ) {
@@ -2534,20 +2542,27 @@ var SWIFT = SWIFT || {};
 			jQuery("body").bind("added_to_cart", function() {
 				var navBag = jQuery('.shopping-bag-item'),
 					bagIcon = navBag.find('.cart-contents'),
-					currentProduct = jQuery('.added-spinner');
+					currentProduct = jQuery('.added-spinner'),
+					addToCartBtn,
+					addedText;
 
 				currentProduct.addClass('product-added');
 
 				if (body.hasClass('single-product') || currentProduct.parents('#jckqv').length > 0) {
-					var addToCartBtn = jQuery('.add_to_cart_button, .single_add_to_cart_button'),
-						addedText = addToCartBtn.data('added_text');
-
+					addToCartBtn = jQuery('.add_to_cart_button, .single_add_to_cart_button');
+					addedText = addToCartBtn.data('added_text');
+					addToCartBtn.find('span').text(addedText);
+				}
+				
+				if ( currentProduct.parents('li.product').length > 0 ) {
+				 	addToCartBtn = currentProduct;
+					addedText = addToCartBtn.data('added_short');						
 					addToCartBtn.find('span').text(addedText);
 				}
 				
 				if ( currentProduct.parents('.add-to-cart-shortcode').length > 0 ) {
-					var addToCartBtn = currentProduct,
-						addedText = addToCartBtn.data('added_text');
+					addToCartBtn = currentProduct;
+					addedText = addToCartBtn.data('added_text');
 					addToCartBtn.find('span').text(addedText);
 				}
 
@@ -3329,7 +3344,8 @@ var SWIFT = SWIFT || {};
 		contentSlider: function() {
 			jQuery('.content-slider > ul').each(function() {
 				var slider = jQuery(this),
-					autoplay = ((slider.parent().attr('data-autoplay') === "yes") ? true : false);
+					autoplay = ((slider.parent().attr('data-autoplay') === "yes") ? true : false),
+					timeout;
 
 				var contentSlider = slider.lightSlider({
 					mode: "fade",
@@ -4267,7 +4283,6 @@ var SWIFT = SWIFT || {};
 			var recentPostAsset = jQuery('.recent-posts:not(.carousel-items,.posts-type-list)');
 			recentPostAsset.imagesLoaded(function () {
 				SWIFT.sliders.thumb();
-				recentPostAsset.equalHeights();
 			});
 
 			// TEAM ASSETS
@@ -4277,8 +4292,10 @@ var SWIFT = SWIFT || {};
 			});
 		},
 		load: function() {
-			jQuery('.recent-posts:not(.carousel-items,.posts-type-list)').children().css('min-height','0');
-			jQuery('.recent-posts:not(.carousel-items,.posts-type-list)').equalHeights();
+			setTimeout(function() {
+				jQuery('.recent-posts:not(.carousel-items,.posts-type-list)').children().css('min-height','0');
+				jQuery('.recent-posts:not(.carousel-items,.posts-type-list)').equalHeights();
+			}, 400);
 		}
 	};
 
@@ -4577,11 +4594,11 @@ var SWIFT = SWIFT || {};
 
 					// Show correct tab on page load
 					var tabUrl = document.location.toString();
-					if (tabUrl.match('#') && jQuery('.nav-tabs a[href=#'+tabUrl.split('#')[1]+']').length > 0) {
-					    var thisTab = jQuery('.nav-tabs a[href=#'+tabUrl.split('#')[1]+']'),
+					if (tabUrl.match('#') && jQuery('.nav-tabs a[href="#'+tabUrl.split('#')[1]+'"]').length > 0) {
+					    var thisTab = jQuery('.nav-tabs a[href="#'+tabUrl.split('#')[1]+']"'),
 					    	tabHash = tabUrl.split('#')[1];
 
-					    jQuery('.nav-tabs a[href=#'+tabHash+']').tab('show');
+					    jQuery('.nav-tabs a[href="#'+tabHash+'"]').tab('show');
 					}
 
 					// Change hash on tab click
@@ -4599,11 +4616,11 @@ var SWIFT = SWIFT || {};
 
 					// Show correct accordion section on page load
 					var accordionUrl = document.location.toString();
-					if (accordionUrl.match('#') && jQuery('.spb_accordion a[href=#'+accordionUrl.split('#')[1]+']').length > 0) {
-					    var thisAccordion = jQuery('.spb_accordion a[href=#'+accordionUrl.split('#')[1]+']'),
+					if (accordionUrl.match('#') && jQuery('.spb_accordion a[href="#'+accordionUrl.split('#')[1]+'"]').length > 0) {
+					    var thisAccordion = jQuery('.spb_accordion a[href="#'+accordionUrl.split('#')[1]+'"]'),
 					    	accordionHash = accordionUrl.split('#')[1];
 
-					    jQuery('.spb_accordion a[href=#'+accordionHash+']').click();
+					    jQuery('.spb_accordion a[href="#'+accordionHash+'"]').click();
 					}
 
 					// Change hash on tab click
@@ -4622,11 +4639,11 @@ var SWIFT = SWIFT || {};
 
 					// Show correct accordion section on page load
 					var tourUrl = document.location.toString();
-					if (tourUrl.match('#') && jQuery('.spb_tour a[href=#'+tourUrl.split('#')[1]+']').length > 0) {
-					    var thisTour = jQuery('.spb_tour a[href=#'+tourUrl.split('#')[1]+']'),
+					if (tourUrl.match('#') && jQuery('.spb_tour a[href="#'+tourUrl.split('#')[1]+'"]').length > 0) {
+					    var thisTour = jQuery('.spb_tour a[href="#'+tourUrl.split('#')[1]+'"]'),
 					    	tourHash = tourUrl.split('#')[1];
 
-					    jQuery('.spb_tour a[href=#'+tourHash+']').click();
+					    jQuery('.spb_tour a[href="#'+tourHash+'"]').click();
 					}
 
 					// Change hash on tab click

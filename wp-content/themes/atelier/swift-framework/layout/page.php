@@ -26,7 +26,7 @@
 
 ?>
 
-<?php if ( have_posts() ) : the_post(); ?>
+<?php while ( have_posts() ) : the_post(); ?>
 
     <?php do_action( 'sf_page_content_before' ); ?>
 
@@ -49,4 +49,4 @@
 
     <?php do_action( 'sf_page_content_after' ); ?>
 
-<?php endif; ?>
+<?php endwhile; ?>

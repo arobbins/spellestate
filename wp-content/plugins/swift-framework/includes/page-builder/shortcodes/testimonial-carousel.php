@@ -100,7 +100,7 @@
                 $items .= spb_carousel_arrows(true);
                 $items .= '<div class="container">';
             } 
-            $items .= '<div id="carousel-' . $sf_carouselID . '" class="testimonials carousel-items clearfix ' . $list_class . '" data-columns="' . $columns . '" data-auto="false">';
+            $items .= '<ul id="carousel-' . $sf_carouselID . '" class="testimonials carousel-items clearfix ' . $list_class . '" data-columns="' . $columns . '" data-auto="false">';
 
             // TESTIMONIAL LOOP
 
@@ -141,9 +141,9 @@
             wp_reset_postdata();
 
             if ( $showcase == "yes" ) { 
-                $items .= '</div></div></div>';
+                $items .= '</ul></div></div>';
             } else {
-                $items .= '</div>';    
+                $items .= '</ul>';    
             }
 
             if ( $page_link == "yes" ) {

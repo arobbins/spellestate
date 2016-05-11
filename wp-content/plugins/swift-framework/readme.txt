@@ -2,8 +2,8 @@
 Contributors: SwiftIdeas
 Tags: swift framework
 Requires at least: 3.6
-Tested up to: 4.4.2
-Stable tag: 4.4.2
+Tested up to: 4.5
+Stable tag: 4.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,6 +16,46 @@ The Swift Framework plugin provides the Custom Post Types, Swift Slider, and Swi
 Supported Themes: Atelier, Cardinal, JOYN
 
 == Changelog ==
+
+= 2.1.7 =
+- FRONTEND: Fixed FAQs category issue.
+- BACKEND: Fixed issue with return key not working in text view.
+
+= 2.1.6 =
+- BACKEND: Fixed unexpected error with v2.1.5
+
+= 2.1.5 =
+- FRONTEND: Improved image loading by adding srcset functionality in various places such as image element, image banner element, and gallery sliders
+- FRONTEND: Fixed issue with tour display
+- FRONTEND: Fixed ajax add to cart issue with add to cart button shortcode
+- BACKEND: Fixed issue with text block having extra margin by default if override margin has been set
+- BACKEND: Fixed legacy design fields not showing as inactive
+- BACKEND: Fixed Google maps buttons fields
+- BACKEND: Fixed extra class field being overridden in child elements by the row
+- BACKEND: Removed duplicate extra class field on row
+- BACKEND: Fixed asset name enter keypress event
+- BACKEND: Text in text blocks is now forced dark colour, to avoid being unable to see the text when being set to a light colour
+- BACKEND: Multi-layer Parallax display fix
+- BACKEND: Various design option fixes
+
+= 2.1.1 =
+- FRONT-END: Fixed issue with Portfolio Showcase error.
+- BACKEND: Re-added Redux Framework to the plugin.
+
+= 2.1.0 =
+- FRONT-END: Added overflow left/right option for image asset for use in full-width rows
+- FRONT-END: You can now select a display layout in the Products page builder asset
+- BACKEND: Added design tab for margin/padding/border controls on columns, rows, and text blocks
+- BACKEND: Improved responsive + touch capabilities for editing pages on touch/mobile devices.
+- BACKEND: Added option to set the default width of the element edit modal
+- BACKEND: Performance improvements
+- BACKEND: Fixed issue with edit modal header disappearing.
+- BACKEND: Fixed issue with controls on 1/6 elements + columns
+- BACKEND: Edit modal header is now stuck to the top of the edit modal, allowing for save/cancel without scrolling
+- BACKEND: Improved element searching, showing no results if none are found rather than all.
+- BACKEND: Fixed compatibility issue with NinjaForms
+- BACKEND: Removed redux framework as provided with the theme or plugin instead.
+- BACKEND: Boxed Content now shows inner content if the Text Block show content option is enabled in the page builder options
 
 = 2.0.3 =
 - FRONT-END: reverted button changes to use previous parameter names.

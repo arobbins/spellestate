@@ -10,7 +10,7 @@
     */
 ?>
 
-<?php if ( have_posts() ) : the_post(); ?>
+<?php while (have_posts()) : the_post(); ?>
 
     <?php
     sf_set_sidebar_global( 'no-sidebars' );
@@ -84,4 +84,4 @@
     do_action( 'sf_portfolio_after_article' );
     ?>
 
-<?php endif; ?>
+<?php endwhile; ?>

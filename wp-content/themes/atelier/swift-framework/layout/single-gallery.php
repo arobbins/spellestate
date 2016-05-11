@@ -55,7 +55,7 @@
     }
 ?>
 
-<?php if ( have_posts() ) : the_post(); ?>
+<?php while (have_posts()) : the_post(); ?>
 
     <?php
     $gallery_id = get_the_ID();
@@ -99,4 +99,4 @@
     do_action( 'sf_gallery_after_article' );
     ?>
 
-<?php endif; ?>
+<?php endwhile; ?>

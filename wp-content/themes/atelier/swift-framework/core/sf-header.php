@@ -41,6 +41,23 @@
         }
         add_action( 'sf_before_page_container', 'sf_framework_check', 0 );
     }
+    
+    /* REDUX CHECK
+    ================================================== */
+    if ( ! function_exists( 'sf_redux_check' ) ) {
+        function sf_redux_check() {
+
+        	if ( class_exists( 'ReduxFramework' ) || !( current_user_can('editor') || current_user_can('administrator') ) ) {
+        		return;
+        	}
+
+            echo '<div class="swift-framework-notice">';
+            echo '<h3>Please install/activate the Redux Framework plugin.</h3>';
+            echo '<p>If you have not installed the plugin, please go to Appearance > Install Plugins</p>';
+            echo '</div>';
+        }
+        add_action( 'sf_before_page_container', 'sf_redux_check', 5 );
+    }
 
 
     /* SITE LOADING
@@ -635,11 +652,29 @@
 
 			$mobile_header_class = "";
             $mobile_header_output = "";
-
-            $mobile_menu_link = '<a href="#" class="mobile-menu-link menu-bars-link">' . $mobile_menu_icon . '</a>';
+			
+			if ( sf_theme_supports('hamburger-css') ) {
+				$mobile_menu_type        = "slideout";
+				$hamburger_class = 'hamburger--3dx';
+				if ( isset( $sf_options['mobile_menu_type'] ) ) {
+				    $mobile_menu_type = $sf_options['mobile_menu_type'];
+				}
+				if ( $mobile_menu_type == "overlay" ) {
+					$hamburger_class = 'hamburger--3dy';
+				}
+				
+				$mobile_menu_link = '<button class="hamburger mobile-menu-link '.$hamburger_class.'" type="button">
+				  <span class="hamburger-box">
+				    <span class="hamburger-inner"></span>
+				  </span>
+				</button>';
+			} else {
+				$mobile_menu_link = '<a href="#" class="mobile-menu-link menu-bars-link">' . $mobile_menu_icon . '</a>';
+			}
+			
             $mobile_cart_link = '<a href="#" class="mobile-cart-link">' . $mobile_cart_icon . '</a>';
 
-			if ( sf_theme_opts_name() == "sf_atelier_options" ) {
+			if ( sf_theme_opts_name() == "sf_atelier_options" || sf_theme_opts_name() == "sf_uplift_options" ) {
 				$mobile_cart_link = '<nav class="std-menu float-alt-menu">' . "\n";
                 $mobile_cart_link .= '<ul class="menu">' . "\n";
 				$mobile_cart_link .= sf_get_cart();
@@ -1022,9 +1057,9 @@
 				$go_to_shop_icon  	 = apply_filters( 'sf_go_to_shop_icon', '<i class="ss-cart"></i>' );
 
                 if ( $show_cart_count ) {
-                    $cart_output .= '<li class="parent shopping-bag-item"><a class="cart-contents" href="' . $woocommerce->cart->get_cart_url() . '" title="' . __( "View your shopping cart", "swiftframework" ) . '">'. apply_filters( 'sf_header_cart_icon', '<i class="ss-cart"></i>' ) . $cart_total . '<span class="num-items cart-count-enabled">' . $cart_count_text_alt . '</span></a>';
+                    $cart_output .= '<li class="parent shopping-bag-item"><a class="cart-contents" href="' . $woocommerce->cart->get_cart_url() . '" title="' . __( "View your shopping cart", "swiftframework" ) . '">'. apply_filters( 'sf_header_cart_icon', '<i class="ss-cart"></i>' ) . '<span class="cart-text">' . __( "Cart", "swiftframework" ) . '</span>' . $cart_total . '<span class="num-items cart-count-enabled">' . $cart_count_text_alt . '</span></a>';
                 } else {
-                    $cart_output .= '<li class="parent shopping-bag-item"><a class="cart-contents" href="' . $woocommerce->cart->get_cart_url() . '" title="' . __( "View your shopping cart", "swiftframework" ) . '">'. apply_filters( 'sf_header_cart_icon', '<i class="ss-cart"></i>' ) . $cart_total . '<span class="num-items">' . $cart_count_text_alt . '</span></a>';
+                    $cart_output .= '<li class="parent shopping-bag-item"><a class="cart-contents" href="' . $woocommerce->cart->get_cart_url() . '" title="' . __( "View your shopping cart", "swiftframework" ) . '">'. apply_filters( 'sf_header_cart_icon', '<i class="ss-cart"></i>' ) . '<span class="cart-text">' . __( "Cart", "swiftframework" ) . '</span>' . $cart_total . '<span class="num-items">' . $cart_count_text_alt . '</span></a>';
                 }
                 $cart_output .= '<ul class="sub-menu">';
                 $cart_output .= '<li>';

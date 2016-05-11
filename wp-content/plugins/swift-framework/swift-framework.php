@@ -5,11 +5,11 @@
 	*	Plugin Name: Swift Framework
 	*	Plugin URI: http://www.swiftideas.com/swift-framework/
 	*	Description: The Swift Framework plugin.
-	*	Version: 2.0.3
+	*	Version: 2.2.0
 	*	Author: Swift Ideas
 	*	Author URI: http://swiftideas.com
 	*	Requires at least: 3.6
-	*	Tested up to: 4.4.2
+	*	Tested up to: 4.5
 	*
 	*	Text Domain: swift-framework-plugin
 	*	Domain Path: /languages/

@@ -3,9 +3,11 @@
 Plugin Name: WooCommerce Stripe Gateway
 Plugin URI: http://www.woothemes.com/products/stripe/
 Description: A payment gateway for Stripe (https://stripe.com/). A Stripe account and a server with Curl, SSL support, and a valid SSL certificate is required (for security reasons) for this gateway to function. Requires WC 2.1+
-Version: 2.6.9
-Author: Mike Jolley
-Author URI: http://mikejolley.com
+Version: 2.6.12
+Author: WooThemes
+Author URI: http://woothemes.com
+Text Domain: woocommerce-gateway-stripe
+Domain Path: /languages
 
 	Copyright: © 2009-2014 WooThemes.
 	License: GNU General Public License v3.0
@@ -39,10 +41,13 @@ class WC_Stripe {
 	 * Constructor
 	 */
 	public function __construct() {
-		define( 'WC_STRIPE_VERSION', '2.6.9' );
+		define( 'WC_STRIPE_VERSION', '2.6.12' );
 		define( 'WC_STRIPE_TEMPLATE_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) . '/templates/' );
 		define( 'WC_STRIPE_PLUGIN_URL', untrailingslashit( plugins_url( basename( plugin_dir_path( __FILE__ ) ), basename( __FILE__ ) ) ) );
 		define( 'WC_STRIPE_MAIN_FILE', __FILE__ );
+
+		// required files
+		require_once( 'includes/class-wc-gateway-stripe-logger.php' );
 
 		// Actions
 		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'plugin_action_links' ) );
@@ -91,8 +96,25 @@ class WC_Stripe {
 			}
 		}
 
-		// Localisation
-		load_plugin_textdomain( 'woocommerce-gateway-stripe', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+		$this->load_plugin_textdomain();
+	}
+
+	/**
+	 * Load Localisation files.
+	 *
+	 * Note: the first-loaded translation file overrides any following ones if
+	 * the same translation is present.
+	 *
+	 * Locales found in:
+	 *      - WP_LANG_DIR/woocommerce-gateway-stripe/woocommerce-gateway-stripe-LOCALE.mo
+	 *      - WP_LANG_DIR/plugins/woocommerce-gateway-stripe-LOCALE.mo
+	 */
+	public function load_plugin_textdomain() {
+		$locale = apply_filters( 'plugin_locale', get_locale(), 'woocommerce-gateway-stripe' );
+		$dir    = trailingslashit( WP_LANG_DIR );
+
+		load_textdomain( 'woocommerce-gateway-stripe', $dir . 'woocommerce-gateway-stripe/woocommerce-gateway-stripe-' . $locale . '.mo' );
+		load_plugin_textdomain( 'woocommerce-gateway-stripe', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 	}
 
 	/**
@@ -179,6 +201,7 @@ class WC_Stripe {
 			}
 		}
 	}
+
 }
 
 new WC_Stripe();

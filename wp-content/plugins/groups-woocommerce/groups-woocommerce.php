@@ -2,7 +2,7 @@
 /**
  * groups-woocommerce.php
  *
- * Copyright (c) 2012-2015 "kento" Karim Rahimpur www.itthinx.com
+ * Copyright (c) 2012-2016 "kento" Karim Rahimpur www.itthinx.com
  *
  * This code is provided subject to the license granted.
  * Unauthorized use and distribution is prohibited.
@@ -22,12 +22,12 @@
  * Plugin Name: Groups WooCommerce
  * Plugin URI: http://www.itthinx.com/plugins/groups-woocommerce
  * Description: Memberships with Groups and WooCommerce. Integrates Groups with WooCommerce and WooCommerce Subscriptions for group membership management based on product purchases and subscriptions. <a href="http://www.itthinx.com/documentation/groups-woocommerce/">Documentation</a> | <a href="http://www.itthinx.com/plugins/groups-woocommerce/">Plugin page</a>
- * Version: 1.9.3
+ * Version: 1.9.5
  * Author: itthinx
  * Author URI: http://www.itthinx.com
  */
 
-define( 'GROUPS_WS_VERSION', '1.9.3' );
+define( 'GROUPS_WS_VERSION', '1.9.5' );
 
 /**
  * Required functions

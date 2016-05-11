@@ -35,7 +35,7 @@
             ), $atts ) );
 
             $search_icon = apply_filters( 'sf_search_icon' , '<i class="ss-search"></i>' );
-
+            $view_icon_svg = apply_filters( 'sf_view_icon_svg' , '' );
 
             /* SIDEBAR CONFIG
             ================================================== */
@@ -145,7 +145,11 @@
                             $masonry_gallery .= '</figcaption>' . "\n";
                         } else if ($enable_lightbox == "yes") {
                             $masonry_gallery .= '<figcaption><div class="thumb-info thumb-info-alt">';
-                            $masonry_gallery .= $search_icon;
+                            if ( $view_icon_svg != "" ) {
+                                $masonry_gallery .= $view_icon_svg;
+                            } else {
+                                $masonry_gallery .= $search_icon;
+                            }
                             $masonry_gallery .= '</figcaption>' . "\n";
                         }
                         
@@ -177,10 +181,13 @@
 
 	                        if ( $enable_lightbox == "yes" ) {
 	                            $main_slider .= "<a href='{$image['full_url']}' class='lightbox zoom' data-rel='ilightbox[galleryid-" . $lightbox_id ."]' data-caption='{$image['caption']}'><i class='fa-search-plus'></i></a>";
-
 	                        }
 
-	                        $main_slider .= "<img src='{$image['full_url']}' alt='{$image['alt']}' />";
+                            if ( isset($image['image_srcset']) ) {
+                                $main_slider .= $image['image_srcset'];
+                            } else {
+                                $main_slider .= "<img src='{$image['full_url']}' alt='{$image['alt']}' />";
+                            }
 
 	                        if ( $show_captions == "yes" && $image['caption'] != "" ) {
 	                            $main_slider .= '<p class="flex-caption">' . $image['caption'] . '</p>';
@@ -202,12 +209,21 @@
 
 	                    foreach ( $gallery_images as $image ) {
 
-	                        if ( $enable_lightbox == "yes" ) {
-	                            $main_slider .= "<li><a href='{$image['full_url']}' class='lightbox' data-rel='ilightbox[galleryid-" . $lightbox_id ."]' data-caption='{$image['caption']}'><img src='{$image['url']}' width='{$image['width']}' height='{$image['height']}' alt='{$image['alt']}' /></a>";
+                            $main_slider .= "<li>";
 
-	                        } else {
-	                            $main_slider .= "<li><img src='{$image['url']}' width='{$image['width']}' height='{$image['height']}' alt='{$image['alt']}' />";
-	                        }
+	                        if ( $enable_lightbox == "yes" ) {
+	                            $main_slider .= "<a href='{$image['full_url']}' class='lightbox' data-rel='ilightbox[galleryid-" . $lightbox_id ."]' data-caption='{$image['caption']}'>";
+                            }
+
+                            if ( isset($image['image_srcset']) ) {
+                                $main_slider .= $image['image_srcset'];
+                            } else {
+                                $main_slider .= "<img src='{$image['url']}' width='{$image['width']}' height='{$image['height']}' alt='{$image['alt']}' />";
+                            }
+
+                            if ( $enable_lightbox == "yes" ) {
+                                $main_slider .= "</a>";
+                            }
 
 	                        if ( $show_captions == "yes" && $image['caption'] != "" ) {
 	                            $main_slider .= '<p class="flex-caption">' . $image['caption'] . '</p>';

@@ -30,7 +30,7 @@
                 'animation'       => '',
                 'animation_delay' => '',
                 'link'            => '',
-                'target'          => '',
+                'target'          => '_self',
                 'el_class'        => '',
                 'el_position'     => '',
                 'width'           => '1/1'
@@ -38,6 +38,10 @@
 
             $has_image = false;
             $output = $icon_box = '';
+
+            if ( $target == "" ) {
+                $target = "_self";
+            }
 
             $el_class = $this->getExtraClass( $el_class );
             $width    = spb_translateColumnWidthToSpan( $width );

@@ -78,38 +78,35 @@ class SwiftFramework_Admin {
 		</h2>
 
 		<div class="about-content">
+
+			<?php if ( !class_exists( 'ReduxFramework' ) ) { ?>
+				<h4>Please install the Redux Framework plugin, as this is required for the Swift Framework plugin to function correctly.</h4>
+				<br/><br/>
+			<?php } ?>
+
 			<p></p>
 			<h3>Coming Soon</h3>
 			<ul>
-				<li><strong>Page Builder</strong> - Design tab. Allowing you to control padding/margin/borders on elements, as well as colours.</li>
-				<li><strong>Page Builder</strong> - responsive & touch device usability improvements.</li>
+				<li>Height option for image banner elements.</li>
+				<li>Preview functionality for elements.</li>
+				<li>Text link option for modal element.</li>
 			</ul>
 			<div class="divide"></div>
-			<h3>Latest Update (v2.0.3)</h3>
+			<h3>Latest Update (v2.2.0)</h3>
 			<p></p>
 			<ul>
-				<li>FRONT-END: reverted button changes to use previous parameter names..</li>
-				<li>BACKEND: Removed empty page builder animation.</li>
-				<li>BACKEND: Added most used functionality, allowing you to quickly access your most used elements.</li>
-				<li>BACKEND: Alert Asset fixes.</li>
-				<li>BACKEND: Fixed Scroll bar in the Edit modal that couldn’t be selected.</li>
-				<li>BACKEND: The sizes (height) of the resize handle was changed to avoid resize conflicts in elements inside each others (like in tabs, accordions, tours, Row).</li>
-				<li>BACKEND: Fixed issues with dragging elements to the bottom of the page builder area. Was fixed in Row, Tour, Tabs, Accordions.</li>
-				<li>BACKEND: Fixed issues with elements added to the tabs, Accordions, tours.</li>
+				<li>FRONTEND: Improved setup of row slants.</li>
+				<li>BACKEND: Added repsonsive visibility indictator to elements, with tooltips.</li>
+				<li>BACKEND: Fixed issue with design options not saving correctly.</li>
+				<li>BACKEND: Other minor fixes.</li>
 			</ul>
 			<div class="divide"></div>
-			<h3>Previous Update (v2.0.2)</h3>
+			<h3>Previous Update (v2.1.7)</h3>
 			<p></p>
 			<ul>
-				<li>FRONTEND: further icon box fixes.</li>
-				<li>FRONTEND: Added compatibility for Portfolio WPML duplication.</li>
-				<li>BACKEND: Added option to show text block text within the element preview, like in older versions.</li>
-				<li>BACKEND: Fixed issue with Toggle display.</li>
-				<li>BACKEND: Fixed issue with responsive visibility dropdown being cut off.</li>
-				<li>BACKEND: Fixed issue with Widget Area element.</li>
-				<li>BACKEND: Fixed issue with products element.</li>
+				<li>FRONTEND: Fixed FAQs category issue.</li>
+				<li>BACKEND: Fixed issue with return key not working in text view.</li
 			</ul>
-			<p></p>
 		</div>
 
 		</div>

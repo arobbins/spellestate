@@ -240,19 +240,20 @@
             $type       = isset( $param['type'] ) ? $param['type'] : '';
             $class      = isset( $param['class'] ) ? $param['class'] : '';
 
-            if ( isset( $param['holder'] ) == false || $param['holder'] == 'hidden' ) {
+              if ( isset( $param['holder'] ) == false || $param['holder'] == 'hidden' ) {
                 $output .= '<input type="hidden" class="spb_param_value ' . $param_name . ' ' . $type . ' ' . $class . '" name="' . $param_name . '" value="' . $value . '" />';
                 if ( ( $param['type'] ) == 'attach_image' ) {
                     $img = spb_getImageBySize( array(
                         'attach_id'  => (int) preg_replace( '/[^\d]/', '', $value ),
-                        'thumb_size' => '66x66'
-                       
-                    ) );
-                    
-                    $output .= ( $img ? $img['p_img_small'] : '<img width="66" height="66" src="' . SwiftPageBuilder::getInstance()->assetURL( 'img/blank_f7.gif' ) . '" class="attachment-thumbnail" alt="" title="" />' ) . '<a href="#" class="column_edit_trigger' . ( $img && ! empty( $img['p_img_small'] ) ? ' image-exists' : '' ) . '"><i class="spb-icon-single-image"></i>' . __( 'No image yet! Click here to select it now.', 'swift-framework-plugin' ) . '</a>';
+                        'thumb_size' => 'thumbnail'
+                    ) ); 
+   
+
+                    $output .= ( $img ? $img['p_img_small'] : '<img width="66" height="66" src="' . SwiftPageBuilder::getInstance()->assetURL( 'img/blank_f7.gif' ) . '" class="attachment-thumbnail" alt="" title="" />' ) . '<a href="#" class="column_edit_trigger' . ( $img && ! empty( $img['p_img_small'][0] ) ? ' image-exists' : '' ) . '"><i class="spb-icon-single-image"></i>' . __( 'No image yet! Click here to select it now.', 'swift-framework-plugin' ) . '</a>';
                 }
             } else {
                 $output .= '<' . $param['holder'] . ' class="spb_param_value ' . $param_name . ' ' . $type . ' ' . $class . '" name="' . $param_name . '">' . $value . '</' . $param['holder'] . '>';
+
             }
 
             return $output;
@@ -273,9 +274,9 @@
   
                     $img = spb_getImageBySize( array(
                         'attach_id'  => (int) preg_replace( '/[^\d]/', '', $value ),
-                        'thumb_size' => '66x66'
+                        'thumb_size' => 'thumbnail'
                     ) );
-                    $output .= ( $img ? $img['p_img_small'] : '<img width="66" height="66" src="' . SwiftPageBuilder::getInstance()->assetURL( 'img/blank_f7.gif' ) . '" class="attachment-thumbnail" alt="" title="" />' ) . '<a href="#" class="hide-layer-image column_edit_trigger' . ( $img && ! empty( $img['p_img_small'] ) ? ' image-exists' : '' ) . '"><i class="spb-icon-single-image"></i>' . __( 'No image yet! Click here to select it now.', 'swift-framework-plugin' ) . '</a>';
+                    $output .= ( $img ? $img['p_img_small'] : '<img width="66" height="66" src="' . SwiftPageBuilder::getInstance()->assetURL( 'img/blank_f7.gif' ) . '" class="attachment-thumbnail" alt="" title="" />' ) . '<a href="#" class="hide-layer-image column_edit_trigger' . ( $img && ! empty( $img['p_img_small'][0] ) ? ' image-exists' : '' ) . '"><i class="spb-icon-single-image"></i>' . __( 'No image yet! Click here to select it now.', 'swift-framework-plugin' ) . '</a>';
                 }
             } else {
                 $output .= '<' . $param['holder'] . ' class="spb_param_value ' . $param_name . ' ' . $type . ' ' . $class . '" name="' . $param_name . '">' . $value . '</' . $param['holder'] . '>';

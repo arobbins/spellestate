@@ -332,13 +332,17 @@
             }
 
         }
-       
-        if ( $p_img != '' ){
+        
+        if ( $p_img != '' ) {
             $p_img_small = '<img src="' . $p_img['url'] . '" width="66" height="66"  class="attachment-thumbnail" />';
+        } else {
+            $img = wp_get_attachment_image_src( $attach_id, 'thumbnail' );
+            if ( isset($img[0]) ) {
+                $p_img_small = '<img src="' . $img[0] . '" width="66" height="66"  class="attachment-thumbnail" />';
+            }
         }
-      
+
         $p_img_large = wp_get_attachment_image_src( $attach_id, 'large' );
-      //   var_dump( $p_img );
 
         return array( 'thumbnail' => $thumbnail, 'p_img_large' => $p_img_large, 'p_img_small' => $p_img_small );
     }

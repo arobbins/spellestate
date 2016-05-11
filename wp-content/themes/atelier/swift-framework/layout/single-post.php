@@ -120,7 +120,7 @@
     }
 ?>
 
-<?php if ( have_posts() ) : the_post(); ?>
+<?php while (have_posts()) : the_post(); ?>
 
     <?php do_action( 'sf_post_before_article' ); ?>
 
@@ -194,4 +194,4 @@
     
     <?php do_action( 'sf_post_after_article_extras' ); ?>
 
-<?php endif; ?>
+<?php endwhile; ?>

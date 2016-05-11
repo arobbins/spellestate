@@ -13,7 +13,6 @@
     *	sf_video_vimeo()
     *	sf_get_embed_src()
     *	sf_featured_img_title()
-    *	sf_swift_slider()
     *
     */
 

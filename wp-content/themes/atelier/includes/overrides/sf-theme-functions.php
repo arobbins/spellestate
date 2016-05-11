@@ -1497,9 +1497,9 @@
 	    	    }
 	    	    $post_details .= '</div>';
 	    	} else if ( $single_author && comments_open() ) {
-	    	    $post_details .= '<div class="post-item-details"><span>'. $comments .'</span></div>';
+	    	    $post_details .= '<div class="blog-item-details"><span>'. $comments .'</span></div>';
 	    	} else {
-	    	    $post_details .= '<span class="author">' . sprintf( __( 'By <a href="%2$s" rel="author" itemprop="author">%1$s</a>', 'swiftframework' ), $post_author, get_author_posts_url( get_the_author_meta( 'ID' ) ) ) . '</span>';
+	    	    $post_details .= '<div class="blog-item-details"><span class="author">' . sprintf( __( 'By <a href="%2$s" rel="author" itemprop="author">%1$s</a>', 'swiftframework' ), $post_author, get_author_posts_url( get_the_author_meta( 'ID' ) ) ) . '</span></div>';
 	    	}
 
 	    	return $post_details;

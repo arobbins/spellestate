@@ -2747,3 +2747,34 @@ body.woocommerce p.stars a:hover:after {
 .bag-product .bag-product-details {
   font-family: "Julius Sans One";
 }
+
+
+/* New styles -- 5/11/16 */
+ .woocommerce-shop-page .prdctfltr_wc.prdctfltr_woocommerce.pf_select .prdctfltr_checkboxes {
+  z-index: 9999;
+}
+
+.product-grid .product {
+  opacity: 1;
+}
+
+
+.prdctfltr_wc .prdctfltr_filter_title .prdctfltr_woocommerce_filter {
+  position: absolute;
+  top: 160%;
+  z-index: 9999999999;
+  background-color: white;
+  left: 46%;
+}
+
+
+.prdctfltr_wc .prdctfltr_filter_title .prdctfltr_woocommerce_filter .prdctfltr-bars:before {
+  display: none;
+}
+
+.woocommerce .products .product {
+  display: inline-block !important;
+  vertical-align: top;
+  width: 24%;
+  float: none;
+}

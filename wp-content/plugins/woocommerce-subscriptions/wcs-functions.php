@@ -13,6 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once( 'includes/wcs-deprecated-functions.php' );
+require_once( 'includes/wcs-conditional-functions.php' );
 require_once( 'includes/wcs-formatting-functions.php' );
 require_once( 'includes/wcs-cart-functions.php' );
 require_once( 'includes/wcs-order-functions.php' );

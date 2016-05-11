@@ -40,7 +40,12 @@
                 continue;
             }
 
-            $image       = wp_get_attachment_image( $attachment_id, apply_filters( 'single_product_small_thumbnail_size', 'shop_thumbnail' ) );
+            $image       = wp_get_attachment_image( $attachment_id, apply_filters( 'single_product_large_thumbnail_size', 'shop_thumbnail' ), false, array(
+            	'title'	=> $image_title,
+            	'alt'	=> $image_title,
+            	'class' => 'product-slider-image',
+            	'data-zoom-image' => $image_link
+            ) );
             $image_class = esc_attr( implode( ' ', $classes ) );
             $image_caption 	= get_post( get_post_thumbnail_id() )->post_excerpt;
             $image_title = esc_attr( get_the_title( $attachment_id ) );

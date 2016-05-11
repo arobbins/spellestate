@@ -5,7 +5,7 @@
  * Description: Sell products and services with recurring payments in your WooCommerce Store.
  * Author: Prospress Inc.
  * Author URI: http://prospress.com/
- * Version: 2.0.11
+ * Version: 2.0.13
  *
  * Copyright 2016 Prospress, Inc.  (email : freedoms@prospress.com)
  *
@@ -118,7 +118,7 @@ class WC_Subscriptions {
 
 	public static $plugin_file = __FILE__;
 
-	public static $version = '2.0.11';
+	public static $version = '2.0.13';
 
 	private static $total_subscription_count = null;
 
@@ -152,14 +152,14 @@ class WC_Subscriptions {
 		// Ensure a subscription is never in the cart with products
 		add_filter( 'woocommerce_add_to_cart_validation', __CLASS__ . '::maybe_empty_cart', 10, 3 );
 
-		// Enqueue front-end styles
-		add_filter( 'woocommerce_enqueue_styles', __CLASS__ . '::enqueue_styles', 10, 1 );
+		// Enqueue front-end styles, run after Storefront because it sets the styles to be empty
+		add_filter( 'woocommerce_enqueue_styles', __CLASS__ . '::enqueue_styles', 100, 1 );
 
 		// Display Subscriptions on a User's account page
 		add_action( 'woocommerce_before_my_account', __CLASS__ . '::get_my_subscriptions_template' );
 
 		// Load translation files
-		add_action( 'plugins_loaded', __CLASS__ . '::load_plugin_textdomain' );
+		add_action( 'init', __CLASS__ . '::load_plugin_textdomain', 3 );
 
 		// Load dependent files
 		add_action( 'plugins_loaded', __CLASS__ . '::load_dependant_classes' );
@@ -314,6 +314,13 @@ class WC_Subscriptions {
 				'deps'    => 'woocommerce-smallscreen',
 				'version' => WC_VERSION,
 				'media'   => '',
+			);
+		} elseif ( is_checkout() ) {
+			$styles['wcs-checkout'] = array(
+				'src'     => str_replace( array( 'http:', 'https:' ), '', plugin_dir_url( __FILE__ ) ) . 'assets/css/checkout.css',
+				'deps'    => 'wc-checkout',
+				'version' => WC_VERSION,
+				'media'   => 'all',
 			);
 		}
 

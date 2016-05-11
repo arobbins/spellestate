@@ -57,7 +57,15 @@
     }
 
     function sf_excerpt( $limit ) {
-        $excerpt = explode( ' ', get_the_excerpt(), $limit );
+    	global $post;
+    	$excerpt = "";
+        $custom_excerpt = sf_get_post_meta( $post->ID, 'sf_custom_excerpt', true );
+		
+		if ( $custom_excerpt != "" ) {
+			$excerpt = explode( ' ', $custom_excerpt, $limit );
+		} else {
+			$excerpt = explode( ' ', get_the_excerpt(), $limit );
+		}
         if ( count( $excerpt ) >= $limit ) {
             array_pop( $excerpt );
             $excerpt = implode( " ", $excerpt ) . '...';

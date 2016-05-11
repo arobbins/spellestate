@@ -150,7 +150,7 @@
                 if ( ! $fancy_title_image ) {
                     $fancy_title_image     = get_post_thumbnail_id();
                     $fancy_title_image_url = wp_get_attachment_url( $fancy_title_image, 'full' );
-                    $fancy_title_image_meta = wp_get_attachment_metadata( $hero_id );
+                    $fancy_title_image_meta = wp_get_attachment_metadata( $fancy_title_image );
                     $heading_img_width = isset($fancy_title_image_meta['width']) ? $fancy_title_image_meta['width'] : 0;
                     $heading_img_height = isset($fancy_title_image_meta['height']) ? $fancy_title_image_meta['height'] : 0;
                 }
@@ -355,9 +355,8 @@
 							<?php } else if ( is_tax() ) {	
 								global $wp_query;
 								$term = $wp_query->get_queried_object();
-								var_dump($term);
 							?>
-								<h1 <?php echo $article_heading_text; ?><?php echo $term->name; ?></h1>
+								<h1 <?php echo $article_heading_text; ?>><?php echo $term->name; ?></h1>
 								
                             <?php } else if ( is_archive() ) { ?>
 

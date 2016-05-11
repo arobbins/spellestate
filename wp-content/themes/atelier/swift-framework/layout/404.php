@@ -1,6 +1,9 @@
 <?php
     global $sf_options;
-    $type = $sf_options['404_type'];
+    $type = "";
+    if ( isset($sf_options['404_type']) ) {
+    	$type = $sf_options['404_type'];
+    }
     
     if ( $type == "page" ) {
     	$page = __( $sf_options['404_page'], 'swiftframework' );
@@ -12,6 +15,7 @@
             exit;
         }
     }
+    
     $error_content = __( $sf_options['404_page_content'], 'swiftframework' );
 ?>
 

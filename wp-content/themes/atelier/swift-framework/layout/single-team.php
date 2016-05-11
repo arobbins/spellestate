@@ -10,7 +10,7 @@
     */
 ?>
 
-<?php if ( have_posts() ) : the_post(); ?>
+<?php while (have_posts()) : the_post(); ?>
 
     <?php
     $member_position    = sf_get_post_meta( $post->ID, 'sf_team_member_position', true );
@@ -103,4 +103,4 @@
     do_action( 'sf_team_after_article' );
     ?>
 
-<?php endif; ?>
+<?php endwhile; ?>

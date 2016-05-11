@@ -5,7 +5,7 @@
     remove_action( 'atcf_campaign_contribute_custom_price', 'edd_purchase_link_top', 5 );
 ?>
 
-<?php if ( have_posts() ) : the_post(); ?>
+<?php while (have_posts()) : the_post(); ?>
 
     <!-- OPEN article -->
     <article <?php post_class( 'clearfix' ); ?> id="<?php the_ID(); ?>">
@@ -64,4 +64,4 @@
 
     </section>
 
-<?php endif; ?>
+<?php endwhile; ?>

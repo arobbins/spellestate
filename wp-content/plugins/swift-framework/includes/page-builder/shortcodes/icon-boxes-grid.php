@@ -43,13 +43,23 @@
         }
     }
 
-    SPBMap::map( 'spb_icon_box_grid', array(
+    if( get_option('sf_theme') == 'uplift' ) {
+
+        SPBMap::map( 'spb_icon_box_grid', array(
         "name"          => __( "Icon Box Grid", 'swift-framework-plugin' ),
         "base"          => "spb_icon_box_grid",
         "class"         => "spb_tab_ui",
         "icon"          => "icon-icon-grid",
         "wrapper_class" => "clearfix",
         "params"        => array(
+            array(
+                "type"        => "dropdown",
+                "heading"     => __( "Column count", 'swift-framework-plugin' ),
+                "param_name"  => "columns",
+                "value"       => array( "3", "4" ),
+                "std"         => '3',
+                "description" => __( "How many columns to display.", 'swift-framework-plugin' )
+            ),
             array(
                 "type"        => "dropdown",
                 "heading"     => __( "Colour Style", 'swift-framework-plugin' ),
@@ -86,4 +96,5 @@
 		  
 			
         )
-    ) );
+        ) );
+    }
