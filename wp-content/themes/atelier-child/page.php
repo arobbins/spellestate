@@ -61,7 +61,7 @@
 <?php } ?>
 
 <?php
-  
+
   if(have_rows('modules')):
 
     while(have_rows('modules')) : the_row();
@@ -70,6 +70,13 @@
       if(get_row_layout() == 'module_promo'):
 
         get_template_part('modules/promo/promo-view');
+
+      endif;
+
+      // Default
+      if(get_row_layout() == 'module_default'):
+
+        get_template_part('modules/default/default-view');
 
       endif;
 
