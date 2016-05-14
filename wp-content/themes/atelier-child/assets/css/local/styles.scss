@@ -27,6 +27,7 @@
 @import "mixins";
 @import "variables";
 @import "grid";
+@import "blog";
 
 @font-face {
   font-family: 'icomoon';
@@ -2777,4 +2778,12 @@ body.woocommerce p.stars a:hover:after {
   vertical-align: top;
   width: 24%;
   float: none;
+}
+
+.woo-aux-options-wrap {
+  display: none;
+}
+
+.woocommerce-shop-page-title {
+  border-bottom: 1px solid #e4e4e4;
 }

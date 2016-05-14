@@ -1,0 +1,123 @@
+.single-post {
+
+  .post-details {
+    .categories {
+      display: none;
+    }
+  }
+
+  .top-author-info {
+    // margin-bottom: 0;
+  }
+}
+
+.top-author-info .post-details {
+  width: 80%;
+}
+
+.blog-item-details span.author {
+  font-size: 16px;
+}
+
+.post-aux-wrap {
+  display: none;
+}
+
+
+.blog .blog-items {
+  margin: 0;
+  width: 100%;
+  list-style: none;
+  padding: 0;
+}
+
+.blog .blog-item {
+  width: 49%;
+
+  @include respond-to(600) {
+    width: 100%;
+  }
+}
+
+.blog .blog-item:nth-child(even) {
+  padding-right: 0;
+}
+
+.blog .inner-page-wrap .col-sm-8 {
+  width: 100%;
+}
+
+.blog .blog-item .comments-likes {
+  display: none;
+}
+
+.masonry-items .blog-item figure.thumb-media-image+.details-wrap:before,
+.masonry-items .blog-item figure.thumb-media-slider+.details-wrap:before {
+  display: none;
+}
+
+.masonry-items .blog-item figure.thumb-media-image+.details-wrap,
+.masonry-items .blog-item figure.thumb-media-slider+.details-wrap {
+  padding: 25px;
+  box-shadow: none;
+  border: 1px solid #e3e3e3;
+}
+
+.blog .posts-type-bold .recent-post .details-wrap,
+.blog .masonry-items .blog-item .details-wrap,
+.blog .blog-grid-items .blog-item > div,
+.blog .product-shadows .preview-slider-item-wrapper {
+  background-color: white;
+}
+
+.masonry-items .blog-item .read-more-button {
+  position: static;
+  border: none;
+  font-weight: normal;
+}
+
+.masonry-items .blog-item .details-wrap h2,
+.masonry-items .blog-item .inst-overlay h2 {
+  margin-bottom: 0;
+  font-size: 24px;
+}
+
+.blog .posts-type-bold .recent-post.has-thumb:hover .details-wrap,
+.blog .posts-type-bold .recent-post.no-thumb:hover .details-wrap,
+.blog .bold-items .blog-item:hover,
+.blog .masonry-items .blog-item:hover .details-wrap,
+.blog .blog-grid-items .blog-item:hover > div,
+.blog .instagram-item .inst-overlay,
+.blog .masonry-items .blog-item:hover .details-wrap:before {
+  background-color: transparent;
+  opacity: 0.6;
+  color: #222;
+}
+
+.blog .posts-type-bold .recent-post:hover .details-wrap *,
+.blog .bold-items .blog-item:hover *,
+.blog .masonry-items .blog-item:hover .details-wrap,
+.blog .masonry-items .blog-item:hover .details-wrap a,
+.blog .masonry-items .blog-item:hover h2,
+.blog .masonry-items .blog-item:hover h6,
+.blog .masonry-items .blog-item:hover .details-wrap .quote-excerpt *,
+.blog .blog-grid-items .blog-item:hover *,
+.blog .instagram-item .inst-overlay data {
+  color: #222;
+}
+
+.blog .masonry-items .blog-item figure figcaption {
+  display: none;
+}
+
+.recent-post figure.animated-overlay figcaption {
+  display: none;
+}
+
+.blog .full-center #main-navigation ul.menu > li > a,
+.blog .full-center .header-right ul.menu > li > a,
+.blog .full-center nav.float-alt-menu ul.menu > li > a,
+.blog .full-center .header-right div.text,
+.blog .full-center #header .aux-item ul.social-icons li {
+  height: auto;
+}

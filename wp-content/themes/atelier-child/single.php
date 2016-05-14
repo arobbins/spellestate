@@ -6,6 +6,7 @@
 ?>
 
 <?php
+
   global $sf_options;
   $default_sidebar_config = $sf_options['default_post_sidebar_config'];
   $default_left_sidebar = $sf_options['default_post_left_sidebar'];
