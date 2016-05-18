@@ -2,8 +2,8 @@
 Contributors: SwiftIdeas
 Tags: swift framework
 Requires at least: 3.6
-Tested up to: 4.5
-Stable tag: 4.5
+Tested up to: 4.5.2
+Stable tag: 4.5.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,6 +16,22 @@ The Swift Framework plugin provides the Custom Post Types, Swift Slider, and Swi
 Supported Themes: Atelier, Cardinal, JOYN
 
 == Changelog ==
+
+= 2.2.2 =
+- FRONTEND: Inital improvements to FAQ styling & functionality
+- FRONTEND: Fixed issue with Swift Slider fade on Firefox
+- FRONTEND: Excluded Swift Slider slides from WordPress search results
+- FRONTEND: Fixed social share output
+
+= 2.2.1 =
+- BACKEND: Products - fixed issue with certain fields showing when not needed
+- BACKEND: Fixed edit modal layout issues
+
+= 2.2.0 =
+- FRONTEND: Improved setup of row slants
+- BACKEND: Added repsonsive visibility indictator to elements, with tooltips
+- BACKEND: Fixed issue with design options not saving correctly
+- BACKEND: Other minor fixes
 
 = 2.1.7 =
 - FRONTEND: Fixed FAQs category issue.

@@ -419,7 +419,7 @@ img.alignleft, img.alignright, img.aligncenter {
 #spb .spb_edit_form_elements > .row {
     margin-bottom: 0;
 }
-#spb_edit_form .row-fluid.lb_buttonset + .lb_buttonset {
+#spb_edit_form .row-fluid.lb_buttonset:not(.hide) + .lb_buttonset {
     margin-top: -31px;
 }
 .spb_edit_wrap .label_wrapper.lb_buttonset, .lb_buttonset .edit_form_line {

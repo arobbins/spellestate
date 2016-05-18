@@ -92,20 +92,22 @@ class SwiftFramework_Admin {
 				<li>Text link option for modal element.</li>
 			</ul>
 			<div class="divide"></div>
-			<h3>Latest Update (v2.2.0)</h3>
+			<h3>Latest Update (v2.2.2)</h3>
+			<p></p>
+			<ul>
+				<li>FRONTEND: Inital improvements to FAQ styling &amp; functionality.</li>
+				<li>FRONTEND: Fixed issue with Swift Slider fade on Firefox.</li>
+				<li>FRONTEND: Excluded Swift Slider slides from WordPress search results.</li>
+				<li>FRONTEND: Fixed social share output.</li>
+			</ul>
+			<div class="divide"></div>
+			<h3>Previous Update (v2.2.0)</h3>
 			<p></p>
 			<ul>
 				<li>FRONTEND: Improved setup of row slants.</li>
 				<li>BACKEND: Added repsonsive visibility indictator to elements, with tooltips.</li>
 				<li>BACKEND: Fixed issue with design options not saving correctly.</li>
 				<li>BACKEND: Other minor fixes.</li>
-			</ul>
-			<div class="divide"></div>
-			<h3>Previous Update (v2.1.7)</h3>
-			<p></p>
-			<ul>
-				<li>FRONTEND: Fixed FAQs category issue.</li>
-				<li>BACKEND: Fixed issue with return key not working in text view.</li
 			</ul>
 		</div>
 

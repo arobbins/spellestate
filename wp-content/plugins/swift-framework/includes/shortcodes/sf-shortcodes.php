@@ -9,6 +9,12 @@
 	*
 	*/
 
+
+    /* ADD SHORTCODE FUNCTIONALITY TO WIDGETS
+    ================================================== */
+    add_filter( 'widget_text', 'do_shortcode' );
+    
+
     /* ==================================================
 
 	SHORTCODES OUTPUT
@@ -1608,9 +1614,9 @@
     	        $image = wp_get_attachment_url( get_post_thumbnail_id() );
 
     	        if ( $center == "yes" ) {
-    	            $share_output = '<div class="article-share share-center" data-buttontext="' . __( "Share this", 'swift-framework-plugin' ) . '" data-image="' . $image . '"></div>';
+    	            $share_output = '<div class="article-share share-center" data-buttontext="' . __( "Share this", 'swift-framework-plugin' ) . '" data-image="' . $image . '"><share-button class="share-button"></share-button></div>';
     	        } else {
-    	            $share_output = '<div class="article-share" data-buttontext="' . __( "Share this", 'swift-framework-plugin' ) . '" data-image="' . $image . '"></div>';
+    	            $share_output = '<div class="article-share" data-buttontext="' . __( "Share this", 'swift-framework-plugin' ) . '" data-image="' . $image . '"><share-button class="share-button"></share-button></div>';
     	        }
 
     	        return apply_filters( 'sf_social_share_output', $share_output, $atts);

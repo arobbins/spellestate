@@ -305,6 +305,7 @@
         "type"        => "dropdown",
         "heading"     => __( "Product display type", 'swift-framework-plugin' ),
         "param_name"  => "display_type",
+        "required"       => array("asset_type", "!=", "categories"),
         "value"       => $product_display_type
     );
 
@@ -313,6 +314,7 @@
             "type"        => "dropdown",
             "heading"     => __( "Product display layout", 'swift-framework-plugin' ),
             "param_name"  => "display_layout",
+            "required"       => array("asset_type", "!=", "categories"),
             "value"       => $product_display_layout
         );
     }
@@ -326,6 +328,7 @@
     		        __( 'Yes', 'swift-framework-plugin' ) => "yes",
                     __( 'No', 'swift-framework-plugin' )  => "no"
     		    ),
+                "required"       => array("asset_type", "!=", "categories"),
                 "buttonset_on"  => "yes",
     		    "description" => __( "Select if you'd like the asset to show products in a Multi-Masonry layout. NOTE: Not supported with Preview Slider display type.", 'swift-framework-plugin' )
     	);

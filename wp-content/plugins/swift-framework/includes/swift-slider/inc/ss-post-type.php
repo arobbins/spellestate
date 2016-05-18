@@ -19,6 +19,7 @@
             'hierarchical'      => true,
             'show_ui'           => true,
             'show_in_nav_menus' => false,
+            'exclude_from_search' => true,
             'args'              => array( 'orderby' => 'term_order' ),
             'rewrite'           => false,
             'query_var'         => true

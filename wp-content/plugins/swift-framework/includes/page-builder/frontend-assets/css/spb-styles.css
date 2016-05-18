@@ -3050,9 +3050,9 @@ ul.faqs-section {
 .faq-item {
 	padding-top: 40px;
 	border-top: 1px solid #ccc;
-	/*border: 1px solid #e3e3e3;
-	border-radius: 4px;*/
-	margin-bottom: 40px;
+	border: 1px solid #e3e3e3;
+	border-radius: 4px;
+	margin-bottom: 30px;
 }
 .faq-item:hover {
 	cursor: pointer;
@@ -3063,7 +3063,7 @@ ul.faqs-section {
 .faq-item h6 {
 	margin-bottom: 15px;
 }
-/*.faq-item h5 {
+.faq-item h5 {
 	margin: 0;
     padding: 30px;
     border-bottom: 1px solid #e3e3e3;
@@ -3097,8 +3097,7 @@ ul.faqs-section {
     opacity: 0.6;
     position: absolute;
     left: 30px;
-    top: 30px;
-}*/
+}
 
 /* --------------------------------------------
 	GALLERY SHORTCODE

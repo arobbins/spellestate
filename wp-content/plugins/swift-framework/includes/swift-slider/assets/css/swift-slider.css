@@ -72,10 +72,20 @@
 
 .swiper-slide {
     float: left;
+    pointer-events: none;
 }
 
 .swiper-slide.swiper-slide-active {
 	z-index: 1;
+    pointer-events: auto;
+}
+
+/* FADE */
+.swift-slider[data-transition="fade"] .swiper-wrapper, .swift-slider[data-transition="fade"] .swiper-slide {
+    -webkit-transition-property: opacity;
+    -moz-transition-property: opacity;
+    -o-transition-property: opacity;
+    transition-property: opacity;
 }
 
 /* IE10 Windows Phone 8 Fixes */

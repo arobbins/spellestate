@@ -290,6 +290,18 @@
     /* PARAMS
     ================================================== */
     $list_galleries = array();
+    $image_sizes = array(
+                __( "Full", 'swift-framework-plugin' )               => "full",
+                __( "Large", 'swift-framework-plugin' )              => "large",
+                __( "Medium", 'swift-framework-plugin' )             => "medium",
+                __( "Thumbnail", 'swift-framework-plugin' )          => "thumbnail",
+                __( "Small 4/3 Cropped", 'swift-framework-plugin' )  => "thumb-image",
+                __( "Medium 4/3 Cropped", 'swift-framework-plugin' ) => "thumb-image-twocol",
+                __( "Large 4/3 Cropped", 'swift-framework-plugin' )  => "thumb-image-onecol",
+                __( "Large 1/1 Cropped", 'swift-framework-plugin' )  => "large-square",
+            );
+
+    $image_sizes = apply_filters('sf_image_sizes', $image_sizes);
 
     if ( is_admin() ) {
         $list_galleries = array(
@@ -363,16 +375,7 @@
             "type"        => "dropdown",
             "heading"     => __( "Image Size Override", 'swift-framework-plugin' ),
             "param_name"  => "image_size",
-            "value"       => array(
-                __( "Full", 'swift-framework-plugin' )               => "full",
-                __( "Large", 'swift-framework-plugin' )              => "large",
-                __( "Medium", 'swift-framework-plugin' )             => "medium",
-                __( "Thumbnail", 'swift-framework-plugin' )          => "thumbnail",
-                __( "Small 4/3 Cropped", 'swift-framework-plugin' )  => "thumb-image",
-                __( "Medium 4/3 Cropped", 'swift-framework-plugin' ) => "thumb-image-twocol",
-                __( "Large 4/3 Cropped", 'swift-framework-plugin' )  => "thumb-image-onecol",
-                __( "Large 1/1 Cropped", 'swift-framework-plugin' )  => "large-square",
-            ),
+            "value"       => $image_sizes,
             "required"       => array("display_type", "=", "masonry"),
             "description" => __( "Override the source size for the images (NOTE: this doesn't affect it's size on the front-end, only the quality).", 'swift-framework-plugin' )
         ),

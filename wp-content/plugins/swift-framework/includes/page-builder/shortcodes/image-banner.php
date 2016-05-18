@@ -91,6 +91,19 @@ class SwiftPageBuilderShortcode_spb_image_banner extends SwiftPageBuilderShortco
     }
 }
 
+$image_sizes = array(
+                __( "Full", 'swift-framework-plugin' )               => "full",
+                __( "Large", 'swift-framework-plugin' )              => "large",
+                __( "Medium", 'swift-framework-plugin' )             => "medium",
+                __( "Thumbnail", 'swift-framework-plugin' )          => "thumbnail",
+                __( "Small 4/3 Cropped", 'swift-framework-plugin' )  => "thumb-image",
+                __( "Medium 4/3 Cropped", 'swift-framework-plugin' ) => "thumb-image-twocol",
+                __( "Large 4/3 Cropped", 'swift-framework-plugin' )  => "thumb-image-onecol",
+                __( "Large 1/1 Cropped", 'swift-framework-plugin' )  => "large-square",
+            );
+
+$image_sizes = apply_filters('sf_image_sizes', $image_sizes);
+
 SPBMap::map( 'spb_image_banner', array(
     "name"   => __( "Image Banner", 'swift-framework-plugin' ),
     "base"   => "spb_image_banner",
@@ -108,16 +121,7 @@ SPBMap::map( 'spb_image_banner', array(
             "type"        => "dropdown",
             "heading"     => __( "Image Size", 'swift-framework-plugin' ),
             "param_name"  => "image_size",
-            "value"       => array(
-                __( "Full", 'swift-framework-plugin' )               => "full",
-                __( "Large", 'swift-framework-plugin' )              => "large",
-                __( "Medium", 'swift-framework-plugin' )             => "medium",
-                __( "Thumbnail", 'swift-framework-plugin' )          => "thumbnail",
-                __( "Small 4/3 Cropped", 'swift-framework-plugin' )  => "thumb-image",
-                __( "Medium 4/3 Cropped", 'swift-framework-plugin' ) => "thumb-image-twocol",
-                __( "Large 4/3 Cropped", 'swift-framework-plugin' )  => "thumb-image-onecol",
-                __( "Large 1/1 Cropped", 'swift-framework-plugin' )  => "large-square",
-            ),
+            "value"       => $image_sizes,
             "description" => __( "Select the source size for the image (NOTE: this doesn't affect it's size on the front-end, only the quality).", 'swift-framework-plugin' )
         ),
         array(
