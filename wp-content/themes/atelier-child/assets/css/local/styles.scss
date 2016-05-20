@@ -2873,3 +2873,44 @@ ul.page-numbers li > span.current,
 .pagination-wrap li.prev, .pagination-wrap li.next a {
   margin-top: -8px;
 }
+
+
+#mobile-logo.has-img img {
+  max-height: 80px !important;
+  position: relative;
+  top: -9px;
+  z-index: 999999999999;
+}
+
+#mobile-logo.has-img {
+  max-width: 70%;
+}
+
+a.mobile-menu-link {
+  width: 40px;
+  height: 35px;
+  top: 50%;
+  position: relative;
+  margin-top: -13px;
+}
+
+a.menu-bars-link span,
+a.menu-bars-link span:before,
+a.menu-bars-link span:after {
+  width: 40px;
+  height: 2px;
+}
+
+a.menu-bars-link span:before {
+  top: -9px;
+  z-index: 99999999999910;
+}
+
+a.menu-bars-link span:after {
+  transform-origin: 50% 100%;
+  top: 9px;
+}
+
+a.menu-bars-link span {
+  top: 11px;
+}
