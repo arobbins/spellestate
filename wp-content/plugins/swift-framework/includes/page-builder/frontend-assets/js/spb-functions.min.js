@@ -464,7 +464,7 @@
 
 			// FAQs
 			if ( jQuery('.spb_faqs_element').length > 0 ) {
-				//SPB.faqs.init();
+				SPB.faqs.init();
 			}
 
 			// ICON GRID

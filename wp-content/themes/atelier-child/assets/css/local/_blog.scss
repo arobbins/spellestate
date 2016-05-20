@@ -36,6 +36,7 @@
 
   @include respond-to(600) {
     width: 100%;
+    padding: 0;
   }
 }
 

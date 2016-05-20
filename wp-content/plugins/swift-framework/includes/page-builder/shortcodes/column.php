@@ -13,7 +13,7 @@
 
         public function content( $atts, $content = null ) {
 
-            $col_el_class = $inline_style = $inner_inline_style = $width = $el_position = $custom_css ='';
+            $col_el_class = $el_class = $inline_style = $inner_inline_style = $width = $el_position = $custom_css ='';
 
             extract( shortcode_atts( array(
                 'col_bg_color'                => '',
@@ -29,6 +29,7 @@
                 'el_position'                 => '',
                 'width'                       => '1/2',
                 'custom_css'                  => '',
+                'el_class'                    => '',
             ), $atts ) );
 
             $output = $animation_output = '';
@@ -55,11 +56,15 @@
                 $inner_inline_style .= 'padding:' . $col_padding . '%;';
             }
 
+            if( $el_class != '' ) {
+                $col_el_class = $el_class;
+            }
+
             if ( $col_animation != "" && $col_animation != "none" ) {
             	$col_el_class .= ' sf-animation';
                 $animation_output = 'data-animation="' . $col_animation . '" data-delay="' . $col_animation_delay . '"';
-            }
-
+            }        
+  
             global $column_width;
 
             if ( $orig_width != "" ) {

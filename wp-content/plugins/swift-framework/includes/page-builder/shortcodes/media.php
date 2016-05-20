@@ -78,7 +78,8 @@
                 "heading"     => __( "Video link", 'swift-framework-plugin' ),
                 "param_name"  => "link",
                 "value"       => "",
-                "description" => __( 'Link to the video. More about supported formats at <a href="http://codex.wordpress.org/Embeds#Okay.2C_So_What_Sites_Can_I_Embed_From.3F" target="_blank">WordPress codex page</a>.', 'swift-framework-plugin' )
+                "description" => __( 'Link to the video. More about supported formats at http://codex.wordpress.org/Embeds', 'swift-framework-plugin' ),
+                "link"        =>  '<a class="spb_field_link" href="http://codex.wordpress.org/Embeds#Okay.2C_So_What_Sites_Can_I_Embed_From.3F" target="_blank">'. __('More about supported formats click this link', 'swift-framework-plugin' ) . '</a>'
             ),
             array(
                 "type"        => "textfield",
@@ -730,9 +731,8 @@
     	                "heading"     => __( "Advanced Styling", 'swift-framework-plugin' ),
     	                "param_name"  => "advanced_styling",
     	                "value"       => array(
-                            __( "Yes", 'swift-framework-plugin' ) => "yes",
-    	                    __( "No", 'swift-framework-plugin' )        => "no"
-    	                    
+    	                    __( "No", 'swift-framework-plugin' )  => "no",
+                            __( "Yes", 'swift-framework-plugin' ) => "yes"
     	                ),
                         "buttonset_on"  => "yes",
     	                "description" => __( "Set whether you would like to use the advanced map styling option.", 'swift-framework-plugin' )

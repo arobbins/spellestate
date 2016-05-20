@@ -200,6 +200,9 @@ html.noscroll {
 .spb_tour .container {
 	display: inline-block;
 }
+.spb-row-container {
+	position: relative;
+}
 .spb-row-container.remove-element-spacing, .spb-row-container.remove-element-spacing div[class*="col-sm"] {
 	padding-left: 0;
 	padding-right: 0;
@@ -3048,7 +3051,6 @@ ul.faqs-section {
 	list-style: none;
 }
 .faq-item {
-	padding-top: 40px;
 	border-top: 1px solid #ccc;
 	border: 1px solid #e3e3e3;
 	border-radius: 4px;
@@ -5497,6 +5499,13 @@ ul.social-icons li.vk a:hover {
 ul.social-icons li.twitch a:hover {
 	background-color: #6441a5;
 }
+ul.social-icons li.whatsapp a:hover {
+	background-color: #4dc247;
+}
+ul.social-icons li.snapchat a:hover {
+	background-color: #fffc00;
+	color: #000!important;
+}
 ul.social-icons li.mail a:hover {
 	background-color: #666;
 }
@@ -6149,6 +6158,9 @@ ul.testimonials {
 	TEXT BLOCK SHORTCODE
 -------------------------------------------- */
 
+.spb_content_element.spb_text_column.col-sm-12 .spb-asset-content > .container {
+	max-width: 100%;
+}
 .spb_text_column ul, .box-content-wrap ul, #comments-list .comment-body ul {
 	list-style: disc inside none;
 }

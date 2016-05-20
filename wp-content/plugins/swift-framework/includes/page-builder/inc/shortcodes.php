@@ -551,6 +551,8 @@
                 $output .= $this->singleParamEditForm( $param, $param_value );
                 $output .= ( isset( $param['description'] )  && !isset($param['param_type'])) ? '<a class="tooltipped" data-position="left" data-delay="50" data-tooltip="' . __( $param['description'], 'swift-framework-plugin' ) . '"><i class="material-icons prefix">info</i></a>' : '';
                 $output .= '</div>';
+                $output .=  isset( $param['link'] ) ?  __( $param['link'], 'swift-framework-plugin' )  : '';
+
             } else {  
                 //Repeater fields
                 if ( isset($param['param_type']) &&  $param['param_type'] == 'repeater'  ) {
@@ -1009,12 +1011,15 @@
                 //$param_line .= '<select multiple name="' . $param['param_name'] . '" class="spb_param_value spb-select ' . $param['param_name'] . ' ' . $param['type'] . '" type="hidden" value="" name="" multiple>';
     
                 $selected_values = explode( ",", $param_value );
+                
                 $selected_values = array_map('ltrim', $selected_values);
 
                 foreach ( $param['value'] as $val => $text_val ) {
 
                     $text_val = __( $text_val, 'swift-framework-plugin' );
                     $selected = '';
+
+
                     if ( in_array( $val, $selected_values )  ) {
                         $selected = ' selected="selected"';
                     }

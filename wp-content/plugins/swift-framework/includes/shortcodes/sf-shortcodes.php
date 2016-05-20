@@ -153,7 +153,7 @@
                 "target"    => "_self",
             ), $atts ) );
 
-            if ( substr( $image, 0, 3 ) === "ss-" || substr( $image, 0, 3 ) === "fa-" || substr( $image, 0, 3 ) === "sf-" ) {
+            if ( substr( $image, 0, 3 ) === "ss-" || substr( $image, 0, 3 ) === "fa-" || substr( $image, 0, 7 ) === "nucleo-" || substr( $image, 0, 3 ) === "sf-" ) {
                 $icon  = $image;
                 $image = "";
             }
@@ -975,6 +975,8 @@
             $yelp       = "";
             $vk         = "";
             $twitch     = "";
+            $snapchat   = "";
+            $whatsapp   = "";
             if ( isset( $sf_options['yelp_url'] ) ) {
                 $yelp = $sf_options['yelp_url'];
             }
@@ -983,6 +985,12 @@
             }
             if ( isset( $sf_options['twitch_url'] ) ) {
                 $twitch = $sf_options['twitch_url'];
+            }
+            if ( isset( $sf_options['snapchat_url'] ) ) {
+                $snapchat = $sf_options['snapchat_url'];
+            }
+            if ( isset( $sf_options['whatsapp_url'] ) ) {
+                $whatsapp = $sf_options['whatsapp_url'];
             }
 
             $social_icons = '';
@@ -1054,6 +1062,12 @@
                 if ( $twitch ) {
                     $social_icons .= '<li class="twitch"><a href="' . $twitch . '" target="_blank"><i class="fa-twitch"></i><i class="fa-twitch"></i></a></li>' . "\n";
                 }
+                if ( $snapchat ) {
+                    $social_icons .= '<li class="snapchat"><a href="' . $snapchat . '" target="_blank"><i class="fa-snapchat"></i><i class="fa-snapchat"></i></a></li>' . "\n";
+                }
+                if ( $whatsapp ) {
+                    $social_icons .= '<li class="whatsapp"><a href="' . $whatsapp . '" target="_blank"><i class="fa-whatsapp"></i><i class="fa-whatsapp"></i></a></li>' . "\n";
+                }
             } else {
 
                 $social_type = explode( ',', $type );
@@ -1124,6 +1138,12 @@
                     if ( $id == "twitch" ) {
                         $social_icons .= '<li class="twitch"><a href="' . $twitch . '" target="_blank"><i class="fa-twitch"></i><i class="fa-twitch"></i></a></li>' . "\n";
                     }
+                    if ( $id == "snapchat" ) {
+                        $social_icons .= '<li class="snapchat"><a href="' . $snapchat . '" target="_blank"><i class="fa-snapchat"></i><i class="fa-snapchat"></i></a></li>' . "\n";
+                    }
+                    if ( $id == "whatsapp" ) {
+                        $social_icons .= '<li class="whatsapp"><a href="' . $whatsapp . '" target="_blank"><i class="fa-whatsapp"></i><i class="fa-whatsapp"></i></a></li>' . "\n";
+                    }
                 }
             }
 
@@ -1135,6 +1155,7 @@
         }
 
         add_shortcode( "social", "sf_social_icons" );
+        add_shortcode( "sf_social", "sf_social_icons" );
     }
 
 
@@ -1321,6 +1342,8 @@
         function sf_modal( $atts, $content = null ) {
             extract( shortcode_atts( array(
                 "header"     => '',
+                "link_type"  => '',
+                "link_text"  => '',
                 "btn_type"   => '',
                 "btn_colour" => '',
                 "btn_size"   => '',
@@ -1340,15 +1363,19 @@
 
             $modal_delete_icon = apply_filters( 'sf_close_icon', '<i class="ss-delete"></i>' );
 
-            $button_class = 'sf-button ' . $btn_size . ' ' . $btn_colour . ' ' . $btn_type;
-
-            if ( $btn_type == "sf-icon-reveal" || $btn_type == "sf-icon-stroke" ) {
-                $modal_output .= '<a class="' . $button_class . '" href="#modal-' . $sf_modalCount . '" role="button" data-toggle="modal">';
-                $modal_output .= '<i class="' . $btn_icon . '"></i>';
-                $modal_output .= '<span class="text">' . $btn_text . '</span>';
-                $modal_output .= '</a>';
+            if ( $link_type == "text" ) {
+                $modal_output .= '<a class="modal-text-link" href="#modal-' . $sf_modalCount . '" role="button" data-toggle="modal">'.$link_text.'</a>';
             } else {
-                $modal_output .= '<a class="' . $button_class . '" href="#modal-' . $sf_modalCount . '" role="button" data-toggle="modal"><span class="text">' . $btn_text . '</span></a>';
+                $button_class = 'sf-button ' . $btn_size . ' ' . $btn_colour . ' ' . $btn_type;
+
+                if ( $btn_type == "sf-icon-reveal" || $btn_type == "sf-icon-stroke" ) {
+                    $modal_output .= '<a class="' . $button_class . '" href="#modal-' . $sf_modalCount . '" role="button" data-toggle="modal">';
+                    $modal_output .= '<i class="' . $btn_icon . '"></i>';
+                    $modal_output .= '<span class="text">' . $btn_text . '</span>';
+                    $modal_output .= '</a>';
+                } else {
+                    $modal_output .= '<a class="' . $button_class . '" href="#modal-' . $sf_modalCount . '" role="button" data-toggle="modal"><span class="text">' . $btn_text . '</span></a>';
+                }
             }
 
             $modal_output .= '<div id="modal-' . $sf_modalCount . '" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="' . $header . '" aria-hidden="true">';

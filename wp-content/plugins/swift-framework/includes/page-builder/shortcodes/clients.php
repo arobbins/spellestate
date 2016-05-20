@@ -21,7 +21,7 @@
                 'item_columns'     => '4',
                 'category'         => '',
                 'carousel'         => 'no',
-                'carousel_columns' => '',
+                'carousel_autoplay' => '',
                 'pagination'       => 'no',
                 'el_position'      => '',
                 'width'            => '1/1',
@@ -83,7 +83,7 @@
             $client_height = $client_width * $img_scale;
 
             if ( $carousel == "yes" ) {
-                $items .= '<div id="carousel-' . $sf_carouselID . '" class="clients-items carousel-items clearfix" data-columns="' . $item_columns . '">';
+                $items .= '<div id="carousel-' . $sf_carouselID . '" class="clients-items carousel-items clearfix" data-columns="' . $item_columns . '" data-autoplay="'.$carousel_autoplay.'">';
             } else {
                 $items .= '<div class="clients-items clearfix">';
             }
@@ -220,6 +220,14 @@
                 "buttonset_on"  => "yes",
                 "description" => __( "Enable carousel functionality.", 'swift-framework-plugin' )
             ),
+            // array(
+            //     "type"        => "textfield",
+            //     "heading"     => __( "Carousel Autoplay", 'swift-framework-plugin' ),
+            //     "param_name"  => "carousel_autoplay",
+            //     "value"       => "",
+            //     "required"       => array("carousel", "=", "yes"),
+            //     "description" => __( "Enable carousel autoplay. Enter time in miliseconds for the carousel to auto-rotate. Leave blank to disable.", 'swift-framework-plugin' )
+            // ),
             array(
                 "type"        => "dropdown",
                 "heading"     => __( "Pagination", 'swift-framework-plugin' ),

@@ -3580,6 +3580,9 @@ li:hover .sf-close-image-bar{
   width: 30px!important;
   height: 100%!important;    
 }
+#spb .spb_boxed_content .ui-resizable-handle.ui-resizable-e {
+    height: 100%!important;
+}
 #spb .ui-resizable-ew, #spb .ui-resizable-handle {
   background: transparent!important;
   width: 30px!important;
@@ -3766,6 +3769,12 @@ li:hover .sf-close-image-bar{
     bottom: 0;
     right: -32px;
     cursor: help;
+}
+.spb_field_link {
+    color: #9e9e9e!important;
+    text-decoration: underline!important;
+    margin-top: 10px;
+    float: left;
 }
 .responsive-vis-indicator .material-tooltip {
     position: absolute;

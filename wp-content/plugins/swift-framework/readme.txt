@@ -17,6 +17,18 @@ Supported Themes: Atelier, Cardinal, JOYN
 
 == Changelog ==
 
+= 2.2.52 =
+- FRONTEND: Fix for nucleo icon output
+
+= 2.2.51 =
+- FRONTEND: Fix for row background issues
+
+= 2.2.5 =
+- FRONTEND: Added WhatsApp & Snapchat social icon output
+- BACKEND: Fixed issue where 30px vertical padding was reseted when editing the row
+- BACKEND: Fixed issue where percentage button wasn't saving the option
+- BACKEND: Fixed issue where Google Map was appearing blank by default
+
 = 2.2.2 =
 - FRONTEND: Inital improvements to FAQ styling & functionality
 - FRONTEND: Fixed issue with Swift Slider fade on Firefox

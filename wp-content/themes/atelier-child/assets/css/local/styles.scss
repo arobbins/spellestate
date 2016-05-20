@@ -2787,3 +2787,89 @@ body.woocommerce p.stars a:hover:after {
 .woocommerce-shop-page-title {
   border-bottom: 1px solid #e4e4e4;
 }
+
+
+/* Child pages plugin */
+.child_pages {
+
+  .child_page-container {
+    position: relative;
+    padding: 10px 10px 4px 10px;
+  }
+
+  .post_content {
+    // display: none !important;
+    min-height: 0 !important;
+
+    h4 {
+      position: absolute;
+      font-size: 37px;
+      left: 0;
+      top: 36%;
+      width: 100%;
+      text-align: center;
+      color: white;
+
+      @media screen and (max-width: 400px) {
+        font-size: 22px;
+        font-weight: bold;
+      }
+
+      &:hover {
+        cursor: pointer;
+      }
+
+      a {
+        color: white;
+        text-decoration: none;
+      }
+    }
+  }
+
+  .post_thumb {
+    max-height: 200px !important;
+
+    @media screen and (max-width: 400px) {
+      min-height: 0 !important;
+    }
+
+    a {
+      width: 100%;
+      height: 100%;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+
+    img {
+      width: 100%;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+
+}
+
+.pagination-wrap .pagenavi li:hover {
+  cursor: pointer;
+}
+
+
+@media only screen and (max-width: 479px) {
+  .pagination-wrap li.prev, .pagination-wrap li.next {
+    width: auto;
+  }
+}
+
+ul.page-numbers li > span.current,
+.pagination-wrap ul li span.current,
+.pagination-wrap ul li .single_page {
+  padding-top: 3px !important;
+}
+
+.pagination-wrap li.prev, .pagination-wrap li.next a {
+  margin-top: -8px;
+}

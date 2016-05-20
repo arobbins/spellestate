@@ -165,6 +165,10 @@ var currentAsset = "";
                 }
             }
 
+            if ( element.attr( "data-element_type" ) == 'spb_column' ) {
+                jQuery( '#col_el_class' ).parent().parent().parent().hide();
+            }
+
             if ( element.attr( "data-element_type" ) == 'spb_row' ) {
 
                 jQuery( '#row_el_class' ).parent().parent().parent().hide();
@@ -1018,7 +1022,15 @@ jQuery( document ).ready(
                 } else {
                     changedInput.prev().width(''+ jQuery( this ).val() / changedInput.attr('max') * 100 + '%');
                     jQuery( this ).parent().prev().find('input').val( jQuery( this ).val() );
-                }            
+                }  
+            
+               jQuery('.spb_edit_form_elements .custom-padding-top').val( jQuery( '#padding_vertical' ).val() );
+               jQuery('.spb_edit_form_elements .custom-padding-bottom').val( jQuery( '#padding_vertical' ).val() );                       
+               jQuery('.spb_edit_form_elements .custom-padding-left').val( jQuery( '#padding_horizontal' ).val() );
+               jQuery('.spb_edit_form_elements .custom-padding-right').val( jQuery( '#padding_horizontal' ).val() );     
+               jQuery('.spb_edit_form_elements .custom-margin-top').val( jQuery( '#margin_vertical' ).val() );                
+               jQuery('.spb_edit_form_elements .custom-margin-bottom').val( jQuery( '#margin_vertical' ).val() );   
+
             }
         });
 
@@ -3167,19 +3179,29 @@ function initDroppable() {
               // Set the minimum width
               jQuery(this).resizable( "option", "minWidth", el_step_size );
 
-
+ 
         },   
         stop: function( event, ui ) {  
                jQuery( 'body' ).removeClass( 'startedDragging' );
-               ui.element.css( 'height' , ui.originalSize.height );
+
+               if ( ui.element.hasClass('spb_text_block') ){
+                setTimeout(function(){  ui.element.css( 'height' ,  ui.element.find('.spb_element_wrapper').height() + 30); }, 50);
+                  
+               }else{
+                   ui.element.css( 'height' , ui.originalSize.height );
+               }
+             
                var column = jQuery( this ).closest( ".spb_sortable" );
                var resized = jQuery(this);
 
                resized.queue(function() {
+
+
                   var sizes = getColumnSize( column );
                   ui.element.css({ width: '' });
                   save_spb_html();
                   column.removeClass( sizes[0] ).addClass( percentageClass );
+
                   save_spb_html();
                   jQuery( this ).dequeue();
 
@@ -3708,6 +3730,7 @@ function showEditForm( element ) {
         });
 
         jQuery('#spb .edit_form_line').find('select').not('.disabled').material_select();  
+
         jQuery('.icon_section_holder, .pricing_column_holder').find('select').not('.disabled').material_select();  
         jQuery('.collapsible').collapsible( { accordion : false  });
         check_form_dependency_fields();
@@ -3749,6 +3772,9 @@ function showEditForm( element ) {
                tinyMCE.activeEditor.setContent( form_content );
             }
         } 
+
+        jQuery('#spb .edit_form_line').find('select').not('.disabled').trigger('contentChanged');  
+        
     });
 }
 
@@ -3829,6 +3855,9 @@ function saveFormEditing( element ) {
             border_color = jQuery('#spb_edit_form .border_color_global').val();
             border_style = jQuery('#spb_edit_form .border_styling_global').find( 'select' ).val();
             bg_color = jQuery('#spb_edit_form .back_color_global').val();
+            
+            if ( border_style == 'default' )
+                border_style = '';
 
             if( mt == '' ){
                 mt = 0;

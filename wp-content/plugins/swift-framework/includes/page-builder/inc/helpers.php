@@ -710,26 +710,25 @@
             return get_option( 'sf_theme');
         }
     }
-
+    
 	/* GET PRODUCT CATEGORIES
 	================================================== */
-	if ( ! function_exists( 'spb_get_product_categories' ) ) {
-		function spb_get_product_categories() {
+    
+    if ( ! function_exists( 'spb_get_product_categories' ) ) {
+        function spb_get_product_categories() {
+ 
+            $get_category  = get_categories( array( 'taxonomy' => 'product_cat' ) );
+            //$get_category  = get_categories( array( 'taxonomy' => $category_name ) );
+             //$category_list = array( '0' => '' );
 
-			if ( !is_admin() ) {
-				return;
-			}
+            foreach ( $get_category as $category ) {
+                  $category_list[$category->slug] = $category->cat_name ;
+            }
 
-		    $categories = get_terms('product_cat');
-			$categories_array = array();
+            return $category_list;
 
-			foreach ($categories as $category) {
-			      $categories_array[$category->slug] = $category->name;
-			}
-
-		    return $categories_array;
-		}
-	}
+        }
+    }
 
     /* GET PRODUCT CATEGORIES
     ================================================== */

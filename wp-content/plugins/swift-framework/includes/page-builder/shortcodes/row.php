@@ -78,7 +78,7 @@
                 $row_el_class = $el_class;
             }
 
-            $row_el_class   = $this->getExtraClass( $row_el_class ) . ' ' . $responsive_vis;
+            $row_el_class   .= $this->getExtraClass( $row_el_class ) . ' ' . $responsive_vis;
             $orig_width     = $width;
             $width          = spb_translateColumnWidthToSpan( $width );
             $img_url        = wp_get_attachment_image_src( $bg_image, 'full' );
@@ -217,7 +217,7 @@
         }
 
         public function contentAdmin( $atts, $content = null ) {
-            $width = $row_el_class = $el_class = $bg_color = $element_name = $minimize_row = $row_responsive_vis = $padding_vertical = '';
+            $width = $custom_css_percentage = $row_el_class = $el_class = $bg_color = $element_name = $minimize_row = $row_responsive_vis = $padding_vertical = '';
             extract( shortcode_atts( array(
                 'wrap_type'               => 'content-width',
                 'row_el_class'            => '',
@@ -229,7 +229,7 @@
                 'row_bottom_style'        => '',
                 'row_padding_vertical'    => '',
                 'row_padding_horizontal'  => '',
-                'row_margin_vertical'     => '',
+                'row_margin_vertical'     => '30',
                 'row_overlay_opacity'     => '0',
                 'remove_element_spacing'  => '',
                 'vertical_center'         => 'true',
@@ -261,6 +261,7 @@
                 'width'                   => 'span12',
                 'custom_css'              => '',
                 'simplified_controls'     => '',
+                'custom_css_percentage'   => '',
                 'border_color_global'     => '',
                 'border_styling_global'   => '',
                 'back_color_global'       => '',
@@ -272,7 +273,7 @@
                 $element_name = __( "Row", 'swift-framework-plugin' );
             }
 
-            $output = '';
+            $output = ''; 
 
             $output .= '<div data-element_type="spb_row" class="spb_row spb_sortable span12 spb_droppable not-column-inherit">';
             $output .= '<input type="hidden" class="spb_sc_base" name="element_name-spb_row" value="spb_row">';

@@ -622,3 +622,18 @@ function acme_login_redirect($redirect_to, $request, $user) {
   return ( is_array( $user->roles ) && in_array( 'administrator', $user->roles ) ) ? admin_url() : site_url('/my-account');
 }
 add_filter('login_redirect', 'acme_login_redirect', 10, 3);
+
+
+function my_template($template) {
+
+	return '<div id="child_page-%post_id%" class="child_page" style="width:%width%;">
+	  <div class="child_page-container">
+	    <div class="post_thumb"><a href="%post_url%">%post_thumb%</a></div>
+	    <div class="post_content">
+	      <h4><a href="%post_url%">%post_title%</a></h4>
+	      <div class="post_excerpt">%post_excerpt%</div>
+	    </div>
+	  </div>
+	</div>';
+}
+add_filter("child-pages-shortcode-template", "my_template");
