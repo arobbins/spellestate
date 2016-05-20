@@ -50,16 +50,14 @@
                 printf( __( 'Showing %1$d-%2$d of %3$d products', 'swiftframework' ), $first, $last, $total );
             }
         ?>
+	</p>
+    <p class="woocommerce-show-products">
+        <span><?php _e( "View", "swiftframework" ); ?> </span>
+        <a class="show-products-link"
+           href="?show_products=<?php echo esc_attr($products_per_page); ?>"><?php echo esc_attr($products_per_page); ?></a>/<a
+            class="show-products-link"
+            href="?show_products=<?php echo esc_attr($products_per_page * 2); ?>"><?php echo esc_attr($products_per_page * 2); ?></a>/<a
+            class="show-products-link"
+            href="?show_products=<?php echo esc_attr($total); ?>"><?php _e( "All", "swiftframework" ); ?></a>
     </p>
-    <?php if ( $total > $per_page ) { ?>
-        <p class="woocommerce-show-products">
-            <span><?php _e( "View", "swiftframework" ); ?> </span>
-            <a class="show-products-link"
-               href="?show_products=<?php echo esc_attr($products_per_page); ?>"><?php echo esc_attr($products_per_page); ?></a>/<a
-                class="show-products-link"
-                href="?show_products=<?php echo esc_attr($products_per_page * 2); ?>"><?php echo esc_attr($products_per_page * 2); ?></a>/<a
-                class="show-products-link"
-                href="?show_products=<?php echo esc_attr($total); ?>"><?php _e( "All", "swiftframework" ); ?></a>
-        </p>
-    <?php } ?>
 </div>

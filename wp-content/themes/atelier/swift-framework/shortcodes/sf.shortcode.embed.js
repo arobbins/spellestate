@@ -138,6 +138,8 @@ function embedSelectedShortcode() {
         var tooltip_direction = document.getElementById( 'tooltip-direction' ).value;
 
         // Modal
+        var modal_link_type = document.getElementById( 'modal-link-type' ).value;
+        var modal_link_text = document.getElementById( 'modal-link-text' ).value;
         var modal_button_size = document.getElementById( 'modal-button-size' ).value;
         var modal_button_type = document.getElementById( 'modal-button-type' ).value;
         var modal_button_colour = document.getElementById( 'modal-button-colour' ).value;
@@ -334,7 +336,7 @@ function embedSelectedShortcode() {
 
         if ( shortcode_select == 'shortcode-modal' ) {
 
-            shortcodeHTML = '[sf_modal header="' + modal_header + '" btn_colour="' + modal_button_colour + '" btn_type="' + modal_button_type + '" btn_size="' + modal_button_size + '" btn_icon="' + modal_button_icon + '" btn_text="' + modal_button_text + '"]<br/>ENTER THE MODAL BODY HERE<br/>[/sf_modal]<br/>';
+            shortcodeHTML = '[sf_modal header="' + modal_header + '" link_type="' + modal_link_type + '" link_text="' + modal_link_text + '" btn_colour="' + modal_button_colour + '" btn_type="' + modal_button_type + '" btn_size="' + modal_button_size + '" btn_icon="' + modal_button_icon + '" btn_text="' + modal_button_text + '"]<br/>ENTER THE MODAL BODY HERE<br/>[/sf_modal]<br/>';
 
         }
 

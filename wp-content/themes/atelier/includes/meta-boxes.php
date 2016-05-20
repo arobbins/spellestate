@@ -1735,7 +1735,7 @@
 					'name' 	=> '',
 					'title' => __('Swift Slider Options', 'swiftframework'),
 				    'id' 	=> "{$prefix}ss_options",
-				    'wrap-class' => 'pageslider-swift-slider',
+				    'class' => 'pageslider-swift-slider',
 				    'type' 	=> 'section'
 				),
 	
@@ -1750,7 +1750,7 @@
 					),
 					'multiple' => false,
 					'std'  => 'none',
-					'wrap-class' => 'pageslider-swift-slider',
+					'class' => 'pageslider-swift-slider',
 					'desc' => __('Choose if you would like to display the Swift Slider in horizontal slider mode, or vertical curtain slider format.', 'swiftframework'),
 				),
 	
@@ -1762,7 +1762,7 @@
 					'options' => $swift_slider_categories,
 					'multiple' => false,
 					'std'  => 'none',
-					'wrap-class' => 'pageslider-swift-slider',
+					'class' => 'pageslider-swift-slider',
 					'desc' => __('Choose the category of slide that you would like to show, or all.', 'swiftframework'),
 				),
 				
@@ -1773,7 +1773,7 @@
 					'id'   => "{$prefix}ss_random",
 					'type' => 'checkbox',
 					'std'  => 0,
-					'wrap-class' => 'pageslider-swift-slider',
+					'class' => 'pageslider-swift-slider',
 					'desc' => __('Choose if you would like the slider to show slides in random order.', 'swiftframework'),
 				),
 	
@@ -1785,7 +1785,7 @@
 					'desc' => __("Set the number of slides to show. If blank then all will show.", 'swiftframework'),
 					'clone' => false,
 					'type'  => 'text',
-					'wrap-class' => 'pageslider-swift-slider',
+					'class' => 'pageslider-swift-slider',
 					'std' => '5',
 				),
 	
@@ -1795,7 +1795,7 @@
 					'id'   => "{$prefix}ss_fs",
 					'type' => 'checkbox',
 					'std'  => 0,
-					'wrap-class' => 'pageslider-swift-slider',
+					'class' => 'pageslider-swift-slider',
 					'desc' => __('Choose if you would like the slider to be window height.', 'swiftframework'),
 				),
 	
@@ -1806,7 +1806,7 @@
 					'desc' => __("Set the maximum height that the Swift Slider should display at (optional) (no px).", 'swiftframework'),
 					'clone' => false,
 					'type'  => 'text',
-					'wrap-class' => 'pageslider-swift-slider',
+					'class' => 'pageslider-swift-slider',
 					'std' => '600',
 				),
 	
@@ -1817,7 +1817,7 @@
 					'desc' => __("If you would like the slider to auto-rotate, then set the autoplay rotate time in ms here. I.e. you would enter '5000' for the slider to rotate every 5 seconds.", 'swiftframework'),
 					'clone' => false,
 					'type'  => 'text',
-					'wrap-class' => 'pageslider-swift-slider',
+					'class' => 'pageslider-swift-slider',
 					'std' => '',
 				),
 	
@@ -1832,7 +1832,7 @@
 					),
 					'multiple' => false,
 					'std'  => 'slide',
-					'wrap-class' => 'pageslider-swift-slider',
+					'class' => 'pageslider-swift-slider',
 					'desc' => __('Choose the transition type for the slider.', 'swiftframework'),
 				),
 	
@@ -1842,7 +1842,7 @@
 					'id'   => "{$prefix}ss_loop",
 					'type' => 'checkbox',
 					'std'  => 1,
-					'wrap-class' => 'pageslider-swift-slider',
+					'class' => 'pageslider-swift-slider',
 					'desc' => __('Choose if you would like the slider to loop (not possible on curtain slider).', 'swiftframework'),
 				),
 	
@@ -1852,7 +1852,7 @@
 					'id'   => "{$prefix}ss_nav",
 					'type' => 'checkbox',
 					'std'  => 1,
-					'wrap-class' => 'pageslider-swift-slider',
+					'class' => 'pageslider-swift-slider',
 					'desc' => __('Choose if you would like to display the left/right arrows on the slider (only if slider type is set to "Slider").', 'swiftframework'),
 				),
 	
@@ -1862,7 +1862,7 @@
 					'id'   => "{$prefix}ss_pagination",
 					'type' => 'checkbox',
 					'std'  => 1,
-					'wrap-class' => 'pageslider-swift-slider',
+					'class' => 'pageslider-swift-slider',
 					'desc' => __('Choose if you would like to display the slider pagination.', 'swiftframework'),
 				),
 	
@@ -1872,7 +1872,7 @@
 					'id'   => "{$prefix}ss_continue",
 					'type' => 'checkbox',
 					'std'  => 1,
-					'wrap-class' => 'pageslider-swift-slider',
+					'class' => 'pageslider-swift-slider',
 					'desc' => __('Choose if you would like to display the continue button on Curtain slider type to progress to the content. If you want to only display the slider on the page, and no content, then make sure you set this to NO.', 'swiftframework'),
 				),
 	
@@ -1881,7 +1881,7 @@
 					'name' 	=> '',
 					'title' => __('Revolution Slider Options', 'swiftframework'),
 				    'id' 	=> "{$prefix}rs_options",
-				    'wrap-class' => 'pageslider-revslider',
+				    'class' => 'pageslider-revslider',
 				    'type' 	=> 'section'
 				),
 	
@@ -1891,7 +1891,7 @@
 					'id' => $prefix . 'rev_slider_alias',
 					'desc' => __("Enter the revolution slider alias for the slider that you want to show.", 'swiftframework'),
 					'type'  => 'text',
-					'wrap-class' => 'pageslider-revslider',
+					'class' => 'pageslider-revslider',
 					'std' => '',
 				),
 	
@@ -1900,7 +1900,7 @@
 					'name' 	=> '',
 					'title' => __('LayerSlider Options', 'swiftframework'),
 				    'id' 	=> "{$prefix}ls_options",
-				    'wrap-class' => 'pageslider-layerslider',
+				    'class' => 'pageslider-layerslider',
 				    'type' 	=> 'section'
 				),
 	
@@ -1910,7 +1910,7 @@
 					'id' => $prefix . 'layerslider_id',
 					'desc' => __("Enter the LayerSlider ID for the slider that you want to show.", 'swiftframework'),
 					'type'  => 'text',
-					'wrap-class' => 'pageslider-layerslider',
+					'class' => 'pageslider-layerslider',
 					'std' => '',
 				),
 	
@@ -1919,7 +1919,7 @@
 					'name' 	=> '',
 					'title' => __('Master Slider Options', 'swiftframework'),
 				    'id' 	=> "{$prefix}ms_options",
-				    'wrap-class' => 'pageslider-masterslider',
+				    'class' => 'pageslider-masterslider',
 				    'type' 	=> 'section'
 				),
 	
@@ -1929,7 +1929,7 @@
 					'id' => $prefix . 'masterslider_id',
 					'desc' => __("Enter the Master Slider ID for the slider that you want to show.", 'swiftframework'),
 					'type'  => 'text',
-					'wrap-class' => 'pageslider-masterslider',
+					'class' => 'pageslider-masterslider',
 					'std' => '',
 				)
 			)

@@ -11,7 +11,7 @@
 
 	if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-	global $woocommerce, $post, $product, $woocommerce_loop, $sf_options, $sf_catalog_mode, $sf_product_multimasonry, $sf_product_display_type;
+	global $woocommerce, $post, $product, $woocommerce_loop, $sf_options, $sf_catalog_mode, $sf_product_multimasonry, $sf_product_display_type, $sf_product_display_layout;
 
 	// Store loop count we're currently on
 	if ( empty( $woocommerce_loop['loop'] ) )
@@ -79,6 +79,10 @@
 		if ( isset($sf_options['product_display_layout']) ) {
 			$product_layout = $sf_options['product_display_layout'];
 		}
+	}
+	
+	if ( $sf_product_display_layout != "" ) {
+		$product_layout = $sf_product_display_layout;
 	}
 
 	if ( $product_qv_hover ) {

@@ -8,7 +8,7 @@
                     'swiftframework_shortcodes', function() {
                         ed.windowManager.open(
                             {
-                                file: url + '/interface.php',
+                                file:  ajaxurl + '?action=sf_shortcode_generator',
                                 width: 500 + ed.getLang( 'swiftframework_shortcodes.delta_width', 0 ),
                                 height: 600 + ed.getLang( 'swiftframework_shortcodes.delta_height', 0 ),
                                 inline: 1

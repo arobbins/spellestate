@@ -313,17 +313,22 @@
 
         		$hide_empty = 1;
 				$category_id = '';
+				$ids = array();
 				
 				if ( $category != "" ) {
-					$category = str_replace( "0,", "", $category );
-        			$category_term = get_term_by('slug', $category, 'product_cat');
-        			$category_id = $category_term->term_id;
+					$category = str_replace( "0,", "", $category );		
+					$categories = explode( ',', $category );			
+	       			foreach ($categories as $term) {
+	       				$category_term = get_term_by('slug', $term, 'product_cat');
+	       				$category_id = $category_term->term_id;
+	       				array_push($ids, $category_id);
+        			}
         		}
-        		
+        		        		
         		$args = array(
         			'hide_empty' => $hide_empty,
         			'pad_counts' => true,
-        			'child_of'   => $category_id
+        			'include'    => $ids,
         		);
 
         		$product_categories = get_terms( 'product_cat', $args );

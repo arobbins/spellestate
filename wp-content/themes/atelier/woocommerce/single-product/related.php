@@ -9,7 +9,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-global $product, $sf_options, $woocommerce_loop, $sf_carouselID;
+global $product, $sf_options, $woocommerce_loop, $sf_carouselID, $sf_product_display_type, $sf_product_display_layout;
 
 $related = $product->get_related(12);
 
@@ -38,16 +38,22 @@ $sf_carouselID++;
 
 $product_display_type = $sf_options['product_display_type'];
 $product_display_gutters = $sf_options['product_display_gutters'];
+$related_heading = __( $sf_options['related_heading_text'] , 'swiftframework' );
+$related_product_display_type = $product_display_type;
+if ( isset($sf_options['related_product_display_type']) ) {
+	$related_product_display_type = $sf_options['related_product_display_type'];
+}
+
+// Set global
+$sf_product_display_type = $related_product_display_type;
 
 $gutter_class = "";
 
-if (!$product_display_gutters && $product_display_type == "gallery") {
+if (!$product_display_gutters && $related_product_display_type == "gallery") {
 	$gutter_class = 'no-gutters';
 } else {
 	$gutter_class = 'gutters';
 }
-
-$related_heading = __( $sf_options['related_heading_text'] , 'swiftframework' );
 
 if ( $products->have_posts() ) : ?>
 
@@ -58,7 +64,7 @@ if ( $products->have_posts() ) : ?>
 			<div class="carousel-arrows"><a href="#" class="carousel-prev"><i class="sf-icon-chevron-prev"></i></a><a href="#" class="carousel-next"><i class="sf-icon-chevron-next"></i></a></div>
 		</div>
 
-		<div class="related products carousel-items <?php echo esc_attr($gutter_class); ?> product-type-<?php echo esc_attr($product_display_type); ?>" id="carousel-<?php echo esc_attr($sf_carouselID); ?>" data-columns="<?php echo esc_attr($woocommerce_loop['columns']); ?>>">
+		<div class="related products carousel-items <?php echo esc_attr($gutter_class); ?> product-type-<?php echo esc_attr($related_product_display_type); ?>" id="carousel-<?php echo esc_attr($sf_carouselID); ?>" data-columns="<?php echo esc_attr($woocommerce_loop['columns']); ?>">
 
 			<?php while ( $products->have_posts() ) : $products->the_post(); ?>
 

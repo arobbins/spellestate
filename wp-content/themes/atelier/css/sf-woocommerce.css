@@ -1316,6 +1316,11 @@ nav.woocommerce-pagination ul li:first-child {
 	padding-left: 1px;
 	overflow: visible;
 }
+.woocommerce-shop-page #infscr-loading {
+	margin: 70px auto 60px;
+	height: auto;
+	line-height: normal;
+}
 .woocommerce .jckqvBtn {
 	display: inline-block;
 	float: none;
@@ -1741,6 +1746,13 @@ nav.woocommerce-pagination ul li:first-child {
 }
 .woocommerce .products .product.product-layout-list .product-details .price {
 	text-align: left;
+}
+.woocommerce .products .product.product-layout-list .clear {
+	display: none;
+}
+.woocommerce .products .product.product-layout-list .product-actions {
+	float: left;
+	padding-left: 30px;
 }
 .products .product.product-layout-list .product-details .product-desc {
 	display: block;
@@ -2676,6 +2688,10 @@ nav.woocommerce-pagination ul li:first-child {
 	margin-left: 0;
 	margin-right: 0;
 }
+.product > #product-reviews-wrap #reviews {
+	margin-left: -15px;
+	margin-right: -15px;
+}
 #product-reviews-wrap #comments {
 	width: 60%;
 	padding-right: 0;
@@ -3055,6 +3071,9 @@ table.shop_table .wew-notification-action_wrapper input[type="text"] {
 .woocommerce table.shop_table td {
 	border-top-width: 2px;
 }
+.woocommerce table.shop_table td.actions {
+	padding-right: 0;
+}
 .woocommerce table.cart .product-thumbnail, .woocommerce-page table.cart .product-thumbnail {
 	width: 100px;
 }
@@ -3157,6 +3176,7 @@ table.shop_table .wew-notification-action_wrapper input[type="text"] {
 .woocommerce .wc-proceed-to-checkout > a.checkout-button {
 	width: 100%;
 	margin-bottom: 0;
+	font-size: 1em;
 }
 .woocommerce .coupon {
 	width: auto;
@@ -3581,7 +3601,7 @@ ul.checkout-process li a.active, ul.checkout-process li p.active {
 	visibility: visible!important;
 	display: block!important;
 }
-.woocommerce #account_details .login form p.form-row input[type="submit"], .my-account-login-wrap .login-wrap form.login p.form-row input[type="submit"], .woocommerce .my-account-login-wrap form input[type="submit"], .lost_reset_password p.form-row input[type="submit"], .track_order p.form-row input[type="submit"], .change_password_form p input[type="submit"], .woocommerce table.my_account_orders .order-actions .button, .woocommerce .widget_price_filter .price_slider_amount .button, .woocommerce.widget .buttons a, .woocommerce .wishlist_table tr td.product-add-to-cart a, #login-form .modal-body form.login p.form-row input[type="submit"], #wew-submit-email-to-notify, .woocommerce .cart .button, .woocommerce .cart input.button, .woocommerce input[name="apply_coupon"], .woocommerce a.button.wc-backward, #yith-wcwl-form .product-add-to-cart > .button {
+.woocommerce #account_details .login form p.form-row input[type="submit"], .my-account-login-wrap .login-wrap form.login p.form-row input[type="submit"], .woocommerce .my-account-login-wrap form input[type="submit"], .lost_reset_password p.form-row input[type="submit"], .track_order p.form-row input[type="submit"], .change_password_form p input[type="submit"], .woocommerce table.my_account_orders .order-actions .button, .woocommerce .widget_price_filter .price_slider_amount .button, .woocommerce.widget .buttons a, .woocommerce .wishlist_table tr td.product-add-to-cart a, #login-form .modal-body form.login p.form-row input[type="submit"], #wew-submit-email-to-notify, .woocommerce .cart .button, .woocommerce .cart input.button, .woocommerce input[name="apply_coupon"], .woocommerce a.button.wc-backward, #yith-wcwl-form .product-add-to-cart > .button, .woocommerce a.button {
 	margin-right: 20px;
 	float: left;
 	border: 2px solid #e3e3e3;
@@ -3606,7 +3626,9 @@ ul.checkout-process li a.active, ul.checkout-process li p.active {
 	border-radius: 0;
 	font-weight: normal;
 	margin-right: 0;
-	font-size: 14p;x
+	font-size: 14px;
+	padding: 14px 20px;
+	height: 44px;
 }
 .woocommerce #account_details .login form p.form-row a.lost_password, .my-account-login-wrap .login-wrap form.login p.form-row a.lost_password {
 	margin: 6px 0 0;
@@ -4079,9 +4101,13 @@ ul.my-account-nav > li a:before {
 .my_account_orders td.order-number a {
 	border-bottom: 1px dotted #e4e4e4;
 }
+.woocommerce table.my_account_orders .order-actions {
+	padding-right: 0;
+}
 .woocommerce table.my_account_orders .order-actions .button {
 	float: none;
 	margin: 0;
+	padding: 12px 20px;
 }
 .woocommerce .address .edit-address {
 	border-bottom: 1px dotted #e4e4e4;
@@ -4228,6 +4254,64 @@ table.customer_details td {
 	width: 50%;
 	float: left;
 }
+
+
+/* --------------------------------------------
+	WOOCOMMERCE 2.6 MY ACCOUNT
+-------------------------------------------- */
+
+.woocommerce-MyAccount-navigation {
+	padding-right: 10px;
+}
+.woocommerce-MyAccount-navigation ul {
+	margin: 0;
+}
+.woocommerce-MyAccount-navigation li {
+	border-bottom: 1px solid #e3e3e3;
+	border-top: 0px solid #e3e3e3;
+}
+.woocommerce-MyAccount-navigation li:first-child {
+	border-top-width: 1px;
+}
+.woocommerce-MyAccount-navigation li > a {
+	display: block;
+	line-height: 36px;
+	padding: 10px 0;
+	font-weight: bold;
+	position: relative;
+	text-decoration: none;
+}
+.woocommerce-account .page-content .woocommerce-MyAccount-content > h2:first-child, .woocommerce-MyAccount-content > form > h3 {
+	margin-top: 0;
+}
+.woocommerce-MyAccount-content form p.form-row {
+	margin-bottom: 10px;
+}
+.woocommerce-MyAccount-content form p.form-row label {
+	padding-bottom: 0;
+	float: none;
+}
+.woocommerce-account .woocommerce-EditAccountForm fieldset {
+	margin: 40px 0 20px;
+	padding: 0;
+	border: 0;
+}
+.woocommerce-account .woocommerce-EditAccountForm fieldset legend {
+    padding: 0 0 10px;
+    font-weight: bold;
+    font-size: 16px;
+}
+.woocommerce-account .addresses .title .edit {
+    margin-right: 20px;
+    margin-top: 15px;
+}
+.woocommerce-MyAccount-content > .woocommerce-Message:first-child {
+	margin-top: 0!important;
+}
+.woocommerce form .woocomerce-FormRow.form-submit {
+	margin-top: 20px;
+}
+
 
 /* --------------------------------------------
 	WOOCOMMERCE PRODUCT CATEGORIES

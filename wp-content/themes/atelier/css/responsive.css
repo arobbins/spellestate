@@ -198,7 +198,7 @@
 	.mhs-tablet-land #mobile-top-text, .mhs-tablet-land #mobile-header, .mhs-tablet-land #mobile-header-sticky-wrapper {
 		display: block;
 	}
-	.mhs-tablet-land .header-wrap, .mhs-tablet-land #top-bar {
+	.mhs-tablet-land .header-wrap, .mhs-tablet-land #top-bar, .mhs-tablet-land #top-bar-sticky-wrapper {
 		display: none;
 	}
 	.mhs-tablet-land .vertical-header #site-loading, .mhs-tablet-land .vertical-header-right #site-loading {
@@ -365,7 +365,7 @@
 	.mhs-tablet-port #mobile-top-text, .mhs-tablet-port #mobile-header, .mhs-tablet-port #mobile-header-sticky-wrapper  {
 		display: block;
 	}
-	.mhs-tablet-port .header-wrap, .mhs-tablet-port #top-bar {
+	.mhs-tablet-port .header-wrap, .mhs-tablet-port #top-bar, .mhs-tablet-port #top-bar-sticky-wrapper {
 		display: none;
 	}
 	.mhs-tablet-port.vertical-header #container, .mhs-tablet-port.vertical-header #main-container {
@@ -849,7 +849,7 @@
 	.mhs-mobile #mobile-top-text, .mhs-mobile #mobile-header, .mhs-mobile #mobile-header-sticky-wrapper {
 		display: block;
 	}
-	.mhs-mobile .header-wrap, .mhs-mobile #top-bar {
+	.mhs-mobile .header-wrap, .mhs-mobile #top-bar, .mhs-mobile #top-bar-sticky-wrapper {
 		display: none;
 	}
 	.mhs-mobile.vertical-header #container, .mhs-mobile.vertical-header #main-container {
@@ -1428,6 +1428,15 @@
 	}
 	.sf-mobile-shop-filters .tagcloud {
 		padding: 30px 0;
+	}
+	.woocommerce-account .woocommerce-MyAccount-navigation {
+		width: 100%;
+		float: none;
+		margin-bottom: 30px;
+	}
+	.woocommerce-account .woocommerce-MyAccount-content {
+	    float: none;
+	    width: 100%;
 	}
 	
 	/* EVENTS CALENDAR */

@@ -36,6 +36,8 @@
 	/* Remove default product item link */
 	remove_action( 'woocommerce_before_shop_loop_item', 'woocommerce_template_loop_product_link_open', 10 );
 	
+	/* Remove review meta */
+	remove_action( 'woocommerce_review_meta', 'woocommerce_review_display_meta', 10 );
 	
 	/* REMOVE UNESSECARY WOOCOMMERCE SCRIPTS
     ================================================== */
@@ -757,12 +759,12 @@
                 $html .= '<div class="yith-wcwl-add-button';  // the class attribute is closed in the next row
 
                 $html .= $exists ? ' hide" style="display:none;"' : ' show"';
-				$html .= '><a href="' . htmlspecialchars( $yith_wcwl->get_addtowishlist_url() ) . '"  data-ajaxurl="' . admin_url( 'admin-ajax.php' ). '" data-product-id="' . $product->id . '" data-product-type="' . $product_type . '" ' . $classes . ' >';
+				$html .= '><a href="' . htmlspecialchars( $yith_wcwl->get_addtowishlist_url() ) . '" rel="nofollow" data-ajaxurl="' . admin_url( 'admin-ajax.php' ). '" data-product-id="' . $product->id . '" data-product-type="' . $product_type . '" ' . $classes . ' >';
 
                 $html .= apply_filters('sf_add_to_wishlist_icon', '<i class="ss-star"></i>');
                 $html .= '</a></div>';
 
-                $html .= '<div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;"><span class="feedback">' . __( 'Product added to wishlist.', 'swiftframework' ) . '</span> <a href="' . $url . '">';
+                $html .= '<div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;"><span class="feedback">' . __( 'Product added to wishlist.', 'swiftframework' ) . '</span> <a href="' . $url . '" rel="nofollow">';
                 $html .= apply_filters('sf_added_to_wishlist_icon', '<i class="fa-check"></i>');
                 $html .= '</a></div>';
                 $html .= '<div class="yith-wcwl-wishlistexistsbrowse ' . ( $exists ? 'show' : 'hide' ) . '" style="display:' . ( $exists ? 'block' : 'none' ) . '"><a href="' . $url . '">';

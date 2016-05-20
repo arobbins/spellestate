@@ -664,7 +664,7 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
 			if ( 'themes.php' === $this->parent_slug ) {
 				$this->page_hook = call_user_func( 'add_theme_page', $args['page_title'], $args['menu_title'], $args['capability'], $args['menu_slug'], $args['function'] );
 			} else {
-				$this->page_hook = call_user_func( 'add_submenu_page', $args['parent_slug'], $args['page_title'], $args['menu_title'], $args['capability'], $args['menu_slug'], $args['function'] );
+				$this->page_hook = call_user_func( 'add_theme_page', $args['parent_slug'], $args['page_title'], $args['menu_title'], $args['capability'], $args['menu_slug'], $args['function'] );
 			}
 		}
 
@@ -1789,36 +1789,57 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
 
 
 
-		public function sf_check_latest_plugin_versions() {			
-			$response = wp_remote_get( 'http://swiftideas.com/extras/plugins/sf-plugin-versions.txt' );
-			$header = $body = "";
-			if ( is_array($response) ) {
- 				$header = $response['headers']; // array of http header lines
-  				$body = $response['body']; // use the content
-			}
-
-			$arr = explode(";", $body);
+		public function sf_check_latest_plugin_versions() {
 			
-			$sf_latest_plugins_versions = array();
+			// Do we have this information in our transients already?
+			$transient = get_transient( 'sf_remote_plugin_update_check' );
 			
-			foreach ($arr as $plugin){
-				$plugin_fields = array();
-				$plugin_fields = explode(",", $plugin);
+			// Yep!  Just return it and we're done.
+			if( ! empty( $transient ) ) {
+			
+				// The function will return here every time after the first time it is run, until the transient expires.
+				return $transient;
+			
+			// Nope!  We gotta make a call.
+			} else {
+					  							
+				$response = wp_remote_get( 'http://swiftideas.com/extras/plugins/sf-plugin-versions.txt' );
+				$header = $body = "";
+				if ( is_array($response) ) {
+	 				$header = $response['headers']; // array of http header lines
+	  				$body = $response['body']; // use the content
+				}
+	
+				$arr = explode(";", $body);
 				
-				if( isset( $plugin_fields[0]) &&  $plugin_fields[0] != '' ){
-
-					$plugin_name    = array_shift ($plugin_fields);
-					$plugin_slug    = trim( array_shift ($plugin_fields) );
-					$plugin_version = trim( array_shift ($plugin_fields) );
-
-					$sf_latest_plugins_versions[$plugin_slug] = array( 'name' => $plugin_name, 'slug' => $plugin_slug, 'version'  => $plugin_version ); 
+				$sf_latest_plugins_versions = array();
+				
+				foreach ($arr as $plugin){
+					$plugin_fields = array();
+					$plugin_fields = explode(",", $plugin);
 					
-				}	
+					if( isset( $plugin_fields[0]) &&  $plugin_fields[0] != '' ){
+	
+						$plugin_name    = array_shift ($plugin_fields);
+						$plugin_slug    = trim( array_shift ($plugin_fields) );
+						$plugin_version = trim( array_shift ($plugin_fields) );
+	
+						$sf_latest_plugins_versions[$plugin_slug] = array( 'name' => $plugin_name, 'slug' => $plugin_slug, 'version'  => $plugin_version ); 
+						
+					}	
+					
+				}
 				
+				// Cache for 6 hours
+				$cache_time = 21600;
+				
+				// Save the API response so we don't have to call again until tomorrow.
+				set_transient( 'sf_remote_plugin_update_check', $sf_latest_plugins_versions, $cache_time );
+				
+				// Return plugin versions
+				return $sf_latest_plugins_versions;
+								
 			}
-
-			return $sf_latest_plugins_versions;
-		
 		}
 
 		/**

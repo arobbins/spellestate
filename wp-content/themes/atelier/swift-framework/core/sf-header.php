@@ -1278,7 +1278,7 @@
 	    	if ( class_exists('WCML_Multi_Currency_Support') ) {
 	    		$currency_code = get_option('woocommerce_currency');
 	    		$currency_switch_output .= '<li class="parent currency-switch-item">';
-	    		$currency_switch_output .= '<span class="current-currency">' . get_woocommerce_currency_symbol($currency_code) . '</span>';
+	    		$currency_switch_output .= '<span class="current-currency">' . get_woocommerce_currency_symbol() . '</span>';
 	    		$currency_switch_output .= do_shortcode('[currency_switcher switcher_style="list" format="%code% (%symbol%)"]');
 	    		$currency_switch_output .= '</li>';
 	    		return $currency_switch_output;

@@ -17,7 +17,6 @@
     *	sf_global_include_classes()
     *	sf_content_filter()
     *	sf_layerslider_overrides()
-    *	sf_envato_toolkit_admin_init()
     *	sf_widget_area_filter()
 	*	sf_get_gshare_count()
     *	sf_get_tweets()
@@ -2031,6 +2030,7 @@
 	            'f038' => 'fa-align-right', 
 	            'f270' => 'fa-amazon', 
 	            'f0f9' => 'fa-ambulance', 
+	            'f2a3' => 'fa-american-sign-language-interpreting', 
 	            'f13d' => 'fa-anchor', 
 	            'f17b' => 'fa-android', 
 	            'f209' => 'fa-angellist', 
@@ -2061,8 +2061,11 @@
 	            'f0b2' => 'fa-arrows-alt', 
 	            'f07e' => 'fa-arrows-h', 
 	            'f07d' => 'fa-arrows-v', 
+	            'f2a3' => 'fa-asl-interpreting', 
+	            'f2a2' => 'fa-assistive-listening-systems', 
 	            'f069' => 'fa-asterisk', 
 	            'f1fa' => 'fa-at', 
+	            'f29e' => 'fa-audio-description', 
 	            'f1b9' => 'fa-automobile', 
 	            'f04a' => 'fa-backward', 
 	            'f24e' => 'fa-balance-scale', 
@@ -2097,6 +2100,7 @@
 	            'f172' => 'fa-bitbucket-square', 
 	            'f15a' => 'fa-bitcoin', 
 	            'f27e' => 'fa-black-tie', 
+	            'f29d' => 'fa-blind', 
 	            'f293' => 'fa-bluetooth', 
 	            'f294' => 'fa-bluetooth-b', 
 	            'f032' => 'fa-bold', 
@@ -2105,6 +2109,7 @@
 	            'f02d' => 'fa-book', 
 	            'f02e' => 'fa-bookmark', 
 	            'f097' => 'fa-bookmark-o', 
+	            'f2a1' => 'fa-braille', 
 	            'f0b1' => 'fa-briefcase', 
 	            'f15a' => 'fa-btc', 
 	            'f188' => 'fa-bug', 
@@ -2207,6 +2212,8 @@
 	            'f0e4' => 'fa-dashboard', 
 	            'f210' => 'fa-dashcube', 
 	            'f1c0' => 'fa-database', 
+	            'f2a4' => 'fa-deaf', 
+	            'f2a4' => 'fa-deafness', 
 	            'f03b' => 'fa-dedent', 
 	            'f1a5' => 'fa-delicious', 
 	            'f108' => 'fa-desktop', 
@@ -2228,6 +2235,7 @@
 	            'f0e0' => 'fa-envelope', 
 	            'f003' => 'fa-envelope-o', 
 	            'f199' => 'fa-envelope-square', 
+	            'f299' => 'fa-envira', 
 	            'f12d' => 'fa-eraser', 
 	            'f153' => 'fa-eur', 
 	            'f153' => 'fa-euro', 
@@ -2242,6 +2250,7 @@
 	            'f06e' => 'fa-eye', 
 	            'f070' => 'fa-eye-slash', 
 	            'f1fb' => 'fa-eyedropper', 
+	            'f2b4' => 'fa-fa', 
 	            'f09a' => 'fa-facebook', 
 	            'f09a' => 'fa-facebook-f', 
 	            'f230' => 'fa-facebook-official', 
@@ -2276,6 +2285,7 @@
 	            'f06d' => 'fa-fire', 
 	            'f134' => 'fa-fire-extinguisher', 
 	            'f269' => 'fa-firefox', 
+	            'f2b0' => 'fa-first-order', 
 	            'f024' => 'fa-flag', 
 	            'f11e' => 'fa-flag-checkered', 
 	            'f11d' => 'fa-flag-o', 
@@ -2288,6 +2298,7 @@
 	            'f07c' => 'fa-folder-open', 
 	            'f115' => 'fa-folder-open-o', 
 	            'f031' => 'fa-font', 
+	            'f2b4' => 'fa-font-awesome', 
 	            'f280' => 'fa-fonticons', 
 	            'f286' => 'fa-fort-awesome', 
 	            'f211' => 'fa-forumbee', 
@@ -2311,11 +2322,16 @@
 	            'f09b' => 'fa-github', 
 	            'f113' => 'fa-github-alt', 
 	            'f092' => 'fa-github-square', 
+	            'f296' => 'fa-gitlab', 
 	            'f184' => 'fa-gittip', 
 	            'f000' => 'fa-glass', 
+	            'f2a5' => 'fa-glide', 
+	            'f2a6' => 'fa-glide-g', 
 	            'f0ac' => 'fa-globe', 
 	            'f1a0' => 'fa-google', 
 	            'f0d5' => 'fa-google-plus', 
+	            'f2b3' => 'fa-google-plus-circle', 
+	            'f2b3' => 'fa-google-plus-official', 
 	            'f0d4' => 'fa-google-plus-square', 
 	            'f1ee' => 'fa-google-wallet', 
 	            'f19d' => 'fa-graduation-cap', 
@@ -2336,6 +2352,7 @@
 	            'f257' => 'fa-hand-scissors-o', 
 	            'f259' => 'fa-hand-spock-o', 
 	            'f256' => 'fa-hand-stop-o', 
+	            'f2a4' => 'fa-hard-of-hearing', 
 	            'f292' => 'fa-hashtag', 
 	            'f0a0' => 'fa-hdd-o', 
 	            'f1dc' => 'fa-header', 
@@ -2408,6 +2425,7 @@
 	            'f177' => 'fa-long-arrow-left', 
 	            'f178' => 'fa-long-arrow-right', 
 	            'f176' => 'fa-long-arrow-up', 
+	            'f2a8' => 'fa-low-vision', 
 	            'f0d0' => 'fa-magic', 
 	            'f076' => 'fa-magnet', 
 	            'f064' => 'fa-mail-forward', 
@@ -2479,8 +2497,9 @@
 	            'f03e' => 'fa-photo', 
 	            'f03e' => 'fa-picture-o', 
 	            'f200' => 'fa-pie-chart', 
-	            'f1a7' => 'fa-pied-piper', 
+	            'f2ae' => 'fa-pied-piper', 
 	            'f1a8' => 'fa-pied-piper-alt', 
+	            'f1a7' => 'fa-pied-piper-pp', 
 	            'f0d2' => 'fa-pinterest', 
 	            'f231' => 'fa-pinterest-p', 
 	            'f0d3' => 'fa-pinterest-square', 
@@ -2501,6 +2520,7 @@
 	            'f029' => 'fa-qrcode', 
 	            'f128' => 'fa-question', 
 	            'f059' => 'fa-question-circle', 
+	            'f29c' => 'fa-question-circle-o', 
 	            'f10d' => 'fa-quote-left', 
 	            'f10e' => 'fa-quote-right', 
 	            'f1d0' => 'fa-ra', 
@@ -2518,6 +2538,7 @@
 	            'f01e' => 'fa-repeat', 
 	            'f112' => 'fa-reply', 
 	            'f122' => 'fa-reply-all', 
+	            'f1d0' => 'fa-resistance', 
 	            'f079' => 'fa-retweet', 
 	            'f157' => 'fa-rmb', 
 	            'f018' => 'fa-road', 
@@ -2555,8 +2576,10 @@
 	            'f291' => 'fa-shopping-basket', 
 	            'f07a' => 'fa-shopping-cart', 
 	            'f090' => 'fa-sign-in', 
+	            'f2a7' => 'fa-sign-language', 
 	            'f08b' => 'fa-sign-out', 
 	            'f012' => 'fa-signal', 
+	            'f2a7' => 'fa-signing', 
 	            'f215' => 'fa-simplybuilt', 
 	            'f0e8' => 'fa-sitemap', 
 	            'f216' => 'fa-skyatlas', 
@@ -2565,6 +2588,9 @@
 	            'f1de' => 'fa-sliders', 
 	            'f1e7' => 'fa-slideshare', 
 	            'f118' => 'fa-smile-o', 
+	            'f2ab' => 'fa-snapchat', 
+	            'f2ac' => 'fa-snapchat-ghost', 
+	            'f2ad' => 'fa-snapchat-square', 
 	            'f1e3' => 'fa-soccer-ball-o', 
 	            'f0dc' => 'fa-sort', 
 	            'f15d' => 'fa-sort-alpha-asc', 
@@ -2627,6 +2653,7 @@
 	            'f00a' => 'fa-th', 
 	            'f009' => 'fa-th-large', 
 	            'f00b' => 'fa-th-list', 
+	            'f2b2' => 'fa-themeisle', 
 	            'f08d' => 'fa-thumb-tack', 
 	            'f165' => 'fa-thumbs-down', 
 	            'f088' => 'fa-thumbs-o-down', 
@@ -2666,6 +2693,7 @@
 	            'f0e9' => 'fa-umbrella', 
 	            'f0cd' => 'fa-underline', 
 	            'f0e2' => 'fa-undo', 
+	            'f29a' => 'fa-universal-access', 
 	            'f19c' => 'fa-university', 
 	            'f127' => 'fa-unlink', 
 	            'f09c' => 'fa-unlock', 
@@ -2684,11 +2712,14 @@
 	            'f226' => 'fa-venus-double', 
 	            'f228' => 'fa-venus-mars', 
 	            'f237' => 'fa-viacoin', 
+	            'f2a9' => 'fa-viadeo', 
+	            'f2aa' => 'fa-viadeo-square', 
 	            'f03d' => 'fa-video-camera', 
 	            'f27d' => 'fa-vimeo', 
 	            'f194' => 'fa-vimeo-square', 
 	            'f1ca' => 'fa-vine', 
 	            'f189' => 'fa-vk', 
+	            'f2a0' => 'fa-volume-control-phone', 
 	            'f027' => 'fa-volume-down', 
 	            'f026' => 'fa-volume-off', 
 	            'f028' => 'fa-volume-up', 
@@ -2698,11 +2729,14 @@
 	            'f1d7' => 'fa-weixin', 
 	            'f232' => 'fa-whatsapp', 
 	            'f193' => 'fa-wheelchair', 
+	            'f29b' => 'fa-wheelchair-alt', 
 	            'f1eb' => 'fa-wifi', 
 	            'f266' => 'fa-wikipedia-w', 
 	            'f17a' => 'fa-windows', 
 	            'f159' => 'fa-won', 
 	            'f19a' => 'fa-wordpress', 
+	            'f297' => 'fa-wpbeginner', 
+	            'f298' => 'fa-wpforms', 
 	            'f0ad' => 'fa-wrench', 
 	            'f168' => 'fa-xing', 
 	            'f169' => 'fa-xing-square', 
@@ -2713,9 +2747,10 @@
 	            'f1d4' => 'fa-yc-square', 
 	            'f1e9' => 'fa-yelp', 
 	            'f157' => 'fa-yen', 
+	            'f2b1' => 'fa-yoast', 
 	            'f167' => 'fa-youtube', 
 	            'f16a' => 'fa-youtube-play', 
-	            'f166' => 'fa-youtube-square',
+	            'f166' => 'fa-youtube-square', 
             );
 
             // GIZMO
@@ -3105,7 +3140,19 @@
 		    }
 		}
 	}
-
+	
+	
+	/* SHORTCODE GENERATOR
+	================================================== */
+	if ( ! function_exists( 'sf_shortcode_generator' ) ) {
+	    function sf_shortcode_generator() {
+	        require_once( 'sf-interface.php' );   
+	        wp_die();
+	    }
+	    add_action( 'wp_ajax_sf_shortcode_generator', 'sf_shortcode_generator' );
+	    add_action( 'wp_ajax_nopriv_sf_shortcode_generator', 'sf_shortcode_generator' );
+	}
+	
 
     /* DIRECTORY FRONT END SUBMISSION
     ================================================== */

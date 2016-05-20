@@ -282,7 +282,7 @@
 		    wp_register_script('sf-owlcarousel', SF_LOCAL_PATH . '/js/combine/owl.carousel.min.js', 'jquery', NULL, TRUE);
 			wp_register_script('sf-jquery-ui', SF_LOCAL_PATH . '/js/combine/jquery-ui-1.10.2.custom.min.js', 'jquery', NULL, TRUE);
 			wp_register_script('sf-ilightbox', SF_LOCAL_PATH . '/js/combine/ilightbox.min.js', 'jquery', NULL, TRUE);
-		    wp_register_script('sf-maps', '//maps.google.com/maps/api/js?sensor=false', 'jquery', NULL, TRUE);
+		    wp_register_script('sf-maps', '//maps.google.com/maps/api/js', 'jquery', NULL, TRUE);
 		    wp_register_script('sf-elevatezoom', SF_LOCAL_PATH . '/js/combine/jquery.elevateZoom.min.js', 'jquery', NULL, TRUE);
 		    wp_register_script('sf-infinite-scroll',  SF_LOCAL_PATH . '/js/combine/jquery.infinitescroll.min.js', 'jquery', NULL, TRUE);
 		    wp_register_script('sf-theme-scripts', SF_LOCAL_PATH . '/js/combine/theme-scripts.js', 'jquery', NULL, TRUE);

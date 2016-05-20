@@ -1,8 +1,5 @@
 <?php
 
-    // Require config
-    require_once( 'config.php' );
-
     $icon_list = sf_get_icons_list();
     $animatons_list = sf_get_animations_list();
     $upload_dir = wp_upload_dir();     
@@ -630,7 +627,21 @@
 
 <div id="shortcode-modal" class="shortcode-option">
     <h5><?php _e( 'Modal', 'swiftframework' ); ?></h5>
-
+	
+	<div class="option">
+	    <label for="modal-link-type"><?php _e( 'Link Type', 'uplift' ); ?></label>
+	    <select id="modal-link-type" name="modal-link-type">
+	        <option value="button"><?php _e( 'Button', 'uplift' ); ?></option>
+	        <option value="text"><?php _e( 'Text Link', 'uplift' ); ?></option>
+	    </select>
+	</div>
+	
+	<div class="option">
+	    <label for="modal-link-text"><?php _e( 'Modal link text', 'uplift' ); ?></label>
+	    <input id="modal-link-text" name="modal-link-text" type="text" value="<?php _e( 'Modal link', 'uplift' ); ?>"/>
+	    <p class="info">If using the Text Link type, then enter the link text here.</p>
+	</div>
+	
     <div class="option">
         <label for="modal-button-size"><?php _e( 'Modal Button size', 'swiftframework' ); ?></label>
         <select id="modal-button-size" name="modal-button-size">

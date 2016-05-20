@@ -13481,6 +13481,12 @@ input[type="file"] {
 .spb_accordion .spb_accordion_section > h4.ui-state-active a:after {
 	content: "\e603";
 }
+.spb_accordion .ui-accordion .ui-accordion-content {
+	padding: 15px;
+}
+.spb_accordion_section .spb_text_column {
+    margin-bottom: 0;
+}
 .spb_accordion .ui-accordion .ui-accordion-content .row {
 	margin-left: -15px!important;
 }

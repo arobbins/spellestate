@@ -2838,7 +2838,7 @@ if ( !class_exists( "Redux_Framework_options_config" ) ) {
 						'id' => 'disable_help_bar',
 						'type' => 'button_set',
 						'title' => __('Disable Help Bar', 'swiftframework'),
-						'subtitle' => __('Disable the help bar on account / checkout pages.', 'swiftframework'),
+						'subtitle' => __('Disable the help bar on checkout pages.', 'swiftframework'),
 						'desc' => '',
 						'options' => array('1' => 'Disable','0' => 'Enable'),
 						'default' => '0'
@@ -2847,7 +2847,7 @@ if ( !class_exists( "Redux_Framework_options_config" ) ) {
 						'id' => 'help_bar_text',
 						'type' => 'text',
 						'title' => __('Help Bar Text', 'swiftframework'),
-						'subtitle' => __('This text appears in the help bar on account / checkout pages.', 'swiftframework'),
+						'subtitle' => __('This text appears in the help bar on checkout pages.', 'swiftframework'),
 						'desc' => '',
 						'default' => 'Need help? Call customer services on 0800 123 4567.'
 						),
@@ -2943,6 +2943,20 @@ if ( !class_exists( "Redux_Framework_options_config" ) ) {
 				'title' => __('Shop Options', 'swiftframework'),
 				'subsection' => true,
 				'fields' => array(
+					array(
+						'id' => 'product_display_pagination',
+						'type' => 'select',
+						'title' => __('Shop Pagination', 'uplift'),
+						'subtitle' => "Select the pagination type for the shop page.",
+						'options' => array(
+							'infinite-scroll' => 'Infinite Scroll',
+							'load-more'		=> 'Load More (AJAX)',
+							'standard'		=> 'Standard',
+							'none'		=> 'None'
+							),
+						'desc' => '',
+						'default' => 'standard',
+						),
 					array(
 						'id' => 'enable_woo_global_filters',
 						'type' => 'button_set',
@@ -3400,6 +3414,19 @@ if ( !class_exists( "Redux_Framework_options_config" ) ) {
 						'default' => 'Related products'
 						),
 					array(
+						'id' => 'related_product_display_type',
+						'type' => 'select',
+						'title' => __('Related Product Display Type', 'swiftframework'),
+						'subtitle' => "Choose the product display type for the related products.",
+						'options' => array(
+							'standard'		=> 'Standard',
+							'gallery'		=> 'Gallery',
+							'gallery-bordered'	=> 'Gallery Bordered',
+						),
+						'desc' => '',
+						'default' => 'standard'
+						),
+					array(
 						'id' => 'woo_product_divide_0',
 						'type' => 'divide'
 						),
@@ -3612,6 +3639,22 @@ if ( !class_exists( "Redux_Framework_options_config" ) ) {
 						'type' => 'text',
 						'title' => __('Twitch', 'swiftframework'),
 						'subtitle' => "Your Twitch URL",
+						'desc' => '',
+						'default' => ''
+						),
+					array(
+						'id' => 'snapchat_url',
+						'type' => 'text',
+						'title' => __('Snapchat', 'swiftframework'),
+						'subtitle' => "Your Snapchat URL",
+						'desc' => '',
+						'default' => ''
+						),
+					array(
+						'id' => 'whatsapp_url',
+						'type' => 'text',
+						'title' => __('WhatsApp', 'swiftframework'),
+						'subtitle' => "Your WhatsApp URL",
 						'desc' => '',
 						'default' => ''
 						),

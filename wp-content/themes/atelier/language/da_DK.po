@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Atelier\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-08 19:44+0000\n"
-"PO-Revision-Date: 2016-03-08 19:44+0000\n"
+"POT-Creation-Date: 2016-05-13 01:46+0100\n"
+"PO-Revision-Date: 2016-05-13 01:46+0100\n"
 "Last-Translator: OctoKom <webtest@octokom.dk>\n"
 "Language-Team: OctoKom <info@octokom.dk>\n"
 "Language: da\n"
@@ -264,7 +264,7 @@ msgstr ""
 "lov til dette."
 
 #: bbpress/form-reply.php:75 swift-framework/content/sf-campaign-detail.php:215
-#: swift-framework/content/sf-post-detail.php:452
+#: swift-framework/content/sf-post-detail.php:460
 msgid "Tags:"
 msgstr "Tags:"
 
@@ -311,7 +311,7 @@ msgstr "Søg efter:"
 #: includes/overrides/sf-theme-functions.php:1422 searchform.php:3
 #: swift-framework/content/sf-blog.php:374
 #: swift-framework/core/sf-directory.php:151
-#: swift-framework/core/sf-header.php:986 swift-framework/layout/404.php:22
+#: swift-framework/core/sf-header.php:1021 swift-framework/layout/404.php:26
 #: swift-framework/layout/search.php:77
 msgid "Search"
 msgstr "Søg"
@@ -460,7 +460,7 @@ msgstr "Navn:"
 msgid "Slug:"
 msgstr "Forkortelse:"
 
-#: bbpress/form-topic-tag.php:45 includes/class-tgm-plugin-activation.php:2609
+#: bbpress/form-topic-tag.php:45 includes/class-tgm-plugin-activation.php:2759
 #: includes/option-extensions/extensions/custom_fonts/custom_fonts/field_custom_fonts.php:194
 #: includes/option-extensions/extensions/custom_icon_fonts/custom_icon_fonts/field_custom_icon_fonts.php:183
 msgid "Update"
@@ -487,6 +487,9 @@ msgstr ""
 "specificeret?"
 
 #: bbpress/form-topic-tag.php:88 bbpress/form-topic-tag.php:101
+#: includes/meta-box/inc/fields/autocomplete.php:14
+#: includes/meta-box/inc/fields/autocomplete.php:77
+#: includes/meta-box/inc/fields/autocomplete.php:94
 #: includes/options/inc/fields/slides/field_slides.php:167
 #: includes/options/inc/fields/slides/field_slides.php:220
 msgid "Delete"
@@ -615,14 +618,14 @@ msgstr "Konto"
 #: bbpress/form-user-register.php:23
 #: includes/options/inc/fields/password/field_password.php:63
 #: swift-framework/core/sf-footer.php:506
-#: swift-framework/core/sf-functions.php:1977
-#: woocommerce/myaccount/form-login.php:92
+#: swift-framework/core/sf-functions.php:1980
+#: woocommerce/myaccount/form-login.php:94
 msgid "Username"
 msgstr "Brugernavn"
 
 #: bbpress/form-user-edit.php:103 bbpress/form-user-register.php:28
 #: comments.php:77 swift-framework/core/sf-footer.php:507
-#: swift-framework/core/sf-functions.php:1983
+#: swift-framework/core/sf-functions.php:1986
 #: woocommerce/single-product-reviews.php:70
 #: woocommerce/single-product-reviews.php:71
 msgid "Email"
@@ -693,9 +696,9 @@ msgstr "Logind"
 #: bbpress/form-user-login.php:22
 #: includes/options/inc/fields/password/field_password.php:62
 #: swift-framework/core/sf-footer.php:508
-#: swift-framework/core/sf-functions.php:1989
-#: woocommerce/myaccount/form-login.php:50
-#: woocommerce/myaccount/form-login.php:112
+#: swift-framework/core/sf-functions.php:1992
+#: woocommerce/myaccount/form-login.php:52
+#: woocommerce/myaccount/form-login.php:108
 msgid "Password"
 msgstr "Kodeord"
 
@@ -731,8 +734,8 @@ msgstr ""
 "Vi bruger din emailadresse til at sende dig et sikkert kodeord og verificere "
 "din konto."
 
-#: bbpress/form-user-register.php:36 swift-framework/core/sf-functions.php:2001
-#: woocommerce/myaccount/form-login.php:129
+#: bbpress/form-user-register.php:36 swift-framework/core/sf-functions.php:2004
+#: woocommerce/myaccount/form-login.php:122
 msgid "Register"
 msgstr "Tilmeld"
 
@@ -1005,28 +1008,28 @@ msgstr "Du skal være <a href=\"%s\">logget ind</a> for at skrive en kommentar."
 msgid "Proceed to Checkout"
 msgstr "Fortsæt til betaling"
 
-#: includes/class-tgm-plugin-activation.php:333
+#: includes/class-tgm-plugin-activation.php:334
 #: includes/plugin-includes.php:153
 msgid "Install Required Plugins"
 msgstr "Installer påkrævet plugins"
 
-#: includes/class-tgm-plugin-activation.php:334
+#: includes/class-tgm-plugin-activation.php:335
 #: includes/plugin-includes.php:154
 msgid "Install Plugins"
 msgstr "Installer plugins"
 
-#: includes/class-tgm-plugin-activation.php:335
+#: includes/class-tgm-plugin-activation.php:336
 #: includes/plugin-includes.php:155
 #, php-format
 msgid "Installing Plugin: %s"
 msgstr "Installere plugin: %s"
 
-#: includes/class-tgm-plugin-activation.php:336
+#: includes/class-tgm-plugin-activation.php:337
 #: includes/plugin-includes.php:156
 msgid "Something went wrong with the plugin API."
 msgstr "Noget gik talt med pluginnets API."
 
-#: includes/class-tgm-plugin-activation.php:338
+#: includes/class-tgm-plugin-activation.php:339
 #: includes/plugin-includes.php:157
 #, php-format
 msgid "This theme requires the following plugin: %1$s."
@@ -1034,7 +1037,7 @@ msgid_plural "This theme requires the following plugins: %1$s."
 msgstr[0] "Dette tema kræver følgende plugin: %1$s."
 msgstr[1] "Dette tema kræver følgende plugins: %1$s."
 
-#: includes/class-tgm-plugin-activation.php:343
+#: includes/class-tgm-plugin-activation.php:344
 #: includes/plugin-includes.php:158
 #, php-format
 msgid "This theme recommends the following plugin: %1$s."
@@ -1042,7 +1045,7 @@ msgid_plural "This theme recommends the following plugins: %1$s."
 msgstr[0] "Dette tema anbefaler følgende plugin: %1$s."
 msgstr[1] "Dette tema anbefaler følgende plugins: %1$s."
 
-#: includes/class-tgm-plugin-activation.php:348
+#: includes/class-tgm-plugin-activation.php:349
 #, php-format
 msgid ""
 "Sorry, but you do not have the correct permissions to install the %1$s "
@@ -1053,7 +1056,7 @@ msgid_plural ""
 msgstr[0] "Du har desværre ikke rettighederne til at installere %1$s."
 msgstr[1] "Du har desværre ikke rettighederne til at installere %1$s."
 
-#: includes/class-tgm-plugin-activation.php:353
+#: includes/class-tgm-plugin-activation.php:354
 #: includes/plugin-includes.php:163
 #, php-format
 msgid ""
@@ -1069,14 +1072,14 @@ msgstr[1] ""
 "Følgende skal opdateres til seneste version, for at garentere maksimal "
 "kompatibilitet med disse temaer: %1$s."
 
-#: includes/class-tgm-plugin-activation.php:358
+#: includes/class-tgm-plugin-activation.php:359
 #, php-format
 msgid "There is an update available for: %1$s."
 msgid_plural "There are updates available for the following plugins: %1$s."
 msgstr[0] "Der er en opdatering tilgængelig til: %1$s."
 msgstr[1] "Der er en opdatering tilgængelig til: %1$s."
 
-#: includes/class-tgm-plugin-activation.php:363
+#: includes/class-tgm-plugin-activation.php:364
 #, php-format
 msgid ""
 "Sorry, but you do not have the correct permissions to update the %1$s plugin."
@@ -1086,7 +1089,7 @@ msgid_plural ""
 msgstr[0] "Du har desværre ikke rettighederne til at opdatere %1$s."
 msgstr[1] "Du har desværre ikke rettighederne til at opdatere %1$s."
 
-#: includes/class-tgm-plugin-activation.php:368
+#: includes/class-tgm-plugin-activation.php:369
 #: includes/plugin-includes.php:160
 #, php-format
 msgid "The following required plugin is currently inactive: %1$s."
@@ -1096,7 +1099,7 @@ msgstr[0] ""
 msgstr[1] ""
 "De følgende påkrævede plugins er pånuværende tidspunkt inaktiv: %1$s."
 
-#: includes/class-tgm-plugin-activation.php:373
+#: includes/class-tgm-plugin-activation.php:374
 #: includes/plugin-includes.php:161
 #, php-format
 msgid "The following recommended plugin is currently inactive: %1$s."
@@ -1106,7 +1109,7 @@ msgstr[0] ""
 msgstr[1] ""
 "De følgende anbefalede plugins er pånuværende tidspunkt inaktiv: %1$s."
 
-#: includes/class-tgm-plugin-activation.php:378
+#: includes/class-tgm-plugin-activation.php:379
 #, php-format
 msgid ""
 "Sorry, but you do not have the correct permissions to activate the %1$s "
@@ -1117,53 +1120,53 @@ msgid_plural ""
 msgstr[0] "Du har desværre ikke rettighederne til at aktivere %1$s."
 msgstr[1] "Du har desværre ikke rettighederne til at aktivere %1$s."
 
-#: includes/class-tgm-plugin-activation.php:383
+#: includes/class-tgm-plugin-activation.php:384
 #: includes/plugin-includes.php:165
 msgid "Begin installing plugin"
 msgid_plural "Begin installing plugins"
 msgstr[0] "Påbegynd installeringen af plugin"
 msgstr[1] "Påbegynd installeringen af plugins"
 
-#: includes/class-tgm-plugin-activation.php:388
+#: includes/class-tgm-plugin-activation.php:389
 msgid "Begin updating plugin"
 msgid_plural "Begin updating plugins"
 msgstr[0] "Påbegynd opdateringen af plugin"
 msgstr[1] "Påbegynd opdateringen af plugins"
 
-#: includes/class-tgm-plugin-activation.php:393
+#: includes/class-tgm-plugin-activation.php:394
 msgid "Begin activating plugin"
 msgid_plural "Begin activating plugins"
 msgstr[0] "Påbegynd aktivering"
 msgstr[1] "Påbegynd aktivering"
 
-#: includes/class-tgm-plugin-activation.php:397
+#: includes/class-tgm-plugin-activation.php:398
 #: includes/plugin-includes.php:167
 msgid "Return to Required Plugins Installer"
 msgstr "Gå tilbage til påkrævede plugins"
 
-#: includes/class-tgm-plugin-activation.php:398
+#: includes/class-tgm-plugin-activation.php:399
 msgid "Return to the dashboard"
 msgstr "Tilbage til kontrolpanelet"
 
-#: includes/class-tgm-plugin-activation.php:399
-#: includes/class-tgm-plugin-activation.php:3029
+#: includes/class-tgm-plugin-activation.php:400
+#: includes/class-tgm-plugin-activation.php:3179
 #: includes/plugin-includes.php:168
 msgid "Plugin activated successfully."
 msgstr "Plugin blev aktiveret uden problemer."
 
-#: includes/class-tgm-plugin-activation.php:400
-#: includes/class-tgm-plugin-activation.php:2832
+#: includes/class-tgm-plugin-activation.php:401
+#: includes/class-tgm-plugin-activation.php:2982
 msgid "The following plugin was activated successfully:"
 msgid_plural "The following plugins were activated successfully:"
 msgstr[0] "Følgende plugin blev aktiveret uden problemer."
 msgstr[1] "Følgende plugins blev aktiveret uden problemer."
 
-#: includes/class-tgm-plugin-activation.php:401
+#: includes/class-tgm-plugin-activation.php:402
 #, php-format
 msgid "No action taken. Plugin %1$s was already active."
 msgstr "Intet ændret. %1$s var allerede aktiv."
 
-#: includes/class-tgm-plugin-activation.php:402
+#: includes/class-tgm-plugin-activation.php:403
 #, php-format
 msgid ""
 "Plugin not activated. A higher version of %s is needed for this theme. "
@@ -1172,37 +1175,45 @@ msgstr ""
 "Plugin blev ikke aktiveret. En nyere version af %s er nødvendig til dette "
 "tema. Opdater venligst dette plugin."
 
-#: includes/class-tgm-plugin-activation.php:403
+#: includes/class-tgm-plugin-activation.php:404
 #, php-format
 msgid "All plugins installed and activated successfully. %1$s"
 msgstr "Alle plugins blev installeret og aktiveret uden problemer. %1$s"
 
-#: includes/class-tgm-plugin-activation.php:404
+#: includes/class-tgm-plugin-activation.php:405
 msgid "Dismiss this notice"
 msgstr "Fjern denne påmindelse"
 
-#: includes/class-tgm-plugin-activation.php:405
+#: includes/class-tgm-plugin-activation.php:406
 msgid "Please contact the administrator of this site for help."
 msgstr "Kontakt venligst administratoren. "
 
-#: includes/class-tgm-plugin-activation.php:520
+#: includes/class-tgm-plugin-activation.php:525
 msgid "This plugin needs to be updated to be compatible with your theme."
 msgstr "Dette plugin skal opdateret for at være kompatibel med dit tema."
 
-#: includes/class-tgm-plugin-activation.php:521
+#: includes/class-tgm-plugin-activation.php:526
 msgid "Update Required"
 msgstr "Påkrævet opdatering"
 
-#: includes/class-tgm-plugin-activation.php:635
+#: includes/class-tgm-plugin-activation.php:545
+msgid "Force the update to our latest version in the server."
+msgstr ""
+
+#: includes/class-tgm-plugin-activation.php:546
+msgid "Force Update"
+msgstr ""
+
+#: includes/class-tgm-plugin-activation.php:661
 msgid "Set the parent_slug config variable instead."
 msgstr "Sæt forældre_forkortelse til variabel i stedet."
 
-#: includes/class-tgm-plugin-activation.php:828
-#: includes/class-tgm-plugin-activation.php:3438
+#: includes/class-tgm-plugin-activation.php:872
+#: includes/class-tgm-plugin-activation.php:3589
 msgid "Return to the Dashboard"
 msgstr "Tilbage til kontrolpanelet"
 
-#: includes/class-tgm-plugin-activation.php:935
+#: includes/class-tgm-plugin-activation.php:988
 msgid ""
 "The remote plugin package does not contain a folder with the desired slug "
 "and renaming did not work."
@@ -1210,8 +1221,8 @@ msgstr ""
 "Plugin-pakken indeholder ikke en mappe med den ønskede forkortelse og "
 "omdøbning virker ikke."
 
-#: includes/class-tgm-plugin-activation.php:935
-#: includes/class-tgm-plugin-activation.php:938
+#: includes/class-tgm-plugin-activation.php:988
+#: includes/class-tgm-plugin-activation.php:991
 msgid ""
 "Please contact the plugin provider and ask them to package their plugin "
 "according to the WordPress guidelines."
@@ -1219,7 +1230,7 @@ msgstr ""
 "Venligst kontakt holdet bag dette plugin og bed dem om at pakke deres plugin "
 "efter WordPress retningslinjer."
 
-#: includes/class-tgm-plugin-activation.php:938
+#: includes/class-tgm-plugin-activation.php:991
 msgid ""
 "The remote plugin package consists of more than one file, but the files are "
 "not packaged in a folder."
@@ -1227,71 +1238,71 @@ msgstr ""
 "Plugin-pakken indeholder mere end 1 fil, men denne fil er ikke pakket i en "
 "mappe."
 
-#: includes/class-tgm-plugin-activation.php:1116
-#: includes/class-tgm-plugin-activation.php:2828
+#: includes/class-tgm-plugin-activation.php:1169
+#: includes/class-tgm-plugin-activation.php:2978
 msgctxt "plugin A *and* plugin B"
 msgid "and"
 msgstr "og"
 
-#: includes/class-tgm-plugin-activation.php:1881
+#: includes/class-tgm-plugin-activation.php:2009
 #, php-format
 msgctxt "%s = version number"
 msgid "TGMPA v%s"
 msgstr "TGMPA v%s"
 
-#: includes/class-tgm-plugin-activation.php:2167
+#: includes/class-tgm-plugin-activation.php:2309
 msgid "Required"
 msgstr "Påkrævet"
 
-#: includes/class-tgm-plugin-activation.php:2170
+#: includes/class-tgm-plugin-activation.php:2312
 msgid "Recommended"
 msgstr "Anbefalet"
 
-#: includes/class-tgm-plugin-activation.php:2186
+#: includes/class-tgm-plugin-activation.php:2328
 msgid "WordPress Repository"
 msgstr "WordPress opbevaringssted"
 
-#: includes/class-tgm-plugin-activation.php:2189
+#: includes/class-tgm-plugin-activation.php:2331
 msgid "External Source"
 msgstr "Ekstern kilde"
 
-#: includes/class-tgm-plugin-activation.php:2192
+#: includes/class-tgm-plugin-activation.php:2334
 msgid "Pre-Packaged"
 msgstr "Færdigpakket"
 
-#: includes/class-tgm-plugin-activation.php:2209
+#: includes/class-tgm-plugin-activation.php:2351
 msgid "Not Installed"
 msgstr "Ikke installeret"
 
-#: includes/class-tgm-plugin-activation.php:2213
+#: includes/class-tgm-plugin-activation.php:2355
 msgid "Installed But Not Activated"
 msgstr "Installeret, men ikke aktiveret"
 
-#: includes/class-tgm-plugin-activation.php:2215
+#: includes/class-tgm-plugin-activation.php:2357
 #: includes/options/inc/fields/link_color/field_link_color.php:100
 #: includes/sf-plugin-activation.php:22
 msgid "Active"
 msgstr "Aktiv"
 
-#: includes/class-tgm-plugin-activation.php:2221
+#: includes/class-tgm-plugin-activation.php:2363
 msgid "Required Update not Available"
 msgstr "Påkrævet opdatering er ikke tilgængelig"
 
-#: includes/class-tgm-plugin-activation.php:2224
+#: includes/class-tgm-plugin-activation.php:2366
 msgid "Requires Update"
 msgstr "Kræver opdatering"
 
-#: includes/class-tgm-plugin-activation.php:2227
+#: includes/class-tgm-plugin-activation.php:2369
 msgid "Update recommended"
 msgstr "Opdatering er anbefalet"
 
-#: includes/class-tgm-plugin-activation.php:2235
+#: includes/class-tgm-plugin-activation.php:2377
 #, php-format
 msgctxt "%1$s = install status, %2$s = update status"
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
-#: includes/class-tgm-plugin-activation.php:2280
+#: includes/class-tgm-plugin-activation.php:2423
 #, php-format
 msgctxt "plugins"
 msgid "All <span class=\"count\">(%s)</span>"
@@ -1299,45 +1310,52 @@ msgid_plural "All <span class=\"count\">(%s)</span>"
 msgstr[0] "Alle <span class=\"count\">(%s)</span>"
 msgstr[1] "Alle <span class=\"count\">(%s)</span>"
 
-#: includes/class-tgm-plugin-activation.php:2283
+#: includes/class-tgm-plugin-activation.php:2426
 #, php-format
 msgid "To Install <span class=\"count\">(%s)</span>"
 msgid_plural "To Install <span class=\"count\">(%s)</span>"
 msgstr[0] "Installer <span class=\"count\">(%s)</span>"
 msgstr[1] "Installer <span class=\"count\">(%s)</span>"
 
-#: includes/class-tgm-plugin-activation.php:2286
+#: includes/class-tgm-plugin-activation.php:2429
 #, php-format
 msgid "Update Available <span class=\"count\">(%s)</span>"
 msgid_plural "Update Available <span class=\"count\">(%s)</span>"
 msgstr[0] "Opdatering tilgængelig <span class=\"count\">(%s)</span>"
 msgstr[1] "Opdatering tilgængelig <span class=\"count\">(%s)</span>"
 
-#: includes/class-tgm-plugin-activation.php:2289
+#: includes/class-tgm-plugin-activation.php:2432
 #, php-format
 msgid "To Activate <span class=\"count\">(%s)</span>"
 msgid_plural "To Activate <span class=\"count\">(%s)</span>"
 msgstr[0] "Aktiver <span class=\"count\">(%s)</span>"
 msgstr[1] "Aktiver <span class=\"count\">(%s)</span>"
 
-#: includes/class-tgm-plugin-activation.php:2371
+#: includes/class-tgm-plugin-activation.php:2435
+#, php-format
+msgid "Force Update <span class=\"count\">(%s)</span>"
+msgid_plural "Force Update <span class=\"count\">(%s)</span>"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/class-tgm-plugin-activation.php:2517
 msgctxt "as in: \"version nr unknown\""
 msgid "unknown"
 msgstr "ukendt"
 
-#: includes/class-tgm-plugin-activation.php:2379
+#: includes/class-tgm-plugin-activation.php:2525
 msgid "Installed version:"
 msgstr "Installeret version:"
 
-#: includes/class-tgm-plugin-activation.php:2387
+#: includes/class-tgm-plugin-activation.php:2533
 msgid "Minimum required version:"
 msgstr "Påkrævet version (eller herover):"
 
-#: includes/class-tgm-plugin-activation.php:2399
+#: includes/class-tgm-plugin-activation.php:2545
 msgid "Available version:"
 msgstr "Tilgængelige version:"
 
-#: includes/class-tgm-plugin-activation.php:2422
+#: includes/class-tgm-plugin-activation.php:2568
 #, php-format
 msgid ""
 "No plugins to install, update or activate. <a href=\"%1$s\">Return to the "
@@ -1346,108 +1364,114 @@ msgstr ""
 "Ingen plugins at installere, opdatere eller aktivere. <a href=\"%1$s"
 "\">Tilbage til kontrolpanelet</a>"
 
-#: includes/class-tgm-plugin-activation.php:2436
+#: includes/class-tgm-plugin-activation.php:2582
 msgid "Plugin"
 msgstr "Plugin"
 
-#: includes/class-tgm-plugin-activation.php:2437
+#: includes/class-tgm-plugin-activation.php:2583
 msgid "Source"
 msgstr "Kilde"
 
-#: includes/class-tgm-plugin-activation.php:2438
+#: includes/class-tgm-plugin-activation.php:2584
 #: swift-framework/shortcodes/interface.php:431
 msgid "Type"
 msgstr "Type"
 
-#: includes/class-tgm-plugin-activation.php:2442
+#: includes/class-tgm-plugin-activation.php:2588
 #: includes/options/inc/welcome/views/status_report.php:715
 msgid "Version"
 msgstr "Version"
 
-#: includes/class-tgm-plugin-activation.php:2443
+#: includes/class-tgm-plugin-activation.php:2589
 #: includes/options/inc/welcome/welcome.php:357
 msgid "Status"
 msgstr "Status"
 
-#: includes/class-tgm-plugin-activation.php:2491
+#: includes/class-tgm-plugin-activation.php:2637
 #, php-format
 msgctxt "%2$s = plugin name in screen reader markup"
 msgid "Install %2$s"
 msgstr "Installer %2$s"
 
-#: includes/class-tgm-plugin-activation.php:2495
+#: includes/class-tgm-plugin-activation.php:2641
 #, php-format
 msgctxt "%2$s = plugin name in screen reader markup"
 msgid "Update %2$s"
 msgstr "Opdater %2$s"
 
-#: includes/class-tgm-plugin-activation.php:2500
+#: includes/class-tgm-plugin-activation.php:2645
 #, php-format
 msgctxt "%2$s = plugin name in screen reader markup"
 msgid "Activate %2$s"
 msgstr "Aktiver %2$s"
 
-#: includes/class-tgm-plugin-activation.php:2570
+#: includes/class-tgm-plugin-activation.php:2647
+#, php-format
+msgctxt "%2$s = plugin name in screen reader markup"
+msgid "Force Update %2$s"
+msgstr ""
+
+#: includes/class-tgm-plugin-activation.php:2720
 msgid "Upgrade message from the plugin author:"
 msgstr "Opdateringsbesked fra forfatteren af dette plugin:"
 
-#: includes/class-tgm-plugin-activation.php:2603
+#: includes/class-tgm-plugin-activation.php:2753
 #: includes/sf-plugin-activation.php:20
 msgid "Install"
 msgstr "Installer"
 
-#: includes/class-tgm-plugin-activation.php:2612
+#: includes/class-tgm-plugin-activation.php:2762
 #: includes/sf-plugin-activation.php:21
 msgid "Activate"
 msgstr "Aktiver"
 
-#: includes/class-tgm-plugin-activation.php:2643
+#: includes/class-tgm-plugin-activation.php:2793
 msgid "No plugins were selected to be installed. No action taken."
 msgstr ""
 "Ingen plugins blev valgt til installation. Derfor blev ingen handling udført."
 
-#: includes/class-tgm-plugin-activation.php:2645
+#: includes/class-tgm-plugin-activation.php:2795
 msgid "No plugins were selected to be updated. No action taken."
 msgstr ""
 "Ingen plugins blev valgt til installation. Derfor blev ingen handling udført."
 
-#: includes/class-tgm-plugin-activation.php:2681
+#: includes/class-tgm-plugin-activation.php:2831
 msgid "No plugins are available to be installed at this time."
 msgstr "Ingen plugins kan installeres på nuværende tidspunkt."
 
-#: includes/class-tgm-plugin-activation.php:2683
+#: includes/class-tgm-plugin-activation.php:2833
 msgid "No plugins are available to be updated at this time."
 msgstr "Ingen plugins kan opdateres på nuværende tidspunkt."
 
-#: includes/class-tgm-plugin-activation.php:2788
+#: includes/class-tgm-plugin-activation.php:2938
 msgid "No plugins were selected to be activated. No action taken."
 msgstr ""
 "Ingen plugins blev valgt til aktivering. Derfor blev ingen handling udført."
 
-#: includes/class-tgm-plugin-activation.php:2814
+#: includes/class-tgm-plugin-activation.php:2964
 msgid "No plugins are available to be activated at this time."
 msgstr "Ingen plugins kan aktiveres på nuværende tidspunkt."
 
-#: includes/class-tgm-plugin-activation.php:3028
+#: includes/class-tgm-plugin-activation.php:3178
 msgid "Plugin activation failed."
 msgstr "Aktiveringen af plugin fejlede."
 
-#: includes/class-tgm-plugin-activation.php:3362
+#: includes/class-tgm-plugin-activation.php:3513
 #, php-format
 msgid "Updating Plugin %1$s (%2$d/%3$d)"
 msgstr "Opdatere plugin %1$s (%2$d/%3$d)"
 
-#: includes/class-tgm-plugin-activation.php:3364
+#: includes/class-tgm-plugin-activation.php:3515
 #, php-format
 msgid "An error occurred while installing %1$s: <strong>%2$s</strong>."
 msgstr "Der skete en fejl under installationen %1$s: <strong>%2$s</strong>."
 
-#: includes/class-tgm-plugin-activation.php:3365
+#: includes/class-tgm-plugin-activation.php:3516
 #, php-format
 msgid "The installation of %1$s failed."
 msgstr "Installationen af %1$s fejlede."
 
-#: includes/class-tgm-plugin-activation.php:3369
+#: includes/class-tgm-plugin-activation.php:3520
 msgid ""
 "The installation and activation process is starting. This process may take a "
 "while on some hosts, so please be patient."
@@ -1455,31 +1479,31 @@ msgstr ""
 "Installationen og aktiveringen er påbegyndt. Denne process kan tage noget "
 "til, alt efter host, så hav venligst tålmodighed."
 
-#: includes/class-tgm-plugin-activation.php:3370
+#: includes/class-tgm-plugin-activation.php:3521
 #, php-format
 msgid "%1$s installed and activated successfully."
 msgstr "%1$s blev installeret og aktiveret uden problemer."
 
-#: includes/class-tgm-plugin-activation.php:3370
-#: includes/class-tgm-plugin-activation.php:3376
+#: includes/class-tgm-plugin-activation.php:3521
+#: includes/class-tgm-plugin-activation.php:3527
 msgid "Show Details"
 msgstr "Vis detaljer"
 
-#: includes/class-tgm-plugin-activation.php:3370
-#: includes/class-tgm-plugin-activation.php:3376
+#: includes/class-tgm-plugin-activation.php:3521
+#: includes/class-tgm-plugin-activation.php:3527
 msgid "Hide Details"
 msgstr "Skjul detaljer"
 
-#: includes/class-tgm-plugin-activation.php:3371
+#: includes/class-tgm-plugin-activation.php:3522
 msgid "All installations and activations have been completed."
 msgstr "Alle installationer og aktiveringer blev færdiggjort."
 
-#: includes/class-tgm-plugin-activation.php:3372
+#: includes/class-tgm-plugin-activation.php:3523
 #, php-format
 msgid "Installing and Activating Plugin %1$s (%2$d/%3$d)"
 msgstr "Installation og aktivering %1$s (%2$d/%3$d)"
 
-#: includes/class-tgm-plugin-activation.php:3375
+#: includes/class-tgm-plugin-activation.php:3526
 msgid ""
 "The installation process is starting. This process may take a while on some "
 "hosts, so please be patient."
@@ -1487,86 +1511,59 @@ msgstr ""
 "Installationen er påbegyndt. Denne process kan tage noget til, alt efter "
 "host, så hav venligst tålmodighed."
 
-#: includes/class-tgm-plugin-activation.php:3376
+#: includes/class-tgm-plugin-activation.php:3527
 #, php-format
 msgid "%1$s installed successfully."
 msgstr "%1$s blev installeret uden problemer."
 
-#: includes/class-tgm-plugin-activation.php:3377
+#: includes/class-tgm-plugin-activation.php:3528
 msgid "All installations have been completed."
 msgstr "Alle installationer blev færdiggjort."
 
-#: includes/class-tgm-plugin-activation.php:3378
+#: includes/class-tgm-plugin-activation.php:3529
 #, php-format
 msgid "Installing Plugin %1$s (%2$d/%3$d)"
 msgstr "Installere %1$s (%2$d/%3$d)"
 
-#: includes/envato-wordpress-toolkit-library/class-envato-protected-api.php:67
-msgid "Please enter your Envato Marketplace Username."
-msgstr "Indtast venligst dit Envato Marketplace brugernavn."
+#: includes/meta-box/inc/core.php:40
+msgid "Documentation"
+msgstr ""
 
-#: includes/envato-wordpress-toolkit-library/class-envato-protected-api.php:71
-msgid "Please enter your Envato Marketplace API Key."
-msgstr "Indtast venligst din Envato Marketplace API nøgle."
+#: includes/meta-box/inc/core.php:41
+#: includes/options/inc/welcome/welcome.php:345
+msgid "Extensions"
+msgstr "Udvidelser"
 
-#: includes/envato-wordpress-toolkit-library/class-envato-protected-api.php:96
-msgid "The API \"set\" is a required parameter."
-msgstr "Denne API \"set\" er et påkrævet parameter."
+#: includes/meta-box/inc/field.php:196
+msgid "+ Add more"
+msgstr ""
 
-#: includes/envato-wordpress-toolkit-library/class-envato-protected-api.php:167
-msgid "The Envato Marketplace \"item ID\" is a required parameter."
-msgstr "Envato Marketplace \"item ID\" er en påkrævet parameter."
-
-#: includes/envato-wordpress-toolkit-library/class-envato-wordpress-theme-upgrader.php:288
-msgid "Downloading upgrade package from the Envato API&#8230;"
-msgstr "Downloader opgraderingspakken fra Envato API&#8230;"
-
-#: includes/envato-wordpress-toolkit-library/class-envato-wordpress-theme-upgrader.php:299
-msgid "Downloading install package from the Envato API&#8230;"
-msgstr "Downloader installationspakken fra Envato API&#8230;"
-
-#: includes/meta-box/inc/field.php:187
-msgid "+"
-msgstr "+"
-
-#: includes/meta-box/inc/field.php:204
-msgid "&#8211;"
-msgstr "&#8211;"
-
-#: includes/meta-box/inc/fields/button.php:35
+#: includes/meta-box/inc/fields/button.php:29
 msgid "Click me"
 msgstr "Klik på mig"
 
-#: includes/meta-box/inc/fields/file-advanced.php:23
-msgid "Select Files"
-msgstr "Vælg filer"
+#: includes/meta-box/inc/fields/checkbox.php:85
+#: swift-framework/shortcodes/interface.php:293
+#: swift-framework/shortcodes/interface.php:926
+msgid "Yes"
+msgstr "Ja"
 
-#: includes/meta-box/inc/fields/file-advanced.php:64
-msgctxt "file upload"
-msgid "Select or Upload Files"
-msgstr "Vælg eller upload filer "
+#: includes/meta-box/inc/fields/checkbox.php:85
+#: swift-framework/shortcodes/interface.php:292
+#: swift-framework/shortcodes/interface.php:927
+msgid "No"
+msgstr "Nej"
 
-#: includes/meta-box/inc/fields/file-advanced.php:100
-#: includes/meta-box/inc/fields/file.php:137
-msgctxt "file upload"
-msgid "Deselect"
-msgstr "Fravælg"
-
-#: includes/meta-box/inc/fields/file-advanced.php:101
-#: includes/meta-box/inc/fields/file.php:138
-msgctxt "file upload"
-msgid "Edit"
-msgstr "Ændre"
-
-#: includes/meta-box/inc/fields/file-input.php:17
+#: includes/meta-box/inc/fields/file-input.php:18
 msgid "Select File"
 msgstr "Vælg fil"
 
-#: includes/meta-box/inc/fields/file-input.php:40
+#: includes/meta-box/inc/fields/file-input.php:41
+#: includes/meta-box/inc/fields/select.php:91
 msgid "Select"
 msgstr "Vælg"
 
-#: includes/meta-box/inc/fields/file-input.php:42
+#: includes/meta-box/inc/fields/file-input.php:43
 #: includes/options/inc/fields/background/field_background.php:321
 #: includes/options/inc/fields/media/field_media.php:205
 #: includes/options/inc/fields/multi_text/field_multi_text.php:69
@@ -1578,140 +1575,195 @@ msgstr "Vælg"
 msgid "Remove"
 msgstr "Fjern"
 
-#: includes/meta-box/inc/fields/file.php:19
+#: includes/meta-box/inc/fields/file.php:15
 #, php-format
 msgid "You may only upload maximum %d file"
 msgstr "Du må maksimalt uploade %d fil"
 
-#: includes/meta-box/inc/fields/file.php:20
+#: includes/meta-box/inc/fields/file.php:16
 #, php-format
 msgid "You may only upload maximum %d files"
 msgstr "Du må maksimalt uploade %d filer"
 
-#: includes/meta-box/inc/fields/file.php:70
+#: includes/meta-box/inc/fields/file.php:83
 msgid "Error: Cannot delete file"
 msgstr "Fejl: Kan ikke slette filen"
 
-#: includes/meta-box/inc/fields/file.php:83
+#: includes/meta-box/inc/fields/file.php:96
 msgctxt "file upload"
 msgid "Upload Files"
 msgstr "Upload filer"
 
-#: includes/meta-box/inc/fields/file.php:84
+#: includes/meta-box/inc/fields/file.php:97
 msgctxt "file upload"
 msgid "+ Add new file"
 msgstr "+ Tilføj ny fil"
 
-#: includes/meta-box/inc/fields/image-advanced.php:22
-msgid "Select Images"
-msgstr "Vælg billeder"
+#: includes/meta-box/inc/fields/file.php:153
+msgctxt "file upload"
+msgid "Delete"
+msgstr ""
 
-#: includes/meta-box/inc/fields/image-advanced.php:70
-msgctxt "image upload"
-msgid "Select or Upload Images"
-msgstr "Vælg eller upload billeder"
-
-#: includes/meta-box/inc/fields/image-advanced.php:106
-#: includes/meta-box/inc/fields/image.php:136
-msgctxt "image upload"
-msgid "Deselect"
-msgstr "Fravælg"
-
-#: includes/meta-box/inc/fields/image-advanced.php:107
-#: includes/meta-box/inc/fields/image.php:137
-msgctxt "image upload"
+#: includes/meta-box/inc/fields/file.php:154
+msgctxt "file upload"
 msgid "Edit"
 msgstr "Ændre"
 
-#: includes/meta-box/inc/fields/image.php:70
-#: includes/meta-box/inc/fields/thickbox-image.php:34
+#: includes/meta-box/inc/fields/image.php:61
+#: includes/meta-box/inc/fields/thickbox-image.php:53
 msgctxt "image upload"
 msgid "Upload Images"
 msgstr "Upload billeder"
 
-#: includes/meta-box/inc/fields/image.php:71
+#: includes/meta-box/inc/fields/image.php:62
 msgctxt "image upload"
 msgid "+ Add new image"
 msgstr "+ Tilføj nyt billede"
 
-#: includes/meta-box/inc/fields/map.php:48
+#: includes/meta-box/inc/fields/image.php:124
+msgctxt "image upload"
+msgid "Delete"
+msgstr ""
+
+#: includes/meta-box/inc/fields/image.php:125
+msgctxt "image upload"
+msgid "Edit"
+msgstr "Ændre"
+
+#: includes/meta-box/inc/fields/key-value.php:19
+msgid "Key"
+msgstr ""
+
+#: includes/meta-box/inc/fields/key-value.php:25
+msgid "Value"
+msgstr ""
+
+#: includes/meta-box/inc/fields/map.php:49
 msgid "Find Address"
 msgstr "Find adresse"
 
-#: includes/meta-box/inc/fields/oembed.php:54
+#: includes/meta-box/inc/fields/media.php:18
+msgctxt "media"
+msgid "+ Add Media"
+msgstr ""
+
+#: includes/meta-box/inc/fields/media.php:19
+msgctxt "media"
+msgid " file"
+msgstr ""
+
+#: includes/meta-box/inc/fields/media.php:20
+msgctxt "media"
+msgid " files"
+msgstr ""
+
+#: includes/meta-box/inc/fields/media.php:21
+msgctxt "media"
+msgid "Remove"
+msgstr ""
+
+#: includes/meta-box/inc/fields/media.php:22
+msgctxt "media"
+msgid "Edit"
+msgstr ""
+
+#: includes/meta-box/inc/fields/media.php:23
+msgctxt "media"
+msgid "View"
+msgstr ""
+
+#: includes/meta-box/inc/fields/media.php:24
+msgctxt "media"
+msgid "No Title"
+msgstr ""
+
+#: includes/meta-box/inc/fields/media.php:27
+msgctxt "media"
+msgid "Select Files"
+msgstr ""
+
+#: includes/meta-box/inc/fields/media.php:28
+msgctxt "media"
+msgid "Drop files here to upload"
+msgstr ""
+
+#: includes/meta-box/inc/fields/oembed.php:65
 msgid "Embed HTML not available."
 msgstr "Embed HTML er ikke tilgængelig."
 
-#: includes/meta-box/inc/fields/oembed.php:76
+#: includes/meta-box/inc/fields/oembed.php:84
 msgid "Preview"
 msgstr "Eksempel"
 
-#: includes/meta-box/inc/fields/plupload-image.php:102
-msgctxt "image upload"
-msgid "Drop images here"
-msgstr "Smid billeder her"
+#: includes/meta-box/inc/fields/post.php:34
+msgid "Select a post"
+msgstr ""
 
-#: includes/meta-box/inc/fields/plupload-image.php:103
-msgctxt "image upload"
-msgid "or"
-msgstr "eller"
-
-#: includes/meta-box/inc/fields/plupload-image.php:104
-msgctxt "image upload"
-msgid "Select Files"
-msgstr "Vælg filer"
-
-#: includes/meta-box/inc/fields/plupload-image.php:179
-msgctxt "image upload"
-msgid "Allowed Image Files"
-msgstr "Tilladte billedfiler"
-
-#: includes/meta-box/inc/fields/post.php:52
-msgid "Post"
-msgstr "Skriv"
-
-#: includes/meta-box/inc/fields/post.php:66
-#: includes/meta-box/inc/fields/taxonomy.php:40
+#: includes/meta-box/inc/fields/post.php:38
+#: includes/meta-box/inc/fields/taxonomy.php:51
 #, php-format
 msgid "Select a %s"
 msgstr "Vælg en %s"
 
-#: includes/meta-box/inc/meta-box.php:242
+#: includes/meta-box/inc/fields/select.php:91
+#: includes/options/inc/fields/border/field_border.php:125
+#: includes/options/inc/fields/spacing/field_spacing.php:191
+#: woocommerce/loop/result-count.php:61
+msgid "All"
+msgstr "Alle"
+
+#: includes/meta-box/inc/fields/select.php:91 includes/meta-boxes.php:535
+#: includes/meta-boxes.php:753 includes/meta-boxes.php:1722
+#: includes/overrides/sf-theme-functions.php:293
+#: swift-framework/core/sf-functions.php:3079
+#: swift-framework/shortcodes/interface.php:301
+msgid "None"
+msgstr "Ingen"
+
+#: includes/meta-box/inc/fields/taxonomy.php:47
+msgid "Select a term"
+msgstr ""
+
+#: includes/meta-box/inc/fields/user.php:34
+msgid "Select an user"
+msgstr ""
+
+#: includes/meta-box/inc/validation.php:42
 msgid "Please correct the errors highlighted below and try again."
 msgstr "Ændre venligst de markerede fejl udenfor og prøv igen."
 
-#: includes/meta-boxes.php:97 includes/meta-boxes.php:236
-#: includes/meta-boxes.php:365
+#: includes/meta-boxes.php:99 includes/meta-boxes.php:238
+#: includes/meta-boxes.php:367
 msgid "Thumbnail"
 msgstr "Thumbnail"
 
-#: includes/meta-boxes.php:104 includes/meta-boxes.php:243
-#: includes/meta-boxes.php:372
+#: includes/meta-boxes.php:106 includes/meta-boxes.php:245
+#: includes/meta-boxes.php:374
 msgid "Thumbnail type"
 msgstr "Thumbnailtype"
 
-#: includes/meta-boxes.php:117 includes/meta-boxes.php:255
-#: includes/meta-boxes.php:383
+#: includes/meta-boxes.php:119 includes/meta-boxes.php:257
+#: includes/meta-boxes.php:385
 msgid "Choose what will be used for the item thumbnail."
 msgstr "Vælg hvad der skal bruges til thumbnail."
 
-#: includes/meta-boxes.php:122 includes/meta-boxes.php:260
-#: includes/meta-boxes.php:388 includes/meta-boxes.php:1471
+#: includes/meta-boxes.php:124 includes/meta-boxes.php:262
+#: includes/meta-boxes.php:390 includes/meta-boxes.php:1473
 msgid "Thumbnail image"
 msgstr "Thumbnail billede"
 
-#: includes/meta-boxes.php:123 includes/meta-boxes.php:261
-#: includes/meta-boxes.php:389 includes/meta-boxes.php:1472
+#: includes/meta-boxes.php:125 includes/meta-boxes.php:263
+#: includes/meta-boxes.php:391 includes/meta-boxes.php:1474
 msgid "The image that will be used as the thumbnail image."
 msgstr "Billedet som vil blive bruge til thumbnail billede."
 
-#: includes/meta-boxes.php:131 includes/meta-boxes.php:269
-#: includes/meta-boxes.php:397
+#: includes/meta-boxes.php:133 includes/meta-boxes.php:271
+#: includes/meta-boxes.php:399
 msgid "Thumbnail video URL"
 msgstr "Thumbnail video URL"
 
-#: includes/meta-boxes.php:133 includes/meta-boxes.php:271
-#: includes/meta-boxes.php:399
+#: includes/meta-boxes.php:135 includes/meta-boxes.php:273
+#: includes/meta-boxes.php:401
 msgid ""
 "Enter the video url for the thumbnail. Only links from Vimeo & YouTube are "
 "supported."
@@ -1719,115 +1771,115 @@ msgstr ""
 "Indtast video URL til thumbnail. Kun links fra Vimeo & YouTube er "
 "understøttet."
 
-#: includes/meta-boxes.php:141
+#: includes/meta-boxes.php:143
 msgid "Thumbnail audio URL"
 msgstr "Thumbnail til lydfilen URL"
 
-#: includes/meta-boxes.php:143
+#: includes/meta-boxes.php:145
 msgid "Enter the audio url for the thumbnail."
 msgstr "Indtast lyd-filens URL til denne thumbnail."
 
-#: includes/meta-boxes.php:151 includes/meta-boxes.php:279
+#: includes/meta-boxes.php:153 includes/meta-boxes.php:281
 msgid "Thumbnail Self Hosted Video MP4 URL"
 msgstr "Thumbnail til \"Self Hosted\" Video MP4 URL"
 
-#: includes/meta-boxes.php:153 includes/meta-boxes.php:281
+#: includes/meta-boxes.php:155 includes/meta-boxes.php:283
 msgid "Enter the video mp4 url for the thumbnail."
 msgstr "Indtast MP4 videoens URL til thumbnailen."
 
-#: includes/meta-boxes.php:159 includes/meta-boxes.php:287
+#: includes/meta-boxes.php:161 includes/meta-boxes.php:289
 msgid "Thumbnail Self Hosted Video WEBM URL"
 msgstr "Thumbnail til \"Self Hosted\" Video WEBM URL"
 
-#: includes/meta-boxes.php:161 includes/meta-boxes.php:289
+#: includes/meta-boxes.php:163 includes/meta-boxes.php:291
 msgid "Enter the video webm url for the thumbnail."
 msgstr "Indtast WEBM videoens URL til thumbnailen."
 
-#: includes/meta-boxes.php:167 includes/meta-boxes.php:295
+#: includes/meta-boxes.php:169 includes/meta-boxes.php:297
 msgid "Thumbnail Self Hosted Video OGG URL"
 msgstr "Thumbnail til \"Self Hosted\" Video OGG URL"
 
-#: includes/meta-boxes.php:169 includes/meta-boxes.php:297
+#: includes/meta-boxes.php:171 includes/meta-boxes.php:299
 msgid "Enter the video ogg url for the thumbnail."
 msgstr "Indtast OGG videoens URL til thumbnailen."
 
-#: includes/meta-boxes.php:177 includes/meta-boxes.php:305
-#: includes/meta-boxes.php:407
+#: includes/meta-boxes.php:179 includes/meta-boxes.php:307
+#: includes/meta-boxes.php:409
 msgid "Thumbnail gallery"
 msgstr "Thumbnail-galleri"
 
-#: includes/meta-boxes.php:178 includes/meta-boxes.php:306
-#: includes/meta-boxes.php:408
+#: includes/meta-boxes.php:180 includes/meta-boxes.php:308
+#: includes/meta-boxes.php:410
 msgid "The images that will be used in the thumbnail gallery."
 msgstr "Billedet som vil blive bruge til thumbnail-galleri."
 
-#: includes/meta-boxes.php:186 includes/meta-boxes.php:314
-#: includes/meta-boxes.php:416
+#: includes/meta-boxes.php:188 includes/meta-boxes.php:316
+#: includes/meta-boxes.php:418
 msgid "Thumbnail link type"
 msgstr "Thumbnail linktype"
 
-#: includes/meta-boxes.php:190 includes/meta-boxes.php:318
-#: includes/meta-boxes.php:420
+#: includes/meta-boxes.php:192 includes/meta-boxes.php:320
+#: includes/meta-boxes.php:422
 msgid "Link to item"
 msgstr "Link til punkt"
 
-#: includes/meta-boxes.php:191 includes/meta-boxes.php:319
-#: includes/meta-boxes.php:421
+#: includes/meta-boxes.php:193 includes/meta-boxes.php:321
+#: includes/meta-boxes.php:423
 msgid "Link to URL"
 msgstr "Link til URL"
 
-#: includes/meta-boxes.php:192 includes/meta-boxes.php:320
-#: includes/meta-boxes.php:422
+#: includes/meta-boxes.php:194 includes/meta-boxes.php:322
+#: includes/meta-boxes.php:424
 msgid "Link to URL (New Window)"
 msgstr "Link til URl (Nyt vindue)"
 
-#: includes/meta-boxes.php:193 includes/meta-boxes.php:321
-#: includes/meta-boxes.php:423
+#: includes/meta-boxes.php:195 includes/meta-boxes.php:323
+#: includes/meta-boxes.php:425
 msgid "Lightbox to the thumbnail image"
 msgstr "Lightbox til thumbnailbillede."
 
-#: includes/meta-boxes.php:194 includes/meta-boxes.php:322
-#: includes/meta-boxes.php:424
+#: includes/meta-boxes.php:196 includes/meta-boxes.php:324
+#: includes/meta-boxes.php:426
 msgid "Lightbox to image (select below)"
 msgstr "Lightbox til billede (vælg nedenfor)"
 
-#: includes/meta-boxes.php:195 includes/meta-boxes.php:323
-#: includes/meta-boxes.php:425
+#: includes/meta-boxes.php:197 includes/meta-boxes.php:325
+#: includes/meta-boxes.php:427
 msgid "Fullscreen Video Overlay (input below)"
 msgstr "Fuldskærmsvideo overlay (indsæt nedenfor)"
 
-#: includes/meta-boxes.php:199 includes/meta-boxes.php:327
-#: includes/meta-boxes.php:429
+#: includes/meta-boxes.php:201 includes/meta-boxes.php:329
+#: includes/meta-boxes.php:431
 msgid "Choose what link will be used for the image(s) and title of the item."
 msgstr "Vælg hvilket link der bruges til billed(erne) og titelen."
 
-#: includes/meta-boxes.php:204 includes/meta-boxes.php:332
-#: includes/meta-boxes.php:434
+#: includes/meta-boxes.php:206 includes/meta-boxes.php:334
+#: includes/meta-boxes.php:436
 msgid "Thumbnail link URL"
 msgstr "Thumbnail link URL"
 
-#: includes/meta-boxes.php:206 includes/meta-boxes.php:334
-#: includes/meta-boxes.php:436
+#: includes/meta-boxes.php:208 includes/meta-boxes.php:336
+#: includes/meta-boxes.php:438
 msgid "Enter the url for the thumbnail link."
 msgstr "Indtast URLen til dette thumbnail link."
 
-#: includes/meta-boxes.php:214 includes/meta-boxes.php:342
-#: includes/meta-boxes.php:444
+#: includes/meta-boxes.php:216 includes/meta-boxes.php:344
+#: includes/meta-boxes.php:446
 msgid "Thumbnail link lightbox image"
 msgstr "Thumbnail link lightbox image"
 
-#: includes/meta-boxes.php:215 includes/meta-boxes.php:343
-#: includes/meta-boxes.php:445
+#: includes/meta-boxes.php:217 includes/meta-boxes.php:345
+#: includes/meta-boxes.php:447
 msgid "The image that will be used as the lightbox image."
 msgstr "Billedet som bruges til lightbox billede."
 
-#: includes/meta-boxes.php:222 includes/meta-boxes.php:350
-#: includes/meta-boxes.php:452
+#: includes/meta-boxes.php:224 includes/meta-boxes.php:352
+#: includes/meta-boxes.php:454
 msgid "Thumbnail link lightbox video URL"
 msgstr "Thumbnail link lightbox video URL"
 
-#: includes/meta-boxes.php:224 includes/meta-boxes.php:352
-#: includes/meta-boxes.php:454
+#: includes/meta-boxes.php:226 includes/meta-boxes.php:354
+#: includes/meta-boxes.php:456
 msgid ""
 "Enter the video url for the thumbnail lightbox. Only links from Vimeo & "
 "YouTube are supported."
@@ -1835,31 +1887,31 @@ msgstr ""
 "Indtast videoens URL til Thumbnail lightbox. Kun links fra Vimeo & YouTube "
 "er understøttet."
 
-#: includes/meta-boxes.php:462
+#: includes/meta-boxes.php:464
 msgid "Thumbnail Hover Background Color"
 msgstr "Thumbnail hover baggrundsfarve"
 
-#: includes/meta-boxes.php:464
+#: includes/meta-boxes.php:466
 msgid "Optionally set an alternate background colour for the thumbnail hover."
 msgstr "Alternativt kan du vælge en anden baggrundsfarve til thumbnail hover."
 
-#: includes/meta-boxes.php:471
+#: includes/meta-boxes.php:473
 msgid "Thumbnail Hover Text Color"
 msgstr "Thumbnail hover tekst farve"
 
-#: includes/meta-boxes.php:473
+#: includes/meta-boxes.php:475
 msgid "Optionally set an alternate text colour for the thumbnail hover."
 msgstr "Alternativt kan du vælge en anden tekst farve til thumbnail hover."
 
-#: includes/meta-boxes.php:485 includes/meta-boxes.php:1438
+#: includes/meta-boxes.php:487 includes/meta-boxes.php:1440
 msgid "Masonry Thumbnail"
 msgstr "Murværks thumbnail"
 
-#: includes/meta-boxes.php:492 includes/meta-boxes.php:1445
+#: includes/meta-boxes.php:494 includes/meta-boxes.php:1447
 msgid "Masonry Thumbnail Size"
 msgstr "Murværks thumbnail størrelse"
 
-#: includes/meta-boxes.php:503 includes/meta-boxes.php:1455
+#: includes/meta-boxes.php:505 includes/meta-boxes.php:1457
 msgid ""
 "Choose the size that you would like the item to show as with the Multi-Size "
 "Masonry setup. This will only affect the display in an asset with that "
@@ -1868,15 +1920,15 @@ msgstr ""
 "Vælg den størrelse, du ønsker det element vises som med MultiSize murværk. "
 "Dette vil kun påvirke udseendet i et aktiv med denne visningstype ."
 
-#: includes/meta-boxes.php:513
+#: includes/meta-boxes.php:515
 msgid "Detail Media"
 msgstr "Detalje medie"
 
-#: includes/meta-boxes.php:520
+#: includes/meta-boxes.php:522
 msgid "Use the thumbnail content"
 msgstr "Brug thumbnailets indhold"
 
-#: includes/meta-boxes.php:523
+#: includes/meta-boxes.php:525
 msgid ""
 "Uncheck this box if you wish to select different media for the main detail "
 "display."
@@ -1884,66 +1936,59 @@ msgstr ""
 "Fjern markering af denne kasse, hvis du øønsker at vælge et andet medie til "
 "\"vigtigste-detaljer\" visningstype."
 
-#: includes/meta-boxes.php:529
+#: includes/meta-boxes.php:531
 msgid "Detail type"
 msgstr "Detalje type"
 
-#: includes/meta-boxes.php:533 includes/meta-boxes.php:751
-#: includes/meta-boxes.php:1720 includes/overrides/sf-theme-functions.php:293
-#: swift-framework/core/sf-functions.php:3076
-#: swift-framework/shortcodes/interface.php:301
-msgid "None"
-msgstr "Ingen"
-
-#: includes/meta-boxes.php:534
+#: includes/meta-boxes.php:536
 msgid "Image"
 msgstr "Billede"
 
-#: includes/meta-boxes.php:535
+#: includes/meta-boxes.php:537
 msgid "Video"
 msgstr "Video"
 
-#: includes/meta-boxes.php:536 includes/meta-boxes.php:1746
+#: includes/meta-boxes.php:538 includes/meta-boxes.php:1748
 msgid "Standard Slider"
 msgstr "Standard slider"
 
-#: includes/meta-boxes.php:537
+#: includes/meta-boxes.php:539
 msgid "Stacked Gallery"
 msgstr "Stacked galleri"
 
-#: includes/meta-boxes.php:538
+#: includes/meta-boxes.php:540
 msgid "Revolution/Layer Slider"
 msgstr "Revolution/Layer Slider"
 
-#: includes/meta-boxes.php:539
+#: includes/meta-boxes.php:541
 msgid "Audio"
 msgstr "Lyd"
 
-#: includes/meta-boxes.php:540
+#: includes/meta-boxes.php:542
 msgid "Self Hosted Video"
 msgstr "\"Self Hosted\" Video"
 
-#: includes/meta-boxes.php:541
+#: includes/meta-boxes.php:543
 msgid "Custom"
 msgstr "Brugerdefineret"
 
-#: includes/meta-boxes.php:545
+#: includes/meta-boxes.php:547
 msgid "Choose what will be used for the item detail media."
 msgstr "Vælg hvad der skal bruges som dette elements detalje medie."
 
-#: includes/meta-boxes.php:550
+#: includes/meta-boxes.php:552
 msgid "Detail image"
 msgstr "Detajlebillede"
 
-#: includes/meta-boxes.php:551
+#: includes/meta-boxes.php:553
 msgid "The image that will be used as the detail image."
 msgstr "Billedet der bruges som detalje billede."
 
-#: includes/meta-boxes.php:559
+#: includes/meta-boxes.php:561
 msgid "Detail video URL"
 msgstr "Detajle video URL"
 
-#: includes/meta-boxes.php:561
+#: includes/meta-boxes.php:563
 msgid ""
 "Enter the video url for the detail display. Only links from Vimeo & YouTube "
 "are supported."
@@ -1951,108 +1996,109 @@ msgstr ""
 "Indtast videoens URL til detalje visning. Kun links fra Vimeo & YouTube er "
 "undersøttet."
 
-#: includes/meta-boxes.php:569
+#: includes/meta-boxes.php:571
 msgid "Detail audio URL"
 msgstr "Detalje lyd URL"
 
-#: includes/meta-boxes.php:571
+#: includes/meta-boxes.php:573
 msgid "Enter the audio url for the detail display."
 msgstr "Indtast lydfilens URL til detalje visning."
 
-#: includes/meta-boxes.php:579
+#: includes/meta-boxes.php:581
 msgid "Detail Self Hosted Video MP4 URL"
 msgstr "Detalje \"Self Hosted\" Video MP4 URL"
 
-#: includes/meta-boxes.php:581
+#: includes/meta-boxes.php:583
 msgid "Enter the video mp4 url for the detail display."
 msgstr "Indtast MP4 videoens URL til detalje visning."
 
-#: includes/meta-boxes.php:587
+#: includes/meta-boxes.php:589
 msgid "Detail Self Hosted Video WEBM URL"
 msgstr "Detalje \"Self Hosted\" Video WEBM URL"
 
-#: includes/meta-boxes.php:589
+#: includes/meta-boxes.php:591
 msgid "Enter the video webm url for the detail display."
 msgstr "Indtast WEBM videoens URL til detalje visning."
 
-#: includes/meta-boxes.php:595
+#: includes/meta-boxes.php:597
 msgid "Detail Self Hosted Video OGG URL"
 msgstr "Detalje \"Self Hosted\" Video OGG URL"
 
-#: includes/meta-boxes.php:597
+#: includes/meta-boxes.php:599
 msgid "Enter the video ogg url for the detail display."
 msgstr "Indtast OGG videoens URL til detalje visning."
 
-#: includes/meta-boxes.php:605
+#: includes/meta-boxes.php:607
 msgid "Post detail gallery"
 msgstr "Indlæggets detalje galleri"
 
-#: includes/meta-boxes.php:606
+#: includes/meta-boxes.php:608
 msgid "The images that will be used in the detail gallery."
 msgstr "Dette billede vil blive brugt i detalje galleriet."
 
-#: includes/meta-boxes.php:614 includes/meta-boxes.php:1888
+#: includes/meta-boxes.php:616 includes/meta-boxes.php:1890
 msgid "Revolution slider alias"
 msgstr "Revolution slider alias"
 
-#: includes/meta-boxes.php:616 includes/meta-boxes.php:1890
+#: includes/meta-boxes.php:618 includes/meta-boxes.php:1892
 msgid "Enter the revolution slider alias for the slider that you want to show."
 msgstr "Indtast det Revolution Slider alias til det slide du ønsker vises."
 
-#: includes/meta-boxes.php:624
+#: includes/meta-boxes.php:626
 msgid "Layer Slider alias"
 msgstr "Layer Slider alias"
 
-#: includes/meta-boxes.php:626
+#: includes/meta-boxes.php:628
 msgid "Enter the Layer Slider ID for the slider that you want to show."
 msgstr "Indtast Layer Slider ID til den slider du ønsker vises."
 
-#: includes/meta-boxes.php:634
+#: includes/meta-boxes.php:636
 msgid "Custom detail display"
 msgstr "Brugerdefineret detalje visning"
 
-#: includes/meta-boxes.php:635
+#: includes/meta-boxes.php:637
 msgid "If you'd like to provide your own detail media, please add it here"
 msgstr ""
 "Hvis du ønsker at benytte dine egne detalje medier, tilføj den venligst her"
 
-#: includes/meta-boxes.php:649 includes/meta-boxes.php:698
+#: includes/meta-boxes.php:651 includes/meta-boxes.php:700
 msgid "Page Title"
 msgstr "Sidetitel"
 
-#: includes/meta-boxes.php:656
+#: includes/meta-boxes.php:658
 msgid "Show page title"
 msgstr "Vis sidetitel"
 
-#: includes/meta-boxes.php:659
+#: includes/meta-boxes.php:661
 msgid "Show the page title at the top of the page."
 msgstr "Vis sidetitlen i toppen af siden."
 
-#: includes/meta-boxes.php:665
+#: includes/meta-boxes.php:667
 msgid "Page Title Background Color"
 msgstr "Sidetitlens baggrundsfarve."
 
-#: includes/meta-boxes.php:667
+#: includes/meta-boxes.php:669
 msgid "Optionally set a background color for the page title."
 msgstr "Alternativt kan du ændre baggrundsfarven til sidens titel."
 
-#: includes/meta-boxes.php:674
+#: includes/meta-boxes.php:676
 msgid "Page Title Text Color"
 msgstr "Sidetitlens tekstfarve"
 
-#: includes/meta-boxes.php:676
+#: includes/meta-boxes.php:678
 msgid "Optionally set a text color for the page title."
 msgstr "Alternativt kan du ændre tekst farven til sidens titel."
 
-#: includes/meta-boxes.php:683
+#: includes/meta-boxes.php:685
 msgid "Page Title Style"
 msgstr "Sidetitlens udseende"
 
-#: includes/meta-boxes.php:687 includes/meta-boxes.php:833
-#: includes/meta-boxes.php:915 includes/meta-boxes.php:1031
-#: includes/meta-boxes.php:1194 includes/meta-boxes.php:1212
-#: includes/meta-boxes.php:1355 includes/meta-boxes.php:1683
-#: includes/sf-options.php:3122 swift-framework/shortcodes/interface.php:12
+#: includes/meta-boxes.php:689 includes/meta-boxes.php:835
+#: includes/meta-boxes.php:917 includes/meta-boxes.php:1033
+#: includes/meta-boxes.php:1196 includes/meta-boxes.php:1214
+#: includes/meta-boxes.php:1357 includes/meta-boxes.php:1685
+#: includes/sf-options.php:3122 swift-framework/sf-megamenu/sf-megamenu.php:70
+#: swift-framework/shortcodes/interface.php:12
 #: swift-framework/shortcodes/interface.php:28
 #: swift-framework/shortcodes/interface.php:324
 #: swift-framework/shortcodes/interface.php:351
@@ -2064,44 +2110,44 @@ msgstr "Sidetitlens udseende"
 msgid "Standard"
 msgstr "Standard"
 
-#: includes/meta-boxes.php:688
+#: includes/meta-boxes.php:690
 msgid "Hero"
 msgstr "Hero"
 
-#: includes/meta-boxes.php:689
+#: includes/meta-boxes.php:691
 msgid "Hero Tabbed"
 msgstr "Hero Tabbed"
 
-#: includes/meta-boxes.php:693
+#: includes/meta-boxes.php:695
 msgid "Choose the heading style."
 msgstr "Vælg overskrifts typen."
 
-#: includes/meta-boxes.php:700
+#: includes/meta-boxes.php:702
 msgid "Enter a custom page title if you'd like."
 msgstr "Indtast en brugerdefineret sidetitel, hvis dette ønskes."
 
-#: includes/meta-boxes.php:707
+#: includes/meta-boxes.php:709
 msgid "Page Subtitle"
 msgstr "Sidens underoverskrift"
 
-#: includes/meta-boxes.php:709
+#: includes/meta-boxes.php:711
 msgid "Enter a custom page title if you'd like (Hero Page Title Style Only)."
 msgstr ""
 "Indtast en brugerdefineret sidetitel, hvis dette ønskes (Kun Hero sidetitel)"
 
-#: includes/meta-boxes.php:715
+#: includes/meta-boxes.php:717
 msgid "Hero Overlay Color"
 msgstr "Hero overlay farve"
 
-#: includes/meta-boxes.php:717
+#: includes/meta-boxes.php:719
 msgid "Set an overlay color for hero heading image."
 msgstr "Vælg en farve til overlayet, til hero overskrift billedet."
 
-#: includes/meta-boxes.php:723
+#: includes/meta-boxes.php:725
 msgid "Overlay Opacity"
 msgstr "Overlay gennemsigtighed"
 
-#: includes/meta-boxes.php:725
+#: includes/meta-boxes.php:727
 msgid ""
 "Set the opacity level of the overlay. This will lighten or darken the image "
 "depening on the color selected."
@@ -2109,44 +2155,44 @@ msgstr ""
 "Vælg gennemsigtigheden for dette overlay. Dette vil lysne eller gøre "
 "billedet mørkere, alt efter hvilken farve der vælges."
 
-#: includes/meta-boxes.php:738
+#: includes/meta-boxes.php:740
 msgid "Hero Heading Background Image"
 msgstr "Hero Heading baggrundsbillede"
 
-#: includes/meta-boxes.php:739
+#: includes/meta-boxes.php:741
 msgid "The image that will be used as the background for the hero header."
 msgstr "Dette billede vil blive brugt til baggrund, for Hero overskrift."
 
-#: includes/meta-boxes.php:747
+#: includes/meta-boxes.php:749
 msgid "Hero Heading Overlay Effect"
 msgstr "Hero Heading overlay effekt"
 
-#: includes/meta-boxes.php:752
+#: includes/meta-boxes.php:754
 msgid "Falling Circles"
 msgstr "Faldende cirkler"
 
-#: includes/meta-boxes.php:753
+#: includes/meta-boxes.php:755
 msgid "Geometric"
 msgstr "Geometrisk"
 
-#: includes/meta-boxes.php:757
+#: includes/meta-boxes.php:759
 msgid ""
 "Optionally have an animated canvas overlay on the hero heading background."
 msgstr "Alternativt kan du have et animeret lag på Hero Heading baggrunden."
 
-#: includes/meta-boxes.php:762
+#: includes/meta-boxes.php:764
 msgid "Hero Heading Text Style"
 msgstr "Hero Heading tekst udseende"
 
-#: includes/meta-boxes.php:766
+#: includes/meta-boxes.php:768
 msgid "Light"
 msgstr "Lys"
 
-#: includes/meta-boxes.php:767
+#: includes/meta-boxes.php:769
 msgid "Dark"
 msgstr "Mørk"
 
-#: includes/meta-boxes.php:771
+#: includes/meta-boxes.php:773
 msgid ""
 "If you uploaded an image in the option above, choose light/dark styling for "
 "the text heading text here."
@@ -2154,11 +2200,11 @@ msgstr ""
 "Hvis du har uploadet et billede ovenfor, vælg venligst lys/mørk udseende for "
 "at ændre tekstens udseende."
 
-#: includes/meta-boxes.php:776
+#: includes/meta-boxes.php:778
 msgid "Hero Heading Text Align"
 msgstr "Hero Heading tekstjustering"
 
-#: includes/meta-boxes.php:780
+#: includes/meta-boxes.php:782
 #: includes/options/inc/fields/border/field_border.php:159
 #: includes/options/inc/fields/spacing/field_spacing.php:236
 #: swift-framework/shortcodes/interface.php:299
@@ -2169,13 +2215,13 @@ msgstr "Hero Heading tekstjustering"
 msgid "Left"
 msgstr "Venstre"
 
-#: includes/meta-boxes.php:781 swift-framework/shortcodes/interface.php:730
+#: includes/meta-boxes.php:783 swift-framework/shortcodes/interface.php:730
 #: swift-framework/shortcodes/interface.php:870
 #: swift-framework/shortcodes/interface.php:880
 msgid "Center"
 msgstr "Midten"
 
-#: includes/meta-boxes.php:782
+#: includes/meta-boxes.php:784
 #: includes/options/inc/fields/border/field_border.php:145
 #: includes/options/inc/fields/spacing/field_spacing.php:222
 #: swift-framework/shortcodes/interface.php:300
@@ -2185,49 +2231,49 @@ msgstr "Midten"
 msgid "Right"
 msgstr "Højre"
 
-#: includes/meta-boxes.php:786
+#: includes/meta-boxes.php:788
 msgid "Choose the text alignment for the hero heading."
 msgstr "Vælg tekstjusteringer til Hero Heading"
 
-#: includes/meta-boxes.php:791
+#: includes/meta-boxes.php:793
 msgid "Hero Heading Height"
 msgstr "Hero Heading højde"
 
-#: includes/meta-boxes.php:793
+#: includes/meta-boxes.php:795
 msgid "Set the height for the Hero Heading (no px)."
 msgstr "Indtast højden på Hero Heading (ingen px)."
 
-#: includes/meta-boxes.php:801
+#: includes/meta-boxes.php:803
 msgid "Remove breadcrumbs"
 msgstr "Fjern breadcrumbs"
 
-#: includes/meta-boxes.php:804
+#: includes/meta-boxes.php:806
 msgid "Remove the breadcrumbs from under the page title on this page."
 msgstr "Fjern breadcrumbs under sidetitlen fra denne side."
 
-#: includes/meta-boxes.php:814
+#: includes/meta-boxes.php:816
 msgid "Portfolio Meta"
 msgstr "Portfolio meta"
 
-#: includes/meta-boxes.php:822
+#: includes/meta-boxes.php:824
 msgid "Portfolio Header Options"
 msgstr "Portfolio header indstilling"
 
-#: includes/meta-boxes.php:829
+#: includes/meta-boxes.php:831
 msgid "Portfolio Header Type"
 msgstr "Portfolio headertype"
 
-#: includes/meta-boxes.php:834 includes/meta-boxes.php:1195
-#: includes/meta-boxes.php:1685 includes/sf-options.php:3124
+#: includes/meta-boxes.php:836 includes/meta-boxes.php:1197
+#: includes/meta-boxes.php:1687 includes/sf-options.php:3124
 msgid "Naked (Light)"
 msgstr "Nøgen (Lys)"
 
-#: includes/meta-boxes.php:835 includes/meta-boxes.php:1196
-#: includes/meta-boxes.php:1686 includes/sf-options.php:3125
+#: includes/meta-boxes.php:837 includes/meta-boxes.php:1198
+#: includes/meta-boxes.php:1688 includes/sf-options.php:3125
 msgid "Naked (Dark)"
 msgstr "Nøgen (Mørk)"
 
-#: includes/meta-boxes.php:839
+#: includes/meta-boxes.php:841
 msgid ""
 "Choose the type of header that is shown on this portfolio. NOTE: The naked "
 "options are only possible when you have the hero heading enabled, or the "
@@ -2237,52 +2283,52 @@ msgstr ""
 "udgave er kun mulig, såfremt du har aktiveret Hero Heading eller "
 "medievisningen nedenfor er sat til \"Fuldbredde medie\" og ingen header vist."
 
-#: includes/meta-boxes.php:845
+#: includes/meta-boxes.php:847
 msgid "Portfolio Item Details"
 msgstr "Portfolio element detaljer"
 
-#: includes/meta-boxes.php:852
+#: includes/meta-boxes.php:854
 msgid "Client"
 msgstr "Klient"
 
-#: includes/meta-boxes.php:854
+#: includes/meta-boxes.php:856
 msgid "Enter a client for use within the portfolio item index (optional)."
 msgstr "Indtast en klient til brug indeni et portfolio element (valgfrit)."
 
-#: includes/meta-boxes.php:862
+#: includes/meta-boxes.php:864
 msgid "Subtitle"
 msgstr "Underoverskrift"
 
-#: includes/meta-boxes.php:864
+#: includes/meta-boxes.php:866
 msgid "Enter a subtitle for use within the portfolio item index (optional)."
 msgstr ""
 "Indtast en underoverskrift til brug indeni et portfolio element (valgfrit)."
 
-#: includes/meta-boxes.php:872
+#: includes/meta-boxes.php:874
 msgid "External Link"
 msgstr "Eksternt link"
 
-#: includes/meta-boxes.php:874
+#: includes/meta-boxes.php:876
 msgid ""
 "Enter an external link for the item  (optional) (NOTE: INCLUDE HTTP://)."
 msgstr ""
 "Indtast et eksternt link til dette element (valgfrit) (Note: Inkludér "
 "HTTP:// eller HTTPS://)."
 
-#: includes/meta-boxes.php:883 includes/meta-boxes.php:1164
-#: includes/meta-boxes.php:1481 includes/meta-boxes.php:1965
-#: includes/meta-boxes.php:2467
+#: includes/meta-boxes.php:885 includes/meta-boxes.php:1166
+#: includes/meta-boxes.php:1483 includes/meta-boxes.php:1967
+#: includes/meta-boxes.php:2469
 msgid "Custom Excerpt"
 msgstr "Brugerdefineret uddag"
 
-#: includes/meta-boxes.php:890 includes/meta-boxes.php:1171
-#: includes/meta-boxes.php:1488 includes/meta-boxes.php:1972
-#: includes/meta-boxes.php:2474
+#: includes/meta-boxes.php:892 includes/meta-boxes.php:1173
+#: includes/meta-boxes.php:1490 includes/meta-boxes.php:1974
+#: includes/meta-boxes.php:2476
 msgid "Custom excerpt"
 msgstr "Brugerdefineret uddag"
 
-#: includes/meta-boxes.php:891 includes/meta-boxes.php:1172
-#: includes/meta-boxes.php:2475
+#: includes/meta-boxes.php:893 includes/meta-boxes.php:1174
+#: includes/meta-boxes.php:2477
 msgid ""
 "You can optionally write a custom excerpt here to display instead of the "
 "excerpt that is automatically generated. If you use the page builder, then "
@@ -2292,23 +2338,23 @@ msgstr ""
 "stedet for det automatisk genereret uddrag. Hvis du bruger sideopbyggeren, "
 "skal du tilføje indholdet i denne kasse."
 
-#: includes/meta-boxes.php:902 includes/meta-boxes.php:1183
+#: includes/meta-boxes.php:904 includes/meta-boxes.php:1185
 msgid "Main Detail Options"
 msgstr "Hoveddetalje indstillinger"
 
-#: includes/meta-boxes.php:909 includes/meta-boxes.php:1205
+#: includes/meta-boxes.php:911 includes/meta-boxes.php:1207
 msgid "Media Display"
 msgstr "Medievisning"
 
-#: includes/meta-boxes.php:913
+#: includes/meta-boxes.php:915
 msgid "Full Width Media"
 msgstr "Fuldbredde medie"
 
-#: includes/meta-boxes.php:914
+#: includes/meta-boxes.php:916
 msgid "Split Media / Description"
 msgstr "Split medie / beskrivelse"
 
-#: includes/meta-boxes.php:919
+#: includes/meta-boxes.php:921
 msgid ""
 "Choose how you would like to display your selected media - full width (edge "
 "to edge), split, or standard (media with content below)."
@@ -2316,11 +2362,11 @@ msgstr ""
 "Vælg hvordan du ønsker vise dine valgte medier - fuldbredde (kant til kant), "
 "split eller standard (medie med indhold nedenunder)."
 
-#: includes/meta-boxes.php:924
+#: includes/meta-boxes.php:926
 msgid "Media Image Height"
 msgstr "Medie billede højde"
 
-#: includes/meta-boxes.php:926
+#: includes/meta-boxes.php:928
 msgid ""
 "If you are using the image detail type, and would like to set a height for "
 "the image - then please do so here (no px)."
@@ -2328,11 +2374,11 @@ msgstr ""
 "Hvis du bruger billede detalje og ønsker at sætte en højde på billeder, så "
 "kan dette gøres her (ingen px)."
 
-#: includes/meta-boxes.php:933
+#: includes/meta-boxes.php:935
 msgid "Item Sidebar Content"
 msgstr "Indholdet for elementets sidebar"
 
-#: includes/meta-boxes.php:934
+#: includes/meta-boxes.php:936
 msgid ""
 "You can optionally add some content here to display in the details column, "
 "including shortcodes etc. Only visible on Standard and Full Width Media "
@@ -2342,47 +2388,47 @@ msgstr ""
 "eksempelvis shortcodes. Kun visning såfremt standard eller fuldbredde medie "
 "er valgt."
 
-#: includes/meta-boxes.php:944
+#: includes/meta-boxes.php:946
 msgid "Hide item details bar"
 msgstr "Skjul elementets detaljebar"
 
-#: includes/meta-boxes.php:947
+#: includes/meta-boxes.php:949
 msgid "Check this box to hide the item details on the detail page."
 msgstr "Marker denne boks for at skjule elementets detaljer på detalje siden."
 
-#: includes/meta-boxes.php:953 includes/meta-boxes.php:1258
-#: includes/meta-boxes.php:2375
+#: includes/meta-boxes.php:955 includes/meta-boxes.php:1260
+#: includes/meta-boxes.php:2377
 msgid "Include social sharing"
 msgstr "Inkludér social deling"
 
-#: includes/meta-boxes.php:956 includes/meta-boxes.php:1261
+#: includes/meta-boxes.php:958 includes/meta-boxes.php:1263
 msgid "Check this box to show social sharing icons on the detail page."
 msgstr "Marker denne boks for at vise social delingsikonerne på detalje siden."
 
-#: includes/meta-boxes.php:963 includes/meta-boxes.php:1948
+#: includes/meta-boxes.php:965 includes/meta-boxes.php:1950
 msgid "One Page Options"
 msgstr "One Page indstillinger"
 
-#: includes/meta-boxes.php:970 includes/meta-boxes.php:1955
+#: includes/meta-boxes.php:972 includes/meta-boxes.php:1957
 msgid "Enable One Page Navigation"
 msgstr "Aktiver One Page navigation"
 
-#: includes/meta-boxes.php:973 includes/meta-boxes.php:1958
+#: includes/meta-boxes.php:975 includes/meta-boxes.php:1960
 msgid "Enable the one page nav which appears on the right of the page."
 msgstr "Aktiver One Page navigationen, som vises i højre siden af siden."
 
-#: includes/meta-boxes.php:980 includes/meta-boxes.php:1286
-#: includes/meta-boxes.php:1405 includes/meta-boxes.php:1984
+#: includes/meta-boxes.php:982 includes/meta-boxes.php:1288
+#: includes/meta-boxes.php:1407 includes/meta-boxes.php:1986
 msgid "Misc. Options"
 msgstr "Diverse indstillinger"
 
-#: includes/meta-boxes.php:987 includes/meta-boxes.php:1293
-#: includes/meta-boxes.php:1412 includes/meta-boxes.php:1991
+#: includes/meta-boxes.php:989 includes/meta-boxes.php:1295
+#: includes/meta-boxes.php:1414 includes/meta-boxes.php:1993
 msgid "Extra page class"
 msgstr "Ekstra side class"
 
-#: includes/meta-boxes.php:989 includes/meta-boxes.php:1295
-#: includes/meta-boxes.php:1414 includes/meta-boxes.php:1993
+#: includes/meta-boxes.php:991 includes/meta-boxes.php:1297
+#: includes/meta-boxes.php:1416 includes/meta-boxes.php:1995
 msgid ""
 "If you wish to add extra classes to the body class of the page (for custom "
 "css use), then please add the class(es) here."
@@ -2390,43 +2436,43 @@ msgstr ""
 "Hvis du ønsker at tilføje ekstra classes til body classen på siden (til "
 "brugerdefineret CSS), tilføj dem venligst her."
 
-#: includes/meta-boxes.php:997 includes/meta-boxes.php:1312
-#: includes/meta-boxes.php:2019
+#: includes/meta-boxes.php:999 includes/meta-boxes.php:1314
+#: includes/meta-boxes.php:2021
 msgid "Remove top spacing"
 msgstr "Fjern mellemrum i toppen"
 
-#: includes/meta-boxes.php:1000 includes/meta-boxes.php:1315
-#: includes/meta-boxes.php:2022
+#: includes/meta-boxes.php:1002 includes/meta-boxes.php:1317
+#: includes/meta-boxes.php:2024
 msgid "Remove the spacing at the top of the page."
 msgstr "Fjern mellemrum fra toppen af siden"
 
-#: includes/meta-boxes.php:1006 includes/meta-boxes.php:1303
-#: includes/meta-boxes.php:1422 includes/meta-boxes.php:2010
+#: includes/meta-boxes.php:1008 includes/meta-boxes.php:1305
+#: includes/meta-boxes.php:1424 includes/meta-boxes.php:2012
 msgid "Remove promo bar"
 msgstr "Fjern promobaren"
 
-#: includes/meta-boxes.php:1009 includes/meta-boxes.php:1306
-#: includes/meta-boxes.php:1425 includes/meta-boxes.php:2013
+#: includes/meta-boxes.php:1011 includes/meta-boxes.php:1308
+#: includes/meta-boxes.php:1427 includes/meta-boxes.php:2015
 msgid "Remove the promo bar at the bottom of the page."
 msgstr "Fjern promobaren fra bunden af denne side."
 
-#: includes/meta-boxes.php:1020
+#: includes/meta-boxes.php:1022
 msgid "Page Style"
 msgstr "Sidens uddseende"
 
-#: includes/meta-boxes.php:1027
+#: includes/meta-boxes.php:1029
 msgid "Page Design Style"
 msgstr "Sideudseende"
 
-#: includes/meta-boxes.php:1032
+#: includes/meta-boxes.php:1034
 msgid "Boxed Inner Page"
 msgstr "Boxed inderside"
 
-#: includes/meta-boxes.php:1033
+#: includes/meta-boxes.php:1035
 msgid "Hero / Content Split"
 msgstr "Hero / Indholdssplit"
 
-#: includes/meta-boxes.php:1037
+#: includes/meta-boxes.php:1039
 msgid ""
 "Select the design style for the page. NOTE: if using the \"Hero / Content "
 "Split\" style, then please make sure you have the page title style set to "
@@ -2436,73 +2482,73 @@ msgstr ""
 "skal du være sikker på, at sidens titel er sat til \"Hero\" og at du har "
 "tilføjet et baggrundsbillede."
 
-#: includes/meta-boxes.php:1048
+#: includes/meta-boxes.php:1050
 msgid "Page Background"
 msgstr "Sidens baggrund"
 
-#: includes/meta-boxes.php:1055 swift-framework/shortcodes/interface.php:853
+#: includes/meta-boxes.php:1057 swift-framework/shortcodes/interface.php:853
 msgid "Background Image"
 msgstr "Baggrundsbillede"
 
-#: includes/meta-boxes.php:1056
+#: includes/meta-boxes.php:1058
 msgid "The image that will be used as the OUTER page background image."
 msgstr "Dette billede vil blive brugt som baggrund på ydresiden."
 
-#: includes/meta-boxes.php:1064
+#: includes/meta-boxes.php:1066
 msgid "Background Image Size"
 msgstr "Baggrundsbilledets størrelse"
 
-#: includes/meta-boxes.php:1065 includes/meta-boxes.php:1088
+#: includes/meta-boxes.php:1067 includes/meta-boxes.php:1090
 msgid ""
 "For fullscreen images, choose Cover. For repeating patterns, choose Auto."
 msgstr "For fuldskærmsbilleder, vælg Cover. For at gentage mønstre, vælg Auto."
 
-#: includes/meta-boxes.php:1078
+#: includes/meta-boxes.php:1080
 msgid "Inner Background Image"
 msgstr "Indersidens baggrundsbillede"
 
-#: includes/meta-boxes.php:1079
+#: includes/meta-boxes.php:1081
 msgid "The image that will be used as the INNER page background image."
 msgstr "Dette billede vil blive brugt som baggrund på indersiden."
 
-#: includes/meta-boxes.php:1087
+#: includes/meta-boxes.php:1089
 msgid "Inner Background Image Size"
 msgstr "Indersidens baggrundsbillede størrelse"
 
-#: includes/meta-boxes.php:1101
+#: includes/meta-boxes.php:1103
 msgid "Inner Background Color"
 msgstr "Indersidens baggrundsfarve"
 
-#: includes/meta-boxes.php:1103
+#: includes/meta-boxes.php:1105
 msgid "Optionally set a background color for the inner page background."
 msgstr ""
 "Alternativt kan du vælge en baggrundsfarve til baggrunden for indersiden."
 
-#: includes/meta-boxes.php:1115
+#: includes/meta-boxes.php:1117
 msgid "Download Options"
 msgstr "Downloadindstillinger"
 
-#: includes/meta-boxes.php:1122
+#: includes/meta-boxes.php:1124
 msgid "Show Download Button"
 msgstr "Vis downloadknap"
 
-#: includes/meta-boxes.php:1125
+#: includes/meta-boxes.php:1127
 msgid "Enable a download button on the detail and index for the post."
 msgstr "Aktiver en download-knap på detaljer og index for dette indlæg."
 
-#: includes/meta-boxes.php:1131
+#: includes/meta-boxes.php:1133
 msgid "Download File"
 msgstr "Download fil"
 
-#: includes/meta-boxes.php:1132
+#: includes/meta-boxes.php:1134
 msgid "The file that the download button will link to."
 msgstr "Filen som download-knappen skal linke til."
 
-#: includes/meta-boxes.php:1140
+#: includes/meta-boxes.php:1142
 msgid "Download shortcode"
 msgstr "Download shortcode"
 
-#: includes/meta-boxes.php:1141
+#: includes/meta-boxes.php:1143
 msgid ""
 "Alternatively, you can provide a shortcode here for your download, for "
 "example from the Easy Digital Downloads plugin."
@@ -2510,15 +2556,15 @@ msgstr ""
 "Alternativt kan du skrive en shortcode her for dine downloads, f.eks. fra "
 "Easy Digital Downloads pluginnet."
 
-#: includes/meta-boxes.php:1156
+#: includes/meta-boxes.php:1158
 msgid "Post Meta"
 msgstr "Indlæggets meta"
 
-#: includes/meta-boxes.php:1190
+#: includes/meta-boxes.php:1192
 msgid "Post Header Type"
 msgstr "Indlæggets headertype"
 
-#: includes/meta-boxes.php:1200
+#: includes/meta-boxes.php:1202
 msgid ""
 "Choose the type of header that is shown on this post. NOTE: The naked "
 "options are only possible when you have the hero heading enabled, or the "
@@ -2528,19 +2574,19 @@ msgstr ""
 "såfremt du har aktiveret \"hero header\" eller hvis medie visning nedenfor "
 "er sat til \"Fuld bredde med titel overlay\"."
 
-#: includes/meta-boxes.php:1209
+#: includes/meta-boxes.php:1211
 msgid "Full Width with Title Overlay"
 msgstr "Fuldbredde med titel overlay"
 
-#: includes/meta-boxes.php:1210
+#: includes/meta-boxes.php:1212
 msgid "Full Width"
 msgstr "Fuldbredde"
 
-#: includes/meta-boxes.php:1211
+#: includes/meta-boxes.php:1213
 msgid "Standard (Above content)"
 msgstr "Standard (over indholdet)"
 
-#: includes/meta-boxes.php:1216
+#: includes/meta-boxes.php:1218
 msgid ""
 "Choose how you would like to display your selected media - full width (edge "
 "to edge) with or without the title overlay, or standard. If you choose the "
@@ -2552,11 +2598,11 @@ msgstr ""
 "overlay, er det anbefalet at du skjuler sidens titel under meta "
 "indstillingerne."
 
-#: includes/meta-boxes.php:1221
+#: includes/meta-boxes.php:1223
 msgid "Title Overlay Min Height"
 msgstr "Titel overlay minimum højde"
 
-#: includes/meta-boxes.php:1223
+#: includes/meta-boxes.php:1225
 msgid ""
 "If you are using the 'Full Width with Title Overlay' media display type, you "
 "can set a min-height for it here (no px)."
@@ -2564,19 +2610,19 @@ msgstr ""
 "Hvis du bruger \"Fuldbredde med titel overlay\", kan du vælge en "
 "minimumshøjde her (ingen px)."
 
-#: includes/meta-boxes.php:1231
+#: includes/meta-boxes.php:1233
 msgid "Title Overlay Text Color"
 msgstr "Titel overlay tekstfarve"
 
-#: includes/meta-boxes.php:1233
+#: includes/meta-boxes.php:1235
 msgid "Optionally set a text color for the title overlay text."
 msgstr "Alternativt kan du vælge en tekstfarve til teksten i titel overlay."
 
-#: includes/meta-boxes.php:1240
+#: includes/meta-boxes.php:1242
 msgid "Extra Paragraph Spacing"
 msgstr "Ekstra mellemrum på afsnit"
 
-#: includes/meta-boxes.php:1243
+#: includes/meta-boxes.php:1245
 msgid ""
 "Check this box to enable extra spacing around paragraph elements within the "
 "post content."
@@ -2584,20 +2630,20 @@ msgstr ""
 "Marker denne kasse for at aktivere ekstra mellemrum, mellem afsnitselementer "
 "i indlæggets indhold."
 
-#: includes/meta-boxes.php:1249
+#: includes/meta-boxes.php:1251
 msgid "Include author info"
 msgstr "Inkluder forfatter informationer"
 
-#: includes/meta-boxes.php:1252
+#: includes/meta-boxes.php:1254
 msgid "Check this box to show the author info box on the detail page."
 msgstr ""
 "Marker denne boks for at vise forfatterens informationer på detalje siden."
 
-#: includes/meta-boxes.php:1267
+#: includes/meta-boxes.php:1269
 msgid "Remove article pagination"
 msgstr "Fjern artiklens nummerering"
 
-#: includes/meta-boxes.php:1270
+#: includes/meta-boxes.php:1272
 msgid ""
 "Check this box to remove the next/previous article pagination on the detail "
 "page."
@@ -2605,49 +2651,49 @@ msgstr ""
 "Marker denne kasse for at fjerne artiklens \"næste/forrige\" nummerering på "
 "detaljesiden."
 
-#: includes/meta-boxes.php:1276
+#: includes/meta-boxes.php:1278
 msgid "Include related articles"
 msgstr "Inkluder relaterede artikler"
 
-#: includes/meta-boxes.php:1279
+#: includes/meta-boxes.php:1281
 msgid "Check this box to show related articles on the detail page."
 msgstr ""
 "Marker denne boks, hvis du ønsker at relaterede artikler skal vises på "
 "detalje siden."
 
-#: includes/meta-boxes.php:1321 includes/meta-boxes.php:2028
+#: includes/meta-boxes.php:1323 includes/meta-boxes.php:2030
 msgid "Remove bottom spacing"
 msgstr "Fjern mellemrum i bunden"
 
-#: includes/meta-boxes.php:1324 includes/meta-boxes.php:2031
+#: includes/meta-boxes.php:1326 includes/meta-boxes.php:2033
 msgid "Remove the spacing at the bottom of the page."
 msgstr "Fjerner mellemrummet i bunden af siden"
 
-#: includes/meta-boxes.php:1336
+#: includes/meta-boxes.php:1338
 msgid "Product Meta"
 msgstr "Produktmeta"
 
-#: includes/meta-boxes.php:1344
+#: includes/meta-boxes.php:1346
 msgid "Product Display"
 msgstr "Produktvisning"
 
-#: includes/meta-boxes.php:1351
+#: includes/meta-boxes.php:1353
 msgid "Page Display Type"
 msgstr "Sidevisningstype"
 
-#: includes/meta-boxes.php:1356
+#: includes/meta-boxes.php:1358
 msgid "Fullscreen Split"
 msgstr "Fuldskærms split"
 
-#: includes/meta-boxes.php:1360
+#: includes/meta-boxes.php:1362
 msgid "Choose the layout for the product detail display."
 msgstr "Vælg dette layout til produktvisningen."
 
-#: includes/meta-boxes.php:1365
+#: includes/meta-boxes.php:1367
 msgid "Fullscreen Display Background Color"
 msgstr "Fuldskærmsvisnings baggrundsfarve"
 
-#: includes/meta-boxes.php:1367
+#: includes/meta-boxes.php:1369
 msgid ""
 "Optionally set a background colour for product display slider (ONLY when "
 "using the Fullscreen Split display type above)."
@@ -2655,15 +2701,15 @@ msgstr ""
 "Alternativt vælg en baggrundfarve som vises på produktslideren (Kun hvis "
 "Fuldskærms split anvendes ovenfor)"
 
-#: includes/meta-boxes.php:1375 includes/meta-boxes.php:1393
+#: includes/meta-boxes.php:1377 includes/meta-boxes.php:1395
 msgid "Product Description"
 msgstr "Produktbeskrivelse"
 
-#: includes/meta-boxes.php:1382
+#: includes/meta-boxes.php:1384
 msgid "Product Short Description"
 msgstr "Produktets korte beskrivelse"
 
-#: includes/meta-boxes.php:1383
+#: includes/meta-boxes.php:1385
 msgid ""
 "You can optionally write a short description here, which shows above the "
 "variations/cart options."
@@ -2671,7 +2717,7 @@ msgstr ""
 "Du kan alternativt skrive en kort beskrivelse her, denne vil blive vist over "
 "variationer og kurven."
 
-#: includes/meta-boxes.php:1394
+#: includes/meta-boxes.php:1396
 msgid ""
 "You can optionally write a product description here, which shows under the "
 "description accordion heading if you have the page builder enabled for "
@@ -2681,11 +2727,11 @@ msgstr ""
 "beskrivelsesharmonikaen, hvis du har sideopbyggeren aktiveret på "
 "produktsider."
 
-#: includes/meta-boxes.php:1465
+#: includes/meta-boxes.php:1467
 msgid "Team Member Meta"
 msgstr "Medarbejder meta"
 
-#: includes/meta-boxes.php:1489
+#: includes/meta-boxes.php:1491
 msgid ""
 "You can optionally write a custom excerpt here to display instead of the "
 "excerpt that is automatically generated (this is needed if you use the page "
@@ -2695,153 +2741,153 @@ msgstr ""
 "for det uddrag der generes automatisk (dette er nødvendigt hvis du bruger "
 "sideopbygger ovenfor)"
 
-#: includes/meta-boxes.php:1500
+#: includes/meta-boxes.php:1502
 msgid "Team Member Details"
 msgstr "Medarbejder detaljer"
 
-#: includes/meta-boxes.php:1507
+#: includes/meta-boxes.php:1509
 msgid "Position"
 msgstr "Position"
 
-#: includes/meta-boxes.php:1509
+#: includes/meta-boxes.php:1511
 msgid "Enter the team member's position within the team."
 msgstr "Indtast medarbejderens position."
 
-#: includes/meta-boxes.php:1517
+#: includes/meta-boxes.php:1519
 msgid "Email Address"
 msgstr "Email"
 
-#: includes/meta-boxes.php:1519
+#: includes/meta-boxes.php:1521
 msgid "Enter the team member's email address."
 msgstr "Indtast medarbejderens email."
 
-#: includes/meta-boxes.php:1527
+#: includes/meta-boxes.php:1529
 msgid "Phone Number"
 msgstr "Telefonnummer"
 
-#: includes/meta-boxes.php:1529
+#: includes/meta-boxes.php:1531
 msgid "Enter the team member's phone number."
 msgstr "Indtast medarbejderens telefonnummer."
 
-#: includes/meta-boxes.php:1537 includes/sf-options.php:3453
-#: swift-framework/core/sf-functions.php:702
-#: swift-framework/core/sf-functions.php:711
-#: swift-framework/core/sf-functions.php:718 woocommerce/share.php:31
+#: includes/meta-boxes.php:1539 includes/sf-options.php:3466
+#: swift-framework/core/sf-functions.php:705
+#: swift-framework/core/sf-functions.php:714
+#: swift-framework/core/sf-functions.php:721 woocommerce/share.php:31
 msgid "Twitter"
 msgstr "Twitter"
 
-#: includes/meta-boxes.php:1539
+#: includes/meta-boxes.php:1541
 msgid "Enter the team member's Twitter username."
 msgstr "Indtast medarbejderens Twitter brugernavn."
 
-#: includes/meta-boxes.php:1547 includes/sf-options.php:3461
+#: includes/meta-boxes.php:1549 includes/sf-options.php:3474
 #: woocommerce/share.php:28
 msgid "Facebook"
 msgstr "Facebook"
 
-#: includes/meta-boxes.php:1549
+#: includes/meta-boxes.php:1551
 msgid "Enter the team member's Facebook URL."
 msgstr "Indtast medarbejderens Facebook URL."
 
-#: includes/meta-boxes.php:1557 includes/sf-options.php:3501
+#: includes/meta-boxes.php:1559 includes/sf-options.php:3514
 msgid "LinkedIn"
 msgstr "LinkedIn"
 
-#: includes/meta-boxes.php:1559
+#: includes/meta-boxes.php:1561
 msgid "Enter the team member's LinkedIn URL."
 msgstr "Indtast medarbejderens LinkedIn URL."
 
-#: includes/meta-boxes.php:1567 includes/sf-options.php:3509
+#: includes/meta-boxes.php:1569 includes/sf-options.php:3522
 msgid "Google+"
 msgstr "Google+"
 
-#: includes/meta-boxes.php:1569
+#: includes/meta-boxes.php:1571
 msgid "Enter the team member's Google+ URL."
 msgstr "Indtast medarbejderens Google+ URL."
 
-#: includes/meta-boxes.php:1577 includes/sf-options.php:3493
+#: includes/meta-boxes.php:1579 includes/sf-options.php:3506
 msgid "Skype"
 msgstr "Skype"
 
-#: includes/meta-boxes.php:1579
+#: includes/meta-boxes.php:1581
 msgid "Enter the team member's Skype username."
 msgstr "Indtast medarbejderens Skype brugernavn."
 
-#: includes/meta-boxes.php:1587 includes/sf-options.php:3549
+#: includes/meta-boxes.php:1589 includes/sf-options.php:3562
 #: swift-framework/content/sf-blog.php:299
 msgid "Instagram"
 msgstr "Instagram"
 
-#: includes/meta-boxes.php:1589
+#: includes/meta-boxes.php:1591
 msgid "Enter the team member's Instragram URL (e.g. http://hashgr.am/)."
 msgstr "Indtast medarbejderens Instagram URL (f.eks. http://hashgr.am/)."
 
-#: includes/meta-boxes.php:1597 includes/sf-options.php:3469
+#: includes/meta-boxes.php:1599 includes/sf-options.php:3482
 msgid "Dribbble"
 msgstr "Dribbble"
 
-#: includes/meta-boxes.php:1599
+#: includes/meta-boxes.php:1601
 msgid "Enter the team member's Dribbble username."
 msgstr "Indtast medarbejderens Dribbble brugernavn."
 
-#: includes/meta-boxes.php:1612
+#: includes/meta-boxes.php:1614
 msgid "Client Meta"
 msgstr "Klient meta"
 
-#: includes/meta-boxes.php:1618
+#: includes/meta-boxes.php:1620
 msgid "Client Link"
 msgstr "Klient link"
 
-#: includes/meta-boxes.php:1620
+#: includes/meta-boxes.php:1622
 msgid "Enter the link for the client if you want the image to be clickable."
 msgstr ""
 "Indtast linket til den klient, såfremt du ønsker billedet skal være klikbart."
 
-#: includes/meta-boxes.php:1633
+#: includes/meta-boxes.php:1635
 msgid "Testimonial Meta"
 msgstr "Udtalelse meta"
 
-#: includes/meta-boxes.php:1639
+#: includes/meta-boxes.php:1641
 msgid "Testimonial Cite"
 msgstr "Udtalt af"
 
-#: includes/meta-boxes.php:1641
+#: includes/meta-boxes.php:1643
 msgid "Enter the cite name for the testimonial."
 msgstr "Skriv navnet på den som har lavet udtalelsen."
 
-#: includes/meta-boxes.php:1649
+#: includes/meta-boxes.php:1651
 msgid "Testimonial Cite Subtext"
 msgstr "Udtalelsens sekundære tekst"
 
-#: includes/meta-boxes.php:1651
+#: includes/meta-boxes.php:1653
 msgid "Enter the cite subtext for the testimonial (optional)."
 msgstr "Skriv en sekundær tekst til udtalelsen her (valgfrit)."
 
-#: includes/meta-boxes.php:1659
+#: includes/meta-boxes.php:1661
 msgid "Testimonial Cite Image"
 msgstr "Billede til personen bag udtalelsen"
 
-#: includes/meta-boxes.php:1660
+#: includes/meta-boxes.php:1662
 msgid "Enter the cite image for the testimonial (optional)."
 msgstr "Tilføj et billede til personen bag udtalelsen (valgfrit)."
 
-#: includes/meta-boxes.php:1673
+#: includes/meta-boxes.php:1675
 msgid "Page Header / Slider"
 msgstr "Sidens header / slider"
 
-#: includes/meta-boxes.php:1679
+#: includes/meta-boxes.php:1681
 msgid "Page Header Type"
 msgstr "Sidens headertype"
 
-#: includes/meta-boxes.php:1684 includes/sf-options.php:3123
+#: includes/meta-boxes.php:1686 includes/sf-options.php:3123
 msgid "Standard (Overlay)"
 msgstr "Standard (Overlay)"
 
-#: includes/meta-boxes.php:1687
+#: includes/meta-boxes.php:1689
 msgid "Below Slider"
 msgstr "Under slider"
 
-#: includes/meta-boxes.php:1691
+#: includes/meta-boxes.php:1693
 msgid ""
 "Choose the type of header that is shown on this page. If you choose one of "
 "the Naked header options, then the header will be overlaid over the slider/"
@@ -2852,11 +2898,11 @@ msgstr ""
 "de nøgne header muligheder, skal headeren overlappe sliderområdet nedenfor. "
 "NOTE: Disse indstillinger er kun tilgængelige til ikke lodrette headere."
 
-#: includes/meta-boxes.php:1696
+#: includes/meta-boxes.php:1698
 msgid "Use Alt Logo"
 msgstr "Brug alternativt logo"
 
-#: includes/meta-boxes.php:1700
+#: includes/meta-boxes.php:1702
 msgid ""
 "Choose if you would like to use the ALT logo on this page (the logo will "
 "revert to the standard logo for the sticky header if you are using it)."
@@ -2864,11 +2910,11 @@ msgstr ""
 "Hvis du vil bruge ALT logoet på denne side (logoet vil returnere til "
 "standard logo, i fastlåste headere, såfremt du bruger det)."
 
-#: includes/meta-boxes.php:1705
+#: includes/meta-boxes.php:1707
 msgid "Page Menu"
 msgstr "Sidens menu"
 
-#: includes/meta-boxes.php:1711
+#: includes/meta-boxes.php:1713
 msgid ""
 "Optionally you can choose to override the menu that is used on the page. "
 "This is ideal if you want to create a page with a anchor link scroll menu."
@@ -2877,27 +2923,27 @@ msgstr ""
 "Dette er idealt hvis du ønsker at oprette en side, med anchor link scroll "
 "menu."
 
-#: includes/meta-boxes.php:1716
+#: includes/meta-boxes.php:1718
 msgid "Page Slider"
 msgstr "Page Slider"
 
-#: includes/meta-boxes.php:1721
+#: includes/meta-boxes.php:1723
 msgid "Swift Slider"
 msgstr "Swift Slider"
 
-#: includes/meta-boxes.php:1722
+#: includes/meta-boxes.php:1724
 msgid "Revolution Slider"
 msgstr "Revolution Slider"
 
-#: includes/meta-boxes.php:1723
+#: includes/meta-boxes.php:1725
 msgid "LayerSlider"
 msgstr "LayerSlider"
 
-#: includes/meta-boxes.php:1724
+#: includes/meta-boxes.php:1726
 msgid "Master Slider"
 msgstr "Master Slider"
 
-#: includes/meta-boxes.php:1728
+#: includes/meta-boxes.php:1730
 msgid ""
 "Choose the type of slider you would like to display at the top of the page, "
 "if any. You can then set the slider settings below."
@@ -2905,19 +2951,19 @@ msgstr ""
 "Vælg den type slider du ønsker at vise i toppen af denne side, hvis det "
 "ønskes. Du kan indstille slideren nedenfor."
 
-#: includes/meta-boxes.php:1734
+#: includes/meta-boxes.php:1736
 msgid "Swift Slider Options"
 msgstr "Swift Slider indstillinger"
 
-#: includes/meta-boxes.php:1742
+#: includes/meta-boxes.php:1744
 msgid "Swift Slider Type"
 msgstr "Swift Slider type"
 
-#: includes/meta-boxes.php:1747
+#: includes/meta-boxes.php:1749
 msgid "Curtain Slider"
 msgstr "Curtain Slider"
 
-#: includes/meta-boxes.php:1752
+#: includes/meta-boxes.php:1754
 msgid ""
 "Choose if you would like to display the Swift Slider in horizontal slider "
 "mode, or vertical curtain slider format."
@@ -2925,43 +2971,43 @@ msgstr ""
 "Vælg hvis du ønsker at bruge Swift Slider i horisontal tilstand eller lodret "
 "gardinformat."
 
-#: includes/meta-boxes.php:1757
+#: includes/meta-boxes.php:1759
 msgid "Swift Slider Slide Category"
 msgstr "Swift Slider slide kategori"
 
-#: includes/meta-boxes.php:1764 includes/sf-options.php:3202
+#: includes/meta-boxes.php:1766 includes/sf-options.php:3202
 msgid "Choose the category of slide that you would like to show, or all."
 msgstr "Vælg den slider-kategori du ønsker at vise, eller alle."
 
-#: includes/meta-boxes.php:1770
+#: includes/meta-boxes.php:1772
 msgid "Swift Slider Random"
 msgstr ""
 
-#: includes/meta-boxes.php:1775 includes/sf-options.php:3232
+#: includes/meta-boxes.php:1777 includes/sf-options.php:3232
 msgid "Choose if you would like the slider to show slides in random order."
 msgstr ""
 
-#: includes/meta-boxes.php:1781
+#: includes/meta-boxes.php:1783
 msgid "Swift Slider Slides"
 msgstr "Swift Slider slides"
 
-#: includes/meta-boxes.php:1783 includes/sf-options.php:3214
+#: includes/meta-boxes.php:1785 includes/sf-options.php:3214
 msgid "Set the number of slides to show. If blank then all will show."
 msgstr "Indtast det antal af slides som vises. Efterlad blank og alle vises."
 
-#: includes/meta-boxes.php:1792
+#: includes/meta-boxes.php:1794
 msgid "Swift Slider Fullscreen"
 msgstr "Swift Slider i fuldskærm"
 
-#: includes/meta-boxes.php:1797
+#: includes/meta-boxes.php:1799
 msgid "Choose if you would like the slider to be window height."
 msgstr "Vælg hvorvidt du ønsker at slideren skal være samme højde som vinduet."
 
-#: includes/meta-boxes.php:1802
+#: includes/meta-boxes.php:1804
 msgid "Swift Slider Max Height"
 msgstr "Swift Slider maksimal højde"
 
-#: includes/meta-boxes.php:1804 includes/sf-options.php:3223
+#: includes/meta-boxes.php:1806 includes/sf-options.php:3223
 msgid ""
 "Set the maximum height that the Swift Slider should display at (optional) "
 "(no px)."
@@ -2969,11 +3015,11 @@ msgstr ""
 "Indtast den maksimale højde som Swifter Slider kan være (valgfrit) (ingen "
 "px)."
 
-#: includes/meta-boxes.php:1813
+#: includes/meta-boxes.php:1815
 msgid "Swift Slider Autoplay"
 msgstr "Swift Slider automatisk afspilning."
 
-#: includes/meta-boxes.php:1815
+#: includes/meta-boxes.php:1817
 msgid ""
 "If you would like the slider to auto-rotate, then set the autoplay rotate "
 "time in ms here. I.e. you would enter '5000' for the slider to rotate every "
@@ -2983,38 +3029,38 @@ msgstr ""
 "rotationstiden her i ms. Eksempelvis svarer '5000' til rotation hvert 5. "
 "sekund."
 
-#: includes/meta-boxes.php:1824
+#: includes/meta-boxes.php:1826
 msgid "Swift Slider Transition"
 msgstr "Swift Slider overgang"
 
-#: includes/meta-boxes.php:1828
+#: includes/meta-boxes.php:1830
 #: includes/options/inc/fields/slides/field_slides.php:68
 msgid "Slide"
 msgstr "Slide"
 
-#: includes/meta-boxes.php:1829
+#: includes/meta-boxes.php:1831
 msgid "Fade"
 msgstr "Fade"
 
-#: includes/meta-boxes.php:1834 includes/sf-options.php:3260
+#: includes/meta-boxes.php:1836 includes/sf-options.php:3260
 msgid "Choose the transition type for the slider."
 msgstr ""
 
-#: includes/meta-boxes.php:1839
+#: includes/meta-boxes.php:1841
 msgid "Swift Slider Loop"
 msgstr "Swift Slider loop"
 
-#: includes/meta-boxes.php:1844
+#: includes/meta-boxes.php:1846
 msgid ""
 "Choose if you would like the slider to loop (not possible on curtain slider)."
 msgstr ""
 "Vælg om du ønsker slideren skal loope (ikke muligt med gardin-slidere)."
 
-#: includes/meta-boxes.php:1849
+#: includes/meta-boxes.php:1851
 msgid "Swift Slider Navigation"
 msgstr "Swift Slider navigation"
 
-#: includes/meta-boxes.php:1854
+#: includes/meta-boxes.php:1856
 msgid ""
 "Choose if you would like to display the left/right arrows on the slider "
 "(only if slider type is set to \"Slider\")."
@@ -3022,19 +3068,19 @@ msgstr ""
 "Vælg om du ønsker at vise 'ventre/højre'-pile på slideren (kun muligt hvis "
 "slideren er sat til \"slider\")."
 
-#: includes/meta-boxes.php:1859
+#: includes/meta-boxes.php:1861
 msgid "Swift Slider Pagination"
 msgstr "Swift Slider nummerering"
 
-#: includes/meta-boxes.php:1864 includes/sf-options.php:3280
+#: includes/meta-boxes.php:1866 includes/sf-options.php:3280
 msgid "Choose if you would like to display the slider pagination."
 msgstr "Vælg om du ønsker at vise nummerering i slideren."
 
-#: includes/meta-boxes.php:1869
+#: includes/meta-boxes.php:1871
 msgid "Swift Slider Continue"
 msgstr "Swift Slider fortsæt"
 
-#: includes/meta-boxes.php:1874
+#: includes/meta-boxes.php:1876
 msgid ""
 "Choose if you would like to display the continue button on Curtain slider "
 "type to progress to the content. If you want to only display the slider on "
@@ -3044,124 +3090,124 @@ msgstr ""
 "at vise slideren på siden og intet indhold, skal du sikre at du har markeret "
 "NEJ."
 
-#: includes/meta-boxes.php:1880
+#: includes/meta-boxes.php:1882
 msgid "Revolution Slider Options"
 msgstr "Revolution Slider indstillinger"
 
-#: includes/meta-boxes.php:1899
+#: includes/meta-boxes.php:1901
 msgid "LayerSlider Options"
 msgstr "LayerSlider indstillinger"
 
-#: includes/meta-boxes.php:1907
+#: includes/meta-boxes.php:1909
 msgid "LayerSlider ID"
 msgstr "LayerSlider ID"
 
-#: includes/meta-boxes.php:1909
+#: includes/meta-boxes.php:1911
 msgid "Enter the LayerSlider ID for the slider that you want to show."
 msgstr "Indtast Layer Slider ID til den slide du ønsker vises."
 
-#: includes/meta-boxes.php:1918
+#: includes/meta-boxes.php:1920
 msgid "Master Slider Options"
 msgstr "Master Slider indstillinger"
 
-#: includes/meta-boxes.php:1926
+#: includes/meta-boxes.php:1928
 msgid "Master Slider ID"
 msgstr "Master Slider ID"
 
-#: includes/meta-boxes.php:1928
+#: includes/meta-boxes.php:1930
 msgid "Enter the Master Slider ID for the slider that you want to show."
 msgstr "Indtast Master Slider ID til den slide du ønsker vises."
 
-#: includes/meta-boxes.php:1941
+#: includes/meta-boxes.php:1943
 msgid "Page Meta"
 msgstr "Sidens meta"
 
-#: includes/meta-boxes.php:1973
+#: includes/meta-boxes.php:1975
 msgid ""
 "You can optionally write a custom excerpt here to display content when pages "
 "show up in search results."
 msgstr ""
 
-#: includes/meta-boxes.php:2001
+#: includes/meta-boxes.php:2003
 msgid "Enable Newsletter Bar"
 msgstr "Aktiver nyhedsbrevsbaren"
 
-#: includes/meta-boxes.php:2004
+#: includes/meta-boxes.php:2006
 msgid "Enable the newsletter bar, you can configure this in the theme options."
 msgstr ""
 "Aktiver nyhedsbrevsbaren, du kan konfigurere denne under temaets "
 "indstillinger."
 
-#: includes/meta-boxes.php:2041 includes/meta-boxes.php:2084
-#: includes/meta-boxes.php:2126
+#: includes/meta-boxes.php:2043 includes/meta-boxes.php:2086
+#: includes/meta-boxes.php:2128
 msgid "Sidebar Options"
 msgstr "Sidebar indstillinger"
 
-#: includes/meta-boxes.php:2048 includes/meta-boxes.php:2091
-#: includes/meta-boxes.php:2133
+#: includes/meta-boxes.php:2050 includes/meta-boxes.php:2093
+#: includes/meta-boxes.php:2135
 msgid "Sidebar configuration"
 msgstr "Konfigurer sidebar"
 
-#: includes/meta-boxes.php:2052 includes/meta-boxes.php:2095
-#: includes/meta-boxes.php:2137
+#: includes/meta-boxes.php:2054 includes/meta-boxes.php:2097
+#: includes/meta-boxes.php:2139
 msgid "No Sidebars"
 msgstr "Ingen sidebar"
 
-#: includes/meta-boxes.php:2053 includes/meta-boxes.php:2064
-#: includes/meta-boxes.php:2096 includes/meta-boxes.php:2106
-#: includes/meta-boxes.php:2138 includes/meta-boxes.php:2149
+#: includes/meta-boxes.php:2055 includes/meta-boxes.php:2066
+#: includes/meta-boxes.php:2098 includes/meta-boxes.php:2108
+#: includes/meta-boxes.php:2140 includes/meta-boxes.php:2151
 #: includes/sf-options.php:2478
 msgid "Left Sidebar"
 msgstr "Venstre sidebar"
 
-#: includes/meta-boxes.php:2054 includes/meta-boxes.php:2072
-#: includes/meta-boxes.php:2097 includes/meta-boxes.php:2114
-#: includes/meta-boxes.php:2139 includes/meta-boxes.php:2157
+#: includes/meta-boxes.php:2056 includes/meta-boxes.php:2074
+#: includes/meta-boxes.php:2099 includes/meta-boxes.php:2116
+#: includes/meta-boxes.php:2141 includes/meta-boxes.php:2159
 #: includes/sf-options.php:2487
 msgid "Right Sidebar"
 msgstr "Højre sidebar"
 
-#: includes/meta-boxes.php:2055 includes/meta-boxes.php:2140
+#: includes/meta-boxes.php:2057 includes/meta-boxes.php:2142
 msgid "Both Sidebars"
 msgstr "Begge sidebars"
 
-#: includes/meta-boxes.php:2059
+#: includes/meta-boxes.php:2061
 msgid "Choose the sidebar configuration for the detail page of this page."
 msgstr "Vælg den sidebar konfiguration til detalje siden af denne side."
 
-#: includes/meta-boxes.php:2101
+#: includes/meta-boxes.php:2103
 msgid "Choose the sidebar configuration for the detail page of this post."
 msgstr "Vælg den sidebar konfiguration til detalje siden af dette indlæg."
 
-#: includes/meta-boxes.php:2144
+#: includes/meta-boxes.php:2146
 msgid "Choose the sidebar configuration for the detail page of this product."
 msgstr "Vælg den sidebar konfiguration til detalje siden til dette produkt."
 
-#: includes/meta-boxes.php:2338
+#: includes/meta-boxes.php:2340
 msgid "Gallery Options"
 msgstr "Galleri indstillinger"
 
-#: includes/meta-boxes.php:2345
+#: includes/meta-boxes.php:2347
 msgid "Gallery Images"
 msgstr "Galleribilleder"
 
-#: includes/meta-boxes.php:2346
+#: includes/meta-boxes.php:2348
 msgid "The images that will be used in the gallery."
 msgstr "Disse billeder vil blive brugt i galleriet."
 
-#: includes/meta-boxes.php:2354
+#: includes/meta-boxes.php:2356
 msgid "Gallery Subtitle"
 msgstr "Galleriets underoverskrift"
 
-#: includes/meta-boxes.php:2356
+#: includes/meta-boxes.php:2358
 msgid "Enter a subtitle for use within the galleries list (optional)."
 msgstr "Indtast en underoverskrift som bruges i galleri listen (valgfrit)."
 
-#: includes/meta-boxes.php:2364
+#: includes/meta-boxes.php:2366
 msgid "Gallery Excerpt"
 msgstr "Galleri uddrag"
 
-#: includes/meta-boxes.php:2365
+#: includes/meta-boxes.php:2367
 msgid ""
 "You can write an excerpt here which will display on the galleries list if "
 "you have it set to show."
@@ -3169,55 +3215,55 @@ msgstr ""
 "Du kan skrive et uddrag her, som vil blive vist på gallerilisten, hvis har "
 "valgt at vise dette."
 
-#: includes/meta-boxes.php:2378
+#: includes/meta-boxes.php:2380
 msgid "Check this box to show social sharing on the detail page."
 msgstr "Marker denne boks, for at vise socialdeling på detalje siden."
 
-#: includes/meta-boxes.php:2389
+#: includes/meta-boxes.php:2391
 msgid "Directory Options"
 msgstr "Oversigts indstillinger"
 
-#: includes/meta-boxes.php:2398 swift-framework/core/sf-functions.php:3235
+#: includes/meta-boxes.php:2400 swift-framework/core/sf-functions.php:3238
 msgid "Address"
 msgstr "Adresse"
 
-#: includes/meta-boxes.php:2400
+#: includes/meta-boxes.php:2402
 msgid ""
 "Enter the address that you would like to show on the map here, i.e. "
 "\"Cupertino\"."
 msgstr "Indtast den adresse du vil have vist på kortet."
 
-#: includes/meta-boxes.php:2408 swift-framework/core/sf-functions.php:3239
+#: includes/meta-boxes.php:2410 swift-framework/core/sf-functions.php:3242
 msgid "Generate Coordinates"
 msgstr "Generer koordinater"
 
-#: includes/meta-boxes.php:2410
+#: includes/meta-boxes.php:2412
 msgid ""
 "Will automatically generate the latitude/longitude coordinates witht the "
 "given address."
 msgstr "Vil automatisk generere bredde-/længdegraden med denne adresse."
 
-#: includes/meta-boxes.php:2417 swift-framework/core/sf-functions.php:3244
+#: includes/meta-boxes.php:2419 swift-framework/core/sf-functions.php:3247
 msgid "Latitude Coordinate"
 msgstr "Breddegrader"
 
-#: includes/meta-boxes.php:2419
+#: includes/meta-boxes.php:2421
 msgid "Enter the Latitude coordinate of the Directory Item."
 msgstr "Indtast breddegraden til dette element."
 
-#: includes/meta-boxes.php:2427 swift-framework/core/sf-functions.php:3250
+#: includes/meta-boxes.php:2429 swift-framework/core/sf-functions.php:3253
 msgid "Longitude Coordinate"
 msgstr "Længdegrader"
 
-#: includes/meta-boxes.php:2429
+#: includes/meta-boxes.php:2431
 msgid "Enter the Longitude coordinate of the Directory Item."
 msgstr "Indtast længdegraden til dette element."
 
-#: includes/meta-boxes.php:2437
+#: includes/meta-boxes.php:2439
 msgid "Custom Map Pin"
 msgstr "Brugerdefineret kortnål"
 
-#: includes/meta-boxes.php:2438
+#: includes/meta-boxes.php:2440
 msgid ""
 "Choose an image to use as the custom pin for the address on the map. Upload "
 "your custom map pin, the image size must be 150px x 75px."
@@ -3226,23 +3272,23 @@ msgstr ""
 "på kortet. Upload din brugerdefinerede nål, billedets størrelse skal være "
 "150px x 75px."
 
-#: includes/meta-boxes.php:2446 swift-framework/core/sf-functions.php:3265
+#: includes/meta-boxes.php:2448 swift-framework/core/sf-functions.php:3268
 msgid "Pin Link"
 msgstr "Nålens link"
 
-#: includes/meta-boxes.php:2448
+#: includes/meta-boxes.php:2450
 msgid "Enter the Link url of the location marker."
 msgstr "Indtast det link som skal være på markøren."
 
-#: includes/meta-boxes.php:2456 swift-framework/core/sf-functions.php:3271
+#: includes/meta-boxes.php:2458 swift-framework/core/sf-functions.php:3274
 msgid "Pin Button Text"
 msgstr "Teksten til nålens knap"
 
-#: includes/meta-boxes.php:2458
+#: includes/meta-boxes.php:2460
 msgid "Enter the text of the Pin Button."
 msgstr "Indtast teksten til nålens knap."
 
-#: includes/meta-boxes.php:2517 includes/sf-options.php:632
+#: includes/meta-boxes.php:2496 includes/sf-options.php:632
 msgid "Meta Options"
 msgstr "Meta indstillinger"
 
@@ -3709,7 +3755,7 @@ msgid "Press return or enter to expand"
 msgstr ""
 
 #: includes/options/inc/extensions/import_export/extension_import_export.php:120
-#: includes/sf-options.php:3634
+#: includes/sf-options.php:3647
 msgid "Import / Export"
 msgstr "Importer / eksporter"
 
@@ -3834,12 +3880,6 @@ msgstr "Ingen medie valgt"
 msgid "Upload"
 msgstr "Upload"
 
-#: includes/options/inc/fields/border/field_border.php:125
-#: includes/options/inc/fields/spacing/field_spacing.php:191
-#: woocommerce/loop/result-count.php:62
-msgid "All"
-msgstr "Alle"
-
 #: includes/options/inc/fields/border/field_border.php:138
 #: includes/options/inc/fields/spacing/field_spacing.php:215
 #: swift-framework/shortcodes/interface.php:616
@@ -3918,10 +3958,10 @@ msgstr "Ingen elementer af denne type blev fundet."
 
 #: includes/options/inc/fields/slides/field_slides.php:145
 #: includes/options/inc/fields/slides/field_slides.php:200
-#: swift-framework/core/sf-functions.php:3212
-#: swift-framework/core/sf-woocommerce.php:454
-#: swift-framework/core/sf-woocommerce.php:455
-#: swift-framework/core/sf-woocommerce.php:482
+#: swift-framework/core/sf-functions.php:3215
+#: swift-framework/core/sf-woocommerce.php:451
+#: swift-framework/core/sf-woocommerce.php:452
+#: swift-framework/core/sf-woocommerce.php:479
 #: swift-framework/widgets/widget-advertgrid.php:50
 #: swift-framework/widgets/widget-flickr.php:40
 #: swift-framework/widgets/widget-instagram.php:37
@@ -3931,7 +3971,7 @@ msgstr "Titel"
 
 #: includes/options/inc/fields/slides/field_slides.php:149
 #: includes/options/inc/fields/slides/field_slides.php:204
-#: swift-framework/core/sf-functions.php:3217
+#: swift-framework/core/sf-functions.php:3220
 #: swift-framework/sf-megamenu/edit_custom_walker.php:193
 #: woocommerce/cart/cart.php:35 woocommerce/single-product/tabs/tabs.php:26
 msgid "Description"
@@ -4238,12 +4278,12 @@ msgstr ""
 "tilmeld dig vores nyhedsbrev"
 
 #: includes/options/inc/tracking.php:157
-#: woocommerce/myaccount/form-login.php:103
+#: woocommerce/myaccount/form-login.php:101
 msgid "Email address"
 msgstr "Emailadresse"
 
-#: includes/options/inc/tracking.php:157 swift-framework/core/sf-header.php:930
-#: swift-framework/core/sf-header.php:1315
+#: includes/options/inc/tracking.php:157 swift-framework/core/sf-header.php:965
+#: swift-framework/core/sf-header.php:1350
 msgid "Subscribe"
 msgstr "Tilmeld"
 
@@ -4582,9 +4622,9 @@ msgstr "Vis hvorvidt WordPress er i Debug tilstand."
 
 #: includes/options/inc/welcome/views/status_report.php:255
 #: includes/overrides/sf-theme-functions.php:1133
-#: swift-framework/core/sf-header.php:939
-#: swift-framework/core/sf-header.php:1324
-#: swift-framework/core/sf-header.php:1356
+#: swift-framework/core/sf-header.php:974
+#: swift-framework/core/sf-header.php:1359
+#: swift-framework/core/sf-header.php:1391
 msgid "Language"
 msgstr "Sprog"
 
@@ -5113,10 +5153,6 @@ msgstr "Redux Framework status"
 msgid "What's New"
 msgstr "Hvad er nyt"
 
-#: includes/options/inc/welcome/welcome.php:345
-msgid "Extensions"
-msgstr "Udvidelser"
-
 #: includes/options/inc/welcome/welcome.php:348
 msgid "Changelog"
 msgstr "Ændringslog"
@@ -5257,7 +5293,7 @@ msgid "Bounce In Up"
 msgstr "Hop ind (op)"
 
 #: includes/overrides/sf-theme-functions.php:307
-#: swift-framework/core/sf-functions.php:3077
+#: swift-framework/core/sf-functions.php:3080
 msgid "Fade In"
 msgstr "Fade ind"
 
@@ -5294,7 +5330,7 @@ msgid "Fade In Up Big"
 msgstr "Fade ind (op, stor)"
 
 #: includes/overrides/sf-theme-functions.php:316
-#: swift-framework/core/sf-functions.php:3084
+#: swift-framework/core/sf-functions.php:3087
 msgid "Flip"
 msgstr "Roter"
 
@@ -5376,7 +5412,7 @@ msgstr "Skriv for at søge"
 
 #: includes/overrides/sf-theme-functions.php:510
 #: includes/overrides/sf-theme-functions.php:969
-#: swift-framework/core/sf-header.php:542
+#: swift-framework/core/sf-header.php:559
 msgid "Please assign a menu to the Main Menu in Appearance > Menus"
 msgstr "Vælg venligst en menu til hovedmenu under Udseende > Menuer"
 
@@ -5387,41 +5423,42 @@ msgstr "Supersøgning"
 #: includes/overrides/sf-theme-functions.php:1108
 #: includes/overrides/sf-theme-functions.php:1110
 #: includes/overrides/sf-theme-functions.php:1112
-#: swift-framework/core/sf-header.php:234
-#: swift-framework/core/sf-header.php:259
+#: swift-framework/core/sf-header.php:251
+#: swift-framework/core/sf-header.php:276
 msgid "Menu"
 msgstr "Menu"
 
 #: includes/overrides/sf-theme-functions.php:1217
-#: swift-framework/core/sf-header.php:1430
+#: swift-framework/core/sf-header.php:1465
 msgid "Other"
 msgstr "Andre"
 
 #: includes/overrides/sf-theme-functions.php:1283
 #: includes/overrides/sf-theme-functions.php:1285
-#: swift-framework/core/sf-header.php:1526
+#: swift-framework/core/sf-header.php:1561
 #, php-format
 msgid "View all %d results"
 msgstr "Se allle %d resultater"
 
 #: includes/overrides/sf-theme-functions.php:1292
-#: swift-framework/core/sf-header.php:1532
+#: swift-framework/core/sf-header.php:1567
 msgid "No results"
 msgstr "Ingen resultater"
 
 #: includes/overrides/sf-theme-functions.php:1293
-#: swift-framework/core/sf-header.php:1533
+#: swift-framework/core/sf-header.php:1568
 msgid "No search results could be found, please try another query."
 msgstr "Søgningen gav ingen resultater, prøv venligst igen."
 
 #: includes/overrides/sf-theme-functions.php:1448
-#: swift-framework/core/sf-header.php:819
-#: swift-framework/core/sf-header.php:924
-#: swift-framework/core/sf-header.php:1301
-#: swift-framework/core/sf-header.php:1308 woocommerce/checkout/thankyou.php:39
+#: swift-framework/core/sf-header.php:854
+#: swift-framework/core/sf-header.php:959
+#: swift-framework/core/sf-header.php:1336
+#: swift-framework/core/sf-header.php:1343 woocommerce/checkout/thankyou.php:39
 #: woocommerce/myaccount/form-edit-address.php:38
 #: woocommerce/myaccount/my-account.php:38
-#: woocommerce/order/order-details.php:34 woocommerce/wishlist.php:89
+#: woocommerce/myaccount/my-account2.php:38
+#: woocommerce/order/order-details.php:34 woocommerce/wishlist-view.php:89
 msgid "My Account"
 msgstr "Min konto"
 
@@ -5430,15 +5467,15 @@ msgid "Logout"
 msgstr "Log ud"
 
 #: includes/overrides/sf-theme-functions.php:1451
-#: swift-framework/core/sf-header.php:822
-#: swift-framework/core/sf-header.php:926
-#: swift-framework/core/sf-header.php:1311
-#: woocommerce/myaccount/form-login.php:60
+#: swift-framework/core/sf-header.php:857
+#: swift-framework/core/sf-header.php:961
+#: swift-framework/core/sf-header.php:1346
+#: woocommerce/myaccount/form-login.php:61
 msgid "Login"
 msgstr "Log ind"
 
 #: includes/overrides/sf-theme-functions.php:1452
-#: swift-framework/core/sf-header.php:1312
+#: swift-framework/core/sf-header.php:1347
 msgid "Sign Up"
 msgstr "Tilmeld"
 
@@ -5447,14 +5484,14 @@ msgid "No Comments"
 msgstr "Ingen kommentar"
 
 #: includes/overrides/sf-theme-functions.php:1488
-#: swift-framework/core/sf-functions.php:1533
+#: swift-framework/core/sf-functions.php:1536
 msgid " Comments"
 msgstr " kommentar"
 
 #: includes/overrides/sf-theme-functions.php:1490
 #: swift-framework/content/sf-campaign-detail.php:221
-#: swift-framework/content/sf-post-detail.php:457
-#: swift-framework/core/sf-functions.php:1535
+#: swift-framework/content/sf-post-detail.php:465
+#: swift-framework/core/sf-functions.php:1538
 msgid "1 Comment"
 msgstr "1 kommentar"
 
@@ -5512,17 +5549,17 @@ msgid "Tags"
 msgstr "Tags"
 
 #: includes/overrides/sf-theme-functions.php:1978
-#: swift-framework/core/sf-page-heading.php:494
+#: swift-framework/core/sf-page-heading.php:493
 msgid "Newer"
 msgstr "Nyerer"
 
 #: includes/overrides/sf-theme-functions.php:1988
-#: swift-framework/core/sf-page-heading.php:459
+#: swift-framework/core/sf-page-heading.php:458
 msgid "View all posts"
 msgstr "Se alle posts"
 
 #: includes/overrides/sf-theme-functions.php:2002
-#: swift-framework/core/sf-page-heading.php:480
+#: swift-framework/core/sf-page-heading.php:479
 msgid "Older"
 msgstr "Ændre"
 
@@ -6146,8 +6183,8 @@ msgstr "Dette <a href=\"%1$s\">child theme</a> kræver dets forældretema, %2$s.
 msgid "http://codex.wordpress.org/Child_Themes"
 msgstr "http://codex.wordpress.org/Child_Themes"
 
-#: includes/sf-options.php:212 swift-framework/core/sf-header.php:859
-#: swift-framework/core/sf-header.php:861
+#: includes/sf-options.php:212 swift-framework/core/sf-header.php:894
+#: swift-framework/core/sf-header.php:896
 msgid "Welcome"
 msgstr "Velkommen"
 
@@ -7864,7 +7901,7 @@ msgid ""
 msgstr ""
 "Antallet af produkter du ønsker vises pr siden på butik- / kategorisiden."
 
-#: includes/sf-options.php:2810 swift-framework/sf-megamenu/sf-megamenu.php:148
+#: includes/sf-options.php:2810 swift-framework/sf-megamenu/sf-megamenu.php:175
 msgid "New Badge"
 msgstr "Nyt mærke"
 
@@ -7904,16 +7941,16 @@ msgid "Disable Help Bar"
 msgstr "Deaktiver hjælpelinje"
 
 #: includes/sf-options.php:2841
-msgid "Disable the help bar on account / checkout pages."
-msgstr "Deaktivere hjælpelinjen på konto- / betalingssiden"
+msgid "Disable the help bar on checkout pages."
+msgstr ""
 
 #: includes/sf-options.php:2849
 msgid "Help Bar Text"
 msgstr "Hjælpelinjens tekst"
 
 #: includes/sf-options.php:2850
-msgid "This text appears in the help bar on account / checkout pages."
-msgstr "Denne tekst er synlig i hjælpebaren på konto- / betalingssider."
+msgid "This text appears in the help bar on checkout pages."
+msgstr ""
 
 #: includes/sf-options.php:2857
 msgid "Modal Link 1 Title"
@@ -8339,111 +8376,115 @@ msgstr "Mersalgs overskrift"
 msgid "Related Heading Text"
 msgstr "Relaterede overskrift"
 
-#: includes/sf-options.php:3409
+#: includes/sf-options.php:3405
+msgid "Related Product Display Type"
+msgstr ""
+
+#: includes/sf-options.php:3422
 msgid "Default Product Sidebar Config"
 msgstr "Standard produktsidebar konfiguration"
 
-#: includes/sf-options.php:3423
+#: includes/sf-options.php:3436
 msgid "Default Product Left Sidebar"
 msgstr "Standard produktsidebar (venstre)"
 
-#: includes/sf-options.php:3432
+#: includes/sf-options.php:3445
 msgid "Default Product Right Sidebar"
 msgstr "Standard produktsidebar (højre)"
 
-#: includes/sf-options.php:3447
+#: includes/sf-options.php:3460
 msgid "Social Profiles"
 msgstr "Social profiler"
 
-#: includes/sf-options.php:3477
+#: includes/sf-options.php:3490
 msgid "Vimeo"
 msgstr "Vimeo"
 
-#: includes/sf-options.php:3485
+#: includes/sf-options.php:3498
 msgid "Tumblr"
 msgstr "Tumblr"
 
-#: includes/sf-options.php:3517
+#: includes/sf-options.php:3530
 msgid "Flickr"
 msgstr "Flickr"
 
-#: includes/sf-options.php:3525
+#: includes/sf-options.php:3538
 msgid "YouTube"
 msgstr "YouTube"
 
-#: includes/sf-options.php:3533
+#: includes/sf-options.php:3546
 msgid "Pinterest"
 msgstr "Pinterest"
 
-#: includes/sf-options.php:3541
+#: includes/sf-options.php:3554
 msgid "Foursquare"
 msgstr "Foursquare"
 
-#: includes/sf-options.php:3557
+#: includes/sf-options.php:3570
 msgid "GitHub"
 msgstr "GitHub"
 
-#: includes/sf-options.php:3565
+#: includes/sf-options.php:3578
 msgid "Xing"
 msgstr "Xing"
 
-#: includes/sf-options.php:3573
+#: includes/sf-options.php:3586
 msgid "Behance"
 msgstr "Behance"
 
-#: includes/sf-options.php:3581
+#: includes/sf-options.php:3594
 msgid "Deviantart"
 msgstr "Deviantart"
 
-#: includes/sf-options.php:3589
+#: includes/sf-options.php:3602
 msgid "SoundCloud"
 msgstr "SoundCloud"
 
-#: includes/sf-options.php:3597
+#: includes/sf-options.php:3610
 msgid "Yelp"
 msgstr "Yelp"
 
-#: includes/sf-options.php:3605
+#: includes/sf-options.php:3618
 msgid "VK"
 msgstr ""
 
-#: includes/sf-options.php:3613
+#: includes/sf-options.php:3626
 msgid "Twitch"
 msgstr ""
 
-#: includes/sf-options.php:3621
+#: includes/sf-options.php:3634
 msgid "RSS Feed"
 msgstr "RSS Feed"
 
-#: includes/sf-options.php:3635
+#: includes/sf-options.php:3648
 msgid "Import and Export your Redux Framework settings from file, text or URL."
 msgstr ""
 "Importer eller eksporter dine Redux Framework indstillinger fra en fil, "
 "tekst eller URL."
 
-#: includes/sf-options.php:3649
+#: includes/sf-options.php:3662
 msgid "<strong>Theme URL:</strong> "
 msgstr "<strong>Tema URL:</strong> "
 
-#: includes/sf-options.php:3650
+#: includes/sf-options.php:3663
 msgid "<strong>Author:</strong> "
 msgstr "<strong>Forfatter:</strong> "
 
-#: includes/sf-options.php:3651
+#: includes/sf-options.php:3664
 msgid "<strong>Version:</strong> "
 msgstr "<strong>Version:</strong> "
 
-#: includes/sf-options.php:3655
+#: includes/sf-options.php:3668
 msgid "<strong>Tags:</strong> "
 msgstr "<strong>Tags:</strong> "
 
-#: includes/sf-options.php:3717 includes/sf-options.php:3721
-#: includes/sf-options.php:3722
+#: includes/sf-options.php:3730 includes/sf-options.php:3734
+#: includes/sf-options.php:3735
 msgid "Theme Options"
 msgstr "Tema indstillinger"
 
 #: swift-framework/content/sf-blog.php:320
-#: swift-framework/content/sf-portfolio.php:329
+#: swift-framework/content/sf-portfolio.php:331
 #: swift-framework/layout/archive.php:89 swift-framework/layout/search.php:99
 msgid "Load More"
 msgstr "Indlæs flere"
@@ -8463,8 +8504,8 @@ msgstr "RSS"
 #: swift-framework/content/sf-campaign-detail.php:29
 #: swift-framework/content/sf-campaign-detail.php:167
 #: swift-framework/content/sf-portfolio-detail.php:248
-#: swift-framework/content/sf-post-detail.php:392
-#: swift-framework/core/sf-woocommerce.php:999
+#: swift-framework/content/sf-post-detail.php:400
+#: swift-framework/core/sf-woocommerce.php:996
 #: swift-framework/layout/single-gallery.php:23
 msgid "Share this"
 msgstr "Del dette"
@@ -8517,7 +8558,7 @@ msgid "Funding Ends"
 msgstr "Finansieringen slutter"
 
 #: swift-framework/content/sf-campaign-detail.php:80
-#: swift-framework/core/sf-functions.php:3229
+#: swift-framework/core/sf-functions.php:3232
 #: swift-framework/layout/single-directory.php:91
 msgid "Location"
 msgstr "Lokation"
@@ -8550,18 +8591,18 @@ msgid "Contact Author"
 msgstr "Skriv til forfatteren"
 
 #: swift-framework/content/sf-campaign-detail.php:211
-#: swift-framework/content/sf-post-detail.php:447
+#: swift-framework/content/sf-post-detail.php:455
 msgid "Categories:"
 msgstr "Kategorier:"
 
 #: swift-framework/content/sf-campaign-detail.php:221
-#: swift-framework/content/sf-post-detail.php:457
-#: swift-framework/core/sf-functions.php:1531
+#: swift-framework/content/sf-post-detail.php:465
+#: swift-framework/core/sf-functions.php:1534
 msgid "0 Comments"
 msgstr "0 kommentar"
 
 #: swift-framework/content/sf-campaign-detail.php:221
-#: swift-framework/content/sf-post-detail.php:457
+#: swift-framework/content/sf-post-detail.php:465
 msgid "% Comments"
 msgstr "% kommentar"
 
@@ -8571,8 +8612,8 @@ msgstr "Næste projekt"
 
 #: swift-framework/content/sf-campaign-detail.php:271
 #: swift-framework/content/sf-campaign-detail.php:289
-#: swift-framework/content/sf-post-detail.php:528
-#: swift-framework/content/sf-post-detail.php:555
+#: swift-framework/content/sf-post-detail.php:536
+#: swift-framework/content/sf-post-detail.php:563
 #: swift-framework/content/sf-post-formats.php:777
 #: swift-framework/content/sf-post-formats.php:917
 #: swift-framework/content/sf-post-formats.php:1043
@@ -8601,8 +8642,8 @@ msgid "Anonymous"
 msgstr "Annonym"
 
 #: swift-framework/content/sf-galleries.php:248
-#: swift-framework/content/sf-portfolio.php:376
-#: swift-framework/core/sf-functions.php:1735
+#: swift-framework/content/sf-portfolio.php:378
+#: swift-framework/core/sf-functions.php:1738
 msgid "Show all"
 msgstr "Vis alle"
 
@@ -8652,26 +8693,26 @@ msgstr ""
 "<span class=\"vcard author\">Af <span itemprop=\"author\" class=\"fn\">%1$s</"
 "span></span> i %2$s"
 
-#: swift-framework/content/sf-post-detail.php:270
+#: swift-framework/content/sf-post-detail.php:278
 #: swift-framework/content/sf-post-formats.php:376
 #: swift-framework/content/sf-post-formats.php:1211
 msgid "Download"
 msgstr "Download"
 
-#: swift-framework/content/sf-post-detail.php:335
+#: swift-framework/content/sf-post-detail.php:343
 msgid "Review"
 msgstr "Anmeldelse"
 
-#: swift-framework/content/sf-post-detail.php:372
+#: swift-framework/content/sf-post-detail.php:380
 msgid "Overall"
 msgstr "Samlet"
 
-#: swift-framework/content/sf-post-detail.php:518
+#: swift-framework/content/sf-post-detail.php:526
 msgid "Next Article"
 msgstr "Næste artikel"
 
-#: swift-framework/content/sf-post-detail.php:525
-#: swift-framework/content/sf-post-detail.php:552
+#: swift-framework/content/sf-post-detail.php:533
+#: swift-framework/content/sf-post-detail.php:560
 #: swift-framework/content/sf-post-formats.php:775
 #: swift-framework/content/sf-post-formats.php:915
 #: swift-framework/content/sf-post-formats.php:1041
@@ -8679,8 +8720,8 @@ msgstr "Næste artikel"
 msgid "In %1$s on <time datetime=\"%2$s\">%3$s</time>"
 msgstr "I %1$s <time datetime=\"%2$s\">%3$s</time>"
 
-#: swift-framework/content/sf-post-detail.php:531
-#: swift-framework/content/sf-post-detail.php:558
+#: swift-framework/content/sf-post-detail.php:539
+#: swift-framework/content/sf-post-detail.php:566
 #: swift-framework/content/sf-post-formats.php:779
 #: swift-framework/content/sf-post-formats.php:919
 #: swift-framework/content/sf-post-formats.php:943
@@ -8694,11 +8735,11 @@ msgstr ""
 "<span class=\"author\">Af <a href=\"%2$s\" rel=\"author\" itemprop=\"author"
 "\">%1$s</a></span> i %3$s"
 
-#: swift-framework/content/sf-post-detail.php:545
+#: swift-framework/content/sf-post-detail.php:553
 msgid "Previous Article"
 msgstr "Forrige artikel"
 
-#: swift-framework/content/sf-post-detail.php:624
+#: swift-framework/content/sf-post-detail.php:635
 msgid "Related Articles"
 msgstr "Relaterede artikler"
 
@@ -8771,24 +8812,23 @@ msgid "Pledged"
 msgstr "Sikkerhed"
 
 #: swift-framework/content/sf-products.php:67
-#: swift-framework/content/sf-products.php:456
+#: swift-framework/content/sf-products.php:461
 msgid "You haven't viewed any products yet."
 msgstr "Du har ikke anmeldt nogle produkter endnu."
 
 #: swift-framework/content/sf-products.php:185
-#: swift-framework/core/sf-woocommerce.php:530
+#: swift-framework/core/sf-woocommerce.php:527
 #, php-format
 msgid "Rated %s out of 5"
 msgstr "bedømt %s ud af 5"
 
 #: swift-framework/content/sf-products.php:185
-#: woocommerce/single-product/review.php:28
 msgid "out of 5"
 msgstr "ud af 5"
 
 #: swift-framework/core/sf-comments.php:39
-#: swift-framework/core/sf-functions.php:821
-#: swift-framework/core/sf-functions.php:993
+#: swift-framework/core/sf-functions.php:824
+#: swift-framework/core/sf-functions.php:996
 #: swift-framework/widgets/widget-comments.php:66
 msgid "ago"
 msgstr "siden"
@@ -8869,7 +8909,7 @@ msgid "Quickview"
 msgstr "Hurtigvisning"
 
 #: swift-framework/core/sf-footer.php:509
-#: woocommerce/myaccount/form-login.php:44
+#: woocommerce/myaccount/form-login.php:48
 msgid "Username or email address"
 msgstr "Brugernavn eller emailadresse"
 
@@ -8948,211 +8988,215 @@ msgstr "Du er allerede vild med dette."
 msgid "Sorry, there was a problem processing your request."
 msgstr "Der var desværre en fejl i behandlingen af din anmodning."
 
-#: swift-framework/core/sf-functions.php:888
+#: swift-framework/core/sf-functions.php:891
 msgid "Please provide your Twitter username"
 msgstr "Indtast venligst dit Twitter brugernavn"
 
-#: swift-framework/core/sf-functions.php:1374
+#: swift-framework/core/sf-functions.php:1377
 #, php-format
 msgid "Page %s"
 msgstr "Side %s"
 
-#: swift-framework/core/sf-functions.php:1420
+#: swift-framework/core/sf-functions.php:1423
 msgid "We are currently in maintenance mode, please check back shortly."
 msgstr ""
 "Vi er på nuværende tidspunkt i gang med vedligeholdelse, kom tilbage senere."
 
-#: swift-framework/core/sf-functions.php:1677
+#: swift-framework/core/sf-functions.php:1680
 msgid "Product Category"
 msgstr "Produktkategori"
 
-#: swift-framework/core/sf-functions.php:1678
+#: swift-framework/core/sf-functions.php:1681
 msgid "Price"
 msgstr "Pris"
 
-#: swift-framework/core/sf-functions.php:1994
-#: woocommerce/myaccount/form-login.php:121
+#: swift-framework/core/sf-functions.php:1997
+#: woocommerce/myaccount/form-login.php:115
 msgid "Anti-spam"
 msgstr "Anti-spam"
 
-#: swift-framework/core/sf-functions.php:3078
+#: swift-framework/core/sf-functions.php:3081
 msgid "Fade from Left"
 msgstr "Fade fra venstre"
 
-#: swift-framework/core/sf-functions.php:3079
+#: swift-framework/core/sf-functions.php:3082
 msgid "Fade from Right"
 msgstr "Fade fra højre"
 
-#: swift-framework/core/sf-functions.php:3080
+#: swift-framework/core/sf-functions.php:3083
 msgid "Fade from Bottom"
 msgstr "Fade fra bunden"
 
-#: swift-framework/core/sf-functions.php:3081
+#: swift-framework/core/sf-functions.php:3084
 #: swift-framework/sf-megamenu/edit_custom_walker.php:110
 msgid "Move up"
 msgstr "Flyt op"
 
-#: swift-framework/core/sf-functions.php:3082
+#: swift-framework/core/sf-functions.php:3085
 msgid "Grow"
 msgstr "Gro"
 
-#: swift-framework/core/sf-functions.php:3083
+#: swift-framework/core/sf-functions.php:3086
 msgid "Helix"
 msgstr "Helix"
 
-#: swift-framework/core/sf-functions.php:3085
+#: swift-framework/core/sf-functions.php:3088
 msgid "Pop up"
 msgstr "Pop up"
 
-#: swift-framework/core/sf-functions.php:3086
+#: swift-framework/core/sf-functions.php:3089
 msgid "Spin"
 msgstr "Spin"
 
-#: swift-framework/core/sf-functions.php:3087
+#: swift-framework/core/sf-functions.php:3090
 msgid "Flip-X"
 msgstr "Flip-X"
 
-#: swift-framework/core/sf-functions.php:3088
+#: swift-framework/core/sf-functions.php:3091
 msgid "Flip-Y"
 msgstr "Flip-Y"
 
-#: swift-framework/core/sf-functions.php:3169
+#: swift-framework/core/sf-functions.php:3172
 msgid "There is a new directory entry pending review, you can view it here:"
 msgstr ""
 "Der er kommet en ny indmeldelse til oversigten der mangler gennemgang. Du "
 "kan se den her:"
 
-#: swift-framework/core/sf-functions.php:3171
+#: swift-framework/core/sf-functions.php:3174
 #, php-format
 msgid "[%s] New directory entry pending review."
 msgstr "[%s] Ny indmeldelse til oversigten afventer gennemgang."
 
-#: swift-framework/core/sf-functions.php:3174
+#: swift-framework/core/sf-functions.php:3177
 msgid "Thank you for your submission, your entry is pending review."
 msgstr "Tak for din indsendelse, din indmeldelse afventer behandling."
 
-#: swift-framework/core/sf-functions.php:3180
+#: swift-framework/core/sf-functions.php:3183
 msgid "Choose a Category"
 msgstr "Vælg en kategori"
 
-#: swift-framework/core/sf-functions.php:3181
+#: swift-framework/core/sf-functions.php:3184
 msgid "Choose a Location"
 msgstr "Vælg en lokation"
 
-#: swift-framework/core/sf-functions.php:3208
+#: swift-framework/core/sf-functions.php:3211
 msgid "Please fill all the fields"
 msgstr "Udfyldt venligst alle felterne"
 
-#: swift-framework/core/sf-functions.php:3223
+#: swift-framework/core/sf-functions.php:3226
 #: swift-framework/widgets/widget-portfolio-grid.php:147
 #: swift-framework/widgets/widget-portfolio.php:149
 #: swift-framework/widgets/widget-posts.php:175
 msgid "Category"
 msgstr "Kategori"
 
-#: swift-framework/core/sf-functions.php:3255
+#: swift-framework/core/sf-functions.php:3258
 msgid "Pin Image"
 msgstr "Pin billede"
 
-#: swift-framework/core/sf-functions.php:3260
+#: swift-framework/core/sf-functions.php:3263
 msgid "Featured Image"
 msgstr "Fremhævet billede"
 
-#: swift-framework/core/sf-functions.php:3279
+#: swift-framework/core/sf-functions.php:3282
 msgid "Create"
 msgstr "Opret"
 
-#: swift-framework/core/sf-header.php:497
+#: swift-framework/core/sf-header.php:514
 msgid "Please assign a menu to the Top Bar Menu in Appearance > Menus"
 msgstr "Vælg venligst en menu til topbaren under Udseende > Menuer"
 
-#: swift-framework/core/sf-header.php:748
+#: swift-framework/core/sf-header.php:783
 msgid "Enter text to search"
 msgstr "Skriv for at søge"
 
-#: swift-framework/core/sf-header.php:820
-#: swift-framework/core/sf-header.php:923
-#: swift-framework/core/sf-header.php:1309
+#: swift-framework/core/sf-header.php:855
+#: swift-framework/core/sf-header.php:958
+#: swift-framework/core/sf-header.php:1344
 msgid "Sign Out"
 msgstr "Log ud"
 
-#: swift-framework/core/sf-header.php:1012
-#: swift-framework/core/sf-woocommerce.php:583
+#: swift-framework/core/sf-header.php:1047
+#: swift-framework/core/sf-header.php:1060
+#: swift-framework/core/sf-header.php:1062
+#: swift-framework/core/sf-woocommerce.php:580
+#: swift-framework/core/sf-woocommerce.php:604
+#: swift-framework/core/sf-woocommerce.php:609
 msgid "Cart"
 msgstr "Kurv"
 
-#: swift-framework/core/sf-header.php:1025
-#: swift-framework/core/sf-header.php:1027
-#: swift-framework/core/sf-woocommerce.php:606
-#: swift-framework/core/sf-woocommerce.php:612
+#: swift-framework/core/sf-header.php:1060
+#: swift-framework/core/sf-header.php:1062
+#: swift-framework/core/sf-woocommerce.php:603
+#: swift-framework/core/sf-woocommerce.php:609
 msgid "View your shopping cart"
 msgstr "Se din kurv"
 
-#: swift-framework/core/sf-header.php:1038
-#: swift-framework/core/sf-woocommerce.php:626
+#: swift-framework/core/sf-header.php:1073
+#: swift-framework/core/sf-woocommerce.php:623
 msgid "in the cart"
 msgstr "i kurven"
 
-#: swift-framework/core/sf-header.php:1054
-#: swift-framework/core/sf-woocommerce.php:659
+#: swift-framework/core/sf-header.php:1089
+#: swift-framework/core/sf-woocommerce.php:656
 msgid "Unit Price:"
 msgstr "Pris:"
 
-#: swift-framework/core/sf-header.php:1056
-#: swift-framework/core/sf-woocommerce.php:661
+#: swift-framework/core/sf-header.php:1091
+#: swift-framework/core/sf-woocommerce.php:658
 msgid "Quantity:"
 msgstr "Antal:"
 
-#: swift-framework/core/sf-header.php:1058
-#: swift-framework/core/sf-woocommerce.php:664 woocommerce/cart/cart.php:111
+#: swift-framework/core/sf-header.php:1093
+#: swift-framework/core/sf-woocommerce.php:661 woocommerce/cart/cart.php:111
 msgid "Remove this item"
 msgstr "Fjern dette"
 
-#: swift-framework/core/sf-header.php:1070
-#: swift-framework/core/sf-woocommerce.php:678
+#: swift-framework/core/sf-header.php:1105
+#: swift-framework/core/sf-woocommerce.php:675
 msgid "Total incl. tax"
 msgstr "Total inkl. moms"
 
-#: swift-framework/core/sf-header.php:1072
-#: swift-framework/core/sf-woocommerce.php:680
+#: swift-framework/core/sf-header.php:1107
+#: swift-framework/core/sf-woocommerce.php:677
 #: woocommerce/cart/cart-totals.php:69 woocommerce/order/order-details.php:48
 msgid "Total"
 msgstr "Total"
 
-#: swift-framework/core/sf-header.php:1081
-#: swift-framework/core/sf-woocommerce.php:691
+#: swift-framework/core/sf-header.php:1116
+#: swift-framework/core/sf-woocommerce.php:688
 msgid "View cart"
 msgstr "Se kurv"
 
-#: swift-framework/core/sf-header.php:1083
-#: swift-framework/core/sf-woocommerce.php:696
+#: swift-framework/core/sf-header.php:1118
+#: swift-framework/core/sf-woocommerce.php:693
 msgid "Checkout"
 msgstr ""
 
-#: swift-framework/core/sf-header.php:1089
-#: swift-framework/core/sf-woocommerce.php:619
-#: swift-framework/core/sf-woocommerce.php:703
+#: swift-framework/core/sf-header.php:1124
+#: swift-framework/core/sf-woocommerce.php:616
+#: swift-framework/core/sf-woocommerce.php:700
 msgid "Your cart is empty."
 msgstr "Din kurv er tom"
 
-#: swift-framework/core/sf-header.php:1138
-#: swift-framework/core/sf-header.php:1140
+#: swift-framework/core/sf-header.php:1173
+#: swift-framework/core/sf-header.php:1175
 msgid "View your wishlist"
 msgstr "Se din ønskeliste"
 
-#: swift-framework/core/sf-header.php:1138
+#: swift-framework/core/sf-header.php:1173
 msgid "Wishlist"
 msgstr "Ønskeliste"
 
-#: swift-framework/core/sf-header.php:1215
+#: swift-framework/core/sf-header.php:1250
 msgid "Your wishlist is empty."
 msgstr "Din ønskeliste er tom"
 
-#: swift-framework/core/sf-header.php:1225
+#: swift-framework/core/sf-header.php:1260
 msgid "View Wishlist"
 msgstr "Se ønskeliste"
 
-#: swift-framework/core/sf-header.php:1599
+#: swift-framework/core/sf-header.php:1634
 msgid ""
 "Please select a page for the Contact Slideout in Theme Options > Header "
 "Options"
@@ -9160,7 +9204,7 @@ msgstr ""
 "Vælg venligst en side, som skal bruge til kontakt slideout. Dette kan gøres "
 "under Temaindstillinger > Header indstillinger"
 
-#: swift-framework/core/sf-media.php:99
+#: swift-framework/core/sf-media.php:98
 msgid "Video not found"
 msgstr "Videoen blev ikke fundet"
 
@@ -9214,29 +9258,29 @@ msgstr "<h1>%1$s result på <span>%2$s</span></h1>"
 msgid "<h1>%1$s results for <span>%2$s</span></h1>"
 msgstr "<h1>%1$s resulter på <span>%2$s</span></h1>"
 
-#: swift-framework/core/sf-page-heading.php:366
+#: swift-framework/core/sf-page-heading.php:365
 msgid "Posts tagged with"
 msgstr "Indlægget er tagget med"
 
-#: swift-framework/core/sf-page-heading.php:370
-#: swift-framework/core/sf-page-heading.php:373
-#: swift-framework/core/sf-page-heading.php:376
+#: swift-framework/core/sf-page-heading.php:369
+#: swift-framework/core/sf-page-heading.php:372
+#: swift-framework/core/sf-page-heading.php:375
 msgid "Archive for"
 msgstr "Arkiv til"
 
-#: swift-framework/core/sf-page-heading.php:381
+#: swift-framework/core/sf-page-heading.php:380
 msgid "Projects by"
 msgstr "Projekter af"
 
-#: swift-framework/core/sf-page-heading.php:383
+#: swift-framework/core/sf-page-heading.php:382
 msgid "Author archive for"
 msgstr "Forfatter arkiv til "
 
-#: swift-framework/core/sf-page-heading.php:387
+#: swift-framework/core/sf-page-heading.php:386
 msgid "Blog Archives"
 msgstr "Blog arkiver"
 
-#: swift-framework/core/sf-page-heading.php:394
+#: swift-framework/core/sf-page-heading.php:393
 msgid "404"
 msgstr "404"
 
@@ -9260,182 +9304,183 @@ msgstr "<i class='ss-navigateleft'></i> Forrige"
 msgid "Any"
 msgstr "Hvilken som helst"
 
-#: swift-framework/core/sf-woocommerce.php:183
+#: swift-framework/core/sf-woocommerce.php:180
 msgctxt "breadcrumb"
 msgid "Home"
 msgstr "Forside"
 
-#: swift-framework/core/sf-woocommerce.php:239
+#: swift-framework/core/sf-woocommerce.php:236
 #: woocommerce/loop/add-to-cart.php:17
 msgid "Sold out"
 msgstr "Udsolgt"
 
-#: swift-framework/core/sf-woocommerce.php:243
+#: swift-framework/core/sf-woocommerce.php:240
 msgid "Sale"
 msgstr ""
 
-#: swift-framework/core/sf-woocommerce.php:248
+#: swift-framework/core/sf-woocommerce.php:245
 msgid "New"
 msgstr "Nyhed"
 
-#: swift-framework/core/sf-woocommerce.php:251 woocommerce/wishlist.php:167
+#: swift-framework/core/sf-woocommerce.php:248
+#: woocommerce/wishlist-view.php:167
 msgid "Free"
 msgstr "Gratis"
 
-#: swift-framework/core/sf-woocommerce.php:266
-#: swift-framework/core/sf-woocommerce.php:340
+#: swift-framework/core/sf-woocommerce.php:263
+#: swift-framework/core/sf-woocommerce.php:337
 msgid "Hero Image"
 msgstr "Hero billede"
 
-#: swift-framework/core/sf-woocommerce.php:270
-#: swift-framework/core/sf-woocommerce.php:345
+#: swift-framework/core/sf-woocommerce.php:267
+#: swift-framework/core/sf-woocommerce.php:342
 msgid "Upload/Add image"
 msgstr "Upload/Tilføj billede"
 
-#: swift-framework/core/sf-woocommerce.php:271
-#: swift-framework/core/sf-woocommerce.php:346
+#: swift-framework/core/sf-woocommerce.php:268
+#: swift-framework/core/sf-woocommerce.php:343
 msgid "Remove image"
 msgstr "Fjern billede"
 
-#: swift-framework/core/sf-woocommerce.php:272
-#: swift-framework/core/sf-woocommerce.php:347
+#: swift-framework/core/sf-woocommerce.php:269
+#: swift-framework/core/sf-woocommerce.php:344
 msgid "This image is used for the hero image on product category pages."
 msgstr "Dette billede bliver brugt som Hero billede på produktkategori sider."
 
-#: swift-framework/core/sf-woocommerce.php:295
-#: swift-framework/core/sf-woocommerce.php:366
+#: swift-framework/core/sf-woocommerce.php:292
+#: swift-framework/core/sf-woocommerce.php:363
 msgid "Choose an image"
 msgstr "Vælg et billede"
 
-#: swift-framework/core/sf-woocommerce.php:297
-#: swift-framework/core/sf-woocommerce.php:368
+#: swift-framework/core/sf-woocommerce.php:294
+#: swift-framework/core/sf-woocommerce.php:365
 msgid "Use image"
 msgstr "Brug billede"
 
-#: swift-framework/core/sf-woocommerce.php:473
+#: swift-framework/core/sf-woocommerce.php:470
 msgid "Comment Metadata"
 msgstr "Kommenter metadata"
 
-#: swift-framework/core/sf-woocommerce.php:556
+#: swift-framework/core/sf-woocommerce.php:553
 msgid "% items"
 msgstr "% produkter"
 
-#: swift-framework/core/sf-woocommerce.php:558
+#: swift-framework/core/sf-woocommerce.php:555
 msgid "0 items"
 msgstr "0 produkter"
 
-#: swift-framework/core/sf-woocommerce.php:560
+#: swift-framework/core/sf-woocommerce.php:557
 msgid "1 item"
 msgstr "1 produkt"
 
-#: swift-framework/core/sf-woocommerce.php:619
+#: swift-framework/core/sf-woocommerce.php:616
 msgid "item in the cart"
 msgstr "produkt i kurven"
 
-#: swift-framework/core/sf-woocommerce.php:619
+#: swift-framework/core/sf-woocommerce.php:616
 msgid "items in the cart"
 msgstr "produkter i kurven"
 
-#: swift-framework/core/sf-woocommerce.php:733
+#: swift-framework/core/sf-woocommerce.php:730
 msgid "Add to wishlist"
 msgstr "Tilføj til ønskeliste"
 
-#: swift-framework/core/sf-woocommerce.php:755
+#: swift-framework/core/sf-woocommerce.php:752
 msgid "View wishlist"
 msgstr "Se ønskeliste"
 
-#: swift-framework/core/sf-woocommerce.php:770
+#: swift-framework/core/sf-woocommerce.php:767
 msgid "Product added to wishlist."
 msgstr "Produktet blev tilføjet til ønskelisten."
 
-#: swift-framework/core/sf-woocommerce.php:831
+#: swift-framework/core/sf-woocommerce.php:828
 msgid "Standard Layout"
 msgstr "Standard layout"
 
-#: swift-framework/core/sf-woocommerce.php:832
-#: swift-framework/core/sf-woocommerce.php:859
+#: swift-framework/core/sf-woocommerce.php:829
+#: swift-framework/core/sf-woocommerce.php:856
 msgid "List Layout"
 msgstr "Liste layout"
 
-#: swift-framework/core/sf-woocommerce.php:833
-#: swift-framework/core/sf-woocommerce.php:860
+#: swift-framework/core/sf-woocommerce.php:830
+#: swift-framework/core/sf-woocommerce.php:857
 msgid "Grid Layout"
 msgstr "Gitter layout"
 
-#: swift-framework/core/sf-woocommerce.php:858
+#: swift-framework/core/sf-woocommerce.php:855
 msgid "Solo Layout"
 msgstr "Enkelt layout"
 
-#: swift-framework/core/sf-woocommerce.php:872
+#: swift-framework/core/sf-woocommerce.php:869
 msgid "1 product"
 msgstr "1 produkt"
 
-#: swift-framework/core/sf-woocommerce.php:874
+#: swift-framework/core/sf-woocommerce.php:871
 #, php-format
 msgid "%d products"
 msgstr "%d produkter"
 
-#: swift-framework/core/sf-woocommerce.php:876
+#: swift-framework/core/sf-woocommerce.php:873
 #, php-format
 msgid "%1$d-%2$d of %3$d products"
 msgstr "%1$d-%2$d af %3$d produkter"
 
-#: swift-framework/core/sf-woocommerce.php:893
+#: swift-framework/core/sf-woocommerce.php:890
 msgid "Filters"
 msgstr "Filtre"
 
-#: swift-framework/core/sf-woocommerce.php:910
+#: swift-framework/core/sf-woocommerce.php:907
 msgid ""
 "Please add widgets to the WooCommerce Filters widget area in Appearance > "
 "Widgets"
 msgstr ""
 
-#: swift-framework/core/sf-woocommerce.php:1028
+#: swift-framework/core/sf-woocommerce.php:1025
 msgid "Need Help?"
 msgstr "Har du brug for hjælp?"
 
-#: swift-framework/core/sf-woocommerce.php:1030
-#: swift-framework/core/sf-woocommerce.php:1040
+#: swift-framework/core/sf-woocommerce.php:1027
+#: swift-framework/core/sf-woocommerce.php:1037
 msgid "Contact Us"
 msgstr "Kontakt os"
 
-#: swift-framework/core/sf-woocommerce.php:1032
-#: swift-framework/core/sf-woocommerce.php:1055
+#: swift-framework/core/sf-woocommerce.php:1029
+#: swift-framework/core/sf-woocommerce.php:1052
 msgid "Leave Feedback"
 msgstr "Efterlad feedback"
 
-#: swift-framework/core/sf-woocommerce.php:1090
-#: swift-framework/core/sf-woocommerce.php:1114
+#: swift-framework/core/sf-woocommerce.php:1087
+#: swift-framework/core/sf-woocommerce.php:1111
 msgid "Email customer care"
 msgstr "Email til kundeservice"
 
-#: swift-framework/core/sf-woocommerce.php:1094
-#: swift-framework/core/sf-woocommerce.php:1131
+#: swift-framework/core/sf-woocommerce.php:1091
+#: swift-framework/core/sf-woocommerce.php:1128
 msgid "Shipping information"
 msgstr "Forsendelsesinformation"
 
-#: swift-framework/core/sf-woocommerce.php:1098
-#: swift-framework/core/sf-woocommerce.php:1148
+#: swift-framework/core/sf-woocommerce.php:1095
+#: swift-framework/core/sf-woocommerce.php:1145
 msgid "Returns & exchange"
 msgstr "Retunering & ombytning"
 
-#: swift-framework/core/sf-woocommerce.php:1102
-#: swift-framework/core/sf-woocommerce.php:1165
+#: swift-framework/core/sf-woocommerce.php:1099
+#: swift-framework/core/sf-woocommerce.php:1162
 msgid "F.A.Q.'s"
 msgstr "F.A.Q."
 
-#: swift-framework/core/sf-woocommerce.php:1228
+#: swift-framework/core/sf-woocommerce.php:1225
 msgid "Shipping Calculator"
 msgstr "Forsendelsesberegner"
 
-#: swift-framework/core/sf-woocommerce.php:1249
+#: swift-framework/core/sf-woocommerce.php:1246
 #: woocommerce/loop/add-to-cart.php:70
 #: woocommerce/single-product/add-to-cart/grouped.php:16
 #: woocommerce/single-product/add-to-cart/simple.php:14
 msgid "Adding..."
 msgstr "Tilføjer..."
 
-#: swift-framework/core/sf-woocommerce.php:1250
+#: swift-framework/core/sf-woocommerce.php:1247
 #: woocommerce/loop/add-to-cart.php:71
 #: woocommerce/single-product/add-to-cart/grouped.php:17
 #: woocommerce/single-product/add-to-cart/simple.php:15
@@ -9509,59 +9554,171 @@ msgid "Original: %s"
 msgstr "Original: %s"
 
 #: swift-framework/sf-megamenu/edit_custom_walker.php:236
-#: woocommerce/wishlist.php:261
+#: woocommerce/wishlist-view.php:261
 msgid "Cancel"
 msgstr "Annuller"
 
+#: swift-framework/sf-megamenu/sf-megamenu.php:53
+#: swift-framework/shortcodes/interface.php:33
+#: swift-framework/shortcodes/interface.php:165
+#: swift-framework/shortcodes/interface.php:352
+#: swift-framework/shortcodes/interface.php:644
+msgid "Accent"
+msgstr "Betoning"
+
+#: swift-framework/sf-megamenu/sf-megamenu.php:54
+#: swift-framework/shortcodes/interface.php:34
+#: swift-framework/shortcodes/interface.php:166
+#: swift-framework/shortcodes/interface.php:645
+msgid "Black"
+msgstr "Sort"
+
+#: swift-framework/sf-megamenu/sf-megamenu.php:55
+#: swift-framework/shortcodes/interface.php:35
+#: swift-framework/shortcodes/interface.php:167
+#: swift-framework/shortcodes/interface.php:646
+msgid "White"
+msgstr "Hvid"
+
+#: swift-framework/sf-megamenu/sf-megamenu.php:56
+#: swift-framework/shortcodes/interface.php:36
+#: swift-framework/shortcodes/interface.php:168
+#: swift-framework/shortcodes/interface.php:647
+msgid "Blue"
+msgstr "Blå"
+
+#: swift-framework/sf-megamenu/sf-megamenu.php:57
+#: swift-framework/shortcodes/interface.php:37
+#: swift-framework/shortcodes/interface.php:169
+#: swift-framework/shortcodes/interface.php:648
+msgid "Grey"
+msgstr "Grå"
+
+#: swift-framework/sf-megamenu/sf-megamenu.php:58
+#: swift-framework/shortcodes/interface.php:38
+#: swift-framework/shortcodes/interface.php:170
+#: swift-framework/shortcodes/interface.php:649
+msgid "Light Grey"
+msgstr "Lysgrå"
+
+#: swift-framework/sf-megamenu/sf-megamenu.php:59
+#: swift-framework/shortcodes/interface.php:39
+#: swift-framework/shortcodes/interface.php:171
+#: swift-framework/shortcodes/interface.php:650
+msgid "Orange"
+msgstr "Orange"
+
+#: swift-framework/sf-megamenu/sf-megamenu.php:60
+#: swift-framework/shortcodes/interface.php:40
+#: swift-framework/shortcodes/interface.php:173
+#: swift-framework/shortcodes/interface.php:652
+msgid "Green"
+msgstr "Grøn"
+
+#: swift-framework/sf-megamenu/sf-megamenu.php:61
+#: swift-framework/shortcodes/interface.php:41
+#: swift-framework/shortcodes/interface.php:174
+#: swift-framework/shortcodes/interface.php:653
+msgid "Pink"
+msgstr "Pink"
+
+#: swift-framework/sf-megamenu/sf-megamenu.php:62
+#: swift-framework/shortcodes/interface.php:42
+#: swift-framework/shortcodes/interface.php:175
+#: swift-framework/shortcodes/interface.php:654
+msgid "Gold"
+msgstr "Guld"
+
 #: swift-framework/sf-megamenu/sf-megamenu.php:63
+msgid "Purple"
+msgstr ""
+
+#: swift-framework/sf-megamenu/sf-megamenu.php:64
+msgid "Midnight"
+msgstr ""
+
+#: swift-framework/sf-megamenu/sf-megamenu.php:65
+#: swift-framework/shortcodes/interface.php:43
+msgid "Transparent - Light"
+msgstr ""
+
+#: swift-framework/sf-megamenu/sf-megamenu.php:66
+#: swift-framework/shortcodes/interface.php:44
+#: swift-framework/shortcodes/interface.php:178
+#: swift-framework/shortcodes/interface.php:656
+msgid "Transparent - Dark"
+msgstr "Transparent - Mørk"
+
+#: swift-framework/sf-megamenu/sf-megamenu.php:71
+#: swift-framework/shortcodes/interface.php:13
+msgid "Bordered"
+msgstr "Omkranset"
+
+#: swift-framework/sf-megamenu/sf-megamenu.php:72
+msgid "Rounded"
+msgstr "Afrundet"
+
+#: swift-framework/sf-megamenu/sf-megamenu.php:73
+msgid "Rounded Bordered"
+msgstr "Afrundet og omkranset"
+
+#: swift-framework/sf-megamenu/sf-megamenu.php:90
 msgid "Enable Mega Menu"
 msgstr "Aktiver menumega"
 
-#: swift-framework/sf-megamenu/sf-megamenu.php:72
+#: swift-framework/sf-megamenu/sf-megamenu.php:99
 msgid "Mega Menu Columns"
 msgstr "Megamenu kolonner"
 
-#: swift-framework/sf-megamenu/sf-megamenu.php:87
+#: swift-framework/sf-megamenu/sf-megamenu.php:114
 msgid "Natural Width Mega Menu"
 msgstr "Naturlig bredde på megamenuen"
 
-#: swift-framework/sf-megamenu/sf-megamenu.php:96
+#: swift-framework/sf-megamenu/sf-megamenu.php:123
 msgid "Alternative Style Mega Menu"
 msgstr "Alternativ udseende på megamenuen"
 
-#: swift-framework/sf-megamenu/sf-megamenu.php:108
+#: swift-framework/sf-megamenu/sf-megamenu.php:135
 msgid "Hide Mega Menu Headings"
 msgstr "Skjul megamenuens overskrifter"
 
-#: swift-framework/sf-megamenu/sf-megamenu.php:124
+#: swift-framework/sf-megamenu/sf-megamenu.php:151
 msgid "Visible only when logged in"
 msgstr "Kun synlig hvis logget ind"
 
-#: swift-framework/sf-megamenu/sf-megamenu.php:134
+#: swift-framework/sf-megamenu/sf-megamenu.php:161
 msgid "Visible only when logged out"
 msgstr "Synlig når logget ud"
 
-#: swift-framework/sf-megamenu/sf-megamenu.php:160
+#: swift-framework/sf-megamenu/sf-megamenu.php:187
 msgid "Button Style Menu Item"
 msgstr "Udseende af menu elementets knap"
 
-#: swift-framework/sf-megamenu/sf-megamenu.php:175
+#: swift-framework/sf-megamenu/sf-megamenu.php:199
+msgid "Button Type"
+msgstr ""
+
+#: swift-framework/sf-megamenu/sf-megamenu.php:215
+msgid "Button Colour"
+msgstr ""
+
+#: swift-framework/sf-megamenu/sf-megamenu.php:238
 msgid "Menu Icon (Icon Mind / Font Awesome)"
 msgstr "Menu ikon (Icon Mind / Font Awesome)"
 
-#: swift-framework/sf-megamenu/sf-megamenu.php:190
+#: swift-framework/sf-megamenu/sf-megamenu.php:253
 msgid "Mega Menu No Link Title"
 msgstr "Fjern link i megamenuens titler"
 
-#: swift-framework/sf-megamenu/sf-megamenu.php:200
+#: swift-framework/sf-megamenu/sf-megamenu.php:263
 msgid "No Menu Column Spacing (for custom html column)"
 msgstr "Ingen mellemrum i menuens kolonner (til brugerdefineret HTML kolonne)"
 
-#: swift-framework/sf-megamenu/sf-megamenu.php:209
+#: swift-framework/sf-megamenu/sf-megamenu.php:272
 msgid "Custom HTML Column Width (optional)"
 msgstr "Brugerdefineret HTML kolonnebredde (valgfrit)"
 
-#: swift-framework/sf-megamenu/sf-megamenu.php:214
+#: swift-framework/sf-megamenu/sf-megamenu.php:277
 msgid ""
 "Optionally set a width here for the menu column, ideal if you want to make "
 "it wider. Numeric value (no px)."
@@ -9569,13 +9726,9 @@ msgstr ""
 "Alternativt, vælg en bredde her til menuens kolonner, idealt hvis du ønsker "
 "dem breddere. Numerisk værdi (ingen px)."
 
-#: swift-framework/sf-megamenu/sf-megamenu.php:219
+#: swift-framework/sf-megamenu/sf-megamenu.php:282
 msgid "Custom HTML Column (within Mega Menu)"
 msgstr "Brugerdefineret HTML kolonner (indeni megamenuen)"
-
-#: swift-framework/shortcodes/interface.php:13
-msgid "Bordered"
-msgstr "Omkranset"
 
 #: swift-framework/shortcodes/interface.php:14
 msgid "3D Rotate"
@@ -9603,77 +9756,6 @@ msgstr "Ikon"
 #: swift-framework/shortcodes/interface.php:711
 msgid "Large"
 msgstr "Stor"
-
-#: swift-framework/shortcodes/interface.php:33
-#: swift-framework/shortcodes/interface.php:165
-#: swift-framework/shortcodes/interface.php:352
-#: swift-framework/shortcodes/interface.php:644
-msgid "Accent"
-msgstr "Betoning"
-
-#: swift-framework/shortcodes/interface.php:34
-#: swift-framework/shortcodes/interface.php:166
-#: swift-framework/shortcodes/interface.php:645
-msgid "Black"
-msgstr "Sort"
-
-#: swift-framework/shortcodes/interface.php:35
-#: swift-framework/shortcodes/interface.php:167
-#: swift-framework/shortcodes/interface.php:646
-msgid "White"
-msgstr "Hvid"
-
-#: swift-framework/shortcodes/interface.php:36
-#: swift-framework/shortcodes/interface.php:168
-#: swift-framework/shortcodes/interface.php:647
-msgid "Blue"
-msgstr "Blå"
-
-#: swift-framework/shortcodes/interface.php:37
-#: swift-framework/shortcodes/interface.php:169
-#: swift-framework/shortcodes/interface.php:648
-msgid "Grey"
-msgstr "Grå"
-
-#: swift-framework/shortcodes/interface.php:38
-#: swift-framework/shortcodes/interface.php:170
-#: swift-framework/shortcodes/interface.php:649
-msgid "Light Grey"
-msgstr "Lysgrå"
-
-#: swift-framework/shortcodes/interface.php:39
-#: swift-framework/shortcodes/interface.php:171
-#: swift-framework/shortcodes/interface.php:650
-msgid "Orange"
-msgstr "Orange"
-
-#: swift-framework/shortcodes/interface.php:40
-#: swift-framework/shortcodes/interface.php:173
-#: swift-framework/shortcodes/interface.php:652
-msgid "Green"
-msgstr "Grøn"
-
-#: swift-framework/shortcodes/interface.php:41
-#: swift-framework/shortcodes/interface.php:174
-#: swift-framework/shortcodes/interface.php:653
-msgid "Pink"
-msgstr "Pink"
-
-#: swift-framework/shortcodes/interface.php:42
-#: swift-framework/shortcodes/interface.php:175
-#: swift-framework/shortcodes/interface.php:654
-msgid "Gold"
-msgstr "Guld"
-
-#: swift-framework/shortcodes/interface.php:43
-msgid "Transparent - Light"
-msgstr ""
-
-#: swift-framework/shortcodes/interface.php:44
-#: swift-framework/shortcodes/interface.php:178
-#: swift-framework/shortcodes/interface.php:656
-msgid "Transparent - Dark"
-msgstr "Transparent - Mørk"
 
 #: swift-framework/shortcodes/interface.php:114
 msgid "Select a shortcode"
@@ -9864,16 +9946,6 @@ msgstr "Ikonets tegn"
 #: swift-framework/shortcodes/interface.php:290
 msgid "Circular container"
 msgstr "Rund container"
-
-#: swift-framework/shortcodes/interface.php:292
-#: swift-framework/shortcodes/interface.php:927
-msgid "No"
-msgstr "Nej"
-
-#: swift-framework/shortcodes/interface.php:293
-#: swift-framework/shortcodes/interface.php:926
-msgid "Yes"
-msgstr "Ja"
 
 #: swift-framework/shortcodes/interface.php:297
 msgid "Icon float"
@@ -10538,12 +10610,12 @@ msgstr ""
 msgid "Your selection"
 msgstr "Dine valg"
 
-#: woocommerce/cart/cart.php:34 woocommerce/wishlist.php:119
+#: woocommerce/cart/cart.php:34 woocommerce/wishlist-view.php:119
 msgid "Item"
 msgstr "Produkt"
 
-#: woocommerce/cart/cart.php:36 woocommerce/wishlist.php:121
-#: woocommerce/wishlist.php:293
+#: woocommerce/cart/cart.php:36 woocommerce/wishlist-view.php:121
+#: woocommerce/wishlist-view.php:293
 msgid "Unit Price"
 msgstr "Pris"
 
@@ -10678,23 +10750,26 @@ msgstr "Viser alle %d produkter"
 msgid "Showing %1$d-%2$d of %3$d products"
 msgstr "Viser %1$d-%2$d ud af %3$d produkter"
 
-#: woocommerce/loop/result-count.php:56
+#: woocommerce/loop/result-count.php:55
 msgid "View"
 msgstr "Se"
 
 #: woocommerce/myaccount/form-edit-address.php:26
 #: woocommerce/myaccount/my-address.php:19
 #: woocommerce/myaccount/my-address.php:25
+#: woocommerce/myaccount/my-address2.php:19
+#: woocommerce/myaccount/my-address2.php:25
 msgid "Billing Address"
 msgstr "Faktureringsadresse"
 
 #: woocommerce/myaccount/form-edit-address.php:26
 #: woocommerce/myaccount/my-address.php:20
+#: woocommerce/myaccount/my-address2.php:20
 msgid "Shipping Address"
 msgstr "Forsendelsesadresse"
 
 #: woocommerce/myaccount/form-edit-address.php:40
-#: woocommerce/order/order-details.php:36 woocommerce/wishlist.php:92
+#: woocommerce/order/order-details.php:36 woocommerce/wishlist-view.php:92
 msgid "Back to my account"
 msgstr "Tilbage til min konto"
 
@@ -10702,28 +10777,30 @@ msgstr "Tilbage til min konto"
 msgid "Save Address"
 msgstr "Gem adresse"
 
-#: woocommerce/myaccount/form-login.php:37
+#: woocommerce/myaccount/form-login.php:41
 msgid "Registered customers"
 msgstr "Registreret kunde"
 
-#: woocommerce/myaccount/form-login.php:63
+#: woocommerce/myaccount/form-login.php:64
 msgid "Remember me"
 msgstr "Husk mig"
 
-#: woocommerce/myaccount/form-login.php:68
+#: woocommerce/myaccount/form-login.php:69
 msgid "Lost your password?"
 msgstr "Glemt dit kodeord?"
 
-#: woocommerce/myaccount/form-login.php:81
+#: woocommerce/myaccount/form-login.php:83
 msgid "Not registered? No problem"
 msgstr "Ikke registreret? Intet prioblem"
 
 #: woocommerce/myaccount/my-account.php:23
+#: woocommerce/myaccount/my-account2.php:23
 #, php-format
 msgid "Hello <strong>%1$s</strong> (not %1$s? <a href=\"%2$s\">Sign out</a>)."
 msgstr "Hej <strong>%1$s</strong> (ikke %1$s? <a href=\"%2$s\">log ud</a>)."
 
 #: woocommerce/myaccount/my-account.php:28
+#: woocommerce/myaccount/my-account2.php:28
 #, php-format
 msgid ""
 "From your account dashboard you can view your recent orders, manage your "
@@ -10735,42 +10812,52 @@ msgstr ""
 "dit kodeord og konto detaljer</a>."
 
 #: woocommerce/myaccount/my-account.php:40
+#: woocommerce/myaccount/my-account2.php:40
 msgid "My Orders"
 msgstr "Mine ordre"
 
 #: woocommerce/myaccount/my-account.php:41
+#: woocommerce/myaccount/my-account2.php:41
 msgid "My Downloads"
 msgstr "Mine downloads"
 
 #: woocommerce/myaccount/my-account.php:43
+#: woocommerce/myaccount/my-account2.php:43
 msgid "My Wishlist"
 msgstr "Min ønskeliste"
 
 #: woocommerce/myaccount/my-account.php:45
+#: woocommerce/myaccount/my-account2.php:45
 msgid "Address Book"
 msgstr "Adressebog"
 
 #: woocommerce/myaccount/my-account.php:47
+#: woocommerce/myaccount/my-account2.php:47
 msgid "Change Details"
 msgstr "Ændre detaljer"
 
 #: woocommerce/myaccount/my-address.php:17
+#: woocommerce/myaccount/my-address2.php:17
 msgid "My Addresses"
 msgstr "Mine adresser"
 
 #: woocommerce/myaccount/my-address.php:23
+#: woocommerce/myaccount/my-address2.php:23
 msgid "My Address"
 msgstr "Min adresse"
 
 #: woocommerce/myaccount/my-address.php:35
+#: woocommerce/myaccount/my-address2.php:35
 msgid "The following addresses will be used on the checkout page by default."
 msgstr "Følgende adresser vil blive brugt på betalingssiden."
 
 #: woocommerce/myaccount/my-address.php:67
+#: woocommerce/myaccount/my-address2.php:67
 msgid "You have not set up this type of address yet."
 msgstr "Du har endnu ikke opsat denne adresse endnu."
 
 #: woocommerce/myaccount/my-address.php:80
+#: woocommerce/myaccount/my-address2.php:80
 msgid "Edit address"
 msgstr "Ændre adresse"
 
@@ -10855,77 +10942,64 @@ msgstr ""
 msgid "Placeholder"
 msgstr ""
 
-#: woocommerce/single-product/review.php:27
-#, php-format
-msgid "Rated %d out of 5"
-msgstr "Bedømt %d ud af 5"
-
-#: woocommerce/single-product/review.php:44
-msgid "Your comment is awaiting approval"
-msgstr "Din kommentar afventer godkendelse"
-
-#: woocommerce/single-product/review.php:54
-msgid "verified owner"
-msgstr "godkendt ejer"
-
 #: woocommerce/single-product/tabs/additional-information.php:14
 msgid "Additional Information"
 msgstr "Yderligere informationer"
 
-#: woocommerce/wishlist.php:94
+#: woocommerce/wishlist-view.php:94
 msgid "Shop"
 msgstr "Shop"
 
-#: woocommerce/wishlist.php:95
+#: woocommerce/wishlist-view.php:95
 msgid "Create Account / Login"
 msgstr "Opret en konto / login"
 
-#: woocommerce/wishlist.php:120 woocommerce/wishlist.php:287
+#: woocommerce/wishlist-view.php:120 woocommerce/wishlist-view.php:287
 msgid "Product Name"
 msgstr "Produktnavn"
 
-#: woocommerce/wishlist.php:122 woocommerce/wishlist.php:301
+#: woocommerce/wishlist-view.php:122 woocommerce/wishlist-view.php:301
 msgid "Stock Status"
 msgstr "Lagerstatus"
 
-#: woocommerce/wishlist.php:124
+#: woocommerce/wishlist-view.php:124
 msgid "Actions"
 msgstr "Handlinger"
 
-#: woocommerce/wishlist.php:180 woocommerce/wishlist.php:370
+#: woocommerce/wishlist-view.php:180 woocommerce/wishlist-view.php:370
 msgid "Out of Stock"
 msgstr "Ikke på lager"
 
-#: woocommerce/wishlist.php:183 woocommerce/wishlist.php:373
+#: woocommerce/wishlist-view.php:183 woocommerce/wishlist-view.php:373
 msgid "In Stock"
 msgstr "På lager"
 
-#: woocommerce/wishlist.php:204 woocommerce/wishlist.php:206
-#: woocommerce/wishlist.php:397
+#: woocommerce/wishlist-view.php:204 woocommerce/wishlist-view.php:206
+#: woocommerce/wishlist-view.php:397
 msgid "Remove this product"
 msgstr "Fjern dette produkt"
 
-#: woocommerce/wishlist.php:214
+#: woocommerce/wishlist-view.php:214
 msgid "Your wishlist is currently empty."
 msgstr "Din ønskeliste er tom"
 
-#: woocommerce/wishlist.php:248
+#: woocommerce/wishlist-view.php:248
 msgid "Edit title"
 msgstr "Ændre titel"
 
-#: woocommerce/wishlist.php:257
+#: woocommerce/wishlist-view.php:257
 msgid "Save"
 msgstr "Gem"
 
-#: woocommerce/wishlist.php:356
+#: woocommerce/wishlist-view.php:356
 msgid "Free!"
 msgstr "Gratis!"
 
-#: woocommerce/wishlist.php:408
+#: woocommerce/wishlist-view.php:408
 msgid "No products were added to the wishlist"
 msgstr "Ingen produkter blev tilføjet til ønskelisten"
 
-#: woocommerce/wishlist.php:434
+#: woocommerce/wishlist-view.php:434
 msgid "Ask an estimate of costs"
 msgstr "Efterspørg en estimeret pris"
 
@@ -10934,6 +11008,86 @@ msgstr "Efterspørg en estimeret pris"
 
 #~ msgid "Feedback Modal Content"
 #~ msgstr "Feedback modal indhold"
+
+#~ msgid "Please enter your Envato Marketplace Username."
+#~ msgstr "Indtast venligst dit Envato Marketplace brugernavn."
+
+#~ msgid "Please enter your Envato Marketplace API Key."
+#~ msgstr "Indtast venligst din Envato Marketplace API nøgle."
+
+#~ msgid "The API \"set\" is a required parameter."
+#~ msgstr "Denne API \"set\" er et påkrævet parameter."
+
+#~ msgid "The Envato Marketplace \"item ID\" is a required parameter."
+#~ msgstr "Envato Marketplace \"item ID\" er en påkrævet parameter."
+
+#~ msgid "Downloading upgrade package from the Envato API&#8230;"
+#~ msgstr "Downloader opgraderingspakken fra Envato API&#8230;"
+
+#~ msgid "Downloading install package from the Envato API&#8230;"
+#~ msgstr "Downloader installationspakken fra Envato API&#8230;"
+
+#~ msgid "+"
+#~ msgstr "+"
+
+#~ msgid "&#8211;"
+#~ msgstr "&#8211;"
+
+#~ msgid "Select Files"
+#~ msgstr "Vælg filer"
+
+#~ msgctxt "file upload"
+#~ msgid "Select or Upload Files"
+#~ msgstr "Vælg eller upload filer "
+
+#~ msgctxt "file upload"
+#~ msgid "Deselect"
+#~ msgstr "Fravælg"
+
+#~ msgid "Select Images"
+#~ msgstr "Vælg billeder"
+
+#~ msgctxt "image upload"
+#~ msgid "Select or Upload Images"
+#~ msgstr "Vælg eller upload billeder"
+
+#~ msgctxt "image upload"
+#~ msgid "Deselect"
+#~ msgstr "Fravælg"
+
+#~ msgctxt "image upload"
+#~ msgid "Drop images here"
+#~ msgstr "Smid billeder her"
+
+#~ msgctxt "image upload"
+#~ msgid "or"
+#~ msgstr "eller"
+
+#~ msgctxt "image upload"
+#~ msgid "Select Files"
+#~ msgstr "Vælg filer"
+
+#~ msgctxt "image upload"
+#~ msgid "Allowed Image Files"
+#~ msgstr "Tilladte billedfiler"
+
+#~ msgid "Post"
+#~ msgstr "Skriv"
+
+#~ msgid "Disable the help bar on account / checkout pages."
+#~ msgstr "Deaktivere hjælpelinjen på konto- / betalingssiden"
+
+#~ msgid "This text appears in the help bar on account / checkout pages."
+#~ msgstr "Denne tekst er synlig i hjælpebaren på konto- / betalingssider."
+
+#~ msgid "Rated %d out of 5"
+#~ msgstr "Bedømt %d ud af 5"
+
+#~ msgid "Your comment is awaiting approval"
+#~ msgstr "Din kommentar afventer godkendelse"
+
+#~ msgid "verified owner"
+#~ msgstr "godkendt ejer"
 
 #~ msgid "Loading"
 #~ msgstr "Indlæser"
@@ -11082,12 +11236,6 @@ msgstr "Efterspørg en estimeret pris"
 
 #~ msgid "Sale!"
 #~ msgstr "Nedsat!"
-
-#~ msgid "Rounded"
-#~ msgstr "Afrundet"
-
-#~ msgid "Rounded Bordered"
-#~ msgstr "Afrundet og omkranset"
 
 #~ msgid "%d Review"
 #~ msgid_plural "%d Reviews"
