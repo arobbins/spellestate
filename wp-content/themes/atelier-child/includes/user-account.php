@@ -10,7 +10,6 @@
 
       echo '<span><a href="'. site_url('/my-account') .'" class="user-account-link">Login or register</a></span>';
 
-
     } ?>
   </section>
 </div>

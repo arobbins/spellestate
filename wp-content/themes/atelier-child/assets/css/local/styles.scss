@@ -2914,3 +2914,15 @@ a.menu-bars-link span:after {
 a.menu-bars-link span {
   top: 11px;
 }
+
+.user-account {
+  display: none;
+}
+
+.single,
+.archive,
+.page {
+  .user-account {
+    display: block;
+  }
+}
