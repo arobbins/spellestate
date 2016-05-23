@@ -720,7 +720,7 @@
             $get_category  = get_categories( array( 'taxonomy' => 'product_cat' ) );
             //$get_category  = get_categories( array( 'taxonomy' => $category_name ) );
              //$category_list = array( '0' => '' );
-
+            $category_list = array();
             foreach ( $get_category as $category ) {
                   $category_list[$category->slug] = $category->cat_name ;
             }

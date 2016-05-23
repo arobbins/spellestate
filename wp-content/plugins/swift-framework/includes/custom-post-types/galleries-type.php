@@ -71,7 +71,7 @@
                     'feeds'      => true
                 )
                     : false,
-                'supports'          => array( 'title', 'thumbnail', 'editor', 'custom-fields', 'excerpt', 'comments' ),
+                'supports'          => array( 'title', 'thumbnail', 'editor', 'custom-fields', 'excerpt', 'comments', 'revisions' ),
                 'has_archive'       => true,
                 'taxonomies'        => array( 'gallery-category' )
             );

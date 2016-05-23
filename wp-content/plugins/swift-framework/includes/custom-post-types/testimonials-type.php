@@ -56,7 +56,7 @@
                 'show_in_nav_menus' => false,
                 'menu_icon'         => 'dashicons-format-quote',
                 'rewrite'           => false,
-                'supports'          => array( 'title', 'editor', 'custom-fields', 'excerpt' ),
+                'supports'          => array( 'title', 'editor', 'custom-fields', 'excerpt', 'revisions' ),
                 'has_archive'       => true,
                 'taxonomies'        => array( 'testimonials-category' )
             );

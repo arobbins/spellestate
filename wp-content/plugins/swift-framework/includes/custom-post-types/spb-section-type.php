@@ -62,7 +62,7 @@
                 'menu_icon'           => 'dashicons-schedule',
                 'hierarchical'        => false,
                 'rewrite'             => false,
-                'supports'            => array( 'title', 'editor' ),
+                'supports'            => array( 'title', 'editor', 'revisions' ),
                 'has_archive'         => true,
                 'taxonomies'          => array( 'spb-section-category' )
 

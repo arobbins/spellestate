@@ -81,11 +81,20 @@
 }
 
 /* FADE */
-.swift-slider[data-transition="fade"] .swiper-wrapper, .swift-slider[data-transition="fade"] .swiper-slide {
-    -webkit-transition-property: opacity;
-    -moz-transition-property: opacity;
-    -o-transition-property: opacity;
-    transition-property: opacity;
+.swift-slider[data-transition="fade"] .swiper-wrapper {
+    transition: none!important;
+    -webkit-transition: none!important;
+}
+.swift-slider[data-transition="fade"] .swiper-slide {
+    transition: opacity 1.2s ease;
+    -webkit-transition: opacity 1.2s ease;
+}
+.swift-slider[data-transition="fade"] .swiper-slide:not(.swiper-slide-active) {
+    opacity: 0;
+}
+.swift-slider[data-transition="fade"] .swiper-slide.swiper-slide-active {
+    opacity: 1
+    z-index: 50;
 }
 
 /* IE10 Windows Phone 8 Fixes */

@@ -70,7 +70,7 @@
                     'feeds'      => true
                 )
                     : false,
-                'supports'          => array( 'title', 'editor', 'thumbnail', 'custom-fields', 'excerpt' ),
+                'supports'          => array( 'title', 'editor', 'thumbnail', 'custom-fields', 'excerpt', 'revisions' ),
                 'has_archive'       => true,
                 'taxonomies'        => array( 'team-category', 'post_tag' )
             );

@@ -260,9 +260,14 @@
                 $el_name = $this->settings["name"];
             }
             
+            if( $this->settings["base"] == "spb_multilayer_parallax" ){
+                $content_url = plugins_url() .'/swift-framework/includes/page-builder/assets/img/blank_f7.gif';
+            }else{
+                $content_url = "";
+            }
 
 
-            $output .= '<div data-element_type="' . $this->settings["base"] . '" class="' . $this->settings["base"] . ' spb_content_element spb_sortable ' . spb_translateColumnWidthToSpanEditor( $width ) . ' ' . $this->settings["class"] . '">';
+            $output .= '<div data-element_type="' . $this->settings["base"] . '" class="' . $this->settings["base"] . ' spb_content_element spb_sortable ' . spb_translateColumnWidthToSpanEditor( $width ) . ' ' . $this->settings["class"] . '" data-content-url="' .$content_url . '">';
             $output .= '<input type="hidden" class="spb_sc_base" name="element_name-' . $this->shortcode . '" value="' . $this->settings["base"] . '" />';
             $output .= $this->getCallbacks( $this->shortcode );
             $output .= '<div class="spb_element_wrapper ' . $this->settings( "wrapper_class" ) . '">';

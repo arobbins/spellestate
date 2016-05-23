@@ -56,7 +56,7 @@
                 'show_in_nav_menus' => false,
                 'menu_icon'         => 'dashicons-businessman',
                 'rewrite'           => false,
-                'supports'          => array( 'title', 'thumbnail', 'excerpt', 'custom-fields', 'excerpt' ),
+                'supports'          => array( 'title', 'thumbnail', 'excerpt', 'custom-fields', 'excerpt', 'revisions' ),
                 'has_archive'       => true,
                 'taxonomies'        => array( 'clients-category', 'post_tag' )
             );

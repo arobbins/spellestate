@@ -69,7 +69,7 @@
                     'feeds'      => true
                 )
                     : false,
-                'supports' => array('title', 'editor'),
+                'supports' => array('title', 'editor', 'revisions'),
                 'has_archive' => true,
                 'taxonomies' => array('faqs-category', 'post_tag')
             );

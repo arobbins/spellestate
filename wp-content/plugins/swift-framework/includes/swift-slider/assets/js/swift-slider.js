@@ -1,3 +1,6 @@
+/*global jQuery, SWIFT, WheelEvent */
+/*jshint unused:false*/
+
 /*
  *
  *  Swift Slider Frontend JS
@@ -9,7 +12,6 @@
 
 var SWIFTSLIDER = SWIFTSLIDER || {};
 
-/*global jQuery */
 (function() {
 
     // USE STRICT
@@ -103,6 +105,7 @@ var SWIFTSLIDER = SWIFTSLIDER || {};
                         loop: false,
                         progress: true,
                         mode: 'vertical',
+                        transition: "slide",
                         speed: 1000,
                         autoplay: sliderAuto,
                         keyboardControl: true,
@@ -149,8 +152,8 @@ var SWIFTSLIDER = SWIFTSLIDER || {};
                         loop: sliderLoop,
                         progress: true,
                         touchRatio: 0.7,
-                        mode: 'horizontal',
-                        speed: 600,
+                        speed: 1200,
+                        transition: "fade",
                         autoplay: sliderAuto,
                         grabCursor: grabAbility,
                         paginationClickable: true,
@@ -165,8 +168,8 @@ var SWIFTSLIDER = SWIFTSLIDER || {};
                                 var slide = swiper.slides[i];
                                 var progress = slide.progress;
                                 var translate = progress*swiper.width;
-                                var opacity = 1 - Math.min(Math.abs(progress),1);
-                                slide.style.opacity = opacity;
+                                //var opacity = 1 - Math.min(Math.abs(progress),1);
+                                //slide.style.opacity = opacity;
                                 swiper.setTransform(slide,'translate3d('+translate+'px,0,0)');
                             }
                         },
@@ -188,6 +191,7 @@ var SWIFTSLIDER = SWIFTSLIDER || {};
                         loop: sliderLoop,
                         touchRatio: 0.7,
                         mode: 'horizontal',
+                        transition: "slide",
                         speed: 600,
                         autoplay: sliderAuto,
                         grabCursor: grabAbility,
@@ -247,7 +251,7 @@ var SWIFTSLIDER = SWIFTSLIDER || {};
                         if ( !videoElement.attr('loop') ) {
                             sliderInstance.find( '.swiper-slide-active video' ).addClass('finished');
                         }
-                    }
+                    };
 
                 } else {
 
@@ -549,16 +553,14 @@ var SWIFTSLIDER = SWIFTSLIDER || {};
                 }
             );
 
-            window.requestAnimationFrame = window.requestAnimationFrame
-            || window.mozRequestAnimationFrame
-            || window.webkitRequestAnimationFrame
-            || window.msRequestAnimationFrame
-            || function(f){setTimeout(f, 1000/60)}
+            window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame || function(f){ 
+                setTimeout(f, 1000/60);
+            };
 
             if ( parallaxCanScroll ) {
-                window.addEventListener('scroll', function(){ 
-                    requestAnimationFrame(SWIFTSLIDER.parallaxScroll) 
-                }, false)
+                window.addEventListener('scroll', function() { 
+                    requestAnimationFrame(SWIFTSLIDER.parallaxScroll);
+                }, false);
             }
         },
         parallaxScroll: function(sliderHeight) {
@@ -571,14 +573,14 @@ var SWIFTSLIDER = SWIFTSLIDER || {};
                 // Transition the slider wrapper
                 parallaxInstance.stop( true, true ).transition(
                     {
-                        y: scrollTop * -.2
+                        y: scrollTop * - 0.2
                     }, 0
                 );
 
                 // Transition the caption
                 parallaxInstance.find( '.caption-wrap' ).stop( true, true ).transition(
                     {
-                        y: scrollTop * -.15,
+                        y: scrollTop * - 0.15,
                         opacity: 1 - scrollTop / ( parallaxSliderHeight - 150 )
                     }, 0
                 );
@@ -599,7 +601,7 @@ var SWIFTSLIDER = SWIFTSLIDER || {};
 
 
             if ( scrollTop >= elemBottom - stickyHeaderHeight ) {
-                parallaxWrap.addClass('not-visible')
+                parallaxWrap.addClass('not-visible');
             } else {
                 parallaxWrap.removeClass('not-visible');
             }
@@ -2995,20 +2997,32 @@ var Swiper = function (selector, params) {
             }
             else _this.fireCallback(params.onSlideChangeStart, _this, direction);
         }
-        //Transition End Callback
+        // Transition End Callback
         if (params.onSlideChangeEnd) {
             if (_this.support.transitions) {
                 if (params.queueEndCallbacks) {
                     if (_this._queueEndCallbacks) return;
                     _this._queueEndCallbacks = true;
-                    _this.wrapperTransitionEnd(function (swiper) {
-                        _this.fireCallback(params.onSlideChangeEnd, swiper, direction);
-                    });
+                    if ( params.transition === "fade" ) {
+                        setTimeout(function() {
+                             _this.fireCallback(params.onSlideChangeEnd, _this, direction);
+                        }, 100);
+                    } else {
+                        _this.wrapperTransitionEnd(function (swiper) {
+                            _this.fireCallback(params.onSlideChangeEnd, _this, direction);
+                        });
+                    }
                 }
                 else {
-                    _this.wrapperTransitionEnd(function (swiper) {
-                        _this.fireCallback(params.onSlideChangeEnd, swiper, direction);
-                    });
+                    if ( params.transition === "fade" ) {
+                        setTimeout(function() {
+                             _this.fireCallback(params.onSlideChangeEnd, _this, direction);
+                        }, 100);
+                    } else {
+                        _this.wrapperTransitionEnd(function (swiper) {
+                            _this.fireCallback(params.onSlideChangeEnd, _this, direction);
+                        });
+                    }
                 }
             }
             else {
@@ -3310,6 +3324,10 @@ var Swiper = function (selector, params) {
             _this.wrapperTransitionEnd(function () {
                 if (typeof autoplayTimeoutId !== 'undefined') autoplay();
             });
+            if ( _this.params.transition === "fade") {
+                if (typeof autoplayTimeoutId !== 'undefined') autoplay();
+            }
+
         }, params.autoplay);
     }
     /*==================================================

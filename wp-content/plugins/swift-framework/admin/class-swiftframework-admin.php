@@ -91,23 +91,20 @@ class SwiftFramework_Admin {
 				<li>Preview functionality for elements.</li>
 			</ul>
 			<div class="divide"></div>
-			<h3>Latest Update (v2.2.5)</h3>
+			<h3>Latest Update (v2.2.61)</h3>
+			<p></p>
+			<ul>
+				<li>FRONTEND: Fix for fade transition stalling progress on Swift Slider</li>
+				<li>BACKEND: Re-added missing Campaign element</li>
+			</ul>
+			<div class="divide"></div>
+			<h3>Previous Update (v2.2.5)</h3>
 			<p></p>
 			<ul>
 				<li>FRONTEND: Added WhatsApp &amp; Snapchat social icon output</li>
 				<li>BACKEND: Fixed issue where 30px vertical padding was reseted when editing the row</li>
 				<li>BACKEND: Fixed issue where percentage button wasn't saving the option</li>
 				<li>BACKEND: Fixed issue where Google Map was appearing blank by default</li>
-				
-			</ul>
-			<div class="divide"></div>
-			<h3>Previous Update (v2.2.2)</h3>
-			<p></p>
-			<ul>
-				<li>FRONTEND: Inital improvements to FAQ styling &amp; functionality.</li>
-				<li>FRONTEND: Fixed issue with Swift Slider fade on Firefox.</li>
-				<li>FRONTEND: Excluded Swift Slider slides from WordPress search results.</li>
-				<li>FRONTEND: Fixed social share output.</li>
 			</ul>
 		</div>
 

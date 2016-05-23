@@ -17,6 +17,11 @@ Supported Themes: Atelier, Cardinal, JOYN
 
 == Changelog ==
 
+= 2.2.61 =
+- FRONTEND: Fix for fade transition stalling progress on Swift Slider
+- BACKEND: Re-added missing Campaign element
+- BACKEND: Custom post types now all support revisions
+
 = 2.2.52 =
 - FRONTEND: Fix for nucleo icon output
 
