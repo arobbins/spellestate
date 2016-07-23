@@ -642,8 +642,9 @@ var SWIFT = SWIFT || {};
 		smoothScrollLinks: function() {
 			jQuery('a.smooth-scroll-link').on('click', function(e) {
 
-				var linkHref = jQuery(this).attr('href');
-
+				var linkHref = jQuery(this).attr('href'),
+					linkOffset = jQuery(this).data('offset') ? jQuery(this).data('offset') : 0;
+					
 				if (linkHref && linkHref.indexOf('#') === 0) {
 					var headerHeight = 0;
 
@@ -660,7 +661,7 @@ var SWIFT = SWIFT || {};
 					SWIFT.isScrolling = true;
 
 					jQuery('html, body').stop().animate({
-						scrollTop: jQuery(linkHref).offset().top - headerHeight
+						scrollTop: jQuery(linkHref).offset().top - headerHeight + linkOffset
 					}, 1000, 'easeInOutExpo', function() {
 						SWIFT.isScrolling = false;
 					});
@@ -966,7 +967,10 @@ var SWIFT = SWIFT || {};
 			var lightboxSocial = {};
 			if (lightboxSharing) {
 				lightboxSocial = {
-					facebook: true,
+					facebook: {
+						source: 'https://www.facebook.com/sharer/sharer.php?u={URL}',
+						text: 'Share on Facebook'
+					},
 					twitter: true,
 					googleplus: true,
 					pinterest: {
@@ -1188,7 +1192,7 @@ var SWIFT = SWIFT || {};
 			});
 		},
 		directorySubmit: function() {
-			jQuery('#sf_directory_calculate_coordinates').live("click", function(e) {
+			jQuery(document).on("click", '#sf_directory_calculate_coordinates', function(e) {
 				e.preventDefault();
 				var geocoder = new google.maps.Geocoder();
 
@@ -2874,7 +2878,6 @@ var SWIFT = SWIFT || {};
 							firstImage.attr('data-zoom-image', firstImage.parent().attr('data-thumb'));
 							firstImage.data('zoom-image', firstImage.parent().attr('data-thumb'));
 							setTimeout(function() {
-								console.log(firstImage.data('zoom-image'));
 								SWIFT.woocommerce.productZoom(firstImage);
 							}, 200);
 						}
@@ -3131,11 +3134,16 @@ var SWIFT = SWIFT || {};
 		multiMasonrySizeFix: function(productsInstance, $init) {
 			var baseItem = productsInstance.find('.product.size-standard').first(),
 				standardHeight = baseItem.height(),
-				standardWidth = baseItem.width(),
-				largeHeight = (standardHeight * 2) + parseInt(baseItem.css('margin-bottom'), 10),
-				wideWidth = (standardWidth * 2) + parseInt(baseItem.css('margin-bottom'), 10);
-
-			if (standardHeight > 0) {
+				largeHeight = 0;
+			
+			if ( standardHeight > 0 ) {
+				largeHeight = (standardHeight * 2) + parseInt(baseItem.css('margin-bottom'), 10);
+			} else {
+				var firstProduct = productsInstance.find('.product.size-large,.product.size-tall').first(),
+				largeHeight = firstProduct.height();				
+			}
+			
+			if (largeHeight > 0) {
 				productsInstance.find('.product.size-large .multi-masonry-img-wrap').css('height', largeHeight);
 				productsInstance.find('.product.size-tall .multi-masonry-img-wrap').css('height', largeHeight);
 			}
@@ -3477,6 +3485,10 @@ var SWIFT = SWIFT || {};
 				sliderVertHeight = parseInt(productSliderVertHeight, 10),
 				thumbItems = 4,
 				thumbItemsResponsive = 3;
+				
+			if ( isMobileAlt || $window.width() <= 768 ) {
+				productSliderThumbsPos = "bottom";
+			}
 			
 			if ( productSliderThumbsPos === "left" ) {
 				galleryVertical = true;
@@ -3521,6 +3533,10 @@ var SWIFT = SWIFT || {};
 						var currentImage = jQuery('#product-img-slider').find('.lslide.active > .product-slider-image');
 						SWIFT.woocommerce.productZoom(currentImage);
 					}
+					el.find('.product-slider-image').each(function(){
+						var imgClass = (this.width/this.height >= 1) ? 'wide' : 'tall';
+						jQuery(this).addClass(imgClass);
+					});
 	            },
 	            onBeforeSlide: function (el) {
 		            if (hasProductZoom) {
@@ -3690,14 +3706,30 @@ var SWIFT = SWIFT || {};
 		multiMasonrySizeFix: function($init) {
 			var baseItem = portfolioContainer.find('.portfolio-item.size-standard').first(),
 				standardHeight = baseItem.height(),
-				standardWidth = baseItem.width(),
-				wideTallHeight = (standardHeight * 2) + parseInt(baseItem.css('margin-bottom'), 10),
-				wideWidth = (standardWidth * 2) + parseInt(baseItem.css('margin-bottom'), 10);
-
-			if (standardHeight > 0) {
+				largeHeight = 0;
+			
+			if ( standardHeight > 0 ) {
+				largeHeight = (standardHeight * 2) + parseInt(baseItem.css('margin-bottom'), 10);
+			} else {
+				var firstItem = portfolioContainer.find('.portfolio-item.size-tall,.portfolio-item.size-wide-tall').first(),
+				largeHeight = firstItem.height();
+				standardHeight = (largeHeight / 2) - parseInt(baseItem.css('margin-bottom'), 10);			
+			}
+			
+			if (largeHeight > 0) {
 				portfolioContainer.find('.portfolio-item.size-wide .multi-masonry-img-wrap').css('height', standardHeight);
-				portfolioContainer.find('.portfolio-item.size-wide-tall .multi-masonry-img-wrap').css('height', wideTallHeight);
-				portfolioContainer.find('.portfolio-item.size-tall .multi-masonry-img-wrap').css('height', wideTallHeight);
+				portfolioContainer.find('.portfolio-item.size-wide-tall .multi-masonry-img-wrap').css('height', largeHeight);
+				portfolioContainer.find('.portfolio-item.size-tall .multi-masonry-img-wrap').css('height', largeHeight);
+				
+				// Wide tall sliders
+				var heightDiff = (portfolioContainer.find('.portfolio-item.size-wide-tall ul.slides > li').first().height() - largeHeight) / 2;
+				portfolioContainer.find('.portfolio-item.size-wide-tall ul.slides').css('max-height', largeHeight);
+				portfolioContainer.find('.portfolio-item.size-wide-tall ul.slides > li').css('margin-top', -heightDiff);
+				
+				// Wide sliders
+				var wideHeightDiff = (portfolioContainer.find('.portfolio-item.size-wide ul.slides > li').first().height() - standardHeight) / 2;
+				portfolioContainer.find('.portfolio-item.size-wide ul.slides').css('max-height', standardHeight);
+				portfolioContainer.find('.portfolio-item.size-wide ul.slides > li').css('margin-top', -wideHeightDiff);
 			}
 			if ($init) {
 				portfolioContainer.isotope('layout');
@@ -4006,13 +4038,14 @@ var SWIFT = SWIFT || {};
 			var userID = instagrams.data('userid'),
 				token = instagrams.data('token'),
 				count = instagrams.data('count'),
-				itemClass = instagrams.data('itemclass');
-
+				itemClass = instagrams.data('itemclass'),
+				clientid = '756db9880cc84c3dab85118df38f9b91';
+			    
 			jQuery.ajax({
-				type: "GET",
-				dataType: "jsonp",
-				cache: false,
-				url: "https://api.instagram.com/v1/users/"+userID+"/media/recent/?access_token="+token,
+				url: 'https://api.instagram.com/v1/users/' + userID + '/media/recent?access_token=' + token, // specify the ID of the first found user
+				dataType: 'jsonp',
+				type: 'GET',
+				data: {client_id: clientid, count: count},
 				success: function(data) {
 					for (var i = 0; i < count; i++) {
 						if (data.data[i]) {
@@ -4023,13 +4056,16 @@ var SWIFT = SWIFT || {};
 							instagrams.append("<li class='blog-item instagram-item "+itemClass+"' data-date='"+data.data[i].created_time+"'><a class='timestamp inst-icon' target='_blank' href='" + data.data[i].link +"'><i class='fa-instagram'></i></a><div class='inst-overlay'><a target='_blank' href='" + data.data[i].link +"'></a><h6>"+instagrams.data('title')+"</h6><h2>"+caption+"</h2><div class='name-divide'></div><data class='date timeago' title='"+data.data[i].created_time+"' value=''>"+data.data[i].created_time+"</data></div><img class='instagram-image' src='" + data.data[i].images.standard_resolution.url +"' width='306px' height='306px' /></li>");
 						}
 					}
-					jQuery("data.timeago").timeago();
+					jQuery( "data.timeago" ).timeago();
 					instagrams.imagesLoaded(function(){
-						blogItems.isotope('insert', jQuery(instagrams.html()));
+						blogItems.isotope( 'insert', jQuery(instagrams.html()) );
 					});
 					blogItems.isotope('updateSortData').isotope();
+				},
+				error: function(data2) {
+					console.log(data2);
 				}
-			});
+			});			
 		},
 		animateItems: function(blogInstance) {
 			blogInstance.find('.blog-item').each(function(i) {
@@ -4096,13 +4132,14 @@ var SWIFT = SWIFT || {};
 		blogGridInstagram: function(instagrams, gridItems) {
 			var userID = instagrams.data('userid'),
 				token = instagrams.data('token'),
-				count = instagrams.data('count');
-
+				count = instagrams.data('count'),
+				clientid = '756db9880cc84c3dab85118df38f9b91';
+			
 			jQuery.ajax({
-				type: "GET",
-				dataType: "jsonp",
-				cache: false,
-				url: "https://api.instagram.com/v1/users/"+userID+"/media/recent/?access_token="+token,
+				url: 'https://api.instagram.com/v1/users/' + userID + '/media/recent?access_token=' + token, // specify the ID of the first found user
+				dataType: 'jsonp',
+				type: 'GET',
+				data: {client_id: clientid, count: count},
 				success: function(data) {
 					for (var i = 0; i < count; i++) {
 						if (data.data[i]) {
@@ -4120,6 +4157,9 @@ var SWIFT = SWIFT || {};
 						SWIFT.blog.blogGridResize();
 					});
 					gridItems.isotope('updateSortData').isotope();
+				},
+				error: function(data2) {
+					console.log(data2);
 				}
 			});
 		},
@@ -6265,7 +6305,7 @@ var SWIFT = SWIFT || {};
 				SWIFT.map.init();
 				SWIFT.mapDirectory.init('', '', '');
 
-				jQuery('#directory-search-button').live( "click", function() {
+				jQuery(document).on( "click", '#directory-search-button', function() {
 					jQuery('.directory-search-form').submit();
 				});
 				jQuery('ul.nav-tabs li a').click(function(){

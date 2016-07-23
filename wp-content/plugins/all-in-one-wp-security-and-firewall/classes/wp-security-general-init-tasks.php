@@ -123,6 +123,11 @@ class AIOWPSecurity_General_Init_Tasks
             }
         }
 
+        //For registration manual approval feature
+        if($aio_wp_security->configs->get_value('aiowps_enable_manual_registration_approval') == '1'){
+            add_filter('wp_login_errors', array(&$this, 'modify_registration_page_messages'),10, 2);
+        }
+        
         //For registration page captcha feature
         if (AIOWPSecurity_Utility::is_multisite_install()){
             $blog_id = get_current_blog_id();
@@ -198,7 +203,7 @@ class AIOWPSecurity_General_Init_Tasks
         //If white list enabled need to re-adjust the .htaccess rules
         if ($aio_wp_security->configs->get_value('aiowps_enable_whitelisting') == '1') {
             $write_result = AIOWPSecurity_Utility_Htaccess::write_to_htaccess(); //now let's write to the .htaccess file
-            if ($write_result == -1)
+            if ( !$write_result )
             {
                 $this->show_msg_error(__('The plugin was unable to write to the .htaccess file. Please edit file manually.','all-in-one-wp-security-and-firewall'));
                 $aio_wp_security->debug_logger->log_debug("AIOWPSecurity_whitelist_Menu - The plugin was unable to write to the .htaccess file.");
@@ -208,7 +213,7 @@ class AIOWPSecurity_General_Init_Tasks
 
     function spam_detect_process_comment_post($comment_id, $comment_approved)
     {
-        if($comment_approved == 'spam'){
+        if($comment_approved === "spam"){
             $this->block_comment_ip($comment_id);
         }
 
@@ -484,5 +489,18 @@ class AIOWPSecurity_General_Init_Tasks
         global $aio_wp_security;
         $message = html_entity_decode($message);
         return $message;
+    }
+    
+    function modify_registration_page_messages($errors, $redirect_to)
+    {
+        if( isset($_GET['checkemail']) && 'registered' == $_GET['checkemail'] ){
+            if(is_wp_error($errors)){
+                $errors->remove('registered');
+                $pending_approval_msg = __('Your registration is pending approval.', 'all-in-one-wp-security-and-firewall');
+                $pending_approval_msg = apply_filters('aiowps_pending_registration_message', $pending_approval_msg);
+                $errors->add('registered', $pending_approval_msg, array('registered'=>'message'));
+            }
+        }
+        return $errors;
     }
 }

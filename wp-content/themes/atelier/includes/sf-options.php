@@ -2334,6 +2334,52 @@ if ( !class_exists( "Redux_Framework_options_config" ) ) {
 						'default' => '1'
 						),
 					array(
+						'id' => 'default_page_heading_style',
+						'type' => 'select',
+						'title' => __('Default Page Heading Style', 'swiftframework'),
+						'subtitle' => "Choose the default page heading style for meta options, plus 404 + other non-custom pages.",
+						'options' => array(
+							'standard'		=> 'Standard',
+							'fancy'		=> 'Hero',
+							'fancy-tabbed'		=> 'Hero Tabbed'
+							),
+						'desc' => '',
+						'default' => 'standard'
+						),
+					array(
+						'id' => 'default_page_heading_text_align',
+						'type' => 'select',
+						'title' => __('Default Page Heading Text Align', 'swiftframework'),
+						'subtitle' => "Choose the page heading align for meta options, plus 404 + other non-custom pages (Standard/Hero only).",
+						'options' => array(
+							'left'		=> 'Left',
+							'center'	=> 'Center',
+							'right'		=> 'Right'
+							),
+						'desc' => '',
+						'default' => 'left'
+						),
+					array(
+						'id' => 'default_page_heading_image',
+						'type' => 'media',
+						'url'=> true,
+						'title' => __('Default Hero Heading Background Image', 'swiftframework'),
+						'subtitle' => __('Upload the hero heading background image for meta options, plus 404 + other non-custom pages (Hero Heading Only).', 'swiftframework'),
+						'desc' => ''
+						),
+					array(
+						'id' => 'default_page_heading_text_style',
+						'type' => 'select',
+						'title' => __('Default Hero Heading Text Style', 'swiftframework'),
+						'subtitle' => "Choose the text style for meta options, plus 404 + other non-custom pages (Hero Heading Only).",
+						'options' => array(
+							'light'		=> 'Light',
+							'dark'		=> 'Dark'
+							),
+						'desc' => '',
+						'default' => 'light'
+						),
+					array(
 						'id' => 'default_sidebar_config',
 						'type' => 'select',
 						'title' => __('Default Page Sidebar Config', 'swiftframework'),
@@ -2946,7 +2992,7 @@ if ( !class_exists( "Redux_Framework_options_config" ) ) {
 					array(
 						'id' => 'product_display_pagination',
 						'type' => 'select',
-						'title' => __('Shop Pagination', 'uplift'),
+						'title' => __('Shop Pagination', 'swiftframework'),
 						'subtitle' => "Select the pagination type for the shop page.",
 						'options' => array(
 							'infinite-scroll' => 'Infinite Scroll',

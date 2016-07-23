@@ -5,7 +5,7 @@
     *	Custom Portfolio Widget
     *	------------------------------------------------
     *	Swift Framework
-    * 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+    * 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     */
 
@@ -56,6 +56,9 @@
                 )
             );
 
+            $thumb_width = apply_filters('sf_widget_portfolio_thumb_width', 94);
+            $thumb_height = apply_filters('sf_widget_portfolio_thumb_height', 75);
+
             if ( $recent_portfolio->have_posts() ) :
 
                 ?>
@@ -68,15 +71,15 @@
                         $post_title     = get_the_title();
                         $post_permalink = get_permalink();
                         $thumb_image    = get_post_thumbnail_id();
-                        $thumb_img_url  = wp_get_attachment_url( $thumb_image, 'widget-image' );
-                        $image          = sf_aq_resize( $thumb_img_url, 94, 75, true, false );
+                        $thumb_img_url  = wp_get_attachment_url( $thumb_image, 'full' );
+                        $image          = sf_aq_resize( $thumb_img_url, $thumb_width, $thumb_height, true, false );
                         $image_alt      = esc_attr( sf_get_post_meta( $thumb_image, '_wp_attachment_image_alt', true ) );
                         ?>
                         <li>
-                            <a href="<?php echo $post_permalink; ?>" class="recent-post-image">
+                            <a href="<?php echo esc_url($post_permalink); ?>" class="recent-post-image">
                                 <?php if ( $image ) { ?>
-                                    <img src="<?php echo $image[0]; ?>" width="<?php echo $image[1]; ?>"
-                                         height="<?php echo $image[2]; ?>" alt="<?php echo $image_alt; ?>"/>
+                                    <img src="<?php echo esc_attr($image[0]); ?>" width="<?php echo esc_attr($image[1]); ?>"
+                                         height="<?php echo esc_attr($image[2]); ?>" alt="<?php echo esc_attr($image_alt); ?>"/>
                                 <?php } else if ( $thumb_type == "video" ) { ?>
                                     <?php echo $video_icon; ?>
                                 <?php } else if ( $thumb_type == "audio" ) { ?>
@@ -87,12 +90,15 @@
                             </a>
 
                             <div class="recent-post-details">
-                                <a class="recent-post-title" href="<?php echo $post_permalink; ?>"
-                                   title="<?php echo $post_title; ?>"><?php echo $post_title; ?></a>
+                                <a class="recent-post-title" href="<?php echo esc_url($post_permalink); ?>"
+                                   title="<?php echo esc_attr($post_title); ?>"><?php echo $post_title; ?></a>
                             </div>
                         </li>
 
-                        <?php wp_reset_query(); endwhile; ?>
+                        <?php 
+                        	endwhile;
+                        	wp_reset_postdata();
+                        ?>
                 </ul>
 
             <?php endif; ?>
@@ -131,24 +137,21 @@
             // The widget form
             ?>
             <p>
-                <label
-                    for="<?php echo $this->get_field_id( 'title' ); ?>"><?php echo __( 'Title:', 'swiftframework' ); ?></label>
-                <input id="<?php echo $this->get_field_id( 'title' ); ?>"
-                       name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo $title; ?>"
+                <label for="<?php echo esc_attr($this->get_field_id( 'title' )); ?>"><?php echo __( 'Title:', 'swiftframework' ); ?></label>
+                <input id="<?php echo esc_attr($this->get_field_id( 'title' )); ?>"
+                       name="<?php echo esc_attr($this->get_field_name( 'title' )); ?>" type="text" value="<?php echo esc_attr($title); ?>"
                        class="widefat"/>
             </p>
             <p>
-                <label
-                    for="<?php echo $this->get_field_id( 'number' ); ?>"><?php echo __( 'Number of items to show:', 'swiftframework' ); ?></label>
-                <input id="<?php echo $this->get_field_id( 'number' ); ?>"
-                       name="<?php echo $this->get_field_name( 'number' ); ?>" type="text"
-                       value="<?php echo $number; ?>" size="3"/>
+                <label for="<?php echo esc_attr($this->get_field_id( 'number' )); ?>"><?php echo __( 'Number of items to show:', 'swiftframework' ); ?></label>
+                <input id="<?php echo esc_attr($this->get_field_id( 'number' )); ?>"
+                       name="<?php echo esc_attr($this->get_field_name( 'number' )); ?>" type="text"
+                       value="<?php echo esc_attr($number); ?>" size="3"/>
             </p>
             <p>
-                <label
-                    for="<?php echo $this->get_field_id( 'category' ); ?>"><?php _e( 'Category', 'swiftframework' ); ?></label>
-                <select name="<?php echo $this->get_field_name( 'category' ); ?>"
-                        id="<?php echo $this->get_field_id( 'category' ); ?>" class="">
+                <label for="<?php echo esc_attr($this->get_field_id( 'category' )); ?>"><?php _e( 'Category', 'swiftframework' ); ?></label>
+                <select name="<?php echo esc_attr($this->get_field_name( 'category' )); ?>"
+                        id="<?php echo esc_attr($this->get_field_id( 'category' )); ?>" class="">
                     <?php
                         $options = sf_get_category_list( 'portfolio-category' );
                         foreach ( $options as $option ) {

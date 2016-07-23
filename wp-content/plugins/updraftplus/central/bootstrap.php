@@ -7,13 +7,6 @@ if (!defined('UPDRAFTPLUS_DIR')) die('No access.');
 // Load the listener class that we rely on to pick up messages
 if (!class_exists('UpdraftPlus_UpdraftCentral_Listener')) require_once('listener.php');
 
-// Load the commands classes - the commands that we want to have available
-
-// UpdraftPlus commands
-if (!class_exists('UpdraftPlus_RemoteControl_Commands')) require_once('updraftplus-commands.php');
-// Core UpdraftCentral commands
-if (!class_exists('UpdraftCentral_Core_Commands')) require_once('core-commands.php');
-
 class UpdraftPlus_UpdraftCentral_Main {
 
 	public function __construct() {
@@ -27,7 +20,9 @@ class UpdraftPlus_UpdraftCentral_Main {
 	
 		$command_classes = apply_filters('updraftplus_remotecontrol_command_classes', array(
 			'core' => 'UpdraftCentral_Core_Commands',
-			'updraftplus' => 'UpdraftPlus_RemoteControl_Commands'
+			'updraftplus' => 'UpdraftPlus_RemoteControl_Commands',
+			'updates' => 'UpdraftCentral_Updates_Commands',
+			'users' => 'UpdraftCentral_Users_Commands',
 		));
 	
 		// Remote control keys
@@ -317,12 +312,12 @@ class UpdraftPlus_UpdraftCentral_Main {
 					);
 				}
 				
-				$response = json_decode($sent_key['body'], true);
+				$response = json_decode(wp_remote_retrieve_body($sent_key), true);
 
 				if (!is_array($response) || !isset($response['key_id']) || !isset($response['key_public'])) {
 					return array(
 						'r' => sprintf(__('A key was created, but the attempt to register it with %s was unsuccessful - please try again later.', 'updraftplus'), (string)$post_it_description),
-						'raw' => $sent_key['body']
+						'raw' => wp_remote_retrieve_body($sent_key)
 					);
 				}
 				

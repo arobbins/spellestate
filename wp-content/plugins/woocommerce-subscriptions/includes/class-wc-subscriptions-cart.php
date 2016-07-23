@@ -41,6 +41,13 @@ class WC_Subscriptions_Cart {
 	private static $recurring_shipping_packages = array();
 
 	/**
+	 * A cache of the calculated shipping package rates
+	 *
+	 * @since 2.0.18
+	 */
+	 private static $shipping_rates = array();
+
+	/**
 	 * Bootstraps the class and hooks required actions & filters.
 	 *
 	 * @since 1.0
@@ -81,11 +88,18 @@ class WC_Subscriptions_Cart {
 
 		add_filter( 'woocommerce_cart_needs_shipping', __CLASS__ . '::cart_needs_shipping', 11, 1 );
 
+		// Remove recurring shipping methods stored in the session whenever a subscription product is removed from the cart
+		add_action( 'woocommerce_remove_cart_item', array( __CLASS__, 'maybe_reset_chosen_shipping_methods' ) );
+		add_action( 'woocommerce_before_cart_item_quantity_zero', array( __CLASS__, 'maybe_reset_chosen_shipping_methods' ) );
+
 		// Massage our shipping methods into the format used by WC core (we can't use normal form elements to do this as WC overrides them)
 		add_action( 'woocommerce_checkout_update_order_review', array( __CLASS__, 'add_shipping_method_post_data' ) );
 
 		// Make sure we use our recurring shipping method for recurring shipping calculations not the default method
 		add_filter( 'woocommerce_shipping_chosen_method', array( __CLASS__, 'set_chosen_shipping_method' ), 10, 2 );
+
+		// Cache package rates. Hook in early to ensure we get a full set of rates.
+		add_filter( 'woocommerce_package_rates', __CLASS__ . '::cache_package_rates', 1, 2 );
 
 		// When WooCommerce calculates rates for a recurring shipping package, only return the recurring shipping package rates
 		add_filter( 'woocommerce_package_rates', __CLASS__ . '::filter_package_rates', 10, 2 );
@@ -93,6 +107,9 @@ class WC_Subscriptions_Cart {
 		// When WooCommerce determines the taxable address only return pick up shipping methods chosen for the recurring cart being calculated.
 		add_filter( 'woocommerce_local_pickup_methods', __CLASS__ . '::filter_recurring_cart_chosen_shipping_method', 100 ,1 );
 		add_filter( 'wc_shipping_local_pickup_plus_chosen_shipping_methods', __CLASS__ . '::filter_recurring_cart_chosen_shipping_method', 10 ,1 );
+
+		// Validate chosen recurring shipping methods
+		add_action( 'woocommerce_after_checkout_validation', __CLASS__ . '::validate_recurring_shipping_methods' );
 	}
 
 	/**
@@ -143,9 +160,8 @@ class WC_Subscriptions_Cart {
 			// For original calculations, we need the items price to account for sign-up fees and/or free trial
 			if ( 'none' == self::$calculation_type ) {
 
-				// Use the cart value first, then fall back to the product value, as plugins may override the cart value (and even Subscriptions itself does with WC_Subscriptions_Synchroniser setting a free trial)
-				$sign_up_fee  = ( isset( $product->subscription_sign_up_fee ) ) ? $product->subscription_sign_up_fee : WC_Subscriptions_Product::get_sign_up_fee( $product );
-				$trial_length = ( isset( $product->subscription_trial_length ) ) ? $product->subscription_trial_length : WC_Subscriptions_Product::get_trial_length( $product );
+				$sign_up_fee  = WC_Subscriptions_Product::get_sign_up_fee( $product );
+				$trial_length = WC_Subscriptions_Product::get_trial_length( $product );
 
 				if ( $trial_length > 0 ) {
 					$price = $sign_up_fee;
@@ -209,6 +225,9 @@ class WC_Subscriptions_Cart {
 
 		$recurring_carts = array();
 
+		// Back up the shipping method. Chances are WC is going to wipe the chosen_shipping_methods data
+		WC()->session->set( 'wcs_shipping_methods', WC()->session->get( 'chosen_shipping_methods', array() ) );
+
 		// Now let's calculate the totals for each group of subscriptions
 		self::$calculation_type = 'recurring_total';
 
@@ -258,8 +277,12 @@ class WC_Subscriptions_Cart {
 		self::$calculation_type = self::$recurring_cart_key = 'none';
 
 		// We need to reset the packages and totals stored in WC()->shipping too
+		WC()->shipping->reset_shipping();
 		self::maybe_restore_shipping_methods();
 		WC()->cart->calculate_shipping();
+
+		// We no longer need our backup of shipping methods
+		unset( WC()->session->wcs_shipping_methods );
 
 		// If there is no sign-up fee and a free trial, and no products being purchased with the subscription, we need to zero the fees for the first billing period
 		if ( 0 == self::get_cart_subscription_sign_up_fee() && self::all_cart_items_have_free_trial() ) {
@@ -327,8 +350,6 @@ class WC_Subscriptions_Cart {
 	public static function cart_needs_shipping( $needs_shipping ) {
 
 		if ( self::cart_contains_subscription() ) {
-			// Back up the shipping method. Chances are WC is going to wipe the chosen_shipping_methods data
-			WC()->session->set( 'ost_shipping_methods', WC()->session->get( 'chosen_shipping_methods' ) );
 			if ( 'none' == self::$calculation_type ) {
 				if ( true == $needs_shipping && ! self::charge_shipping_up_front() && ! self::cart_contains_subscriptions_needing_shipping() ) {
 					$needs_shipping = false;
@@ -348,6 +369,32 @@ class WC_Subscriptions_Cart {
 	}
 
 	/**
+	 * Remove all recurring shipping methods stored in the session (i.e. methods with a key that is a string)
+	 *
+	 * This is attached as a callback to hooks triggered whenever a product is removed from the cart.
+	 *
+	 * @param $cart_item_key string The key for a cart item about to be removed from the cart.
+	 * @return null
+	 * @since 2.0.15
+	 */
+	public static function maybe_reset_chosen_shipping_methods( $cart_item_key ) {
+
+		if ( isset( WC()->cart->cart_contents[ $cart_item_key ] ) ) {
+
+			$chosen_methods = WC()->session->get( 'chosen_shipping_methods', array() );
+
+			// Remove all recurring methods
+			foreach ( $chosen_methods as $key => $methods ) {
+				if ( ! is_numeric( $key ) ) {
+					unset( $chosen_methods[ $key ] );
+				}
+			}
+
+			WC()->session->set( 'chosen_shipping_methods', $chosen_methods );
+		}
+	}
+
+	/**
 	 * Parse recurring shipping rates from the front end and put them into the $_POST['shipping_method'] used by WooCommerce.
 	 *
 	 * When WooCommerce takes the value of inputs for shipping methods selection from the cart and checkout pages, it uses a
@@ -363,6 +410,10 @@ class WC_Subscriptions_Cart {
 	 * @since 2.0.12
 	 */
 	public static function add_shipping_method_post_data() {
+
+		if ( ! WC_Subscriptions::is_woocommerce_pre( '2.6' ) ) {
+			return;
+		}
 
 		check_ajax_referer( 'update-order-review', 'security' );
 
@@ -398,7 +449,7 @@ class WC_Subscriptions_Cart {
 	 */
 	public static function set_chosen_shipping_method( $default_method, $available_methods, $package_index = 0 ) {
 
-		$chosen_methods = WC()->session->get( 'chosen_shipping_methods' );
+		$chosen_methods = WC()->session->get( 'chosen_shipping_methods', array() );
 
 		$recurring_cart_package_key = self::get_recurring_shipping_package_key( self::$recurring_cart_key, $package_index );
 
@@ -431,8 +482,8 @@ class WC_Subscriptions_Cart {
 
 			$default_method = current( array_keys( $prioritized_methods ) );
 
-		// Set the chosen shipping method (if available) to workaround a bug with WC_Shipping::get_default_method() in WC < 2.6 which leads to the default shipping method always being used instead of a valid chosen shipping method
-		} elseif ( isset( $chosen_methods[ $package_index ] ) && $default_method !== $chosen_methods[ $package_index ] && WC_Subscriptions::is_woocommerce_pre( '2.6' ) ) {
+		// Set the chosen shipping method (if available) to workaround WC_Shipping::get_default_method() setting the default shipping method whenever method count changes
+		} elseif ( isset( $chosen_methods[ $package_index ] ) && $default_method !== $chosen_methods[ $package_index ] ) {
 			$default_method = $chosen_methods[ $package_index ];
 		}
 
@@ -485,7 +536,7 @@ class WC_Subscriptions_Cart {
 
 		if ( 'none' !== self::$recurring_cart_key ) {
 
-			$chosen_methods                  = WC()->session->get( 'chosen_shipping_methods' );
+			$chosen_methods                  = WC()->session->get( 'chosen_shipping_methods', array() );
 			$recurring_cart_shipping_methods = array();
 			$recurring_package_count         = 0;
 
@@ -769,7 +820,7 @@ class WC_Subscriptions_Cart {
 	 */
 	public static function cart_needs_payment( $needs_payment, $cart ) {
 
-		if ( false === $needs_payment && self::cart_contains_subscription() && $cart->total == 0 && 'yes' !== get_option( WC_Subscriptions_Admin::$option_prefix . '_turn_off_automatic_payments', 'no' ) ) {
+		if ( false === $needs_payment && self::cart_contains_subscription() && $cart->total == 0 && false === WC_Subscriptions_Switcher::cart_contains_switches() && 'yes' !== get_option( WC_Subscriptions_Admin::$option_prefix . '_turn_off_automatic_payments', 'no' ) ) {
 
 			$recurring_total = 0;
 			$is_one_period   = true;
@@ -847,16 +898,17 @@ class WC_Subscriptions_Cart {
 		// If we had one time shipping in the carts, we may have wiped the WC chosen shippings. Restore them.
 		self::maybe_restore_chosen_shipping_method();
 
-		// Now make sure the correct shipping method is set
-		$chosen_shipping_methods = WC()->session->get( 'chosen_shipping_methods', array() );
-
 		if ( isset( $_POST['shipping_method'] ) && is_array( $_POST['shipping_method'] ) ) {
+
+			// Now make sure the correct shipping method is set
+			$chosen_shipping_methods = WC()->session->get( 'chosen_shipping_methods', array() );
+
 			foreach ( $_POST['shipping_method'] as $i => $value ) {
 				$chosen_shipping_methods[ $i ] = wc_clean( $value );
 			}
-		}
 
-		WC()->session->set( 'chosen_shipping_methods', $chosen_shipping_methods );
+			WC()->session->set( 'chosen_shipping_methods', $chosen_shipping_methods );
+		}
 	}
 
 	/**
@@ -1034,6 +1086,121 @@ class WC_Subscriptions_Cart {
 		}
 
 		return $shipping_methods;
+	}
+
+	/**
+	 * Validate the chosen recurring shipping methods for each recurring shipping package.
+	 * Ensures there is at least one chosen shipping method and that the chosen method is valid considering the available
+	 * package rates.
+	 *
+	 * @since 2.0.14
+	 */
+	public static function validate_recurring_shipping_methods() {
+
+		$shipping_methods     = WC()->checkout()->shipping_methods;
+		$added_invalid_notice = false;
+		$standard_packages    = WC()->shipping->get_packages();
+
+		foreach ( WC()->cart->recurring_carts as $recurring_cart_key => $recurring_cart ) {
+
+			if ( false === $recurring_cart->needs_shipping() || 0 == $recurring_cart->next_payment_date ) {
+				continue;
+			}
+
+			$packages = $recurring_cart->get_shipping_packages();
+
+			foreach ( $packages as $package_index => $base_package ) {
+				$package = self::get_calculated_shipping_for_package( $base_package );
+
+				if ( ( isset( $standard_packages[ $package_index ] ) && $package['rates'] == $standard_packages[ $package_index ]['rates'] ) && apply_filters( 'wcs_cart_totals_shipping_html_price_only', true, $package, WC()->cart->recurring_carts[ $recurring_cart_key ] ) ) {
+					// the recurring package rates match the initial package rates, there won't be a selected shipping method for this recurring cart package
+					// move on to the next package
+					continue;
+				}
+
+				$recurring_shipping_package_key = WC_Subscriptions_Cart::get_recurring_shipping_package_key( $recurring_cart_key, $package_index );
+
+				if ( ! isset( $package['rates'][ $shipping_methods[ $recurring_shipping_package_key ] ] ) ) {
+
+					if ( ! $added_invalid_notice ) {
+						wc_add_notice( __( 'Invalid recurring shipping method.', 'woocommerce-subscriptions' ), 'error' );
+						$added_invalid_notice = true;
+					}
+
+					WC()->checkout()->shipping_methods[ $recurring_shipping_package_key ] = '';
+				}
+			}
+		}
+	}
+
+	/**
+	 * Checks the cart to see if it contains a specific product.
+	 *
+	 * @param int The product ID or variation ID to look for.
+	 * @return bool Whether the product is in the cart.
+	 * @since 2.0.13
+	 */
+	public static function cart_contains_product( $product_id ) {
+
+		$cart_contains_product = false;
+
+		if ( ! empty( WC()->cart->cart_contents ) ) {
+			foreach ( WC()->cart->cart_contents as $cart_item ) {
+				if ( wcs_get_canonical_product_id( $cart_item ) == $product_id ) {
+					$cart_contains_product = true;
+					break;
+				}
+			}
+		}
+
+		return $cart_contains_product;
+	}
+
+	/**
+	 * Cache the package rates calculated by @see WC_Shipping::calculate_shipping_for_package() to avoid multiple calls of calculate_shipping_for_package() per request.
+	 *
+	 * @param array $rates A set of WC_Shipping_Rate objects.
+	 * @param array $package A shipping package in the form returned by @see WC_Cart->get_shipping_packages()
+	 * @return array $rates An unaltered set of WC_Shipping_Rate objects passed to the function
+	 * @since 2.0.18
+	 */
+	public static function cache_package_rates( $rates, $package ) {
+		self::$shipping_rates[ self::get_package_shipping_rates_cache_key( $package ) ] = $rates;
+
+		return $rates;
+	}
+
+	/**
+	 * Calculates the shipping rates for a package.
+	 *
+	 * This function will check cached rates based on a hash of the package contents to avoid re-calculation per page load.
+	 * If there are no rates stored in the cache for this package, it will fall back to @see WC_Shipping::calculate_shipping_for_package()
+	 *
+	 * @param array $package A shipping package in the form returned by @see WC_Cart->get_shipping_packages()
+	 * @return array $package
+	 * @since 2.0.18
+	 */
+	public static function get_calculated_shipping_for_package( $package ) {
+		$key = self::get_package_shipping_rates_cache_key( $package );
+
+		if ( isset( self::$shipping_rates[ $key ] ) ) {
+			$package['rates'] = apply_filters( 'woocommerce_package_rates', self::$shipping_rates[ $key ], $package );
+		} else {
+			$package = WC()->shipping->calculate_shipping_for_package( $package );
+		}
+
+		return $package;
+	}
+
+	/**
+	 * Generate a unqiue package key for a given shipping package to be used for caching package rates.
+	 *
+	 * @param array $package A shipping package in the form returned by WC_Cart->get_shipping_packages().
+	 * @return string key hash
+	 * @since 2.0.18
+	 */
+	private static function get_package_shipping_rates_cache_key( $package ) {
+		return md5( implode( array_keys( $package['contents'] ) ) );
 	}
 
 	/* Deprecated */
@@ -2032,14 +2199,12 @@ class WC_Subscriptions_Cart {
 	 * method to a key that's not going to get wiped by WC's method, and then later restore it.
 	 */
 	public static function maybe_restore_chosen_shipping_method() {
-		$onetime_shipping = WC()->session->get( 'ost_shipping_methods', false );
-		$chosen_shipping_methods = WC()->session->get( 'chosen_shipping_methods', array() );
+		$chosen_shipping_method_cache = WC()->session->get( 'wcs_shipping_methods', false );
+		$chosen_shipping_methods      = WC()->session->get( 'chosen_shipping_methods', array() );
 
-		if ( $onetime_shipping && empty( $chosen_shipping_methods ) ) {
-			WC()->session->set( 'chosen_shipping_methods', $onetime_shipping );
-			unset( WC()->session->ost_shipping_methods );
+		if ( false !== $chosen_shipping_method_cache && empty( $chosen_shipping_methods ) ) {
+			WC()->session->set( 'chosen_shipping_methods', $chosen_shipping_method_cache );
 		}
 	}
 }
 WC_Subscriptions_Cart::init();
-

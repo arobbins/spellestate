@@ -28,7 +28,7 @@
             $el_class = $this->getExtraClass( $el_class );
             $width    = spb_translateColumnWidthToSpan( $width );
 
-            $output .= "\n\t" . '<div class="spb_latest_tweets_widget directory-results user-listing-results ' . $width . $el_class . '"   data-ajax-url="' . admin_url('admin-ajax.php') . '" >';
+            $output .= "\n\t" . '<div class="spb_directory_user_listings_widget directory-results user-listing-results ' . $width . $el_class . '"   data-ajax-url="' . admin_url('admin-ajax.php') . '" >';
             $output .= "\n\t\t" . '<div class="spb-asset-content spb_wrapper latest-tweets-wrap clearfix">';
             $output .= "\n\t\t\t" . '<ul class="tweet-wrap">' . $users_listings_output . "</ul>";
             $output .= "\n\t\t" . '</div> ' . $this->endBlockComment( '.spb_wrapper' );
@@ -93,7 +93,7 @@
             ), $atts ) );
             $output = '';
 
-
+            $current_url = home_url(add_query_arg(array(),$wp->request));
             $el_class = $this->getExtraClass( $el_class );
             $width    = spb_translateColumnWidthToSpan( $width );
             $ajax_url = admin_url( 'admin-ajax.php' );
@@ -185,9 +185,6 @@
                 } else {
                     $dir_location_val = "";
                 }
-
-                
-                $current_url = home_url(add_query_arg(array(),$wp->request));
 
                 //Map Filter
                 $output .= '<form action="" method="post" class="directory-search-form" data-url="' . $current_url . '" data-page-base="' . $wp_rewrite->pagination_base . '">';

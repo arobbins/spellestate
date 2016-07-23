@@ -658,19 +658,15 @@ class WC_Subscriptions_Product {
 
 		if ( $subscription_length > 0 ) {
 
-			$subscription_period = self::get_period( $product_id );
-			$trial_period        = self::get_trial_period( $product_id );
-			$trial_length        = self::get_trial_length( $product_id );
-
 			if ( empty( $from_date ) ) {
 				$from_date = gmdate( 'Y-m-d H:i:s' );
 			}
 
-			if ( $trial_length > 0 ) {
-				$from_date = gmdate( 'Y-m-d H:i:s', wcs_add_time( $trial_length, $trial_period, strtotime( $from_date ) ) );
+			if ( self::get_trial_length( $product_id ) > 0 ) {
+				$from_date = self::get_trial_expiration_date( $product_id, $from_date );
 			}
 
-			$expiration_date = date( 'Y-m-d H:i:s', wcs_add_time( $subscription_length, $subscription_period, strtotime( $from_date ) ) );
+			$expiration_date = gmdate( 'Y-m-d H:i:s', wcs_add_time( $subscription_length, self::get_period( $product_id ), strtotime( $from_date ) ) );
 
 		} else {
 
@@ -960,6 +956,22 @@ class WC_Subscriptions_Product {
 			foreach ( $variation_ids as $variation_id ) {
 				update_post_meta( $variation_id, $meta_key, stripslashes( $data['value'] ) );
 			}
+		} else if ( in_array( $meta_key, array( '_regular_price_increase', '_regular_price_decrease' ) ) ) {
+			$operator = ( '_regular_price_increase' == $meta_key ) ? '+' : '-';
+			$value    = wc_clean( $data['value'] );
+
+			foreach ( $variation_ids as $variation_id ) {
+				 $subscription_price = get_post_meta( $variation_id, '_subscription_price', true );
+
+				if ( '%' === substr( $value, -1 ) ) {
+					$percent = wc_format_decimal( substr( $value, 0, -1 ) );
+					$subscription_price += ( ( $subscription_price / 100 ) * $percent ) * "{$operator}1";
+				} else {
+					$subscription_price += $value * "{$operator}1";
+				}
+
+				update_post_meta( $variation_id, '_subscription_price', $subscription_price );
+			}
 		}
 	}
 
@@ -1027,7 +1039,7 @@ class WC_Subscriptions_Product {
 			$base_tax_rates = $tax->get_shop_base_rate( $product->tax_class );
 			$tax_rates      = $tax->get_rates( $product->get_tax_class() ); // This will get the base rate unless we're on the checkout page
 
-			if ( $deduct_base_taxes && get_option( 'woocommerce_prices_include_tax' ) == 'yes' ) {
+			if ( $deduct_base_taxes && wc_prices_include_tax() ) {
 
 				$base_taxes = $tax->calc_tax( $price, $base_tax_rates, true );
 				$taxes      = $tax->calc_tax( $price - array_sum( $base_taxes ), $tax_rates, false );

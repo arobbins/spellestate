@@ -5,7 +5,7 @@
 	*	Meta Box Functions
 	*	------------------------------------------------
 	*	Swift Framework
-	* 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+	* 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
 	*
 	*/
 	
@@ -22,7 +22,23 @@
 		$default_sidebar_config = $sf_options['default_sidebar_config'];
 		$default_left_sidebar = $sf_options['default_left_sidebar'];
 		$default_right_sidebar = $sf_options['default_right_sidebar'];
-	
+		$default_title_style = 'standard';
+		$default_title_text_style = 'dark';
+		$default_title_text_align = 'left';
+		if ( isset( $sf_options['default_page_title_style'] ) ) {
+		    $default_title_style = $sf_options['default_page_title_style'];
+		}
+		if ( isset( $sf_options['default_page_heading_style'] ) ) {
+			$default_title_style = $sf_options['default_page_heading_style'];
+		}
+		if ( isset( $sf_options['default_page_heading_text_style'] ) ) {
+			$default_title_text_style = $sf_options['default_page_heading_text_style'];
+		}
+		if ( isset( $sf_options['default_page_heading_text_align'] ) ) {
+			$default_title_text_align = $sf_options['default_page_heading_text_align'];
+		}
+		
+		
 		if ($default_show_page_heading == "") {
 			$default_show_page_heading = 1;
 		}
@@ -691,7 +707,7 @@
 						'fancy-tabbed'	=> __('Hero Tabbed', 'swiftframework'),
 					),
 					'multiple' => false,
-					'std'  => 'standard',
+					'std'  => $default_title_style,
 					'desc' => __('Choose the heading style.', 'swiftframework')
 				),
 	
@@ -769,7 +785,7 @@
 						'dark'		=> __('Dark', 'swiftframework')
 					),
 					'multiple' => false,
-					'std'  => 'light',
+					'std'  => $default_title_text_style,
 					'desc' => __('If you uploaded an image in the option above, choose light/dark styling for the text heading text here.', 'swiftframework')
 				),
 	
@@ -784,7 +800,7 @@
 						'right'		=> __('Right', 'swiftframework')
 					),
 					'multiple' => false,
-					'std'  => 'left',
+					'std'  => $default_title_text_align,
 					'desc' => __('Choose the text alignment for the hero heading.', 'swiftframework')
 				),
 	
@@ -1242,7 +1258,7 @@
 					'name' => __('Extra Paragraph Spacing', 'swiftframework'),
 					'id'   => "{$prefix}extra_paragraph_spacing",
 					'type' => 'checkbox',
-					'desc' => __('Check this box to enable extra spacing around paragraph elements within the post content.', 'swiftframework'),
+					'desc' => __('Check this box to enable extra spacing around paragraph elements within the post content. Only for posts with no sidebars.', 'swiftframework'),
 					'std' => 0,
 				),
 	

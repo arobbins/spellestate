@@ -286,6 +286,9 @@ img.alignleft, img.alignright, img.aligncenter {
     height: 36px;
     line-height: 36px;
 }
+#spb #spb_edit_form .row-fluid .input-field.lb_slider_input input {
+    text-align: center;
+}
 #spb #spb_edit_form .row-fluid .input-field .select-wrapper {
     width: 200px;
     float: right;
@@ -1759,12 +1762,12 @@ option.alert-block {
     cursor: pointer;
 }
 
-.gallery_widget_attached_images_list {
+.sf_gallery_widget_attached_images_list {
     margin: 0;
 }
 
 .gallery_widget_img_select li,
-.gallery_widget_attached_images_list li {
+.sf_gallery_widget_attached_images_list li {
     position: relative;
     background: #ffffff;
     border: 1px solid #DFDFDF;
@@ -1783,14 +1786,14 @@ option.alert-block {
 }
 
 .gallery_widget_img_select li img,
-.gallery_widget_attached_images_list li img {
+.sf_gallery_widget_attached_images_list li img {
     max-height: 75px;
     display: inline-block;
     vertical-align: middle;
 }
 
 .gallery_widget_img_select .img-added,
-.gallery_widget_attached_images_list .added .img-added {
+.sf_gallery_widget_attached_images_list .added .img-added {
     display: none;
     line-height: 1.5em;
 }
@@ -1804,7 +1807,7 @@ option.alert-block {
     font-size: 11px;
 }
 
-.gallery_widget_attached_images_list .img_added {
+.sf_gallery_widget_attached_images_list .img_added {
     display: none;
 }
 
@@ -2081,7 +2084,7 @@ li.spb_no_templates span {
     height: auto;
 }
 
-.spb_media_tab #spb_media_list li a.icon-remove, .gallery_widget_attached_images_list .icon-remove {
+.spb_media_tab #spb_media_list li a.icon-remove, .sf_gallery_widget_attached_images_list .icon-remove {
     display: none;
 }
 
@@ -2319,7 +2322,7 @@ li.spb_no_templates span {
     text-align: center;
 }
 
-.spb_image_banner .spb_param_value.textarea_html {
+.spb_image_banner .spb_param_value.textarea_html , .spb_multilayer_parallax_layer .spb_param_value.textarea_html {
     display: none;
 }
 
@@ -2372,7 +2375,6 @@ li.spb_no_templates span {
 
 .spb_tabs_holder .container-helper {
     margin-top: 1em;
-    left: 0
 }
 
 .spb_ui-state-active .container-helper {
@@ -3748,7 +3750,7 @@ li:hover .sf-close-image-bar{
 
 .lb_slider_input {
     float: right;
-    width: 26px;
+    width: 40px;
     margin-top: 0px;
     color: #b6b6b6;
 }
@@ -5055,7 +5057,7 @@ input:not([type]):focus:not([readonly]) + label, input[type=text]:focus:not([rea
     float: left;
     border-radius: 4px;
     display: none;
-     padding: 10px 5px 10px 5px;
+     padding: 10px 5px 10px 15px;
     position: absolute;
     bottom:-20px;
 }

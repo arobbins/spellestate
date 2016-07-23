@@ -1108,6 +1108,47 @@ jQuery(document).ready(function($){
 		$('#updraftcentral_keycreate_altmethod_moreinfo').slideDown();
 	});
 	
+	// Update WebDAV URL as user edits
+	$(".updraft_webdav_settings").on("change keyup paste", function(){
+		
+		var updraft_webdav_settings = [];
+		$('.updraft_webdav_settings').each(function(index, item) {
+			
+			var id = $(item).attr('id');
+			
+			if (id && 'updraft_webdav_settings_' == id.substring(0, 24)) {
+				var which_one = id.substring(24);
+				updraft_webdav_settings[which_one] = this.value;
+			}
+		});
+		
+		var updraft_webdav_url = "";
+		var host = "@";
+		var slash = "/";
+		var colon = ":";
+		var colon_port = ":";
+		
+		if (updraft_webdav_settings['host'].indexOf("@") >= 0 || updraft_webdav_settings['host'] === "" ) {
+			host = "";
+		}
+		
+		if (updraft_webdav_settings['path'].indexOf("/") == 0 || updraft_webdav_settings['path'] === "" ) {
+			slash = "";
+		}
+		
+		if (updraft_webdav_settings['user'] === "" || updraft_webdav_settings['pass'] === "" ) {
+			colon = "";
+		}
+		
+		if (updraft_webdav_settings['host'] === "" || updraft_webdav_settings['port'] === "") {
+			colon_port = "";
+		}
+		
+		updraft_webdav_url = updraft_webdav_settings['webdav'] + updraft_webdav_settings['user'] + colon + updraft_webdav_settings['pass'] + host + updraft_webdav_settings['host'] + colon_port + updraft_webdav_settings['port'] + slash + updraft_webdav_settings['path'];
+		
+		$('#updraft_webdav_settings_url').val(updraft_webdav_url);
+	});
+	
 	$('#updraft-navtab-backups-content').on('click', '.updraft_existing_backups .updraft_existing_backups_row', function(e) {
 		if (! e.ctrlKey && ! e.metaKey) return;
 		$(this).toggleClass('backuprowselected');
@@ -1135,31 +1176,31 @@ jQuery(document).ready(function($){
 		});
 	});
 	
-	jQuery('#updraft-navtab-settings-content select.updraft_interval, #updraft-navtab-settings-content select.updraft_interval_database').change(function() {
+	$('#updraft-navtab-settings-content select.updraft_interval, #updraft-navtab-settings-content select.updraft_interval_database').change(function() {
 		updraft_check_same_times();
 	});
 	
-	jQuery('#backupnow_includefiles_showmoreoptions').click(function(e) {
+	$('#backupnow_includefiles_showmoreoptions').click(function(e) {
 		e.preventDefault();
-		jQuery('#backupnow_includefiles_moreoptions').toggle();
+		$('#backupnow_includefiles_moreoptions').toggle();
 	});
 	
-	jQuery('#updraft-navtab-backups-content a.updraft_diskspaceused_update').click(function(e) {
+	$('#updraft-navtab-backups-content a.updraft_diskspaceused_update').click(function(e) {
 		e.preventDefault();
 		updraftplus_diskspace();
 	});
 	
-	jQuery('#updraft-navtab-backups-content a.updraft_uploader_toggle').click(function(e) {
+	$('#updraft-navtab-backups-content a.updraft_uploader_toggle').click(function(e) {
 		e.preventDefault();
-		jQuery('#updraft-plupload-modal').slideToggle();
+		$('#updraft-plupload-modal').slideToggle();
 	});
 	
-	jQuery('#updraft-navtab-backups-content a.updraft_rescan_local').click(function(e) {
+	$('#updraft-navtab-backups-content a.updraft_rescan_local').click(function(e) {
 		e.preventDefault();
 		updraft_updatehistory(1, 0);
 	});
 	
-	jQuery('#updraft-navtab-backups-content a.updraft_rescan_remote').click(function(e) {
+	$('#updraft-navtab-backups-content a.updraft_rescan_remote').click(function(e) {
 		e.preventDefault();
 		updraft_updatehistory(1, 1);
 	});
@@ -2232,8 +2273,8 @@ jQuery(document).ready(function($){
 		e.preventDefault();
 		$.blockUI({ message: '<div style="margin: 8px; font-size:150%;"><img src="'+updraftlion.ud_url+'/images/udlogo-rotating.gif" height="80" width="80" style="padding-bottom:10px;"><br>'+updraftlion.saving+'</div>'});
 		
-		//Gather data
-		var form_data = $("#updraft-navtab-settings-content form input, #updraft-navtab-settings-content form textarea, #updraft-navtab-settings-content form select").serialize();
+		// Gather data. Excluding the unnecessary 'action' input avoids triggering a very mis-conceived mod_security rule seen on one user's site
+		var form_data = $("#updraft-navtab-settings-content form input[name!='action'], #updraft-navtab-settings-content form textarea, #updraft-navtab-settings-content form select").serialize();
 		
 		//include unchecked checkboxes. user filter to only include unchecked boxes.
 		$.each($('#updraft-navtab-settings-content form input[type=checkbox]')
@@ -2389,7 +2430,7 @@ jQuery(document).ready(function($){
 		},
 		teardown: function(namespaces)
 		{
-			$(this).unbind("touchstart click.triple", data, tripleHandler);
+			$(this).unbind("touchstart click.triple", tripleHandler);
 		}
 	};
 })(jQuery);

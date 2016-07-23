@@ -82,7 +82,11 @@ class UpdraftPlus_ftp_wrapper {
 		while ($ret == FTP_MOREDATA) {
 			if (is_a($updraftplus, 'UpdraftPlus')) {
 				$new_size = ftell($fh);
-				if ($new_size - $existing_size > 524288) {
+				$record_after = 524288;
+				if ($existing_size > 2097152) {
+					$record_after = ($existing_size > 4194304) ? 2097152 : 1048576;
+				}
+				if ($new_size - $existing_size > $record_after) {
 					$existing_size = $new_size;
 					$percent = round(100*$new_size/$file_size,1);
 					$updraftplus->record_uploaded_chunk($percent, '', $local_file_path);

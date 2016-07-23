@@ -92,7 +92,7 @@
 
             while ( $testimonials->have_posts() ) : $testimonials->the_post();
 
-                $testimonial_text         = get_the_content();
+                $testimonial_text         = apply_filters( 'the_content', get_the_content() );
                 $testimonial_cite         = sf_get_post_meta( $post->ID, 'sf_testimonial_cite', true );
                 $testimonial_cite_subtext = sf_get_post_meta( $post->ID, 'sf_testimonial_cite_subtext', true );
                 $testimonial_image        = rwmb_meta( 'sf_testimonial_cite_image', 'type=image', $post->ID );
@@ -127,7 +127,6 @@
 
             endwhile;
 
-            wp_reset_query();
             wp_reset_postdata();
 
             $items .= '</ul>';
@@ -252,7 +251,7 @@
             "heading"     => __( "Column count", 'swift-framework-plugin' ),
             "param_name"  => "columns",
             "value"       => array( "5", "4", "3", "2", "1" ),
-            "required"       => array("display_type", "!=", "masonry"),
+            "required"       => array("display_type", "=", "masonry"),
             "std"         => '3',
             "description" => __( "How many columns to display.", 'swift-framework-plugin' )
         );

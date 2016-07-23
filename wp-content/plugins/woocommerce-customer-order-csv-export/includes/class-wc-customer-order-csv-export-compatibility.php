@@ -18,21 +18,20 @@
  *
  * @package     WC-Customer-Order-CSV-Export/Generator
  * @author      SkyVerge
- * @copyright   Copyright (c) 2012-2015, SkyVerge, Inc.
+ * @copyright   Copyright (c) 2012-2016, SkyVerge, Inc.
  * @license     http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+defined( 'ABSPATH' ) or exit;
 
 /**
- * Customer/Order CSV Export Generator
+ * Customer/Order CSV Export Compatibility
  *
- * Converts customer/order data into CSV
+ * Class that handles compatibility with legacy export formats
  *
  * @since 3.0
  */
 class WC_Customer_Order_CSV_Export_Compatibility {
-
 
 	/** @var string order export format */
 	private $order_format;
@@ -42,10 +41,11 @@ class WC_Customer_Order_CSV_Export_Compatibility {
 
 
 	/**
+	 * Constructor
+	 *
 	 * Check if using import or legacy export format and add filters as needed
 	 *
 	 * @since 3.0
-	 * @return \WC_Customer_Order_CSV_Export_Compatibility
 	 */
 	public function __construct() {
 
@@ -78,7 +78,57 @@ class WC_Customer_Order_CSV_Export_Compatibility {
 
 		if ( 'import' == $this->order_format ) {
 
-			// CSV import format
+			$headers = array(
+				'order_id'                  => 'id',
+				'order_number'              => 'order_number',
+				'order_number_formatted'    => 'order_number_formatted',
+				'order_date'                => 'created_at',
+				'status'                    => 'status',
+				'order_total'               => 'total',
+				'shipping_total'            => 'total_shipping',
+				'tax_total'                 => 'cart_tax',
+				'shipping_tax_total'        => 'shipping_tax',
+				'discount_total'            => 'total_discount',
+				'refunded_total'            => 'total_refunded',
+				'payment_method'            => 'payment_method',
+				'order_currency'            => 'currency',
+				'customer_id'               => 'customer_user',
+				'billing_first_name'        => 'billing_first_name',
+				'billing_last_name'         => 'billing_last_name',
+				'billing_email'             => 'billing_email',
+				'billing_phone'             => 'billing_phone',
+				'billing_address_1'         => 'billing_address_1',
+				'billing_address_2'         => 'billing_address_2',
+				'billing_postcode'          => 'billing_postcode',
+				'billing_city'              => 'billing_city',
+				'billing_state'             => 'billing_state',
+				'billing_country'           => 'billing_country',
+				'billing_company'           => 'billing_company',
+				'shipping_first_name'       => 'shipping_first_name',
+				'shipping_last_name'        => 'shipping_last_name',
+				'shipping_address_1'        => 'shipping_address_1',
+				'shipping_address_2'        => 'shipping_address_2',
+				'shipping_postcode'         => 'shipping_postcode',
+				'shipping_city'             => 'shipping_city',
+				'shipping_state'            => 'shipping_state',
+				'shipping_country'          => 'shipping_country',
+				'shipping_company'          => 'shipping_company',
+				'customer_note'             => 'note',
+				'line_items'                => 'line_items',
+				'shipping_items'            => 'shipping_lines',
+				'tax_items'                 => 'tax_lines',
+				'fee_items'                 => 'fee_lines',
+				'coupon_items'              => 'coupon_lines',
+				'refunds'                   => 'refunds',
+				'order_notes'               => 'order_notes',
+				'download_permissions'      => 'download_permissions_granted',
+			);
+
+		}
+
+		else if ( 'legacy_import' == $this->order_format ) {
+
+			// Legacy CSV import format
 			$headers = array(
 				'order_id'               => 'order_id',
 				'order_number_formatted' => 'order_number_formatted',
@@ -90,8 +140,7 @@ class WC_Customer_Order_CSV_Export_Compatibility {
 				'fee_total'              => 'order_fees',
 				'fee_tax_total'          => 'order_fee_tax',
 				'tax_total'              => 'order_tax',
-				'cart_discount'          => 'cart_discount',
-				'order_discount'         => 'order_discount',
+				'discount_total'         => 'discount_total',
 				'order_total'            => 'order_total',
 				'payment_method'         => 'payment_method',
 				'shipping_method'        => 'shipping_method',
@@ -139,61 +188,60 @@ class WC_Customer_Order_CSV_Export_Compatibility {
 
 			// legacy format
 			$headers = array(
-				'order_id'            => __( 'Order ID', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ),
-				'order_date'          => __( 'Date', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ),
-				'status'              => __( 'Order Status', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ),
-				'shipping_total'      => __( 'Shipping', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ),
-				'shipping_tax_total'  => __( 'Shipping Tax', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ),
-				'fee_total'           => __( 'Fees', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ),
-				'fee_tax_total'       => __( 'Fee Tax', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ),
-				'tax_total'           => __( 'Tax', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ),
-				'cart_discount'       => __( 'Cart Discount', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ),
-				'order_discount'      => __( 'Order Discount', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ),
-				'order_total'         => __( 'Order Total', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ),
-				'payment_method'      => __( 'Payment Method', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ),
-				'shipping_method'     => __( 'Shipping Method', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ),
-				'billing_first_name'  => __( 'Billing First Name', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ),
-				'billing_last_name'   => __( 'Billing Last Name', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ),
-				'billing_email'       => __( 'Billing Email', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ),
-				'billing_phone'       => __( 'Billing Phone', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ),
-				'billing_address_1'   => __( 'Billing Address 1', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ),
-				'billing_address_2'   => __( 'Billing Address 2', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ),
-				'billing_postcode'    => __( 'Billing Post code', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ),
-				'billing_city'        => __( 'Billing City', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ),
-				'billing_state'       => __( 'Billing State', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ),
-				'billing_country'     => __( 'Billing Country', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ),
-				'billing_company'     => __( 'Billing Company', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ),
-				'shipping_first_name' => __( 'Shipping First Name', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ),
-				'shipping_last_name'  => __( 'Shipping Last Name', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ),
-				'shipping_address_1'  => __( 'Shipping Address 1', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ),
-				'shipping_address_2'  => __( 'Shipping Address 2', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ),
-				'shipping_postcode'   => __( 'Shipping Post code', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ),
-				'shipping_city'       => __( 'Shipping City', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ),
-				'shipping_state'      => __( 'Shipping State', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ),
-				'shipping_country'    => __( 'Shipping Country', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ),
-				'shipping_company'    => __( 'Shipping Company', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ),
-				'customer_note'       => __( 'Customer Note', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ),
+				'order_id'            => __( 'Order ID', 'woocommerce-customer-order-csv-export' ),
+				'order_date'          => __( 'Date', 'woocommerce-customer-order-csv-export' ),
+				'status'              => __( 'Order Status', 'woocommerce-customer-order-csv-export' ),
+				'shipping_total'      => __( 'Shipping', 'woocommerce-customer-order-csv-export' ),
+				'shipping_tax_total'  => __( 'Shipping Tax', 'woocommerce-customer-order-csv-export' ),
+				'fee_total'           => __( 'Fees', 'woocommerce-customer-order-csv-export' ),
+				'fee_tax_total'       => __( 'Fee Tax', 'woocommerce-customer-order-csv-export' ),
+				'tax_total'           => __( 'Tax', 'woocommerce-customer-order-csv-export' ),
+				'discount_total'      => __( 'Discount Total', 'woocommerce-customer-order-csv-export' ),
+				'order_total'         => __( 'Order Total', 'woocommerce-customer-order-csv-export' ),
+				'payment_method'      => __( 'Payment Method', 'woocommerce-customer-order-csv-export' ),
+				'shipping_method'     => __( 'Shipping Method', 'woocommerce-customer-order-csv-export' ),
+				'billing_first_name'  => __( 'Billing First Name', 'woocommerce-customer-order-csv-export' ),
+				'billing_last_name'   => __( 'Billing Last Name', 'woocommerce-customer-order-csv-export' ),
+				'billing_email'       => __( 'Billing Email', 'woocommerce-customer-order-csv-export' ),
+				'billing_phone'       => __( 'Billing Phone', 'woocommerce-customer-order-csv-export' ),
+				'billing_address_1'   => __( 'Billing Address 1', 'woocommerce-customer-order-csv-export' ),
+				'billing_address_2'   => __( 'Billing Address 2', 'woocommerce-customer-order-csv-export' ),
+				'billing_postcode'    => __( 'Billing Post code', 'woocommerce-customer-order-csv-export' ),
+				'billing_city'        => __( 'Billing City', 'woocommerce-customer-order-csv-export' ),
+				'billing_state'       => __( 'Billing State', 'woocommerce-customer-order-csv-export' ),
+				'billing_country'     => __( 'Billing Country', 'woocommerce-customer-order-csv-export' ),
+				'billing_company'     => __( 'Billing Company', 'woocommerce-customer-order-csv-export' ),
+				'shipping_first_name' => __( 'Shipping First Name', 'woocommerce-customer-order-csv-export' ),
+				'shipping_last_name'  => __( 'Shipping Last Name', 'woocommerce-customer-order-csv-export' ),
+				'shipping_address_1'  => __( 'Shipping Address 1', 'woocommerce-customer-order-csv-export' ),
+				'shipping_address_2'  => __( 'Shipping Address 2', 'woocommerce-customer-order-csv-export' ),
+				'shipping_postcode'   => __( 'Shipping Post code', 'woocommerce-customer-order-csv-export' ),
+				'shipping_city'       => __( 'Shipping City', 'woocommerce-customer-order-csv-export' ),
+				'shipping_state'      => __( 'Shipping State', 'woocommerce-customer-order-csv-export' ),
+				'shipping_country'    => __( 'Shipping Country', 'woocommerce-customer-order-csv-export' ),
+				'shipping_company'    => __( 'Shipping Company', 'woocommerce-customer-order-csv-export' ),
+				'customer_note'       => __( 'Customer Note', 'woocommerce-customer-order-csv-export' ),
 			);
 
 			// legacy - one row per line item
 			if ( 'legacy_one_row_per_item' == $this->order_format ) {
 
-				$headers['line_item_sku']       = __( 'Item SKU', WC_Customer_Order_CSV_Export::TEXT_DOMAIN );
-				$headers['line_item_name']      = __( 'Item Name', WC_Customer_Order_CSV_Export::TEXT_DOMAIN );
-				$headers['line_item_variation'] = __( 'Item Variation', WC_Customer_Order_CSV_Export::TEXT_DOMAIN );
-				$headers['line_item_amount']    = __( 'Item Amount', WC_Customer_Order_CSV_Export::TEXT_DOMAIN );
-				$headers['line_item_price']     = __( 'Row Price', WC_Customer_Order_CSV_Export::TEXT_DOMAIN );
+				$headers['line_item_sku']       = __( 'Item SKU', 'woocommerce-customer-order-csv-export' );
+				$headers['line_item_name']      = __( 'Item Name', 'woocommerce-customer-order-csv-export' );
+				$headers['line_item_variation'] = __( 'Item Variation', 'woocommerce-customer-order-csv-export' );
+				$headers['line_item_amount']    = __( 'Item Amount', 'woocommerce-customer-order-csv-export' );
+				$headers['line_item_price']     = __( 'Row Price', 'woocommerce-customer-order-csv-export' );
 
 			} else {
 
 				// legacy - one column for all line items
-				$headers['order_items'] = __( 'Order Items', WC_Customer_Order_CSV_Export::TEXT_DOMAIN );
+				$headers['order_items'] = __( 'Order Items', 'woocommerce-customer-order-csv-export' );
 			}
 
 			// additional legacy columns that must go after line item
-			$headers['download_permissions'] = __( 'Download Permissions Granted', WC_Customer_Order_CSV_Export::TEXT_DOMAIN );
-			$headers['order_notes']          = __( 'Order notes', WC_Customer_Order_CSV_Export::TEXT_DOMAIN );
-			$headers['coupon_items']         = __( 'Coupons', WC_Customer_Order_CSV_Export::TEXT_DOMAIN );
+			$headers['download_permissions'] = __( 'Download Permissions Granted', 'woocommerce-customer-order-csv-export' );
+			$headers['order_notes']          = __( 'Order notes', 'woocommerce-customer-order-csv-export' );
+			$headers['coupon_items']         = __( 'Coupons', 'woocommerce-customer-order-csv-export' );
 		}
 
 		return $headers;
@@ -212,7 +260,11 @@ class WC_Customer_Order_CSV_Export_Compatibility {
 
 		if ( 'import' == $this->order_format ) {
 
-			return $this->get_import_one_column_per_line_item( $order_data, $order );
+			return $this->get_import_columns( $order_data, $order );
+
+		} elseif ( 'legacy_import' == $this->order_format ) {
+
+			return $this->get_legacy_import_one_column_per_line_item( $order_data, $order );
 
 		} elseif ( 'legacy_one_row_per_item' == $this->order_format ) {
 
@@ -226,6 +278,82 @@ class WC_Customer_Order_CSV_Export_Compatibility {
 
 
 	/**
+	 * Get the order data format for CSV Import JSON format
+	 *
+	 * @since 3.12.0
+	 * @param array $order_data an array of order data for the given order
+	 * @param WC_Order $order the WC_Order object
+	 * @return array modified order data
+	 */
+	private function get_import_columns( $order_data, WC_Order $order ) {
+
+		if ( isset( $order_data['refunded_total'] ) && $order_data['refunded_total'] ) {
+
+			$refunds = array();
+
+			foreach ( $order->get_refunds() as $refund ) {
+
+				$line_items = array();
+
+				// add line items
+				foreach ( $refund->get_items( array( 'line_item', 'fee', 'shipping' ) ) as $item_id => $item ) {
+
+					$refund_amount = abs( isset( $item['line_total'] ) ? $item['line_total'] : ( isset( $item['cost'] ) ? $item['cost'] : null ) );
+
+					// skip empty refund lines
+					if ( ! $refund_amount ) {
+						continue;
+					}
+
+					$refunded_item = array(
+						'refunded_item_id' => $item['refunded_item_id'],
+						'refund_total'     => $refund_amount,
+					);
+
+					if ( isset( $item['taxes'] ) ) {
+						$refunded_item['refund_tax'] = maybe_unserialize( $item['taxes'] );
+					}
+
+					if ( isset( $item['line_tax_data'] ) ) {
+						$tax_data = maybe_unserialize( $item['line_tax_data'] );
+						$refunded_item['refund_tax'] = $tax_data['total'];
+					}
+
+					if ( isset( $item['qty'] ) ) {
+						$refunded_item['qty'] = $item['qty'];
+					}
+
+					$line_items[] = $refunded_item;
+				}
+
+				$refund_data = array(
+					'id'         => $refund->id,
+					'date'       => $refund->date,
+					'amount'     => wc_format_decimal( $refund->get_refund_amount(), 2 ),
+					'reason'     => $refund->get_refund_reason(),
+					'line_items' => $line_items
+				);
+
+				$refunds[] = $refund_data;
+			}
+
+			$order_data['refunds'] = ! empty( $refunds ) ? json_encode( $refunds ) : '';
+		}
+
+		// fix order numbers
+		$order_data['order_id']               = $order->id;
+		$order_data['order_number_formatted'] = get_post_meta( $order->id, '_order_number_formatted', true );
+		$order_data['order_number']           = get_post_meta( $order->id, '_order_number', true );
+
+		// fix customer user
+		$user = new WP_User( $order_data['customer_id'] );
+		$order_data['customer_id'] = $user->user_email;
+
+		return $order_data;
+	}
+
+
+	/**
 	 * Get the order data format for a single column per line item, compatible with the CSV Import Suite plugin
 	 *
 	 * @since 3.0
@@ -233,12 +361,12 @@ class WC_Customer_Order_CSV_Export_Compatibility {
 	 * @param WC_Order $order the WC_Order object
 	 * @return array modified order data
 	 */
-	private function get_import_one_column_per_line_item( $order_data, WC_Order $order ) {
+	private function get_legacy_import_one_column_per_line_item( $order_data, WC_Order $order ) {
 
 		$count = 1;
 
 		// add line items
-		foreach( $order->get_items() as $_ => $item ) {
+		foreach ( $order->get_items() as $_ => $item ) {
 
 			// sku/qty/price
 			$product = $order->get_product_from_item( $item );
@@ -250,17 +378,17 @@ class WC_Customer_Order_CSV_Export_Compatibility {
 			$sku = $product->get_sku();
 
 			// note that product ID must be prefixed with `product_id:` so the importer can properly parse it vs. the SKU
-			$product_id = $product->is_type( 'variation' ) ? $product->variation_id : $product->id;
+			$product_id = SV_WC_Plugin_Compatibility::product_get_id( $product );
 
 			$line_item = array(
 				$sku ? $sku : "product_id:{$product_id}",
 				$item['qty'],
-				$order->get_item_total( $item )
+				$order->get_line_total( $item )
 			);
 
 			// Add item meta
-			$item_meta = new WC_Order_Item_Meta( $item['item_meta'] );
-			$formatted_meta = SV_WC_Plugin_Compatibility::get_formatted_item_meta( $item_meta );
+			$item_meta = new WC_Order_Item_Meta( $item );
+			$formatted_meta = $item_meta->get_formatted();
 
 			if ( ! empty( $formatted_meta ) ) {
 
@@ -330,7 +458,7 @@ class WC_Customer_Order_CSV_Export_Compatibility {
 				$product = new WC_Product( 0 );
 			}
 
-			$item_meta = new WC_Order_Item_Meta( $item['item_meta'] );
+			$item_meta = new WC_Order_Item_Meta( $item );
 			$variation = $item_meta->display( true, true );
 
 			if ( $variation ) {
@@ -352,7 +480,7 @@ class WC_Customer_Order_CSV_Export_Compatibility {
 			}
 
 			// set order ID to order number
-			$order_data['order_id'] = ltrim( $order->get_order_number(), _x( '#', 'hash before the order number', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ) );
+			$order_data['order_id'] = ltrim( $order->get_order_number(), _x( '#', 'hash before the order number', 'woocommerce-customer-order-csv-export' ) );
 
 			$data[] = $order_data;
 		}
@@ -398,7 +526,7 @@ class WC_Customer_Order_CSV_Export_Compatibility {
 
 			$line_item .= ' x' . $item['qty'];
 
-			$item_meta = new WC_Order_Item_Meta( $item['item_meta'] );
+			$item_meta = new WC_Order_Item_Meta( $item );
 			$variation = $item_meta->display( true, true );
 
 			if ( $variation ) {
@@ -420,7 +548,7 @@ class WC_Customer_Order_CSV_Export_Compatibility {
 		}
 
 		// set order ID to order number
-		$order_data['order_id'] = ltrim( $order->get_order_number(), _x( '#', 'hash before the order number', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ) );
+		$order_data['order_id'] = ltrim( $order->get_order_number(), _x( '#', 'hash before the order number', 'woocommerce-customer-order-csv-export' ) );
 
 		return $order_data;
 	}
@@ -440,7 +568,7 @@ class WC_Customer_Order_CSV_Export_Compatibility {
 
 		foreach ( $order_ids as $order_id ) {
 
-			$order = SV_WC_Plugin_Compatibility::wc_get_order( $order_id );
+			$order = wc_get_order( $order_id );
 
 			$line_items_count = count( $order->get_items() );
 
@@ -467,7 +595,7 @@ class WC_Customer_Order_CSV_Export_Compatibility {
 
 		foreach ( $order_ids as $order_id ) {
 
-			$order = SV_WC_Plugin_Compatibility::wc_get_order( $order_id );
+			$order = wc_get_order( $order_id );
 
 			$line_items_count = count( $order->get_items( 'shipping' ) );
 
@@ -495,6 +623,7 @@ class WC_Customer_Order_CSV_Export_Compatibility {
 			$headers = array(
 				'user_login'          => 'username',
 				'email'               => 'email',
+				'user_pass'           => 'password',
 				'date_registered'     => 'date_registered',
 				'billing_first_name'  => 'billing_first_name',
 				'billing_last_name'   => 'billing_last_name',
@@ -522,18 +651,18 @@ class WC_Customer_Order_CSV_Export_Compatibility {
 
 			// legacy format
 			$headers = array(
-				'customer_id'        => __( 'ID', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ),
-				'billing_first_name' => __( 'First Name', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ),
-				'billing_last_name'  => __( 'Last Name', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ),
-				'billing_email'      => __( 'Email', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ),
-				'billing_phone'      => __( 'Phone', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ),
-				'billing_address_1'  => __( 'Address', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ),
-				'billing_address_2'  => __( 'Address 2', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ),
-				'billing_postcode'   => __( 'Post code', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ),
-				'billing_city'       => __( 'City', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ),
-				'billing_state'      => __( 'State', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ),
-				'billing_country'    => __( 'Country', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ),
-				'billing_company'    => __( 'Company', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ),
+				'customer_id'        => __( 'ID', 'woocommerce-customer-order-csv-export' ),
+				'billing_first_name' => __( 'First Name', 'woocommerce-customer-order-csv-export' ),
+				'billing_last_name'  => __( 'Last Name', 'woocommerce-customer-order-csv-export' ),
+				'billing_email'      => __( 'Email', 'woocommerce-customer-order-csv-export' ),
+				'billing_phone'      => __( 'Phone', 'woocommerce-customer-order-csv-export' ),
+				'billing_address_1'  => __( 'Address', 'woocommerce-customer-order-csv-export' ),
+				'billing_address_2'  => __( 'Address 2', 'woocommerce-customer-order-csv-export' ),
+				'billing_postcode'   => __( 'Post code', 'woocommerce-customer-order-csv-export' ),
+				'billing_city'       => __( 'City', 'woocommerce-customer-order-csv-export' ),
+				'billing_state'      => __( 'State', 'woocommerce-customer-order-csv-export' ),
+				'billing_country'    => __( 'Country', 'woocommerce-customer-order-csv-export' ),
+				'billing_company'    => __( 'Company', 'woocommerce-customer-order-csv-export' ),
 			);
 		}
 
@@ -554,6 +683,7 @@ class WC_Customer_Order_CSV_Export_Compatibility {
 		if ( 'import' == $this->customer_format ) {
 
 			$customer_data['user_login'] = isset( $user->user_login ) ? $user->user_login : '';
+			$customer_data['user_pass']  = isset( $user->user_pass )  ? $user->user_pass  : '';
 		}
 
 		return $customer_data;

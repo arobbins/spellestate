@@ -4,7 +4,7 @@
 /*
 * Swift Framework WooCommerce Stylesheet v1.0
 * Stylesheet for WooCommerce functionality
-* Copyright Swift Ideas 2015
+* Copyright Swift Ideas 2016
 */
 
 /* Fix for terrible generic WooCommerce css */
@@ -28,6 +28,10 @@
 .woocommerce ul.products li.product {
 	padding: 0 15px;
 	margin: 0;
+	clear: none;
+}
+.woocommerce ul.products.multi-masonry-items.gutters li.product {
+	padding-bottom: 30px;
 }
 .woocommerce ul.products li.product.product-display-standard {
 	margin-bottom: 30px;
@@ -592,7 +596,7 @@ select.hasCustomSelect {
 	margin-top: 50px;
 }
 .woocommerce-shop-page .multi-masonry-items.gutters {
-	margin: 0 15px 30px;
+	margin: 0 15px 30px!important;
 }
 .inner-page-wrap.full-width-shop section[class*="col-sm"], .inner-page-wrap.full-width-shop .sidebar[class*="col-sm"], .inner-page-wrap.full-width-shop .page-content {
 	padding-left: 0;
@@ -618,7 +622,8 @@ select.hasCustomSelect {
 	padding-top: 0;
 }
 .inner-page-wrap.full-width-shop ul.products > li {
-	margin: 0!important;
+	margin-left: 0!important;
+	margin-right: 0!important;
 	float: left!important;
 }
 .inner-page-wrap.full-width-shop ul.products > li.product-display-standard {
@@ -765,6 +770,9 @@ li.product .add-to-cart-wrap .variations_form {
 .product-grid .product {
 	opacity: 0;
 	list-style: none;
+}
+.product-grid .product.item-animated {
+	opacity: 1;
 }
 .yit-wcan-container .product {
 	opacity: 1!important;
@@ -2635,26 +2643,36 @@ nav.woocommerce-pagination ul li:first-child {
 .woocommerce div.product form.cart .group_table {
 	margin-bottom: 30px;
 	border-bottom: 0;
+	width: 100%;
+}
+.woocommerce div.product form.cart .group_table th {
+	text-align: left;
+	padding: 10px 20px 10px 0;
 }
 .woocommerce div.product form.cart .group_table .quantity {
 	background: transparent;
 }
 .woocommerce div.product form.cart .group_table td {
 	padding-bottom: 10px;
+	padding-left: 0;
+	text-align: left;
 }
 .woocommerce div.product form.cart .group_table td.label {
 	background: transparent;
 	color: inherit;
 	text-shadow: none;
 	vertical-align: top;
-	padding-top: 10px;
-	line-height: 68px;
+	padding: 0 30px 0 0;
+	line-height: 60px;
 }
 .woocommerce div.product form.cart .group_table td.price {
 	padding-top: 12px;
 	vertical-align: top;
-	text-align: right;
-	line-height: 42px;
+	text-align: left;
+	line-height: inherit;
+}
+.woocommerce div.product form.cart .group_table td.price p.stock {
+	margin-top: 0;
 }
 #product-description .accordion-inner {
 	margin-bottom: 20px;
@@ -3612,6 +3630,9 @@ ul.checkout-process li a.active, ul.checkout-process li p.active {
 	padding: 14px 20px;
 	font-weight: normal;
 }
+.woocommerce #respond input#submit.disabled, .woocommerce #respond input#submit:disabled, .woocommerce #respond input#submit:disabled[disabled], .woocommerce a.button.disabled, .woocommerce a.button:disabled, .woocommerce a.button:disabled[disabled], .woocommerce button.button.disabled, .woocommerce button.button:disabled, .woocommerce button.button:disabled[disabled], .woocommerce input.button.disabled, .woocommerce input.button:disabled, .woocommerce input.button:disabled[disabled] {
+	padding: 14px 20px;
+}
 .woocommerce form.register, .woocommerce-page form.register {
 	border: 0;
 	padding: 0;
@@ -4398,7 +4419,7 @@ table.customer_details td {
 	right: 10px;
 	top: 7px;
 }
-.woocommerce .widget_layered_nav select {
+.woocommerce .widget_layered_nav select, .woocommerce .widget_product_categories select {
 	margin-bottom: 20px;
 	margin-top: 0;
 	border-width: 2px;

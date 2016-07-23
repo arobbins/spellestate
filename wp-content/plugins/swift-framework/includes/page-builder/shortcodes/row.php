@@ -74,11 +74,11 @@
 
             $responsive_vis = str_replace( "_", " ", $row_responsive_vis );
 
-            if(   $el_class != '' ) {
+            if(   $el_class != '' ) {  
                 $row_el_class = $el_class;
-            }
+            }   
 
-            $row_el_class   .= $this->getExtraClass( $row_el_class ) . ' ' . $responsive_vis;
+            $row_el_class   = $this->getExtraClass( $row_el_class ) . ' ' . $responsive_vis;
             $orig_width     = $width;
             $width          = spb_translateColumnWidthToSpan( $width );
             $img_url        = wp_get_attachment_image_src( $bg_image, 'full' );
@@ -616,7 +616,8 @@
             __( 'No', 'swift-framework-plugin' )  => "false",
             __( 'Yes', 'swift-framework-plugin' ) => "true",
         ),
-        "buttonset_on"  => "true", 
+        "buttonset_on"  => "true",
+        "std" => "false",
         "description" => __( "Enable this option if you wish to center the elements within the row.", 'swift-framework-plugin' )
     );
     $params[] = array(

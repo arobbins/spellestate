@@ -25,7 +25,6 @@ if ( empty( $subscription ) ) {
 }
 
 wc_print_notices();
-
 ?>
 
 <table class="shop_table subscription_details">

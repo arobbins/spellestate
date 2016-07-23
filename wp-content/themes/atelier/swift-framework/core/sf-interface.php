@@ -629,16 +629,16 @@
     <h5><?php _e( 'Modal', 'swiftframework' ); ?></h5>
 	
 	<div class="option">
-	    <label for="modal-link-type"><?php _e( 'Link Type', 'uplift' ); ?></label>
+	    <label for="modal-link-type"><?php _e( 'Link Type', 'swiftframework' ); ?></label>
 	    <select id="modal-link-type" name="modal-link-type">
-	        <option value="button"><?php _e( 'Button', 'uplift' ); ?></option>
-	        <option value="text"><?php _e( 'Text Link', 'uplift' ); ?></option>
+	        <option value="button"><?php _e( 'Button', 'swiftframework' ); ?></option>
+	        <option value="text"><?php _e( 'Text Link', 'swiftframework' ); ?></option>
 	    </select>
 	</div>
 	
 	<div class="option">
-	    <label for="modal-link-text"><?php _e( 'Modal link text', 'uplift' ); ?></label>
-	    <input id="modal-link-text" name="modal-link-text" type="text" value="<?php _e( 'Modal link', 'uplift' ); ?>"/>
+	    <label for="modal-link-text"><?php _e( 'Modal link text', 'swiftframework' ); ?></label>
+	    <input id="modal-link-text" name="modal-link-text" type="text" value="<?php _e( 'Modal link', 'swiftframework' ); ?>"/>
 	    <p class="info">If using the Text Link type, then enter the link text here.</p>
 	</div>
 	

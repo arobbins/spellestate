@@ -156,7 +156,6 @@
 
             endwhile;
 
-            wp_reset_query();
             wp_reset_postdata();
 
             if ( $alt_display == "yes" ) { 

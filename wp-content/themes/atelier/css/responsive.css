@@ -4,7 +4,7 @@
 /*
 * Swift Framework Responsive Stylesheet v1.0
 * Responsive Stylesheet for Display on Devices
-* Copyright Swift Ideas 2015
+* Copyright Swift Ideas 2016
 */
 
 
@@ -247,6 +247,9 @@
 	/* WOOCOMMERCE */
 	.full-width-shop[data-shopcolumns="6"] .product, .full-width-shop[data-shopcolumns="6"] .sidebar[class*="col-sm"] {
 		width: 33.3%;
+	}
+	.full-width-shop .products.multi-masonry-items .product {
+		width: 25%;
 	}
 	.full-width-shop[data-shopcolumns="5"] .product .cart-overlay .shop-actions > a > span {
 		display: none;
@@ -607,6 +610,26 @@
 	#tab-reviews #review_form_wrapper {
 		width: 100%;
 	} 
+	.woocommerce div.product form.cart div.quantity {
+		margin-bottom: 20px!important;
+		margin-right: 0!important;
+		width: 100%;
+		float: none!important;
+		max-width: none;
+		position: relative;
+	}
+	.woocommerce .summary .quantity input.qty {
+		border-left-width: 2px;
+		width: 100%;
+		padding-right: 16px;
+	}
+	.woocommerce .quantity .qty-adjust {
+		position: absolute;
+		top: 0;
+		right: 0;
+		border-left-width: 2px;
+		border-left-style: solid;
+	}
 }
 
 @media only screen and (min-width: 768px) and (max-width: 959px) {
@@ -1107,6 +1130,12 @@
 	}
 	.portfolio-showcase-wrap ul li .item-info, .portfolio-showcase-wrap ul li .item-logo {
 		display: none!important;
+	}
+	.portfolio-item.size-wide-tall ul.slides {
+		max-height: none!important;
+	}
+	.portfolio-item.size-wide-tall ul.slides > li {
+		margin-top: 0!important;
 	}
 	ul.team-members > li {
 		width: 50%;

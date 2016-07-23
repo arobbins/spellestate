@@ -32,7 +32,7 @@
 
             $content_section = get_post( $spb_section_id );
 
-            $output .= "\n\t" . '<div class="spb-section spb_content_element ' . $el_class . '">';
+            $output .= "\n\t" . '<div class="spb-section spb_content_element ' . $width . $el_class . '">';
             if ( isset( $content_section->post_content ) ) {
             	$content = $content_section->post_content;
             	$content = apply_filters( 'the_content', $content );

@@ -18,11 +18,11 @@
  *
  * @package   SkyVerge/WooCommerce/API/Request
  * @author    SkyVerge
- * @copyright Copyright (c) 2013-2015, SkyVerge, Inc.
+ * @copyright Copyright (c) 2013-2016, SkyVerge, Inc.
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+defined( 'ABSPATH' ) or exit;
 
 if ( ! interface_exists( 'SV_WC_API_Request' ) ) :
 
@@ -30,6 +30,24 @@ if ( ! interface_exists( 'SV_WC_API_Request' ) ) :
  * API Request
  */
 interface SV_WC_API_Request {
+
+
+	/**
+	 * Returns the method for this request: one of HEAD, GET, PUT, PATCH, POST, DELETE
+	 *
+	 * @since 4.0.0
+	 * @return string the request method, or null to use the API default
+	 */
+	public function get_method();
+
+
+	/**
+	 * Returns the request path
+	 *
+	 * @since 4.0.0
+	 * @return string the request path, or '' if none
+	 */
+	public function get_path();
 
 
 	/**

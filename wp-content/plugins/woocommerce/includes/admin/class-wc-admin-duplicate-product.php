@@ -25,7 +25,6 @@ class WC_Admin_Duplicate_Product {
 	public function __construct() {
 		add_action( 'admin_action_duplicate_product', array( $this, 'duplicate_product_action' ) );
 		add_filter( 'post_row_actions', array( $this, 'dupe_link' ), 10, 2 );
-		add_filter( 'page_row_actions', array( $this, 'dupe_link' ), 10, 2 );
 		add_action( 'post_submitbox_start', array( $this, 'dupe_button' ) );
 	}
 
@@ -69,9 +68,9 @@ class WC_Admin_Duplicate_Product {
 		}
 
 		if ( isset( $_GET['post'] ) ) {
-			$notifyUrl = wp_nonce_url( admin_url( "edit.php?post_type=product&action=duplicate_product&post=" . absint( $_GET['post'] ) ), 'woocommerce-duplicate-product_' . $_GET['post'] );
+			$notify_url = wp_nonce_url( admin_url( "edit.php?post_type=product&action=duplicate_product&post=" . absint( $_GET['post'] ) ), 'woocommerce-duplicate-product_' . $_GET['post'] );
 			?>
-			<div id="duplicate-action"><a class="submitduplicate duplication" href="<?php echo esc_url( $notifyUrl ); ?>"><?php _e( 'Copy to a new draft', 'woocommerce' ); ?></a></div>
+			<div id="duplicate-action"><a class="submitduplicate duplication" href="<?php echo esc_url( $notify_url ); ?>"><?php _e( 'Copy to a new draft', 'woocommerce' ); ?></a></div>
 			<?php
 		}
 	}
@@ -124,13 +123,15 @@ class WC_Admin_Duplicate_Product {
 		$new_post_date_gmt  = get_gmt_from_date( $new_post_date );
 
 		if ( $parent > 0 ) {
-			$post_parent        = $parent;
-			$post_status        = $post_status ? $post_status : 'publish';
-			$suffix             = '';
+			$post_parent = $parent;
+			$post_status = $post_status ? $post_status: 'publish';
+			$suffix      = '';
+			$post_title  = $post->post_title;
 		} else {
-			$post_parent        = $post->post_parent;
-			$post_status        = $post_status ? $post_status : 'draft';
-			$suffix             = ' ' . __( '(Copy)', 'woocommerce' );
+			$post_parent = $post->post_parent;
+			$post_status = $post_status ? $post_status: 'draft';
+			$suffix      = ' ' . __( '(Copy)', 'woocommerce' );
+			$post_title  = $post->post_title . $suffix;
 		}
 
 		// Insert the new template in the post table
@@ -142,7 +143,7 @@ class WC_Admin_Duplicate_Product {
 				'post_date_gmt'             => $new_post_date_gmt,
 				'post_content'              => $post->post_content,
 				'post_content_filtered'     => $post->post_content_filtered,
-				'post_title'                => $post->post_title . $suffix,
+				'post_title'                => $post_title,
 				'post_excerpt'              => $post->post_excerpt,
 				'post_status'               => $post_status,
 				'post_type'                 => $post->post_type,
@@ -161,6 +162,34 @@ class WC_Admin_Duplicate_Product {
 
 		$new_post_id = $wpdb->insert_id;
 
+		// Set title for variations
+		if ( 'product_variation' === $post->post_type ) {
+			$post_title = sprintf( __( 'Variation #%s of %s', 'woocommerce' ), absint( $new_post_id ), esc_html( get_the_title( $post_parent ) ) );
+			$wpdb->update(
+				$wpdb->posts,
+				array(
+					'post_title' => $post_title,
+				),
+				array(
+					'ID' => $new_post_id
+				)
+			);
+		}
+
+		// Set name and GUID
+		if ( ! in_array( $post_status, array( 'draft', 'pending', 'auto-draft' ) ) ) {
+	        $wpdb->update(
+				$wpdb->posts,
+				array(
+					'post_name' => wp_unique_post_slug( sanitize_title( $post_title, $new_post_id ), $new_post_id, $post_status, $post->post_type, $post_parent ),
+					'guid'      => get_permalink( $new_post_id ),
+				),
+				array(
+					'ID' => $new_post_id
+				)
+			);
+	    }
+
 		// Copy the taxonomies
 		$this->duplicate_post_taxonomies( $post->ID, $new_post_id, $post->post_type );
 
@@ -175,6 +204,9 @@ class WC_Admin_Duplicate_Product {
 				$this->duplicate_product( $this->get_product_to_duplicate( $child->ID ), $new_post_id, $child->post_status );
 			}
 		}
+
+		// Clear cache
+		clean_post_cache( $new_post_id );
 
 		return $new_post_id;
 	}
@@ -198,7 +230,7 @@ class WC_Admin_Duplicate_Product {
 
 		$post = $wpdb->get_results( "SELECT * FROM $wpdb->posts WHERE ID=$id" );
 
-		if ( isset( $post->post_type ) && $post->post_type == "revision" ) {
+		if ( isset( $post->post_type ) && 'revision' === $post->post_type ) {
 			$id   = $post->post_parent;
 			$post = $wpdb->get_results( "SELECT * FROM $wpdb->posts WHERE ID=$id" );
 		}
@@ -237,7 +269,7 @@ class WC_Admin_Duplicate_Product {
 		global $wpdb;
 
 		$sql     = $wpdb->prepare( "SELECT meta_key, meta_value FROM $wpdb->postmeta WHERE post_id = %d", absint( $id ) );
-		$exclude = array_map( 'esc_sql', array_filter( apply_filters( 'woocommerce_duplicate_product_exclude_meta', array( 'total_sales', '_wc_average_rating', '_wc_rating_count', '_wc_review_count' ) ) ) );
+		$exclude = array_map( 'esc_sql', array_filter( apply_filters( 'woocommerce_duplicate_product_exclude_meta', array( 'total_sales', '_wc_average_rating', '_wc_rating_count', '_wc_review_count', '_sku' ) ) ) );
 
 		if ( sizeof( $exclude ) ) {
 			$sql .= " AND meta_key NOT IN ( '" . implode( "','", $exclude ) . "' )";

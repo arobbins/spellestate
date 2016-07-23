@@ -284,9 +284,7 @@ class WC_Dynamic_Pricing_Advanced_Category extends WC_Dynamic_Pricing_Advanced_B
 
 				break;
 			case 'percent_adjustment':
-				if ( $amount > 1 ) {
-					$amount = $amount / 100;
-				}
+				$amount = $amount / 100;
 				$adjusted = round( floatval( $price ) - ( floatval( $amount ) * $price), (int) $num_decimals );
 				$line_total = 0;
 

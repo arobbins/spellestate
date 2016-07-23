@@ -114,9 +114,8 @@ class WC_Dynamic_Pricing_Simple_Membership extends WC_Dynamic_Pricing_Simple_Bas
 				$result = $adjusted >= 0 ? $adjusted : 0;
 				break;
 			case 'percent_product':
-				if ( $amount > 1 ) {
-					$amount = $amount / 100;
-				}
+				$amount = $amount / 100;
+
 				$result = round( floatval( $price ) - ( floatval( $amount ) * $price), (int) $num_decimals );
 				break;
 			case 'fixed_price':
@@ -218,10 +217,10 @@ class WC_Dynamic_Pricing_Simple_Membership extends WC_Dynamic_Pricing_Simple_Bas
 					$execute_rules = true;
 				}
 
-				if ( isset( $this->set_data ) ) {
+				if ( isset( $pricing_rule_set['date_from'] ) && isset( $pricing_rule_set['date_to'] ) ) {
 					// Check date range
-					$from_date = strtotime( $this->set_data['date_from'] );
-					$to_date = strtotime( $this->set_data['date_to'] );
+					$from_date = strtotime( $pricing_rule_set['date_from'] );
+					$to_date = strtotime( $pricing_rule_set['date_to'] );
 					$now = current_time( 'timestamp' );
 
 					if ( $from_date && $to_date && !( $now >= $from_date && $now <= $to_date ) ) {
@@ -325,9 +324,8 @@ class WC_Dynamic_Pricing_Simple_Membership extends WC_Dynamic_Pricing_Simple_Bas
 					$result = $adjusted >= 0 ? $adjusted : 0;
 					break;
 				case 'percentage_discount':
-					if ( $amount > 1 ) {
-						$amount = $amount / 100;
-					}
+					$amount = $amount / 100;
+
 					$result = round( floatval( $price ) - ( floatval( $amount ) * $price), (int) $num_decimals );
 					break;
 				case 'fixed_price':

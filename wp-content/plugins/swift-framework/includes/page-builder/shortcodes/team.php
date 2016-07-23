@@ -24,6 +24,7 @@
                 "custom_image_height" => '',
                 "category"     => '',
                 'pagination'   => '',
+                'post_ids'     => '',
                 'profile_link' => 'yes',
                 'ajax_overlay' => 'no',
                 'fullwidth'    => 'no',
@@ -70,10 +71,15 @@
                 'paged'               => $paged,
                 'team-category'       => $category_slug,
                 'posts_per_page'      => $item_count,
-                'order'              => $order,
-                'orderby'            => $order_by,
+                'order'               => $order,
+                'orderby'             => $order_by,
                 'ignore_sticky_posts' => 1
             );
+
+            if ( $post_ids != "" ) {
+                $team_args['post__in'] = array($post_ids);
+            }
+
             $team_members = new WP_Query( $team_args );
 
             $count        = 0;
@@ -298,7 +304,6 @@
 
             endwhile;
 
-            wp_reset_query();
             wp_reset_postdata();
 
             if ( $carousel == "yes" ) {
@@ -413,6 +418,13 @@
             "param_name"  => "item_count",
             "value"       => "12",
             "description" => __( "The number of team members to show per page.", 'swift-framework-plugin' )
+        ),
+        array(
+            "type"        => "textfield",
+            "heading"     => __( "Specific Team Member(s)", 'swift-framework-plugin' ),
+            "param_name"  => "post_ids",
+            "value"       => "",
+            "description" => __( "Select specific team members to show here, providing the post ID in comma delimited format.", 'swift-framework-plugin' )
         ),
         array(
             "type"        => "textfield",

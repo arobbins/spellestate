@@ -21,6 +21,7 @@
                 'gutters'            => 'yes',
                 'columns'            => '4',
                 'fullwidth'          => 'no',
+                'include_sticky'     => 'no',
                 'show_title'         => 'yes',
                 'show_excerpt'       => 'yes',
                 'show_details'       => 'yes',
@@ -38,6 +39,7 @@
                 'instagram_id'       => '',
                 'instagram_token'    => '',
                 'blog_filter'        => '',
+                'basic_blog_filter'  => '',
                 'alt_styling'        => 'no',
                 'hover_style'        => 'default',
                 'content_output'     => 'excerpt',
@@ -96,7 +98,11 @@
                     $output .= '<h2 class="spb-heading"><span>' . $title . '</span></h2>';
                 }
                 if ( $blog_filter == "yes" ) {
-                    $output .= sf_post_filter( '', $post_type, $category );
+                    $filter_style = "";
+                    if ( $basic_blog_filter == "yes" ) {
+                       $filter_style = "basic"; 
+                    }
+                    $output .= sf_post_filter( $filter_style, $post_type, $category );
                 }
                 $output .= '</div>';
             }
@@ -245,6 +251,18 @@
                 ),
                 "description" => __( "Select if you'd like the items to be ordered in ascending or descending order.", 'swift-framework-plugin' )
         ),
+        // array(
+        //     "type"        => "buttonset",
+        //     "heading"     => __( "Include Sticky Posts", 'swift-framework-plugin' ),
+        //     "param_name"  => "include_sticky",
+        //     "value"       => array(
+        //         __( 'No', 'swift-framework-plugin' )  => "no",
+        //         __( 'Yes', 'swift-framework-plugin' ) => "yes"
+        //     ),
+        //     "buttonset_on"  => "yes",
+        //     "std"         => "no",
+        //     "description" => __( "Enables sticky posts to be included in the results.", 'swift-framework-plugin' )
+        // ),
         array(
             "type"        => "buttonset",
             "heading"     => __( "Show title text", 'swift-framework-plugin' ),
@@ -339,28 +357,12 @@
         ),
         array(
             "type"        => "textfield",
-            "heading"     => __( "Instagram ID", 'swift-framework-plugin' ),
-            "param_name"  => "instagram_id",
-            "value"       => "",
-            "required"       => array("social_integration", "=", "yes"),
-            "description" => __( "Enter your Instagram ID here to include your instagrams in the blog grid. You can find your instagram ID here - <a href='http://jelled.com/instagram/lookup-user-id' target='_blank'>http://jelled.com/instagram/lookup-user-id</a> You will also need to enter your token below.", 'swift-framework-plugin' )
-        ),
-        array(
-            "type"        => "textfield",
-            "heading"     => __( "Instagram Token", 'swift-framework-plugin' ),
-            "param_name"  => "instagram_token",
-            "value"       => "",
-            "required"       => array("social_integration", "=", "yes"),
-            "description" => __( "Enter your Instagram Token here to include your instagrams in the blog grid. You can generate your instagram access token here - <a href='http://www.pinceladasdaweb.com.br/instagram/access-token/' target='_blank'>http://www.pinceladasdaweb.com.br/instagram/access-token/</a>. NOTE: This is REQUIRED.", 'swift-framework-plugin' )
-        ),
-        array(
-            "type"        => "textfield",
             "class"       => "",
             "heading"     => __( "Number of Instagram items", 'swift-framework-plugin' ),
             "param_name"  => "insta_item_count",
             "value"       => "",
             "required"       => array("social_integration", "=", "yes"),
-            "description" => __( "The number of instagram items to show.", 'swift-framework-plugin' )
+            "description" => __( "The number of instagram items to show. If you haven't already, you'll need to set up your Instagram account in Swift Framework > Instagram Auth.", 'swift-framework-plugin' )
         ),
         array(
             "type"        => "textfield",
@@ -376,7 +378,7 @@
             "param_name" => "aux_options_tab",
             "heading"    => __( "Aux", 'swift-framework-plugin' ),
         ),
-        array(
+        $params[] = array(
             "type"        => "buttonset",
             "heading"     => __( "Filter", 'swift-framework-plugin' ),
             "param_name"  => "blog_filter",
@@ -388,18 +390,35 @@
             "buttonset_on"  => "yes",
             "description" => __( "Show the blog category filter above the items.", 'swift-framework-plugin' )
         ),
-        array(
-            "type"        => "dropdown",
-            "heading"     => __( "Pagination", 'swift-framework-plugin' ),
-            "param_name"  => "pagination",
+    );
+
+    if ( spb_get_theme_name() == "uplift" ) {
+        $params[] = array(
+            "type"        => "buttonset",
+            "heading"     => __( "Basic Filter", 'swift-framework-plugin' ),
+            "param_name"  => "basic_blog_filter",
+            "std"         => "no",
             "value"       => array(
-                __( "Infinite scroll", 'swift-framework-plugin' )  => "infinite-scroll",
-                __( "Load more (AJAX)", 'swift-framework-plugin' ) => "load-more",
-                __( "Standard", 'swift-framework-plugin' )         => "standard",
-                __( "None", 'swift-framework-plugin' )             => "none"
+                __( 'No', 'swift-framework-plugin' )  => "no",
+                __( 'Yes', 'swift-framework-plugin' ) => "yes"
             ),
-            "description" => __( "Show pagination.", 'swift-framework-plugin' )
+            "buttonset_on"  => "yes",
+            "required"       => array("blog_filter", "=", "yes"),
+            "description" => __( "Set the blog filter to be basic, simply a category filter.", 'swift-framework-plugin' )
+        );
+    }
+
+    $params[] = array(
+        "type"        => "dropdown",
+        "heading"     => __( "Pagination", 'swift-framework-plugin' ),
+        "param_name"  => "pagination",
+        "value"       => array(
+            __( "Infinite scroll", 'swift-framework-plugin' )  => "infinite-scroll",
+            __( "Load more (AJAX)", 'swift-framework-plugin' ) => "load-more",
+            __( "Standard", 'swift-framework-plugin' )         => "standard",
+            __( "None", 'swift-framework-plugin' )             => "none"
         ),
+        "description" => __( "Show pagination.", 'swift-framework-plugin' )
     );
 
     if ( spb_get_theme_name() == "atelier" ) {

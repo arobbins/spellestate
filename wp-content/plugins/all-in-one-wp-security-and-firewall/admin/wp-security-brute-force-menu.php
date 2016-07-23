@@ -130,10 +130,10 @@ class AIOWPSecurity_Brute_Force_Menu extends AIOWPSecurity_Admin_Menu
                 //Recalculate points after the feature status/options have been altered
                 $aiowps_feature_mgr->check_feature_status_and_recalculate_points();
                 $res = AIOWPSecurity_Utility_Htaccess::write_to_htaccess(); //Delete the cookie based directives if that feature is active
-                if ($res){
+                if ($res) {
                     $this->show_msg_settings_updated();
                 }
-                else if($res == -1){
+                else {
                     $this->show_msg_error(__('Could not delete the Cookie-based directives from the .htaccess file. Please check the file permissions.', 'all-in-one-wp-security-and-firewall'));
                 }
             }
@@ -181,9 +181,11 @@ class AIOWPSecurity_Brute_Force_Menu extends AIOWPSecurity_Admin_Menu
         <form action="" method="POST">
         <?php wp_nonce_field('aiowpsec-rename-login-page-nonce'); ?>
         <div class="aio_orange_box">
-            <p>
-            <?php _e('This feature can lock you out of admin if it doesn\'t work correctly on your site. You <a href="https://www.tipsandtricks-hq.com/wordpress-security-and-firewall-plugin#advanced_features_note" target="_blank">must read this message</a> before activating this feature.', 'all-in-one-wp-security-and-firewall'); ?>
-            </p>
+            <?php
+            $read_link = '<a href="https://www.tipsandtricks-hq.com/wordpress-security-and-firewall-plugin#advanced_features_note" target="_blank">must read this message</a>';
+            echo '<p>'.sprintf(__('This feature can lock you out of admin if it doesn\'t work correctly on your site. You %s before activating this feature.', 'all-in-one-wp-security-and-firewall'), $read_link).'</p>';
+            echo '<p>'.__("NOTE: If you are hosting your site on WPEngine or a provider which performs server caching, you will need to ask the host support people to NOT cache your renamed login page.", "all-in-one-wp-security-and-firewall").'</p>';
+            ?>
         </div>
         <table class="form-table">
             <tr valign="top">
@@ -287,12 +289,12 @@ class AIOWPSecurity_Brute_Force_Menu extends AIOWPSecurity_Admin_Menu
                 $aiowps_feature_mgr->check_feature_status_and_recalculate_points();
 
                 $res = AIOWPSecurity_Utility_Htaccess::write_to_htaccess();
-                if ($res){
+                if ($res) {
                     echo '<div id="message" class="updated fade"><p>';
                     echo $msg;
                     echo '</p></div>';
                 }
-                else if($res == -1){
+                else {
                     $this->show_msg_error(__('Could not write to the .htaccess file. Please check the file permissions.', 'all-in-one-wp-security-and-firewall'));
                 }
             }
@@ -642,7 +644,7 @@ class AIOWPSecurity_Brute_Force_Menu extends AIOWPSecurity_Admin_Menu
                     $this->show_msg_settings_updated();
 
                     $write_result = AIOWPSecurity_Utility_Htaccess::write_to_htaccess(); //now let's write to the .htaccess file
-                    if ($write_result == -1)
+                    if ( !$write_result )
                     {
                         $this->show_msg_error(__('The plugin was unable to write to the .htaccess file. Please edit file manually.','all-in-one-wp-security-and-firewall'));
                         $aio_wp_security->debug_logger->log_debug("AIOWPSecurity_whitelist_Menu - The plugin was unable to write to the .htaccess file.");

@@ -24,7 +24,7 @@
             ), $atts ) );
 
 
-            /* PAGE BUILDER OUTPUT
+            /* PAGE BUILDER OUTPUT
             ================================================== */
             $width    = spb_translateColumnWidthToSpan( $width );
             $el_class = $this->getExtraClass( $el_class );

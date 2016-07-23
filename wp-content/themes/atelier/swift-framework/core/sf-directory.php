@@ -5,7 +5,7 @@
     *	Directory Functions
     *	------------------------------------------------
     *	Swift Framework
-    * 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+    * 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     *	sf_directory()
     *
@@ -239,7 +239,6 @@
             ================================================== */
             $directory_items_output = $grid_size = "";
             $count                  = 0;
-			$order = "standard";
 
             /* DIRECTORY QUERY SETUP
             ================================================== */
@@ -370,17 +369,12 @@
                 $custom_excerpt = sf_get_post_meta( $post->ID, 'sf_custom_excerpt', true );
                 $post_excerpt   = '';
 
-                if ( $excerpt_length != '') {
-
-                	if ( $custom_excerpt != '' ) {
-                    	$post_excerpt = sf_custom_excerpt( $custom_excerpt, $excerpt_length );
-                	} else {
-                    	$post_excerpt = sf_excerpt( $excerpt_length );
-                	}
-
-                }else{
-                		$post_excerpt = sf_excerpt( 200 );
+                if ( $custom_excerpt != '') {
+					$post_excerpt = $custom_excerpt;
+                } else {
+                	$post_excerpt = sf_excerpt( $excerpt_length );
                 }
+                
 
                 $post_excerpt .= ' <a class="read-more-directory" href="'. get_permalink( $post->ID ) . '">  ' . __('Read More', 'swiftframework') . '</a>';
                 $post_terms = get_the_terms( $post->ID, 'directory-category' );

@@ -163,7 +163,7 @@
 
                 } else {
 
-	                if ( spb_get_theme_name() == "atelier" ) {
+	                if ( spb_get_theme_name() == "atelier" || spb_get_theme_name() == "uplift" || spb_get_theme_name() == "nota" ) {
 
 						$gallery_images = rwmb_meta( 'sf_gallery_images', 'type=image&size=thumb-square' );
 
@@ -252,7 +252,6 @@
 
             endwhile;
 
-            wp_reset_query();
             wp_reset_postdata();
 
 

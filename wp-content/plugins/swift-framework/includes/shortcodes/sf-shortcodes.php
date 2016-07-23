@@ -416,6 +416,7 @@
 	        extract( shortcode_atts( array(
                 "image_id"   => "",
                 "image_size"   => "",
+                "fixed_height" => "",
 	            "image"      => "",
 	            "image_width" => "",
 	            "image_height" => "",
@@ -428,7 +429,13 @@
 	            "extraclass" => ""
 	        ), $atts ) );
 
-	        $image_banner = "";
+	        $image_banner = $img_style = "";
+            $img_style_array = array();
+
+            if ( $fixed_height != "" ) {
+                $img_style = 'style="height:' . $fixed_height. 'px;object-fit:cover;width:100%;"';
+                $img_style_array = array( 'style' => 'height:' . $fixed_height. 'px;object-fit:cover;width:100%;' );
+            }
 
 	        $image_banner .= '<div class="sf-image-banner ' . $extraclass . '">';
 
@@ -445,12 +452,12 @@
 
             $image_banner .= '<div class="img-wrap">';
 			if ( $image_id != "" && $image_size != "" ) {
-                $img      = wp_get_attachment_image( $image_id, $image_size, false );
+                $img      = wp_get_attachment_image( $image_id, $image_size, false, $img_style_array );
                 $image_banner .= $img;
             } else if ( $image_width != "" && $image_height != "" ) {
-				$image_banner .= '<img src="' . $image . '" width="'. $image_width .'" height="'. $image_height .'" alt="'. $image_alt .'" />';
+				$image_banner .= '<img src="' . $image . '" width="'. $image_width .'" height="'. $image_height .'" alt="'. $image_alt .'" '.$img_style.' />';
 			} else {
-	        	$image_banner .= '<img src="' . $image . '" alt="'. $image_alt .'" />';
+	        	$image_banner .= '<img src="' . $image . '" alt="'. $image_alt .'" '.$img_style.' />';
 			}
             $image_banner .= '</div>';
 

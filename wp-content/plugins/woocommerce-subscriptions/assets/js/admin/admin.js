@@ -42,9 +42,7 @@ jQuery(document).ready(function($){
 				$( 'input#_manage_stock' ).change();
 
 				// Make the sale price row full width
-				if ('true' !== WCSubscriptions.isWCPre23) {
-					$('.sale_price_dates_fields').prev('.form-row').addClass('form-row-full').removeClass('form-row-last');
-				}
+				$('.sale_price_dates_fields').prev('.form-row').addClass('form-row-full').removeClass('form-row-last');
 
 			} else {
 
@@ -55,9 +53,7 @@ jQuery(document).ready(function($){
 				}
 
 				// Restore the sale price row width to half
-				if ('true' !== WCSubscriptions.isWCPre23) {
-					$('.sale_price_dates_fields').prev('.form-row').removeClass('form-row-full').addClass('form-row-last');
-				}
+				$('.sale_price_dates_fields').prev('.form-row').removeClass('form-row-full').addClass('form-row-last');
 			}
 		},
 		setSubscriptionLengths: function(){
@@ -234,11 +230,7 @@ jQuery(document).ready(function($){
 					$trialSignUpRow  = $(this).siblings('.variable_subscription_trial_sign_up'),
 					$saleDatesRow;
 
-				if ('true' == WCSubscriptions.isWCPre23) {
-					$saleDatesRow = $(this).siblings('.sale_price_dates_fields');
-				} else {
-					$saleDatesRow = $(this).siblings('.variable_pricing');
-				}
+				$saleDatesRow = $(this).siblings('.variable_pricing');
 
 				// Add the subscription price fields above the standard price fields
 				$(this).insertBefore($regularPriceRow);
@@ -327,16 +319,9 @@ jQuery(document).ready(function($){
 	});
 
 	// Make sure the "Used for variations" checkbox is visible when adding attributes to a variable subscription
-	if ('true' == WCSubscriptions.isWCPre23){
-		$('button.add_attribute').on('click', function(){
-			$.showHideVariableSubscriptionMeta();
-		});
-	} else {
-		// WC 2.3 - run after the Ajax request has inserted variation HTML
-		$('body').on('woocommerce_added_attribute', function(){
-			$.showHideVariableSubscriptionMeta();
-		});
-	}
+	$('body').on('woocommerce_added_attribute', function(){
+		$.showHideVariableSubscriptionMeta();
+	});
 
 	if($.getParameterByName('select_subscription')=='true'){
 		$('select#product-type option[value="'+WCSubscriptions.productType+'"]').attr('selected', 'selected');
@@ -419,23 +404,13 @@ jQuery(document).ready(function($){
 		return confirm(WCSubscriptions.deleteUserWarning);
 	});
 
-	// WC 2.4 variation bulk edit handling
+	// WC 2.4+ variation bulk edit handling
 	$('select.variation_actions').on('variable_subscription_sign_up_fee_ajax_data variable_subscription_period_interval_ajax_data variable_subscription_period_ajax_data variable_subscription_trial_period_ajax_data variable_subscription_trial_length_ajax_data variable_subscription_length_ajax_data', function(event, data) {
 		value = $.getVariationBulkEditValue(event.type.replace(/_ajax_data/g,''));
 		if ( value != null ) {
 			data.value = value;
 		}
 		return data;
-	});
-
-	// WC 2.1 - 2.3 variation bulk edit handling
-	$(document).on('variable_subscription_sign_up_fee variable_subscription_period_interval variable_subscription_period variable_subscription_trial_period variable_subscription_trial_length variable_subscription_length', 'select#field_to_edit', function(event) {
-		if ('true' == WCSubscriptions.isWCPre24) {
-			value = $.getVariationBulkEditValue(event.type);
-			if (value) {
-				$( ':input[name^="' + event.type + '["]').val( value ).change();
-			}
-		}
 	});
 
 	// We're on the Subscriptions settings page

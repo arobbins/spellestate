@@ -1,5 +1,53 @@
 *** WooCommerce Customer/Order CSV Export Changelog ***
 
+2016.06.28 - version 3.12.1
+ * Fix - Use `order_number_formatted` column for the formatted order number in the CSV Import export format
+ * Fix - Use `order_number` column for the underlying order number in the CSV Import export format
+ * Fix - Replace `customer_id` column with `customer_user` column in the CSV Import export format
+
+2016.06.02 - version 3.12.0
+ * Feature - New format: CSV Import (JSON-based)
+ * Tweak - Improve escaping special characters inside items & meta in CSV
+ * Misc - Added support for WooCommerce 2.6
+ * Misc - Removed support for WooCommerce 2.3
+
+2016.03.03 - version 3.11.2
+ * Fix - Replace legacy 'Cart Discount' and 'Order Discount' columns with the 'Discount Total' column in the legacy export formats
+ * Fix - Replace legacy 'cart_discount' and 'order_discount' columns with the 'discount_total' column in the CSV Import export format
+ * Misc - Add a filter 'wc_customer_order_csv_export_auto_export_order_query_args' to tweak query of orders to be exported automatically
+
+2016.01.26 - version 3.11.1
+ * Fix - Fix Ajax conflict with WPML
+
+2016.01.14 - version 3.11.0
+ * Tweak - Include plugin information in the System Status report
+ * Misc - Added support for WooCommerce 2.5
+ * Misc - Removed support for WooCommerce 2.2
+
+2015.12.12 - version 3.10.4
+ * Fix - Updated version of SV Framework from 4.0.0 to 4.1.2
+
+2015.12.11 - version 3.10.3
+ * Fix - WooCommerce Subscriptions: prevent renewal orders from being marked as exported automatically
+ * Misc - WooCommerce Subscriptions 2.0 compatibility
+
+2015.10.22 - version 3.10.2
+ * Tweak - Escape leading equals sign character to prevent issues with loading CSV in Excel
+ * Misc - Added French translation, props Thomas S.
+
+2015.09.25 - version 3.10.1
+ * Fix - Ensure settings tab titles are translatable
+ * Fix - Fix incorrectly line item totals when exporting in the CSV Import format
+ * Tweak - Allow for line items to be removed from the export using the `wc_customer_order_csv_export_order_line_item` filter
+
+2015.07.28 - version 3.10.0
+ * Misc - WooCommerce 2.4 Compatibility
+
+2015.07.20 - version 3.9.2
+ * Tweak - Attach Chosen.js to form fields only if Select2 is not available
+ * Fix - Fix the exported/not exported order count when filtering by order status
+ * Fix - Avoid malformed CSVs in certain server environments by removing ob_clean()
+
 2015.03.12 - version 3.9.1
  * Fix - Fix a warning when a line item has no tax data
  * Tweak - Include order fees in exports

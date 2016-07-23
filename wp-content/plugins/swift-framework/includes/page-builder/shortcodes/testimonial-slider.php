@@ -122,7 +122,6 @@
 
             endwhile;
 
-            wp_reset_query();
             wp_reset_postdata();
 
             $items .= '</ul></div>';
@@ -157,7 +156,7 @@
             $output .= "\n\t\t" . '</div> ' . $this->endBlockComment( '.spb_wrapper' );
             $output .= "\n\t" . '</div> ' . $this->endBlockComment( $width );
 
-            if ( $sidebars == "no-sidebars" ) {
+            if ( $sidebars == "no-sidebars" && $width == "col-sm-12" ) {
                 $output = $this->startRow( $el_position, '', true ) . $output . $this->endRow( $el_position, '', true );
             } else {
                 $output = $this->startRow( $el_position ) . $output . $this->endRow( $el_position );

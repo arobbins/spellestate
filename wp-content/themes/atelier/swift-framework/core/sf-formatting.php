@@ -5,7 +5,7 @@
     *	Swift Framework Formatting Functions
     *	------------------------------------------------
     *	Swift Framework v3.0
-    * 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+    * 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     *	sf_content_filter()
     *	sf_get_the_content_with_formatting()
@@ -62,29 +62,17 @@
         $custom_excerpt = sf_get_post_meta( $post->ID, 'sf_custom_excerpt', true );
 		
 		if ( $custom_excerpt != "" ) {
-			$excerpt = explode( ' ', $custom_excerpt, $limit );
+			$excerpt = wp_trim_words( $custom_excerpt, $limit );
 		} else {
-			$excerpt = explode( ' ', get_the_excerpt(), $limit );
+			$excerpt = wp_trim_words( get_the_excerpt(), $limit );
 		}
-        if ( count( $excerpt ) >= $limit ) {
-            array_pop( $excerpt );
-            $excerpt = implode( " ", $excerpt ) . '...';
-        } else {
-            $excerpt = implode( " ", $excerpt ) . '';
-        }
         $excerpt = preg_replace( '`\[[^\]]*\]`', '', $excerpt );
 
         return '<p>' . $excerpt . '</p>';
     }
 
     function sf_content( $limit ) {
-        $content = explode( ' ', get_the_content(), $limit );
-        if ( count( $content ) >= $limit ) {
-            array_pop( $content );
-            $content = implode( " ", $content ) . '...';
-        } else {
-            $content = implode( " ", $content ) . '';
-        }
+        $content = wp_trim_words( get_the_content(), $limit );
         $content = preg_replace( '/\[.+\]/', '', $content );
         $content = apply_filters( 'the_content', $content );
         $content = str_replace( ']]>', ']]&gt;', $content );
@@ -93,17 +81,11 @@
     }
 
     function sf_custom_excerpt( $custom_content, $limit ) {
-        $content = explode( ' ', $custom_content, $limit );
-        if ( count( $content ) >= $limit ) {
-            array_pop( $content );
-            $content = implode( " ", $content ) . '...';
-        } else {
-            $content = implode( " ", $content ) . '';
-        }
+        $content = wp_trim_words( $custom_content, $limit );
         $content = preg_replace( '/\[.+\]/', '', $content );
         $content = apply_filters( 'the_content', $content );
         $content = str_replace( ']]>', ']]&gt;', $content );
-
+	
         return $content;
     }
 

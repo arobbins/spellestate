@@ -11,9 +11,10 @@ class SwiftPageBuilderShortcode_spb_image_banner extends SwiftPageBuilderShortco
             'width'           => '1/1',
             'image'           => $image,
             'image_size'      => '',
+            'fixed_height'    => '',
             'content_pos'	  => 'center',
             'content_textalign' => 'center',
-            'animation' => 'none',
+            'animation'         => 'none',
             'animation_delay' => '200',
             'image_link'      => '',
             'link_target'     => '',
@@ -58,7 +59,7 @@ class SwiftPageBuilderShortcode_spb_image_banner extends SwiftPageBuilderShortco
 
         $output .= "\n\t" . '<div class="spb_content_element spb_image_banner ' . $width . $el_class . '">';
         $output .= "\n\t\t" . '<div class="spb-asset-content">';
-        $output .= "\n\t\t" . do_shortcode( '[sf_imagebanner image_id="'.$image_id.'" image_size="'.$image_size.'" image="'.$img_url.'" image_width="'.$image_width.'" image_height="'.$image_height.'" image_alt="'.$image_alt.'" animation="'.$animation.'" contentpos="'.$content_pos.'" textalign="'.$content_textalign.'" href="'.$image_link.'" target="'.$link_target.'"]'.$content.'[/sf_imagebanner]' );
+        $output .= "\n\t\t" . do_shortcode( '[sf_imagebanner image_id="'.$image_id.'" image_size="'.$image_size.'" fixed_height="'.$fixed_height.'" image="'.$img_url.'" image_width="'.$image_width.'" image_height="'.$image_height.'" image_alt="'.$image_alt.'" animation="'.$animation.'" contentpos="'.$content_pos.'" textalign="'.$content_textalign.'" href="'.$image_link.'" target="'.$link_target.'"]'.$content.'[/sf_imagebanner]' );
         $output .= "\n\t\t" . '</div>';
         $output .= "\n\t" . '</div> ' . $this->endBlockComment( $width );
 
@@ -123,6 +124,13 @@ SPBMap::map( 'spb_image_banner', array(
             "param_name"  => "image_size",
             "value"       => $image_sizes,
             "description" => __( "Select the source size for the image (NOTE: this doesn't affect it's size on the front-end, only the quality).", 'swift-framework-plugin' )
+        ),
+        array(
+            "type"        => "textfield",
+            "heading"     => __( "Fixed image height", 'swift-framework-plugin' ),
+            "param_name"  => "fixed_height",
+            "value"       => "",
+            "description" => __( "If you wish to fix the image height, for purposes such as a grid, then please provide a numeric value here (no px).", 'swift-framework-plugin' )
         ),
         array(
             "type"        => "textarea_html",

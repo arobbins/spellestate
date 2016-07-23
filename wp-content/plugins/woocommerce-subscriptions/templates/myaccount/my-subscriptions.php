@@ -13,7 +13,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 <div class="woocommerce_account_subscriptions">
 
+	<?php if ( WC_Subscriptions::is_woocommerce_pre( '2.6' ) ) : ?>
 	<h2><?php esc_html_e( 'My Subscriptions', 'woocommerce-subscriptions' ); ?></h2>
+	<?php endif; ?>
 
 	<?php if ( ! empty( $subscriptions ) ) : ?>
 	<table class="shop_table shop_table_responsive my_account_subscriptions my_account_orders">
@@ -46,7 +48,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					$payment_method_to_display = sprintf( __( 'Via %s', 'woocommerce-subscriptions' ), $subscription->get_payment_method_to_display() );
 					$payment_method_to_display = apply_filters( 'woocommerce_my_subscriptions_payment_method', $payment_method_to_display, $subscription );
 					?>
-				&nbsp;<small><?php echo esc_attr( $payment_method_to_display ); ?></small>
+				<br/><small><?php echo esc_attr( $payment_method_to_display ); ?></small>
 				<?php endif; ?>
 			</td>
 			<td class="subscription-total order-total" data-title="<?php echo esc_attr_x( 'Total', 'Used in data attribute. Escaped', 'woocommerce-subscriptions' ); ?>">

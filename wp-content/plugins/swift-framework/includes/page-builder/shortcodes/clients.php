@@ -22,6 +22,7 @@
                 'category'         => '',
                 'carousel'         => 'no',
                 'carousel_autoplay' => '',
+                'link_target'      => '_blank',
                 'pagination'       => 'no',
                 'el_position'      => '',
                 'width'            => '1/1',
@@ -82,8 +83,12 @@
 
             $client_height = $client_width * $img_scale;
 
+            if ( $carousel_autoplay != "" && $carousel_autoplay !== "0" ) {
+                $carousel_autoplay = 'data-autoplay="'.$carousel_autoplay.'"';
+            }
+
             if ( $carousel == "yes" ) {
-                $items .= '<div id="carousel-' . $sf_carouselID . '" class="clients-items carousel-items clearfix" data-columns="' . $item_columns . '" data-autoplay="'.$carousel_autoplay.'">';
+                $items .= '<div id="carousel-' . $sf_carouselID . '" class="clients-items carousel-items clearfix" data-columns="' . $item_columns . '" '.$carousel_autoplay.'>';
             } else {
                 $items .= '<div class="clients-items clearfix">';
             }
@@ -109,7 +114,7 @@
                 if ( $image ) {
 
                     if ( $client_link_url ) {
-                        $items .= '<a href="' . $client_link_url . '" target="_blank"><img src="' . $image[0] . '" width="' . $image[1] . '" height="' . $image[2] . '" alt="' . $image_alt . '" /></a>';
+                        $items .= '<a href="' . $client_link_url . '" target="' . $link_target . '"><img src="' . $image[0] . '" width="' . $image[1] . '" height="' . $image[2] . '" alt="' . $image_alt . '" /></a>';
                     } else {
                         $items .= '<img src="' . $image[0] . '" width="' . $image[1] . '" height="' . $image[2] . '" alt="' . $image_alt . '" />';
                     }
@@ -122,7 +127,6 @@
 
             endwhile;
 
-            wp_reset_query();
             wp_reset_postdata();
 
             $items .= '</div>';
@@ -220,14 +224,24 @@
                 "buttonset_on"  => "yes",
                 "description" => __( "Enable carousel functionality.", 'swift-framework-plugin' )
             ),
-            // array(
-            //     "type"        => "textfield",
-            //     "heading"     => __( "Carousel Autoplay", 'swift-framework-plugin' ),
-            //     "param_name"  => "carousel_autoplay",
-            //     "value"       => "",
-            //     "required"       => array("carousel", "=", "yes"),
-            //     "description" => __( "Enable carousel autoplay. Enter time in miliseconds for the carousel to auto-rotate. Leave blank to disable.", 'swift-framework-plugin' )
-            // ),
+            array(
+                "type"        => "textfield",
+                "heading"     => __( "Carousel Autoplay", 'swift-framework-plugin' ),
+                "param_name"  => "carousel_autoplay",
+                "value"       => "",
+                "required"       => array("carousel", "=", "yes"),
+                "description" => __( "Enable carousel autoplay. Enter time in miliseconds for the carousel to auto-rotate. Leave blank to disable.", 'swift-framework-plugin' )
+            ),
+            array(
+                "type"        => "dropdown",
+                "heading"     => __( "Link target", 'swift-framework-plugin' ),
+                "param_name"  => "link_target",
+                "value"       => array(
+                    __( "Self", 'swift-framework-plugin' )       => "_self",
+                    __( "New Window", 'swift-framework-plugin' ) => "_blank"
+                ),
+                "description" => __( "Select if you want the client link to open in a new window", 'swift-framework-plugin' )
+            ),
             array(
                 "type"        => "dropdown",
                 "heading"     => __( "Pagination", 'swift-framework-plugin' ),

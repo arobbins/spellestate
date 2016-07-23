@@ -18,11 +18,11 @@
  *
  * @package     WC-Customer-Order-CSV-Export/Export-Methods/FTP
  * @author      SkyVerge
- * @copyright   Copyright (c) 2012-2015, SkyVerge, Inc.
+ * @copyright   Copyright (c) 2012-2016, SkyVerge, Inc.
  * @license     http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+defined( 'ABSPATH' ) or exit;
 
 /**
  * Customer/Order CSV Export FTP Class
@@ -67,13 +67,13 @@ class WC_Customer_Order_CSV_Export_Method_FTP extends WC_Customer_Order_CSV_Expo
 		// check for successful connection
 		if ( ! $this->link ) {
 
-			throw new Exception( __( "Could not connect via FTP to {$this->server} on port {$this->port}, check server address and port.", WC_Customer_Order_CSV_Export::TEXT_DOMAIN ) );
+			throw new Exception( __( "Could not connect via FTP to {$this->server} on port {$this->port}, check server address and port.", 'woocommerce-customer-order-csv-export' ) );
 		}
 
 		// attempt to login, note that incorrect credentials throws an E_WARNING PHP error
 		if ( ! ftp_login( $this->link, $this->username, $this->password ) ) {
 
-			throw new Exception( __( "Could not authenticate via FTP with username {$this->username} and password <hidden>. Check username and password.", WC_Customer_Order_CSV_Export::TEXT_DOMAIN ) );
+			throw new Exception( __( "Could not authenticate via FTP with username {$this->username} and password <hidden>. Check username and password.", 'woocommerce-customer-order-csv-export' ) );
 		}
 
 		// set passive mode if enabled
@@ -82,7 +82,7 @@ class WC_Customer_Order_CSV_Export_Method_FTP extends WC_Customer_Order_CSV_Expo
 			// check for success
 			if ( ! ftp_pasv( $this->link, true ) ) {
 
-				throw new Exception( __( 'Could not set passive mode', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ) );
+				throw new Exception( __( 'Could not set passive mode', 'woocommerce-customer-order-csv-export' ) );
 			}
 		}
 
@@ -92,7 +92,7 @@ class WC_Customer_Order_CSV_Export_Method_FTP extends WC_Customer_Order_CSV_Expo
 			// check for success
 			if ( ! ftp_chdir( $this->link, '/' . $this->path ) ) {
 
-				throw new Exception( __( "Could not change directory to {$this->path} - check path exists.", WC_Customer_Order_CSV_Export::TEXT_DOMAIN ) );
+				throw new Exception( __( "Could not change directory to {$this->path} - check path exists.", 'woocommerce-customer-order-csv-export' ) );
 			}
 		}
 	}
@@ -114,7 +114,7 @@ class WC_Customer_Order_CSV_Export_Method_FTP extends WC_Customer_Order_CSV_Expo
 		// check for valid stream handle
 		if ( ! $stream ) {
 
-			throw new Exception( __( 'Could not open php://temp for writing.', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ) );
+			throw new Exception( __( 'Could not open php://temp for writing.', 'woocommerce-customer-order-csv-export' ) );
 		}
 
 		// write CSV into the temporary stream
@@ -126,7 +126,7 @@ class WC_Customer_Order_CSV_Export_Method_FTP extends WC_Customer_Order_CSV_Expo
 		// upload the stream
 		if ( ! ftp_fput( $this->link, $filename, $stream, FTP_ASCII ) ) {
 
-			throw new Exception( __( "Could not upload file: {$filename} - check permissions.", WC_Customer_Order_CSV_Export::TEXT_DOMAIN ) );
+			throw new Exception( __( "Could not upload file: {$filename} - check permissions.", 'woocommerce-customer-order-csv-export' ) );
 		}
 
 		// close the stream handle
@@ -155,7 +155,7 @@ class WC_Customer_Order_CSV_Export_Method_FTP extends WC_Customer_Order_CSV_Expo
 			return false;
 		}
 
-		throw new Exception( sprintf( __( 'FTP error: %s', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ), $error_string ) );
+		throw new Exception( sprintf( __( 'FTP error: %s', 'woocommerce-customer-order-csv-export' ), $error_string ) );
 	}
 
 

@@ -5,6 +5,6 @@
 	"require": {
 		"eher/oauth": "^1.0",
 		"rackspace/php-opencloud": "1.12.2",
-		"aws/aws-sdk-php": "2.7.17"
+		"aws/aws-sdk-php": "2.8.*"
     }
 }

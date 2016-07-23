@@ -5,7 +5,7 @@
     *	Swift Framework Functions
     *	------------------------------------------------
     *	Swift Framework v3.0
-    * 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+    * 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     *	sf_output_container_open()
     *	sf_output_container_close()
@@ -346,7 +346,7 @@
 	            if ( function_exists( 'has_shortcode' ) ) {
 
 		            // Google Maps Script
-	                if ( has_shortcode( $content , 'spb_gmaps' ) || has_shortcode( $content , 'spb_directory' ) ) {
+	                if ( has_shortcode( $content , 'spb_gmaps' ) || has_shortcode( $content , 'spb_directory' ) || has_shortcode( $content, 'spb_directory_user_listings' ) ) {
 						update_post_meta( $post_id , 'sf_page_has_map' , 1 );
 	                } else {
 		                delete_post_meta( $post_id , 'sf_page_has_map' );
@@ -3055,19 +3055,19 @@
                 $icon_list .= sf_icon_format_output( $nucleo_general, "nucleo-general", $format );
             }
             
-            if ( $type == "fontello" || $type == "" ) {
-	            $fontello_icons = get_option('sf_fontello_icon_codes');
-	            
-	            if ( $fontello_icons ) {
-		            $fontello_list = '';
-			
-		            foreach ( $fontello_icons as $icon) {
-		                $fontello_list .= '<li><i class="icon-' . $icon . '"></i><span class="icon-name">' . $icon . '</span></li>';
-		            }
-		      
-		            $icon_list .= $fontello_list;
-				}
-			}
+//            if ( $type == "fontello" || $type == "" ) {
+//	            $fontello_icons = get_option('sf_fontello_icon_codes');
+//	            
+//	            if ( $fontello_icons ) {
+//		            $fontello_list = '';
+//			
+//		            foreach ( $fontello_icons as $icon) {
+//		                $fontello_list .= '<li><i class="icon-' . $icon . '"></i><span class="icon-name">' . $icon . '</span></li>';
+//		            }
+//		      
+//		            $icon_list .= $fontello_list;
+//				}
+//			}
 			
             // APPLY FILTERS
             $icon_list = apply_filters( 'sf_icons_list', $icon_list );

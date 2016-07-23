@@ -1,12 +1,12 @@
 <?php
 /**
- * Plugin Name: WooCommerce Customer/Order CSV Import Suite
+ * Plugin Name: WooCommerce Customer/Order/Coupon CSV Import Suite
  * Plugin URI: http://www.woothemes.com/extension/customerorder-csv-import-suite/
- * Description: Import customers, orders and coupons straight from the WordPress admin
+ * Description: Import customers, coupons and orders straight from the WordPress admin
  * Author: WooThemes / SkyVerge
  * Author URI: http://www.woothemes.com
- * Version: 2.9.0
- * Text Domain: woocommerce-customer-order-csv-import
+ * Version: 3.0.2
+ * Text Domain: woocommerce-csv-import-suite
  * Domain Path: /i18n/languages/
  *
  * Copyright: (c) 2012-2016 SkyVerge, Inc. (info@skyverge.com)
@@ -14,14 +14,14 @@
  * License: GNU General Public License v3.0
  * License URI: http://www.gnu.org/licenses/gpl-3.0.html
  *
- * @package   WC-Customer-CSV-Import-Suite
+ * @package   WC-CSV-Import-Suite
  * @author    SkyVerge
  * @category  Importer
  * @copyright Copyright (c) 2012-2016, SkyVerge, Inc.
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+defined( 'ABSPATH' ) or exit;
 
 // Required functions
 if ( ! function_exists( 'woothemes_queue_update' ) ) {
@@ -32,7 +32,7 @@ if ( ! function_exists( 'woothemes_queue_update' ) ) {
 woothemes_queue_update( plugin_basename( __FILE__ ), 'eb00ca8317a0f64dbe185c995e5ea3df', '18709' );
 
 // WC active check/is admin
-if ( ! is_woocommerce_active() || ! is_admin() ) {
+if ( ! is_woocommerce_active() ) {
 	return;
 }
 
@@ -41,9 +41,13 @@ if ( ! class_exists( 'SV_WC_Framework_Bootstrap' ) ) {
 	require_once( plugin_dir_path( __FILE__ ) . 'lib/skyverge/woocommerce/class-sv-wc-framework-bootstrap.php' );
 }
 
-SV_WC_Framework_Bootstrap::instance()->register_plugin( '4.2.0', __( 'WooCommerce Customer/Order CSV Import', 'woocommerce-customer-order-csv-import' ), __FILE__, 'init_woocommerce_customer_order_csv_import', array( 'minimum_wc_version' => '2.3.6', 'backwards_compatible' => '4.2.0' ) );
+SV_WC_Framework_Bootstrap::instance()->register_plugin( '4.4.0', __( 'WooCommerce Customer/Order/Coupon CSV Import', 'woocommerce-csv-import-suite' ), __FILE__, 'init_woocommerce_csv_import_suite', array(
+	'minimum_wc_version'   => '2.4.13',
+	'minimum_wp_version'   => '4.1',
+	'backwards_compatible' => '4.4.0',
+) );
 
-function init_woocommerce_customer_order_csv_import() {
+function init_woocommerce_csv_import_suite() {
 
 /**
  * Customer/Order/Coupon CSV Import Suite Main Class.  This class is responsible
@@ -53,20 +57,32 @@ function init_woocommerce_customer_order_csv_import() {
  *
  * Adapted from the WordPress post importer by the WordPress team
  */
-class WC_Customer_CSV_Import_Suite extends SV_WC_Plugin {
+class WC_CSV_Import_Suite extends SV_WC_Plugin {
 
 
 	/** version number */
-	const VERSION = '2.9.0';
+	const VERSION = '3.0.2';
 
-	/** @var WC_Customer_CSV_Import_Suite single instance of this plugin */
+	/** @var WC_CSV_Import_Suite single instance of this plugin */
 	protected static $instance;
 
 	/** string the plugin id */
-	const PLUGIN_ID = 'customer_csv_import_suite';
+	const PLUGIN_ID = 'csv_import_suite';
 
 	/** plugin text domain, DEPRECATED as of 2.9.0 */
-	const TEXT_DOMAIN = 'woocommerce-customer-order-csv-import';
+	const TEXT_DOMAIN = 'woocommerce-csv-import-suite';
+
+	/** @var \WC_CSV_Import_Suite_Admin instance */
+	protected $admin;
+
+	/** @var \WC_CSV_Import_Suite_Importers instance */
+	protected $importers;
+
+	/** @var \WC_CSV_Import_Suite_Background_Import instance */
+	protected $background_import;
+
+	/** @var \WC_CSV_Import_Suite_AJAX instance */
+	protected $ajax;
 
 
 	/**
@@ -74,14 +90,134 @@ class WC_Customer_CSV_Import_Suite extends SV_WC_Plugin {
 	 */
 	public function __construct() {
 
-		parent::__construct( self::PLUGIN_ID, self::VERSION );
+		parent::__construct(
+			self::PLUGIN_ID,
+			self::VERSION,
+			array(
+				'dependencies' => array( 'mbstring' ),
+			)
+		);
 
-		// register importers
-		add_action( 'admin_init', array( $this, 'admin_init' ) );
+		// Initialize
+		add_action( 'init', array( $this, 'includes' ) );
+	}
 
-		// add the menu item
-		add_action( 'admin_menu',         array( $this, 'admin_menu' ) );
-		add_action( 'admin_print_styles', array( $this, 'admin_scripts' ) );
+
+	/**
+	 * Include required files
+	 *
+	 * @since 3.0.0
+	 */
+	public function includes() {
+
+		// importers and background import must be loaded all the time, because
+		// otherwise background jobs simply won't work
+		require_once( $this->get_framework_path() . '/utilities/class-sv-wp-async-request.php' );
+		require_once( $this->get_framework_path() . '/utilities/class-sv-wp-background-job-handler.php' );
+
+		$this->background_import = $this->load_class( '/includes/class-wc-csv-import-suite-background-import.php', 'WC_CSV_Import_Suite_Background_Import' );
+		$this->importers         = $this->load_class( '/includes/class-wc-csv-import-suite-importers.php', 'WC_CSV_Import_Suite_Importers' );
+
+		if ( is_admin() ) {
+			$this->admin_includes();
+		}
+
+		if ( is_ajax() ) {
+			$this->ajax_includes();
+		}
+	}
+
+
+	/**
+	 * Include required admin files
+	 *
+	 * @since 3.0.0
+	 */
+	private function admin_includes() {
+		$this->admin = $this->load_class( '/includes/admin/class-wc-csv-import-suite-admin.php', 'WC_CSV_Import_Suite_Admin' );
+	}
+
+
+	/**
+	 * Include required AJAX files
+	 *
+	 * @since 3.0.0
+	 */
+	private function ajax_includes() {
+
+		require_once( $this->get_plugin_path() . '/includes/class-wc-csv-import-suite-parser.php' );
+		$this->ajax = $this->load_class( '/includes/class-wc-csv-import-suite-ajax.php', 'WC_CSV_Import_Suite_AJAX' );
+	}
+
+
+	/**
+	 * Return admin class instance
+	 *
+	 * @since 3.0.0
+	 * @return \WC_CSV_Import_Suite_Admin
+	 */
+	public function get_admin_instance() {
+		return $this->admin;
+	}
+
+
+	/**
+	 * Return importers class instance
+	 *
+	 * @since 3.0.0
+	 * @return \WC_CSV_Import_Suite_Importers
+	 */
+	public function get_importers_instance() {
+		return $this->importers;
+	}
+
+
+	/**
+	 * Return background import class instance
+	 *
+	 * @since 3.0.0
+	 * @return \WC_CSV_Import_Suite_Background_Import
+	 */
+	public function get_background_import_instance() {
+		return $this->background_import;
+	}
+
+
+	/**
+	 * Return the ajax class instance
+	 *
+	 * @since 3.0.0
+	 * @return \WC_CSV_Import_Suite_AJAX
+	 */
+	public function get_ajax_instance() {
+		return $this->ajax;
+	}
+
+
+	/**
+	 * Backwards compat for changing the visibility of some class instances.
+	 *
+	 * @TODO Remove this as part of WC 2.7 compat {IT 2016-05-17}
+	 *
+	 * @since 3.0.0
+	 */
+	public function __get( $name ) {
+
+		switch ( $name ) {
+
+			case 'admin':
+				_deprecated_function( 'wc_csv_import_suite()->admin', '3.0.0', 'wc_csv_import_suite()->get_admin_instance()' );
+				return $this->get_admin_instance();
+
+			case 'ajax':
+				_deprecated_function( 'wc_csv_import_suite()->ajax', '3.0.0', 'wc_csv_import_suite()->get_ajax_instance()' );
+				return $this->get_ajax_instance();
+		}
+
+		// you're probably doing it wrong
+		trigger_error( 'Call to undefined property ' . __CLASS__ . '::' . $name, E_USER_ERROR );
+
+		return null;
 	}
 
 
@@ -92,29 +228,7 @@ class WC_Customer_CSV_Import_Suite extends SV_WC_Plugin {
 	 */
 	public function load_translation() {
 
-		load_plugin_textdomain( 'woocommerce-customer-order-csv-import', false, dirname( plugin_basename( $this->get_file() ) ) . '/i18n/languages' );
-	}
-
-
-	/**
-	 * Admin Init - register the customer and order importers, handle the
-	 */
-	public function admin_init() {
-
-		register_importer( 'woocommerce_customer_csv',
-							'WooCommerce Customer (CSV)',
-							__( 'Import <strong>customers</strong> to your store via a csv file.', 'woocommerce-customer-order-csv-import' ),
-							array( $this, 'customer_importer' ) );
-
-		register_importer( 'woocommerce_order_csv',
-							'WooCommerce Order (CSV)',
-							__( 'Import <strong>orders</strong> to your store via a csv file.', 'woocommerce-customer-order-csv-import' ),
-							array( $this, 'order_importer' ) );
-
-		register_importer( 'woocommerce_coupon_csv',
-							'WooCommerce Coupon (CSV)',
-							__( 'Import <strong>coupons</strong> to your store via a csv file.', 'woocommerce-customer-order-csv-import' ),
-							array( $this, 'coupon_importer' ) );
+		load_plugin_textdomain( 'woocommerce-csv-import-suite', false, dirname( plugin_basename( $this->get_file() ) ) . '/i18n/languages' );
 	}
 
 
@@ -134,7 +248,7 @@ class WC_Customer_CSV_Import_Suite extends SV_WC_Plugin {
 		$settings_url = $this->get_settings_url( $plugin_id );
 
 		if ( $settings_url ) {
-			return sprintf( '<a href="%s">%s</a>', $settings_url, __( 'Import', 'woocommerce-customer-order-csv-import' ) );
+			return sprintf( '<a href="%s">%s</a>', $settings_url, __( 'Import', 'woocommerce-csv-import-suite' ) );
 		}
 
 		// no settings
@@ -182,7 +296,7 @@ class WC_Customer_CSV_Import_Suite extends SV_WC_Plugin {
 
 
 	/**
-	 * Returns true if on the Customer/Order Import page
+	 * Returns true if on the Customer/Order/CouponImport page
 	 *
 	 * @since 2.3
 	 * @see SV_WC_Plugin::is_plugin_settings()
@@ -193,211 +307,15 @@ class WC_Customer_CSV_Import_Suite extends SV_WC_Plugin {
 	}
 
 
-	/**
-	 * Add a submenu item to the WooCommerce menu
-	 */
-	public function admin_menu() {
-
-		add_submenu_page(
-			'woocommerce',
-			__( 'CSV Customer Import Suite', 'woocommerce-customer-order-csv-import' ),
-			__( 'CSV Customer Import Suite', 'woocommerce-customer-order-csv-import' ),
-			'manage_woocommerce',
-			self::PLUGIN_ID,
-			array( $this, 'admin_page' )
-		);
-
-	}
-
-
-	/**
-	 * Include admin scripts
-	 */
-	public function admin_scripts() {
-
-		wp_enqueue_style( 'woocommerce_admin_styles', WC()->plugin_url() . '/assets/css/admin.css' );
-		wp_register_style( 'woocommerce-csv_importer', $this->get_plugin_url() . '/assets/css/admin/wc-customer-order-csv-import.min.css', '', '1.0.0', 'screen' );
-		wp_enqueue_style( 'woocommerce-csv_importer' );
-	}
-
-
-	/**
-	 * Render the admin page which includes links to the documentation,
-	 * sample import files, and buttons to perform the imports
-	 */
-	public function admin_page() {
-		?>
-
-		<div class="wrap woocommerce">
-			<div class="icon32" id="icon-woocommerce-importer"><br></div>
-			<h2><?php _e( 'Import Customers &amp; Orders', 'woocommerce-customer-order-csv-import' ); ?></h2>
-
-			<?php
-				$this->admin_import_page();
-			?>
-
-		</div>
-		<?php
-	}
-
-
-	/**
-	 * Render the body of the admin starting page
-	 */
-	private function admin_import_page() {
-
-		?>
-		<div id="message" class="updated woocommerce-message wc-connect">
-			<div class="squeezer">
-				<h4><?php _e( '<strong>Customer CSV Import Suite</strong> &#8211; Before getting started prepare your CSV files', 'woocommerce-customer-order-csv-import' ); ?></h4>
-
-				<p class="submit"><a href="<?php echo $this->get_documentation_url(); ?>" class="button-primary"><?php _e( 'Documentation', 'woocommerce-customer-order-csv-import' ); ?></a>
-					<a class="docs button-primary" href="http://docs.woothemes.com/wp-content/uploads/2012/07/woocommerce-csv-import-sample-customers.csv"><?php _e( 'Sample Customer CSV', 'woocommerce-customer-order-csv-import' ); ?></a>
-					<a class="docs button-primary" href="http://docs.woothemes.com/wp-content/uploads/2012/07/woocommerce-csv-import-sample-orders.csv"><?php _e( 'Sample Order CSV', 'woocommerce-customer-order-csv-import' ); ?></a>
-					<a class="docs button-primary" href="http://docs.woothemes.com/wp-content/uploads/2012/07/woocommerce-csv-import-sample-coupons.csv"><?php _e( 'Sample Coupon CSV', 'woocommerce-customer-order-csv-import' ); ?></a>
-				<p>
-			</div>
-		</div>
-
-		<div class="tool-box">
-
-			<h3 class="title"><?php _e( 'Import Customer CSV', 'woocommerce-customer-order-csv-import' ); ?></h3>
-			<p><?php _e('Import customers into WooCommerce using this tool.', 'woocommerce-customer-order-csv-import'); ?></p>
-			<p class="description"><?php _e( 'Upload a CSV from your computer. Click import to import your CSV as new customers (existing customers will be skipped), or click merge to merge customers. Importing requires the <code>email</code> column, whilst merging requires <code>email</code>, <code>username</code> or <code>id</code>.', 'woocommerce-customer-order-csv-import' ); ?></p>
-
-			<p class="submit"><a class="button" href="<?php echo admin_url( 'admin.php?import=woocommerce_customer_csv' ); ?>"><?php _e( 'Import Customers', 'woocommerce-customer-order-csv-import' ); ?></a> <a class="button" href="<?php echo admin_url( 'admin.php?import=woocommerce_customer_csv&merge=1' ); ?>"><?php _e( 'Merge Customers', 'woocommerce-customer-order-csv-import' ); ?></a></p>
-
-		</div>
-
-		<div class="tool-box">
-
-			<h3 class="title"><?php _e( 'Import Orders CSV', 'woocommerce-customer-order-csv-import' ); ?></h3>
-			<p><?php _e( 'Import and add orders using this tool.', 'woocommerce-customer-order-csv-import' ); ?></p>
-			<p class="description"><?php _e( 'Upload a CSV from your computer to import previous orders.', 'woocommerce-customer-order-csv-import'); ?></p>
-			<p class="submit"><a class="button" href="<?php echo admin_url( 'admin.php?import=woocommerce_order_csv' ); ?>"><?php _e( 'Import Orders', 'woocommerce-customer-order-csv-import' ); ?></a></p>
-
-		</div>
-
-		<div class="tool-box">
-
-			<h3 class="title"><?php _e( 'Import Coupons CSV', 'woocommerce-customer-order-csv-import' ); ?></h3>
-			<p><?php _e( 'Import and add coupons using this tool.', 'woocommerce-customer-order-csv-import' ); ?></p>
-			<p class="description"><?php _e( 'Import a CSV from your computer. Click import to import your CSV as new coupons (existing coupons will be skipped), or click merge to merge coupons.', 'woocommerce-customer-order-csv-import'); ?></p>
-			<p class="submit"><a class="button" href="<?php echo admin_url( 'admin.php?import=woocommerce_coupon_csv' ); ?>"><?php _e( 'Import Coupons', 'woocommerce-customer-order-csv-import' ); ?></a>  <a class="button" href="<?php echo admin_url( 'admin.php?import=woocommerce_coupon_csv&merge=1' ); ?>"><?php _e( 'Merge Coupons', 'woocommerce-customer-order-csv-import' ); ?></a></p></p>
-
-		</div>
-		<?php
-	}
-
-
-	/**
-	 * Customer Importer Tool
-	 *
-	 * Registered callback function for the WordPress Importer
-	 */
-	public function customer_importer() {
-
-		if ( ! defined( 'WP_LOAD_IMPORTERS' ) ) return;
-
-		// Load Importer API
-		require_once( ABSPATH . 'wp-admin/includes/import.php' );
-
-		if ( ! class_exists( 'WP_Importer' ) ) {
-			$class_wp_importer = ABSPATH . 'wp-admin/includes/class-wp-importer.php';
-			if ( file_exists( $class_wp_importer ) ) {
-				require $class_wp_importer;
-			}
-		}
-
-		// includes
-		require_once( $this->get_plugin_path() . '/classes/class-wc-customer-import.php' );
-		require_once( $this->get_plugin_path() . '/classes/class-wc-csv-parser.php' );
-		require_once( $this->get_plugin_path() . '/classes/class-wc-csv-log.php' );
-
-		// Dispatch
-		global $WC_CSV_Import;
-
-		$WC_CSV_Import = new WC_CSV_Customer_Import();
-
-		$WC_CSV_Import->dispatch();
-	}
-
-
-	/**
-	 * Order Importer Tool
-	 *
-	 * Registered callback function for the WordPress Importer
-	 */
-	public function order_importer() {
-
-		if ( ! defined( 'WP_LOAD_IMPORTERS' ) ) return;
-
-		// Load Importer API
-		require_once ABSPATH . 'wp-admin/includes/import.php';
-
-		if ( ! class_exists( 'WP_Importer' ) ) {
-			$class_wp_importer = ABSPATH . 'wp-admin/includes/class-wp-importer.php';
-			if ( file_exists( $class_wp_importer ) ) {
-				require $class_wp_importer;
-			}
-		}
-
-		// includes
-		require_once( $this->get_plugin_path() . '/classes/class-wc-order-import.php' );
-		require_once( $this->get_plugin_path() . '/classes/class-wc-csv-parser.php' );
-		require_once( $this->get_plugin_path() . '/classes/class-wc-csv-log.php' );
-
-		// Dispatch
-		global $WC_CSV_Import;
-
-		$WC_CSV_Import = new WC_CSV_Order_Import();
-
-		$WC_CSV_Import->dispatch();
-
-	}
-
-
-	/**
-	 * Coupons Importer Tool
-	 *
-	 * Registered callback function for the WordPress Importer
-	 */
-	public function coupon_importer() {
-
-		if ( ! defined( 'WP_LOAD_IMPORTERS' ) ) return;
-
-		// Load Importer API
-		require_once ABSPATH . 'wp-admin/includes/import.php';
-
-		if ( ! class_exists( 'WP_Importer' ) ) {
-			$class_wp_importer = ABSPATH . 'wp-admin/includes/class-wp-importer.php';
-			if ( file_exists( $class_wp_importer ) ) require $class_wp_importer;
-		}
-
-		// includes
-		require_once( $this->get_plugin_path() . '/classes/class-wc-coupon-import.php' );
-		require_once(  $this->get_plugin_path() . '/classes/class-wc-csv-parser.php' );
-		require_once(  $this->get_plugin_path() . '/classes/class-wc-csv-log.php' );
-
-		// Dispatch
-		global $WC_CSV_Import;
-
-		$WC_CSV_Import = new WC_CSV_Coupon_Import();
-
-		$WC_CSV_Import->dispatch();
-
-	}
-
-
 	/** Helper methods ******************************************************/
 
 
 	/**
-	* Main Customer/Order CSV Import Suite Instance, ensures only one instance is/can be loaded
+	* Main Customer/Order/Coupon CSV Import Suite Instance, ensures only one instance is/can be loaded
 	*
 	* @since 2.7.0
-	* @see wc_customer_csv_import()
-	* @return WC_Customer_CSV_Import_Suite
+	* @see wc_csv_import_suite()
+	* @return WC_CSV_Import_Suite
 	*/
 	public static function instance() {
 		if ( is_null( self::$instance ) ) {
@@ -415,7 +333,7 @@ class WC_Customer_CSV_Import_Suite extends SV_WC_Plugin {
 	 * @return string the plugin name
 	 */
 	public function get_plugin_name() {
-		return __( 'WooCommerce Customer/Order CSV Import', 'woocommerce-customer-order-csv-import' );
+		return __( 'WooCommerce Customer/Order/Coupon CSV Import', 'woocommerce-csv-import-suite' );
 	}
 
 
@@ -430,21 +348,21 @@ class WC_Customer_CSV_Import_Suite extends SV_WC_Plugin {
 	}
 
 
-} // class WC_Customer_CSV_Import_Suite
+} // class WC_CSV_Import_Suite
 
 
 /**
- * Returns the One True Instance of Customer/Order CSV Import Suite
+ * Returns the One True Instance of Customer/Order/Coupon CSV Import Suite
  *
  * @since 2.7.0
- * @return WC_Customer_CSV_Import_Suite
+ * @return WC_CSV_Import_Suite
 */
-function wc_customer_csv_import() {
-	return WC_Customer_CSV_Import_Suite::instance();
+function wc_csv_import_suite() {
+	return WC_CSV_Import_Suite::instance();
 }
 
 
 // fire it up!
-wc_customer_csv_import();
+wc_csv_import_suite();
 
-} // init_woocommerce_customer_order_csv_import()
+} // init_woocommerce_csv_import_suite()

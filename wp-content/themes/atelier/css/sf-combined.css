@@ -2690,10 +2690,19 @@ ul.page-numbers li a.prev i, ul.page-numbers li a.next i {
     user-select: none;
 }
 .lSSlideOuter .lSPager.lSGallery li {
+	position: relative;
     opacity: 0.5;
     overflow: hidden;
     -webkit-transition: opacity 0.35s linear 0s;
     transition: opacity 0.35s linear 0s;
+}
+.lSSlideOuter.vertical .lSPager.lSGallery li img {
+	height: 100%!important;
+	width: auto!important;
+	max-width: none;
+	transform: translateX(-50%);
+	left: 50%;
+	position: absolute;
 }
 .lSSlideOuter .lSPager.lSGallery li.active, .lSSlideOuter .lSPager.lSGallery li:hover {
     opacity: 1;
@@ -2794,6 +2803,27 @@ ul.page-numbers li a.prev i, ul.page-numbers li a.next i {
     width: 100% !important;
     max-width: none !important;
 }
+.lSSlideOuter.vertical .lightSlider > li {
+	overflow: hidden;
+	position: relative;
+}
+/*.lSSlideOuter.vertical .lightSlider > li > img.tall {
+	max-width: none;
+	transform: translateX(-50%);
+	left: 50%;
+	position: absolute;
+	width: 100%!important;
+	height: auto!important;
+}*/
+.lSSlideOuter.vertical .lightSlider > li > img, .lSSlideOuter.vertical .lightSlider > li > img.wide {
+	max-width: none;
+	transform: translateX(-50%);
+	left: 50%;
+	position: absolute;
+	height: 100%!important;
+	width: auto!important;
+}
+
 .lSSlideOuter.lSrtl {
     direction: rtl;
 }
@@ -5003,8 +5033,17 @@ h3.spb-center-heading span, h4.spb-center-heading span {
 	float: right;
 	margin-left: 5px;
 }
-.page-heading .prev-item i, .page-heading .next-item i {
-	vertical-align: -2px;
+.page-heading .view-all {
+	font-size: 36px;
+	line-height: 40px;
+	float: right;
+	margin-left: 5px;
+}
+.page-heading .view-all a {
+	color: inherit;
+}
+.page-heading .prev-item i, .page-heading .next-item i, .page-heading .view-all i {
+	vertical-align: -3px;
 }
 .page-heading .prev-item + #breadcrumbs {
 	margin-right: 15px;
@@ -5039,11 +5078,11 @@ h3.spb-center-heading span, h4.spb-center-heading span {
 	right: 5px;
 	top: 50%;
 }
-.page-heading .prev-item a, .page-heading .next-item a {
+.page-heading .prev-item a, .page-heading .next-item a, .page-heading .view-all a {
 	color: inherit;
 	opacity: 0.6;
 }
-.page-heading .prev-item a:hover, .page-heading .next-item a:hover {
+.page-heading .prev-item a:hover, .page-heading .next-item a:hover, .page-heading .view-all a:hover {
 	opacity: 1;
 }
 .page-heading.ph-sort {
@@ -6234,6 +6273,9 @@ nav .menu .wishlist-item ul.sub-menu li:first-child:before {
 }
 #logo.has-img a {
 	line-height: 0;
+}
+#logo.has-img img {
+	max-width: 95%;
 }
 #logo img {
 	height: auto;
@@ -7577,7 +7619,7 @@ nav ul.menu > li.menu-item.sf-menu-item-btn > a > span.menu-item-text > i {
 .vertical-header-right nav.std-menu ul.sub-menu > li.parent:after {
 	content: "\f104";
 }
-.vertical-header nav#main-navigation .menu li.parent > a:after {
+.vertical-header nav#main-navigation .menu li.parent > a:after, .vertical-header nav .menu li.parent > a:after {
 	display: none!important;
 }
 
@@ -14425,7 +14467,7 @@ input[type="file"] {
 /*
 * Swift Framework WooCommerce Stylesheet v1.0
 * Stylesheet for WooCommerce functionality
-* Copyright Swift Ideas 2015
+* Copyright Swift Ideas 2016
 */
 
 /* Fix for terrible generic WooCommerce css */
@@ -14449,6 +14491,10 @@ input[type="file"] {
 .woocommerce ul.products li.product {
 	padding: 0 15px;
 	margin: 0;
+	clear: none;
+}
+.woocommerce ul.products.multi-masonry-items.gutters li.product {
+	padding-bottom: 30px;
 }
 .woocommerce ul.products li.product.product-display-standard {
 	margin-bottom: 30px;
@@ -15013,7 +15059,7 @@ select.hasCustomSelect {
 	margin-top: 50px;
 }
 .woocommerce-shop-page .multi-masonry-items.gutters {
-	margin: 0 15px 30px;
+	margin: 0 15px 30px!important;
 }
 .inner-page-wrap.full-width-shop section[class*="col-sm"], .inner-page-wrap.full-width-shop .sidebar[class*="col-sm"], .inner-page-wrap.full-width-shop .page-content {
 	padding-left: 0;
@@ -15039,7 +15085,8 @@ select.hasCustomSelect {
 	padding-top: 0;
 }
 .inner-page-wrap.full-width-shop ul.products > li {
-	margin: 0!important;
+	margin-left: 0!important;
+	margin-right: 0!important;
 	float: left!important;
 }
 .inner-page-wrap.full-width-shop ul.products > li.product-display-standard {
@@ -15186,6 +15233,9 @@ li.product .add-to-cart-wrap .variations_form {
 .product-grid .product {
 	opacity: 0;
 	list-style: none;
+}
+.product-grid .product.item-animated {
+	opacity: 1;
 }
 .yit-wcan-container .product {
 	opacity: 1!important;
@@ -17056,26 +17106,36 @@ nav.woocommerce-pagination ul li:first-child {
 .woocommerce div.product form.cart .group_table {
 	margin-bottom: 30px;
 	border-bottom: 0;
+	width: 100%;
+}
+.woocommerce div.product form.cart .group_table th {
+	text-align: left;
+	padding: 10px 20px 10px 0;
 }
 .woocommerce div.product form.cart .group_table .quantity {
 	background: transparent;
 }
 .woocommerce div.product form.cart .group_table td {
 	padding-bottom: 10px;
+	padding-left: 0;
+	text-align: left;
 }
 .woocommerce div.product form.cart .group_table td.label {
 	background: transparent;
 	color: inherit;
 	text-shadow: none;
 	vertical-align: top;
-	padding-top: 10px;
-	line-height: 68px;
+	padding: 0 30px 0 0;
+	line-height: 60px;
 }
 .woocommerce div.product form.cart .group_table td.price {
 	padding-top: 12px;
 	vertical-align: top;
-	text-align: right;
-	line-height: 42px;
+	text-align: left;
+	line-height: inherit;
+}
+.woocommerce div.product form.cart .group_table td.price p.stock {
+	margin-top: 0;
 }
 #product-description .accordion-inner {
 	margin-bottom: 20px;
@@ -18033,6 +18093,9 @@ ul.checkout-process li a.active, ul.checkout-process li p.active {
 	padding: 14px 20px;
 	font-weight: normal;
 }
+.woocommerce #respond input#submit.disabled, .woocommerce #respond input#submit:disabled, .woocommerce #respond input#submit:disabled[disabled], .woocommerce a.button.disabled, .woocommerce a.button:disabled, .woocommerce a.button:disabled[disabled], .woocommerce button.button.disabled, .woocommerce button.button:disabled, .woocommerce button.button:disabled[disabled], .woocommerce input.button.disabled, .woocommerce input.button:disabled, .woocommerce input.button:disabled[disabled] {
+	padding: 14px 20px;
+}
 .woocommerce form.register, .woocommerce-page form.register {
 	border: 0;
 	padding: 0;
@@ -18819,7 +18882,7 @@ table.customer_details td {
 	right: 10px;
 	top: 7px;
 }
-.woocommerce .widget_layered_nav select {
+.woocommerce .widget_layered_nav select, .woocommerce .widget_product_categories select {
 	margin-bottom: 20px;
 	margin-top: 0;
 	border-width: 2px;

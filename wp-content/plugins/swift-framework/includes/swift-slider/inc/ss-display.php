@@ -104,8 +104,7 @@
 
             endwhile;
 
-            // Reset Query & Postdata
-            wp_reset_query();
+            // Reset postdata
             wp_reset_postdata();
 
             $swift_slider_output .= '</div><!-- .swiper-wrapper -->';
@@ -183,6 +182,7 @@
             $background_size   = sf_get_post_meta( $postID, 'ss_background_size', true );
             $background_valign = sf_get_post_meta( $postID, 'ss_background_valign', true );
             $background_halign = sf_get_post_meta( $postID, 'ss_background_halign', true );
+            $mobile_background_halign = sf_get_post_meta( $postID, 'ss_mobile_background_halign', true );
             $bg_mp4            = rwmb_meta( 'ss_background_video_mp4', 'type=file' );
             $bg_webm           = rwmb_meta( 'ss_background_video_webm', 'type=file' );
             $bg_ogg            = rwmb_meta( 'ss_background_video_ogg', 'type=file' );
@@ -198,6 +198,10 @@
             $slide_link        = sf_get_post_meta( $postID, 'ss_slide_link', true );
             $slide_link_url    = sf_get_post_meta( $postID, 'ss_slide_link_url', true );
 
+            // Mobile Background align
+            if ( $mobile_background_halign == "" ) {
+                $mobile_background_halign = $background_halign;
+            }
             // Background Image
             foreach ( $bg_image as $image ) {
                 $bg_image_url = $image['url'];
@@ -263,7 +267,7 @@
 
             if ( $bg_image_url != "" ) {
 
-                $swift_slider_slide .= '<div class="swiper-slide ' . $bg_type . '-slide dynamic-header-change" data-slide-id="' . $slide_ID . '" data-slide-title="' . $slide_title . '" style="background-image: url(' . $bg_image_url . ');background-color: ' . $bg_color . '" data-bg-size="' . $background_size . '" data-bg-align="' . $background_valign . '" data-bg-horiz-align="' . $background_halign . '" data-slide-img="' . $bg_image_url . '" data-style="' . $slide_style . '" data-header-style="' . $slide_style . '">';
+                $swift_slider_slide .= '<div class="swiper-slide ' . $bg_type . '-slide dynamic-header-change" data-slide-id="' . $slide_ID . '" data-slide-title="' . $slide_title . '" style="background-image: url(' . $bg_image_url . ');background-color: ' . $bg_color . '" data-bg-size="' . $background_size . '" data-bg-align="' . $background_valign . '" data-bg-horiz-align="' . $background_halign . '" data-mobile-bg-horiz-align="' . $mobile_background_halign . '" data-slide-img="' . $bg_image_url . '" data-style="' . $slide_style . '" data-header-style="' . $slide_style . '">';
 
                 if ( ! empty( $bg_opacity ) && $bg_opacity > 0 ) {
                     $bg_opacity_d = $bg_opacity / 100; // Decimal value
@@ -311,7 +315,7 @@
                 if ( $video_overlay != "none" ) {
                     $swift_slider_slide .= '<div class="video-overlay overlay-' . $video_overlay . '"></div>';
                 }
-                $swift_slider_slide .= '<video class="video" poster="' . $bg_image_url . '" autoplay ' . $video_loop . ' ' . $video_mute . ' preload="auto" data-width="' . $bg_video_size['width'] . '" data-height="' . $bg_video_size['height'] . '">';
+                $swift_slider_slide .= '<video class="video" poster="' . $bg_image_url . '" ' . $video_loop . ' ' . $video_mute . ' preload="auto" data-width="' . $bg_video_size['width'] . '" data-height="' . $bg_video_size['height'] . '">';
 
                 if ( $bg_webm_url != "" ) {
                     $swift_slider_slide .= '<source src="' . $bg_webm_url . '" type="video/webm">';

@@ -18,11 +18,11 @@
  *
  * @package     WC-Customer-Order-CSV-Export/Export-Methods/Email
  * @author      SkyVerge
- * @copyright   Copyright (c) 2012-2015, SkyVerge, Inc.
+ * @copyright   Copyright (c) 2012-2016, SkyVerge, Inc.
  * @license     http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+defined( 'ABSPATH' ) or exit;
 
 /**
  * Customer/Order CSV Export Email Class
@@ -118,7 +118,7 @@ class WC_Customer_Order_CSV_Export_Method_Email implements WC_Customer_Order_CSV
 		 */
 		$subject = apply_filters( 'wc_customer_order_csv_export_email_subject', get_option( 'wc_customer_order_csv_export_email_subject' ) );
 
-		$message = sprintf( __( 'Order Export for %s', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ), date_i18n( wc_date_format(), current_time( 'timestamp' ) ) );
+		$message = sprintf( __( 'Order Export for %s', 'woocommerce-customer-order-csv-export' ), date_i18n( wc_date_format(), current_time( 'timestamp' ) ) );
 
 		/**
 		 * Allow actors to change the email headers.

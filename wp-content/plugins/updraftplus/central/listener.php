@@ -13,14 +13,15 @@ class UpdraftPlus_UpdraftCentral_Listener {
 	private $php_events = array();
 	private $commands = array();
 	private $current_udrpc = null;
+	private $command_classes;
 
 	public function __construct($keys = array(), $command_classes = array()) {
 		global $updraftplus;
 		$this->ud = $updraftplus;
+		// It seems impossible for this condition to result in a return; but it seems Plesk can do something odd within the control panel that causes a problem - see HS#6276
+		if (!is_a($this->ud, 'UpdraftPlus')) return;
 
-		foreach ($command_classes as $class_prefix => $command_class) {
-			if (class_exists($command_class)) $this->commands[$class_prefix] = new $command_class($this);
-		}
+		$this->command_classes = $command_classes;
 		
 		foreach ($keys as $name_hash => $key) {
 			// publickey_remote isn't necessarily set yet, depending on the key exchange method
@@ -100,16 +101,27 @@ class UpdraftPlus_UpdraftCentral_Listener {
 		$this->initialise_listener_error_handling($key_name_indicator);
 
 		if (!preg_match('/^([a-z0-9]+)\.(.*)$/', $command, $matches)) return;
-		$command_class_name = $matches[1];
+		$class_prefix = $matches[1];
 		$command = $matches[2];
 		
 		// We only handle some commands - the others, we let something else deal with
-		if (!isset($this->commands[$command_class_name])) return $response;
-		$command_class = $this->commands[$command_class_name];
+		if (!isset($this->command_classes[$class_prefix])) return $response;
 
-		if ('_' == substr($command, 0, 1) || !method_exists($command_class, $command)) {
+		$command_php_class = $this->command_classes[$class_prefix];
+		
+		if (!class_exists($command_php_class) && file_exists(UPDRAFTPLUS_DIR.'/central/'.$class_prefix.'-commands.php')) require_once(UPDRAFTPLUS_DIR.'/central/'.$class_prefix.'-commands.php');
+		
+		if (empty($this->commands[$class_prefix])) {
+			if (class_exists($command_php_class)) {
+				$this->commands[$class_prefix] = new $command_php_class($this);
+			}
+		}
+		
+		$command_class = isset($this->commands[$class_prefix]) ? $this->commands[$class_prefix] : new stdClass;
+
+		if ('_' == substr($command, 0, 1) || !is_a($command_class, $command_php_class) || !method_exists($command_class, $command)) {
 			if (defined('UPDRAFTPLUS_UDRPC_FORCE_DEBUG') && UPDRAFTPLUS_UDRPC_FORCE_DEBUG) error_log("Unknown RPC command received: ".$command);
-			return $this->return_rpc_message(array('response' => 'rpcerror', 'data' => array('code' => 'unknown_rpc_command', 'data' => $command)));
+			return $this->return_rpc_message(array('response' => 'rpcerror', 'data' => array('code' => 'unknown_rpc_command', 'data' => array('prefix' => $class_prefix, 'command' => $command, 'class' => $command_php_class))));
 		}
 
 		$extra_info = isset($this->extra_info[$key_name_indicator]) ? $this->extra_info[$key_name_indicator] : null;

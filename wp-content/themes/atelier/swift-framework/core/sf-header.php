@@ -4,7 +4,7 @@
     *	Header Functions
     *	------------------------------------------------
     *	Swift Framework
-    * 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+    * 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     *	sf_framework_check()
     *	sf_site_loading()
@@ -1064,7 +1064,7 @@
                 $cart_output .= '<ul class="sub-menu">';
                 $cart_output .= '<li>';
 
-                $cart_output .= '<div class="shopping-bag">';
+                $cart_output .= '<div class="shopping-bag" data-empty-bag-txt="' . __( 'Your cart is empty.', 'swiftframework' ) . '" data-singular-item-txt="' . __( 'item in the cart', 'swiftframework' ) . '" data-multiple-item-txt="' . __( 'items in the cart', 'swiftframework' ) .'">';
 
                 $cart_output .= '<div class="loading-overlay"><i class="sf-icon-loader"></i></div>';
 
@@ -1077,21 +1077,29 @@
                     foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
 
                         $_product     		 = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
-                        $price 				 = apply_filters( 'woocommerce_cart_item_price', $woocommerce->cart->get_product_price( $_product ), $cart_item, $cart_item_key );
-                        $product_title       = $_product->get_title();
-                        $product_short_title = ( strlen( $product_title ) > 25 ) ? substr( $product_title, 0, 22 ) . '...' : $product_title;
-						
+                        $product_id   = apply_filters( 'woocommerce_cart_item_product_id', $cart_item['product_id'], $cart_item, $cart_item_key );
+                        
 						if ( $_product && $_product->exists() && $cart_item['quantity'] > 0 && apply_filters( 'woocommerce_cart_item_visible', true, $cart_item, $cart_item_key ) ) {
-                            $cart_output .= '<div class="bag-product clearfix">';
+						
+							$product_price     = apply_filters( 'woocommerce_cart_item_price', WC()->cart->get_product_price( $_product ), $cart_item, $cart_item_key );
+							$product_title       = $_product->get_title();
+							$product_short_title = ( strlen( $product_title ) > 25 ) ? substr( $product_title, 0, 22 ) . '...' : $product_title;
+							
+                            $cart_output .= '<div class="bag-product clearfix product-id-' . $cart_item['product_id'] . '">';
                             $cart_output .= '<figure><a class="bag-product-img" href="' . get_permalink( $cart_item['product_id'] ) . '">' . $_product->get_image() . '</a></figure>';
                             $cart_output .= '<div class="bag-product-details">';
                             $cart_output .= '<div class="bag-product-title"><a href="' . get_permalink( $cart_item['product_id'] ) . '">' . apply_filters( 'woocommerce_cart_widget_product_title', $product_short_title, $_product ) . '</a></div>';
-                            $cart_output .= '<div class="bag-product-price">' . __( "Unit Price:", "swiftframework" ) . '
-	                        ' . $price . '</div>';
-                            $cart_output .= '<div class="bag-product-quantity">' . __( 'Quantity:', 'swiftframework' ) . ' ' . $cart_item['quantity'] . '</div>';
+                            $cart_output .= '<div class="bag-product-price">' . __( "Unit Price:", 'swiftframework' ) . '
+	                        ' . $product_price . '</div>';
+                            $cart_output .= '<div class="bag-product-quantity">' . __( 'Quantity:', 'swiftframework' ) . ' ' . apply_filters( 'woocommerce_widget_cart_item_quantity', '<span class="quantity">' . sprintf( '%s &times; %s', $cart_item['quantity'], $product_price ) . '</span>', $cart_item, $cart_item_key ) . '</div>';
                             $cart_output .= '</div>';
- 							$cart_output .= '<a href="#" class="remove remove-product" data-ajaxurl="'.admin_url( 'admin-ajax.php' ).'"  data-product-id="'. $cart_item['product_id'] .'" data-product-qty="'. $cart_item['quantity'] .'" title="' . __( 'Remove this item', 'swiftframework' ) . '">&times;</a>';
-
+                            $cart_output .= apply_filters( 'woocommerce_cart_item_remove_link', sprintf(
+                            							'<a href="%s" class="remove remove-product" title="%s" data-ajaxurl="'.admin_url( 'admin-ajax.php' ).'" data-product-qty="'. $cart_item['quantity'] .'"  data-product-id="%s" data-product_sku="%s">&times;</a>',
+                            							esc_url( WC()->cart->get_remove_url( $cart_item_key ) ),
+                            							__( 'Remove this item', 'swiftframework' ),
+                            							esc_attr( $product_id ),
+                            							esc_attr( $_product->get_sku() )
+                            						), $cart_item_key );
                             $cart_output .= '</div>';
                         }
                     }
@@ -1275,7 +1283,7 @@
 	if ( ! function_exists( 'sf_get_currency_switcher' ) ) {
 	    function sf_get_currency_switcher() {
 	    	$currency_switch_output = "";
-	    	if ( class_exists('WCML_Multi_Currency_Support') ) {
+	    	if ( class_exists('WCML_Multi_Currency') ) {
 	    		$currency_code = get_option('woocommerce_currency');
 	    		$currency_switch_output .= '<li class="parent currency-switch-item">';
 	    		$currency_switch_output .= '<span class="current-currency">' . get_woocommerce_currency_symbol() . '</span>';

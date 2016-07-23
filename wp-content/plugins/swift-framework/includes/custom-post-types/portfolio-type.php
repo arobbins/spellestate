@@ -71,7 +71,7 @@
                     'feeds'      => true
                 )
                     : false,
-                'supports'          => array( 'title', 'editor', 'thumbnail', 'custom-fields', 'excerpt', 'revisions' ),
+                'supports'          => array( 'title', 'editor', 'thumbnail', 'custom-fields', 'excerpt', 'revisions', 'comments' ),
                 'has_archive'       => true,
                 'taxonomies'        => array( 'portfolio-category' )
             );

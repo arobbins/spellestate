@@ -131,14 +131,14 @@
                 "type"        => "textfield",
                 "heading"     => __( "Horizontal scale movement", 'swift-framework-plugin' ),
                 "param_name"  => "x_scalar",
-                "value"       => "",
+                "value"       => "20",
                 "description" => __( "Multiplies the X-axis input motion by this value, increasing or decreasing the sensitivity of the layer motion.", 'swift-framework-plugin' )
             ),
             array(
                 "type"        => "textfield",
                 "heading"     => __( "Vertical scale movement", 'swift-framework-plugin' ),
                 "param_name"  => "y_scalar",
-                "value"       => "",
+                "value"       => "20",
                 "description" => __( "Multiplies the Y-axis input motion by this value, increasing or decreasing the sensitivity of the layer motion.", 'swift-framework-plugin' )
             ),
             array(
@@ -229,6 +229,7 @@
 
             $output = $elem;
             $output = '<div class="row-fluid spb_column_container not-column-inherit not-sortable">' . $output . '</div>';
+
 
             return $output;
         }
@@ -417,14 +418,15 @@
                     "heading"     => __( "Text Layer Enable", 'swift-framework-plugin' ),
                     "param_name"  => "text_layer",
                     "value"       => array(
-                        __( 'Yes', 'swift-framework-plugin' ) => "yes",
-                        __( 'No', 'swift-framework-plugin' )  => "no"
+                        __( 'No', 'swift-framework-plugin' )  => "no",
+                         __( 'Yes', 'swift-framework-plugin' ) => "yes"
                     ),
                     "buttonset_on"  => "yes",
                     "description" => __( "Select if you would like this layer to be a text layer.", 'swift-framework-plugin' )
                 ),
                 array(
                     "type"        => "textarea_html",
+                    "holder"      => "div",
                     "class"       => "",
                     "heading"     => __( "Text Layer Content", 'swift-framework-plugin' ),
                     "param_name"  => "content",

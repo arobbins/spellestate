@@ -18,11 +18,11 @@
  *
  * @package     WC-Customer-Order-CSV-Export/Export-Methods/HTTP-POST
  * @author      SkyVerge
- * @copyright   Copyright (c) 2012-2015, SkyVerge, Inc.
+ * @copyright   Copyright (c) 2012-2016, SkyVerge, Inc.
  * @license     http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+defined( 'ABSPATH' ) or exit;
 
 /**
  * Customer/Order CSV Export HTTP POST Class
@@ -48,7 +48,7 @@ class WC_Customer_Order_CSV_Export_Method_HTTP_POST implements WC_Customer_Order
 			'timeout'     => 60,
 			'redirection' => 0,
 			'httpversion' => '1.0',
-			'sslverify'   => false,
+			'sslverify'   => true,
 			'blocking'    => true,
 			'headers'     => array(
 				'accept'       => 'text/csv',
@@ -59,7 +59,7 @@ class WC_Customer_Order_CSV_Export_Method_HTTP_POST implements WC_Customer_Order
 			'user-agent'  => "WordPress " . $GLOBALS['wp_version'],
 		) );
 
-		$response = wp_remote_post( get_option( 'wc_customer_order_csv_export_http_post_url' ), $args );
+		$response = wp_safe_remote_post( get_option( 'wc_customer_order_csv_export_http_post_url' ), $args );
 
 		// check for errors
 		if ( is_wp_error( $response ) ) {

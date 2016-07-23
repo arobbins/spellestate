@@ -5,7 +5,7 @@
     *	Swift Framework Media Functions
     *	------------------------------------------------
     *	Swift Framework v3.0
-    * 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+    * 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     *	sf_return_slider()
     *	sf_video_embed()
@@ -76,8 +76,9 @@
 
             $video_padding = ( intval( $height, 10 ) / intval( $width, 10 ) ) * 100;
             $inline_style  = 'padding-bottom: ' . $video_padding . '%;';
+            $ssl_override = apply_filters( 'sf_video_youtube_ssl', false );
 
-            if ( is_ssl() ) {
+            if ( is_ssl() || $ssl_override ) {
                 return '<div class="sf-video-wrap" style="' . $inline_style . '"><iframe itemprop="video" class="video-embed" src="https://www.youtube.com/embed/' . $video_id[1] . $youtube_params . '" width="' . $width . '" height="' . $height . '" allowfullscreen></iframe></div>';
             } else {
                 return '<div class="sf-video-wrap" style="' . $inline_style . '"><iframe itemprop="video" class="video-embed" src="http://www.youtube.com/embed/' . $video_id[1] . $youtube_params . '" width="' . $width . '" height="' . $height . '" allowfullscreen></iframe></div>';
@@ -93,12 +94,13 @@
 
             $video_padding = ( intval( $height, 10 ) / intval( $width, 10 ) ) * 100;
             $inline_style  = 'padding-bottom: ' . $video_padding . '%;';
-
+			$ssl_override = apply_filters( 'sf_video_vimeo_ssl', false );
+			
             if ( $video_id == "" ) {
                 return '<div class="sf-video-wrap">' . __( "Video not found", "swiftframework" ) . '</div>';
             }
 
-            if ( is_ssl() ) {
+            if ( is_ssl() || $ssl_override ) {
                 return '<div class="sf-video-wrap" style="' . $inline_style . '"><iframe itemprop="video" class="video-embed" src="https://player.vimeo.com/video/' . $video_id . $vimeo_params . '" width="' . $width . '" height="' . $height . '"></iframe></div>';
             } else {
                 return '<div class="sf-video-wrap" style="' . $inline_style . '"><iframe itemprop="video" class="video-embed" src="http://player.vimeo.com/video/' . $video_id . $vimeo_params . '" width="' . $width . '" height="' . $height . '"></iframe></div>';

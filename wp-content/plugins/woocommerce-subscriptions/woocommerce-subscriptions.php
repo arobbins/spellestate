@@ -5,7 +5,7 @@
  * Description: Sell products and services with recurring payments in your WooCommerce Store.
  * Author: Prospress Inc.
  * Author URI: http://prospress.com/
- * Version: 2.0.13
+ * Version: 2.0.18
  *
  * Copyright 2016 Prospress, Inc.  (email : freedoms@prospress.com)
  *
@@ -118,7 +118,7 @@ class WC_Subscriptions {
 
 	public static $plugin_file = __FILE__;
 
-	public static $version = '2.0.13';
+	public static $version = '2.0.18';
 
 	private static $total_subscription_count = null;
 
@@ -150,13 +150,10 @@ class WC_Subscriptions {
 		add_action( 'wcopc_subscription_add_to_cart', __CLASS__ . '::wcopc_subscription_add_to_cart' ); // One Page Checkout compatibility
 
 		// Ensure a subscription is never in the cart with products
-		add_filter( 'woocommerce_add_to_cart_validation', __CLASS__ . '::maybe_empty_cart', 10, 3 );
+		add_filter( 'woocommerce_add_to_cart_validation', __CLASS__ . '::maybe_empty_cart', 10, 4 );
 
 		// Enqueue front-end styles, run after Storefront because it sets the styles to be empty
 		add_filter( 'woocommerce_enqueue_styles', __CLASS__ . '::enqueue_styles', 100, 1 );
-
-		// Display Subscriptions on a User's account page
-		add_action( 'woocommerce_before_my_account', __CLASS__ . '::get_my_subscriptions_template' );
 
 		// Load translation files
 		add_action( 'init', __CLASS__ . '::load_plugin_textdomain', 3 );
@@ -308,19 +305,19 @@ class WC_Subscriptions {
 	 */
 	public static function enqueue_styles( $styles ) {
 
-		if ( self::is_woocommerce_pre( '2.3' ) && is_page( get_option( 'woocommerce_myaccount_page_id' ) ) ) {
-			$styles['woocommerce-subscriptions'] = array(
-				'src'     => str_replace( array( 'http:', 'https:' ), '', plugin_dir_url( __FILE__ ) ) . 'assets/css/woocommerce-subscriptions.css',
-				'deps'    => 'woocommerce-smallscreen',
-				'version' => WC_VERSION,
-				'media'   => '',
-			);
-		} elseif ( is_checkout() ) {
+		if ( is_checkout() || is_cart() ) {
 			$styles['wcs-checkout'] = array(
 				'src'     => str_replace( array( 'http:', 'https:' ), '', plugin_dir_url( __FILE__ ) ) . 'assets/css/checkout.css',
 				'deps'    => 'wc-checkout',
 				'version' => WC_VERSION,
 				'media'   => 'all',
+			);
+		} elseif ( is_account_page() ) {
+			$styles['wcs-view-subscription'] = array(
+				'src'     => str_replace( array( 'http:', 'https:' ), '', plugin_dir_url( __FILE__ ) ) . 'assets/css/view-subscription.css',
+				'deps'    => 'woocommerce-smallscreen',
+				'version' => self::$version,
+				'media'   => 'only screen and (max-width: ' . apply_filters( 'woocommerce_style_smallscreen_breakpoint', $breakpoint = '768px' ) . ')',
 			);
 		}
 
@@ -363,12 +360,13 @@ class WC_Subscriptions {
 	 *
 	 * @since 1.0
 	 */
-	public static function maybe_empty_cart( $valid, $product_id, $quantity ) {
+	public static function maybe_empty_cart( $valid, $product_id, $quantity, $variation_id = '' ) {
 
 		$is_subscription                 = WC_Subscriptions_Product::is_subscription( $product_id );
 		$cart_contains_subscription      = WC_Subscriptions_Cart::cart_contains_subscription();
 		$multiple_subscriptions_possible = WC_Subscriptions_Payment_Gateways::one_gateway_supports( 'multiple_subscriptions' );
 		$manual_renewals_enabled         = ( 'yes' == get_option( WC_Subscriptions_Admin::$option_prefix . '_accept_manual_renewals', 'no' ) ) ? true : false;
+		$canonical_product_id            = ( ! empty( $variation_id ) ) ? $variation_id : $product_id;
 
 		if ( $is_subscription && 'yes' != get_option( WC_Subscriptions_Admin::$option_prefix . '_multiple_purchase', 'no' ) ) {
 
@@ -380,7 +378,7 @@ class WC_Subscriptions {
 
 			self::add_notice( __( 'A subscription renewal has been removed from your cart. Multiple subscriptions can not be purchased at the same time.', 'woocommerce-subscriptions' ), 'notice' );
 
-		} elseif ( $is_subscription && $cart_contains_subscription && ! $multiple_subscriptions_possible && ! $manual_renewals_enabled ) {
+		} elseif ( $is_subscription && $cart_contains_subscription && ! $multiple_subscriptions_possible && ! $manual_renewals_enabled && ! WC_Subscriptions_Cart::cart_contains_product( $canonical_product_id ) ) {
 
 			self::remove_subscriptions_from_cart();
 
@@ -564,8 +562,10 @@ class WC_Subscriptions {
 			if ( ! is_woocommerce_active() ) : ?>
 <div id="message" class="error">
 	<p><?php
+		$install_url = wp_nonce_url( add_query_arg( array( 'action' => 'install-plugin', 'plugin' => 'woocommerce' ), admin_url( 'update.php' ) ), 'install-plugin_woocommerce' );
+
 		// translators: 1$-2$: opening and closing <strong> tags, 3$-4$: link tags, takes to woocommerce plugin on wp.org, 5$-6$: opening and closing link tags, leads to plugins.php in admin
-		printf( esc_html__( '%1$sWooCommerce Subscriptions is inactive.%2$s The %3$sWooCommerce plugin%4$s must be active for WooCommerce Subscriptions to work. Please %5$sinstall & activate WooCommerce &raquo;%6$s',  'woocommerce-subscriptions' ), '<strong>', '</strong>', '<a href="http://wordpress.org/extend/plugins/woocommerce/">', '</a>', '<a href="' . esc_url( admin_url( 'plugins.php' ) ) . '">', '</a>' ); ?>
+		printf( esc_html__( '%1$sWooCommerce Subscriptions is inactive.%2$s The %3$sWooCommerce plugin%4$s must be active for WooCommerce Subscriptions to work. Please %5$sinstall & activate WooCommerce &raquo;%6$s',  'woocommerce-subscriptions' ), '<strong>', '</strong>', '<a href="http://wordpress.org/extend/plugins/woocommerce/">', '</a>', '<a href="' .  esc_url( $install_url ) . '">', '</a>' ); ?>
 	</p>
 </div>
 		<?php elseif ( version_compare( get_option( 'woocommerce_db_version' ), '2.3', '<' ) ) : ?>
@@ -724,12 +724,12 @@ class WC_Subscriptions {
 	public static function attach_dependant_hooks() {
 
 		// Redirect the user immediately to the checkout page after clicking "Sign Up Now" buttons to encourage immediate checkout
-		if ( self::is_woocommerce_pre( '2.3' ) ) {
-			add_filter( 'add_to_cart_redirect', __CLASS__ . '::add_to_cart_redirect' );
-		} else {
-			add_filter( 'woocommerce_add_to_cart_redirect', __CLASS__ . '::add_to_cart_redirect' );
-		}
+		add_filter( 'woocommerce_add_to_cart_redirect', __CLASS__ . '::add_to_cart_redirect' );
 
+		if ( self::is_woocommerce_pre( '2.6' ) ) {
+			// Display Subscriptions on a User's account page
+			add_action( 'woocommerce_before_my_account', __CLASS__ . '::get_my_subscriptions_template' );
+		}
 	}
 
 	/**

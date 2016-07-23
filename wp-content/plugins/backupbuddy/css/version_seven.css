@@ -1,0 +1,58 @@
+.pb_backupbuddy_alert[rel="backupbuddy_version_seven"] {
+	border-left: 0;
+	margin: 1em 0;
+	position: relative;
+	font-size: 14px;
+	line-height: 1.6;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	color: #7db4bd;
+	border: 1px solid #123f47;
+	border-bottom-width: 3px;
+	background: #001D22;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+	padding: 0 1em !important;
+}
+
+.pb_backupbuddy_alert[rel="backupbuddy_version_seven"] .backupbuddy-icon-drive {
+	font-size: 2em;
+	margin-right: .5em;
+	vertical-align: middle;
+}
+
+.pb_backupbuddy_alert[rel="backupbuddy_version_seven"] p {
+	font-size: 1.2em;
+	color: #7db4bd;
+}
+
+.pb_backupbuddy_alert[rel="backupbuddy_version_seven"] .backupbuddy-nag-button {
+	background: #00b5e4;
+	border-radius: 3px;
+	display: inline-block;
+	margin: 10px 0 10px 10px;
+	padding: 10px 18px;
+	-webkit-transition: all .1s linear;
+	-moz-transition: all .1s linear;
+	transition: all .1s linear;
+	color: #fff;
+	font-weight: bold;
+	text-decoration: none;
+	text-transform: uppercase;
+	font-size: 14px;
+}
+
+.pb_backupbuddy_alert[rel="backupbuddy_version_seven"] .backupbuddy-nag-button:hover,
+.pb_backupbuddy_alert[rel="backupbuddy_version_seven"] .backupbuddy-nag-button:focus {
+	background: #3fc7eb;
+}
+
+.pb_backupbuddy_alert[rel="backupbuddy_version_seven"] .pb_backupbuddy_disalert:not(.backupbuddy-nag-button) {
+	margin: 2em 1em 0 0;
+}
+
+.pb_backupbuddy_alert[rel="backupbuddy_version_seven"] b {
+	color: #3fc7eb;
+}

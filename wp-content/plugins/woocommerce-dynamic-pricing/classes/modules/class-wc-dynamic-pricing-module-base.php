@@ -16,6 +16,7 @@ abstract class WC_Dynamic_Pricing_Module_Base {
 		global $woocommerce;
 
 		$result = false;
+		do_action( 'wc_memberships_discounts_disable_price_adjustments' );
 
 		$filter_cart_item = $cart_item;
 		if ( isset( $woocommerce->cart->cart_contents[$cart_item_key] ) ) {
@@ -37,6 +38,7 @@ abstract class WC_Dynamic_Pricing_Module_Base {
 			}
 		}
 
+		do_action( 'wc_memberships_discounts_enable_price_adjustments' );
 		return apply_filters( 'woocommerce_dynamic_pricing_get_price_to_discount', $result, $filter_cart_item, $cart_item_key );
 	}
 
@@ -47,9 +49,9 @@ abstract class WC_Dynamic_Pricing_Module_Base {
 	}
 
 	protected function is_cumulative( $cart_item, $cart_item_key, $default = false ) {
-		global $woocommerce;
 		//Check to make sure the item has not already been discounted by this module.  This could happen if update_totals is called more than once in the cart. 
-		if ( isset($woocommerce->cart->cart_contents) && is_array($woocommerce->cart->cart_contents) && isset( $woocommerce->cart->cart_contents[$cart_item_key]['discounts'] ) && in_array( $this->module_id, $woocommerce->cart->cart_contents[$cart_item_key]['discounts']['by'] ) ) {
+		$cart = WC()->cart->get_cart();
+		if ( isset( $cart ) && is_array( $cart ) && isset( $cart[$cart_item_key]['discounts'] ) && in_array( $this->module_id, WC()->cart->cart_contents[$cart_item_key]['discounts']['by'] ) ) {
 			return false;
 		} else {
 			return apply_filters( 'woocommerce_dynamic_pricing_is_cumulative', $default, $this->module_id, $cart_item, $cart_item_key );

@@ -57,6 +57,12 @@
 
                     }
 
+                    $pad_horizontal_default = 0;
+                    
+                    if ( $name == 'spb_column' ){
+                        $pad_horizontal_default = 15;
+                    }
+
                     if ( $name == 'spb_row' || $name == 'spb_text_block' || $name == 'spb_column' ){
                         $asset_name =  array(
                                  "type"       => "section_tab",
@@ -111,7 +117,7 @@
                                 "type"        => "uislider",
                                 "heading"     => __( "Padding - Horizontal", 'swift-framework-plugin' ),
                                 "param_name"  => "padding_horizontal",
-                                "value"       => "0",  
+                                "value"       => $pad_horizontal_default,  
                                 "step"        => "1",
                                 "min"         => "0",
                                 "max"         => "800",

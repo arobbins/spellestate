@@ -4,7 +4,7 @@
 	*	Theme Styling Functions
 	*	------------------------------------------------
 	*	Swift Framework
-	* 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+	* 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
 	*
 	*	sf_custom_styles()
 	*	sf_custom_script()
@@ -1218,6 +1218,8 @@
             echo 'ul.member-contact li a:hover {color: ' . $link_hover_color . ';}';
             echo '.testimonials.carousel-items li .testimonial-text {border-color: ' . $section_divide_color . ';}';
             echo '.testimonials.carousel-items li .testimonial-text:after {border-left-color: ' . $section_divide_color . ';border-top-color: ' . $section_divide_color . ';}';
+            echo '.product-reviews.masonry-items li.testimonial .testimonial-text {background-color: ' . $section_divide_color . ';}';
+            echo '.product-reviews.masonry-items li.testimonial.has-cite .testimonial-text::after {border-top-color: ' . $section_divide_color . ';}';
             echo '.horizontal-break {background-color: ' . $section_divide_color . ';}';
             echo '.horizontal-break.bold {background-color: ' . $body_text_color . ';}';
             echo '.progress .bar {background-color: ' . $accent_color . ';}';
@@ -1297,7 +1299,7 @@
             echo '.woocommerce a.button, .woocommerce input.button, .woocommerce button[type=submit], .woocommerce-ordering .woo-select, .variations_form .woo-select, .add_review a, .woocommerce .coupon input.apply-coupon, .woocommerce .button.update-cart-button, .shipping-calculator-form .woo-select, .woocommerce .shipping-calculator-form .update-totals-button button, .woocommerce #billing_country_field .woo-select, .woocommerce #shipping_country_field .woo-select, .woocommerce #review_form #respond .form-submit input, .woocommerce table.my_account_orders .order-actions .button, .woocommerce .widget_price_filter .price_slider_amount .button, .woocommerce.widget .buttons a, .load-more-btn, #wew-submit-email-to-notify, .woocommerce input[name="save_account_details"], .woocommerce .shipping-calculator-form .update-totals-button button {background: transparent; color: ' . $link_text_color . '}';
             echo '.product figcaption a.product-added {color: ' . $accent_alt_color . ';}';
             echo 'ul.products li.product a.quick-view-button, .woocommerce p.cart a.add_to_cart_button, .lost_reset_password p.form-row input[type=submit], .track_order p.form-row input[type=submit], .change_password_form p input[type=submit], .woocommerce form.register input[type=submit], .woocommerce .wishlist_table tr td.product-add-to-cart a, .woocommerce input.button[name="save_address"], .woocommerce .woocommerce-message a.button, .woocommerce .quantity, .woocommerce-page .quantity, .woocommerce .cart .yith-wcwl-add-to-wishlist a, .woocommerce-checkout .login input[type=submit], .woocommerce button[type=submit], .my-account-login-wrap .login-wrap form.login p.form-row input[type=submit], .products .product.buy-btn-visible > .product-actions .add-to-cart-wrap > a {border-color: ' . $section_divide_color . ';}';
-            echo '.woocommerce form.cart button.add_to_cart_button, #jckqv .cart .add_to_cart_button, #jckqv .cart .single_add_to_cart_button, #jckqv .quantity .qty, #jckqv .cart .yith-wcwl-add-to-wishlist a, #jckqv .quantity .qty-plus, #jckqv .quantity .qty-minus, .woocommerce .single_add_to_cart_button, .woocommerce .single_add_to_cart_button.button.alt {border-color: '.$body_text_color.';color: '.$body_text_color.';}';
+            echo '.woocommerce form.cart button.add_to_cart_button, #jckqv .cart .add_to_cart_button, #jckqv .cart .single_add_to_cart_button, #jckqv .quantity .qty, #jckqv .cart .yith-wcwl-add-to-wishlist a, #jckqv .quantity .qty-plus, #jckqv .quantity .qty-minus, .woocommerce .single_add_to_cart_button, .woocommerce .single_add_to_cart_button.button.alt, .woocommerce button.single_add_to_cart_button.button.alt.disabled {border-color: '.$body_text_color.';color: '.$body_text_color.';}';
             echo '.woocommerce form.cart button.add_to_cart_button:disabled[disabled] {border-color: '.$accent_color.'!important; color: '.$accent_color.'!important;}';
             echo '.woocommerce div.product form.cart .variations select {background-color: ' . $alt_bg_color . ';}';
             echo '.woocommerce .products .product figure .cart-overlay .shop-actions > a.product-added, .woocommerce .products .product figure .cart-overlay .shop-actions .add-to-cart-wrap > a.product-added, .woocommerce ul.products li.product figure figcaption .shop-actions > a.product-added:hover, .add_to_cart_button > i.fa-circle-o-notch, .yith-wcwl-wishlistaddedbrowse a, .yith-wcwl-wishlistexistsbrowse a {color: ' . $accent_color . '!important;}';
@@ -1330,7 +1332,7 @@
             echo '.woocommerce .products .product.product-display-gallery-bordered > figure, .product-type-gallery-bordered .products, .product-type-gallery-bordered .products .owl-wrapper-outer, .inner-page-wrap.full-width-shop .product-type-gallery-bordered .sidebar[class*="col-sm"], .products.product-type-gallery-bordered {border-color:' . $section_divide_color . ';}';
 			echo '.woocommerce div.product .woocommerce-tabs ul.tabs li.active a:after {background: '.$inner_page_bg_color.'; box-shadow: inset 2px 2px '.$section_divide_color.';}';
 			echo ' .woocommerce #review_form #respond .form-submit input:hover {background: ' . $accent_color . '!important; border-color: ' . $accent_color . '!important; color: ' . $accent_alt_color . '!important;}';
-			echo '.woocommerce .quantity .minus, .woocommerce .quantity input.qty, .woocommerce .quantity .qty-adjust .woocommerce .quantity .plus, .woocommerce div.product form.cart .variations select, .woocommerce .quantity .qty-plus, .woocommerce .quantity .qty-minus {border-color:' . $section_divide_color . ';}';
+			echo '.woocommerce .quantity .minus, .woocommerce .quantity input.qty, .woocommerce .quantity .qty-adjust .woocommerce .quantity .plus, .woocommerce div.product form.cart .variations select, .woocommerce .quantity .qty-plus, .woocommerce .quantity .qty-minus, .woocommerce .quantity .qty-adjust {border-color:' . $section_divide_color . ';}';
 			echo '.woocommerce table.shop_attributes th, .woocommerce table.shop_attributes td {border-color:' . $section_divide_color . ';}';
 			echo '.product-fw-split div.product div.summary {background-color:' . $inner_page_bg_color . ';}';
 			echo '.woocommerce table.shop_table tr td.product-remove .remove {color: '.$body_text_color.'!important;}';

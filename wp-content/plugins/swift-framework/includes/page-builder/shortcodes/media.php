@@ -924,7 +924,6 @@
                     //"holder"      => "div",
                     "heading"     => __( "Address", 'swift-framework-plugin' ),
                     "param_name"  => "address",
-                    "value"       => __( 'Click the edit button to change the map pin details.', 'swift-framework-plugin' ),
                     "description" => __( 'Enter the address that you would like to show on the map here, i.e. "Cupertino".', 'swift-framework-plugin' )
                 ),
                 array(

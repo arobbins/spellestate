@@ -111,6 +111,20 @@
                 'std'      => 'center',
                 'desc'     => __( 'Choose the horizontal align for the slide background image.', 'swift-framework-plugin' )
             ),
+            // BACKGROUND IMAGE ALIGNMENT
+            array(
+                'name'     => __( 'Mobile Background image horizontal align', 'swift-framework-plugin' ),
+                'id'       => "{$prefix}mobile_background_halign",
+                'type'     => 'select',
+                'options'  => array(
+                    'left'    => __( 'Left', 'swift-framework-plugin' ),
+                    'center' => __( 'Center', 'swift-framework-plugin' ),
+                    'right' => __( 'Right', 'swift-framework-plugin' ),
+                ),
+                'multiple' => false,
+                'std'      => 'center',
+                'desc'     => __( 'Choose the horizontal align for the slide background image on Mobile devices ( landscape / portrait < 768 ).', 'swift-framework-plugin' )
+            ),
             // SLIDE STYLING
             array(
                 'name'     => __( 'Slide Styling', 'swift-framework-plugin' ),

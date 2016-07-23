@@ -25,7 +25,7 @@ class UpdraftPlus_BackupModule_s3generic extends UpdraftPlus_BackupModule_s3 {
 		$config = $this->get_config();
 		$endpoint = ($region != '' && $region != 'n/a') ? $region : $config['endpoint'];
 		global $updraftplus;
-		$updraftplus->log("Set endpoint: $endpoint");
+		if ($updraftplus->backup_time) $updraftplus->log("Set endpoint: $endpoint");
 		$obj->setEndpoint($endpoint);
 	}
 

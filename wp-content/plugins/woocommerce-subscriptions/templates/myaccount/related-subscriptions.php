@@ -32,13 +32,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<?php echo sprintf( esc_html_x( '#%s', 'hash before order number', 'woocommerce-subscriptions' ), esc_html( $subscription->get_order_number() ) ); ?>
 					</a>
 				</td>
-				<td class="subscription-status order-status" style="text-align:left; white-space:nowrap;" data-title="<?php esc_attr_e( 'Status', 'woocommerce-subscriptions' ); ?>">
+				<td class="subscription-status order-status" style="white-space:nowrap;" data-title="<?php esc_attr_e( 'Status', 'woocommerce-subscriptions' ); ?>">
 					<?php echo esc_attr( wcs_get_subscription_status_name( $subscription->get_status() ) ); ?>
 				</td>
 				<td class="subscription-next-payment order-date" data-title="<?php echo esc_attr_x( 'Next Payment', 'table heading', 'woocommerce-subscriptions' ); ?>">
 					<?php echo esc_attr( $subscription->get_date_to_display( 'next_payment' ) ); ?>
 				</td>
-				<td class="subscription-total order-total">
+				<td class="subscription-total order-total" data-title="<?php echo esc_attr_x( 'Total', 'Used in data attribute. Escaped', 'woocommerce-subscriptions' ); ?>">
 					<?php echo wp_kses_post( $subscription->get_formatted_order_total() ); ?>
 				</td>
 				<td class="subscription-actions order-actions">

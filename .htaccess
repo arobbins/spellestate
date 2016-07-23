@@ -27,14 +27,19 @@ RewriteCond %{REQUEST_METHOD} ^(TRACE|TRACK)
 RewriteRule .* - [F]
 #AIOWPS_DISABLE_TRACE_TRACK_END
 #AIOWPS_FORBID_PROXY_COMMENTS_START
-RewriteCond %{REQUEST_METHOD} =POST
-RewriteCond %{HTTP:VIA}%{HTTP:FORWARDED}%{HTTP:USERAGENT_VIA}%{HTTP:X_FORWARDED_FOR}%{HTTP:PROXY_CONNECTION} !^$ [OR]
-RewriteCond %{HTTP:XPROXY_CONNECTION}%{HTTP:HTTP_PC_REMOTE_ADDR}%{HTTP:HTTP_CLIENT_IP} !^$
-RewriteCond %{REQUEST_URI} !^/(wp-login.php|wp-admin/|wp-content/plugins/|wp-includes/).* [NC]
-RewriteRule .* - [F,NS,L]
+RewriteCond %{REQUEST_METHOD} ^POST
+RewriteCond %{HTTP:VIA} !^$ [OR]
+RewriteCond %{HTTP:FORWARDED} !^$ [OR]
+RewriteCond %{HTTP:USERAGENT_VIA} !^$ [OR]
+RewriteCond %{HTTP:X_FORWARDED_FOR} !^$ [OR]
+RewriteCond %{HTTP:X_FORWARDED_HOST} !^$ [OR]
+RewriteCond %{HTTP:PROXY_CONNECTION} !^$ [OR]
+RewriteCond %{HTTP:XPROXY_CONNECTION} !^$ [OR]
+RewriteCond %{HTTP:HTTP_PC_REMOTE_ADDR} !^$ [OR]
+RewriteCond %{HTTP:HTTP_CLIENT_IP} !^$
+RewriteRule wp-comments-post\.php - [F]
 #AIOWPS_FORBID_PROXY_COMMENTS_END
 #AIOWPS_DENY_BAD_QUERY_STRINGS_START
-RewriteCond %{QUERY_STRING} tag=     [NC,OR]
 RewriteCond %{QUERY_STRING} ftp:     [NC,OR]
 RewriteCond %{QUERY_STRING} http:    [NC,OR]
 RewriteCond %{QUERY_STRING} https:   [NC,OR]
@@ -49,7 +54,6 @@ RedirectMatch 403 \,
 RedirectMatch 403 \:
 RedirectMatch 403 \;
 RedirectMatch 403 \=
-RedirectMatch 403 \@
 RedirectMatch 403 \[
 RedirectMatch 403 \]
 RedirectMatch 403 \^
@@ -192,7 +196,7 @@ RewriteRule .* - [F]
 <IfModule mod_rewrite.c>
 RewriteCond %{REQUEST_METHOD} POST
 RewriteCond %{REQUEST_URI} ^(.*)?wp-comments-post\.php(.*)$
-RewriteCond %{HTTP_REFERER} !^http(s)?s://spellestate\.dev [NC,OR]
+RewriteCond %{HTTP_REFERER} !^http(s)?s://spellestate\.com [NC,OR]
 RewriteCond %{HTTP_USER_AGENT} ^$
 RewriteRule .* http://127.0.0.1 [L]
 </IfModule>
@@ -207,23 +211,4 @@ RewriteRule ^index\.php$ - [L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule . /index.php [L]
-</IfModule>
-
-# END WordPress
-
-Redirect 301 /wines /shop
-
-AddOutputFilterByType DEFLATE text/html text/plain text/xml
-AddOutputFilterByType DEFLATE text/css application/x-javascript
-AddOutputFilterByType DEFLATE text/css text/html text/plain text/xml text/javascript
-
-<IfModule deflate_module>
-    <IfModule filter_module>
-        AddOutputFilterByType DEFLATE text/plain text/html
-        AddOutputFilterByType DEFLATE text/xml application/xml application/xhtml+xml application/xml-dtd
-        AddOutputFilterByType DEFLATE application/rdf+xml application/rss+xml application/atom+xml image/svg+xml
-        AddOutputFilterByType DEFLATE text/css text/javascript application/javascript application/x-javascript
-        AddOutputFilterByType DEFLATE font/otf font/opentype application/font-otf application/x-font-otf
-        AddOutputFilterByType DEFLATE font/ttf font/truetype application/font-ttf application/x-font-ttf
-    </IfModule>
 </IfModule>

@@ -49,7 +49,7 @@
                 
                 $pos = strpos( $custom_css, 'margin-bottom' );
                 if ($pos !== false) { 
-                    $el_class .= ' mt0 mb0';        
+                    //$el_class .= ' mt0 mb0';        
                  }
             
 
@@ -91,7 +91,7 @@
             $output .= "\n\t\t" . '</div>';
             $output .= "\n\t" . '</div> ' . $this->endBlockComment( $width );
 
-            $output = $this->startRow( $el_position ) . $output . $this->endRow( $el_position );
+            $output = $this->startRow( $el_position, '', false ) . $output . $this->endRow( $el_position, '', false );
 
             return $output;
         }
@@ -482,7 +482,7 @@
             $output .= '<div class="blank_spacer ' . $width . ' ' . $el_class . '" style="height:' . $height . ';">';
             $output .= '</div>' . $this->endBlockComment( 'divider' ) . "\n";
 
-            $output = $this->startRow( $el_position ) . $output . $this->endRow( $el_position );
+            $output = $this->startRow( $el_position, '', false ) . $output . $this->endRow( $el_position, '', false );
 
             return $output;
         }

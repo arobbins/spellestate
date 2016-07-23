@@ -79,9 +79,8 @@ class WC_Dynamic_Pricing_Advanced_Totals extends WC_Dynamic_Pricing_Advanced_Bas
 								
 								if ( $original_price ) {
 									$amount = apply_filters( 'woocommerce_dynamic_pricing_get_rule_amount', $rule['amount'], $rule, $cart_item, $this );
-									if ( $amount > 1 ) {
-										$amount = $amount / 100;
-									}
+									$amount = $amount / 100;
+									
 
 									$price_adjusted = round( floatval( $original_price ) - ( floatval( $amount ) * $original_price), (int) $num_decimals );
 									WC_Dynamic_Pricing::apply_cart_item_adjustment( $cart_item_key, $original_price, $price_adjusted, $this->module_id, $set_id );

@@ -55,6 +55,7 @@
             }
             if ( ! sf_woocommerce_activated() ) {
                 unset( $pb_assets['products'] );
+                unset( $pb_assets['product-reviews'] );
             }
             if ( ! sf_gopricing_activated() ) {
                 unset( $pb_assets['gopricing'] );

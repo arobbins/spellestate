@@ -614,7 +614,7 @@ class woocommerce_product_pricing_rules_admin {
 					html += '<input class="int_pricing_blockrule" type="text" name="pricing_rules[' + name + '][blockrules][' + $index + '][from]" value="" /> ';
 					html += '</td>';
 					html += '<td>';
-					html += '<input class="int_pricing_blockrule" type="text" name="pricing_rules[' + name + '][blockrules][' + $index + '][to]" value="" /> ';
+					html += '<input class="int_pricing_blockrule" type="text" name="pricing_rules[' + name + '][blockrules][' + $index + '][adjust]" value="" /> ';
 					html += '</td>';
 					html += '<td>';
 					html += '<select name="pricing_rules[' + name + '][blockrules][' + $index + '][type]">';

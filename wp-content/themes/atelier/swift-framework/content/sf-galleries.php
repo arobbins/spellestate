@@ -5,7 +5,7 @@
     *	Swift Page Builder - Galleries Function Class
     *	------------------------------------------------
     *	Swift Framework
-    * 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+    * 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     *	sf_galleries()
     *	sf_gallery_filter()
@@ -368,7 +368,10 @@
                 $item_svg_icon      = apply_filters( 'sf_gallery_lightbox_svg_icon', "" );
                 $link_script .= "<script type='text/javascript'>jQuery(document).ready(function(){jQuery('#gallery-" . $id . "').click(function(){
 				var lightboxSocial = {
-						facebook: true,
+						facebook: {
+							source: 'https://www.facebook.com/sharer/sharer.php?u={URL}',
+							text: 'Share on Facebook'
+						},
 						twitter: true,
 						googleplus: true,
 						pinterest: {

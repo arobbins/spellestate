@@ -5,7 +5,7 @@
     *	Swift Page Builder - Portfolio Detail Function Class
     *	------------------------------------------------
     *	Swift Framework
-    * 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+    * 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     *	sf_portfolio_detail_media()
     *	sf_portfolio_item_details()

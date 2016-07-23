@@ -5,7 +5,7 @@
     *	Swift Page Builder - Products Function Class
     *	------------------------------------------------
     *	Swift Framework
-    * 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+    * 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     *	sf_mini_product_items()
     *	sf_product_items()
@@ -281,7 +281,7 @@
             if ( $gutters == "no" || $product_display_type == "gallery-bordered" ) {
                 $list_class .= 'no-gutters ';
             }
-			if ( $multi_masonry == "yes" && $product_display_type != "preview-slider" ) {
+			if ( $multi_masonry == "yes" && $product_display_type != "preview-slider" && $asset_type != "categories" ) {
 				$carousel = "no";
 				$list_class .= 'multi-masonry-items ';
 				$sf_product_multimasonry = true;

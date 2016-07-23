@@ -18,11 +18,11 @@
  *
  * @package     WC-Customer-Order-CSV-Export/Export-Methods/File-Transfer
  * @author      SkyVerge
- * @copyright   Copyright (c) 2012-2015, SkyVerge, Inc.
+ * @copyright   Copyright (c) 2012-2016, SkyVerge, Inc.
  * @license     http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+defined( 'ABSPATH' ) or exit;
 
 /**
  * Customer/Order CSV Export File Transfer Class
@@ -80,7 +80,7 @@ abstract class WC_Customer_Order_CSV_Export_Method_File_Transfer implements WC_C
 		// check for blank username
 		if ( ! $this->username ) {
 
-			throw new Exception( __( 'FTP Username is blank.', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ) );
+			throw new Exception( __( 'FTP Username is blank.', 'woocommerce-customer-order-csv-export' ) );
 		}
 
 		/* allow blank passwords */
@@ -88,13 +88,13 @@ abstract class WC_Customer_Order_CSV_Export_Method_File_Transfer implements WC_C
 		// check for blank server
 		if ( ! $this->server ) {
 
-			throw new Exception( __( 'FTP Server is blank.', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ) );
+			throw new Exception( __( 'FTP Server is blank.', 'woocommerce-customer-order-csv-export' ) );
 		}
 
 		// check for blank port
 		if ( ! $this->port ) {
 
-			throw new Exception ( __( 'FTP Port is blank.', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ) );
+			throw new Exception ( __( 'FTP Port is blank.', 'woocommerce-customer-order-csv-export' ) );
 		}
 	}
 

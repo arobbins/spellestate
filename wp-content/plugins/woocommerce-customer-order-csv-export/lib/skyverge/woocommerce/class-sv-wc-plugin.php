@@ -18,11 +18,11 @@
  *
  * @package   SkyVerge/WooCommerce/Plugin/Classes
  * @author    SkyVerge
- * @copyright Copyright (c) 2013-2015, SkyVerge, Inc.
+ * @copyright Copyright (c) 2013-2016, SkyVerge, Inc.
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+defined( 'ABSPATH' ) or exit;
 
 if ( ! class_exists( 'SV_WC_Plugin' ) ) :
 
@@ -34,71 +34,19 @@ if ( ! class_exists( 'SV_WC_Plugin' ) ) :
  * plugin.  This class handles all the "non-feature" support tasks such
  * as verifying dependencies are met, loading the text domain, etc.
  *
- * ## Usage
- *
- * Extend this class and implement the following abstract methods:
- *
- * + `get_file()` - the implementation should be: <code>return __FILE__;</code>
- * + `get_plugin_name()` - returns the plugin name (implemented this way so it can be localized)
- * + `load_translation()` - load the plugin text domain
- *
- * Optional Methods to Override:
- *
- * + `is_plugin_settings()` - if the plugin has an admin settings page you can return true when on it
- * + `get_settings_url()` - return the plugin admin settings URL, if any
- *
- * ### Admin Notices
- *
- * Admin notices, can be displayed by calling the `SV_WC_Admin_Notice_Handler::add_admin_notice()`
- * instance method.  Notices default to dismissible unless on the plugin
- * settings page, in which case they are always displayed.
- *
- * Two methods are defined in this class for convenience when adding notices:
- *
- * + `add_admin_notices()` - Use this for notices that don't depend on settings.  A missing PHP extension is a good example
- * + `add_delayed_admin_notices()` - Use this for notices that might depend on a setting first being saved.  A currency requirement for a payment gateway is a good example
- *
- * The notices functionality is implemented by the `SV_WC_Admin_Notice_Handler`
- * class instance, which can be retrieved by calling `get_admin_notice_handler()`
- * on this plugin.  Note that this method can easily be overridden by a concrete
- * plugin implementation, in order to return a specific subclass of the admin
- * notice handler.
- *
- * `SV_WC_Admin_Notice_Handler` includes some convenience methods:
- *
- * + `add_admin_notice()` - Conditionally add an admin notice for display.
- * + `should_display_notice()` - Returns true if message has not been dismissed, or currently on the plugin settings page
- * + `is_message_dismissed()` - Returns true if message has been dismissed
- *
- * Use the optional parameters for the `add_admin_notice()` call to more finely
- * control the behavior of the notice.  The default behavior is to display the
- * notice everywhere with a "dismiss" link, except for the plugin settings page
- * (if any) where the notice is always displayed, with no "dismiss".
- *
- * To add a notice that can be dismissed from the plugin settings, use:
- * `always_show_on_settings => false`
- *
- * To add a notice that can not be dismissed from anywhere, use:
- * `dismissible` => false
- *
- * Use the standard WordPress/WooCommerce `is_*` methods when adding the notice
- * to control which pages it does (or does not) display on.
- *
- * @version 3.1.0
+ * @version 4.4.0
  */
 abstract class SV_WC_Plugin {
 
+
 	/** Plugin Framework Version */
-	const VERSION = '3.1.0';
+	const VERSION = '4.4.0';
 
 	/** @var object single instance of plugin */
 	protected static $instance;
 
 	/** @var string plugin id */
 	private $id;
-
-	/** @var string plugin text domain */
-	protected $text_domain;
 
 	/** @var string version number */
 	private $version;
@@ -121,6 +69,9 @@ abstract class SV_WC_Plugin {
 	/** @var array string names of required PHP functions */
 	private $function_dependencies = array();
 
+	/** @var string the plugin text domain */
+	private $text_domain;
+
 	/** @var SV_WC_Admin_Notice_Handler the admin notice handler class */
 	private $admin_notice_handler;
 
@@ -138,19 +89,21 @@ abstract class SV_WC_Plugin {
 	 * @since 2.0.0
 	 * @param string $id plugin id
 	 * @param string $version plugin version number
-	 * @param string $text_domain the plugin text domain
 	 * @param array $args optional plugin arguments
 	 */
-	public function __construct( $id, $version, $text_domain, $args = array() ) {
+	public function __construct( $id, $version, $args = array() ) {
 
 		// required params
 		$this->id          = $id;
 		$this->version     = $version;
-		$this->text_domain = $text_domain;
 
 		if ( isset( $args['dependencies'] ) )                $this->dependencies = $args['dependencies'];
 
 		if ( isset( $args['function_dependencies'] ) )       $this->function_dependencies = $args['function_dependencies'];
+
+		if ( isset( $args['text_domain'] ) ) {
+			$this->text_domain = $args['text_domain'];
+		}
 
 		// include library files after woocommerce is loaded
 		add_action( 'sv_wc_framework_plugins_loaded', array( $this, 'lib_includes' ) );
@@ -158,11 +111,13 @@ abstract class SV_WC_Plugin {
 		// includes that are required to be available at all times
 		$this->includes();
 
+		$this->load_hook_deprecator();
+
 		// Admin
-		if ( is_admin() && ! defined( 'DOING_AJAX' ) ) {
+		if ( is_admin() && ! is_ajax() ) {
 
 			// admin message handler
-			require_once( 'class-sv-wp-admin-message-handler.php' );
+			require_once( $this->get_framework_path() . '/class-sv-wp-admin-message-handler.php' );
 
 			// render any admin notices, delayed notices, and
 			add_action( 'admin_notices', array( $this, 'add_admin_notices'            ), 10 );
@@ -173,13 +128,17 @@ abstract class SV_WC_Plugin {
 
 			// defer until WP/WC has fully loaded
 			add_action( 'wp_loaded', array( $this, 'do_install' ) );
+
+			// register activation/deactivation hooks for convenience
+			register_activation_hook(   $this->get_file(), array( $this, 'activate' ) );
+			register_deactivation_hook( $this->get_file(), array( $this, 'deactivate' ) );
 		}
 
 		// automatically log HTTP requests from SV_WC_API_Base
 		$this->add_api_request_logging();
 
 		// Load translation files
-		add_action( 'init', array( $this, 'load_translation' ) );
+		add_action( 'init', array( $this, 'load_translations' ) );
 	}
 
 
@@ -189,7 +148,8 @@ abstract class SV_WC_Plugin {
 	 * @since 3.1.0
 	 */
 	public function __clone() {
-		_doing_it_wrong( __FUNCTION__, sprintf( __( 'You cannot clone instances of %s.', $this->text_domain ), $this->get_plugin_name() ), '3.1.0' );
+		/* translators: Placeholders: %s - plugin name */
+		_doing_it_wrong( __FUNCTION__, sprintf( esc_html__( 'You cannot clone instances of %s.', 'woocommerce-plugin-framework' ), $this->get_plugin_name() ), '3.1.0' );
 	}
 
 	/**
@@ -198,20 +158,47 @@ abstract class SV_WC_Plugin {
 	 * @since 3.1.0
 	 */
 	public function __wakeup() {
-		_doing_it_wrong( __FUNCTION__, sprintf( __( 'You cannot unserialize instances of %s.', $this->text_domain ), $this->get_plugin_name() ), '3.1.0' );
+		/* translators: Placeholders: %s - plugin name */
+		_doing_it_wrong( __FUNCTION__, sprintf( esc_html__( 'You cannot unserialize instances of %s.', 'woocommerce-plugin-framework' ), $this->get_plugin_name() ), '3.1.0' );
 	}
 
 
 	/**
-	 * Load plugin text domain.  This implementation should look simply like:
+	 * Load plugin & framework text domains
 	 *
-	 * *load_plugin_textdomain*( 'text-domain-string', false, dirname( plugin_basename( $this->get_file() ) ) . '/i18n/languages' );
-	 *
-	 * *'s used to avoid errors from stupid Codestyling Localization
-	 *
-	 * Note that the actual text domain string should be used, and not a
-	 * variable or constant, otherwise localization plugins (Codestyling) will
-	 * not be able to detect the localization directory.
+	 * @since 4.2.0
+	 */
+	public function load_translations() {
+
+		// load the framework translation files
+		$framework_domain = 'woocommerce-plugin-framework';
+		$framework_locale = apply_filters( 'plugin_locale', get_locale(), $framework_domain );
+
+		load_textdomain( $framework_domain, WP_LANG_DIR . '/' . $framework_domain . '/' . $framework_domain . '-' . $framework_locale . '.mo' );
+
+		load_plugin_textdomain( $framework_domain, false, dirname( plugin_basename( $this->get_framework_file() ) ) . '/i18n/languages' );
+
+		// if this plugin passes along its text domain, load its translation files
+		if ( $this->text_domain ) {
+
+			$domain = $this->text_domain;
+			$locale = apply_filters( 'plugin_locale', get_locale(), $this->text_domain );
+
+			load_textdomain( $domain, WP_LANG_DIR . '/' . $domain . '/' . $domain . '-' . $locale . '.mo' );
+
+			load_plugin_textdomain( $domain, false, dirname( plugin_basename( $this->get_file() ) ) . '/i18n/languages' );
+
+		// otherwise, let it do the work
+		} else {
+
+			// load plugin text domain
+			$this->load_translation();
+		}
+	}
+
+
+	/**
+	 * Load plugin text domain
 	 *
 	 * @since 1.0.0
 	 */
@@ -239,25 +226,69 @@ abstract class SV_WC_Plugin {
 	 */
 	private function includes() {
 
+		$framework_path = $this->get_framework_path();
+
 		// common exception class
-		require_once( 'class-sv-wc-plugin-exception.php' );
+		require_once(  $framework_path . '/class-sv-wc-plugin-exception.php' );
 
 		// common utility methods
-		require_once( 'class-sv-wc-helper.php' );
+		require_once( $framework_path . '/class-sv-wc-helper.php' );
 
 		// backwards compatibility for older WC versions
-		require_once( 'class-sv-wc-plugin-compatibility.php' );
+		require_once( $framework_path . '/class-sv-wc-plugin-compatibility.php' );
 
 		if ( is_admin() ) {
 			// load admin notice handler
-			require_once( 'class-sv-wc-admin-notice-handler.php' );
+			require_once( $framework_path . '/class-sv-wc-admin-notice-handler.php' );
 		}
 
 		// generic API base
-		require_once( 'api/class-sv-wc-api-exception.php' );
-		require_once( 'api/class-sv-wc-api-base.php' );
-		require_once( 'api/interface-sv-wc-api-request.php' );
-		require_once( 'api/interface-sv-wc-api-response.php' );
+		require_once( $framework_path . '/api/class-sv-wc-api-exception.php' );
+		require_once( $framework_path . '/api/class-sv-wc-api-base.php' );
+		require_once( $framework_path . '/api/interface-sv-wc-api-request.php' );
+		require_once( $framework_path . '/api/interface-sv-wc-api-response.php' );
+
+		// XML API base
+		require_once( $framework_path . '/api/abstract-sv-wc-api-xml-request.php' );
+		require_once( $framework_path . '/api/abstract-sv-wc-api-xml-response.php' );
+
+		// JSON API base
+		require_once( $framework_path . '/api/abstract-sv-wc-api-json-request.php' );
+		require_once( $framework_path . '/api/abstract-sv-wc-api-json-response.php' );
+	}
+
+
+	/**
+	 * Load and instantiate the hook deprecator class
+	 *
+	 * @since 4.3.0
+	 */
+	private function load_hook_deprecator() {
+
+		require_once( $this->get_framework_path() . '/class-sv-wc-hook-deprecator.php' );
+
+		$this->hook_deprecator = new SV_WC_Hook_Deprecator( $this->get_plugin_name(), $this->get_deprecated_hooks() );
+	}
+
+
+	/**
+	 * Return deprecated/removed hooks. Implementing classes should override this
+	 * and return an array of deprecated/removed hooks in the following format:
+	 *
+	 * $old_hook_name = array {
+	 *   @type string $version version the hook was deprecated/removed in
+	 *   @type bool $removed if present and true, the message will indicate the hook was removed instead of deprecated
+	 *   @type string|bool $replacement if present and a string, the message will indicate the replacement hook to use,
+	 *     otherwise (if bool and false) the message will indicate there is no replacement available.
+	 * }
+	 *
+	 * @since 4.3.0
+	 * @return array
+	 */
+	protected function get_deprecated_hooks() {
+
+		// stub method
+		return array();
 	}
 
 
@@ -316,17 +347,20 @@ abstract class SV_WC_Plugin {
 		if ( count( $missing_extensions ) > 0 ) {
 
 			$message = sprintf(
+				/* translators: Placeholders: %1$s - plugin name, %2$s - a PHP extension/comma-separated list of PHP extensions */
 				_n(
-					'%s requires the %s PHP extension to function.  Contact your host or server administrator to configure and install the missing extension.',
-					'%s requires the following PHP extensions to function: %s.  Contact your host or server administrator to configure and install the missing extensions.',
+					'%1$s requires the %2$s PHP extension to function. Contact your host or server administrator to configure and install the missing extension.',
+					'%1$s requires the following PHP extensions to function: %2$s. Contact your host or server administrator to configure and install the missing extensions.',
 					count( $missing_extensions ),
-					$this->text_domain
+					'woocommerce-plugin-framework'
 				),
 				$this->get_plugin_name(),
 				'<strong>' . implode( ', ', $missing_extensions ) . '</strong>'
 			);
 
-			$this->get_admin_notice_handler()->add_admin_notice( $message, 'missing-extensions' );
+			$this->get_admin_notice_handler()->add_admin_notice( $message, 'missing-extensions', array(
+				'notice_class' => 'error',
+			) );
 
 		}
 
@@ -336,17 +370,20 @@ abstract class SV_WC_Plugin {
 		if ( count( $missing_functions ) > 0 ) {
 
 			$message = sprintf(
+				/* translators: Placeholders: %1$s - plugin name, %2$s - a PHP function/comma-separated list of PHP functions */
 				_n(
-					'%s requires the %s PHP function to exist.  Contact your host or server administrator to configure and install the missing function.',
-					'%s requires the following PHP functions to exist: %s.  Contact your host or server administrator to configure and install the missing functions.',
+					'%1$s requires the %2$s PHP function to exist.  Contact your host or server administrator to configure and install the missing function.',
+					'%1$s requires the following PHP functions to exist: %2$s.  Contact your host or server administrator to configure and install the missing functions.',
 					count( $missing_functions ),
-					$this->text_domain
+					'woocommerce-plugin-framework'
 				),
 				$this->get_plugin_name(),
 				'<strong>' . implode( ', ', $missing_functions ) . '</strong>'
 			);
 
-			$this->get_admin_notice_handler()->add_admin_notice( $message, 'missing-functions' );
+			$this->get_admin_notice_handler()->add_admin_notice( $message, 'missing-functions', array(
+				'notice_class' => 'error',
+			) );
 
 		}
 	}
@@ -371,15 +408,13 @@ abstract class SV_WC_Plugin {
 
 		// documentation url if any
 		if ( $this->get_documentation_url() ) {
-			$custom_actions['docs'] = sprintf( '<a href="%s">%s</a>', $this->get_documentation_url(), __( 'Docs', $this->text_domain ) );
+			/* translators: Docs as in Documentation */
+			$custom_actions['docs'] = sprintf( '<a href="%s">%s</a>', $this->get_documentation_url(), esc_html__( 'Docs', 'woocommerce-plugin-framework' ) );
 		}
 
-		// support url
-		$custom_actions['support'] = sprintf( '<a href="%s">%s</a>', 'http://support.woothemes.com/', __( 'Support', $this->text_domain ) );
-
-		// optional review link
-		if ( $this->get_review_url() ) {
-			$custom_actions['review'] = sprintf( '<a href="%s">%s</a>', $this->get_review_url(), __( 'Write a Review', $this->text_domain ) );
+		// support url if any
+		if ( $this->get_support_url() ) {
+			$custom_actions['support'] = sprintf( '<a href="%s">%s</a>', $this->get_support_url(), esc_html_x( 'Support', 'noun', 'woocommerce-plugin-framework' ) );
 		}
 
 		// add the links to the front of the actions list
@@ -503,7 +538,22 @@ abstract class SV_WC_Plugin {
 		}
 
 		$this->logger->add( $log_id, $message );
+	}
 
+
+	/**
+	 * Require and instantiate a class
+	 *
+	 * @since 4.2.0
+	 * @param string $local_path path to class file in plugin, e.g. '/includes/class-wc-foo.php'
+	 * @param string $class_name class to instantiate
+	 * @return object instantiated class instance
+	 */
+	public function load_class( $local_path, $class_name ) {
+
+		require_once( $this->get_plugin_path() . $local_path );
+
+		return new $class_name;
 	}
 
 
@@ -565,7 +615,7 @@ abstract class SV_WC_Plugin {
 			return $this->admin_notice_handler;
 		}
 
-		return $this->admin_notice_handler = new SV_WC_Admin_Notice_Handler( $this, $this->text_domain );
+		return $this->admin_notice_handler = new SV_WC_Admin_Notice_Handler( $this );
 	}
 
 
@@ -629,7 +679,7 @@ abstract class SV_WC_Plugin {
 		$settings_url = $this->get_settings_url( $plugin_id );
 
 		if ( $settings_url ) {
-			return sprintf( '<a href="%s">%s</a>', $settings_url, __( 'Configure', $this->text_domain ) );
+			return sprintf( '<a href="%s">%s</a>', $settings_url, esc_html__( 'Configure', 'woocommerce-plugin-framework' ) );
 		}
 
 		// no settings
@@ -679,41 +729,26 @@ abstract class SV_WC_Plugin {
 
 
 	/**
-	 * Gets the plugin documentation url, which defaults to:
-	 * http://docs.woothemes.com/document/woocommerce-{dasherized plugin id}/
+	 * Gets the plugin documentation url, used for the 'Docs' plugin action
 	 *
 	 * @since 2.0.0
 	 * @return string documentation URL
 	 */
 	public function get_documentation_url() {
 
-		return 'http://docs.woothemes.com/document/woocommerce-' . $this->get_id_dasherized() . '/';
+		return null;
 	}
 
 
 	/**
-	 * Gets the plugin review URL, which defaults to:
-	 * {product page url}#tab-reviews
+	 * Gets the support URL, used for the 'Support' plugin action link
 	 *
-	 * @since 2.0.0
-	 * @return string review url
+	 * @since 4.0.0
+	 * @return string support url
 	 */
-	public function get_review_url() {
+	public function get_support_url() {
 
-		return $this->get_product_page_url() . '#review_form';
-	}
-
-
-	/**
-	 * Gets the skyverge.com product page URL, which defaults to:
-	 * http://www.skyverge.com/product/{dasherized plugin id}/
-	 *
-	 * @since 2.0.0
-	 * @return string skyverge.com product page url
-	 */
-	public function get_product_page_url() {
-
-		return 'http://www.skyverge.com/product/woocommerce-' . $this->get_id_dasherized() . '/';
+		return null;
 	}
 
 
@@ -752,7 +787,7 @@ abstract class SV_WC_Plugin {
 
 
 	/**
-	 * Returns the woocommerce uploads path, sans trailing slash.  Oddly WooCommerce
+	 * Returns the woocommerce uploads path, without trailing slash.  Oddly WooCommerce
 	 * core does not provide a way to get this
 	 *
 	 * @since 2.0.0
@@ -765,14 +800,52 @@ abstract class SV_WC_Plugin {
 
 
 	/**
-	 * Returns the relative path to the framework image directory, with a
+	 * Returns the loaded framework __FILE__
+	 *
+	 * @since 4.0.0
+	 * @return string
+	 */
+	public function get_framework_file() {
+
+		return __FILE__;
+	}
+
+
+	/**
+	 * Returns the loaded framework path, without trailing slash. Ths is the highest
+	 * version framework that was loaded by the bootstrap.
+	 *
+	 * @since 4.0.0
+	 * @return string
+	 */
+	public function get_framework_path() {
+
+		return untrailingslashit( plugin_dir_path( $this->get_framework_file() ) );
+	}
+
+
+	/**
+	 * Returns the absolute path to the loaded framework image directory, without a
 	 * trailing slash
 	 *
-	 * @since 2.0.0
-	 * @return string relative path to framework image directory
+	 * @since 4.0.0
+	 * @return string
 	 */
-	public function get_framework_image_path() {
-		return 'lib/skyverge/woocommerce/assets/images/';
+	public function get_framework_assets_path() {
+
+		return $this->get_framework_path() . '/assets';
+	}
+
+
+	/**
+	 * Returns the loaded framework assets URL without a trailing slash
+	 *
+	 * @since 4.0.0
+	 * @return string
+	 */
+	public function get_framework_assets_url() {
+
+		return untrailingslashit( plugins_url( '/assets', $this->get_framework_file() ) );
 	}
 
 
@@ -806,7 +879,7 @@ abstract class SV_WC_Plugin {
 		$active_plugins = (array) get_option( 'active_plugins', array() );
 
 		if ( is_multisite() ) {
-			$active_plugins = array_merge( $active_plugins, get_site_option( 'active_sitewide_plugins', array() ) );
+			$active_plugins = array_merge( $active_plugins, array_keys( get_site_option( 'active_sitewide_plugins', array() ) ) );
 		}
 
 		$plugin_filenames = array();
@@ -859,6 +932,24 @@ abstract class SV_WC_Plugin {
 
 
 	/**
+	 * Helper method to install default settings for a plugin
+	 *
+	 * @since 4.2.0
+	 * @param array $settings array of settings in format required by WC_Admin_Settings
+	 */
+	public function install_default_settings( array $settings ) {
+
+		foreach ( $settings as $setting ) {
+
+			if ( isset( $setting['id'] ) && isset( $setting['default'] ) ) {
+
+				update_option( $setting['id'], $setting['default'] );
+			}
+		}
+	}
+
+
+	/**
 	 * Plugin install method.  Perform any installation tasks here
 	 *
 	 * @since 2.0.0
@@ -875,6 +966,27 @@ abstract class SV_WC_Plugin {
 	 * @param string $installed_version the currently installed version
 	 */
 	protected function upgrade( $installed_version ) {
+		// stub
+	}
+
+
+	/**
+	 * Plugin activated method. Perform any activation tasks here.
+	 * Note that this _does not_ run during upgrades.
+	 *
+	 * @since 4.2.0
+	 */
+	public function activate() {
+		// stub
+	}
+
+
+	/**
+	 * Plugin deactivation method. Perform any deactivation tasks here.
+	 *
+	 * @since 4.2.0
+	 */
+	public function deactivate() {
 		// stub
 	}
 

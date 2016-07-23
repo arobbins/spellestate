@@ -130,24 +130,58 @@
         }
     }
 
+
     /* GET GO PRICING TABLES LIST
     ================================================== */
     if ( ! function_exists( 'sf_gopricing_list' ) ) {
         function sf_gopricing_list() {
 
-            if ( !is_admin() || !defined( 'GW_GO_PREFIX') ) {
+            if ( !is_admin() ) {
                 return;
             }
 
-            $pricing_tables = get_option( GW_GO_PREFIX . 'tables' );
-            $ptables_array  = array();
+            if( defined('GW_GO_PREFIX') ){
+            
+                $tables_data = get_option( GW_GO_PREFIX . 'tables' );
 
-            if ( ! empty( $pricing_tables ) ) {
-                foreach ( $pricing_tables as $pricing_table ) {
-                    $ptables_array[ $pricing_table['table-id'] ] = esc_attr( $pricing_table['table-name'] );
+                 if ( ! empty( $tables_data ) ) {
+                    foreach ( $tables_data as $pricing_table ) {
+                        $ptables_array[ $pricing_table['table-id'] ] = esc_attr( $pricing_table['table-name'] );
+                    }
                 }
-            }
 
+
+            } else{
+   
+                $args = array( 'post_type' => 'go_pricing_tables');  
+        
+                $posts_query = new WP_Query( $args );
+        
+                if ( empty( $posts_query->posts ) ) return;
+        
+                wp_reset_query();
+
+                $posts = $posts_query->posts;
+                foreach ( (array)$posts as $post ) {
+        
+                    $tables_data[$post->ID] = array(
+                        'postid' => $post->ID,
+                        'name' => $post->post_title, 
+                        'id' => $post->post_excerpt
+                    );
+            
+                }
+
+                $ptables_array  = array();
+       
+                if ( ! empty( $tables_data ) ) {
+                    foreach ( $tables_data as $pricing_table ) {           
+                        $ptables_array[ $pricing_table['id'] ] = esc_attr( $pricing_table['name'] );
+                    }
+                }
+
+            }   
+         
             return $ptables_array;
         }
     }
@@ -226,7 +260,7 @@
             while ( $spb_sections_query->have_posts() ) : $spb_sections_query->the_post();
                 $spb_sections_list[ get_the_title() ] = get_the_ID();
             endwhile;
-            wp_reset_query();
+            wp_reset_postdata();
 
             if ( empty( $spb_sections_list ) ) {
                 $spb_sections_list[] = "No SPB Templates found";
@@ -245,7 +279,7 @@
             while ( $galleries_query->have_posts() ) : $galleries_query->the_post();
                 $galleries_list[ get_the_title() ] = get_the_ID();
             endwhile;
-            wp_reset_query();
+            wp_reset_postdata();
 
             if ( empty( $galleries_list ) ) {
                 $galleries_list[] = "No galleries found";
@@ -1212,8 +1246,8 @@
                 'ui-1_zoom-split' => 'ui-1_zoom-split', 
                 'ui-1_zoom-split-in' => 'ui-1_zoom-split-in', 
                 'ui-1_zoom-split-out' => 'ui-1_zoom-split-out', 
-                'ui-2_alert-!' => 'ui-2_alert-!', 
-                'ui-2_alert-?' => 'ui-2_alert-?', 
+                'ui-2_alert-exclamation' => 'ui-2_alert-exclamation', 
+                'ui-2_alert-question' => 'ui-2_alert-question', 
                 'ui-2_alert-i' => 'ui-2_alert-i', 
                 'ui-2_archive' => 'ui-2_archive', 
                 'ui-2_chart-bar-53' => 'ui-2_chart-bar-53', 

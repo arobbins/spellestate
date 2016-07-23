@@ -22,6 +22,7 @@
 	# COUNT SHORTCODE
 	# COUNTDOWN SHORTCODE
 	# DIRECTORY SHORTCODE
+	# DIRECTORY USER LISTINGS SHORTCODE
 	# DIVIDER SHORTCODE
 	# FAQS SHORTCODE
 	# GALLERY SHORTCODE
@@ -41,6 +42,7 @@
 	# PORTFOLIO CAROUSEL SHORTCODE
 	# PORTFOLIO SHOWCASE SHORTCODE
 	# PRICING TABLE SHORTCODE
+	# PRODUCT REVIEWS SHORTCODE
 	# PROGRESS SHORTCODE
 	# PROMO BAR SHORTCODE
 	# RECENT POSTS SHORTCODE
@@ -204,8 +206,8 @@ html.noscroll {
 	position: relative;
 }
 .spb-row-container.remove-element-spacing, .spb-row-container.remove-element-spacing div[class*="col-sm"] {
-	padding-left: 0;
-	padding-right: 0;
+	padding-left: 0!important;
+	padding-right: 0!important;
 	margin-bottom: 0;
 }
 .spb-row-container.remove-element-spacing .row {
@@ -339,7 +341,7 @@ html.noscroll {
 .spb-row-container.col-window-height .spb-column-container .spb-asset-content > .container {
 	vertical-align: middle;
 	display: inline-block;
-	width: 99%;
+	width: 100%;
 }
 .spb-row-container.spb-row-full-width .spb-column-container .row {
 	margin-left: 0;
@@ -375,6 +377,12 @@ html.noscroll {
 }
 .spb-row-container[data-row-style="dark"] .owl-pagination .view-all {
 	color: #222;
+}
+@media only screen and (max-width: 767px) {
+	.spb-column-container.spb-col-custom-offset {
+		top: 0!important;
+		left: 0!important;
+	}
 }
 
 /* --------------------------------------------
@@ -1880,7 +1888,6 @@ html.noscroll {
   }
 }
 
-
 /* --------------------------------------------
 	BUTTON SHORTCODE
 -------------------------------------------- */
@@ -2888,8 +2895,12 @@ pre[class*="language-"] {
 	float: left;
 }
 .directory-item .directory-item-details {
-	width: 67%;
+	width: 100%;
 	float: left;
+	margin-left: 0;
+}
+.directory-item figure + .directory-item-details {
+	width: 67%;
 	margin-left: 3%;
 }
 .directory-item h3 {
@@ -2912,9 +2923,31 @@ pre[class*="language-"] {
 .single-directory .post-info .comments-likes {
 	margin-top: 0;
 }
+
+
+/* --------------------------------------------
+	DIRECTORY USER LISTINGS SHORTCODE
+-------------------------------------------- */
+
+.directory-submit-wrap {
+    overflow-y: scroll;
+    height: 100%; 
+}
+.directory-submit-wrap label {
+    font-weight: normal;
+}
+.directory-submit-wrap p {
+    margin-bottom: 10px;
+}
+.directory-submit-wrap textarea {
+	margin-bottom: 0;
+}
+.directory-submit-wrap select, .directory-submit-wrap input[type="file"] {
+	margin-bottom: 15px;
+}
 #add-directory-entry {
-	max-width: 80%;
-	margin: 0 auto 80px;
+	margin: 0 auto;
+	padding: 90px 30px 0;
 }
 .directory-error {
 	display: none;
@@ -2924,6 +2957,139 @@ pre[class*="language-"] {
 	border: 1px solid #E90A0A;
 	display: block;
 	color: #E90A0A;
+}
+.edit-listing, .delete-listing {
+    margin-left: 10px;
+    font-size: 12px;
+    line-height: 18px;
+    width: 70px;
+    text-align: center; 
+    height: auto;
+    padding: 7px 8px;
+    border: 2px solid #e4e4e4;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    text-transform: uppercase;
+    font-weight: bold;
+    display: inline-block;
+}
+.edit-listing {
+	margin-left: 0;
+}
+.cancel-listing-modal {
+    margin-right: 20px;
+}
+#spb_edit_listing {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    top: 0;
+    left: 0;
+    z-index: 9999;
+}
+.spb-modal-listing {
+    width: 800px;
+    position: fixed;
+    top: 25%;
+    left: 50%;
+    margin-top: -100px;
+    margin-left: -400px;
+    background-color: white;
+    z-index: 10002;
+    height: 640px;
+    display: none;
+    overflow: hidden;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+.edit_form_actions {
+    float: right;
+    margin-right: 30px;
+    margin-top: 0;
+    line-height: 30px;
+}
+.edit_form_actions > a {
+	line-height: 30px;
+}
+.edit_form_actions > a:last-child {
+	padding: 0 0 0 15px;
+	font-weight: bold;
+	color: #fe504f;
+	opacity: 0.8;
+}
+.edit_form_actions > a:last-child:hover {
+	opacity: 1;
+}
+#edit-modal-header {
+    background: #f7f7f7;
+    border-bottom: 1px solid #e4e4e4;
+    padding: 20px 0;
+    border-radius: 3px 3px 0 0;
+    height: auto;
+    overflow: hidden;
+    width: 100%;
+    position: absolute;
+    z-index: 3;
+    margin-bottom: 20px;
+}
+#edit-modal-header h2 {
+    float: left;
+    margin: 0 0 0 30px;
+    font-size: 24px;
+    line-height: 30px;
+}
+.modal-delete-listing {
+    position: fixed;
+    top: 10%;
+    left: 50%;
+    z-index: 1050;
+    width: 560px;
+    height: 300px;
+    margin-left: -280px;
+    background-color: #ffffff;
+    border: 1px solid #999;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    outline: none;
+    -webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+    -webkit-background-clip: padding-box;
+    -moz-background-clip: padding-box;
+    background-clip: padding-box;
+}
+.modal-delete-listing .fade {
+    opacity: 0;
+    -webkit-transition: opacity 0.15s linear;
+    -moz-transition: opacity 0.15s linear;
+    -o-transition: opacity 0.15s linear;
+    transition: opacity 0.15s linear;
+}
+#modal-from-dom {
+    left: 50%;
+    top: 30%;
+}
+#modal-from-dom .modal-footer {
+	position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 30px;
+}
+#modal-from-dom .modal-footer > a:first-child {
+	padding: 0 15px;
+	font-weight: bold;
+	color: #fe504f;
+	opacity: 0.8;
+}
+#modal-from-dom .modal-footer > a:first-child:hover {
+	opacity: 1;
 }
 
 
@@ -3116,6 +3282,31 @@ ul.faqs-section {
 	position: relative;
 	margin-left: -15px;
 	margin-right: -15px;
+}
+.spb_gallery_widget .gallery-nav {
+    margin-top: 30px;
+}
+.spb_gallery_widget .gallery-nav li {
+    margin-left: 30px;
+    width: 100px !important;
+    float: left;
+}
+.spb_gallery_widget .gallery-nav li:first-child {
+    margin-left: 0;
+}
+.spb_gallery_widget .gallery-nav li img {
+    display: block;
+    width: 100%;
+    height: auto;
+    opacity: .7;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -webkit-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+}
+.spb_gallery_widget .gallery-nav li.flex-active-slide img, .spb_gallery_widget .gallery-nav li img:hover {
+    opacity: 1;
 }
 .gallery-slider p.flex-caption {
 	position: absolute;
@@ -4477,6 +4668,9 @@ ul.jobs {
 	background-position: center center;
 	box-shadow: inset 0px 0px 20px rgba(0, 0, 0, 0.3);
 }
+.mobile-browser .spb_parallax_asset {
+	height: auto!important;
+}
 .spb_parallax_asset:not(.spb-column-container) {
 	width: 100%;
 	padding-left: 0;
@@ -4660,7 +4854,7 @@ ul.jobs {
 	position: absolute;
     width: 100%;
     bottom: -70px;
-    margin: 0!important;.l
+    margin: 0!important;
 }
 .spb_portfolio_showcase_widget .portfolio-showcase-wrap {
 	opacity: 0;
@@ -4846,6 +5040,35 @@ ul.jobs {
 
 
 /* --------------------------------------------
+	PRODUCT REVIEWS SHORTCODE
+-------------------------------------------- */
+
+.product-reviews .testimonial-text > a {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 2;
+	width: 100%;
+	height: 100%;
+}
+.product-reviews .product-details {
+	margin-bottom: 20px;
+}
+.product-reviews .product-details > img {
+	float: left;
+	width: 50px;
+	height: auto;
+	margin-right: 20px;
+}
+.product-reviews .product-details h4 {
+	margin: 0;
+}
+.product-reviews .testimonial-cite .cite-text.has-cite-image {
+	padding-top: 0;
+	line-height: 65px;
+}
+
+/* --------------------------------------------
 	PROGRESS SHORTCODE
 -------------------------------------------- */
 
@@ -4980,7 +5203,7 @@ ul.jobs {
 	position: absolute;
     width: 100%;
     bottom: -70px;
-    margin: 0!important;.l
+    margin: 0!important;
 }
 ul.recent-posts {
 	list-style: none;
@@ -5869,7 +6092,6 @@ figure a.team-gallery-mobile-link {
 	-webkit-filter: blur(20px);
 	-moz-filter: blur(20px);
 	filter: blur(20px);
-	filter:progid:DXImageTransform.Microsoft.Blur(PixelRadius='20');
 	opacity: 0.3;
 }
 .team-member-ajax-content {

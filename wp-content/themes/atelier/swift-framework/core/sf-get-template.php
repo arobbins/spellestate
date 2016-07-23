@@ -5,7 +5,7 @@
     *	Template Function
     *	------------------------------------------------
     *	Swift Framework v3.0
-    * 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+    * 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     *	sf_get_template()
     *	sf_get_header_layout()

@@ -31,7 +31,7 @@ var currentAsset = "";
             var attached_img_div = $button.next();
 
             var hidden_ids = attached_img_div.prev().prev(),
-                img_ul = attached_img_div.find( '.gallery_widget_attached_images_list' );
+                img_ul = attached_img_div.find( '.sf_gallery_widget_attached_images_list' );
 
             img_ul.html( html );
 
@@ -51,13 +51,13 @@ var currentAsset = "";
         },
         galleryImagesControls: function() {
 
-            $( document ).on( 'click', '.gallery_widget_add_images', function( e ) {
+            $( document ).on( 'click', '#spb .sf_gallery_widget_add_images', function( e ) {
 
                     e.preventDefault();
 
                     var file_frame = "",
                         parentField = $( this ).parent().find( '.attach_image' ),
-                        attachedImages = $( this ).parent().find( '.gallery_widget_attached_images_list' );
+                        attachedImages = $( this ).parent().find( '.sf_gallery_widget_attached_images_list' );
 
                     // If the media frame already exists, reopen it.
                     if ( file_frame ) {
@@ -75,7 +75,8 @@ var currentAsset = "";
                     });
 
                     // When an image is selected, run a callback.
-                    file_frame.on( 'select', function() {
+                    file_frame.on( 'select', function( ) {
+                      
                             // We set multiple to false so only get one image from the uploader
                             var attachment = file_frame.state().get( 'selection' ).first().toJSON();
 
@@ -86,10 +87,11 @@ var currentAsset = "";
                             jQuery('.sf-close-delete-file').click(function(e) {
                                 e.preventDefault();
                                 jQuery(this).parent().parent().remove();
-                                jQuery('.gallery_widget_attached_images_ids').val("");
+                                jQuery('.sf_gallery_widget_attached_images_ids').val("");
                                 return false;
 
                             });
+                            return false;
                         }
                     );
 
@@ -163,10 +165,49 @@ var currentAsset = "";
                         jQuery('.spb_edit_form_elements .custom-padding-right').val( el_horizontal_pad.val() );                    
                     }
                 }
-            }
+            }  
 
             if ( element.attr( "data-element_type" ) == 'spb_column' ) {
+                var el_horizontal_pad = element.find('.padding_horizontal').last();
+                var el_vertical_pad = element.find('.padding_vertical').last();
+                var max_value = 20;
                 jQuery( '#col_el_class' ).parent().parent().parent().hide();
+                jQuery('.col_sm').attr('disabled','disabled');
+                
+                setTimeout(function(){  
+
+                    jQuery( '#col_padding_val' ).parent().parent().parent().hide();    
+
+
+                    if ( parseInt( jQuery( '#col_padding_val' ).val() ) > 0 ){
+                    
+                        el_horizontal_pad.val( parseInt( jQuery( '#col_padding_val' ).val() ));
+                        el_vertical_pad.val( parseInt( jQuery( '#col_padding_val' ).val() ));
+
+                        jQuery( '#col_padding_val' ).val(0);
+                        jQuery( '#col_padding' ).val(0);
+                        jQuery( '#padding_horizontal' ).attr( 'max' , max_value );    
+                        jQuery( '#padding_horizontal_val' ).attr( 'max' , max_value );   
+                        jQuery( '#padding_vertical' ).attr( 'max' , max_value );    
+                        jQuery( '#padding_vertical_val' ).attr( 'max' , max_value );   
+                        jQuery( '#spb_edit_form .custom_css_percentage' ).attr('checked', 'checked');
+                        jQuery('.custom-padding-bottom').val( el_horizontal_pad.val() );          
+                        jQuery('.custom-padding-top').val( el_horizontal_pad.val() );  
+                        jQuery('.custom-padding-left').val( el_horizontal_pad.val() );              
+                        jQuery('.custom-padding-right').val( el_horizontal_pad.val() );  
+                        
+                    }
+
+                    
+                    jQuery('#col_padding').attr('disabled','disabled');
+                    jQuery('#padding_horizontal_val').attr('value',  el_horizontal_pad.val() );
+                    jQuery('#padding_horizontal').attr('value',   el_horizontal_pad.val() );
+                    jQuery('#padding_vertical_val').attr('value',  el_vertical_pad.val() );
+                    jQuery('#padding_vertical').attr('value',   el_vertical_pad.val() );
+
+                }, 100);
+
+                
             }
 
             if ( element.attr( "data-element_type" ) == 'spb_row' ) {
@@ -588,7 +629,7 @@ jQuery( document ).ready(
             jQuery( '#padding_vertical_val' ).val( element_value );  
             jQuery( '#padding_vertical' ).trigger( 'change' );
 
-            percentage_value = jQuery( '#padding_horizontal_val' ).val() / jQuery( '#padding_horizontal_val' ).attr( 'max' )*100;
+            percentage_value = jQuery( '#padding_horizontal' ).val() / jQuery( '#padding_horizontal_val' ).attr( 'max' )*100;
             element_value = max_value * percentage_value / 100;
 
             jQuery( '#padding_horizontal' ).attr('max', max_value );
@@ -710,7 +751,7 @@ jQuery( document ).ready(
             else if ( jQuery( this ).closest( '.spb_sortable' ).hasClass( 'spb_multilayer_parallax' ) ) {
                 el_name = 'Multilayer Parallax Layer';
                 tabs_nav.append( '<li class="ui-state-default ui-corner-top" role="tab" tabindex="-1" aria-controls="tab-' + tabs_count + '" aria-labelledby="ui-id-' + tabs_count + '" aria-selected="false" style="top: 0px;"><a href="#tab-' + tabs_count + '" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-' + tabs_count + '"><span>' + tab_title + ' ' + tabs_count + '</span></a></li>' );
-                tabs_asset.append( '<div class="row-fluid spb_column_container not-column-inherit not-sortable"><div data-element_type="spb_multilayer_parallax_layer" class="spb_multilayer_parallax_layer spb_content_element spb_sortable span12"><input type="hidden" class="spb_sc_base" name="element_name-spb_multilayer_parallax_layer" value="spb_multilayer_parallax_layer"><div class="controls sidebar-name"><div class="controls_right" style="display: block;"> <a class="column_edit" href="#" title="Edit"><span class="icon-edit"></span></a><a class="column_delete" href="#" title="Delete"><span class="icon-delete"></span></a></div></div><div class="spb_element_wrapper over_element_wrapper"><div class="spb_elem_controls" style="display: none;"><a class="column_delete" href="#" title="Delete"><span class="icon-delete"></span></a><a class="element-save" href="#" title="Save"><span class="icon-save"></span></a><a class="column_clone" href="#" title="Duplicate"><span class="icon-duplicate"></span></a><a class="column_edit" href="#" title="Edit"><span class="icon-edit"></span></a></div><div class="icon_holder"><span class="spb_multilayer_parallax_layer"></span></div><div class="el_name_holder" data_default_name="' + el_name + '">' + el_name + '</div><div class="el_name_editor"><input type="hidden" class="spb_param_value layer_title textfield " name="layer_title" value=""><input name="el_name_editor" id="el_name_editor" type="text" class="validate textfield" value="' + el_name + ' "><a class="el-name-save" href="#" title="Save"><span class="icon-save"></span></a></div><input type="hidden" class="spb_param_value general_tab section_tab " name="general_tab" value=""><input type="hidden" class="spb_param_value element_name textfield " name="element_name" value=""><input type="hidden" class="spb_param_value layer_title textfield " name="layer_title" value=""><input type="hidden" class="spb_param_value layer_image attach_image " name="layer_image" value=""><img width="66" height="66" src="' +   jQuery( this ).closest( '.spb_sortable' ).attr('data-content-url') +  '" class="attachment-thumbnail" alt="" title=""><a href="#" class="column_edit_trigger image-exists"><i class="spb-icon-single-image"></i>No image yet! Click here to select it now.</a><input type="hidden" class="spb_param_value layer_type dropdown " name="layer_type" value="original"><input type="hidden" class="spb_param_value layer_bg_pos dropdown " name="layer_bg_pos" value="center_center"><input type="hidden" class="spb_param_value layer_bg_repeat dropdown " name="layer_bg_repeat" value="no-repeat"><input type="hidden" class="spb_param_value layer_depth dropdown " name="layer_depth" value="0.00"><input type="hidden" class="spb_param_value section_misc_options section " name="section_misc_options" value=""><input type="hidden" class="spb_param_value text_layer buttonset " name="text_layer" value="yes"><input type="hidden" class="spb_param_value content textarea_html " name="content" value=""></div> <!-- end .spb_element_wrapper --></div> <!-- end #element-spb_multilayer_parallax_layer --></div></div>' );
+                tabs_asset.append( '<div class="row-fluid spb_column_container not-column-inherit not-sortable"><div data-element_type="spb_multilayer_parallax_layer" class="spb_multilayer_parallax_layer spb_content_element spb_sortable span12"><input type="hidden" class="spb_sc_base" name="element_name-spb_multilayer_parallax_layer" value="spb_multilayer_parallax_layer"><div class="controls sidebar-name"><div class="controls_right" style="display: block;"> <a class="column_edit" href="#" title="Edit"><span class="icon-edit"></span></a><a class="column_delete" href="#" title="Delete"><span class="icon-delete"></span></a></div></div><div class="spb_element_wrapper over_element_wrapper"><div class="spb_elem_controls" style="display: none;"><a class="column_delete" href="#" title="Delete"><span class="icon-delete"></span></a><a class="element-save" href="#" title="Save"><span class="icon-save"></span></a><a class="column_clone" href="#" title="Duplicate"><span class="icon-duplicate"></span></a><a class="column_edit" href="#" title="Edit"><span class="icon-edit"></span></a></div><div class="icon_holder"><span class="spb_multilayer_parallax_layer"></span></div><div class="el_name_holder" data_default_name="' + el_name + '">' + el_name + '</div><div class="el_name_editor"><input type="hidden" class="spb_param_value layer_title textfield " name="layer_title" value=""><input name="el_name_editor" id="el_name_editor" type="text" class="validate textfield" value="' + el_name + ' "><a class="el-name-save" href="#" title="Save"><span class="icon-save"></span></a></div><input type="hidden" class="spb_param_value general_tab section_tab " name="general_tab" value=""><input type="hidden" class="spb_param_value element_name textfield " name="element_name" value=""><input type="hidden" class="spb_param_value layer_title textfield " name="layer_title" value=""><input type="hidden" class="spb_param_value layer_image attach_image " name="layer_image" value=""><img width="66" height="66" src="' +   jQuery( this ).closest( '.spb_sortable' ).attr('data-content-url') +  '" class="attachment-thumbnail" alt="" title=""><a href="#" class="column_edit_trigger image-exists"><i class="spb-icon-single-image"></i>No image yet! Click here to select it now.</a><input type="hidden" class="spb_param_value layer_type dropdown " name="layer_type" value="original"><input type="hidden" class="spb_param_value layer_bg_pos dropdown " name="layer_bg_pos" value="center_center"><input type="hidden" class="spb_param_value layer_bg_repeat dropdown " name="layer_bg_repeat" value="no-repeat"><input type="hidden" class="spb_param_value layer_depth dropdown " name="layer_depth" value="0.00"><input type="hidden" class="spb_param_value section_misc_options section " name="section_misc_options" value=""><input type="hidden" class="spb_param_value text_layer buttonset " name="text_layer" value="no"><input type="hidden" class="spb_param_value content textarea_html " name="content" value=""></div> <!-- end .spb_element_wrapper --></div> <!-- end #element-spb_multilayer_parallax_layer --></div></div>' );
                 
             } else {
                 el_name ='Tab';
@@ -990,7 +1031,7 @@ jQuery( document ).ready(
         jQuery('.sf-close-delete-file').live('click', function(e) {
             e.preventDefault();
             jQuery(this).parent().parent().remove();
-            jQuery('.gallery_widget_attached_images_ids').val("");
+            jQuery('.sf_gallery_widget_attached_images_ids').val("");
 
             return false;
         });
@@ -2503,7 +2544,7 @@ function updateSelectedImagesOrderIds( img_ul ) {
 // function cloneSelectedImages( site_img_div, attached_img_div ) {
 //     var hidden_ids = jQuery( attached_img_div ).prev().prev(),
 //         ids_array = (hidden_ids.val().length > 0) ? hidden_ids.val().split( "," ) : [],
-//         img_ul = attached_img_div.find( '.gallery_widget_attached_images_list' );
+//         img_ul = attached_img_div.find( '.sf_gallery_widget_attached_images_list' );
 
 //     img_ul.html( '' );
 
@@ -2896,7 +2937,8 @@ function initDroppable() {
                     ui.placeholder.css( {maxWidth: ui.item.width()  } );
                 }
             },
-            update: function() {
+            stop: function() {
+                endInitDragging();
                 jQuery('.newrowbottom_sortable_element').remove();
                 jQuery( 'body' ).removeClass( 'startedDragging' );
                 jQuery.swift_page_builder.save_spb_html();
@@ -3089,6 +3131,7 @@ function initDroppable() {
               var el_step_size = 0;
               var check_column = ui.element.parent().parent().parent();
               var percentage = 0;
+              var col_width = 0;
               var offset_el = 0;
               var offset_step_el = 0;
               var percentage_step_el = 0;
@@ -3142,37 +3185,49 @@ function initDroppable() {
               if ( percentage >= 88 && percentage <= 100 ) {
                   percentage = '1/1 ';
                   percentageClass = 'span12';
+                  col_width = '12';
               }  
 
               if ( percentage >= 70 && percentage < 88 ) {
                   percentage = '3/4 ';
                   percentageClass = 'span9';
+                  col_width = '9';
               }
             
               if ( percentage >= 60 && percentage < 70 ) {
                   percentage = "2/3 ";
                   percentageClass = 'span8';
+                  col_width = '8';
               }
 
               if ( percentage >= 42 && percentage < 60 ) {
                   percentage = '1/2 ';
                   percentageClass = 'span6';
+                  col_width = '6';
               }
 
               if ( percentage >= 29 && percentage < 42 ) {
                   percentage = "1/3 ";
                   percentageClass = 'span4';
+                  col_width = '4';
               }
 
               if ( percentage >= 20 && percentage < 29 ) {
                   percentage = "1/4 ";
                   percentageClass = 'span3';
+                  col_width = '3';
               }
 
               if ( percentage < 20 ) {
                   percentage = "1/6 ";
                   percentageClass = 'span2';
+                  col_width = '2';
               }
+
+              if( ui.element.hasClass( 'spb_column') ){
+                  ui.element.find('.col_sm').attr('value', col_width);
+              }
+
 
               jQuery(ui.helper).append('<div  class="width-helper" style="font-size:25px;width:100%;height:100%;text-align:right;float:right;margin-right:30px;margin-top:20px;"> ' + percentage + ' Width </div>');
   
@@ -3184,11 +3239,17 @@ function initDroppable() {
         stop: function( event, ui ) {  
                jQuery( 'body' ).removeClass( 'startedDragging' );
 
-               if ( ui.element.hasClass('spb_text_block') ){
+
+               if ( ui.element.hasClass('spb_text_block')  ){
                 setTimeout(function(){  ui.element.css( 'height' ,  ui.element.find('.spb_element_wrapper').height() + 30); }, 50);
                   
-               }else{
-                   ui.element.css( 'height' , ui.originalSize.height );
+               }else if ( ui.element.hasClass('spb_column') ) {               
+                      setTimeout(function(){  ui.element.css( 'height' , '100%');}, 50);
+                  
+                }else{
+
+                    ui.element.css( 'height' , ui.originalSize.height );                  
+                  
                }
              
                var column = jQuery( this ).closest( ".spb_sortable" );
@@ -3201,7 +3262,6 @@ function initDroppable() {
                   ui.element.css({ width: '' });
                   save_spb_html();
                   column.removeClass( sizes[0] ).addClass( percentageClass );
-
                   save_spb_html();
                   jQuery( this ).dequeue();
 
@@ -3367,7 +3427,7 @@ function getElementMarkup( target, element, action ) {
 
                 //Move the Container Helper at the end to don't mess the spb_first and spb_last assignment 
                 if ( target.parent().hasClass('spb_tabs_holder') || target.parent().parent().parent().hasClass('spb_accordion_holder') ){
-                    jQuery( target ).find('.container-helper, .tabs_expanded_helper, .ui-resizable-handle').detach().appendTo( target );
+                    jQuery( target ).find('.container-helper, .tabs_expanded_helper, .ui-resizable-handle').last().detach().appendTo( target );
                 }
 
             }
@@ -4040,7 +4100,9 @@ function saveFormEditing( element ) {
             all_classes = all_classes_ar.join( " " ); // convert array to string
 
             //element.removeClass(all_classes).addClass(new_value); // remove all possible class names and add only selected one
-            element.find( '.spb_element_wrapper' ).removeClass( all_classes ).addClass( new_value ); // remove all possible class names and add only selected one
+            if( !element.hasClass('spb_gallery') ){
+                element.find( '.spb_element_wrapper' ).removeClass( all_classes ).addClass( new_value ); // remove all possible class names and add only selected one
+            }
             }
         }
         else if ( jQuery( this ).hasClass( "select-multiple" ) ) {

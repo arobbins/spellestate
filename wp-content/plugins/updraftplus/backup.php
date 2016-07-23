@@ -124,7 +124,7 @@ class UpdraftPlus_Backup {
 	}
 
 	public function report_remotestorage_extrainfo($service, $info_html, $info_plain) {
-		$this->remotestorage_extrainfo[$service] = $info_plain;
+		$this->remotestorage_extrainfo[$service] = array('pretty' => $info_html, 'plain' => $info_plain);
 	}
 
 	// Public, because called from the 'More Files' add-on
@@ -287,7 +287,6 @@ class UpdraftPlus_Backup {
 
 			$objname = "UpdraftPlus_BackupModule_${service}";
 			if (!class_exists($objname) && file_exists(UPDRAFTPLUS_DIR.'/methods/'.$service.'.php')) {
-
 				require_once(UPDRAFTPLUS_DIR.'/methods/'.$service.'.php');
 			}
 			if (class_exists($objname)) {
@@ -724,6 +723,8 @@ class UpdraftPlus_Backup {
 		$updraftplus->log("Retain: saving new backup history (sets now: ".count($backup_history).") and finishing retain operation");
 		UpdraftPlus_Options::update_updraft_option('updraft_backup_history', $backup_history, false);
 
+		do_action('updraftplus_prune_retained_backups_finished');
+		
 		$updraftplus->jobdata_set('prune', 'finished');
 
 	}
@@ -912,9 +913,12 @@ class UpdraftPlus_Backup {
 		}
 
 		foreach ($this->remotestorage_extrainfo as $service => $message) {
-			if (!empty($updraftplus->backup_methods[$service])) $extra_msg .= $updraftplus->backup_methods[$service].': '.$message."\r\n";
+			if (!empty($updraftplus->backup_methods[$service])) $extra_msg .= $updraftplus->backup_methods[$service].': '.$message['plain']."\r\n";
 		}
 
+		// Make it available to the filter
+		$jobdata['remotestorage_extrainfo'] = $this->remotestorage_extrainfo;
+		
 		$body = apply_filters('updraft_report_body',
 			__('Backup of:', 'updraftplus').' '.site_url()."\r\n".
 			"UpdraftPlus ".__('WordPress backup is complete','updraftplus').".\r\n".
@@ -1449,8 +1453,11 @@ class UpdraftPlus_Backup {
 						$updraftplus->log("Skipping table (filtered): $table");
 					} else {
 
+						$db_temp_file = $this->updraft_dir.'/'.$table_file_prefix.'.tmp.gz';
+						$updraftplus->check_recent_modification($db_temp_file);
+					
 						// Open file, store the handle
-						$opened = $this->backup_db_open($this->updraft_dir.'/'.$table_file_prefix.'.tmp.gz', true);
+						$opened = $this->backup_db_open($db_temp_file, true);
 						if (false === $opened) return false;
 
 						// Create the SQL statements
@@ -1472,7 +1479,7 @@ class UpdraftPlus_Backup {
 						if  ('wp' == $this->whichdb && (!empty($this->table_prefix) && strtolower($this->table_prefix.'sitemeta') == strtolower($table))) {
 							$where = 'meta_key NOT LIKE "updraft_jobdata_%"';
 						} elseif ('wp' == $this->whichdb && (!empty($this->table_prefix) && strtolower($this->table_prefix.'options') == strtolower($table))) {
-							$where = 'option_name NOT LIKE "updraft_jobdata_%"';
+							$where = 'option_name NOT LIKE "updraft_jobdata_%" AND option_name NOT LIKE "_site_transient_update_%"';
 						} else {
 							$where = '';
 						}
@@ -1491,7 +1498,7 @@ class UpdraftPlus_Backup {
 
 						$updraftplus->log("Table $table: finishing file (${table_file_prefix}.gz - ".round(filesize($this->updraft_dir.'/'.$table_file_prefix.'.tmp.gz')/1024,1)." KB)");
 
-						rename($this->updraft_dir.'/'.$table_file_prefix.'.tmp.gz', $this->updraft_dir.'/'.$table_file_prefix.'.gz');
+						rename($db_temp_file, $this->updraft_dir.'/'.$table_file_prefix.'.gz');
 						$updraftplus->something_useful_happened();
 						$stitch_files[] = $table_file_prefix;
 					}
@@ -1568,7 +1575,7 @@ class UpdraftPlus_Backup {
 			if ($sind % 100 == 0) $updraftplus->something_useful_happened();
 		}
 
-		if (defined("DB_CHARSET")) {
+		if (@constant("DB_CHARSET")) {
 			$this->stow("/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;\n/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;\n/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;\n");
 		}
 
@@ -1902,7 +1909,7 @@ class UpdraftPlus_Backup {
 		$this->stow("# Database: ".$updraftplus->backquote($this->dbinfo['name'])."\n");
 		$this->stow("# --------------------------------------------------------\n");
 
-		if (defined("DB_CHARSET")) {
+		if (@constant("DB_CHARSET")) {
 			$this->stow("/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;\n");
 			$this->stow("/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;\n");
 			$this->stow("/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;\n");
@@ -1932,6 +1939,12 @@ class UpdraftPlus_Backup {
 
 		global $updraftplus;
 
+		// Only BinZip supports symlinks. This means that as a consistent outcome, the only think that can be done with directory symlinks is either a) potentially duplicate the data or b) skip it. Whilst with internal WP entities (e.g. plugins) we definitely want the data, in the case of user-selected directories, we assume the user knew what they were doing when they chose the directory - i.e. we can skip symlink-accessed data that's outside.
+		if (is_link($fullpath) && is_dir($fullpath) && 'more' == $this->whichone) {
+			$updraftplus->log("Directory symlink encounted in more files backup: $use_path_when_storing -> ".readlink($fullpath).": skipping");
+			return true;
+		}
+		
 		// De-reference. Important to do to both, because on Windows only doing it to one can make them non-equal, where they were previously equal - something which we later rely upon
 		$fullpath = realpath($fullpath);
 		$original_fullpath = realpath($original_fullpath);
@@ -1981,7 +1994,9 @@ class UpdraftPlus_Backup {
 				$updraftplus->log("Skip directory (.donotbackup file found): $use_path_when_storing");
 				return true;
 			}
+
 			if (!isset($this->existing_files[$use_path_when_storing])) $this->zipfiles_dirbatched[] = $use_path_when_storing;
+			
 			if (!$dir_handle = @opendir($fullpath)) {
 				$updraftplus->log("Failed to open directory: $fullpath");
 				$updraftplus->log(sprintf(__("Failed to open directory (check the file permissions and ownership): %s",'updraftplus'), $fullpath), 'error');
@@ -1990,6 +2005,7 @@ class UpdraftPlus_Backup {
 
 			while (false !== ($e = readdir($dir_handle))) {
 				if ('.' == $e || '..' == $e) continue;
+
 				if (is_link($fullpath.'/'.$e)) {
 					$deref = realpath($fullpath.'/'.$e);
 					if (is_file($deref)) {
@@ -2017,6 +2033,10 @@ class UpdraftPlus_Backup {
 							$updraftplus->log(sprintf(__("%s: unreadable file - could not be backed up"), $deref), 'warning');
 						}
 					} elseif (is_dir($deref)) {
+					
+// 						$link_target = readlink($deref);
+// 						$updraftplus->log("Symbolic link $use_path_when_storing/$e -> $link_target");
+					
 						$this->makezip_recursive_add($deref, $use_path_when_storing.'/'.$e, $original_fullpath, $startlevels, $exclude);
 					}
 				} elseif (is_file($fullpath.'/'.$e)) {
@@ -2266,8 +2286,12 @@ class UpdraftPlus_Backup {
 
 		$this->makezip_if_altered_since = (is_array($this->altered_since)) ? (isset($this->altered_since[$whichone]) ? $this->altered_since[$whichone] : -1) : -1;
 
+		// Reset
+		$got_uploads_from_cache = false;
+		
 		// Uploads: can/should we get it back from the cache?
-		if ('uploads' == $whichone && function_exists('gzopen') && function_exists('gzread')) {
+		// || 'others' == $whichone
+		if (('uploads' == $whichone || 'others' == $whichone) && function_exists('gzopen') && function_exists('gzread')) {
 			$use_cache_files = false;
 			$cache_file_base = $this->zip_basename.'-cachelist-'.$this->makezip_if_altered_since;
 			// Cache file suffixes: -zfd.gz.tmp, -zfb.gz.tmp, -info.tmp, (possible)-zfs.gz.tmp
@@ -2339,7 +2363,11 @@ class UpdraftPlus_Backup {
 					$add_them = true;
 				}
 			} else {
-				$add_them = $this->makezip_recursive_add($element, $this->basename($element), $element, 1, $exclude);
+				if (empty($got_uploads_from_cache)) {
+					$add_them = $this->makezip_recursive_add($element, $this->basename($element), $element, 1, $exclude);
+				} else {
+					$add_them = true;
+				}
 			}
 			if (is_wp_error($add_them) || false === $add_them) $error_occurred = true;
 		}
@@ -2348,19 +2376,42 @@ class UpdraftPlus_Backup {
 
 		// Cache the file scan, if it looks like it'll be useful
 		// We use gzip to reduce the size as on hosts which limit disk I/O, the cacheing may make things worse
-		if ('uploads' == $whichone && !$error_occurred && function_exists('gzopen') && function_exists('gzwrite')) {
+		// 	|| 'others' == $whichone
+		if (('uploads' == $whichone|| 'others' == $whichone) && !$error_occurred && function_exists('gzopen') && function_exists('gzwrite')) {
 			$cache_file_base = $this->zip_basename.'-cachelist-'.$this->makezip_if_altered_since;
 
 			// Just approximate - we're trying to avoid an otherwise-unpredictable PHP fatal error. Cacheing only happens if file enumeration took a long time - so presumably there are very many.
 			$memory_needed_estimate = 0;
 			foreach ($this->zipfiles_batched as $k => $v) { $memory_needed_estimate += strlen($k)+strlen($v)+12; }
-			// Let us suppose we need 15% overhead for gzipping
-			$memory_needed_estimate = $memory_needed_estimate * 0.15;
 
 			// We haven't bothered to check if we just fetched the files from cache, as that shouldn't take a long time and so shouldn't trigger this
-			if ($time_counting_ended-$time_counting_began > 20 && $updraftplus->verify_free_memory($memory_needed_estimate) && $whandle = gzopen($cache_file_base.'-zfb.gz.tmp', 'w')) {
-				$updraftplus->log("File counting took a long time (".($time_counting_ended - $time_counting_began)."s); will attempt to cache results");
-				if (!gzwrite($whandle, serialize($this->zipfiles_batched))) {
+			// Let us suppose we need 15% overhead for gzipping
+			
+			$memory_limit = ini_get('memory_limit');
+			$memory_usage = round(@memory_get_usage(false)/1048576, 1);
+			$memory_usage2 = round(@memory_get_usage(true)/1048576, 1);
+			
+			if ($time_counting_ended-$time_counting_began > 20 && $updraftplus->verify_free_memory($memory_needed_estimate*0.15) && $whandle = gzopen($cache_file_base.'-zfb.gz.tmp', 'w')) {
+				$updraftplus->log("File counting took a long time (".($time_counting_ended - $time_counting_began)."s); will attempt to cache results (memory_limit: $memory_limit (used: ${memory_usage}M | ${memory_usage2}M), estimated uncompressed bytes: ".round($memory_needed_estimate/1024, 1)." Kb)");
+				
+				$buf = 'a:'.count($this->zipfiles_batched).':{';
+				foreach ($this->zipfiles_batched as $file => $add_as) {
+					$k = addslashes($file);
+					$v = addslashes($add_as);
+					$buf .= 's:'.strlen($k).':"'.$k.'";s:'.strlen($v).':"'.$v.'";';
+					if (strlen($buf) > 1048576) {
+						gzwrite($whandle, $buf, strlen($buf));
+						$buf = '';
+					}
+				}
+				$buf .= '}';
+				$final = gzwrite($whandle, $buf);
+				unset($buf);
+				
+// 				$serialised = serialize($this->zipfiles_batched);
+// 				$updraftplus->log("Actual uncompressed bytes: ".round(strlen($serialised)/1024, 1)." Kb");
+// 				if (!gzwrite($whandle, $serialised)) {
+				if (!$final) {
 					@unlink($cache_file_base.'-zfb.gz.tmp');
 					@gzclose($whandle);
 				} else {
@@ -2599,7 +2650,10 @@ class UpdraftPlus_Backup {
 
 			$fsize = filesize($file);
 
-			if ($fsize > UPDRAFTPLUS_WARN_FILE_SIZE) {
+			if (@constant('UPDRAFTPLUS_SKIP_FILE_OVER_SIZE') && $fsize > UPDRAFTPLUS_SKIP_FILE_OVER_SIZE) {
+				$updraftplus->log("File is larger than the user-configured (UPDRAFTPLUS_SKIP_FILE_OVER_SIZE) maximum (is: ".round($fsize/1024, 1)." KB); will skip: ".$add_as);
+				continue;
+			} elseif ($fsize > UPDRAFTPLUS_WARN_FILE_SIZE) {
 				$updraftplus->log(sprintf(__('A very large file was encountered: %s (size: %s Mb)', 'updraftplus'), $add_as, round($fsize/1048576, 1)), 'warning', 'vlargefile_'.md5($this->whichone.'#'.$add_as));
 			}
 

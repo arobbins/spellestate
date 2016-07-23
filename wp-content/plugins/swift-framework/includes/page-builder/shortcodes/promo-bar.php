@@ -23,7 +23,6 @@
                 'href'           => '',
                 'shadow'         => 'yes',
                 'promo_bar_text' => '',
-                'content' => '',
                 'promo_bar_text_size' => '',
                 'width'          => '1/1',
                 'bg_color'       => '',

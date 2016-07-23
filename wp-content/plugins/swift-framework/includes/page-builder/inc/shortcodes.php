@@ -203,11 +203,11 @@
 
             if ( strpos( $position, 'first' ) !== false ) {
                 if ( $fullwidth ) {
-                    $output = ( ! empty( $_GET['spb_debug'] ) && $_GET['spb_debug'] == 'true' ? "\n" . '<!-- START row -->' . "\n" : '' ) . '<section ' . $id . ' class="row fw-row ' . $el_class . '">';
+                    $output = ( ! empty( $_GET['spb_debug'] ) && $_GET['spb_debug'] == 'true' ? "\n" . '<!-- START row (1) -->' . "\n" : '' ) . '<section ' . $id . ' class="row fw-row ' . $el_class . '">';
                 } else if ( $sf_sidebar_config == "no-sidebars" ) {
-                    $output = ( ! empty( $_GET['spb_debug'] ) && $_GET['spb_debug'] == 'true' ? "\n" . '<!-- START row -->' . "\n" : '' ) . '<section ' . $id . ' class="container ' . $el_class . '"><div class="row">';
+                    $output = ( ! empty( $_GET['spb_debug'] ) && $_GET['spb_debug'] == 'true' ? "\n" . '<!-- START row (2) -->' . "\n" : '' ) . '<section ' . $id . ' class="container ' . $el_class . '"><div class="row">';
                 } else {
-                    $output = ( ! empty( $_GET['spb_debug'] ) && $_GET['spb_debug'] == 'true' ? "\n" . '<!-- START row -->' . "\n" : '' ) . '<section ' . $id . ' class="row ' . $el_class . '">';
+                    $output = ( ! empty( $_GET['spb_debug'] ) && $_GET['spb_debug'] == 'true' ? "\n" . '<!-- START row (3) -->' . "\n" : '' ) . '<section ' . $id . ' class="row ' . $el_class . '">';
                 }
             }
 
@@ -233,11 +233,11 @@
             $output = '';
             if ( strpos( $position, 'last' ) !== false ) {
                 if ( $fullwidth ) {
-                    $output = '</section>' . ( ! empty( $_GET['spb_debug'] ) && $_GET['spb_debug'] == 'true' ? "\n" . '<!-- END row --> ' . "\n" : '' . "\n" );
+                    $output = '</section>' . ( ! empty( $_GET['spb_debug'] ) && $_GET['spb_debug'] == 'true' ? "\n" . '<!-- END row (1) --> ' . "\n" : '' . "\n" );
                 } else if ( $sf_sidebar_config == "no-sidebars" ) {
-                    $output = '</div></section>' . ( ! empty( $_GET['spb_debug'] ) && $_GET['spb_debug'] == 'true' ? "\n" . '<!-- END row --> ' . "\n" : '' . "\n" );
+                    $output = '</div></section>' . ( ! empty( $_GET['spb_debug'] ) && $_GET['spb_debug'] == 'true' ? "\n" . '<!-- END row (2) --> ' . "\n" : '' . "\n" );
                 } else {
-                    $output = '</section>' . ( ! empty( $_GET['spb_debug'] ) && $_GET['spb_debug'] == 'true' ? "\n" . '<!-- END row --> ' . "\n" : '' . "\n" );
+                    $output = '</section>' . ( ! empty( $_GET['spb_debug'] ) && $_GET['spb_debug'] == 'true' ? "\n" . '<!-- END row (3) --> ' . "\n" : '' . "\n" );
                 }
             }
 
@@ -1070,24 +1070,24 @@
                 $param_value = __( $param_value, 'swift-framework-plugin' );
                 $param_line .= '<textarea name="' . $param['param_name'] . '" class="spb_param_value spb-textarea ' . $param['param_name'] . ' ' . $param['type'] . '">' . $param_value . '</textarea>';
             } // Attach images
-            else if ( $param['type'] == 'attach_images' ) {
+            else if ( $param['type'] == 'attach_images' ) {  
                 // TODO: More native way
                 $param_value = spb_removeNotExistingImgIDs( $param_value );
-                $param_line .= '<input type="hidden" class="spb_param_value gallery_widget_attached_images_ids ' . $param['param_name'] . ' ' . $param['type'] . '" name="' . $param['param_name'] . '" value="' . $param_value . '" />';
-                $param_line .= '<a class="button gallery_widget_add_images" href="#" title="' . __( 'Add images', 'swift-framework-plugin' ) . '">' . __( 'Add images', 'swift-framework-plugin' ) . '</a>';
-                $param_line .= '<div class="gallery_widget_attached_images">';
-                $param_line .= '<ul class="gallery_widget_attached_images_list">';
+                $param_line .= '<input type="hidden" class="spb_param_value sf_gallery_widget_attached_images_ids ' . $param['param_name'] . ' ' . $param['type'] . '" name="' . $param['param_name'] . '" value="' . $param_value . '" />';
+                $param_line .= '<a class="button sf_gallery_widget_add_images" href="#" title="' . __( 'Add images', 'swift-framework-plugin' ) . '">' . __( 'Add images', 'swift-framework-plugin' ) . '</a>';
+                $param_line .= '<div class="sf_galSFages">';
+                $param_line .= '<ul class="sf_gallery_widget_attached_images_list">';
                 $param_line .= ( $param_value != '' ) ? spb_fieldAttachedImages( explode( ",", $param_value ) ) : '';
                 $param_line .= '</ul>';
-                $param_line .= '</div>';
+                $param_line .= '</div>'; 
                 $param_line .= '<div class="spb_clear"></div>';
             } else if ( $param['type'] == 'attach_image' ) {
                 // TODO: More native way
                 $param_value = spb_removeNotExistingImgIDs( preg_replace( '/[^\d]/', '', $param_value ) );
-                $param_line .= '<input type="hidden" class="spb_param_value gallery_widget_attached_images_ids ' . $param['param_name'] . ' ' . $param['type'] . '" name="' . $param['param_name'] . '" value="' . $param_value . '" />';
-                $param_line .= '<a class="button gallery_widget_add_images" href="#" use-single="true" title="' . __( 'Add image', 'swift-framework-plugin' ) . '" data-uploader_title="' . __( 'Add image', 'swift-framework-plugin' ) . '">' . __( 'Add image', 'swift-framework-plugin' ) . '</a>';
-                $param_line .= '<div class="gallery_widget_attached_images">';
-                $param_line .= '<ul class="gallery_widget_attached_images_list">';
+                $param_line .= '<input type="hidden" class="spb_param_value sf_gallery_widget_attached_images_ids ' . $param['param_name'] . ' ' . $param['type'] . '" name="' . $param['param_name'] . '" value="' . $param_value . '" />';
+                $param_line .= '<a class="button sf_gallery_widget_add_images" href="#" use-single="true" title="' . __( 'Add image', 'swift-framework-plugin' ) . '" data-uploader_title="' . __( 'Add image', 'swift-framework-plugin' ) . '">' . __( 'Add image', 'swift-framework-plugin' ) . '</a>';
+                $param_line .= '<div class="sf_gallery_widget_attached_images">';
+                $param_line .= '<ul class="sf_gallery_widget_attached_images_list">';
                 $param_line .= ( $param_value != '' ) ? spb_fieldAttachedImages( explode( ",", $param_value ) ) : '';
                 $param_line .= '</ul>';
                 $param_line .= '</div>';

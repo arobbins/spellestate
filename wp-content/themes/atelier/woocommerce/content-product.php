@@ -6,7 +6,7 @@
 	 *
 	 * @author 		WooThemes
 	 * @package 	WooCommerce/Templates
-	 * @version     2.5.0
+	 * @version     2.6.1
 	 */
 
 	if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -231,7 +231,8 @@
 				echo '<div class="variable-image-wrapper is-variable">';
 				$img_count = 0;			
 				$available_variations = $product->get_available_variations();
-				if ($available_variations) {
+				if ($available_variations && is_array($available_variations) ) {
+					$available_variations = array_reverse($available_variations);
 					foreach ( $available_variations as $variation ) {
 						if ( $variation['variation_is_visible'] ) {
 							

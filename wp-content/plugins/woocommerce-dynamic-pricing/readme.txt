@@ -3,7 +3,7 @@ Contributors: lcuasstark
 Donate link: http://lucasstark.com/donate
 Tags: woocommerce, price
 Requires at least: 3.0
-Tested up to: 3.3
+Tested up to: 4.5.3
 
 WooCommerce Dynamic Pricing
 

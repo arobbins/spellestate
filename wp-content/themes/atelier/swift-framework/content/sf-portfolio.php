@@ -5,7 +5,7 @@
     *	Swift Page Builder - Portfolio Items Function Class
     *	------------------------------------------------
     *	Swift Framework
-    * 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+    * 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     *	sf_portfolio_items()
     *	sf_portfolio_filter()
@@ -665,15 +665,26 @@
             $thumb_lightbox_video_url = sf_get_post_meta( $post->ID, 'sf_thumbnail_link_video_url', true );
             $thumb_lightbox_video_url = sf_get_embed_src( $thumb_lightbox_video_url );
             $permalink                = get_permalink();
+            $thumb_img_id = 0;
 
             foreach ( $thumb_image as $detail_image ) {
+            	$thumb_img_id = $detail_image['ID'];
                 $thumb_img_url = $detail_image['url'];
                 break;
             }
 
             if ( ! $thumb_image ) {
                 $thumb_image   = get_post_thumbnail_id();
+                $thumb_img_id  = $thumb_image;
                 $thumb_img_url = wp_get_attachment_url( $thumb_image, 'full' );
+            }
+            
+            $image_meta = sf_get_attachment_meta( $thumb_img_id );
+            
+            if ( isset($image_meta) ) {
+            	$image_caption 		= esc_attr( $image_meta['caption'] );
+            	$image_title 		= esc_attr( $image_meta['title'] );
+            	$image_alt 			= esc_attr( $image_meta['alt'] );
             }
 
 
@@ -687,17 +698,25 @@
                 $item_svg_icon   = apply_filters( 'sf_port_url_svg_icon', "" );
             } else if ( $thumb_link_type == "lightbox_thumb" ) {
                 if ( $thumb_img_url != "" ) {
-                    $link_config = 'href="' . $thumb_img_url . '" class="lightbox" data-rel="ilightbox[portfolio]"';                    
+                    $link_config = 'href="' . $thumb_img_url . '" class="lightbox" data-rel="ilightbox[portfolio]" data-caption="'.$image_caption.'"';                    
                 }
                 $item_icon   = apply_filters( 'sf_port_lightbox_icon', "ss-view" );
                 $item_svg_icon   = apply_filters( 'sf_port_lightbox_svg_icon', "" );
             } else if ( $thumb_link_type == "lightbox_image" ) {
                 $lightbox_image_url = '';
                 foreach ( $thumb_lightbox_image as $image ) {
+                	$thumb_img_id = $image['ID'];
                     $lightbox_image_url = $image['full_url'];
                 }
+                $image_meta = sf_get_attachment_meta( $thumb_img_id );
+                
+                if ( isset($image_meta) ) {
+                	$image_caption 		= esc_attr( $image_meta['caption'] );
+                	$image_title 		= esc_attr( $image_meta['title'] );
+                	$image_alt 			= esc_attr( $image_meta['alt'] );
+                }
                 if ( $lightbox_image_url != "" ) {
-                    $link_config = 'href="' . $lightbox_image_url . '" class="lightbox" data-rel="ilightbox[portfolio]"';
+                    $link_config = 'href="' . $lightbox_image_url . '" class="lightbox" data-rel="ilightbox[portfolio]" data-caption="'.$image_caption.'"';
                 }
                 $item_icon   = apply_filters( 'sf_port_lightbox_icon', "ss-view" );
                 $item_svg_icon   = apply_filters( 'sf_port_lightbox_svg_icon', "" );

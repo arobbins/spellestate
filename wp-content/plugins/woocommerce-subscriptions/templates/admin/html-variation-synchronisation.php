@@ -15,7 +15,7 @@ global $wp_locale;
 ?>
 <div class="variable_subscription_sync show_if_variable-subscription variable_subscription_pricing_2_3">
 	<div class="form-row form-row-full">
-		<div class="subscription_sync_week_month"<?php echo esc_attr( $display_week_month_select ); ?>>
+		<div class="subscription_sync_week_month" style="<?php echo esc_attr( $display_week_month_select ); ?>">
 			<label for="variable_subscription_payment_sync_date[<?php echo esc_attr( $loop ); ?>]">
 				<?php echo esc_html( WC_Subscriptions_Synchroniser::$sync_field_label ); ?>: <a class="tips" data-tip="<?php echo esc_attr( WC_Subscriptions_Synchroniser::$sync_description ); ?>" href="#">[?]</a>
 			</label>
@@ -25,7 +25,7 @@ global $wp_locale;
 			<?php endforeach; ?>
 			</select>
 		</div>
-		<div class="subscription_sync_annual"<?php echo esc_attr( $display_annual_select ); ?>>
+		<div class="subscription_sync_annual" style="<?php echo esc_attr( $display_annual_select ); ?>">
 			<label for="variable_subscription_payment_sync_date_day[<?php esc_attr( $loop ); ?>]">
 				<?php echo esc_html( WC_Subscriptions_Synchroniser::$sync_field_label ); ?>: <a class="tips" data-tip="<?php echo esc_attr( WC_Subscriptions_Synchroniser::$sync_description_year ); ?>" href="#">[?]</a>
 			</label>

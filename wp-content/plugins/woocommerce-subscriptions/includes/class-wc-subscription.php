@@ -980,7 +980,7 @@ class WC_Subscription extends WC_Order {
 		} else {
 
 			// The next payment date is {interval} billing periods from the start date, trial end date or last payment date
-			if ( 0 !== $next_payment_time && $next_payment_time < gmdate( 'U' ) && 1 <= $this->get_completed_payment_count() ) {
+			if ( 0 !== $next_payment_time && $next_payment_time < gmdate( 'U' ) && ( ( 0 !== $trial_end_time && 1 >= $this->get_completed_payment_count() ) || WC_Subscriptions_Synchroniser::subscription_contains_synced_product( $this ) ) ) {
 				$from_timestamp = $next_payment_time;
 			} elseif ( $last_payment_time > $start_time && apply_filters( 'wcs_calculate_next_payment_from_last_payment', true, $this ) ) {
 				$from_timestamp = $last_payment_time;
@@ -1072,7 +1072,9 @@ class WC_Subscription extends WC_Order {
 			return '';
 		}
 
-		if ( 'excl' == $tax_display ) {
+		if ( $this->is_one_payment() ) {
+			$subtotal = parent::get_formatted_line_subtotal( $item, $tax_display );
+		} else if ( 'excl' == $tax_display ) {
 			$display_ex_tax_label = $this->prices_include_tax ? 1 : 0;
 			$subtotal = wcs_price_string( $this->get_price_string_details( $this->get_line_subtotal( $item ) ), $display_ex_tax_label );
 		} else {
@@ -1090,7 +1092,7 @@ class WC_Subscription extends WC_Order {
 	 * @return string
 	 */
 	public function get_formatted_order_total( $tax_display = '', $display_refunded = true ) {
-		if ( $this->get_total() > 0 && ! empty( $this->billing_period ) ) {
+		if ( $this->get_total() > 0 && ! empty( $this->billing_period ) && ! $this->is_one_payment() ) {
 			$formatted_order_total = wcs_price_string( $this->get_price_string_details( $this->get_total() ) );
 		} else {
 			$formatted_order_total = parent::get_formatted_order_total();
@@ -1172,7 +1174,7 @@ class WC_Subscription extends WC_Order {
 	 *
 	 * This is protected because it should not be used directly by outside methods. If you need
 	 * to display the price of a subscription, use the @see $this->get_formatted_order_total(),
-	 * @see $this->get_subtotal_to_display() or @see $this->get_formatted_line_subtotal() method.If
+	 * @see $this->get_subtotal_to_display() or @see $this->get_formatted_line_subtotal() method.
 	 * If you want to customise which aspects of a price string are displayed for all subscriptions,
 	 * use the filter 'woocommerce_subscription_price_string_details'.
 	 *
@@ -1246,7 +1248,7 @@ class WC_Subscription extends WC_Order {
 	public function payment_complete( $transaction_id = '' ) {
 
 		// Make sure the last order's status is updated
-		$last_order = $this->get_last_order( 'all' );
+		$last_order = $this->get_last_order( 'all', 'any' );
 
 		if ( false !== $last_order && $last_order->needs_payment() ) {
 			$last_order->payment_complete( $transaction_id );
@@ -1271,7 +1273,7 @@ class WC_Subscription extends WC_Order {
 
 		do_action( 'woocommerce_subscription_payment_complete', $this );
 
-		if ( $this->get_completed_payment_count() > 1 ) {
+		if ( false !== $last_order && wcs_order_contains_renewal( $last_order ) ) {
 			do_action( 'woocommerce_subscription_renewal_payment_complete', $this );
 		}
 	}
@@ -1284,7 +1286,7 @@ class WC_Subscription extends WC_Order {
 	public function payment_failed( $new_status = 'on-hold' ) {
 
 		// Make sure the last order's status is set to failed
-		$last_order = $this->get_last_order( 'all' );
+		$last_order = $this->get_last_order( 'all', 'any' );
 
 		if ( false !== $last_order && false === $last_order->has_status( 'failed' ) ) {
 			remove_filter( 'woocommerce_order_status_changed', 'WC_Subscriptions_Renewal_Order::maybe_record_subscription_payment' );
@@ -1304,7 +1306,7 @@ class WC_Subscription extends WC_Order {
 
 		do_action( 'woocommerce_subscription_payment_failed', $this, $new_status );
 
-		if ( $this->get_completed_payment_count() > 1 ) {
+		if ( false !== $last_order && wcs_order_contains_renewal( $last_order ) ) {
 			do_action( 'woocommerce_subscription_renewal_payment_failed', $this );
 		}
 	}
@@ -1439,32 +1441,44 @@ class WC_Subscription extends WC_Order {
 	 * Gets the most recent order that relates to a subscription, including renewal orders and the initial order (if any).
 	 *
 	 * @param string $return_fields The columns to return, either 'all' or 'ids'
+	 * @param array $order_types Can include any combination of 'parent', 'renewal', 'switch' or 'any' which will return the latest renewal order of any type. Defaults to 'parent' and 'renewal'.
 	 * @since 2.0
 	 */
-	public function get_last_order( $return_fields = 'ids' ) {
+	public function get_last_order( $return_fields = 'ids', $order_types = array( 'parent', 'renewal' ) ) {
 
-		$return_fields = ( 'ids' == $return_fields ) ? $return_fields : 'all';
+		$return_fields  = ( 'ids' == $return_fields ) ? $return_fields : 'all';
+		$order_types    = ( 'any' == $order_types ) ? array( 'parent', 'renewal', 'switch' ) : $order_types;
+		$related_orders = array();
 
-		$last_order = false;
-
-		$renewal_post_ids = WC_Subscriptions::$cache->cache_and_get( 'wcs-related-orders-to-' . $this->id, array( $this, 'get_related_orders_query' ), array( $this->id ) );
-
-		// If there are no renewal orders, get the original order (if there is one)
-		if ( empty( $renewal_post_ids ) ) {
-
-			if ( false !== $this->order ) {
-				if ( 'all' == $return_fields ) {
-					$last_order = $this->order;
-				} else {
-					$last_order = $this->order->id;
-				}
+		foreach ( $order_types as $order_type ) {
+			switch ( $order_type ) {
+				case 'parent':
+					if ( false !== $this->order ) {
+						$related_orders[] = $this->order->id;
+					}
+					break;
+				case 'renewal':
+					$related_orders = array_merge( $related_orders, WC_Subscriptions::$cache->cache_and_get( 'wcs-related-orders-to-' . $this->id, array( $this, 'get_related_orders_query' ), array( $this->id ) ) );
+					break;
+				case 'switch':
+					$related_orders = array_merge( $related_orders, array_keys( wcs_get_switch_orders_for_subscription( $this->id ) ) );
+					break;
+				default:
+					break;
 			}
-		} else {
+		}
 
-			$last_order = array_shift( $renewal_post_ids );
+		if ( empty( $related_orders ) ) {
+			$last_order = false;
+		} else {
+			$last_order = max( $related_orders );
 
 			if ( 'all' == $return_fields ) {
-				$last_order = wc_get_order( $last_order );
+				if ( false !== $this->order && $last_order == $this->order->id ) {
+					$last_order = $this->order;
+				} else {
+					$last_order = wc_get_order( $last_order );
+				}
 			}
 		}
 
@@ -1504,7 +1518,7 @@ class WC_Subscription extends WC_Order {
 	 * @param WC_Payment_Gateway|empty $payment_method
 	 * @param array $payment_meta Associated array of the form: $database_table => array( value, )
 	 */
-	public function set_payment_method( $payment_gateway, $payment_meta = array() ) {
+	public function set_payment_method( $payment_gateway = '', $payment_meta = array() ) {
 
 		if ( ! empty( $payment_meta ) && isset( $payment_gateway->id ) ) {
 			$this->set_payment_method_meta( $payment_gateway->id, $payment_meta );
@@ -1716,5 +1730,43 @@ class WC_Subscription extends WC_Order {
 		}
 
 		return apply_filters( 'woocommerce_get_item_downloads', $files, $item, $this );
+	}
+
+	/**
+	 *  Determine if the subscription is for one payment only.
+	 *
+	 * @return bool whether the subscription is for only one payment
+	 * @since 2.0.17
+	 */
+	public function is_one_payment() {
+
+		$is_one_payment = false;
+
+		if ( 0 != ( $end_time = $this->get_time( 'end' ) ) ) {
+
+			$from_timestamp = $this->get_time( 'start' );
+
+			if ( 0 != $this->get_time( 'trial_end' ) || WC_Subscriptions_Synchroniser::subscription_contains_synced_product( $this ) ) {
+
+				$subscription_order_count = count( $this->get_related_orders() );
+
+				// when we have a sync'd subscription before its 1st payment, we need to base the calculations for the next payment on the first/next payment timestamp.
+				if ( $subscription_order_count < 2 && 0 != ( $next_payment_timestamp = $this->get_time( 'next_payment' ) )  ) {
+					$from_timestamp = $next_payment_timestamp;
+
+				// when we have a sync'd subscription after its 1st payment, we need to base the calculations for the next payment on the last payment timestamp.
+				} else if ( ! ( $subscription_order_count > 2 ) && 0 != ( $last_payment_timestamp = $this->get_time( 'last_payment' ) ) ) {
+					$from_timestamp = $last_payment_timestamp;
+				}
+			}
+
+			$next_payment_timestamp = wcs_add_time( $this->billing_interval, $this->billing_period, $from_timestamp );
+
+			if ( ( $next_payment_timestamp + DAY_IN_SECONDS - 1 ) > $end_time ) {
+				$is_one_payment = true;
+			}
+		}
+
+		return apply_filters( 'woocommerce_subscription_is_one_payment', $is_one_payment, $this );
 	}
 }

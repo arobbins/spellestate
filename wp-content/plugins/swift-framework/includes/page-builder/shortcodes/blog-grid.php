@@ -19,8 +19,7 @@
                 'title'            => '',
                 'fullwidth'        => 'yes',
                 "item_count"       => '5',
-                "instagram_id"     => '',
-                "instagram_token"  => '',
+                "instagram"     => '',
                 "twitter_username" => '',
                 'el_position'      => '',
                 'width'            => '1/1',
@@ -69,7 +68,7 @@
                 $tweet_count     = 0;
                 $instagram_count = $item_count;
             }
-            if ( $instagram_id == "" || $instagram_token == "" ) {
+            if ( $instagram != "yes" ) {
                 $instagram_count = 0;
                 $tweet_count     = $item_count;
             }
@@ -91,6 +90,9 @@
 
             /* INSTAGRAMS
             ================================================== */
+            $instagram_token = get_option('sf_instagram_access_token');
+            $instagram_id = get_option('sf_instagram_user_id');
+
             if ( $instagram_id != "" && $instagram_token != "" ) {
                 $items_output .= '<ul class="blog-instagrams" data-title="' . __( "Instagram", 'swift-framework-plugin' ) . '" data-count="' . $instagram_count . '" data-userid="' . $instagram_id . '" data-token="' . $instagram_token . '" data-itemclass="'.$item_class.'"></ul>';
             }
@@ -159,18 +161,15 @@
                 "description" => __( "Enter your twitter username here to include tweets in the blog grid. Ensure you have the Twitter oAuth plugin installed and your details added.", 'swift-framework-plugin' )
             ),
             array(
-                "type"        => "textfield",
-                "heading"     => __( "Instagram ID", 'swift-framework-plugin' ),
-                "param_name"  => "instagram_id",
-                "value"       => "",
-                "description" => __( "Enter your Instagram ID here to include your instagrams in the blog grid. You can find your instagram ID here - <a href='http://jelled.com/instagram/lookup-user-id' target='_blank'>http://jelled.com/instagram/lookup-user-id</a> You will also need to enter your token below.", 'swift-framework-plugin' )
-            ),
-            array(
-                "type"        => "textfield",
-                "heading"     => __( "Instagram Token", 'swift-framework-plugin' ),
-                "param_name"  => "instagram_token",
-                "value"       => "",
-                "description" => __( "Enter your Instagram Token here to include your instagrams in the blog grid. You can generate your instagram access token here - <a href='http://www.pinceladasdaweb.com.br/instagram/access-token/' target='_blank'>http://www.pinceladasdaweb.com.br/instagram/access-token/</a>. NOTE: This is REQUIRED.", 'swift-framework-plugin' )
+                "type"        => "buttonset",
+                "heading"     => __( "Include Instagram", 'swift-framework-plugin' ),
+                "param_name"  => "instagram",
+                "value"       => array(
+                    __( 'Yes', 'swift-framework-plugin' ) => "yes",
+                    __( 'No', 'swift-framework-plugin' )  => "no"
+                ),
+                "buttonset_on"  => "yes",
+                "description" => __( "Select yes if you'd like to include instagram photos within the blog grid. If you haven't already, you'll need to set up your Instagram account in Swift Framework > Instagram Auth.", 'swift-framework-plugin' )
             ),
             array(
                 "type"        => "buttonset",

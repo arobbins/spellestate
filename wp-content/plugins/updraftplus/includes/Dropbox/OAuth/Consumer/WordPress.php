@@ -58,13 +58,13 @@ class Dropbox_ConsumerWordPress extends Dropbox_ConsumerAbstract
         // If the response body is not a JSON encoded string
         // we'll return the entire response body
         // Important to do this first, as the next section relies on the decoding having taken place
-        if (!$body = json_decode($response['body'])) {
-            $body = $response['body'];
+        if (!$body = json_decode(wp_remote_retrieve_body($response))) {
+            $body = wp_remote_retrieve_body($response);
         }
 
         // Check if an error occurred and throw an Exception. This is part of the authentication process - don't modify.
         if (!empty($body->error)) {
-            $message = $body->error . ' (Status Code: ' . $response['code'] . ')';
+            $message = $body->error . ' (Status Code: ' . wp_remote_retrieve_response_code($response) . ')';
             throw new Dropbox_Exception($message);
         }
         
@@ -73,7 +73,7 @@ class Dropbox_ConsumerWordPress extends Dropbox_ConsumerAbstract
             throw new Dropbox_Exception($message);
         }
         
-        $results = array ( 'body' => $body, 'code' => $response['response']['code'], 'headers' => $response['headers'] );
+        $results = array ( 'body' => $body, 'code' => wp_remote_retrieve_response_code($response), 'headers' => $response['headers'] );
         return $results;
     }
     

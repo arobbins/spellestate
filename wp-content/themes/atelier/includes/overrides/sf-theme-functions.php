@@ -5,7 +5,7 @@
 	*	Swift Framework Theme Functions
 	*	------------------------------------------------
 	*	Swift Framework v3.0
-	* 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+	* 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
 	*
 	*	sf_run_migration()
 	*	sf_theme_opts_name()
@@ -220,7 +220,7 @@
 
 			global $wp_admin_bar;
 
-			if ( current_user_can( 'manage_options' ) ) {
+			if ( current_user_can( 'manage_options' ) && is_admin() ) {
 
 				$theme_customizer = array(
 					'id' => '1',

@@ -5,7 +5,7 @@
     *	Custom Portfolio Widget
     *	------------------------------------------------
     *	Swift Framework
-    * 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+    * 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     */
 
@@ -90,7 +90,9 @@
                         <?php } ?>
 
                         <?php $count ++;
-                        wp_reset_query(); endwhile; ?>
+                        	endwhile;
+                        	wp_reset_postdata();
+                        ?>
                 </ul>
 
             <?php endif; ?>

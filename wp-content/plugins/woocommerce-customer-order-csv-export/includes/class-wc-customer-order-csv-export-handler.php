@@ -18,11 +18,11 @@
  *
  * @package     WC-Customer-Order-CSV-Export/Handler
  * @author      SkyVerge
- * @copyright   Copyright (c) 2012-2015, SkyVerge, Inc.
+ * @copyright   Copyright (c) 2012-2016, SkyVerge, Inc.
  * @license     http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+defined( 'ABSPATH' ) or exit;
 
 /**
  * Customer/Order CSV Export Handler
@@ -175,7 +175,7 @@ class WC_Customer_Order_CSV_Export_Handler {
 
 			if ( ! is_object( $export ) ) {
 
-				throw new Exception( sprintf( __( 'Invalid Export Method: %s', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ), $method ) );
+				throw new Exception( sprintf( __( 'Invalid Export Method: %s', 'woocommerce-customer-order-csv-export' ), $method ) );
 			}
 
 			if ( 'orders' == $this->export_type ) {
@@ -214,20 +214,20 @@ class WC_Customer_Order_CSV_Export_Handler {
 
 			if ( ! is_object( $export ) ) {
 
-				throw new Exception( sprintf( __( 'Invalid Export Method: %s', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ), $method ) );
+				throw new Exception( sprintf( __( 'Invalid Export Method: %s', 'woocommerce-customer-order-csv-export' ), $method ) );
 			}
 
 			// simple test CSV
 			$export->perform_action( 'test.csv',"column_1,column_2,column_3\ntest_1,test_2,test_3" );
 
-			return __( 'Test was successful!', WC_Customer_Order_CSV_Export::TEXT_DOMAIN );
+			return __( 'Test was successful!', 'woocommerce-customer-order-csv-export' );
 
 		} catch ( Exception $e ) {
 
 			// log errors
 			wc_customer_order_csv_export()->log( $e->getMessage() );
 
-			return sprintf( __( 'Test failed: %s', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ), $e->getMessage() );
+			return sprintf( __( 'Test failed: %s', 'woocommerce-customer-order-csv-export' ), $e->getMessage() );
 		}
 	}
 
@@ -245,8 +245,7 @@ class WC_Customer_Order_CSV_Export_Handler {
 		switch ( $method ) {
 
 			case 'download':
-				require_once( wc_customer_order_csv_export()->get_plugin_path() . '/includes/export-methods/class-wc-customer-order-csv-export-method-download.php' );
-				return new WC_Customer_Order_CSV_Export_Method_Download();
+				return wc_customer_order_csv_export()->load_class( '/includes/export-methods/class-wc-customer-order-csv-export-method-download.php', 'WC_Customer_Order_CSV_Export_Method_Download' );
 
 			case 'ftp':
 				// abstract FTP class
@@ -258,29 +257,24 @@ class WC_Customer_Order_CSV_Export_Handler {
 
 					// FTP over SSH
 					case 'sftp' :
-						require_once( wc_customer_order_csv_export()->get_plugin_path() . '/includes/export-methods/ftp/class-wc-customer-order-csv-export-method-sftp.php' );
-						return new WC_Customer_Order_CSV_Export_Method_SFTP();
+						return wc_customer_order_csv_export()->load_class( '/includes/export-methods/ftp/class-wc-customer-order-csv-export-method-sftp.php', 'WC_Customer_Order_CSV_Export_Method_SFTP' );
 
 					// FTP with Implicit SSL
 					case 'ftp_ssl' :
-						require_once( wc_customer_order_csv_export()->get_plugin_path() . '/includes/export-methods/ftp/class-wc-customer-order-csv-export-method-ftp-implicit-ssl.php' );
-						return new WC_Customer_Order_CSV_Export_Method_FTP_Implicit_SSL();
+						return wc_customer_order_csv_export()->load_class( '/includes/export-methods/ftp/class-wc-customer-order-csv-export-method-ftp-implicit-ssl.php', 'WC_Customer_Order_CSV_Export_Method_FTP_Implicit_SSL' );
 
 					// FTP with explicit SSL/TLS *or* regular FTP
 					case 'ftps' :
 					case 'none' :
-						require_once( wc_customer_order_csv_export()->get_plugin_path() . '/includes/export-methods/ftp/class-wc-customer-order-csv-export-method-ftp.php' );
-						return new WC_Customer_Order_CSV_Export_Method_FTP();
+						return wc_customer_order_csv_export()->load_class( '/includes/export-methods/ftp/class-wc-customer-order-csv-export-method-ftp.php', 'WC_Customer_Order_CSV_Export_Method_FTP' );
 				}
 				break;
 
 			case 'http_post':
-				require_once( wc_customer_order_csv_export()->get_plugin_path() . '/includes/export-methods/class-wc-customer-order-csv-export-method-http-post.php' );
-				return new WC_Customer_Order_CSV_Export_Method_HTTP_POST();
+				return wc_customer_order_csv_export()->load_class( '/includes/export-methods/class-wc-customer-order-csv-export-method-http-post.php', 'WC_Customer_Order_CSV_Export_Method_HTTP_POST' );
 
 			case 'email':
-				require_once( wc_customer_order_csv_export()->get_plugin_path() . '/includes/export-methods/class-wc-customer-order-csv-export-method-email.php' );
-				return new WC_Customer_Order_CSV_Export_Method_Email();
+				return wc_customer_order_csv_export()->load_class( '/includes/export-methods/class-wc-customer-order-csv-export-method-email.php', 'WC_Customer_Order_CSV_Export_Method_Email' );
 
 			default:
 
@@ -316,25 +310,25 @@ class WC_Customer_Order_CSV_Export_Handler {
 			// add exported flag
 			update_post_meta( $order_id, '_wc_customer_order_csv_export_is_exported', 1 );
 
-			$order = SV_WC_Plugin_Compatibility::wc_get_order( $order_id );
+			$order = wc_get_order( $order_id );
 
 			switch ( $method ) {
 
 				// note that order downloads using the AJAX order action are not marked or noted, only bulk order downloads
 				case 'download':
-					$message = __( 'downloaded.', WC_Customer_Order_CSV_Export::TEXT_DOMAIN );
+					$message = __( 'downloaded.', 'woocommerce-customer-order-csv-export' );
 					break;
 
 				case 'ftp':
-					$message = __( 'uploaded to remote server.', WC_Customer_Order_CSV_Export::TEXT_DOMAIN );
+					$message = __( 'uploaded to remote server.', 'woocommerce-customer-order-csv-export' );
 					break;
 
 				case 'http_post':
-					$message = __( 'POSTed to remote server.', WC_Customer_Order_CSV_Export::TEXT_DOMAIN );
+					$message = __( 'POSTed to remote server.', 'woocommerce-customer-order-csv-export' );
 					break;
 
 				case 'email':
-					$message = __( 'emailed.', WC_Customer_Order_CSV_Export::TEXT_DOMAIN );
+					$message = __( 'emailed.', 'woocommerce-customer-order-csv-export' );
 					break;
 			}
 
@@ -345,7 +339,7 @@ class WC_Customer_Order_CSV_Export_Handler {
 			 * @param bool $add_order_note true if the order note should be added, false otherwise
 			 */
 			if ( apply_filters( 'wc_customer_order_csv_export_add_order_note', true ) ) {
-				$order->add_order_note( sprintf( __( 'Order exported to CSV and successfully %s', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ), $message ) );
+				$order->add_order_note( sprintf( __( 'Order exported to CSV and successfully %s', 'woocommerce-customer-order-csv-export' ), $message ) );
 			}
 
 			/**

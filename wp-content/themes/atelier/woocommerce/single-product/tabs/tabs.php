@@ -20,7 +20,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 function sf_add_desc_tab($tabs = array()) {
 	global $post;
+	$pb_active = sf_get_post_meta($post->ID, '_spb_js_status', true);
+	$product_description = "";
+	
+	if ( $pb_active == "true" ) {
 	$product_description = sf_get_post_meta($post->ID, 'sf_product_description', true);
+	} else {
+	$product_description = get_the_content();
+	}
+	
 	if ($product_description != "") {
 		$tabs['description'] = array(
 			'title'    => __( 'Description', 'swiftframework' ),

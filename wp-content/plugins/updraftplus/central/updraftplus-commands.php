@@ -238,7 +238,7 @@ class UpdraftPlus_RemoteControl_Commands extends UpdraftCentral_Commands {
 		
 		if (!UpdraftPlus_Options::user_can_manage()) return $this->_generic_error_response('updraftplus_permission_denied');
 	
-		$results = $this->_get_vault()->ajax_vault_disconnect(false);
+		$results = (array)$this->_get_vault()->ajax_vault_disconnect(false);
 
 		return $this->_response($results);
 	

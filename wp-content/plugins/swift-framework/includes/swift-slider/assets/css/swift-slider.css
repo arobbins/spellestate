@@ -133,6 +133,10 @@
     z-index: 1;
 }
 
+.vertical-header .swift-slider.swift-slider-parallax, .vertical-header-right .swift-slider.swift-slider-parallax {
+    position: relative!important;
+}
+
 .spb_swift-slider .swift-slider.swift-slider-parallax {
     position: relative;
     -webkit-transform: none!important;
@@ -183,6 +187,10 @@
     background-position: left top;
 }
 
+.swiper-slide[data-bg-align="top"][data-bg-horiz-align="center"] {
+    background-position: center top;
+}
+
 .swiper-slide[data-bg-align="top"][data-bg-horiz-align="right"] {
     background-position: right top;
 }
@@ -191,12 +199,20 @@
     background-position: left center;
 }
 
+.swiper-slide[data-bg-align="center"][data-bg-horiz-align="center"] {
+    background-position: center center;
+}
+
 .swiper-slide[data-bg-align="center"][data-bg-horiz-align="right"] {
     background-position: right center;
 }
 
 .swiper-slide[data-bg-align="bottom"][data-bg-horiz-align="left"] {
     background-position: left bottom;
+}
+
+.swiper-slide[data-bg-align="bottom"][data-bg-horiz-align="center"] {
+    background-position: center bottom;
 }
 
 .swiper-slide[data-bg-align="bottom"][data-bg-horiz-align="right"] {
@@ -714,6 +730,10 @@ a.swift-slider-prev:hover, a.swift-slider-next:hover {
         bottom: 10px!important;
     }
 
+    .swift-slider[data-type="curtain"] .swift-slider-pagination {
+        bottom: auto!important;
+    }
+
     .swiper-slide .caption-content {
         padding-left: 5%;
         padding-right: 5%;
@@ -742,6 +762,30 @@ a.swift-slider-prev:hover, a.swift-slider-next:hover {
     .swiper-slide .caption-content[data-caption-size="smaller"] div.caption-excerpt {
         font-size: 14px;
         line-height: 22px;
+    }
+
+    .swiper-slide[data-bg-align="top"][data-mobile-bg-horiz-align="left"] {
+        background-position: left top;
+    }
+
+    .swiper-slide[data-bg-align="top"][data-mobile-bg-horiz-align="right"] {
+        background-position: right top;
+    }
+
+    .swiper-slide[data-bg-align="center"][data-mobile-bg-horiz-align="left"] {
+        background-position: left center;
+    }
+
+    .swiper-slide[data-bg-align="center"][data-mobile-bg-horiz-align="right"] {
+        background-position: right center;
+    }
+
+    .swiper-slide[data-bg-align="bottom"][data-mobile-bg-horiz-align="left"] {
+        background-position: left bottom;
+    }
+
+    .swiper-slide[data-bg-align="bottom"][data-mobile-bg-horiz-align="right"] {
+        background-position: right bottom;
     }
 }
 

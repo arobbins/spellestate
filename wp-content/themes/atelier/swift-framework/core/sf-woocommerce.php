@@ -4,7 +4,7 @@
     *	WooCommerce Functions & Hooks
     *	------------------------------------------------
     *	Swift Framework
-    * 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+    * 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     */
 
@@ -231,9 +231,9 @@
 		    <div class="badge-wrap">
 			    <?php
 
-			    	if (sf_is_out_of_stock()) {
+			    	if ( sf_is_out_of_stock() ) {
 
-			    		echo '<span class="out-of-stock-badge">' . __( 'Sold out', 'swiftframework' ) . '</span>';
+			    		echo apply_filters( 'woocommerce_sold_out_flash', '<span class="out-of-stock-badge">' . __( 'Sold out', 'swiftframework' ) . '</span>', $post, $product);
 
 			    	} else if ($product->is_on_sale()) {
 
@@ -625,11 +625,10 @@
                                 <div class="bag-contents">
 
                                     <?php foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) { ?>
-
+                                    
                                         <?php
-                                        $_product     		 = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
-                                        $product_title       = $_product->get_title();
-                                        $price 				 = apply_filters( 'woocommerce_cart_item_price', $woocommerce->cart->get_product_price( $_product ), $cart_item, $cart_item_key );
+                                        $_product     = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
+                                        $product_id   = apply_filters( 'woocommerce_cart_item_product_id', $cart_item['product_id'], $cart_item, $cart_item_key );
                                         ?>
 
                                         <?php  
@@ -639,12 +638,22 @@
                                         if ( $cart_item['variation_id'] > 0 )
                                              $variation_id_class = ' product-var-id-' .  $cart_item['variation_id']; 
 										 
-                                        if ( $_product && $_product->exists() && $cart_item['quantity'] > 0 && apply_filters( 'woocommerce_cart_item_visible', true, $cart_item, $cart_item_key ) ) { ?>
+                                        if ( $_product && $_product->exists() && $cart_item['quantity'] > 0 && apply_filters( 'woocommerce_widget_cart_item_visible', true, $cart_item, $cart_item_key ) ) {
+                                        	
+                                        	$product_name      = apply_filters( 'woocommerce_cart_item_name', $_product->get_title(), $cart_item, $cart_item_key );
+                    						$thumbnail         = apply_filters( 'woocommerce_cart_item_thumbnail', $_product->get_image(), $cart_item, $cart_item_key );
+                    						$product_price     = apply_filters( 'woocommerce_cart_item_price', WC()->cart->get_product_price( $_product ), $cart_item, $cart_item_key );
+                    						$product_permalink = apply_filters( 'woocommerce_cart_item_permalink', $_product->is_visible() ? $_product->get_permalink( $cart_item ) : '', $cart_item, $cart_item_key );
+                    						$product_title       = $_product->get_title();
+                    						$product_short_title = ( strlen( $product_title ) > 25 ) ? substr( $product_title, 0, 22 ) . '...' : $product_title;
+                                        ?>
 
-                                            	<div class="bag-product clearfix  product-id-<?php echo $cart_item['product_id']; ?><?php echo $variation_id_class; ?>">
+                                            	<div class="bag-product clearfix  product-id-<?php echo $cart_item['product_id']; ?>">
 
-                                                <figure><a class="bag-product-img"
-                                                           href="<?php echo get_permalink( $cart_item['product_id'] ); ?>"><?php echo $_product->get_image(); ?></a>
+                                                <figure>
+                                                	<a class="bag-product-img" href="<?php echo esc_url( $product_permalink ); ?>">
+                                                    	<?php echo $_product->get_image(); ?>
+                                                    </a>
                                                 </figure>
 
                                                 <div class="bag-product-details">
@@ -653,12 +662,20 @@
                                                             <?php echo apply_filters( 'woocommerce_cart_widget_product_title', $product_title, $_product ); ?></a>
                                                     </div>
                                                     <div
-                                                        class="bag-product-price"><?php _e( "Unit Price:", "swiftframework" ); ?> <?php echo $price; ?></div>
+                                                        class="bag-product-price"><?php _e( "Unit Price:", 'swiftframework' ); ?> <?php echo $product_price; ?></div>
                                                     <div
                                                         class="bag-product-quantity"><?php _e( 'Quantity:', 'swiftframework' ); ?> <?php echo $cart_item['quantity']; ?></div>
                                                 </div>
 
-												<a href="#" class="remove-product remove" data-ajaxurl="<?php echo admin_url( 'admin-ajax.php' ); ?>" data-product-id="<?php echo $cart_item['product_id'];?>"   data-variation-id="<?php echo $cart_item['variation_id'];?>"     data-product-qty="<?php echo $cart_item['quantity'];?>" title="<?php echo __( 'Remove this item', 'swiftframework' ); ?>">&times;</a>
+												<?php
+												echo  apply_filters( 'woocommerce_cart_item_remove_link', sprintf(
+                            							'<a href="%s" class="remove remove-product" title="%s" data-ajaxurl="'.admin_url( 'admin-ajax.php' ).'" data-product-qty="'. $cart_item['quantity'] .'"  data-product-id="%s" data-product_sku="%s">&times;</a>',
+                            							esc_url( WC()->cart->get_remove_url( $cart_item_key ) ),
+                            							__( 'Remove this item', 'swiftframework' ),
+                            							esc_attr( $product_id ),
+                            							esc_attr( $_product->get_sku() )
+                            						), $cart_item_key );
+												?>
  
                                             </div>
 

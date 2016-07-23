@@ -59,7 +59,7 @@ if (!class_exists('UpdraftPlus_Remote_Communications')):
 class UpdraftPlus_Remote_Communications {
 
 	// Version numbers relate to versions of this PHP library only (i.e. it's not a protocol support number, and version numbers of other compatible libraries (e.g. JavaScript) are not comparable)
-	public $version = '1.4.3';
+	public $version = '1.4.8';
 
 	private $key_name_indicator;
 
@@ -250,11 +250,12 @@ class UpdraftPlus_Remote_Communications {
 	// Supported formats: base64_with_count | (default)raw
 	// $extra_info needs to be JSON-serialisable, so be careful about what you put into it.
 	public function get_portable_bundle($format = 'raw', $extra_info = array(), $options = array()) {
-		$site_url = trailingslashit(network_site_url());
+
 		$bundle = array_merge($extra_info, array(
 			'key' => empty($options['key']) ? $this->get_key_remote() : $options['key'],
 			'name_indicator' => $this->key_name_indicator,
-			'url' => $site_url,
+			'url' => trailingslashit(network_site_url()),
+			'admin_url' => trailingslashit(network_admin_url()),
 		));
 
 		if ('base64_with_count' == $format) {
@@ -619,17 +620,29 @@ class UpdraftPlus_Remote_Communications {
 		
 		if (is_wp_error($post)) return $post;
 
-		if (empty($post['response']) || empty($post['response']['code'])) return new WP_Error('empty_http_code', 'Unexpected HTTP response code');
+		$response_code = wp_remote_retrieve_response_code($post);
+		
+		if (empty($response_code)) return new WP_Error('empty_http_code', 'Unexpected HTTP response code');
 
-		if ($post['response']['code'] < 200 || $post['response']['code'] >= 300) return new WP_Error('unexpected_http_code', 'Unexpected HTTP response code ('.$post['response']['code'].')', $post);
+		if ($response_code < 200 || $response_code >= 300) return new WP_Error('unexpected_http_code', 'Unexpected HTTP response code ('.$response_code.')', $post);
+		
+		$response_body = wp_remote_retrieve_body($post);
 
-		if (empty($post['body'])) return new WP_Error('empty_response', 'Empty response from remote site');
+		if (empty($response_body)) return new WP_Error('empty_response', 'Empty response from remote site');
 
-		$decoded = json_decode((string)$post['body'], true);
+		$decoded = json_decode($response_body, true);
 
 		if (empty($decoded)) {
-			$this->log("response from remote site could not be understood: ".substr($post['body'], 0, 100).' ... ');
-			return new WP_Error('response_not_understood', 'Response from remote site could not be understood', $post['body']);
+		
+			if (false != ($found_at = strpos($response_body, '{"format":'))) {
+				$new_body = substr($response_body, $found_at);
+				$decoded = json_decode($new_body, true);
+			}
+			
+			if (empty($decoded)) {
+				$this->log("response from remote site could not be understood: ".substr($response_body, 0, 100).' ... ');
+				return new WP_Error('response_not_understood', 'Response from remote site could not be understood', $response_body);
+			}
 		}
 
 		if (!is_array($decoded) || empty($decoded['udrpc_message'])) return new WP_Error('response_not_understood', 'Response from remote site was not in the expected format ('.$post['body'].')', $decoded);
@@ -667,26 +680,12 @@ class UpdraftPlus_Remote_Communications {
 		}
 
 		$time_difference = absint(time() - $json_decoded['time']);
-		if ($time_difference > $this->maximum_replay_time_difference) return array(
-			'response' => 'rpcerror',
-			'data' => array(
-				'code' => 'window_error',
-				'difference' => $time_difference,
-				'maximum_difference' => $this->maximum_replay_time_difference
-			)
-		);
+		if ($time_difference > $this->maximum_replay_time_difference) return new WP_Error('window_error', 'Message refused: maxium replay time difference exceeded', $time_difference);
 		
 		if (isset($json_decoded['incoming_rand']) && !empty($this->message_random_number) && $json_decoded['incoming_rand'] != $this->message_random_number) {
 			$this->log("UDRPC: Message mismatch (possibly MITM) (sent_rand="+$this->message_random_number+", returned_rand=".$json_decoded['incoming_rand']."): dropping", 'error');
 			
-			return array(
-				'response' => 'rpcerror',
-				'data' => array(
-					'code' => 'message_mismatch_error',
-					'ours' => $this->message_random_number,
-					'returned' => $json_decoded['incoming_rand']
-				)
-			);
+			return new WP_Error('message_mismatch_error', 'Message refused: message mismatch (possible MITM)');
 			
 		}
 
@@ -910,7 +909,7 @@ class UpdraftPlus_Remote_Communications {
 				$command_action_hooked = true;
 				$response = apply_filters('udrpc_command_'.$command, null, $data, $this->key_name_indicator);
 			} else {
-				$response = array('response' => 'rpcerror', 'data' => array('code' => 'unknown_rpc_command', 'command' => $command));
+				$response = array('response' => 'rpcerror', 'data' => array('code' => 'unknown_rpc_command', 'data' => $command));
 			}
 
 			$response = apply_filters('udrpc_action', $response, $command, $data, $this->key_name_indicator, $this);

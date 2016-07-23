@@ -3,7 +3,7 @@
 *	Admin jQuery Functions
 *	------------------------------------------------
 *	Swift Framework
-* 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+* 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
 *
 */
 
@@ -665,7 +665,7 @@ jQuery(function(jQuery) {
 		jQuery('.rwmb-meta-box').find('.meta-altbg-preview').addClass(altBackgroundValue);
 	}
 	
-	jQuery('#sf_page_title_bg').live('change',function(){
+	jQuery(document).on('change', '#sf_page_title_bg', function() {
 	    jQuery('.meta-altbg-preview').attr('class', 'meta-altbg-preview');
 	    jQuery('.meta-altbg-preview').addClass(jQuery(this).val());
 	});

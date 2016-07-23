@@ -4,7 +4,7 @@
 	*	Swift Framework Overrides
 	*	------------------------------------------------
 	*	Atelier specific functionality
-	* 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+	* 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
 	*
 	*/
 

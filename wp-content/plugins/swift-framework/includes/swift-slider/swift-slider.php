@@ -121,6 +121,15 @@
     add_action( 'wp_enqueue_scripts', 'ss_frontend_js' );
 
 
+    function ss_frontend_js_tag( $tag, $handle ) {
+        if ( 'swift-slider' !== $handle && 'swift-slider-min' !== $handle ) {
+            return $tag;
+        }
+        return str_replace( ' src', ' data-cfasync="true" src', $tag );
+    }
+    add_filter( 'script_loader_tag', 'ss_frontend_js_tag', 10, 2 );
+
+
     /* WPML DUPLICATION FIX
     ================================================== */
     function sf_wpml_override_post_duplication( $value_to_filter, $target_language, $meta_data ) {

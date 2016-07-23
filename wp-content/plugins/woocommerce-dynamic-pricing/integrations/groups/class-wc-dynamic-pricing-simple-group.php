@@ -239,9 +239,8 @@ class WC_Dynamic_Pricing_Simple_Group extends WC_Dynamic_Pricing_Simple_Base {
 					$result = $adjusted >= 0 ? $adjusted : 0;
 					break;
 				case 'percentage_discount':
-					if ( $amount > 1 ) {
-						$amount = $amount / 100;
-					}
+					$amount = $amount / 100;
+
 					$result = round( floatval( $price ) - ( floatval( $amount ) * $price), (int) $num_decimals );
 					break;
 				case 'fixed_price':

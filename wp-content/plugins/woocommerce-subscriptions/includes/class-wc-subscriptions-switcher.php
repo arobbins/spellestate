@@ -106,6 +106,27 @@ class WC_Subscriptions_Switcher {
 
 		// Revoke download permissions from old switch item
 		add_action( 'woocommerce_subscriptions_switched_item', __CLASS__ . '::remove_download_permissions_after_switch', 10, 3 );
+
+		// Check if we need to force payment on this switch, just after calculating the prorated totals in @see self::calculate_prorated_totals()
+		add_filter( 'woocommerce_subscriptions_calculated_total', __CLASS__ . '::set_force_payment_flag_in_cart', 10, 1 );
+
+		// Require payment when switching from a $0 / period subscription to a non-zero subscription to process automatic payments
+		add_filter( 'woocommerce_cart_needs_payment', __CLASS__ . '::cart_needs_payment' , 50, 2 );
+
+		// Require payment when switching from a $0 / period subscription to a non-zero subscription to process automatic payments
+		add_filter( 'woocommerce_payment_successful_result', __CLASS__ . '::maybe_set_payment_method' , 10, 2 );
+
+		// Mock a free trial on the cart item to make sure the switch total doesn't include any recurring amount
+		add_filter( 'woocommerce_before_calculate_totals', __CLASS__ . '::maybe_set_free_trial', 100, 1 );
+		add_action( 'woocommerce_subscription_cart_before_grouping', __CLASS__ . '::maybe_unset_free_trial' );
+		add_action( 'woocommerce_subscription_cart_after_grouping', __CLASS__ . '::maybe_set_free_trial' );
+		add_action( 'wcs_recurring_cart_start_date', __CLASS__ . '::maybe_unset_free_trial', 0, 1 );
+		add_action( 'wcs_recurring_cart_end_date', __CLASS__ . '::maybe_set_free_trial', 100, 1 );
+		add_filter( 'woocommerce_subscriptions_calculated_total', __CLASS__ . '::maybe_unset_free_trial', 10000, 1 );
+		add_action( 'woocommerce_cart_totals_before_shipping', __CLASS__ . '::maybe_set_free_trial' );
+		add_action( 'woocommerce_cart_totals_after_shipping', __CLASS__ . '::maybe_unset_free_trial' );
+		add_action( 'woocommerce_review_order_before_shipping', __CLASS__ . '::maybe_set_free_trial' );
+		add_action( 'woocommerce_review_order_after_shipping', __CLASS__ . '::maybe_unset_free_trial' );
 	}
 
 	/**
@@ -117,12 +138,13 @@ class WC_Subscriptions_Switcher {
 		global $post;
 
 		// If the current user doesn't own the subscription, remove the query arg from the URL
-		if ( isset( $_GET['switch-subscription'] ) ) {
+		if ( isset( $_GET['switch-subscription'] ) && isset( $_GET['item'] ) ) {
 
 			$subscription = wcs_get_subscription( $_GET['switch-subscription'] );
+			$line_item    = wcs_get_order_item( $_GET['item'], $subscription );
 
 			// Visiting a switch link for someone elses subscription or if the switch link doesn't contain a valid nonce
-			if ( ! is_object( $subscription ) || ! current_user_can( 'switch_shop_subscription', $subscription->id ) || empty( $_GET['_wcsnonce'] ) || ! wp_verify_nonce( $_GET['_wcsnonce'], 'wcs_switch_request' ) || 'no' === get_option( WC_Subscriptions_Admin::$option_prefix . '_allow_switching', 'no' ) ) {
+			if ( ! is_object( $subscription ) || empty( $_GET['_wcsnonce'] ) || ! wp_verify_nonce( $_GET['_wcsnonce'], 'wcs_switch_request' ) || empty( $line_item ) || ! self::can_item_be_switched_by_user( $line_item, $subscription )  ) {
 
 				wp_redirect( remove_query_arg( array( 'switch-subscription', 'auto-switch', 'item', '_wcsnonce' ) ) );
 				exit();
@@ -1218,8 +1240,8 @@ class WC_Subscriptions_Switcher {
 
 						// Keep a record of the two separate amounts so we store these and calculate future switch amounts correctly
 						WC()->cart->cart_contents[ $cart_item_key ]['data']->subscription_sign_up_fee_prorated = WC()->cart->cart_contents[ $cart_item_key ]['data']->subscription_sign_up_fee;
-						WC()->cart->cart_contents[ $cart_item_key ]['data']->subscription_price_prorated       = round( $extra_to_pay, 2 );
-						WC()->cart->cart_contents[ $cart_item_key ]['data']->subscription_sign_up_fee         += round( $extra_to_pay, 2 );
+						WC()->cart->cart_contents[ $cart_item_key ]['data']->subscription_price_prorated       = round( $extra_to_pay, wc_get_price_decimals() );
+						WC()->cart->cart_contents[ $cart_item_key ]['data']->subscription_sign_up_fee         += round( $extra_to_pay, wc_get_price_decimals() );
 
 					}
 
@@ -1249,11 +1271,6 @@ class WC_Subscriptions_Switcher {
 				if ( WC()->cart->cart_contents[ $cart_item_key ]['subscription_switch']['first_payment_timestamp'] != $cart_item['subscription_switch']['next_payment_timestamp'] ) {
 					WC()->cart->cart_contents[ $cart_item_key ]['subscription_switch']['recurring_payment_prorated'] = true;
 				}
-			}
-
-			// Finally, if we need to make sure the initial total doesn't include any recurring amount, we can by spoofing a free trial
-			if ( 0 != WC()->cart->cart_contents[ $cart_item_key ]['subscription_switch']['first_payment_timestamp'] ) {
-				WC()->cart->cart_contents[ $cart_item_key ]['data']->subscription_trial_length = 1;
 			}
 
 			if ( 'yes' == $apportion_length || ( 'virtual' == $apportion_length && $is_virtual_product ) ) {
@@ -1647,6 +1664,153 @@ class WC_Subscriptions_Switcher {
 
 		$product_id = wcs_get_canonical_product_id( $old_item );
 		WCS_Download_Handler::revoke_downloadable_file_permission( $product_id, $subscription->id, $subscription->customer_user );
+	}
+
+	/**
+	 * If we are switching a $0 / period subscription to a non-zero $ / period subscription, and the existing
+	 * subscription is using manual renewals but manual renewals are not forced on the site, we need to set a
+	 * flag to force WooCommerce to require payment so that we can switch the subscription to automatic renewals
+	 * because it was probably only set to manual because it was $0.
+	 *
+	 * We need to determine this here instead of on the 'woocommerce_cart_needs_payment' because when payment is being
+	 * processed, we will have changed the associated subscription data already, so we can't check that subscription's
+	 * values anymore. We determine it here, then ue the 'force_payment' flag on 'woocommerce_cart_needs_payment' to
+	 * require payment.
+	 *
+	 * @param int $total
+	 * @since 2.0.16
+	 */
+	public static function set_force_payment_flag_in_cart( $total ) {
+
+		if ( $total > 0 || 'yes' == get_option( WC_Subscriptions_Admin::$option_prefix . '_turn_off_automatic_payments', 'no' ) || false === self::cart_contains_switches() ) {
+			return $total;
+		}
+
+		$old_recurring_total = 0;
+		$new_recurring_total = 0;
+		$has_future_payments = false;
+
+		// Check that the new subscriptions are not for $0 recurring and there is a future payment required
+		foreach ( WC()->cart->recurring_carts as $cart ) {
+
+			$new_recurring_total += $cart->total;
+
+			if ( $cart->next_payment_date > 0 ) {
+				$has_future_payments = true;
+			}
+		}
+
+		foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
+
+			if ( ! isset( $cart_item['subscription_switch']['subscription_id'] ) ) {
+				continue;
+			}
+
+			$subscription = wcs_get_subscription( $cart_item['subscription_switch']['subscription_id'] );
+
+			// Check that the existing subscriptions are for $0 recurring
+			$old_recurring_total = $subscription->get_total();
+
+			if ( 0 == $old_recurring_total && $new_recurring_total > 0 && true === $has_future_payments && $subscription->is_manual() ) {
+				WC()->cart->cart_contents[ $cart_item_key ]['subscription_switch']['force_payment'] = true;
+			}
+		}
+
+		return $total;
+	}
+
+	/**
+	 * Require payment when switching from a $0 / period subscription to a non-zero subscription to process
+	 * automatic payments for future renewals, as indicated by the 'force_payment' flag on the switch, set in
+	 * @see self::set_force_payment_flag_in_cart().
+	 *
+	 * @param bool $needs_payment
+	 * @param object $cart
+	 * @since 2.0.16
+	 */
+	public static function cart_needs_payment( $needs_payment, $cart ) {
+
+		if ( false === $needs_payment && 0 == $cart->total && false !== ( $switch_items = self::cart_contains_switches() ) ) {
+
+			foreach ( $switch_items as $switch_item ) {
+				if ( isset( $switch_item['force_payment'] ) && true === $switch_item['force_payment'] ) {
+					$needs_payment = true;
+					break;
+				}
+			}
+		}
+
+		return $needs_payment;
+	}
+
+	/**
+	 * Once payment is processed on a switch from a $0 / period subscription to a non-zero $ / period subscription, if
+	 * payment was completed with a payment method which supports automatic payments, update the payment on the subscription
+	 * and the manual renewals flag so that future renewals are processed automatically.
+	 *
+	 * @param array $payment_processing_result
+	 * @param int $order_id
+	 * @since 2.0.16
+	 */
+	public static function maybe_set_payment_method( $payment_processing_result, $order_id ) {
+
+		// Only update the payment method the order contains a switch, and payment was processed (i.e. a paid date has been set) not just setup for processing, which is the case with PayPal Standard (which is handled by WCS_PayPal_Standard_Switcher)
+		if ( wcs_order_contains_switch( $order_id ) && false != get_post_meta( $order_id, '_paid_date', true ) ) {
+
+			$order = wc_get_order( $order_id );
+
+			foreach ( wcs_get_subscriptions_for_switch_order( $order_id ) as $subscription ) {
+
+				if ( false === $subscription->is_manual() ) {
+					continue;
+				}
+
+				if ( $subscription->payment_method !== $order->payment_method ) {
+
+					// Set the new payment method on the subscription
+					$available_gateways = WC()->payment_gateways->get_available_payment_gateways();
+					$payment_method     = isset( $available_gateways[ $order->payment_method ] ) ? $available_gateways[ $order->payment_method ] : false;
+
+					if ( $payment_method && $payment_method->supports( 'subscriptions' ) ) {
+						$subscription->set_payment_method( $payment_method );
+						$subscription->update_manual( false );
+					}
+				}
+			}
+		}
+
+		return $payment_processing_result;
+	}
+
+	/**
+	 * Make sure switch cart item price doesn't include any recurring amount by setting a free trial.
+	 *
+	 * @since 2.0.18
+	 */
+	public static function maybe_set_free_trial( $total = '' ) {
+
+		foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
+			if ( isset( $cart_item['subscription_switch']['first_payment_timestamp'] ) && 0 != $cart_item['subscription_switch']['first_payment_timestamp'] ) {
+				WC()->cart->cart_contents[ $cart_item_key ]['data']->subscription_trial_length = 1;
+			}
+		}
+
+		return $total;
+	}
+
+	/**
+	 * Remove mock free trials from switch cart items.
+	 *
+	 * @since 2.0.18
+	 */
+	public static function maybe_unset_free_trial( $total = '' ) {
+
+		foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
+			if ( isset( $cart_item['subscription_switch']['first_payment_timestamp'] ) && 0 != $cart_item['subscription_switch']['first_payment_timestamp'] ) {
+				WC()->cart->cart_contents[ $cart_item_key ]['data']->subscription_trial_length = 0;
+			}
+		}
+		return $total;
 	}
 
 	/** Deprecated Methods **/

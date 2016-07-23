@@ -1,5 +1,33 @@
 *** Customer/Order/Coupon CSV Import Suite Changelog ***
 
+2016.06.28 - version 3.0.2
+ * Tweak - Use the payment method column value as id, rather than title from CSV Export formats
+ * Fix - Check post type for the matching order_id before merging
+ * Fix - Ensure download permissions are granted
+
+2016.06.14 - version 3.0.1
+ * Fix - Ensure order status matching is case insensitive
+
+2016.06.02 - version 3.0.0
+ * Feature - Orders can now be merged / updated during import, hooray!
+ * Feature - Redesigned import UI, with a detailed progress & results screen
+ * Feature - Files can be imported from URLs & file paths as well as uploaded
+ * Feature - Data can be copied & pasted into the import screen instead of uploaded
+ * Feature - Added CSV column mapping to support manual changes and a wider array of file formats
+ * Feature - CSV file preview introduced
+ * Feature - CSV files are now imported in background, should handle large files with no issues
+ * Feature - Added support for importing taxonomies
+ * Feature - Order Import: Added dedicated column for order currency
+ * Feature - Order Import: Added support for importing order refunds
+ * Feature - Customer Import: Option to send WooCommerce welcome emails to imported customers
+ * Feature - Create your own importers by extending the WC_CSV_Import_Suite_Importer class
+ * Tweak - Order Import: Added option to re-calculate order taxes & totals on import
+ * Tweak - Customer Import: Option to hash passwords on import or import pre-hashed passwords
+ * Misc - Completely rewritten from the ground-up for improved reliability and performance
+ * Misc - Added support for WooCommerce 2.6
+ * Misc - Removed support for WooCommerce 2.3
+ * Misc - Many other small tweaks, fixes, and improvements
+
 2016.01.14 - version 2.9.0
  * Misc - Added support for WooCommerce 2.5
  * Misc - Removed support for WooCommerce 2.2

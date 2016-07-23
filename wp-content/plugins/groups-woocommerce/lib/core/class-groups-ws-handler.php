@@ -84,8 +84,13 @@ class Groups_WS_Handler {
 	 * Old action handlers (moved out on init to be able to check for class presence).
 	 */
 	public static function wp_init() {
+
 		// subscriptions < 2.x
-		if ( !class_exists( 'WCS_Action_Deprecator' ) ) {
+		if ( class_exists( 'WC_Subscriptions_Product' ) && !class_exists( 'WCS_Action_Deprecator' ) ) {
+
+			$options = get_option( 'groups-woocommerce', array() );
+			$remove_on_hold = isset( $options[GROUPS_WS_REMOVE_ON_HOLD] ) ? $options[GROUPS_WS_REMOVE_ON_HOLD] : GROUPS_WS_DEFAULT_REMOVE_ON_HOLD;
+
 			// do_action( 'activated_subscription', $user_id, $subscription_key );
 			add_action( 'activated_subscription', array( __CLASS__, 'activated_subscription' ), 10, 2 );
 			// do_action( 'cancelled_subscription', $user_id, $subscription_key );

@@ -4,10 +4,38 @@
     *	Single Portfolio
     *	------------------------------------------------
     *	Swift Framework v3.0
-    * 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+    * 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     *
     */
+?>
+
+<?php
+
+    /* PORTFOLIO COMMENTS
+    ================================================== */
+    if ( ! function_exists( 'sf_portfolio_comments' ) ) {
+        function sf_portfolio_comments() {
+
+            $sf_options = sf_get_theme_opts();
+            $disable_pagecomments = $sf_options['disable_pagecomments'];
+
+            $comments_class = apply_filters( 'sf_post_comments_wrap_class', 'col-sm-8 col-sm-offset-2' );
+
+            if ( comments_open() ) {
+                ?>
+                <div class="comments-wrap">
+                    <div id="comment-area" class="<?php echo esc_attr($comments_class); ?>">
+                        <?php comments_template( '', true ); ?>
+                    </div>
+                </div>
+            <?php
+            }
+        }
+
+        add_action( 'sf_portfolio_article_end', 'sf_portfolio_comments', 10 );
+    }
+
 ?>
 
 <?php while (have_posts()) : the_post(); ?>

@@ -396,7 +396,11 @@ class UpdraftPlus_S3_Compat
 			return $results;
 
 		} catch (Exception $e) {
-			return $this->trigger_from_exception($e);
+			if ($this->useExceptions) {
+				throw $e;
+			} else {
+				return $this->trigger_from_exception($e);
+			}
 		}
 	}
 

@@ -43,7 +43,7 @@
                     return;
                 }
 
-                el.find( '.redux-supersearch-remove' ).live(
+                el.find( '.redux-supersearch-remove' ).on(
                     'click', function() {
                         redux_change( $( this ) );
 

@@ -71,6 +71,8 @@
         'database' => 'options',
         'transient_time' => '3600',
         'network_sites' => TRUE,
+        'google_update_weekly' => TRUE,
+        'google_api_key' => 'AIzaSyDmMdQn34pqGXdRPWRV-ukvBN78Qv2lHoc'
     );
 
     // SOCIAL ICONS -> Setup custom links in the footer for quick links in your panel footer icons.
@@ -215,7 +217,7 @@
     ) );
 
     Redux::setSection( $opt_name, array(
-        'title' => __('Swift Slider', 'swift-builder'),
+        'title' => __('Swift Slider', 'swiftframework'),
         'desc' => '',
         'subsection' => false,
         'icon' => 'el el-icon-website',

@@ -18,11 +18,11 @@
  *
  * @package     WC-Customer-Order-CSV-Export/Export-Methods/FTP-Implicit-SSL
  * @author      SkyVerge
- * @copyright   Copyright (c) 2012-2015, SkyVerge, Inc.
+ * @copyright   Copyright (c) 2012-2016, SkyVerge, Inc.
  * @license     http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+defined( 'ABSPATH' ) or exit;
 
 /**
  * Customer/Order CSV Export FTP over Implicit SSL Class
@@ -61,7 +61,7 @@ class WC_Customer_Order_CSV_Export_Method_FTP_Implicit_SSL extends WC_Customer_O
 		// check for successful connection
 		if ( ! $this->curl_handle ) {
 
-			throw new Exception( __( 'Could not initialize cURL.', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ) );
+			throw new Exception( __( 'Could not initialize cURL.', 'woocommerce-customer-order-csv-export' ) );
 		}
 
 		// connection options
@@ -90,7 +90,7 @@ class WC_Customer_Order_CSV_Export_Method_FTP_Implicit_SSL extends WC_Customer_O
 
 			if ( ! curl_setopt( $this->curl_handle, $option_name, $option_value ) ) {
 
-				throw new Exception( sprintf( __( 'Could not set cURL option: %s', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ), $option_name ) );
+				throw new Exception( sprintf( __( 'Could not set cURL option: %s', 'woocommerce-customer-order-csv-export' ), $option_name ) );
 			}
 		}
 	}
@@ -109,7 +109,8 @@ class WC_Customer_Order_CSV_Export_Method_FTP_Implicit_SSL extends WC_Customer_O
 		// set file name
 		if ( ! curl_setopt( $this->curl_handle, CURLOPT_URL, $this->url . $filename ) ) {
 
-			throw new Exception ( "Could not set cURL file name: {$filename}", WC_Customer_Order_CSV_Export::TEXT_DOMAIN );
+			// translators: Placeholders: %s - name of file to be updloaded
+			throw new Exception( sprintf( __( 'Could not set cURL file name: %s', 'woocommerce-customer-order-csv-export' ), $filename ) );
 		}
 
 		// open memory stream for writing
@@ -118,7 +119,7 @@ class WC_Customer_Order_CSV_Export_Method_FTP_Implicit_SSL extends WC_Customer_O
 		// check for valid stream handle
 		if ( ! $stream ) {
 
-			throw new Exception( __( 'Could not open php://temp for writing.', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ) );
+			throw new Exception( __( 'Could not open php://temp for writing.', 'woocommerce-customer-order-csv-export' ) );
 		}
 
 		// write CSV into the temporary stream
@@ -130,13 +131,15 @@ class WC_Customer_Order_CSV_Export_Method_FTP_Implicit_SSL extends WC_Customer_O
 		// set the file to be uploaded
 		if ( ! curl_setopt( $this->curl_handle, CURLOPT_INFILE, $stream ) ) {
 
-			throw new Exception( __( "Could not load file {$filename}", WC_Customer_Order_CSV_Export::TEXT_DOMAIN ) );
+			// translators: Placeholders: %s - name of file to be updloaded
+			throw new Exception( sprintf( __( 'Could not load file %s', 'woocommerce-customer-order-csv-export' ), $filename ) );
 		}
 
 		// upload file
 		if ( ! curl_exec( $this->curl_handle ) ) {
 
-			throw new Exception( sprintf( __( 'Could not upload file. cURL Error: [%s] - %s', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ), curl_errno( $this->curl_handle ), curl_error( $this->curl_handle ) ) );
+			// translators: Placeholders: %1$s - cURL error number, %2$s - cURL error message
+			throw new Exception( sprintf( __( 'Could not upload file. cURL Error: [%1$s] - %2$s', 'woocommerce-customer-order-csv-export' ), curl_errno( $this->curl_handle ), curl_error( $this->curl_handle ) ) );
 		}
 
 		// close the stream handle

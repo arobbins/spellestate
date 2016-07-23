@@ -5,7 +5,7 @@
     *	Swift Page Builder - Post Format Output Functions
     *	------------------------------------------------
     *	Swift Framework
-    * 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+    * 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     *	sf_get_post_media()
     *	sf_get_post_format_image_src()

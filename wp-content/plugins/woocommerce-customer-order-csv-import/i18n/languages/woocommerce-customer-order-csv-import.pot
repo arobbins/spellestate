@@ -2,9 +2,10 @@
 # This file is distributed under the GNU General Public License v3.0.
 msgid ""
 msgstr ""
-"Project-Id-Version: WooCommerce Customer/Order CSV Import Suite 2.9.0\n"
+"Project-Id-Version: WooCommerce Customer/Order/Coupon CSV Import Suite "
+"3.0.2\n"
 "Report-Msgid-Bugs-To: https://support.woothemes.com/hc/\n"
-"POT-Creation-Date: 2014-06-15 22:41:24+00:00\n"
+"POT-Creation-Date: 2016-05-31 09:10:17+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -12,710 +13,1388 @@ msgstr ""
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
-#: classes/class-wc-coupon-import.php:139
-#: classes/class-wc-customer-import.php:150
-#: classes/class-wc-order-import.php:164
-msgid "Advanced Options"
+#: includes/admin/class-wc-csv-import-suite-admin.php:65
+msgid "Import <strong>customers</strong> to your store via a csv file."
 msgstr ""
 
-#: classes/class-wc-coupon-import.php:141
-#: classes/class-wc-customer-import.php:152
-#: classes/class-wc-order-import.php:166
-msgid "Dry Run"
+#: includes/admin/class-wc-csv-import-suite-admin.php:70
+msgid "Import <strong>orders</strong> to your store via a csv file."
 msgstr ""
 
-#: classes/class-wc-coupon-import.php:143
-#: classes/class-wc-customer-import.php:154
-#: classes/class-wc-order-import.php:168
+#: includes/admin/class-wc-csv-import-suite-admin.php:75
+msgid "Import <strong>coupons</strong> to your store via a csv file."
+msgstr ""
+
+#: includes/admin/class-wc-csv-import-suite-admin.php:96
+msgid "CSV Order Import Suite"
+msgstr ""
+
+#: includes/admin/class-wc-csv-import-suite-admin.php:96
+#: includes/admin/class-wc-csv-import-suite-admin.php:100
+msgid "CSV Import Suite"
+msgstr ""
+
+#: includes/admin/class-wc-csv-import-suite-admin.php:143
+#: includes/admin/views/html-import-progress.php:70
+msgid "View detailed results"
+msgstr ""
+
+#: includes/admin/class-wc-csv-import-suite-admin.php:144
+msgid "Hide detailed results"
+msgstr ""
+
+#: includes/admin/class-wc-csv-import-suite-admin.php:145
+msgid "Import complete."
+msgstr ""
+
+#: includes/admin/class-wc-csv-import-suite-admin.php:146
 msgid ""
-"Perform a test dry run of the import process to check for errors prior to "
-"the actual import"
+"Finished importing. Some lines were skipped or failed to import. See below "
+"for details."
 msgstr ""
 
-#: classes/class-wc-coupon-import.php:146
-#: classes/class-wc-customer-import.php:162
-#: classes/class-wc-order-import.php:176
-msgid "Skip Records"
-msgstr ""
-
-#: classes/class-wc-coupon-import.php:148
-#: classes/class-wc-customer-import.php:164
-#: classes/class-wc-order-import.php:178
+#: includes/admin/class-wc-csv-import-suite-admin.php:148
+#. translators: Placeholders: %1$s - opening <a> tag, %2$s - closing </a> tag
 msgid ""
-"Skip this number of records before parsing.  Use this option when importing "
-"very large files that are unable to complete in a single upload attempt."
+"Dry run complete. Do you want to go ahead and %1$srun the live import%2$s "
+"now?"
 msgstr ""
 
-#: classes/class-wc-coupon-import.php:151
-#: classes/class-wc-customer-import.php:167
-#: classes/class-wc-order-import.php:181
-msgid "Submit"
+#: includes/admin/views/html-import-column-mapper.php:29
+msgid "Map Fields"
 msgstr ""
 
-#: classes/class-wc-coupon-import.php:174
-#: classes/class-wc-customer-import.php:190
-#. translators: Placeholders: %1$s - number of imported records, %2$s - </em>
-#. number of merged records, %3$s - number of skipped records, %4$s - <strong>
-#. tag, %5$s - </strong> tag
+#: includes/admin/views/html-import-column-mapper.php:30
+msgid "Here you can map your imported columns to WooCommerce data fields."
+msgstr ""
+
+#: includes/admin/views/html-import-column-mapper.php:59
+msgid "Column Header"
+msgstr ""
+
+#: includes/admin/views/html-import-column-mapper.php:60
+msgid "Map to"
+msgstr ""
+
+#: includes/admin/views/html-import-column-mapper.php:61
+msgid "Example Column Values"
+msgstr ""
+
+#: includes/admin/views/html-import-column-mapper.php:70
+msgid "-- Skip --"
+msgstr ""
+
+#: includes/admin/views/html-import-column-mapper.php:93
+msgid "Dry Run &raquo;"
+msgstr ""
+
+#: includes/admin/views/html-import-column-mapper.php:94
+msgid "Start Import &raquo;"
+msgstr ""
+
+#: includes/admin/views/html-import-csv-preview.php:28
+msgid "Preview"
+msgstr ""
+
+#: includes/admin/views/html-import-csv-preview.php:29
 msgid ""
-"Import complete - imported %4$s%1$s%5$s, merged %4$s%2$s%5$s, skipped "
-"%4$s%3$s%5$s"
+"Does the preview below look right? Each field should be in its own table "
+"cell. If it doesn't, simply adjust the delimiter until it looks right. If "
+"none of the options seem to work, make sure you are using a well-formatted "
+"CSV file."
 msgstr ""
 
-#: classes/class-wc-coupon-import.php:190
-#: classes/class-wc-coupon-import.php:199
-#: classes/class-wc-coupon-import.php:235
-#: classes/class-wc-coupon-import.php:250
-#: classes/class-wc-customer-import.php:206
-#: classes/class-wc-customer-import.php:215
-#: classes/class-wc-customer-import.php:264
-#: classes/class-wc-customer-import.php:279
-#: classes/class-wc-order-import.php:220 classes/class-wc-order-import.php:229
-#: classes/class-wc-order-import.php:265 classes/class-wc-order-import.php:280
-msgid "Sorry, there has been an error."
+#: includes/admin/views/html-import-options-fields.php:28
+msgid "Options"
 msgstr ""
 
-#: classes/class-wc-coupon-import.php:191
-#: classes/class-wc-customer-import.php:207
-#: classes/class-wc-order-import.php:221
-msgid "The file does not exist, please try again."
+#: includes/admin/views/html-import-options-fields.php:44
+msgid "Merge/update"
 msgstr ""
 
-#: classes/class-wc-coupon-import.php:217
-#: classes/class-wc-customer-import.php:245
-#: classes/class-wc-order-import.php:247
-msgid "All done!"
+#: includes/admin/views/html-import-options-fields.php:49
+msgid "Update existing records if a match is found"
 msgstr ""
 
-#: classes/class-wc-coupon-import.php:217
-msgid "View Coupons"
+#: includes/admin/views/html-import-options-fields.php:59
+msgid "Insert as new if a match is not found"
 msgstr ""
 
-#: classes/class-wc-coupon-import.php:272
-msgid "Processing coupons."
+#: includes/admin/views/html-import-options-fields.php:66
+msgid "Fields are separated by"
 msgstr ""
 
-#: classes/class-wc-coupon-import.php:284
-msgid "> Merging coupon %s."
+#: includes/admin/views/html-import-options.php:40
+#: includes/admin/views/html-import-source-form.php:40
+#: includes/admin/views/html-import-source-options.php:68
+msgid "Next &raquo;"
 msgstr ""
 
-#: classes/class-wc-coupon-import.php:298
-#. translators: Placeholders: %1$s - coupon code, %2$s - error message
-msgid "Failed to update coupon %1$s: %2$s"
+#: includes/admin/views/html-import-progress.php:30
+msgid "Imported file: %s"
 msgstr ""
 
-#: classes/class-wc-coupon-import.php:311
-#. translators: Placeholders: %s - coupon code
-msgid "> Coupon '%s' already processed. Skipping."
+#: includes/admin/views/html-import-progress.php:30
+msgid "Importing file: %s"
 msgstr ""
 
-#: classes/class-wc-coupon-import.php:333
-#. translators: Placeholders: %1$s - coupon code, %2$s - error message
-msgid "Failed to insert coupon %1$s: %2$s"
+#: includes/admin/views/html-import-progress.php:34
+msgid ""
+"Performed a dry run with the selected file. No database records were "
+"inserted or updated."
 msgstr ""
 
-#: classes/class-wc-coupon-import.php:359
-#. translators: Placeholders: %s - coupon code
-msgid "> Finished merging coupon  %s."
+#: includes/admin/views/html-import-progress.php:34
+msgid ""
+"Performing a dry run with the selected file. No database records will be "
+"inserted or updated."
 msgstr ""
 
-#: classes/class-wc-coupon-import.php:365
-#. translators: Placeholders: %s - coupon code
-msgid "> Finished importing coupon %s."
+#: includes/admin/views/html-import-progress.php:47
+msgid "Processed:"
 msgstr ""
 
-#: classes/class-wc-coupon-import.php:370
-msgid "Finished processing coupons."
+#: includes/admin/views/html-import-progress.php:54
+msgid "Results"
 msgstr ""
 
-#: classes/class-wc-coupon-import.php:394
-#: woocommerce-customer-order-csv-import.php:286
+#: includes/admin/views/html-import-progress.php:87
+msgid "Line"
+msgstr ""
+
+#: includes/admin/views/html-import-progress.php:88
+#: includes/class-wc-csv-import-suite-order-import.php:205
+msgid "Status"
+msgstr ""
+
+#: includes/admin/views/html-import-progress.php:89
+msgid "Reason"
+msgstr ""
+
+#: includes/admin/views/html-import-screen.php:3
+msgid "Import Customers, Coupons &amp; Orders"
+msgstr ""
+
+#: includes/admin/views/html-import-screen.php:7
+msgid ""
+"%1$sCustomer CSV Import Suite%2$s Before getting started prepare your CSV "
+"files:"
+msgstr ""
+
+#: includes/admin/views/html-import-screen.php:9
+msgid "Documentation"
+msgstr ""
+
+#: includes/admin/views/html-import-screen.php:10
+msgid "Sample Customer CSV"
+msgstr ""
+
+#: includes/admin/views/html-import-screen.php:11
+msgid "Sample Coupon CSV"
+msgstr ""
+
+#: includes/admin/views/html-import-screen.php:12
+msgid "Sample Order CSV"
+msgstr ""
+
+#: includes/admin/views/html-import-screen.php:19
+msgid "Import Customer CSV"
+msgstr ""
+
+#: includes/admin/views/html-import-screen.php:20
+msgid "Import customers into WooCommerce using this tool."
+msgstr ""
+
+#: includes/admin/views/html-import-screen.php:21
+msgid ""
+"Import a CSV from your computer. Import your CSV as new customers (existing "
+"customers will be skipped), or merge with existing customers."
+msgstr ""
+
+#: includes/admin/views/html-import-screen.php:22
+#: includes/class-wc-csv-import-suite-customer-import.php:55
+msgid "Import Customers"
+msgstr ""
+
+#: includes/admin/views/html-import-screen.php:28
+msgid "Import Coupons CSV"
+msgstr ""
+
+#: includes/admin/views/html-import-screen.php:29
+msgid "Import and add coupons using this tool."
+msgstr ""
+
+#: includes/admin/views/html-import-screen.php:30
+msgid ""
+"Import a CSV from your computer. Import your CSV as new coupons (existing "
+"coupons will be skipped), or merge with existing coupons."
+msgstr ""
+
+#: includes/admin/views/html-import-screen.php:31
+#: includes/class-wc-csv-import-suite-coupon-import.php:69
 msgid "Import Coupons"
 msgstr ""
 
-#: classes/class-wc-coupon-import.php:412
+#: includes/admin/views/html-import-screen.php:37
+msgid "Import Orders CSV"
+msgstr ""
+
+#: includes/admin/views/html-import-screen.php:38
+msgid "Import and add orders using this tool."
+msgstr ""
+
+#: includes/admin/views/html-import-screen.php:39
 msgid ""
-"Hi there! Upload a CSV file containing coupon data to import the contents "
-"into your shop."
+"Import a CSV from your computer. Import your CSV as new orders (existing "
+"orders will be skipped), or merge with existing orders."
 msgstr ""
 
-#: classes/class-wc-coupon-import.php:413
-#: classes/class-wc-customer-import.php:490
-#: classes/class-wc-order-import.php:593
-msgid "Choose a CSV (.csv) file to upload, then click Upload file and import."
+#: includes/admin/views/html-import-screen.php:40
+#: includes/class-wc-csv-import-suite-order-import.php:104
+msgid "Import Orders"
 msgstr ""
 
-#: classes/class-wc-coupon-import.php:421
-#: classes/class-wc-customer-import.php:498
-#: classes/class-wc-order-import.php:601
-msgid ""
-"Before you can upload your import file, you will need to fix the following "
-"error:"
+#: includes/admin/views/html-import-source-fields-copypaste.php:29
+msgid "Copy & paste data"
 msgstr ""
 
-#: classes/class-wc-coupon-import.php:430
-#: classes/class-wc-customer-import.php:507
-#: classes/class-wc-order-import.php:610
+#: includes/admin/views/html-import-source-fields-upload.php:29
+msgid "Import data from CSV file"
+msgstr ""
+
+#: includes/admin/views/html-import-source-fields-upload.php:34
+#: includes/admin/views/html-import-source-options.php:36
+msgid "Before you can start importing, you will need to fix the following error:"
+msgstr ""
+
+#: includes/admin/views/html-import-source-fields-upload.php:54
 msgid "Choose a file from your computer:"
 msgstr ""
 
-#: classes/class-wc-coupon-import.php:436
-#: classes/class-wc-customer-import.php:513
-#: classes/class-wc-order-import.php:616
-msgid "Maximum size: %s"
+#: includes/admin/views/html-import-source-fields-upload.php:59
+msgid "Acceptable file types: CSV or tab-delimited text files. Maximum size: %1$s"
 msgstr ""
 
-#: classes/class-wc-coupon-import.php:442
-#: classes/class-wc-customer-import.php:519
-#: classes/class-wc-order-import.php:622
-msgid "OR enter path to file:"
+#: includes/admin/views/html-import-source-fields-url.php:29
+msgid "Import data from URL or path"
 msgstr ""
 
-#: classes/class-wc-coupon-import.php:450
-#: classes/class-wc-customer-import.php:527
-#: classes/class-wc-order-import.php:630
-msgid "Delimiter"
+#: includes/admin/views/html-import-source-fields-url.php:45
+msgid "Enter URL or path to file:"
 msgstr ""
 
-#: classes/class-wc-coupon-import.php:456
-#: classes/class-wc-customer-import.php:533
-#: classes/class-wc-order-import.php:636
-msgid "Upload file and import"
+#: includes/admin/views/html-import-source-fields-url.php:50
+msgid "Acceptable file types: CSV or tab-delimited text files."
 msgstr ""
 
-#: classes/class-wc-csv-parser.php:247
-#. translators: Placeholders: %s - the import type: one of customer, order, or
-#. coupon
-msgid "Dry Run: no %s will be imported"
+#: includes/admin/views/html-import-source-options.php:31
+msgid "Where do you want to import data from?"
 msgstr ""
 
-#: classes/class-wc-csv-parser.php:251
-#. translators: Placeholders: %s - the import type: one of customer, order, or
-#. coupon
-msgid "Parsing %s CSV."
+#: includes/class-wc-csv-import-suite-background-import.php:222
+msgid "Unknown importer \"%s\". Cancelling."
 msgstr ""
 
-#: classes/class-wc-csv-parser.php:258
-#. translators: Placeholders: %s - the import type: one of customer, order, or
-#. coupon
-msgid "Finished parsing %s CSV."
+#: includes/class-wc-csv-import-suite-coupon-import.php:122
+msgid "%s coupons"
 msgstr ""
 
-#: classes/class-wc-csv-parser.php:300
-msgid "> Warning: Unknown column named '%s' will be ignored."
+#: includes/class-wc-csv-import-suite-coupon-import.php:123
+msgid "%s coupons inserted"
 msgstr ""
 
-#: classes/class-wc-csv-parser.php:312 classes/class-wc-csv-parser.php:597
-#: classes/class-wc-csv-parser.php:1270
-msgid "> Row %s - skipped due to record offset."
+#: includes/class-wc-csv-import-suite-coupon-import.php:124
+msgid "%s coupons merged"
 msgstr ""
 
-#: classes/class-wc-csv-parser.php:320
-#. translators: Placeholders: %1$s - row number, %2$s - coupon code if
-#. available
-msgid "> Row %1$s%2$s - preparing for import."
+#: includes/class-wc-csv-import-suite-coupon-import.php:125
+msgid "%s coupons skipped"
 msgstr ""
 
-#: classes/class-wc-csv-parser.php:324
-msgid "> > Skipped. Missing coupon code."
+#: includes/class-wc-csv-import-suite-coupon-import.php:126
+msgid "%s coupons failed"
 msgstr ""
 
-#: classes/class-wc-csv-parser.php:335
-msgid "> > Skipped. Coupon code '%s' not found, unable to merge."
+#: includes/class-wc-csv-import-suite-coupon-import.php:143
+msgid "Coupon data"
 msgstr ""
 
-#: classes/class-wc-csv-parser.php:344
-msgid "> > Skipped. Coupon code '%s' already exists."
+#: includes/class-wc-csv-import-suite-coupon-import.php:144
+msgid "Coupon code"
 msgstr ""
 
-#: classes/class-wc-csv-parser.php:355
-msgid "> > Skipped. Missing discount type."
+#: includes/class-wc-csv-import-suite-coupon-import.php:145
+msgid "Discount type"
 msgstr ""
 
-#: classes/class-wc-csv-parser.php:371
-msgid "> > Skipped. Unknown discount type '%s'."
+#: includes/class-wc-csv-import-suite-coupon-import.php:146
+msgid "Coupon amount"
 msgstr ""
 
-#: classes/class-wc-csv-parser.php:397
-msgid "> > Skipped. Unknown product sku: %s."
+#: includes/class-wc-csv-import-suite-coupon-import.php:147
+msgid "Individual use only"
 msgstr ""
 
-#: classes/class-wc-csv-parser.php:417
-msgid "> > Skipped. Unknown product category: %s."
+#: includes/class-wc-csv-import-suite-coupon-import.php:148
+msgid "Products"
 msgstr ""
 
-#: classes/class-wc-csv-parser.php:433
-msgid "> > Skipped. Invalid email: %s."
+#: includes/class-wc-csv-import-suite-coupon-import.php:149
+msgid "Exclude products"
 msgstr ""
 
-#: classes/class-wc-csv-parser.php:448
-msgid "> > Skipped. Column '%s' must be 'yes' or 'no'."
+#: includes/class-wc-csv-import-suite-coupon-import.php:150
+msgid "Usage limit per coupon"
 msgstr ""
 
-#: classes/class-wc-csv-parser.php:459
-msgid "> > Skipped. Invalid date format '%s'."
+#: includes/class-wc-csv-import-suite-coupon-import.php:151
+msgid "Usage limit per user"
 msgstr ""
 
-#: classes/class-wc-csv-parser.php:608 classes/class-wc-csv-parser.php:1336
-msgid "> Row %s - preparing for import."
+#: includes/class-wc-csv-import-suite-coupon-import.php:152
+msgid "Limit usage to x items"
 msgstr ""
 
-#: classes/class-wc-csv-parser.php:616
-msgid "> > Skipped. Order number field must be an integer: %s."
+#: includes/class-wc-csv-import-suite-coupon-import.php:153
+msgid "Usage count"
 msgstr ""
 
-#: classes/class-wc-csv-parser.php:624
-msgid ""
-"> > Skipped. Formatted order number provided but no numerical order number, "
-"see the documentation for further details."
+#: includes/class-wc-csv-import-suite-coupon-import.php:154
+msgid "Coupon expiry date"
 msgstr ""
 
-#: classes/class-wc-csv-parser.php:667
-msgid "> > Skipped. Order %s already exists."
+#: includes/class-wc-csv-import-suite-coupon-import.php:155
+msgid "Allow free shipping"
 msgstr ""
 
-#: classes/class-wc-csv-parser.php:683 classes/class-wc-csv-parser.php:1296
-msgid "> > Skipped. Cannot find customer with id %s."
+#: includes/class-wc-csv-import-suite-coupon-import.php:156
+msgid "Categories"
 msgstr ""
 
-#: classes/class-wc-csv-parser.php:728
-#. translators: Placeholders: %1$s - order status, %2$s - available order
-#. statuses
-msgid "> > Skipped. Unknown order status %1$s (%2$s)."
+#: includes/class-wc-csv-import-suite-coupon-import.php:157
+msgid "Exclude categories"
 msgstr ""
 
-#: classes/class-wc-csv-parser.php:740
-msgid "> > Skipped. Invalid date format %s."
+#: includes/class-wc-csv-import-suite-coupon-import.php:158
+msgid "Exclude sale items"
 msgstr ""
 
-#: classes/class-wc-csv-parser.php:1006
-msgid "> > Skipped. Missing SKU, quantity or total for %s on row %s."
+#: includes/class-wc-csv-import-suite-coupon-import.php:159
+msgid "Minimum spend"
 msgstr ""
 
-#: classes/class-wc-csv-parser.php:1028
-msgid "> > Skipped. Unknown order item: %s."
+#: includes/class-wc-csv-import-suite-coupon-import.php:160
+msgid "Maximum spend"
 msgstr ""
 
-#: classes/class-wc-csv-parser.php:1061
-msgid "> > Row %d - %s - skipped. Missing SKU, quantity or total"
+#: includes/class-wc-csv-import-suite-coupon-import.php:161
+msgid "Email restrictions"
 msgstr ""
 
-#: classes/class-wc-csv-parser.php:1073
-#. translators: Placeholders: %1$d - row number, %2$s - order id, %3$s - order
-#. item SKU
-msgid "> > Row %1$d - %2$s - skipped. Unknown order item: %3$s."
+#: includes/class-wc-csv-import-suite-coupon-import.php:162
+msgid "Description"
 msgstr ""
 
-#: classes/class-wc-csv-parser.php:1280
+#: includes/class-wc-csv-import-suite-coupon-import.php:210
+#: includes/class-wc-csv-import-suite-customer-import.php:242
+#: includes/class-wc-csv-import-suite-order-import.php:565
+#. translators: Placeholders: %s - row number
 msgid "> Row %s - preparing for merge."
 msgstr ""
 
-#: classes/class-wc-csv-parser.php:1284
-msgid "> > Skipped. Cannot merge without id, email or username."
+#: includes/class-wc-csv-import-suite-coupon-import.php:210
+#: includes/class-wc-csv-import-suite-customer-import.php:242
+#: includes/class-wc-csv-import-suite-order-import.php:565
+msgid "> Row %s - preparing for import."
 msgstr ""
 
-#: classes/class-wc-csv-parser.php:1302
-msgid "> > Found user with ID %s."
+#: includes/class-wc-csv-import-suite-coupon-import.php:219
+msgid "Missing coupon code."
 msgstr ""
 
-#: classes/class-wc-csv-parser.php:1310
-msgid "> > Skipped. Cannot find customer with username %s."
+#: includes/class-wc-csv-import-suite-coupon-import.php:234
+msgid "> > Skipped. Cannot find coupon with code %s. Importing instead."
 msgstr ""
 
-#: classes/class-wc-csv-parser.php:1315
-msgid "> > Found user with username %s."
+#: includes/class-wc-csv-import-suite-coupon-import.php:237
+msgid "Cannot find coupon with code %s."
 msgstr ""
 
-#: classes/class-wc-csv-parser.php:1325
-msgid "> > Skipped. Cannot find customer with email %s."
+#: includes/class-wc-csv-import-suite-coupon-import.php:242
+#. translators: Placeholders: %s - coupon code
+msgid "> > Found coupon with code '%s'."
 msgstr ""
 
-#: classes/class-wc-csv-parser.php:1330
-msgid "> > Found user with email %s."
+#: includes/class-wc-csv-import-suite-coupon-import.php:256
+#. translators: Placeholders: %s - coupon code
+msgid "Coupon code '%s' already exists."
 msgstr ""
 
-#: classes/class-wc-csv-parser.php:1340
-msgid "> > Skipped. No email set for new customer."
+#: includes/class-wc-csv-import-suite-coupon-import.php:261
+msgid "Missing coupon discount type."
 msgstr ""
 
-#: classes/class-wc-csv-parser.php:1363
-msgid "> > Skipped. Role '%s' not found."
+#: includes/class-wc-csv-import-suite-coupon-import.php:285
+#. translators: Placeholders: %s - discount type name
+msgid "Unknown discount type '%s'."
 msgstr ""
 
-#: classes/class-wc-customer-import.php:145
+#: includes/class-wc-csv-import-suite-coupon-import.php:313
+#. translators: Placeholders: %s - product SKU
+msgid "Unknown product sku: %s."
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-coupon-import.php:338
+#. translators: Placeholders: %s - product category name
+msgid "Unknown product category: %s."
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-coupon-import.php:359
+#. translators: Placeholders: %s - email address
+msgid "Invalid email: %s."
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-coupon-import.php:374
+#. translators: Placeholders: %s - column name
+msgid "Column '%s' must be 'yes' or 'no'."
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-coupon-import.php:389
+#. translators: Placeholders: %s - a date in invalid format
+msgid "Invalid date format '%s'"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-coupon-import.php:403
+#. translators: Placeholders: %1$s - column title, %2$s - column value
+msgid "Invalid %1$s '%2$s'."
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-coupon-import.php:488
+msgid "Processing coupon."
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-coupon-import.php:495
+msgid "> Merging coupon '%s'."
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-coupon-import.php:506
+msgid "> Inserting coupon '%s'"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-coupon-import.php:526
+msgid "> Finished merging coupon %s."
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-coupon-import.php:527
+msgid "> Finished importing coupon %s."
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-coupon-import.php:562
+#: includes/class-wc-csv-import-suite-customer-import.php:616
+msgid "Missing parameter %s"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-coupon-import.php:577
+#: includes/class-wc-csv-import-suite-coupon-import.php:703
+msgid "The coupon code already exists"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-coupon-import.php:605
+#: includes/class-wc-csv-import-suite-coupon-import.php:726
+msgid "Invalid coupon type - the coupon type must be any of these: %s"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-coupon-import.php:661
+msgid "Invalid coupon ID"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-coupon-import.php:667
+msgid "No coupon found with the ID equal to %s"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-coupon-import.php:672
+msgid "Invalid coupon"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-customer-import.php:59
+msgid "%s customers"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-customer-import.php:60
+msgid "%s customers inserted"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-customer-import.php:61
+msgid "%s customers merged"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-customer-import.php:62
+msgid "%s customers skipped"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-customer-import.php:63
+msgid "%s customers failed"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-customer-import.php:100
+#: includes/class-wc-csv-import-suite-order-import.php:193
+msgid "Billing: %s"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-customer-import.php:101
+#: includes/class-wc-csv-import-suite-order-import.php:194
+msgid "Shipping: %s"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-customer-import.php:105
+msgid "User data"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-customer-import.php:106
+msgid "User ID"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-customer-import.php:107
+msgid "Username"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-customer-import.php:108
+#: includes/class-wc-csv-import-suite-customer-import.php:125
+#: includes/class-wc-csv-import-suite-order-import.php:241
+msgid "Email"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-customer-import.php:109
+msgid "Password"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-customer-import.php:110
+msgid "Registered date"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-customer-import.php:111
+msgid "Role"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-customer-import.php:112
+msgid "URL"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-customer-import.php:115
+#: includes/class-wc-csv-import-suite-order-import.php:230
+msgid "Customer data"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-customer-import.php:116
+#: includes/class-wc-csv-import-suite-customer-import.php:127
+#: includes/class-wc-csv-import-suite-order-import.php:232
+#: includes/class-wc-csv-import-suite-order-import.php:243
+msgid "First name"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-customer-import.php:117
+#: includes/class-wc-csv-import-suite-customer-import.php:128
+#: includes/class-wc-csv-import-suite-order-import.php:233
+#: includes/class-wc-csv-import-suite-order-import.php:244
+msgid "Last name"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-customer-import.php:118
+#: includes/class-wc-csv-import-suite-customer-import.php:129
+#: includes/class-wc-csv-import-suite-order-import.php:234
+#: includes/class-wc-csv-import-suite-order-import.php:245
+msgid "Company"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-customer-import.php:119
+#: includes/class-wc-csv-import-suite-customer-import.php:130
+#: includes/class-wc-csv-import-suite-order-import.php:235
+#: includes/class-wc-csv-import-suite-order-import.php:246
+msgid "Address 1"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-customer-import.php:120
+#: includes/class-wc-csv-import-suite-customer-import.php:131
+#: includes/class-wc-csv-import-suite-order-import.php:236
+#: includes/class-wc-csv-import-suite-order-import.php:247
+msgid "Address 2"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-customer-import.php:121
+#: includes/class-wc-csv-import-suite-customer-import.php:132
+#: includes/class-wc-csv-import-suite-order-import.php:237
+#: includes/class-wc-csv-import-suite-order-import.php:248
+msgid "City"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-customer-import.php:122
+#: includes/class-wc-csv-import-suite-customer-import.php:133
+#: includes/class-wc-csv-import-suite-order-import.php:238
+#: includes/class-wc-csv-import-suite-order-import.php:249
+msgid "State"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-customer-import.php:123
+#: includes/class-wc-csv-import-suite-customer-import.php:134
+#: includes/class-wc-csv-import-suite-order-import.php:239
+#: includes/class-wc-csv-import-suite-order-import.php:250
+msgid "Postcode"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-customer-import.php:124
+#: includes/class-wc-csv-import-suite-customer-import.php:135
+#: includes/class-wc-csv-import-suite-order-import.php:240
+#: includes/class-wc-csv-import-suite-order-import.php:251
+msgid "Country"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-customer-import.php:126
+#: includes/class-wc-csv-import-suite-order-import.php:242
+msgid "Phone"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-customer-import.php:136
+msgid "Paying customer"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-customer-import.php:183
 msgid "Shipping Address"
 msgstr ""
 
-#: classes/class-wc-customer-import.php:148
+#: includes/class-wc-csv-import-suite-customer-import.php:188
 msgid "Use billing address as shipping address if not set"
 msgstr ""
 
-#: classes/class-wc-customer-import.php:157
+#: includes/class-wc-csv-import-suite-customer-import.php:195
 msgid "Don't hash user passwords"
 msgstr ""
 
-#: classes/class-wc-customer-import.php:159
+#: includes/class-wc-csv-import-suite-customer-import.php:200
 msgid ""
 "Enable this if your customer import file contains passwords which are "
 "already correctly hashed for WordPress."
 msgstr ""
 
-#: classes/class-wc-customer-import.php:245
-msgid "View Users"
+#: includes/class-wc-csv-import-suite-customer-import.php:207
+msgid "Send emails"
 msgstr ""
 
-#: classes/class-wc-customer-import.php:306
-msgid "Processing customers."
+#: includes/class-wc-csv-import-suite-customer-import.php:212
+msgid "Send welcome emails to new customers after import."
 msgstr ""
 
-#: classes/class-wc-customer-import.php:314
-msgid "> Customer already processed. Skipping."
+#: includes/class-wc-csv-import-suite-customer-import.php:254
+msgid "> > Cannot merge without id, email or username. Importing instead."
 msgstr ""
 
-#: classes/class-wc-customer-import.php:324
-msgid "> %s already exists."
+#: includes/class-wc-csv-import-suite-customer-import.php:269
+msgid "> > Skipped. Cannot find customer with id %s. Importing instead."
 msgstr ""
 
-#: classes/class-wc-customer-import.php:332
-msgid "> Invalid username: %s."
+#: includes/class-wc-csv-import-suite-customer-import.php:272
+#: includes/class-wc-csv-import-suite-order-import.php:684
+msgid "Cannot find customer with id %s."
 msgstr ""
 
-#: classes/class-wc-customer-import.php:339
-msgid "> Invalid email: %s."
+#: includes/class-wc-csv-import-suite-customer-import.php:277
+msgid "> > Cannot find customer with id %s."
 msgstr ""
 
-#: classes/class-wc-customer-import.php:349
+#: includes/class-wc-csv-import-suite-customer-import.php:281
+msgid "> > Found user with id %s."
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-customer-import.php:296
+msgid "> > Skipped. Cannot find customer with username %s. Importing instead."
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-customer-import.php:299
+msgid "Cannot find customer with username %s."
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-customer-import.php:304
+msgid "> > Cannot find customer with username %s."
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-customer-import.php:308
+msgid "> > Found user with username %s."
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-customer-import.php:322
+msgid "> > Skipped. Cannot find customer with email %s. Importing instead."
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-customer-import.php:325
+msgid "Cannot find customer with email %s."
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-customer-import.php:329
+msgid "> > Found user with email %s."
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-customer-import.php:341
+msgid "No email set for new customer."
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-customer-import.php:350
+msgid "Customer %s already exists."
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-customer-import.php:356
+msgid "Invalid username: %s"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-customer-import.php:361
+msgid "Invalid email: %s"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-customer-import.php:382
+msgid "Role \"%s\" not found."
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-customer-import.php:544
+msgid "Processing customer."
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-customer-import.php:550
 msgid "> Merging customer ID %s."
 msgstr ""
 
-#: classes/class-wc-customer-import.php:378
-#. translators: Placeholders: %1$s - username, %2$s - error message
-msgid "Failed to update customer %1$s: %2$s;"
+#: includes/class-wc-csv-import-suite-customer-import.php:559
+msgid "> Inserting customer %s"
 msgstr ""
 
-#: classes/class-wc-customer-import.php:388
-msgid "> > Skipped. Email %s already in use."
-msgstr ""
-
-#: classes/class-wc-customer-import.php:395
-msgid "> > Skipped. Username %s already in use."
-msgstr ""
-
-#: classes/class-wc-customer-import.php:401
-msgid "> Inserting %s"
-msgstr ""
-
-#: classes/class-wc-customer-import.php:419
-#. translators: Placeholders: %1$s - username, %2$s - error message
-msgid "Failed to import customer %1$s: %2$s;"
-msgstr ""
-
-#: classes/class-wc-customer-import.php:424
-msgid "> Inserted - customer ID is %s."
-msgstr ""
-
-#: classes/class-wc-customer-import.php:453
+#: includes/class-wc-csv-import-suite-customer-import.php:579
 msgid "> Finished merging customer ID %s."
 msgstr ""
 
-#: classes/class-wc-customer-import.php:456
+#: includes/class-wc-csv-import-suite-customer-import.php:580
 msgid "> Finished importing customer ID %s."
 msgstr ""
 
-#: classes/class-wc-customer-import.php:460
-msgid "Finished processing customers."
+#: includes/class-wc-csv-import-suite-customer-import.php:692
+msgid "Invalid customer ID"
 msgstr ""
 
-#: classes/class-wc-customer-import.php:471
-#: woocommerce-customer-order-csv-import.php:268
-msgid "Import Customers"
+#: includes/class-wc-csv-import-suite-customer-import.php:699
+msgid "Invalid customer"
 msgstr ""
 
-#: classes/class-wc-customer-import.php:489
+#: includes/class-wc-csv-import-suite-importer.php:88
+msgid "%s items"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-importer.php:89
+msgid "%s items inserted"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-importer.php:90
+msgid "%s items merged"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-importer.php:91
+msgid "%s items skipped"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-importer.php:92
+msgid "%s items failed"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-importer.php:354
+msgid "CSV or tab-delimited text file"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-importer.php:355
+msgid "Upload & import data from .csv or .txt files"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-importer.php:361
+msgid "URL or file path"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-importer.php:362
+msgid "Import data from an URL or path to a file on the server."
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-importer.php:367
+msgid "Copy/paste from file"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-importer.php:368
+msgid "Copy & paste data from .xls, .xlsx or .csv files."
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-importer.php:532
+msgid "Custom Field with column name"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-importer.php:533
+msgid "Taxonomy with column name"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-importer.php:607
 msgid ""
-"Hi there! Upload a CSV file containing customer data to import the contents "
-"into your shop."
+"Could not find job \"%s\". It may have been completed a while ago, deleted "
+"or never existed."
 msgstr ""
 
-#: classes/class-wc-order-import.php:171
-msgid "Allow Unknown Products"
+#: includes/class-wc-csv-import-suite-importer.php:617
+#: includes/class-wc-csv-import-suite-importer.php:1298
+msgid "Inserted"
 msgstr ""
 
-#: classes/class-wc-order-import.php:173
+#: includes/class-wc-csv-import-suite-importer.php:624
+#: includes/class-wc-csv-import-suite-importer.php:1299
+msgid "Merged"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-importer.php:631
+#: includes/class-wc-csv-import-suite-importer.php:1300
+msgid "Skipped"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-importer.php:638
+#: includes/class-wc-csv-import-suite-importer.php:1301
+msgid "Failed"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-importer.php:741
+msgid "Could not find the file %s "
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-importer.php:781
+msgid "Sorry, there has been an error: %s"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-importer.php:978
+msgid "> Preparing multi-line item %s (rows %s)"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-importer.php:1009
+msgid "> Skipped importing rows %s due to issues with related rows."
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-importer.php:1118
+msgid "> > Skipping taxonomy \"%s\" - it does not exist."
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-importer.php:1217
+msgid "> > Failed to import term %s %s"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-importer.php:1475
+msgid "Comma"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-importer.php:1476
+msgid "Semicolon"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-importer.php:1477
+msgid "Tab"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:108
+msgid "%s orders"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:109
+msgid "%s orders inserted"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:110
+msgid "%s orders merged"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:111
+msgid "%s orders skipped"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:112
+msgid "%s orders failed"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:200
+msgid "Order data"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:201
+msgid "Order ID"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:202
+msgid "Formatted order number"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:203
+msgid "Order number"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:204
+msgid "Date"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:206
+msgid "Currency"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:207
+msgid "Shipping total"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:208
+msgid "Shipping tax total"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:209
+msgid "Fees total"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:210
+msgid "Fees tax total"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:211
+msgid "Tax total"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:212
+msgid "Discount"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:213
+msgid "Order total"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:214
+msgid "Total refunded amount"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:215
+msgid "Payment method"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:216
+msgid "Shipping method"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:217
+msgid "Customer note"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:218
+msgid "Order notes"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:219
+msgid "Download Permissions Granted"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:222
+#: includes/class-wc-csv-import-suite-order-import.php:333
+msgid "Order items"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:223
+msgid "Line items"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:224
+msgid "Shipping items"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:225
+msgid "Taxes"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:226
+msgid "Fees"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:227
+msgid "Coupons"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:231
+msgid "Customer user (ID, username or email)"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:254
+msgid "Refunds"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:348
+msgid "Order item %d"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:355
+msgid "Tax item %d"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:362
+msgid "Shipping method %d"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:369
+msgid "Shipping cost %d"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:382
+#: includes/class-wc-csv-import-suite-order-import.php:399
+msgid "Item name"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:383
+#: includes/class-wc-csv-import-suite-order-import.php:398
+msgid "Item SKU"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:384
+#: includes/class-wc-csv-import-suite-order-import.php:401
+msgid "Item quantity"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:385
+msgid "Item tax"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:386
+#: includes/class-wc-csv-import-suite-order-import.php:402
+msgid "Item total"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:387
+#: includes/class-wc-csv-import-suite-order-import.php:400
+msgid "Item meta"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:429
+msgid "Allow unknown products"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:434
 msgid ""
-"Allow line items with unknown product sku/id.  The line item will not be "
+"Allow line items with unknown product sku/id. The line item will not be "
 "linked to any product, so this is not necessarily recommended."
 msgstr ""
 
-#: classes/class-wc-order-import.php:204
-#. translators: Placeholders: %1$s - number of imported records, %2$s - </em>
-#. number of merged records, %3$s - number of skipped records, %4$s - number of
-#. errors, %5$s - <strong> tag, %6$s - </strong> tag
+#: includes/class-wc-csv-import-suite-order-import.php:441
+msgid "Re-calculate taxes & totals"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:446
 msgid ""
-"Import complete - imported %5$s%1$s%6$s, merged %5$s%2$s%6$s, skipped "
-"%5$s%3$s%6$s, errors %5$s%4$s%6$s"
+"Re-calculate taxes and totals after importing the order. This may result in "
+"different tax and order totals than in the CSV file."
 msgstr ""
 
-#: classes/class-wc-order-import.php:247
-msgid "View Orders"
+#: includes/class-wc-csv-import-suite-order-import.php:590
+msgid "Order number field must be an integer: %s."
 msgstr ""
 
-#: classes/class-wc-order-import.php:303
-msgid "Processing orders."
+#: includes/class-wc-csv-import-suite-order-import.php:594
+msgid ""
+"Formatted order number provided but no numerical order number, see the "
+"documentation for further details."
 msgstr ""
 
-#: classes/class-wc-order-import.php:310
-msgid "> Order %s already processed. Skipping."
+#: includes/class-wc-csv-import-suite-order-import.php:604
+msgid "> > Cannot merge without id or order number. Importing instead."
 msgstr ""
 
-#: classes/class-wc-order-import.php:340
-#. translators: Placeholders: %1$s - formatted order number, %2$s - error
-#. message
-msgid "> Error inserting %1$s: %2$s"
+#: includes/class-wc-csv-import-suite-order-import.php:623
+msgid "> > Skipped. Cannot find order with formatted number %s. Importing instead."
 msgstr ""
 
-#: classes/class-wc-order-import.php:355
-#. translators: Placeholders: %s - order number
-msgid "Order %s was not found and could not be imported."
+#: includes/class-wc-csv-import-suite-order-import.php:626
+msgid "Cannot find order with formatted number %s."
 msgstr ""
 
-#: classes/class-wc-order-import.php:360
-#. translators: Placeholders: %1$s - formatted order number, %2$s - error
-#. message
-msgid "> Error updating order %1$s: %2$s"
+#: includes/class-wc-csv-import-suite-order-import.php:631
+msgid "> > Cannot find order with formatted number %s."
 msgstr ""
 
-#: classes/class-wc-order-import.php:421
-msgid "Unknown Product"
+#: includes/class-wc-csv-import-suite-order-import.php:635
+msgid "> > Found order with formatted number %s."
 msgstr ""
 
-#: classes/class-wc-order-import.php:514
+#: includes/class-wc-csv-import-suite-order-import.php:649
+msgid "> > Skipped. Cannot find order with id %s. Importing instead."
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:652
+msgid "Cannot find order with id %s."
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:656
+msgid "> > Found order with ID %s."
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:669
+msgid "Order %s already exists."
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:736
+#. translators: Placeholders: %1$s - order status, %2$s - available order
+#. statuses
+msgid "Unknown order status %1$s (%2$s)."
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:751
+msgid "Invalid date format %s."
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:776
+msgid "Skipped. Invalid or unsupported currency %s."
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:964
+msgid "Cannot import order without line items"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:1061
+msgid "Error while parsing line items for line %d: %s"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:1105
+msgid "Missing SKU, quantity or total for %s on line %s."
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:1125
+#: includes/class-wc-csv-import-suite-order-import.php:1522
+#: includes/class-wc-csv-import-suite-order-import.php:1564
+#. translators: Placeholders: %s - order item SKU
+msgid "Unknown order item: %s."
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:1272
+msgid "> > Cannot update product \"%s\" without order item ID. Inserting instead."
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:1276
+msgid "> > Cannot update coupon \"%s\" without order item ID. Inserting instead."
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:1280
+msgid "> > Cannot update fee \"%s\" without order item ID. Inserting instead."
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:1284
+msgid ""
+"> > Cannot update shipping method \"%s\" without order item ID. Inserting "
+"instead."
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:1288
+msgid "> > Cannot update tax rate \"%s\" without order item ID. Inserting instead."
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:1448
+msgid ""
+"> > Cannot update product \"%s\" without order item ID, as multiple similar "
+"products exist for the order and no direct match could be determined. "
+"Skipping merging line items."
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:1452
+msgid ""
+"> > Cannot update coupon \"%s\" without order item ID, as multiple similar "
+"coupons exist for the order and no direct match could be determined. "
+"Skipping merging coupons."
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:1456
+msgid ""
+"> > Cannot update fee \"%s\" without order item ID, as multiple similar "
+"fees exist for the order and no direct match could be determined. Skipping "
+"merging fees."
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:1460
+msgid ""
+"> > Cannot update shipping method \"%s\" without order item ID, as multiple "
+"similar shipping methods exist for the order and no direct match could be "
+"determined. Skipping merging shipping methods."
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:1464
+msgid ""
+"> > Cannot update tax rate \"%s\" without order item ID, as multiple "
+"similar tax rates exist for the order and no direct match could be "
+"determined. Skipping merging tax rates."
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:1468
+msgid "Cannot determine a unique match for order item"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:1507
+msgid "Missing product ID/SKU, quantity or total for order item on line %s."
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:1555
+msgid "Missing SKU, quantity or total for order item on line %s"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:1619
+msgid "Error while parsing shipping items for line %d: %s"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:1792
+msgid "Error while parsing taxes for line %d: %s"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:1841
+#: includes/class-wc-csv-import-suite-order-import.php:1931
+msgid "Tax"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:1987
+msgid "Error while parsing fees for line %d: %s"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:2021
+#: includes/class-wc-csv-import-suite-order-import.php:2065
+msgid "Fee"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:2096
+msgid "Error while parsing coupons for line %d: %s"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:2106
+msgid "Missing coupon code on line %d"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:2136
+msgid "Error while parsing refunds for line %d: %s"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:2305
+msgid "> Processing order"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:2317
+msgid "> Merging order %s."
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:2326
+msgid "> Inserting order %s"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:2365
+msgid "> Finished merging order %s."
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:2368
+msgid "> Finished importing order %s."
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:2415
+#. translators: Placeholders: %1$s - order identifier, %2$s - error message
+msgid "Failed to insert order %1$s: %2$s;"
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:2432
 msgid "Original order #%s"
 msgstr ""
 
-#: classes/class-wc-order-import.php:524
-msgid "> Finished importing order %s"
+#: includes/class-wc-csv-import-suite-order-import.php:2499
+#. translators: Placeholders: %1$s - order identifier, %2$s - error message(s)
+msgid "Failed to update order %1$s: %2$s;"
 msgstr ""
 
-#: classes/class-wc-order-import.php:529
-msgid "Finished processing orders."
+#: includes/class-wc-csv-import-suite-order-import.php:2768
+msgid "> > Warning: cannot add order item \"%s\"."
 msgstr ""
 
-#: classes/class-wc-order-import.php:574
-#: woocommerce-customer-order-csv-import.php:277
-msgid "Import Orders"
+#: includes/class-wc-csv-import-suite-order-import.php:2783
+msgid "> > Warning: cannot add shipping method \"%s\"."
 msgstr ""
 
-#: classes/class-wc-order-import.php:592
-msgid ""
-"Hi there! Upload a CSV file containing order data to import the contents "
-"into your shop."
+#: includes/class-wc-csv-import-suite-order-import.php:2797
+msgid "> > Warning: cannot add tax \"%s\"."
 msgstr ""
 
-#: lib/skyverge/woocommerce/class-sv-wc-admin-notice-handler.php:194
-#. translators: this is an action that dismisses a message
-msgid "Dismiss"
+#: includes/class-wc-csv-import-suite-order-import.php:2805
+msgid "> > Warning: cannot add coupon \"%s\"."
 msgstr ""
 
-#: lib/skyverge/woocommerce/class-sv-wc-framework-bootstrap.php:262
-msgid ""
-"The following plugins are inactive because they are out of date and require "
-"a newer version to function properly:"
+#: includes/class-wc-csv-import-suite-order-import.php:2839
+msgid "> > Warning: cannot add fee \"%s\"."
 msgstr ""
 
-#: lib/skyverge/woocommerce/class-sv-wc-framework-bootstrap.php:262
-msgid ""
-"The following plugin is inactive because it is out of date and requires a "
-"newer version to function properly:"
+#: includes/class-wc-csv-import-suite-order-import.php:2877
+msgid "> > Warning: cannot update order item %d."
 msgstr ""
 
-#: lib/skyverge/woocommerce/class-sv-wc-framework-bootstrap.php:273
-#. translators: Placeholders: %1$s - <a> tag, %2$s - </a> tag, %3$s - <em> tag,
-#. %4$s - </em> tag, %5$s - <a> tag, %6$s - </a> tag
-msgid ""
-"To reactivate these plugins, please %1$supdate now (recommended)%2$s "
-"%3$sor%4$s %5$sdeactivate the following%6$s:"
+#: includes/class-wc-csv-import-suite-order-import.php:2886
+msgid "> > Warning: cannot update shipping method \"%s\"."
 msgstr ""
 
-#: lib/skyverge/woocommerce/class-sv-wc-framework-bootstrap.php:275
-#. translators: Placeholders: %1$s - <a> tag, %2$s - </a> tag, %3$s - <em> tag,
-#. %4$s - </em> tag, %5$s - <a> tag, %6$s - </a> tag
-msgid ""
-"To reactivate this plugin, please %1$supdate now (recommended)%2$s "
-"%3$sor%4$s %5$sdeactivate the following%6$s:"
+#: includes/class-wc-csv-import-suite-order-import.php:2895
+msgid "> > Warning: cannot update tax \"%s\"."
 msgstr ""
 
-#: lib/skyverge/woocommerce/class-sv-wc-framework-bootstrap.php:291
-msgid ""
-"The following plugins are inactive because they require a newer version of "
-"WooCommerce:"
+#: includes/class-wc-csv-import-suite-order-import.php:2908
+msgid "> > Warning: cannot merge coupon \"%s\"."
 msgstr ""
 
-#: lib/skyverge/woocommerce/class-sv-wc-framework-bootstrap.php:291
-msgid ""
-"The following plugin is inactive because it requires a newer version of "
-"WooCommerce:"
+#: includes/class-wc-csv-import-suite-order-import.php:2923
+msgid "> > Warning: cannot merge fee \"%s\"."
 msgstr ""
 
-#: lib/skyverge/woocommerce/class-sv-wc-framework-bootstrap.php:296
-#. translators: Placeholders: %1$s - plugin name, %2$s - WooCommerce version
-#. number
-msgid "%1$s requires WooCommerce %2$s or newer"
+#: includes/class-wc-csv-import-suite-order-import.php:3026
+msgid "Unknown product"
 msgstr ""
 
-#: lib/skyverge/woocommerce/class-sv-wc-framework-bootstrap.php:300
-#. translators: Placeholders: %1$s - <a> tag, %2$s - </a> tag
-msgid "Please %1$supdate WooCommerce%2$s"
+#: includes/class-wc-csv-import-suite-order-import.php:3437
+msgid "The maximum stack depth has been exceeded."
 msgstr ""
 
-#: lib/skyverge/woocommerce/class-sv-wc-plugin.php:143
-#. translators: Placeholders: %s - plugin name
-msgid "You cannot clone instances of %s."
+#: includes/class-wc-csv-import-suite-order-import.php:3441
+msgid "Invalid or malformed JSON."
 msgstr ""
 
-#: lib/skyverge/woocommerce/class-sv-wc-plugin.php:153
-#. translators: Placeholders: %s - plugin name
-msgid "You cannot unserialize instances of %s."
+#: includes/class-wc-csv-import-suite-order-import.php:3445
+msgid "Control character error, possibly incorrectly encoded."
 msgstr ""
 
-#: lib/skyverge/woocommerce/class-sv-wc-plugin.php:281
-#. translators: Placeholders: %1$s - plugin name, %2$s - a PHP
-#. extension/comma-separated list of PHP extensions
-msgid ""
-"%1$s requires the %2$s PHP extension to function. Contact your host or "
-"server administrator to configure and install the missing extension."
-msgid_plural ""
-"%1$s requires the following PHP extensions to function: %2$s. Contact your "
-"host or server administrator to configure and install the missing "
-"extensions."
-msgstr[0] ""
-msgstr[1] ""
-
-#: lib/skyverge/woocommerce/class-sv-wc-plugin.php:302
-#. translators: Placeholders: %1$s - plugin name, %2$s - a PHP
-#. function/comma-separated list of PHP functions
-msgid ""
-"%1$s requires the %2$s PHP function to exist.  Contact your host or server "
-"administrator to configure and install the missing function."
-msgid_plural ""
-"%1$s requires the following PHP functions to exist: %2$s.  Contact your "
-"host or server administrator to configure and install the missing functions."
-msgstr[0] ""
-msgstr[1] ""
-
-#: lib/skyverge/woocommerce/class-sv-wc-plugin.php:338
-#. translators: Docs as in Documentation
-msgid "Docs"
+#: includes/class-wc-csv-import-suite-order-import.php:3449
+msgid "Syntax error, malformed JSON."
 msgstr ""
 
-#: lib/skyverge/woocommerce/class-sv-wc-plugin.php:608
-msgid "Configure"
+#: includes/class-wc-csv-import-suite-order-import.php:3454
+msgid "Malformed UTF-8 characters, possibly incorrectly encoded."
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:3459
+msgid "One or more recursive references in the value to be encoded."
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:3464
+msgid "One or more NAN or INF values in the value to be encoded."
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:3468
+msgid "A value of a type that cannot be encoded was given."
+msgstr ""
+
+#: includes/class-wc-csv-import-suite-order-import.php:3472
+msgid "Unknown JSON error occured."
 msgstr ""
 
 #: woocommerce-customer-order-csv-import.php:44
-#: woocommerce-customer-order-csv-import.php:418
-msgid "WooCommerce Customer/Order CSV Import"
+#: woocommerce-customer-order-csv-import.php:336
+msgid "WooCommerce Customer/Order/Coupon CSV Import"
 msgstr ""
 
-#: woocommerce-customer-order-csv-import.php:106
-msgid "Import <strong>customers</strong> to your store via a csv file."
-msgstr ""
-
-#: woocommerce-customer-order-csv-import.php:111
-msgid "Import <strong>orders</strong> to your store via a csv file."
-msgstr ""
-
-#: woocommerce-customer-order-csv-import.php:116
-msgid "Import <strong>coupons</strong> to your store via a csv file."
-msgstr ""
-
-#: woocommerce-customer-order-csv-import.php:137
+#: woocommerce-customer-order-csv-import.php:251
 msgid "Import"
 msgstr ""
 
-#: woocommerce-customer-order-csv-import.php:203
-#: woocommerce-customer-order-csv-import.php:204
-msgid "CSV Customer Import Suite"
-msgstr ""
-
-#: woocommerce-customer-order-csv-import.php:233
-msgid "Import Customers &amp; Orders"
-msgstr ""
-
-#: woocommerce-customer-order-csv-import.php:252
-msgid ""
-"<strong>Customer CSV Import Suite</strong> &#8211; Before getting started "
-"prepare your CSV files"
-msgstr ""
-
-#: woocommerce-customer-order-csv-import.php:254
-msgid "Documentation"
-msgstr ""
-
-#: woocommerce-customer-order-csv-import.php:255
-msgid "Sample Customer CSV"
-msgstr ""
-
-#: woocommerce-customer-order-csv-import.php:256
-msgid "Sample Order CSV"
-msgstr ""
-
-#: woocommerce-customer-order-csv-import.php:257
-msgid "Sample Coupon CSV"
-msgstr ""
-
-#: woocommerce-customer-order-csv-import.php:264
-msgid "Import Customer CSV"
-msgstr ""
-
-#: woocommerce-customer-order-csv-import.php:265
-msgid "Import customers into WooCommerce using this tool."
-msgstr ""
-
-#: woocommerce-customer-order-csv-import.php:266
-msgid ""
-"Upload a CSV from your computer. Click import to import your CSV as new "
-"customers (existing customers will be skipped), or click merge to merge "
-"customers. Importing requires the <code>email</code> column, whilst merging "
-"requires <code>email</code>, <code>username</code> or <code>id</code>."
-msgstr ""
-
-#: woocommerce-customer-order-csv-import.php:268
-msgid "Merge Customers"
-msgstr ""
-
-#: woocommerce-customer-order-csv-import.php:274
-msgid "Import Orders CSV"
-msgstr ""
-
-#: woocommerce-customer-order-csv-import.php:275
-msgid "Import and add orders using this tool."
-msgstr ""
-
-#: woocommerce-customer-order-csv-import.php:276
-msgid "Upload a CSV from your computer to import previous orders."
-msgstr ""
-
-#: woocommerce-customer-order-csv-import.php:283
-msgid "Import Coupons CSV"
-msgstr ""
-
-#: woocommerce-customer-order-csv-import.php:284
-msgid "Import and add coupons using this tool."
-msgstr ""
-
-#: woocommerce-customer-order-csv-import.php:285
-msgid ""
-"Import a CSV from your computer. Click import to import your CSV as new "
-"coupons (existing coupons will be skipped), or click merge to merge coupons."
-msgstr ""
-
-#: woocommerce-customer-order-csv-import.php:286
-msgid "Merge Coupons"
-msgstr ""
-
 #. Plugin Name of the plugin/theme
-msgid "WooCommerce Customer/Order CSV Import Suite"
+msgid "WooCommerce Customer/Order/Coupon CSV Import Suite"
 msgstr ""
 
 #. Plugin URI of the plugin/theme
@@ -723,7 +1402,7 @@ msgid "http://www.woothemes.com/extension/customerorder-csv-import-suite/"
 msgstr ""
 
 #. Description of the plugin/theme
-msgid "Import customers, orders and coupons straight from the WordPress admin"
+msgid "Import customers, coupons and orders straight from the WordPress admin"
 msgstr ""
 
 #. Author of the plugin/theme
@@ -732,9 +1411,4 @@ msgstr ""
 
 #. Author URI of the plugin/theme
 msgid "http://www.woothemes.com"
-msgstr ""
-
-#: lib/skyverge/woocommerce/class-sv-wc-plugin.php:343
-msgctxt "noun"
-msgid "Support"
 msgstr ""

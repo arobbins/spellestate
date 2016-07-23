@@ -12,7 +12,15 @@
 	/////////////////////////////////////////////
  	SPB.general = {
  		init: function() {
-
+ 			// PAGE BUILDER ROW CONTENT HEIGHT
+			if ( SPB.var.window.width() > 767 ) {
+				SPB.general.fwRowContent();
+			}
+			SPB.var.window.smartresize( function() {
+				if ( SPB.var.window.width() > 767 ) {
+					SPB.general.fwRowContent();
+				}
+			});
  		},
  		load: function() {
  			// OFFSET CALC
@@ -38,7 +46,52 @@
 			}
 			
 			SPB.var.offset = adjustment;
- 		}
+ 		},
+ 		fwRowContent: function() {
+			jQuery('.spb-row-container[data-v-center="true"]').each(function() {
+
+				if (jQuery(this).find('.row').length > 0) {
+
+					jQuery(this).find('.row').each(function() {
+						var contentHeight = 0;
+
+						if (jQuery(this).find('> div').length > 1) {
+
+							jQuery(this).addClass('multi-column-row');
+
+							jQuery(this).find('> div').each(function() {
+								var assetPadding = parseInt(jQuery(this).css('padding-top')) + parseInt(jQuery(this).css('padding-bottom')),
+									itemHeight = jQuery(this).find('.spb-asset-content').first().innerHeight() + assetPadding;
+								if (itemHeight > contentHeight) {
+									contentHeight = itemHeight;
+								}
+							});
+
+							// SET THE ROW & INNER ASSET MIN HEIGHT
+							jQuery(this).css('min-height', contentHeight);
+							jQuery(this).find('> div').css('min-height', contentHeight);
+
+							// VERTICAL ALIGN THE INNER ASSET CONTENT
+							jQuery(this).find('> div').each(function() {
+								var assetContent = jQuery(this).find('.spb-asset-content').first(),
+									assetPadding = parseInt(jQuery(this).css('padding-top')) + parseInt(jQuery(this).css('padding-bottom')) + parseInt(assetContent.css('padding-top')) + parseInt(assetContent.css('padding-bottom')),
+									innerHeight = assetContent.height() + assetPadding,
+									margins = Math.floor((contentHeight / 2) - (innerHeight /2));
+
+								if ( margins > 0 ) {
+									assetContent.css('margin-top', margins).css('margin-bottom', margins);
+								} else {
+									assetContent.css('margin-top', '').css('margin-bottom', '');
+								}
+							});
+
+						}
+
+					});
+
+				}
+			});
+		},
  	};
 
 	/////////////////////////////////////////////
@@ -227,6 +280,76 @@
 		}
 	};
 
+	/////////////////////////////////////////////
+	// DIRECTORY USER LISTINGS
+	/////////////////////////////////////////////
+	SPB.directoryUserListings = {
+		init: function() {
+			// CANCEL LISTING MODAL
+			jQuery( document ).on('click', '.cancel-listing-modal', function() {
+			    jQuery( '.spb-modal-listing' ).html( '' );
+        		jQuery( '.spb-modal-listing ' ).hide();
+        	    jQuery( '#spb_edit_listing' ).hide();
+        		return false;
+			});
+            			
+            // SAVE LISTING MODAL
+			jQuery( document ).on('click', '.save-listing-modal', function() {
+				jQuery('#add-directory-entry').submit();
+		    });
+
+			// EDIT LISTING
+	        jQuery( 'body' ).append( '<div id="spb_edit_listing"></div><div class="spb-modal-listing"></div>' );
+
+            jQuery( document ).on('click', '.edit-listing', function() {
+
+				var ajaxurl = jQuery('.user-listing-results').attr('data-ajax-url');
+				var listing_id = jQuery(this).attr('data-listing-id');
+				var data = {
+				    action: 'sf_edit_directory_item',
+				    listing_id: listing_id
+				};
+
+				jQuery.post(ajaxurl, data, function( response ) {
+					jQuery( '#spb_edit_listing' ).show().css( {"padding-top": 60} );
+					jQuery( '.spb-modal-listing' ).html( response );
+					jQuery( '.spb-modal-listing' ).show();
+					jQuery( '#spb_edit_listing' ).html( '' );
+				});
+							
+				return false;
+
+			});
+
+			// Delete listing confirm
+			jQuery( document ).on('click', '.delete-listing-confirmation', function(e) {				
+				e.preventDefault();
+				var ajaxurl = jQuery('.user-listing-results').attr('data-ajax-url');
+				var listing_id = jQuery('#modal-from-dom').attr('listing-id');	   
+				var data = {
+					action: 'sf_delete_directory_item',
+					listing_id: listing_id
+				};
+				jQuery.post( ajaxurl, data, function( response ) {
+				    location.reload();
+				});
+			});
+
+			// Cancel the delete listing confirmation popup 	
+			jQuery( document ).on('click', '.cancel-delete-listing', function(e) {
+				e.preventDefault();
+				jQuery('#modal-from-dom').modal('hide');
+			});
+
+			// Displays the delete listing confirmation popup	
+			jQuery( document ).on( 'click', '.delete-listing', function(e) {
+				e.preventDefault();
+				var listing_id = jQuery(this).attr('data-listing-id');
+				jQuery('#modal-from-dom').attr('listing-id', listing_id);
+				jQuery('#modal-from-dom').data('id', listing_id).modal('show');
+			});
+		}
+	};
 
 	/////////////////////////////////////////////
 	// DYNAMIC HEADER
@@ -461,6 +584,11 @@
 		init: function() {
 
 			SPB.general.init();
+
+			// DIRECTORY USER LISTINGS
+			if ( jQuery('.spb_directory_user_listings_widget').length > 0 ) {
+				SPB.directoryUserListings.init();
+			}
 
 			// FAQs
 			if ( jQuery('.spb_faqs_element').length > 0 ) {

@@ -18,11 +18,11 @@
  *
  * @package     WC-Customer-Order-CSV-Export/Export-Methods/Download
  * @author      SkyVerge
- * @copyright   Copyright (c) 2012-2015, SkyVerge, Inc.
+ * @copyright   Copyright (c) 2012-2016, SkyVerge, Inc.
  * @license     http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+defined( 'ABSPATH' ) or exit;
 
 /**
  * Customer/Order CSV Export Method Download
@@ -53,7 +53,9 @@ class WC_Customer_Order_CSV_Export_Method_Download implements WC_Customer_Order_
 		do_action( 'wc_customer_order_csv_export_download_after_headers' );
 
 		// clear the output buffer
-		@ob_clean();
+		@ini_set( 'zlib.output_compression', 'Off' );
+		@ini_set( 'output_buffering', 'Off' );
+		@ini_set( 'output_handler', '' );
 
 		// open the output buffer for writing
 		$fp = fopen( 'php://output', 'w' );

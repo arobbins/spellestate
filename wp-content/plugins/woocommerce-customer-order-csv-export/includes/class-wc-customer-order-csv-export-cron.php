@@ -18,11 +18,11 @@
  *
  * @package     WC-Customer-Order-CSV-Export/Generator
  * @author      SkyVerge
- * @copyright   Copyright (c) 2012-2015, SkyVerge, Inc.
+ * @copyright   Copyright (c) 2012-2016, SkyVerge, Inc.
  * @license     http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+defined( 'ABSPATH' ) or exit;
 
 /**
  * Customer/Order CSV Export Cron Class
@@ -71,7 +71,7 @@ class WC_Customer_Order_CSV_Export_Cron {
 
 				$schedules['wc_customer_order_csv_export_auto_export_interval'] = array(
 					'interval' => (int) $export_interval * 60,
-					'display'  => sprintf( __( 'Every %d minutes', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ), (int) $export_interval )
+					'display'  => sprintf( __( 'Every %d minutes', 'woocommerce-customer-order-csv-export' ), (int) $export_interval )
 				);
 			}
 		}
@@ -132,29 +132,30 @@ class WC_Customer_Order_CSV_Export_Cron {
 
 		$order_statuses = (array) get_option( 'wc_customer_order_csv_export_auto_export_statuses' );
 
-		// get un-exported order IDs
-		$query_args = array(
+		/**
+		 * Query order IDs to export
+		 *
+		 * By default we get un-exported order IDs,
+		 * but this filter can change the query behavior
+		 *
+		 * @since 3.11.2
+		 * @param array $query_args WP_Query args to fetch order IDs to export automatically
+		 * @param array $order_statuses Order statuses to export
+		 */
+		$query_args = apply_filters( 'wc_customer_order_csv_export_auto_export_order_query_args', array(
 			'fields'      => 'ids',
 			'post_type'   => 'shop_order',
 			'post_status' => empty( $order_statuses ) ? 'any' : $order_statuses,
 			'nopaging'    => true,
 			'meta_key'    => '_wc_customer_order_csv_export_is_exported',
 			'meta_value'  => 0
-		);
-
-		// convert the 'any' query arg to an array of order statuses for WC 2.1
-		if ( SV_WC_Plugin_Compatibility::is_wc_version_lt_2_2() && 'any' === $query_args['post_status'] ) {
-
-			$query_args['post_status'] = array_keys( SV_WC_Plugin_Compatibility::wc_get_order_statuses() );
-		}
-
-		$query_args = SV_WC_Plugin_Compatibility::backport_order_status_query_args( $query_args );
+		), $order_statuses );
 
 		$query = new WP_Query( $query_args );
 
 		if ( ! empty( $query->posts ) ) {
 
-			// export them!
+			// Export the queried orders
 			$export = new WC_Customer_Order_CSV_Export_Handler( $query->posts );
 
 			$export->export_via( get_option( 'wc_customer_order_csv_export_auto_export_method' ) );

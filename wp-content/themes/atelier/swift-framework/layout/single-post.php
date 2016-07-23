@@ -92,7 +92,7 @@
 
     /* CUSTOM FORMATTING */
     $extra_paragraph_spacing = sf_get_post_meta( $post->ID, 'sf_extra_paragraph_spacing', true );
-    if ( $extra_paragraph_spacing ) {
+    if ( $extra_paragraph_spacing && $sidebar_config == "no-sidebars" ) {
         $content_wrap_class .= ' extra-spacing';
     }
 

@@ -5,7 +5,7 @@
     *	Swift Page Builder - Post Detail Function Class
     *	------------------------------------------------
     *	Swift Framework
-    * 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+    * 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     *	sf_post_detail_heading()
     *	sf_portfolio_detail_media()

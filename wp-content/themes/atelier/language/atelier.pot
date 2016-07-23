@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Atelier\n"
-"POT-Creation-Date: 2016-05-18 21:10+0100\n"
+"POT-Creation-Date: 2016-07-01 18:34+0100\n"
 "PO-Revision-Date: 2016-05-13 01:44+0100\n"
 "Last-Translator: Swift Ideas <ed@swiftideas.net>\n"
 "Language-Team: Swift Ideas <ed@swiftideas.net>\n"
@@ -10,7 +10,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.7\n"
+"X-Generator: Poedit 1.8.8\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
@@ -430,9 +430,8 @@ msgstr ""
 msgid "Slug:"
 msgstr ""
 
-#: bbpress/form-topic-tag.php:45 includes/class-tgm-plugin-activation.php:2759
+#: bbpress/form-topic-tag.php:45 includes/class-tgm-plugin-activation.php:2921
 #: includes/option-extensions/extensions/custom_fonts/custom_fonts/field_custom_fonts.php:194
-#: includes/option-extensions/extensions/custom_icon_fonts/custom_icon_fonts/field_custom_icon_fonts.php:183
 msgid "Update"
 msgstr ""
 
@@ -455,9 +454,9 @@ msgid ""
 msgstr ""
 
 #: bbpress/form-topic-tag.php:88 bbpress/form-topic-tag.php:101
-#: includes/meta-box/inc/fields/autocomplete.php:14
-#: includes/meta-box/inc/fields/autocomplete.php:77
-#: includes/meta-box/inc/fields/autocomplete.php:94
+#: includes/meta-box/inc/fields/autocomplete.php:23
+#: includes/meta-box/inc/fields/autocomplete.php:87
+#: includes/meta-box/inc/fields/autocomplete.php:104
 #: includes/options/inc/fields/slides/field_slides.php:167
 #: includes/options/inc/fields/slides/field_slides.php:220
 msgid "Delete"
@@ -959,32 +958,40 @@ msgstr ""
 msgid "You must be <a href=\"%s\">logged in</a> to post a comment."
 msgstr ""
 
-#: functions.php:377 woocommerce/cart/cart-totals.php:94
+#: functions.php:388 woocommerce/cart/cart-totals.php:94
 msgid "Proceed to Checkout"
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:334
+#: includes/class-tgm-plugin-activation.php:335
 #: includes/plugin-includes.php:153
 msgid "Install Required Plugins"
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:335
+#: includes/class-tgm-plugin-activation.php:336
 #: includes/plugin-includes.php:154
 msgid "Install Plugins"
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:336
+#. translators: %s: plugin name.
+#: includes/class-tgm-plugin-activation.php:338
 #: includes/plugin-includes.php:155
 #, php-format
 msgid "Installing Plugin: %s"
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:337
+#. translators: %s: plugin name.
+#: includes/class-tgm-plugin-activation.php:340
+#, php-format
+msgid "Updating Plugin: %s"
+msgstr ""
+
+#: includes/class-tgm-plugin-activation.php:341
 #: includes/plugin-includes.php:156
 msgid "Something went wrong with the plugin API."
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:339
+#. translators: 1: plugin name(s).
+#: includes/class-tgm-plugin-activation.php:344
 #: includes/plugin-includes.php:157
 #, php-format
 msgid "This theme requires the following plugin: %1$s."
@@ -992,7 +999,8 @@ msgid_plural "This theme requires the following plugins: %1$s."
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/class-tgm-plugin-activation.php:344
+#. translators: 1: plugin name(s).
+#: includes/class-tgm-plugin-activation.php:350
 #: includes/plugin-includes.php:158
 #, php-format
 msgid "This theme recommends the following plugin: %1$s."
@@ -1000,18 +1008,8 @@ msgid_plural "This theme recommends the following plugins: %1$s."
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/class-tgm-plugin-activation.php:349
-#, php-format
-msgid ""
-"Sorry, but you do not have the correct permissions to install the %1$s "
-"plugin."
-msgid_plural ""
-"Sorry, but you do not have the correct permissions to install the %1$s "
-"plugins."
-msgstr[0] ""
-msgstr[1] ""
-
-#: includes/class-tgm-plugin-activation.php:354
+#. translators: 1: plugin name(s).
+#: includes/class-tgm-plugin-activation.php:356
 #: includes/plugin-includes.php:163
 #, php-format
 msgid ""
@@ -1023,24 +1021,16 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/class-tgm-plugin-activation.php:359
+#. translators: 1: plugin name(s).
+#: includes/class-tgm-plugin-activation.php:362
 #, php-format
 msgid "There is an update available for: %1$s."
 msgid_plural "There are updates available for the following plugins: %1$s."
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/class-tgm-plugin-activation.php:364
-#, php-format
-msgid ""
-"Sorry, but you do not have the correct permissions to update the %1$s plugin."
-msgid_plural ""
-"Sorry, but you do not have the correct permissions to update the %1$s "
-"plugins."
-msgstr[0] ""
-msgstr[1] ""
-
-#: includes/class-tgm-plugin-activation.php:369
+#. translators: 1: plugin name(s).
+#: includes/class-tgm-plugin-activation.php:368
 #: includes/plugin-includes.php:160
 #, php-format
 msgid "The following required plugin is currently inactive: %1$s."
@@ -1048,6 +1038,7 @@ msgid_plural "The following required plugins are currently inactive: %1$s."
 msgstr[0] ""
 msgstr[1] ""
 
+#. translators: 1: plugin name(s).
 #: includes/class-tgm-plugin-activation.php:374
 #: includes/plugin-includes.php:161
 #, php-format
@@ -1057,191 +1048,189 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: includes/class-tgm-plugin-activation.php:379
-#, php-format
-msgid ""
-"Sorry, but you do not have the correct permissions to activate the %1$s "
-"plugin."
-msgid_plural ""
-"Sorry, but you do not have the correct permissions to activate the %1$s "
-"plugins."
-msgstr[0] ""
-msgstr[1] ""
-
-#: includes/class-tgm-plugin-activation.php:384
 #: includes/plugin-includes.php:165
 msgid "Begin installing plugin"
 msgid_plural "Begin installing plugins"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/class-tgm-plugin-activation.php:389
+#: includes/class-tgm-plugin-activation.php:384
 msgid "Begin updating plugin"
 msgid_plural "Begin updating plugins"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/class-tgm-plugin-activation.php:394
+#: includes/class-tgm-plugin-activation.php:389
 msgid "Begin activating plugin"
 msgid_plural "Begin activating plugins"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/class-tgm-plugin-activation.php:398
+#: includes/class-tgm-plugin-activation.php:393
 #: includes/plugin-includes.php:167
 msgid "Return to Required Plugins Installer"
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:399
-msgid "Return to the dashboard"
+#: includes/class-tgm-plugin-activation.php:394
+#: includes/class-tgm-plugin-activation.php:943
+#: includes/class-tgm-plugin-activation.php:2725
+#: includes/class-tgm-plugin-activation.php:3778
+msgid "Return to the Dashboard"
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:400
-#: includes/class-tgm-plugin-activation.php:3179
+#: includes/class-tgm-plugin-activation.php:395
+#: includes/class-tgm-plugin-activation.php:3357
 #: includes/plugin-includes.php:168
 msgid "Plugin activated successfully."
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:401
-#: includes/class-tgm-plugin-activation.php:2982
+#: includes/class-tgm-plugin-activation.php:396
+#: includes/class-tgm-plugin-activation.php:3150
 msgid "The following plugin was activated successfully:"
 msgid_plural "The following plugins were activated successfully:"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/class-tgm-plugin-activation.php:402
+#. translators: 1: plugin name.
+#: includes/class-tgm-plugin-activation.php:398
 #, php-format
 msgid "No action taken. Plugin %1$s was already active."
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:403
+#. translators: 1: plugin name.
+#: includes/class-tgm-plugin-activation.php:400
 #, php-format
 msgid ""
 "Plugin not activated. A higher version of %s is needed for this theme. "
 "Please update the plugin."
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:404
+#. translators: 1: dashboard link.
+#: includes/class-tgm-plugin-activation.php:402
 #, php-format
 msgid "All plugins installed and activated successfully. %1$s"
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:405
+#: includes/class-tgm-plugin-activation.php:403
 msgid "Dismiss this notice"
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:406
+#: includes/class-tgm-plugin-activation.php:404
+msgid ""
+"There are one or more required or recommended plugins to install, update or "
+"activate."
+msgstr ""
+
+#: includes/class-tgm-plugin-activation.php:405
 msgid "Please contact the administrator of this site for help."
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:525
+#: includes/class-tgm-plugin-activation.php:608
 msgid "This plugin needs to be updated to be compatible with your theme."
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:526
+#: includes/class-tgm-plugin-activation.php:609
 msgid "Update Required"
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:545
+#: includes/class-tgm-plugin-activation.php:627
 msgid "Force the update to our latest version in the server."
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:546
+#: includes/class-tgm-plugin-activation.php:628
 msgid "Force Update"
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:661
+#: includes/class-tgm-plugin-activation.php:745
 msgid "Set the parent_slug config variable instead."
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:872
-#: includes/class-tgm-plugin-activation.php:3589
-msgid "Return to the Dashboard"
-msgstr ""
-
-#: includes/class-tgm-plugin-activation.php:988
+#: includes/class-tgm-plugin-activation.php:1050
 msgid ""
 "The remote plugin package does not contain a folder with the desired slug "
 "and renaming did not work."
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:988
-#: includes/class-tgm-plugin-activation.php:991
+#: includes/class-tgm-plugin-activation.php:1050
+#: includes/class-tgm-plugin-activation.php:1053
 msgid ""
 "Please contact the plugin provider and ask them to package their plugin "
 "according to the WordPress guidelines."
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:991
+#: includes/class-tgm-plugin-activation.php:1053
 msgid ""
 "The remote plugin package consists of more than one file, but the files are "
 "not packaged in a folder."
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:1169
-#: includes/class-tgm-plugin-activation.php:2978
+#: includes/class-tgm-plugin-activation.php:1237
+#: includes/class-tgm-plugin-activation.php:3146
 msgctxt "plugin A *and* plugin B"
 msgid "and"
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:2009
+#. translators: %s: version number
+#: includes/class-tgm-plugin-activation.php:2166
 #, php-format
-msgctxt "%s = version number"
 msgid "TGMPA v%s"
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:2309
+#: includes/class-tgm-plugin-activation.php:2462
 msgid "Required"
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:2312
+#: includes/class-tgm-plugin-activation.php:2465
 msgid "Recommended"
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:2328
+#: includes/class-tgm-plugin-activation.php:2481
 msgid "WordPress Repository"
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:2331
+#: includes/class-tgm-plugin-activation.php:2484
 msgid "External Source"
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:2334
+#: includes/class-tgm-plugin-activation.php:2487
 msgid "Pre-Packaged"
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:2351
+#: includes/class-tgm-plugin-activation.php:2504
 msgid "Not Installed"
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:2355
+#: includes/class-tgm-plugin-activation.php:2508
 msgid "Installed But Not Activated"
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:2357
+#: includes/class-tgm-plugin-activation.php:2510
 #: includes/options/inc/fields/link_color/field_link_color.php:100
 #: includes/sf-plugin-activation.php:22
 msgid "Active"
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:2363
+#: includes/class-tgm-plugin-activation.php:2516
 msgid "Required Update not Available"
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:2366
+#: includes/class-tgm-plugin-activation.php:2519
 msgid "Requires Update"
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:2369
+#: includes/class-tgm-plugin-activation.php:2522
 msgid "Update recommended"
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:2377
+#. translators: 1: install status, 2: update status
+#: includes/class-tgm-plugin-activation.php:2531
 #, php-format
-msgctxt "%1$s = install status, %2$s = update status"
+msgctxt "Install/Update Status"
 msgid "%1$s, %2$s"
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:2423
+#. translators: 1: number of plugins.
+#: includes/class-tgm-plugin-activation.php:2577
 #, php-format
 msgctxt "plugins"
 msgid "All <span class=\"count\">(%s)</span>"
@@ -1249,208 +1238,215 @@ msgid_plural "All <span class=\"count\">(%s)</span>"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/class-tgm-plugin-activation.php:2426
+#. translators: 1: number of plugins.
+#: includes/class-tgm-plugin-activation.php:2581
 #, php-format
 msgid "To Install <span class=\"count\">(%s)</span>"
 msgid_plural "To Install <span class=\"count\">(%s)</span>"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/class-tgm-plugin-activation.php:2429
+#. translators: 1: number of plugins.
+#: includes/class-tgm-plugin-activation.php:2585
 #, php-format
 msgid "Update Available <span class=\"count\">(%s)</span>"
 msgid_plural "Update Available <span class=\"count\">(%s)</span>"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/class-tgm-plugin-activation.php:2432
+#. translators: 1: number of plugins.
+#: includes/class-tgm-plugin-activation.php:2589
 #, php-format
 msgid "To Activate <span class=\"count\">(%s)</span>"
 msgid_plural "To Activate <span class=\"count\">(%s)</span>"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/class-tgm-plugin-activation.php:2435
+#: includes/class-tgm-plugin-activation.php:2592
 #, php-format
 msgid "Force Update <span class=\"count\">(%s)</span>"
 msgid_plural "Force Update <span class=\"count\">(%s)</span>"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/class-tgm-plugin-activation.php:2517
+#: includes/class-tgm-plugin-activation.php:2674
 msgctxt "as in: \"version nr unknown\""
 msgid "unknown"
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:2525
+#: includes/class-tgm-plugin-activation.php:2682
 msgid "Installed version:"
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:2533
+#: includes/class-tgm-plugin-activation.php:2690
 msgid "Minimum required version:"
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:2545
+#: includes/class-tgm-plugin-activation.php:2702
 msgid "Available version:"
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:2568
-#, php-format
-msgid ""
-"No plugins to install, update or activate. <a href=\"%1$s\">Return to the "
-"Dashboard</a>"
+#: includes/class-tgm-plugin-activation.php:2725
+msgid "No plugins to install, update or activate."
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:2582
+#: includes/class-tgm-plugin-activation.php:2739
 msgid "Plugin"
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:2583
+#: includes/class-tgm-plugin-activation.php:2740
 msgid "Source"
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:2584
+#: includes/class-tgm-plugin-activation.php:2741
 #: swift-framework/core/sf-interface.php:428
 msgid "Type"
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:2588
+#: includes/class-tgm-plugin-activation.php:2745
 #: includes/options/inc/welcome/views/status_report.php:715
 msgid "Version"
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:2589
-#: includes/options/inc/welcome/welcome.php:357
+#: includes/class-tgm-plugin-activation.php:2746
+#: includes/options/inc/welcome/welcome.php:361
 msgid "Status"
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:2637
+#. translators: %2$s: plugin name in screen reader markup
+#: includes/class-tgm-plugin-activation.php:2795
 #, php-format
-msgctxt "%2$s = plugin name in screen reader markup"
 msgid "Install %2$s"
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:2641
+#. translators: %2$s: plugin name in screen reader markup
+#: includes/class-tgm-plugin-activation.php:2800
 #, php-format
-msgctxt "%2$s = plugin name in screen reader markup"
 msgid "Update %2$s"
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:2645
+#. translators: %2$s: plugin name in screen reader markup
+#: includes/class-tgm-plugin-activation.php:2806
 #, php-format
-msgctxt "%2$s = plugin name in screen reader markup"
 msgid "Activate %2$s"
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:2647
+#: includes/class-tgm-plugin-activation.php:2808
 #, php-format
 msgctxt "%2$s = plugin name in screen reader markup"
 msgid "Force Update %2$s"
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:2720
+#: includes/class-tgm-plugin-activation.php:2882
 msgid "Upgrade message from the plugin author:"
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:2753
+#: includes/class-tgm-plugin-activation.php:2915
 #: includes/sf-plugin-activation.php:20
 msgid "Install"
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:2762
+#: includes/class-tgm-plugin-activation.php:2924
 #: includes/sf-plugin-activation.php:21
 msgid "Activate"
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:2793
+#: includes/class-tgm-plugin-activation.php:2955
 msgid "No plugins were selected to be installed. No action taken."
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:2795
+#: includes/class-tgm-plugin-activation.php:2957
 msgid "No plugins were selected to be updated. No action taken."
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:2831
+#: includes/class-tgm-plugin-activation.php:2998
 msgid "No plugins are available to be installed at this time."
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:2833
+#: includes/class-tgm-plugin-activation.php:3000
 msgid "No plugins are available to be updated at this time."
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:2938
+#: includes/class-tgm-plugin-activation.php:3106
 msgid "No plugins were selected to be activated. No action taken."
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:2964
+#: includes/class-tgm-plugin-activation.php:3132
 msgid "No plugins are available to be activated at this time."
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:3178
+#: includes/class-tgm-plugin-activation.php:3356
 msgid "Plugin activation failed."
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:3513
+#. translators: 1: plugin name, 2: action number 3: total number of actions.
+#: includes/class-tgm-plugin-activation.php:3696
 #, php-format
 msgid "Updating Plugin %1$s (%2$d/%3$d)"
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:3515
+#. translators: 1: plugin name, 2: error message.
+#: includes/class-tgm-plugin-activation.php:3699
 #, php-format
 msgid "An error occurred while installing %1$s: <strong>%2$s</strong>."
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:3516
+#. translators: 1: plugin name.
+#: includes/class-tgm-plugin-activation.php:3701
 #, php-format
 msgid "The installation of %1$s failed."
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:3520
+#: includes/class-tgm-plugin-activation.php:3705
 msgid ""
 "The installation and activation process is starting. This process may take a "
 "while on some hosts, so please be patient."
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:3521
+#. translators: 1: plugin name.
+#: includes/class-tgm-plugin-activation.php:3707
 #, php-format
 msgid "%1$s installed and activated successfully."
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:3521
-#: includes/class-tgm-plugin-activation.php:3527
+#: includes/class-tgm-plugin-activation.php:3707
+#: includes/class-tgm-plugin-activation.php:3715
 msgid "Show Details"
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:3521
-#: includes/class-tgm-plugin-activation.php:3527
+#: includes/class-tgm-plugin-activation.php:3707
+#: includes/class-tgm-plugin-activation.php:3715
 msgid "Hide Details"
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:3522
+#: includes/class-tgm-plugin-activation.php:3708
 msgid "All installations and activations have been completed."
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:3523
+#. translators: 1: plugin name, 2: action number 3: total number of actions.
+#: includes/class-tgm-plugin-activation.php:3710
 #, php-format
 msgid "Installing and Activating Plugin %1$s (%2$d/%3$d)"
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:3526
+#: includes/class-tgm-plugin-activation.php:3713
 msgid ""
 "The installation process is starting. This process may take a while on some "
 "hosts, so please be patient."
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:3527
+#. translators: 1: plugin name.
+#: includes/class-tgm-plugin-activation.php:3715
 #, php-format
 msgid "%1$s installed successfully."
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:3528
+#: includes/class-tgm-plugin-activation.php:3716
 msgid "All installations have been completed."
 msgstr ""
 
-#: includes/class-tgm-plugin-activation.php:3529
+#. translators: 1: plugin name, 2: action number 3: total number of actions.
+#: includes/class-tgm-plugin-activation.php:3718
 #, php-format
 msgid "Installing Plugin %1$s (%2$d/%3$d)"
 msgstr ""
@@ -1460,11 +1456,11 @@ msgid "Documentation"
 msgstr ""
 
 #: includes/meta-box/inc/core.php:41
-#: includes/options/inc/welcome/welcome.php:345
+#: includes/options/inc/welcome/welcome.php:349
 msgid "Extensions"
 msgstr ""
 
-#: includes/meta-box/inc/field.php:196
+#: includes/meta-box/inc/field.php:192
 msgid "+ Add more"
 msgstr ""
 
@@ -1472,28 +1468,28 @@ msgstr ""
 msgid "Click me"
 msgstr ""
 
-#: includes/meta-box/inc/fields/checkbox.php:85
+#: includes/meta-box/inc/fields/checkbox.php:82
 #: swift-framework/core/sf-interface.php:290
 #: swift-framework/core/sf-interface.php:937
 msgid "Yes"
 msgstr ""
 
-#: includes/meta-box/inc/fields/checkbox.php:85
+#: includes/meta-box/inc/fields/checkbox.php:82
 #: swift-framework/core/sf-interface.php:289
 #: swift-framework/core/sf-interface.php:938
 msgid "No"
 msgstr ""
 
-#: includes/meta-box/inc/fields/file-input.php:18
+#: includes/meta-box/inc/fields/file-input.php:25
 msgid "Select File"
 msgstr ""
 
-#: includes/meta-box/inc/fields/file-input.php:41
+#: includes/meta-box/inc/fields/file-input.php:49
 #: includes/meta-box/inc/fields/select.php:91
 msgid "Select"
 msgstr ""
 
-#: includes/meta-box/inc/fields/file-input.php:43
+#: includes/meta-box/inc/fields/file-input.php:51
 #: includes/options/inc/fields/background/field_background.php:321
 #: includes/options/inc/fields/media/field_media.php:205
 #: includes/options/inc/fields/multi_text/field_multi_text.php:69
@@ -1505,66 +1501,45 @@ msgstr ""
 msgid "Remove"
 msgstr ""
 
-#: includes/meta-box/inc/fields/file.php:15
+#: includes/meta-box/inc/fields/file.php:24
 #, php-format
 msgid "You may only upload maximum %d file"
 msgstr ""
 
-#: includes/meta-box/inc/fields/file.php:16
+#: includes/meta-box/inc/fields/file.php:25
 #, php-format
 msgid "You may only upload maximum %d files"
 msgstr ""
 
-#: includes/meta-box/inc/fields/file.php:83
+#: includes/meta-box/inc/fields/file.php:85
 msgid "Error: Cannot delete file"
 msgstr ""
 
-#: includes/meta-box/inc/fields/file.php:96
+#: includes/meta-box/inc/fields/file.php:98
 msgctxt "file upload"
 msgid "Upload Files"
 msgstr ""
 
-#: includes/meta-box/inc/fields/file.php:97
+#: includes/meta-box/inc/fields/file.php:99
 msgctxt "file upload"
 msgid "+ Add new file"
 msgstr ""
 
-#: includes/meta-box/inc/fields/file.php:153
+#: includes/meta-box/inc/fields/file.php:162
 msgctxt "file upload"
 msgid "Delete"
 msgstr ""
 
-#: includes/meta-box/inc/fields/file.php:154
+#: includes/meta-box/inc/fields/file.php:163
 msgctxt "file upload"
 msgid "Edit"
 msgstr ""
 
-#: includes/meta-box/inc/fields/image.php:61
-#: includes/meta-box/inc/fields/thickbox-image.php:53
-msgctxt "image upload"
-msgid "Upload Images"
-msgstr ""
-
-#: includes/meta-box/inc/fields/image.php:62
-msgctxt "image upload"
-msgid "+ Add new image"
-msgstr ""
-
-#: includes/meta-box/inc/fields/image.php:124
-msgctxt "image upload"
-msgid "Delete"
-msgstr ""
-
-#: includes/meta-box/inc/fields/image.php:125
-msgctxt "image upload"
-msgid "Edit"
-msgstr ""
-
-#: includes/meta-box/inc/fields/key-value.php:19
+#: includes/meta-box/inc/fields/key-value.php:20
 msgid "Key"
 msgstr ""
 
-#: includes/meta-box/inc/fields/key-value.php:25
+#: includes/meta-box/inc/fields/key-value.php:26
 msgid "Value"
 msgstr ""
 
@@ -1572,47 +1547,47 @@ msgstr ""
 msgid "Find Address"
 msgstr ""
 
-#: includes/meta-box/inc/fields/media.php:18
+#: includes/meta-box/inc/fields/media.php:24
 msgctxt "media"
 msgid "+ Add Media"
 msgstr ""
 
-#: includes/meta-box/inc/fields/media.php:19
+#: includes/meta-box/inc/fields/media.php:25
 msgctxt "media"
 msgid " file"
 msgstr ""
 
-#: includes/meta-box/inc/fields/media.php:20
+#: includes/meta-box/inc/fields/media.php:26
 msgctxt "media"
 msgid " files"
 msgstr ""
 
-#: includes/meta-box/inc/fields/media.php:21
+#: includes/meta-box/inc/fields/media.php:27
 msgctxt "media"
 msgid "Remove"
 msgstr ""
 
-#: includes/meta-box/inc/fields/media.php:22
+#: includes/meta-box/inc/fields/media.php:28
 msgctxt "media"
 msgid "Edit"
 msgstr ""
 
-#: includes/meta-box/inc/fields/media.php:23
+#: includes/meta-box/inc/fields/media.php:29
 msgctxt "media"
 msgid "View"
 msgstr ""
 
-#: includes/meta-box/inc/fields/media.php:24
+#: includes/meta-box/inc/fields/media.php:30
 msgctxt "media"
 msgid "No Title"
 msgstr ""
 
-#: includes/meta-box/inc/fields/media.php:27
+#: includes/meta-box/inc/fields/media.php:33
 msgctxt "media"
 msgid "Select Files"
 msgstr ""
 
-#: includes/meta-box/inc/fields/media.php:28
+#: includes/meta-box/inc/fields/media.php:34
 msgctxt "media"
 msgid "Drop files here to upload"
 msgstr ""
@@ -1621,7 +1596,7 @@ msgstr ""
 msgid "Embed HTML not available."
 msgstr ""
 
-#: includes/meta-box/inc/fields/oembed.php:84
+#: includes/meta-box/inc/fields/oembed.php:81
 msgid "Preview"
 msgstr ""
 
@@ -1635,6 +1610,12 @@ msgstr ""
 msgid "Select a %s"
 msgstr ""
 
+#: includes/meta-box/inc/fields/select-advanced.php:44
+#: includes/options/inc/fields/select/field_select.php:83
+#: includes/options/inc/fields/select_image/field_select_image.php:63
+msgid "Select an item"
+msgstr ""
+
 #: includes/meta-box/inc/fields/select.php:91
 #: includes/options/inc/fields/border/field_border.php:125
 #: includes/options/inc/fields/spacing/field_spacing.php:191
@@ -1642,8 +1623,8 @@ msgstr ""
 msgid "All"
 msgstr ""
 
-#: includes/meta-box/inc/fields/select.php:91 includes/meta-boxes.php:535
-#: includes/meta-boxes.php:753 includes/meta-boxes.php:1722
+#: includes/meta-box/inc/fields/select.php:91 includes/meta-boxes.php:551
+#: includes/meta-boxes.php:769 includes/meta-boxes.php:1738
 #: includes/overrides/sf-theme-functions.php:293
 #: swift-framework/core/sf-functions.php:3115
 #: swift-framework/core/sf-interface.php:298
@@ -1654,369 +1635,374 @@ msgstr ""
 msgid "Select a term"
 msgstr ""
 
+#: includes/meta-box/inc/fields/thickbox-image.php:53
+msgctxt "image upload"
+msgid "Upload Images"
+msgstr ""
+
 #: includes/meta-box/inc/fields/user.php:34
 msgid "Select an user"
 msgstr ""
 
-#: includes/meta-box/inc/validation.php:42
+#: includes/meta-box/inc/validation.php:49
 msgid "Please correct the errors highlighted below and try again."
 msgstr ""
 
-#: includes/meta-boxes.php:99 includes/meta-boxes.php:238
-#: includes/meta-boxes.php:367
+#: includes/meta-boxes.php:115 includes/meta-boxes.php:254
+#: includes/meta-boxes.php:383
 msgid "Thumbnail"
 msgstr ""
 
-#: includes/meta-boxes.php:106 includes/meta-boxes.php:245
-#: includes/meta-boxes.php:374
+#: includes/meta-boxes.php:122 includes/meta-boxes.php:261
+#: includes/meta-boxes.php:390
 msgid "Thumbnail type"
-msgstr ""
-
-#: includes/meta-boxes.php:119 includes/meta-boxes.php:257
-#: includes/meta-boxes.php:385
-msgid "Choose what will be used for the item thumbnail."
-msgstr ""
-
-#: includes/meta-boxes.php:124 includes/meta-boxes.php:262
-#: includes/meta-boxes.php:390 includes/meta-boxes.php:1473
-msgid "Thumbnail image"
-msgstr ""
-
-#: includes/meta-boxes.php:125 includes/meta-boxes.php:263
-#: includes/meta-boxes.php:391 includes/meta-boxes.php:1474
-msgid "The image that will be used as the thumbnail image."
-msgstr ""
-
-#: includes/meta-boxes.php:133 includes/meta-boxes.php:271
-#: includes/meta-boxes.php:399
-msgid "Thumbnail video URL"
 msgstr ""
 
 #: includes/meta-boxes.php:135 includes/meta-boxes.php:273
 #: includes/meta-boxes.php:401
+msgid "Choose what will be used for the item thumbnail."
+msgstr ""
+
+#: includes/meta-boxes.php:140 includes/meta-boxes.php:278
+#: includes/meta-boxes.php:406 includes/meta-boxes.php:1489
+msgid "Thumbnail image"
+msgstr ""
+
+#: includes/meta-boxes.php:141 includes/meta-boxes.php:279
+#: includes/meta-boxes.php:407 includes/meta-boxes.php:1490
+msgid "The image that will be used as the thumbnail image."
+msgstr ""
+
+#: includes/meta-boxes.php:149 includes/meta-boxes.php:287
+#: includes/meta-boxes.php:415
+msgid "Thumbnail video URL"
+msgstr ""
+
+#: includes/meta-boxes.php:151 includes/meta-boxes.php:289
+#: includes/meta-boxes.php:417
 msgid ""
 "Enter the video url for the thumbnail. Only links from Vimeo & YouTube are "
 "supported."
 msgstr ""
 
-#: includes/meta-boxes.php:143
+#: includes/meta-boxes.php:159
 msgid "Thumbnail audio URL"
 msgstr ""
 
-#: includes/meta-boxes.php:145
+#: includes/meta-boxes.php:161
 msgid "Enter the audio url for the thumbnail."
 msgstr ""
 
-#: includes/meta-boxes.php:153 includes/meta-boxes.php:281
+#: includes/meta-boxes.php:169 includes/meta-boxes.php:297
 msgid "Thumbnail Self Hosted Video MP4 URL"
 msgstr ""
 
-#: includes/meta-boxes.php:155 includes/meta-boxes.php:283
+#: includes/meta-boxes.php:171 includes/meta-boxes.php:299
 msgid "Enter the video mp4 url for the thumbnail."
 msgstr ""
 
-#: includes/meta-boxes.php:161 includes/meta-boxes.php:289
+#: includes/meta-boxes.php:177 includes/meta-boxes.php:305
 msgid "Thumbnail Self Hosted Video WEBM URL"
 msgstr ""
 
-#: includes/meta-boxes.php:163 includes/meta-boxes.php:291
+#: includes/meta-boxes.php:179 includes/meta-boxes.php:307
 msgid "Enter the video webm url for the thumbnail."
 msgstr ""
 
-#: includes/meta-boxes.php:169 includes/meta-boxes.php:297
+#: includes/meta-boxes.php:185 includes/meta-boxes.php:313
 msgid "Thumbnail Self Hosted Video OGG URL"
 msgstr ""
 
-#: includes/meta-boxes.php:171 includes/meta-boxes.php:299
+#: includes/meta-boxes.php:187 includes/meta-boxes.php:315
 msgid "Enter the video ogg url for the thumbnail."
-msgstr ""
-
-#: includes/meta-boxes.php:179 includes/meta-boxes.php:307
-#: includes/meta-boxes.php:409
-msgid "Thumbnail gallery"
-msgstr ""
-
-#: includes/meta-boxes.php:180 includes/meta-boxes.php:308
-#: includes/meta-boxes.php:410
-msgid "The images that will be used in the thumbnail gallery."
-msgstr ""
-
-#: includes/meta-boxes.php:188 includes/meta-boxes.php:316
-#: includes/meta-boxes.php:418
-msgid "Thumbnail link type"
-msgstr ""
-
-#: includes/meta-boxes.php:192 includes/meta-boxes.php:320
-#: includes/meta-boxes.php:422
-msgid "Link to item"
-msgstr ""
-
-#: includes/meta-boxes.php:193 includes/meta-boxes.php:321
-#: includes/meta-boxes.php:423
-msgid "Link to URL"
-msgstr ""
-
-#: includes/meta-boxes.php:194 includes/meta-boxes.php:322
-#: includes/meta-boxes.php:424
-msgid "Link to URL (New Window)"
 msgstr ""
 
 #: includes/meta-boxes.php:195 includes/meta-boxes.php:323
 #: includes/meta-boxes.php:425
-msgid "Lightbox to the thumbnail image"
+msgid "Thumbnail gallery"
 msgstr ""
 
 #: includes/meta-boxes.php:196 includes/meta-boxes.php:324
 #: includes/meta-boxes.php:426
-msgid "Lightbox to image (select below)"
+msgid "The images that will be used in the thumbnail gallery."
 msgstr ""
 
-#: includes/meta-boxes.php:197 includes/meta-boxes.php:325
-#: includes/meta-boxes.php:427
-msgid "Fullscreen Video Overlay (input below)"
-msgstr ""
-
-#: includes/meta-boxes.php:201 includes/meta-boxes.php:329
-#: includes/meta-boxes.php:431
-msgid "Choose what link will be used for the image(s) and title of the item."
-msgstr ""
-
-#: includes/meta-boxes.php:206 includes/meta-boxes.php:334
-#: includes/meta-boxes.php:436
-msgid "Thumbnail link URL"
+#: includes/meta-boxes.php:204 includes/meta-boxes.php:332
+#: includes/meta-boxes.php:434
+msgid "Thumbnail link type"
 msgstr ""
 
 #: includes/meta-boxes.php:208 includes/meta-boxes.php:336
 #: includes/meta-boxes.php:438
-msgid "Enter the url for the thumbnail link."
+msgid "Link to item"
 msgstr ""
 
-#: includes/meta-boxes.php:216 includes/meta-boxes.php:344
-#: includes/meta-boxes.php:446
-msgid "Thumbnail link lightbox image"
+#: includes/meta-boxes.php:209 includes/meta-boxes.php:337
+#: includes/meta-boxes.php:439
+msgid "Link to URL"
+msgstr ""
+
+#: includes/meta-boxes.php:210 includes/meta-boxes.php:338
+#: includes/meta-boxes.php:440
+msgid "Link to URL (New Window)"
+msgstr ""
+
+#: includes/meta-boxes.php:211 includes/meta-boxes.php:339
+#: includes/meta-boxes.php:441
+msgid "Lightbox to the thumbnail image"
+msgstr ""
+
+#: includes/meta-boxes.php:212 includes/meta-boxes.php:340
+#: includes/meta-boxes.php:442
+msgid "Lightbox to image (select below)"
+msgstr ""
+
+#: includes/meta-boxes.php:213 includes/meta-boxes.php:341
+#: includes/meta-boxes.php:443
+msgid "Fullscreen Video Overlay (input below)"
 msgstr ""
 
 #: includes/meta-boxes.php:217 includes/meta-boxes.php:345
 #: includes/meta-boxes.php:447
-msgid "The image that will be used as the lightbox image."
+msgid "Choose what link will be used for the image(s) and title of the item."
+msgstr ""
+
+#: includes/meta-boxes.php:222 includes/meta-boxes.php:350
+#: includes/meta-boxes.php:452
+msgid "Thumbnail link URL"
 msgstr ""
 
 #: includes/meta-boxes.php:224 includes/meta-boxes.php:352
 #: includes/meta-boxes.php:454
+msgid "Enter the url for the thumbnail link."
+msgstr ""
+
+#: includes/meta-boxes.php:232 includes/meta-boxes.php:360
+#: includes/meta-boxes.php:462
+msgid "Thumbnail link lightbox image"
+msgstr ""
+
+#: includes/meta-boxes.php:233 includes/meta-boxes.php:361
+#: includes/meta-boxes.php:463
+msgid "The image that will be used as the lightbox image."
+msgstr ""
+
+#: includes/meta-boxes.php:240 includes/meta-boxes.php:368
+#: includes/meta-boxes.php:470
 msgid "Thumbnail link lightbox video URL"
 msgstr ""
 
-#: includes/meta-boxes.php:226 includes/meta-boxes.php:354
-#: includes/meta-boxes.php:456
+#: includes/meta-boxes.php:242 includes/meta-boxes.php:370
+#: includes/meta-boxes.php:472
 msgid ""
 "Enter the video url for the thumbnail lightbox. Only links from Vimeo & "
 "YouTube are supported."
 msgstr ""
 
-#: includes/meta-boxes.php:464
+#: includes/meta-boxes.php:480
 msgid "Thumbnail Hover Background Color"
 msgstr ""
 
-#: includes/meta-boxes.php:466
+#: includes/meta-boxes.php:482
 msgid "Optionally set an alternate background colour for the thumbnail hover."
 msgstr ""
 
-#: includes/meta-boxes.php:473
+#: includes/meta-boxes.php:489
 msgid "Thumbnail Hover Text Color"
 msgstr ""
 
-#: includes/meta-boxes.php:475
+#: includes/meta-boxes.php:491
 msgid "Optionally set an alternate text colour for the thumbnail hover."
 msgstr ""
 
-#: includes/meta-boxes.php:487 includes/meta-boxes.php:1440
+#: includes/meta-boxes.php:503 includes/meta-boxes.php:1456
 msgid "Masonry Thumbnail"
 msgstr ""
 
-#: includes/meta-boxes.php:494 includes/meta-boxes.php:1447
+#: includes/meta-boxes.php:510 includes/meta-boxes.php:1463
 msgid "Masonry Thumbnail Size"
 msgstr ""
 
-#: includes/meta-boxes.php:505 includes/meta-boxes.php:1457
+#: includes/meta-boxes.php:521 includes/meta-boxes.php:1473
 msgid ""
 "Choose the size that you would like the item to show as with the Multi-Size "
 "Masonry setup. This will only affect the display in an asset with that "
 "display type."
 msgstr ""
 
-#: includes/meta-boxes.php:515
+#: includes/meta-boxes.php:531
 msgid "Detail Media"
 msgstr ""
 
-#: includes/meta-boxes.php:522
+#: includes/meta-boxes.php:538
 msgid "Use the thumbnail content"
 msgstr ""
 
-#: includes/meta-boxes.php:525
+#: includes/meta-boxes.php:541
 msgid ""
 "Uncheck this box if you wish to select different media for the main detail "
 "display."
 msgstr ""
 
-#: includes/meta-boxes.php:531
+#: includes/meta-boxes.php:547
 msgid "Detail type"
 msgstr ""
 
-#: includes/meta-boxes.php:536
+#: includes/meta-boxes.php:552
 msgid "Image"
 msgstr ""
 
-#: includes/meta-boxes.php:537
+#: includes/meta-boxes.php:553
 msgid "Video"
 msgstr ""
 
-#: includes/meta-boxes.php:538 includes/meta-boxes.php:1748
+#: includes/meta-boxes.php:554 includes/meta-boxes.php:1764
 msgid "Standard Slider"
 msgstr ""
 
-#: includes/meta-boxes.php:539
+#: includes/meta-boxes.php:555
 msgid "Stacked Gallery"
 msgstr ""
 
-#: includes/meta-boxes.php:540
+#: includes/meta-boxes.php:556
 msgid "Revolution/Layer Slider"
 msgstr ""
 
-#: includes/meta-boxes.php:541
+#: includes/meta-boxes.php:557
 msgid "Audio"
 msgstr ""
 
-#: includes/meta-boxes.php:542
+#: includes/meta-boxes.php:558
 msgid "Self Hosted Video"
 msgstr ""
 
-#: includes/meta-boxes.php:543
+#: includes/meta-boxes.php:559
 msgid "Custom"
 msgstr ""
 
-#: includes/meta-boxes.php:547
+#: includes/meta-boxes.php:563
 msgid "Choose what will be used for the item detail media."
 msgstr ""
 
-#: includes/meta-boxes.php:552
+#: includes/meta-boxes.php:568
 msgid "Detail image"
 msgstr ""
 
-#: includes/meta-boxes.php:553
+#: includes/meta-boxes.php:569
 msgid "The image that will be used as the detail image."
 msgstr ""
 
-#: includes/meta-boxes.php:561
+#: includes/meta-boxes.php:577
 msgid "Detail video URL"
 msgstr ""
 
-#: includes/meta-boxes.php:563
+#: includes/meta-boxes.php:579
 msgid ""
 "Enter the video url for the detail display. Only links from Vimeo & YouTube "
 "are supported."
 msgstr ""
 
-#: includes/meta-boxes.php:571
+#: includes/meta-boxes.php:587
 msgid "Detail audio URL"
 msgstr ""
 
-#: includes/meta-boxes.php:573
+#: includes/meta-boxes.php:589
 msgid "Enter the audio url for the detail display."
 msgstr ""
 
-#: includes/meta-boxes.php:581
+#: includes/meta-boxes.php:597
 msgid "Detail Self Hosted Video MP4 URL"
 msgstr ""
 
-#: includes/meta-boxes.php:583
+#: includes/meta-boxes.php:599
 msgid "Enter the video mp4 url for the detail display."
 msgstr ""
 
-#: includes/meta-boxes.php:589
+#: includes/meta-boxes.php:605
 msgid "Detail Self Hosted Video WEBM URL"
 msgstr ""
 
-#: includes/meta-boxes.php:591
+#: includes/meta-boxes.php:607
 msgid "Enter the video webm url for the detail display."
 msgstr ""
 
-#: includes/meta-boxes.php:597
+#: includes/meta-boxes.php:613
 msgid "Detail Self Hosted Video OGG URL"
 msgstr ""
 
-#: includes/meta-boxes.php:599
+#: includes/meta-boxes.php:615
 msgid "Enter the video ogg url for the detail display."
 msgstr ""
 
-#: includes/meta-boxes.php:607
+#: includes/meta-boxes.php:623
 msgid "Post detail gallery"
 msgstr ""
 
-#: includes/meta-boxes.php:608
+#: includes/meta-boxes.php:624
 msgid "The images that will be used in the detail gallery."
 msgstr ""
 
-#: includes/meta-boxes.php:616 includes/meta-boxes.php:1890
+#: includes/meta-boxes.php:632 includes/meta-boxes.php:1906
 msgid "Revolution slider alias"
 msgstr ""
 
-#: includes/meta-boxes.php:618 includes/meta-boxes.php:1892
+#: includes/meta-boxes.php:634 includes/meta-boxes.php:1908
 msgid "Enter the revolution slider alias for the slider that you want to show."
 msgstr ""
 
-#: includes/meta-boxes.php:626
+#: includes/meta-boxes.php:642
 msgid "Layer Slider alias"
 msgstr ""
 
-#: includes/meta-boxes.php:628
+#: includes/meta-boxes.php:644
 msgid "Enter the Layer Slider ID for the slider that you want to show."
 msgstr ""
 
-#: includes/meta-boxes.php:636
+#: includes/meta-boxes.php:652
 msgid "Custom detail display"
 msgstr ""
 
-#: includes/meta-boxes.php:637
+#: includes/meta-boxes.php:653
 msgid "If you'd like to provide your own detail media, please add it here"
 msgstr ""
 
-#: includes/meta-boxes.php:651 includes/meta-boxes.php:700
+#: includes/meta-boxes.php:667 includes/meta-boxes.php:716
 msgid "Page Title"
 msgstr ""
 
-#: includes/meta-boxes.php:658
+#: includes/meta-boxes.php:674
 msgid "Show page title"
 msgstr ""
 
-#: includes/meta-boxes.php:661
+#: includes/meta-boxes.php:677
 msgid "Show the page title at the top of the page."
 msgstr ""
 
-#: includes/meta-boxes.php:667
+#: includes/meta-boxes.php:683
 msgid "Page Title Background Color"
 msgstr ""
 
-#: includes/meta-boxes.php:669
+#: includes/meta-boxes.php:685
 msgid "Optionally set a background color for the page title."
 msgstr ""
 
-#: includes/meta-boxes.php:676
+#: includes/meta-boxes.php:692
 msgid "Page Title Text Color"
 msgstr ""
 
-#: includes/meta-boxes.php:678
+#: includes/meta-boxes.php:694
 msgid "Optionally set a text color for the page title."
 msgstr ""
 
-#: includes/meta-boxes.php:685
+#: includes/meta-boxes.php:701
 msgid "Page Title Style"
 msgstr ""
 
-#: includes/meta-boxes.php:689 includes/meta-boxes.php:835
-#: includes/meta-boxes.php:917 includes/meta-boxes.php:1033
-#: includes/meta-boxes.php:1196 includes/meta-boxes.php:1214
-#: includes/meta-boxes.php:1357 includes/meta-boxes.php:1685
-#: includes/sf-options.php:3136 swift-framework/core/sf-interface.php:9
+#: includes/meta-boxes.php:705 includes/meta-boxes.php:851
+#: includes/meta-boxes.php:933 includes/meta-boxes.php:1049
+#: includes/meta-boxes.php:1212 includes/meta-boxes.php:1230
+#: includes/meta-boxes.php:1373 includes/meta-boxes.php:1701
+#: includes/sf-options.php:3182 swift-framework/core/sf-interface.php:9
 #: swift-framework/core/sf-interface.php:25
 #: swift-framework/core/sf-interface.php:321
 #: swift-framework/core/sf-interface.php:348
@@ -2029,96 +2015,96 @@ msgstr ""
 msgid "Standard"
 msgstr ""
 
-#: includes/meta-boxes.php:690
+#: includes/meta-boxes.php:706
 msgid "Hero"
 msgstr ""
 
-#: includes/meta-boxes.php:691
+#: includes/meta-boxes.php:707
 msgid "Hero Tabbed"
 msgstr ""
 
-#: includes/meta-boxes.php:695
+#: includes/meta-boxes.php:711
 msgid "Choose the heading style."
 msgstr ""
 
-#: includes/meta-boxes.php:702
+#: includes/meta-boxes.php:718
 msgid "Enter a custom page title if you'd like."
 msgstr ""
 
-#: includes/meta-boxes.php:709
+#: includes/meta-boxes.php:725
 msgid "Page Subtitle"
 msgstr ""
 
-#: includes/meta-boxes.php:711
+#: includes/meta-boxes.php:727
 msgid "Enter a custom page title if you'd like (Hero Page Title Style Only)."
 msgstr ""
 
-#: includes/meta-boxes.php:717
+#: includes/meta-boxes.php:733
 msgid "Hero Overlay Color"
 msgstr ""
 
-#: includes/meta-boxes.php:719
+#: includes/meta-boxes.php:735
 msgid "Set an overlay color for hero heading image."
 msgstr ""
 
-#: includes/meta-boxes.php:725
+#: includes/meta-boxes.php:741
 msgid "Overlay Opacity"
 msgstr ""
 
-#: includes/meta-boxes.php:727
+#: includes/meta-boxes.php:743
 msgid ""
 "Set the opacity level of the overlay. This will lighten or darken the image "
 "depening on the color selected."
 msgstr ""
 
-#: includes/meta-boxes.php:740
+#: includes/meta-boxes.php:756
 msgid "Hero Heading Background Image"
 msgstr ""
 
-#: includes/meta-boxes.php:741
+#: includes/meta-boxes.php:757
 msgid "The image that will be used as the background for the hero header."
 msgstr ""
 
-#: includes/meta-boxes.php:749
+#: includes/meta-boxes.php:765
 msgid "Hero Heading Overlay Effect"
 msgstr ""
 
-#: includes/meta-boxes.php:754
+#: includes/meta-boxes.php:770
 msgid "Falling Circles"
 msgstr ""
 
-#: includes/meta-boxes.php:755
+#: includes/meta-boxes.php:771
 msgid "Geometric"
 msgstr ""
 
-#: includes/meta-boxes.php:759
+#: includes/meta-boxes.php:775
 msgid ""
 "Optionally have an animated canvas overlay on the hero heading background."
 msgstr ""
 
-#: includes/meta-boxes.php:764
+#: includes/meta-boxes.php:780
 msgid "Hero Heading Text Style"
 msgstr ""
 
-#: includes/meta-boxes.php:768
+#: includes/meta-boxes.php:784
 msgid "Light"
 msgstr ""
 
-#: includes/meta-boxes.php:769
+#: includes/meta-boxes.php:785
 msgid "Dark"
 msgstr ""
 
-#: includes/meta-boxes.php:773
+#: includes/meta-boxes.php:789
 msgid ""
 "If you uploaded an image in the option above, choose light/dark styling for "
 "the text heading text here."
 msgstr ""
 
-#: includes/meta-boxes.php:778
+#: includes/meta-boxes.php:794
 msgid "Hero Heading Text Align"
 msgstr ""
 
-#: includes/meta-boxes.php:782
+#: includes/meta-boxes.php:798
 #: includes/options/inc/fields/border/field_border.php:159
 #: includes/options/inc/fields/spacing/field_spacing.php:236
 #: swift-framework/core/sf-interface.php:296
@@ -2129,13 +2115,13 @@ msgstr ""
 msgid "Left"
 msgstr ""
 
-#: includes/meta-boxes.php:783 swift-framework/core/sf-interface.php:741
+#: includes/meta-boxes.php:799 swift-framework/core/sf-interface.php:741
 #: swift-framework/core/sf-interface.php:881
 #: swift-framework/core/sf-interface.php:891
 msgid "Center"
 msgstr ""
 
-#: includes/meta-boxes.php:784
+#: includes/meta-boxes.php:800
 #: includes/options/inc/fields/border/field_border.php:145
 #: includes/options/inc/fields/spacing/field_spacing.php:222
 #: swift-framework/core/sf-interface.php:297
@@ -2145,335 +2131,335 @@ msgstr ""
 msgid "Right"
 msgstr ""
 
-#: includes/meta-boxes.php:788
+#: includes/meta-boxes.php:804
 msgid "Choose the text alignment for the hero heading."
 msgstr ""
 
-#: includes/meta-boxes.php:793
+#: includes/meta-boxes.php:809
 msgid "Hero Heading Height"
 msgstr ""
 
-#: includes/meta-boxes.php:795
+#: includes/meta-boxes.php:811
 msgid "Set the height for the Hero Heading (no px)."
 msgstr ""
 
-#: includes/meta-boxes.php:803
+#: includes/meta-boxes.php:819
 msgid "Remove breadcrumbs"
 msgstr ""
 
-#: includes/meta-boxes.php:806
+#: includes/meta-boxes.php:822
 msgid "Remove the breadcrumbs from under the page title on this page."
 msgstr ""
 
-#: includes/meta-boxes.php:816
+#: includes/meta-boxes.php:832
 msgid "Portfolio Meta"
 msgstr ""
 
-#: includes/meta-boxes.php:824
+#: includes/meta-boxes.php:840
 msgid "Portfolio Header Options"
 msgstr ""
 
-#: includes/meta-boxes.php:831
+#: includes/meta-boxes.php:847
 msgid "Portfolio Header Type"
 msgstr ""
 
-#: includes/meta-boxes.php:836 includes/meta-boxes.php:1197
-#: includes/meta-boxes.php:1687 includes/sf-options.php:3138
+#: includes/meta-boxes.php:852 includes/meta-boxes.php:1213
+#: includes/meta-boxes.php:1703 includes/sf-options.php:3184
 msgid "Naked (Light)"
 msgstr ""
 
-#: includes/meta-boxes.php:837 includes/meta-boxes.php:1198
-#: includes/meta-boxes.php:1688 includes/sf-options.php:3139
+#: includes/meta-boxes.php:853 includes/meta-boxes.php:1214
+#: includes/meta-boxes.php:1704 includes/sf-options.php:3185
 msgid "Naked (Dark)"
 msgstr ""
 
-#: includes/meta-boxes.php:841
+#: includes/meta-boxes.php:857
 msgid ""
 "Choose the type of header that is shown on this portfolio. NOTE: The naked "
 "options are only possible when you have the hero heading enabled, or the "
 "media display below set to \"Full Width Media\" & no heading shown."
 msgstr ""
 
-#: includes/meta-boxes.php:847
+#: includes/meta-boxes.php:863
 msgid "Portfolio Item Details"
 msgstr ""
 
-#: includes/meta-boxes.php:854
+#: includes/meta-boxes.php:870
 msgid "Client"
 msgstr ""
 
-#: includes/meta-boxes.php:856
+#: includes/meta-boxes.php:872
 msgid "Enter a client for use within the portfolio item index (optional)."
 msgstr ""
 
-#: includes/meta-boxes.php:864
+#: includes/meta-boxes.php:880
 msgid "Subtitle"
 msgstr ""
 
-#: includes/meta-boxes.php:866
+#: includes/meta-boxes.php:882
 msgid "Enter a subtitle for use within the portfolio item index (optional)."
 msgstr ""
 
-#: includes/meta-boxes.php:874
+#: includes/meta-boxes.php:890
 msgid "External Link"
 msgstr ""
 
-#: includes/meta-boxes.php:876
+#: includes/meta-boxes.php:892
 msgid ""
 "Enter an external link for the item  (optional) (NOTE: INCLUDE HTTP://)."
 msgstr ""
 
-#: includes/meta-boxes.php:885 includes/meta-boxes.php:1166
-#: includes/meta-boxes.php:1483 includes/meta-boxes.php:1967
-#: includes/meta-boxes.php:2469
+#: includes/meta-boxes.php:901 includes/meta-boxes.php:1182
+#: includes/meta-boxes.php:1499 includes/meta-boxes.php:1983
+#: includes/meta-boxes.php:2485
 msgid "Custom Excerpt"
 msgstr ""
 
-#: includes/meta-boxes.php:892 includes/meta-boxes.php:1173
-#: includes/meta-boxes.php:1490 includes/meta-boxes.php:1974
-#: includes/meta-boxes.php:2476
+#: includes/meta-boxes.php:908 includes/meta-boxes.php:1189
+#: includes/meta-boxes.php:1506 includes/meta-boxes.php:1990
+#: includes/meta-boxes.php:2492
 msgid "Custom excerpt"
 msgstr ""
 
-#: includes/meta-boxes.php:893 includes/meta-boxes.php:1174
-#: includes/meta-boxes.php:2477
+#: includes/meta-boxes.php:909 includes/meta-boxes.php:1190
+#: includes/meta-boxes.php:2493
 msgid ""
 "You can optionally write a custom excerpt here to display instead of the "
 "excerpt that is automatically generated. If you use the page builder, then "
 "you'll want to add content to this box."
 msgstr ""
 
-#: includes/meta-boxes.php:904 includes/meta-boxes.php:1185
+#: includes/meta-boxes.php:920 includes/meta-boxes.php:1201
 msgid "Main Detail Options"
 msgstr ""
 
-#: includes/meta-boxes.php:911 includes/meta-boxes.php:1207
+#: includes/meta-boxes.php:927 includes/meta-boxes.php:1223
 msgid "Media Display"
 msgstr ""
 
-#: includes/meta-boxes.php:915
+#: includes/meta-boxes.php:931
 msgid "Full Width Media"
 msgstr ""
 
-#: includes/meta-boxes.php:916
+#: includes/meta-boxes.php:932
 msgid "Split Media / Description"
 msgstr ""
 
-#: includes/meta-boxes.php:921
+#: includes/meta-boxes.php:937
 msgid ""
 "Choose how you would like to display your selected media - full width (edge "
 "to edge), split, or standard (media with content below)."
 msgstr ""
 
-#: includes/meta-boxes.php:926
+#: includes/meta-boxes.php:942
 msgid "Media Image Height"
 msgstr ""
 
-#: includes/meta-boxes.php:928
+#: includes/meta-boxes.php:944
 msgid ""
 "If you are using the image detail type, and would like to set a height for "
 "the image - then please do so here (no px)."
 msgstr ""
 
-#: includes/meta-boxes.php:935
+#: includes/meta-boxes.php:951
 msgid "Item Sidebar Content"
 msgstr ""
 
-#: includes/meta-boxes.php:936
+#: includes/meta-boxes.php:952
 msgid ""
 "You can optionally add some content here to display in the details column, "
 "including shortcodes etc. Only visible on Standard and Full Width Media "
 "display types."
 msgstr ""
 
-#: includes/meta-boxes.php:946
+#: includes/meta-boxes.php:962
 msgid "Hide item details bar"
 msgstr ""
 
-#: includes/meta-boxes.php:949
+#: includes/meta-boxes.php:965
 msgid "Check this box to hide the item details on the detail page."
 msgstr ""
 
-#: includes/meta-boxes.php:955 includes/meta-boxes.php:1260
-#: includes/meta-boxes.php:2377
+#: includes/meta-boxes.php:971 includes/meta-boxes.php:1276
+#: includes/meta-boxes.php:2393
 msgid "Include social sharing"
 msgstr ""
 
-#: includes/meta-boxes.php:958 includes/meta-boxes.php:1263
+#: includes/meta-boxes.php:974 includes/meta-boxes.php:1279
 msgid "Check this box to show social sharing icons on the detail page."
 msgstr ""
 
-#: includes/meta-boxes.php:965 includes/meta-boxes.php:1950
+#: includes/meta-boxes.php:981 includes/meta-boxes.php:1966
 msgid "One Page Options"
 msgstr ""
 
-#: includes/meta-boxes.php:972 includes/meta-boxes.php:1957
+#: includes/meta-boxes.php:988 includes/meta-boxes.php:1973
 msgid "Enable One Page Navigation"
 msgstr ""
 
-#: includes/meta-boxes.php:975 includes/meta-boxes.php:1960
+#: includes/meta-boxes.php:991 includes/meta-boxes.php:1976
 msgid "Enable the one page nav which appears on the right of the page."
 msgstr ""
 
-#: includes/meta-boxes.php:982 includes/meta-boxes.php:1288
-#: includes/meta-boxes.php:1407 includes/meta-boxes.php:1986
+#: includes/meta-boxes.php:998 includes/meta-boxes.php:1304
+#: includes/meta-boxes.php:1423 includes/meta-boxes.php:2002
 msgid "Misc. Options"
 msgstr ""
 
-#: includes/meta-boxes.php:989 includes/meta-boxes.php:1295
-#: includes/meta-boxes.php:1414 includes/meta-boxes.php:1993
+#: includes/meta-boxes.php:1005 includes/meta-boxes.php:1311
+#: includes/meta-boxes.php:1430 includes/meta-boxes.php:2009
 msgid "Extra page class"
 msgstr ""
 
-#: includes/meta-boxes.php:991 includes/meta-boxes.php:1297
-#: includes/meta-boxes.php:1416 includes/meta-boxes.php:1995
+#: includes/meta-boxes.php:1007 includes/meta-boxes.php:1313
+#: includes/meta-boxes.php:1432 includes/meta-boxes.php:2011
 msgid ""
 "If you wish to add extra classes to the body class of the page (for custom "
 "css use), then please add the class(es) here."
 msgstr ""
 
-#: includes/meta-boxes.php:999 includes/meta-boxes.php:1314
-#: includes/meta-boxes.php:2021
+#: includes/meta-boxes.php:1015 includes/meta-boxes.php:1330
+#: includes/meta-boxes.php:2037
 msgid "Remove top spacing"
 msgstr ""
 
-#: includes/meta-boxes.php:1002 includes/meta-boxes.php:1317
-#: includes/meta-boxes.php:2024
+#: includes/meta-boxes.php:1018 includes/meta-boxes.php:1333
+#: includes/meta-boxes.php:2040
 msgid "Remove the spacing at the top of the page."
 msgstr ""
 
-#: includes/meta-boxes.php:1008 includes/meta-boxes.php:1305
-#: includes/meta-boxes.php:1424 includes/meta-boxes.php:2012
+#: includes/meta-boxes.php:1024 includes/meta-boxes.php:1321
+#: includes/meta-boxes.php:1440 includes/meta-boxes.php:2028
 msgid "Remove promo bar"
 msgstr ""
 
-#: includes/meta-boxes.php:1011 includes/meta-boxes.php:1308
-#: includes/meta-boxes.php:1427 includes/meta-boxes.php:2015
+#: includes/meta-boxes.php:1027 includes/meta-boxes.php:1324
+#: includes/meta-boxes.php:1443 includes/meta-boxes.php:2031
 msgid "Remove the promo bar at the bottom of the page."
 msgstr ""
 
-#: includes/meta-boxes.php:1022
+#: includes/meta-boxes.php:1038
 msgid "Page Style"
 msgstr ""
 
-#: includes/meta-boxes.php:1029
+#: includes/meta-boxes.php:1045
 msgid "Page Design Style"
 msgstr ""
 
-#: includes/meta-boxes.php:1034
+#: includes/meta-boxes.php:1050
 msgid "Boxed Inner Page"
 msgstr ""
 
-#: includes/meta-boxes.php:1035
+#: includes/meta-boxes.php:1051
 msgid "Hero / Content Split"
 msgstr ""
 
-#: includes/meta-boxes.php:1039
+#: includes/meta-boxes.php:1055
 msgid ""
 "Select the design style for the page. NOTE: if using the \"Hero / Content "
 "Split\" style, then please make sure you have the page title style set to "
 "\"Hero\" and that you have set the background image for it there."
 msgstr ""
 
-#: includes/meta-boxes.php:1050
+#: includes/meta-boxes.php:1066
 msgid "Page Background"
 msgstr ""
 
-#: includes/meta-boxes.php:1057 swift-framework/core/sf-interface.php:864
+#: includes/meta-boxes.php:1073 swift-framework/core/sf-interface.php:864
 msgid "Background Image"
 msgstr ""
 
-#: includes/meta-boxes.php:1058
+#: includes/meta-boxes.php:1074
 msgid "The image that will be used as the OUTER page background image."
 msgstr ""
 
-#: includes/meta-boxes.php:1066
+#: includes/meta-boxes.php:1082
 msgid "Background Image Size"
 msgstr ""
 
-#: includes/meta-boxes.php:1067 includes/meta-boxes.php:1090
+#: includes/meta-boxes.php:1083 includes/meta-boxes.php:1106
 msgid ""
 "For fullscreen images, choose Cover. For repeating patterns, choose Auto."
 msgstr ""
 
-#: includes/meta-boxes.php:1080
+#: includes/meta-boxes.php:1096
 msgid "Inner Background Image"
 msgstr ""
 
-#: includes/meta-boxes.php:1081
+#: includes/meta-boxes.php:1097
 msgid "The image that will be used as the INNER page background image."
 msgstr ""
 
-#: includes/meta-boxes.php:1089
+#: includes/meta-boxes.php:1105
 msgid "Inner Background Image Size"
 msgstr ""
 
-#: includes/meta-boxes.php:1103
+#: includes/meta-boxes.php:1119
 msgid "Inner Background Color"
 msgstr ""
 
-#: includes/meta-boxes.php:1105
+#: includes/meta-boxes.php:1121
 msgid "Optionally set a background color for the inner page background."
 msgstr ""
 
-#: includes/meta-boxes.php:1117
+#: includes/meta-boxes.php:1133
 msgid "Download Options"
 msgstr ""
 
-#: includes/meta-boxes.php:1124
+#: includes/meta-boxes.php:1140
 msgid "Show Download Button"
 msgstr ""
 
-#: includes/meta-boxes.php:1127
+#: includes/meta-boxes.php:1143
 msgid "Enable a download button on the detail and index for the post."
 msgstr ""
 
-#: includes/meta-boxes.php:1133
+#: includes/meta-boxes.php:1149
 msgid "Download File"
 msgstr ""
 
-#: includes/meta-boxes.php:1134
+#: includes/meta-boxes.php:1150
 msgid "The file that the download button will link to."
 msgstr ""
 
-#: includes/meta-boxes.php:1142
+#: includes/meta-boxes.php:1158
 msgid "Download shortcode"
 msgstr ""
 
-#: includes/meta-boxes.php:1143
+#: includes/meta-boxes.php:1159
 msgid ""
 "Alternatively, you can provide a shortcode here for your download, for "
 "example from the Easy Digital Downloads plugin."
 msgstr ""
 
-#: includes/meta-boxes.php:1158
+#: includes/meta-boxes.php:1174
 msgid "Post Meta"
 msgstr ""
 
-#: includes/meta-boxes.php:1192
+#: includes/meta-boxes.php:1208
 msgid "Post Header Type"
 msgstr ""
 
-#: includes/meta-boxes.php:1202
+#: includes/meta-boxes.php:1218
 msgid ""
 "Choose the type of header that is shown on this post. NOTE: The naked "
 "options are only possible when you have the hero heading enabled, or the "
 "media display below set to \"Full Width with Title Overlay\"."
 msgstr ""
 
-#: includes/meta-boxes.php:1211
+#: includes/meta-boxes.php:1227
 msgid "Full Width with Title Overlay"
 msgstr ""
 
-#: includes/meta-boxes.php:1212
+#: includes/meta-boxes.php:1228
 msgid "Full Width"
 msgstr ""
 
-#: includes/meta-boxes.php:1213
+#: includes/meta-boxes.php:1229
 msgid "Standard (Above content)"
 msgstr ""
 
-#: includes/meta-boxes.php:1218
+#: includes/meta-boxes.php:1234
 msgid ""
 "Choose how you would like to display your selected media - full width (edge "
 "to edge) with or without the title overlay, or standard. If you choose the "
@@ -2481,276 +2467,276 @@ msgid ""
 "page title meta options."
 msgstr ""
 
-#: includes/meta-boxes.php:1223
+#: includes/meta-boxes.php:1239
 msgid "Title Overlay Min Height"
 msgstr ""
 
-#: includes/meta-boxes.php:1225
+#: includes/meta-boxes.php:1241
 msgid ""
 "If you are using the 'Full Width with Title Overlay' media display type, you "
 "can set a min-height for it here (no px)."
 msgstr ""
 
-#: includes/meta-boxes.php:1233
+#: includes/meta-boxes.php:1249
 msgid "Title Overlay Text Color"
 msgstr ""
 
-#: includes/meta-boxes.php:1235
+#: includes/meta-boxes.php:1251
 msgid "Optionally set a text color for the title overlay text."
 msgstr ""
 
-#: includes/meta-boxes.php:1242
+#: includes/meta-boxes.php:1258
 msgid "Extra Paragraph Spacing"
 msgstr ""
 
-#: includes/meta-boxes.php:1245
+#: includes/meta-boxes.php:1261
 msgid ""
 "Check this box to enable extra spacing around paragraph elements within the "
-"post content."
+"post content. Only for posts with no sidebars."
 msgstr ""
 
-#: includes/meta-boxes.php:1251
+#: includes/meta-boxes.php:1267
 msgid "Include author info"
 msgstr ""
 
-#: includes/meta-boxes.php:1254
+#: includes/meta-boxes.php:1270
 msgid "Check this box to show the author info box on the detail page."
 msgstr ""
 
-#: includes/meta-boxes.php:1269
+#: includes/meta-boxes.php:1285
 msgid "Remove article pagination"
 msgstr ""
 
-#: includes/meta-boxes.php:1272
+#: includes/meta-boxes.php:1288
 msgid ""
 "Check this box to remove the next/previous article pagination on the detail "
 "page."
 msgstr ""
 
-#: includes/meta-boxes.php:1278
+#: includes/meta-boxes.php:1294
 msgid "Include related articles"
 msgstr ""
 
-#: includes/meta-boxes.php:1281
+#: includes/meta-boxes.php:1297
 msgid "Check this box to show related articles on the detail page."
 msgstr ""
 
-#: includes/meta-boxes.php:1323 includes/meta-boxes.php:2030
+#: includes/meta-boxes.php:1339 includes/meta-boxes.php:2046
 msgid "Remove bottom spacing"
 msgstr ""
 
-#: includes/meta-boxes.php:1326 includes/meta-boxes.php:2033
+#: includes/meta-boxes.php:1342 includes/meta-boxes.php:2049
 msgid "Remove the spacing at the bottom of the page."
 msgstr ""
 
-#: includes/meta-boxes.php:1338
+#: includes/meta-boxes.php:1354
 msgid "Product Meta"
 msgstr ""
 
-#: includes/meta-boxes.php:1346
+#: includes/meta-boxes.php:1362
 msgid "Product Display"
 msgstr ""
 
-#: includes/meta-boxes.php:1353
+#: includes/meta-boxes.php:1369
 msgid "Page Display Type"
 msgstr ""
 
-#: includes/meta-boxes.php:1358
+#: includes/meta-boxes.php:1374
 msgid "Fullscreen Split"
 msgstr ""
 
-#: includes/meta-boxes.php:1362
+#: includes/meta-boxes.php:1378
 msgid "Choose the layout for the product detail display."
 msgstr ""
 
-#: includes/meta-boxes.php:1367
+#: includes/meta-boxes.php:1383
 msgid "Fullscreen Display Background Color"
 msgstr ""
 
-#: includes/meta-boxes.php:1369
+#: includes/meta-boxes.php:1385
 msgid ""
 "Optionally set a background colour for product display slider (ONLY when "
 "using the Fullscreen Split display type above)."
 msgstr ""
 
-#: includes/meta-boxes.php:1377 includes/meta-boxes.php:1395
+#: includes/meta-boxes.php:1393 includes/meta-boxes.php:1411
 msgid "Product Description"
 msgstr ""
 
-#: includes/meta-boxes.php:1384
+#: includes/meta-boxes.php:1400
 msgid "Product Short Description"
 msgstr ""
 
-#: includes/meta-boxes.php:1385
+#: includes/meta-boxes.php:1401
 msgid ""
 "You can optionally write a short description here, which shows above the "
 "variations/cart options."
 msgstr ""
 
-#: includes/meta-boxes.php:1396
+#: includes/meta-boxes.php:1412
 msgid ""
 "You can optionally write a product description here, which shows under the "
 "description accordion heading if you have the page builder enabled for "
 "product pages."
 msgstr ""
 
-#: includes/meta-boxes.php:1467
+#: includes/meta-boxes.php:1483
 msgid "Team Member Meta"
 msgstr ""
 
-#: includes/meta-boxes.php:1491
+#: includes/meta-boxes.php:1507
 msgid ""
 "You can optionally write a custom excerpt here to display instead of the "
 "excerpt that is automatically generated (this is needed if you use the page "
 "builder above)."
 msgstr ""
 
-#: includes/meta-boxes.php:1502
+#: includes/meta-boxes.php:1518
 msgid "Team Member Details"
 msgstr ""
 
-#: includes/meta-boxes.php:1509
+#: includes/meta-boxes.php:1525
 msgid "Position"
 msgstr ""
 
-#: includes/meta-boxes.php:1511
+#: includes/meta-boxes.php:1527
 msgid "Enter the team member's position within the team."
 msgstr ""
 
-#: includes/meta-boxes.php:1519
+#: includes/meta-boxes.php:1535
 msgid "Email Address"
 msgstr ""
 
-#: includes/meta-boxes.php:1521
+#: includes/meta-boxes.php:1537
 msgid "Enter the team member's email address."
 msgstr ""
 
-#: includes/meta-boxes.php:1529
+#: includes/meta-boxes.php:1545
 msgid "Phone Number"
 msgstr ""
 
-#: includes/meta-boxes.php:1531
+#: includes/meta-boxes.php:1547
 msgid "Enter the team member's phone number."
 msgstr ""
 
-#: includes/meta-boxes.php:1539 includes/sf-options.php:3480
+#: includes/meta-boxes.php:1555 includes/sf-options.php:3526
 #: swift-framework/core/sf-functions.php:705
 #: swift-framework/core/sf-functions.php:714
 #: swift-framework/core/sf-functions.php:721 woocommerce/share.php:31
 msgid "Twitter"
 msgstr ""
 
-#: includes/meta-boxes.php:1541
+#: includes/meta-boxes.php:1557
 msgid "Enter the team member's Twitter username."
 msgstr ""
 
-#: includes/meta-boxes.php:1549 includes/sf-options.php:3488
+#: includes/meta-boxes.php:1565 includes/sf-options.php:3534
 #: woocommerce/share.php:28
 msgid "Facebook"
 msgstr ""
 
-#: includes/meta-boxes.php:1551
+#: includes/meta-boxes.php:1567
 msgid "Enter the team member's Facebook URL."
 msgstr ""
 
-#: includes/meta-boxes.php:1559 includes/sf-options.php:3528
+#: includes/meta-boxes.php:1575 includes/sf-options.php:3574
 msgid "LinkedIn"
 msgstr ""
 
-#: includes/meta-boxes.php:1561
+#: includes/meta-boxes.php:1577
 msgid "Enter the team member's LinkedIn URL."
 msgstr ""
 
-#: includes/meta-boxes.php:1569 includes/sf-options.php:3536
+#: includes/meta-boxes.php:1585 includes/sf-options.php:3582
 msgid "Google+"
 msgstr ""
 
-#: includes/meta-boxes.php:1571
+#: includes/meta-boxes.php:1587
 msgid "Enter the team member's Google+ URL."
 msgstr ""
 
-#: includes/meta-boxes.php:1579 includes/sf-options.php:3520
+#: includes/meta-boxes.php:1595 includes/sf-options.php:3566
 msgid "Skype"
 msgstr ""
 
-#: includes/meta-boxes.php:1581
+#: includes/meta-boxes.php:1597
 msgid "Enter the team member's Skype username."
 msgstr ""
 
-#: includes/meta-boxes.php:1589 includes/sf-options.php:3576
+#: includes/meta-boxes.php:1605 includes/sf-options.php:3622
 #: swift-framework/content/sf-blog.php:299
 msgid "Instagram"
 msgstr ""
 
-#: includes/meta-boxes.php:1591
+#: includes/meta-boxes.php:1607
 msgid "Enter the team member's Instragram URL (e.g. http://hashgr.am/)."
 msgstr ""
 
-#: includes/meta-boxes.php:1599 includes/sf-options.php:3496
+#: includes/meta-boxes.php:1615 includes/sf-options.php:3542
 msgid "Dribbble"
 msgstr ""
 
-#: includes/meta-boxes.php:1601
+#: includes/meta-boxes.php:1617
 msgid "Enter the team member's Dribbble username."
 msgstr ""
 
-#: includes/meta-boxes.php:1614
+#: includes/meta-boxes.php:1630
 msgid "Client Meta"
 msgstr ""
 
-#: includes/meta-boxes.php:1620
+#: includes/meta-boxes.php:1636
 msgid "Client Link"
 msgstr ""
 
-#: includes/meta-boxes.php:1622
+#: includes/meta-boxes.php:1638
 msgid "Enter the link for the client if you want the image to be clickable."
 msgstr ""
 
-#: includes/meta-boxes.php:1635
+#: includes/meta-boxes.php:1651
 msgid "Testimonial Meta"
 msgstr ""
 
-#: includes/meta-boxes.php:1641
+#: includes/meta-boxes.php:1657
 msgid "Testimonial Cite"
 msgstr ""
 
-#: includes/meta-boxes.php:1643
+#: includes/meta-boxes.php:1659
 msgid "Enter the cite name for the testimonial."
 msgstr ""
 
-#: includes/meta-boxes.php:1651
+#: includes/meta-boxes.php:1667
 msgid "Testimonial Cite Subtext"
 msgstr ""
 
-#: includes/meta-boxes.php:1653
+#: includes/meta-boxes.php:1669
 msgid "Enter the cite subtext for the testimonial (optional)."
 msgstr ""
 
-#: includes/meta-boxes.php:1661
+#: includes/meta-boxes.php:1677
 msgid "Testimonial Cite Image"
 msgstr ""
 
-#: includes/meta-boxes.php:1662
+#: includes/meta-boxes.php:1678
 msgid "Enter the cite image for the testimonial (optional)."
 msgstr ""
 
-#: includes/meta-boxes.php:1675
+#: includes/meta-boxes.php:1691
 msgid "Page Header / Slider"
 msgstr ""
 
-#: includes/meta-boxes.php:1681
+#: includes/meta-boxes.php:1697
 msgid "Page Header Type"
 msgstr ""
 
-#: includes/meta-boxes.php:1686 includes/sf-options.php:3137
+#: includes/meta-boxes.php:1702 includes/sf-options.php:3183
 msgid "Standard (Overlay)"
 msgstr ""
 
-#: includes/meta-boxes.php:1689
+#: includes/meta-boxes.php:1705
 msgid "Below Slider"
 msgstr ""
 
-#: includes/meta-boxes.php:1693
+#: includes/meta-boxes.php:1709
 msgid ""
 "Choose the type of header that is shown on this page. If you choose one of "
 "the Naked header options, then the header will be overlaid over the slider/"
@@ -2758,375 +2744,374 @@ msgid ""
 "headers."
 msgstr ""
 
-#: includes/meta-boxes.php:1698
+#: includes/meta-boxes.php:1714
 msgid "Use Alt Logo"
 msgstr ""
 
-#: includes/meta-boxes.php:1702
+#: includes/meta-boxes.php:1718
 msgid ""
 "Choose if you would like to use the ALT logo on this page (the logo will "
 "revert to the standard logo for the sticky header if you are using it)."
 msgstr ""
 
-#: includes/meta-boxes.php:1707
+#: includes/meta-boxes.php:1723
 msgid "Page Menu"
 msgstr ""
 
-#: includes/meta-boxes.php:1713
+#: includes/meta-boxes.php:1729
 msgid ""
 "Optionally you can choose to override the menu that is used on the page. "
 "This is ideal if you want to create a page with a anchor link scroll menu."
 msgstr ""
 
-#: includes/meta-boxes.php:1718
+#: includes/meta-boxes.php:1734
 msgid "Page Slider"
 msgstr ""
 
-#: includes/meta-boxes.php:1723
+#: includes/meta-boxes.php:1739
 msgid "Swift Slider"
 msgstr ""
 
-#: includes/meta-boxes.php:1724
+#: includes/meta-boxes.php:1740
 msgid "Revolution Slider"
 msgstr ""
 
-#: includes/meta-boxes.php:1725
+#: includes/meta-boxes.php:1741
 msgid "LayerSlider"
 msgstr ""
 
-#: includes/meta-boxes.php:1726
+#: includes/meta-boxes.php:1742
 msgid "Master Slider"
 msgstr ""
 
-#: includes/meta-boxes.php:1730
+#: includes/meta-boxes.php:1746
 msgid ""
 "Choose the type of slider you would like to display at the top of the page, "
 "if any. You can then set the slider settings below."
 msgstr ""
 
-#: includes/meta-boxes.php:1736
+#: includes/meta-boxes.php:1752
 msgid "Swift Slider Options"
 msgstr ""
 
-#: includes/meta-boxes.php:1744
+#: includes/meta-boxes.php:1760
 msgid "Swift Slider Type"
 msgstr ""
 
-#: includes/meta-boxes.php:1749
+#: includes/meta-boxes.php:1765
 msgid "Curtain Slider"
 msgstr ""
 
-#: includes/meta-boxes.php:1754
+#: includes/meta-boxes.php:1770
 msgid ""
 "Choose if you would like to display the Swift Slider in horizontal slider "
 "mode, or vertical curtain slider format."
 msgstr ""
 
-#: includes/meta-boxes.php:1759
+#: includes/meta-boxes.php:1775
 msgid "Swift Slider Slide Category"
 msgstr ""
 
-#: includes/meta-boxes.php:1766 includes/sf-options.php:3216
+#: includes/meta-boxes.php:1782 includes/sf-options.php:3262
 msgid "Choose the category of slide that you would like to show, or all."
 msgstr ""
 
-#: includes/meta-boxes.php:1772
+#: includes/meta-boxes.php:1788
 msgid "Swift Slider Random"
 msgstr ""
 
-#: includes/meta-boxes.php:1777 includes/sf-options.php:3246
+#: includes/meta-boxes.php:1793 includes/sf-options.php:3292
 msgid "Choose if you would like the slider to show slides in random order."
 msgstr ""
 
-#: includes/meta-boxes.php:1783
+#: includes/meta-boxes.php:1799
 msgid "Swift Slider Slides"
 msgstr ""
 
-#: includes/meta-boxes.php:1785 includes/sf-options.php:3228
+#: includes/meta-boxes.php:1801 includes/sf-options.php:3274
 msgid "Set the number of slides to show. If blank then all will show."
 msgstr ""
 
-#: includes/meta-boxes.php:1794
+#: includes/meta-boxes.php:1810
 msgid "Swift Slider Fullscreen"
 msgstr ""
 
-#: includes/meta-boxes.php:1799
+#: includes/meta-boxes.php:1815
 msgid "Choose if you would like the slider to be window height."
 msgstr ""
 
-#: includes/meta-boxes.php:1804
+#: includes/meta-boxes.php:1820
 msgid "Swift Slider Max Height"
 msgstr ""
 
-#: includes/meta-boxes.php:1806 includes/sf-options.php:3237
+#: includes/meta-boxes.php:1822 includes/sf-options.php:3283
 msgid ""
 "Set the maximum height that the Swift Slider should display at (optional) "
 "(no px)."
 msgstr ""
 
-#: includes/meta-boxes.php:1815
+#: includes/meta-boxes.php:1831
 msgid "Swift Slider Autoplay"
 msgstr ""
 
-#: includes/meta-boxes.php:1817
+#: includes/meta-boxes.php:1833
 msgid ""
 "If you would like the slider to auto-rotate, then set the autoplay rotate "
 "time in ms here. I.e. you would enter '5000' for the slider to rotate every "
 "5 seconds."
 msgstr ""
 
-#: includes/meta-boxes.php:1826
+#: includes/meta-boxes.php:1842
 msgid "Swift Slider Transition"
 msgstr ""
 
-#: includes/meta-boxes.php:1830
+#: includes/meta-boxes.php:1846
 #: includes/options/inc/fields/slides/field_slides.php:68
 msgid "Slide"
 msgstr ""
 
-#: includes/meta-boxes.php:1831
+#: includes/meta-boxes.php:1847
 msgid "Fade"
 msgstr ""
 
-#: includes/meta-boxes.php:1836 includes/sf-options.php:3274
+#: includes/meta-boxes.php:1852 includes/sf-options.php:3320
 msgid "Choose the transition type for the slider."
 msgstr ""
 
-#: includes/meta-boxes.php:1841
+#: includes/meta-boxes.php:1857
 msgid "Swift Slider Loop"
 msgstr ""
 
-#: includes/meta-boxes.php:1846
+#: includes/meta-boxes.php:1862
 msgid ""
 "Choose if you would like the slider to loop (not possible on curtain slider)."
 msgstr ""
 
-#: includes/meta-boxes.php:1851
+#: includes/meta-boxes.php:1867
 msgid "Swift Slider Navigation"
 msgstr ""
 
-#: includes/meta-boxes.php:1856
+#: includes/meta-boxes.php:1872
 msgid ""
 "Choose if you would like to display the left/right arrows on the slider "
 "(only if slider type is set to \"Slider\")."
 msgstr ""
 
-#: includes/meta-boxes.php:1861
+#: includes/meta-boxes.php:1877
 msgid "Swift Slider Pagination"
 msgstr ""
 
-#: includes/meta-boxes.php:1866 includes/sf-options.php:3294
+#: includes/meta-boxes.php:1882 includes/sf-options.php:3340
 msgid "Choose if you would like to display the slider pagination."
 msgstr ""
 
-#: includes/meta-boxes.php:1871
+#: includes/meta-boxes.php:1887
 msgid "Swift Slider Continue"
 msgstr ""
 
-#: includes/meta-boxes.php:1876
+#: includes/meta-boxes.php:1892
 msgid ""
 "Choose if you would like to display the continue button on Curtain slider "
 "type to progress to the content. If you want to only display the slider on "
 "the page, and no content, then make sure you set this to NO."
 msgstr ""
 
-#: includes/meta-boxes.php:1882
+#: includes/meta-boxes.php:1898
 msgid "Revolution Slider Options"
 msgstr ""
 
-#: includes/meta-boxes.php:1901
+#: includes/meta-boxes.php:1917
 msgid "LayerSlider Options"
 msgstr ""
 
-#: includes/meta-boxes.php:1909
+#: includes/meta-boxes.php:1925
 msgid "LayerSlider ID"
 msgstr ""
 
-#: includes/meta-boxes.php:1911
+#: includes/meta-boxes.php:1927
 msgid "Enter the LayerSlider ID for the slider that you want to show."
 msgstr ""
 
-#: includes/meta-boxes.php:1920
+#: includes/meta-boxes.php:1936
 msgid "Master Slider Options"
 msgstr ""
 
-#: includes/meta-boxes.php:1928
+#: includes/meta-boxes.php:1944
 msgid "Master Slider ID"
 msgstr ""
 
-#: includes/meta-boxes.php:1930
+#: includes/meta-boxes.php:1946
 msgid "Enter the Master Slider ID for the slider that you want to show."
 msgstr ""
 
-#: includes/meta-boxes.php:1943
+#: includes/meta-boxes.php:1959
 msgid "Page Meta"
 msgstr ""
 
-#: includes/meta-boxes.php:1975
+#: includes/meta-boxes.php:1991
 msgid ""
 "You can optionally write a custom excerpt here to display content when pages "
 "show up in search results."
 msgstr ""
 
-#: includes/meta-boxes.php:2003
+#: includes/meta-boxes.php:2019
 msgid "Enable Newsletter Bar"
 msgstr ""
 
-#: includes/meta-boxes.php:2006
+#: includes/meta-boxes.php:2022
 msgid "Enable the newsletter bar, you can configure this in the theme options."
 msgstr ""
 
-#: includes/meta-boxes.php:2043 includes/meta-boxes.php:2086
-#: includes/meta-boxes.php:2128
+#: includes/meta-boxes.php:2059 includes/meta-boxes.php:2102
+#: includes/meta-boxes.php:2144
 msgid "Sidebar Options"
 msgstr ""
 
-#: includes/meta-boxes.php:2050 includes/meta-boxes.php:2093
-#: includes/meta-boxes.php:2135
+#: includes/meta-boxes.php:2066 includes/meta-boxes.php:2109
+#: includes/meta-boxes.php:2151
 msgid "Sidebar configuration"
 msgstr ""
 
-#: includes/meta-boxes.php:2054 includes/meta-boxes.php:2097
-#: includes/meta-boxes.php:2139
+#: includes/meta-boxes.php:2070 includes/meta-boxes.php:2113
+#: includes/meta-boxes.php:2155
 msgid "No Sidebars"
 msgstr ""
 
-#: includes/meta-boxes.php:2055 includes/meta-boxes.php:2066
-#: includes/meta-boxes.php:2098 includes/meta-boxes.php:2108
-#: includes/meta-boxes.php:2140 includes/meta-boxes.php:2151
-#: includes/sf-options.php:2478
+#: includes/meta-boxes.php:2071 includes/meta-boxes.php:2082
+#: includes/meta-boxes.php:2114 includes/meta-boxes.php:2124
+#: includes/meta-boxes.php:2156 includes/meta-boxes.php:2167
+#: includes/sf-options.php:2524
 msgid "Left Sidebar"
 msgstr ""
 
-#: includes/meta-boxes.php:2056 includes/meta-boxes.php:2074
-#: includes/meta-boxes.php:2099 includes/meta-boxes.php:2116
-#: includes/meta-boxes.php:2141 includes/meta-boxes.php:2159
-#: includes/sf-options.php:2487
+#: includes/meta-boxes.php:2072 includes/meta-boxes.php:2090
+#: includes/meta-boxes.php:2115 includes/meta-boxes.php:2132
+#: includes/meta-boxes.php:2157 includes/meta-boxes.php:2175
+#: includes/sf-options.php:2533
 msgid "Right Sidebar"
 msgstr ""
 
-#: includes/meta-boxes.php:2057 includes/meta-boxes.php:2142
+#: includes/meta-boxes.php:2073 includes/meta-boxes.php:2158
 msgid "Both Sidebars"
 msgstr ""
 
-#: includes/meta-boxes.php:2061
+#: includes/meta-boxes.php:2077
 msgid "Choose the sidebar configuration for the detail page of this page."
 msgstr ""
 
-#: includes/meta-boxes.php:2103
+#: includes/meta-boxes.php:2119
 msgid "Choose the sidebar configuration for the detail page of this post."
 msgstr ""
 
-#: includes/meta-boxes.php:2146
+#: includes/meta-boxes.php:2162
 msgid "Choose the sidebar configuration for the detail page of this product."
 msgstr ""
 
-#: includes/meta-boxes.php:2340
+#: includes/meta-boxes.php:2356
 msgid "Gallery Options"
 msgstr ""
 
-#: includes/meta-boxes.php:2347
+#: includes/meta-boxes.php:2363
 msgid "Gallery Images"
 msgstr ""
 
-#: includes/meta-boxes.php:2348
+#: includes/meta-boxes.php:2364
 msgid "The images that will be used in the gallery."
 msgstr ""
 
-#: includes/meta-boxes.php:2356
+#: includes/meta-boxes.php:2372
 msgid "Gallery Subtitle"
 msgstr ""
 
-#: includes/meta-boxes.php:2358
+#: includes/meta-boxes.php:2374
 msgid "Enter a subtitle for use within the galleries list (optional)."
 msgstr ""
 
-#: includes/meta-boxes.php:2366
+#: includes/meta-boxes.php:2382
 msgid "Gallery Excerpt"
 msgstr ""
 
-#: includes/meta-boxes.php:2367
+#: includes/meta-boxes.php:2383
 msgid ""
 "You can write an excerpt here which will display on the galleries list if "
 "you have it set to show."
 msgstr ""
 
-#: includes/meta-boxes.php:2380
+#: includes/meta-boxes.php:2396
 msgid "Check this box to show social sharing on the detail page."
 msgstr ""
 
-#: includes/meta-boxes.php:2391
+#: includes/meta-boxes.php:2407
 msgid "Directory Options"
 msgstr ""
 
-#: includes/meta-boxes.php:2400 swift-framework/core/sf-functions.php:3286
+#: includes/meta-boxes.php:2416 swift-framework/core/sf-functions.php:3286
 msgid "Address"
 msgstr ""
 
-#: includes/meta-boxes.php:2402
+#: includes/meta-boxes.php:2418
 msgid ""
 "Enter the address that you would like to show on the map here, i.e. "
 "\"Cupertino\"."
 msgstr ""
 
-#: includes/meta-boxes.php:2410 swift-framework/core/sf-functions.php:3290
+#: includes/meta-boxes.php:2426 swift-framework/core/sf-functions.php:3290
 msgid "Generate Coordinates"
 msgstr ""
 
-#: includes/meta-boxes.php:2412
+#: includes/meta-boxes.php:2428
 msgid ""
 "Will automatically generate the latitude/longitude coordinates witht the "
 "given address."
 msgstr ""
 
-#: includes/meta-boxes.php:2419 swift-framework/core/sf-functions.php:3295
+#: includes/meta-boxes.php:2435 swift-framework/core/sf-functions.php:3295
 msgid "Latitude Coordinate"
 msgstr ""
 
-#: includes/meta-boxes.php:2421
+#: includes/meta-boxes.php:2437
 msgid "Enter the Latitude coordinate of the Directory Item."
 msgstr ""
 
-#: includes/meta-boxes.php:2429 swift-framework/core/sf-functions.php:3301
+#: includes/meta-boxes.php:2445 swift-framework/core/sf-functions.php:3301
 msgid "Longitude Coordinate"
 msgstr ""
 
-#: includes/meta-boxes.php:2431
+#: includes/meta-boxes.php:2447
 msgid "Enter the Longitude coordinate of the Directory Item."
 msgstr ""
 
-#: includes/meta-boxes.php:2439
+#: includes/meta-boxes.php:2455
 msgid "Custom Map Pin"
 msgstr ""
 
-#: includes/meta-boxes.php:2440
+#: includes/meta-boxes.php:2456
 msgid ""
 "Choose an image to use as the custom pin for the address on the map. Upload "
 "your custom map pin, the image size must be 150px x 75px."
 msgstr ""
 
-#: includes/meta-boxes.php:2448 swift-framework/core/sf-functions.php:3316
+#: includes/meta-boxes.php:2464 swift-framework/core/sf-functions.php:3316
 msgid "Pin Link"
 msgstr ""
 
-#: includes/meta-boxes.php:2450
+#: includes/meta-boxes.php:2466
 msgid "Enter the Link url of the location marker."
 msgstr ""
 
-#: includes/meta-boxes.php:2458 swift-framework/core/sf-functions.php:3322
+#: includes/meta-boxes.php:2474 swift-framework/core/sf-functions.php:3322
 msgid "Pin Button Text"
 msgstr ""
 
-#: includes/meta-boxes.php:2460
+#: includes/meta-boxes.php:2476
 msgid "Enter the text of the Pin Button."
 msgstr ""
 
-#: includes/meta-boxes.php:2496 includes/sf-options.php:632
+#: includes/meta-boxes.php:2512 includes/sf-options.php:632
 msgid "Meta Options"
 msgstr ""
 
 #: includes/option-extensions/extensions/custom_fonts/custom_fonts/field_custom_fonts.php:97
-#: includes/option-extensions/extensions/custom_icon_fonts/custom_icon_fonts/field_custom_icon_fonts.php:97
 msgid "Error"
 msgstr ""
 
@@ -3140,34 +3125,28 @@ msgid "No Custom Fonts Found"
 msgstr ""
 
 #: includes/option-extensions/extensions/custom_fonts/custom_fonts/field_custom_fonts.php:187
-#: includes/option-extensions/extensions/custom_icon_fonts/custom_icon_fonts/field_custom_icon_fonts.php:176
 msgid "There was an error deleting your font:"
 msgstr ""
 
 #: includes/option-extensions/extensions/custom_fonts/custom_fonts/field_custom_fonts.php:188
-#: includes/option-extensions/extensions/custom_icon_fonts/custom_icon_fonts/field_custom_icon_fonts.php:177
 msgid "Unzipping archive and generating any missing font files."
 msgstr ""
 
 #: includes/option-extensions/extensions/custom_fonts/custom_fonts/field_custom_fonts.php:189
-#: includes/option-extensions/extensions/custom_icon_fonts/custom_icon_fonts/field_custom_icon_fonts.php:178
 msgid "Converting font file(s)..."
 msgstr ""
 
 #: includes/option-extensions/extensions/custom_fonts/custom_fonts/field_custom_fonts.php:190
-#: includes/option-extensions/extensions/custom_icon_fonts/custom_icon_fonts/field_custom_icon_fonts.php:179
 msgid ""
 "The only file(s) imported were those uploaded.  Please refresh the page to "
 "continue (making note of any errors before doing so, please)."
 msgstr ""
 
 #: includes/option-extensions/extensions/custom_fonts/custom_fonts/field_custom_fonts.php:191
-#: includes/option-extensions/extensions/custom_icon_fonts/custom_icon_fonts/field_custom_icon_fonts.php:180
 msgid "An unknown error occurred. Please try again."
 msgstr ""
 
 #: includes/option-extensions/extensions/custom_fonts/custom_fonts/field_custom_fonts.php:192
-#: includes/option-extensions/extensions/custom_icon_fonts/custom_icon_fonts/field_custom_icon_fonts.php:181
 msgid "Conversion complete.  Refreshing page..."
 msgstr ""
 
@@ -3182,43 +3161,34 @@ msgstr ""
 
 #: includes/option-extensions/extensions/custom_fonts/extension_custom_fonts.php:240
 #: includes/option-extensions/extensions/custom_fonts/extension_custom_fonts.php:300
-#: includes/option-extensions/extensions/custom_icon_fonts/extension_custom_icon_fonts.php:223
-#: includes/option-extensions/extensions/custom_icon_fonts/extension_custom_icon_fonts.php:284
 msgid "Fonts Squirrel"
 msgstr ""
 
 #: includes/option-extensions/extensions/custom_fonts/extension_custom_fonts.php:316
-#: includes/option-extensions/extensions/custom_icon_fonts/extension_custom_icon_fonts.php:309
 msgid "Unable to delete font file(s)."
 msgstr ""
 
 #: includes/option-extensions/extensions/custom_fonts/extension_custom_fonts.php:412
-#: includes/option-extensions/extensions/custom_icon_fonts/extension_custom_icon_fonts.php:406
 msgid "Attachment does not exist."
 msgstr ""
 
 #: includes/option-extensions/extensions/custom_fonts/extension_custom_fonts.php:506
-#: includes/option-extensions/extensions/custom_icon_fonts/extension_custom_icon_fonts.php:508
 msgid "File type not recognized."
 msgstr ""
 
 #: includes/option-extensions/extensions/custom_fonts/extension_custom_fonts.php:513
-#: includes/option-extensions/extensions/custom_icon_fonts/extension_custom_icon_fonts.php:515
 msgid "Unidentified error."
 msgstr ""
 
 #: includes/option-extensions/extensions/custom_fonts/extension_custom_fonts.php:542
-#: includes/option-extensions/extensions/custom_icon_fonts/extension_custom_icon_fonts.php:544
 msgid "The font format .eot is not supported."
 msgstr ""
 
 #: includes/option-extensions/extensions/custom_fonts/extension_custom_fonts.php:564
-#: includes/option-extensions/extensions/custom_icon_fonts/extension_custom_icon_fonts.php:566
 msgid "No valid font file was found."
 msgstr ""
 
 #: includes/option-extensions/extensions/custom_fonts/extension_custom_fonts.php:613
-#: includes/option-extensions/extensions/custom_icon_fonts/extension_custom_icon_fonts.php:615
 msgid ""
 "<br><br>Your font could not be converted at this time. Please try again "
 "later."
@@ -3226,36 +3196,11 @@ msgstr ""
 
 #: includes/option-extensions/extensions/custom_fonts/extension_custom_fonts.php:790
 #: includes/option-extensions/extensions/custom_fonts/extension_custom_fonts.php:799
-#: includes/option-extensions/extensions/custom_icon_fonts/extension_custom_icon_fonts.php:796
-#: includes/option-extensions/extensions/custom_icon_fonts/extension_custom_icon_fonts.php:805
 msgid "Font Control"
 msgstr ""
 
 #: includes/option-extensions/extensions/custom_fonts/extension_custom_fonts.php:791
-#: includes/option-extensions/extensions/custom_icon_fonts/extension_custom_icon_fonts.php:797
 msgid "<p class=\"description\"></p>"
-msgstr ""
-
-#: includes/option-extensions/extensions/custom_icon_fonts/custom_icon_fonts/field_custom_icon_fonts.php:113
-#: includes/option-extensions/extensions/custom_icon_fonts/custom_icon_fonts/field_custom_icon_fonts.php:117
-msgid "Add Icon Font"
-msgstr ""
-
-#: includes/option-extensions/extensions/custom_icon_fonts/custom_icon_fonts/field_custom_icon_fonts.php:116
-msgid "No Custom Icon Fonts Found"
-msgstr ""
-
-#: includes/option-extensions/extensions/custom_icon_fonts/custom_icon_fonts/field_custom_icon_fonts.php:182
-msgid "Choose ZIP file"
-msgstr ""
-
-#: includes/option-extensions/extensions/custom_icon_fonts/extension_custom_icon_fonts.php:221
-#: includes/option-extensions/extensions/custom_icon_fonts/extension_custom_icon_fonts.php:280
-msgid "Custom Icon Fonts"
-msgstr ""
-
-#: includes/option-extensions/extensions/custom_icon_fonts/extension_custom_icon_fonts.php:464
-msgid "Error when creating Fontello file."
 msgstr ""
 
 #: includes/option-extensions/extensions/search/extension_search.php:97
@@ -3316,36 +3261,36 @@ msgstr ""
 msgid "Create Widget Area"
 msgstr ""
 
-#: includes/options/core/enqueue.php:453
-#: includes/options/inc/extensions/customizer/extension_customizer.php:687
+#: includes/options/core/enqueue.php:452
+#: includes/options/inc/extensions/customizer/extension_customizer.php:685
 msgid "You have changes that are not saved. Would you like to save them now?"
 msgstr ""
 
-#: includes/options/core/enqueue.php:461
-#: includes/options/inc/extensions/customizer/extension_customizer.php:688
+#: includes/options/core/enqueue.php:460
+#: includes/options/inc/extensions/customizer/extension_customizer.php:686
 msgid "Are you sure? Resetting will lose all custom values."
 msgstr ""
 
-#: includes/options/core/enqueue.php:469
+#: includes/options/core/enqueue.php:468
 msgid "Are you sure? Resetting will lose all custom values in this section."
 msgstr ""
 
-#: includes/options/core/enqueue.php:477
-#: includes/options/inc/extensions/customizer/extension_customizer.php:689
+#: includes/options/core/enqueue.php:476
+#: includes/options/inc/extensions/customizer/extension_customizer.php:687
 msgid ""
 "Your current options will be replaced with the values of this preset. Would "
 "you like to proceed?"
 msgstr ""
 
-#: includes/options/core/enqueue.php:484
+#: includes/options/core/enqueue.php:483
 msgid "Please Wait"
 msgstr ""
 
-#: includes/options/core/enqueue.php:495
+#: includes/options/core/enqueue.php:494
 msgid "There was an error saving. Here is the result of your action:"
 msgstr ""
 
-#: includes/options/core/enqueue.php:496
+#: includes/options/core/enqueue.php:495
 msgid ""
 "There was a problem with your action. Please try again or reload the page."
 msgstr ""
@@ -3395,7 +3340,7 @@ msgid "Options panel created using %1$s"
 msgstr ""
 
 #: includes/options/framework.php:220
-#: includes/options/inc/welcome/welcome.php:201
+#: includes/options/inc/welcome/welcome.php:205
 msgid "Redux Framework"
 msgstr ""
 
@@ -3403,23 +3348,23 @@ msgstr ""
 msgid "Options"
 msgstr ""
 
-#: includes/options/framework.php:1745
+#: includes/options/framework.php:1751
 msgid "Enable"
 msgstr ""
 
-#: includes/options/framework.php:1750
+#: includes/options/framework.php:1756
 msgid "Disable"
 msgstr ""
 
-#: includes/options/framework.php:1756
+#: includes/options/framework.php:1762
 msgid "moving the mouse over"
 msgstr ""
 
-#: includes/options/framework.php:1758
+#: includes/options/framework.php:1764
 msgid "clicking"
 msgstr ""
 
-#: includes/options/framework.php:1762
+#: includes/options/framework.php:1768
 #, php-format
 msgid ""
 "Hints are tooltips that popup when %d the hint icon, offering addition "
@@ -3427,28 +3372,28 @@ msgid ""
 "the link below."
 msgstr ""
 
-#: includes/options/framework.php:1767
+#: includes/options/framework.php:1773
 msgid "Hints"
 msgstr ""
 
-#: includes/options/framework.php:1894
+#: includes/options/framework.php:1900
 #: swift-framework/core/sf-interface.php:161
 msgid "Default"
 msgstr ""
 
-#: includes/options/framework.php:2776
+#: includes/options/framework.php:2778
 msgid "Invalid security credential.  Please reload the page and try again."
 msgstr ""
 
-#: includes/options/framework.php:2785
+#: includes/options/framework.php:2787
 msgid "Invalid user capability.  Please reload the page and try again."
 msgstr ""
 
-#: includes/options/framework.php:2861
+#: includes/options/framework.php:2867
 msgid "Your panel has no fields. Nothing to save."
 msgstr ""
 
-#: includes/options/framework.php:3954
+#: includes/options/framework.php:3973
 msgid ""
 "<strong>Redux Framework Notice: </strong>There are references to the Redux "
 "Framework support site in your config's <code>admin_bar_links</code> "
@@ -3456,7 +3401,7 @@ msgid ""
 "shipping your product."
 msgstr ""
 
-#: includes/options/framework.php:3969
+#: includes/options/framework.php:3988
 msgid ""
 "<strong>Redux Framework Notice: </strong>There are references to the Redux "
 "Framework support site in your config's <code>share_icons</code> argument.  "
@@ -3530,15 +3475,15 @@ msgid ""
 "date. The core version is %s"
 msgstr ""
 
-#: includes/options/inc/extensions/customizer/extension_customizer.php:722
+#: includes/options/inc/extensions/customizer/extension_customizer.php:720
 msgid "You have changes that are not saved.  Would you like to save them now?"
 msgstr ""
 
-#: includes/options/inc/extensions/customizer/extension_customizer.php:723
+#: includes/options/inc/extensions/customizer/extension_customizer.php:721
 msgid "Are you sure?  Resetting will lose all custom values."
 msgstr ""
 
-#: includes/options/inc/extensions/customizer/extension_customizer.php:724
+#: includes/options/inc/extensions/customizer/extension_customizer.php:722
 msgid ""
 "Your current options will be replaced with the values of this preset.  Would "
 "you like to proceed?"
@@ -3573,7 +3518,7 @@ msgid "Press return or enter to expand"
 msgstr ""
 
 #: includes/options/inc/extensions/import_export/extension_import_export.php:120
-#: includes/sf-options.php:3677
+#: includes/sf-options.php:3723
 msgid "Import / Export"
 msgstr ""
 
@@ -3754,11 +3699,6 @@ msgstr ""
 msgid "Add More"
 msgstr ""
 
-#: includes/options/inc/fields/select/field_select.php:83
-#: includes/options/inc/fields/select_image/field_select_image.php:63
-msgid "Select an item"
-msgstr ""
-
 #: includes/options/inc/fields/select/field_select.php:134
 #: includes/options/inc/fields/select_image/field_select_image.php:144
 msgid "No items of this type were found."
@@ -3772,7 +3712,7 @@ msgstr ""
 #: swift-framework/core/sf-woocommerce.php:479
 #: swift-framework/widgets/widget-advertgrid.php:50
 #: swift-framework/widgets/widget-flickr.php:40
-#: swift-framework/widgets/widget-instagram.php:37
+#: swift-framework/widgets/widget-instagram.php:40
 #: swift-framework/widgets/widget-video.php:30
 msgid "Title"
 msgstr ""
@@ -3781,7 +3721,7 @@ msgstr ""
 #: includes/options/inc/fields/slides/field_slides.php:204
 #: swift-framework/core/sf-functions.php:3268
 #: swift-framework/sf-megamenu/edit_custom_walker.php:193
-#: woocommerce/cart/cart.php:35 woocommerce/single-product/tabs/tabs.php:26
+#: woocommerce/cart/cart.php:35 woocommerce/single-product/tabs/tabs.php:34
 msgid "Description"
 msgstr ""
 
@@ -4026,7 +3966,7 @@ msgid ""
 msgstr ""
 
 #: includes/options/inc/tracking.php:154
-#: includes/options/inc/welcome/welcome.php:225
+#: includes/options/inc/welcome/welcome.php:229
 msgid "Redux Extensions"
 msgstr ""
 
@@ -4076,7 +4016,7 @@ msgid "Email address"
 msgstr ""
 
 #: includes/options/inc/tracking.php:157 swift-framework/core/sf-header.php:965
-#: swift-framework/core/sf-header.php:1350
+#: swift-framework/core/sf-header.php:1358
 msgid "Subscribe"
 msgstr ""
 
@@ -4385,8 +4325,8 @@ msgstr ""
 #: includes/options/inc/welcome/views/status_report.php:255
 #: includes/overrides/sf-theme-functions.php:1133
 #: swift-framework/core/sf-header.php:974
-#: swift-framework/core/sf-header.php:1359
-#: swift-framework/core/sf-header.php:1391
+#: swift-framework/core/sf-header.php:1367
+#: swift-framework/core/sf-header.php:1399
 msgid "Language"
 msgstr ""
 
@@ -4817,7 +4757,7 @@ msgid ""
 "\"_blank\">following article</a> before asking for support from us directly."
 msgstr ""
 
-#: includes/options/inc/welcome/welcome.php:104
+#: includes/options/inc/welcome/welcome.php:106
 msgid ""
 "If you like <strong>Redux</strong> please leave us a <a href=\"https://"
 "wordpress.org/support/view/plugin-reviews/redux-framework?filter=5#postform"
@@ -4826,47 +4766,47 @@ msgid ""
 "you from Redux in advance!"
 msgstr ""
 
-#: includes/options/inc/welcome/welcome.php:179
+#: includes/options/inc/welcome/welcome.php:183
 msgid "Support hash could not be generated. Please try again later."
 msgstr ""
 
-#: includes/options/inc/welcome/welcome.php:201
+#: includes/options/inc/welcome/welcome.php:205
 msgid "Welcome to Redux Framework"
 msgstr ""
 
-#: includes/options/inc/welcome/welcome.php:209
+#: includes/options/inc/welcome/welcome.php:213
 msgid "Redux Framework Changelog"
 msgstr ""
 
-#: includes/options/inc/welcome/welcome.php:217
+#: includes/options/inc/welcome/welcome.php:221
 msgid "Get Support"
 msgstr ""
 
-#: includes/options/inc/welcome/welcome.php:234
+#: includes/options/inc/welcome/welcome.php:238
 msgid "The people that develop Redux Framework"
 msgstr ""
 
-#: includes/options/inc/welcome/welcome.php:242
+#: includes/options/inc/welcome/welcome.php:246
 msgid "Redux Framework Status"
 msgstr ""
 
-#: includes/options/inc/welcome/welcome.php:342
+#: includes/options/inc/welcome/welcome.php:346
 msgid "What's New"
 msgstr ""
 
-#: includes/options/inc/welcome/welcome.php:348
+#: includes/options/inc/welcome/welcome.php:352
 msgid "Changelog"
 msgstr ""
 
-#: includes/options/inc/welcome/welcome.php:351
+#: includes/options/inc/welcome/welcome.php:355
 msgid "Credits"
 msgstr ""
 
-#: includes/options/inc/welcome/welcome.php:354
+#: includes/options/inc/welcome/welcome.php:358
 msgid "Support"
 msgstr ""
 
-#: includes/options/inc/welcome/welcome.php:517
+#: includes/options/inc/welcome/welcome.php:521
 #, php-format
 msgid "View %s"
 msgstr ""
@@ -5126,32 +5066,32 @@ msgid "Menu"
 msgstr ""
 
 #: includes/overrides/sf-theme-functions.php:1217
-#: swift-framework/core/sf-header.php:1465
+#: swift-framework/core/sf-header.php:1473
 msgid "Other"
 msgstr ""
 
 #: includes/overrides/sf-theme-functions.php:1283
 #: includes/overrides/sf-theme-functions.php:1285
-#: swift-framework/core/sf-header.php:1561
+#: swift-framework/core/sf-header.php:1569
 #, php-format
 msgid "View all %d results"
 msgstr ""
 
 #: includes/overrides/sf-theme-functions.php:1292
-#: swift-framework/core/sf-header.php:1567
+#: swift-framework/core/sf-header.php:1575
 msgid "No results"
 msgstr ""
 
 #: includes/overrides/sf-theme-functions.php:1293
-#: swift-framework/core/sf-header.php:1568
+#: swift-framework/core/sf-header.php:1576
 msgid "No search results could be found, please try another query."
 msgstr ""
 
 #: includes/overrides/sf-theme-functions.php:1448
 #: swift-framework/core/sf-header.php:854
 #: swift-framework/core/sf-header.php:959
-#: swift-framework/core/sf-header.php:1336
-#: swift-framework/core/sf-header.php:1343 woocommerce/checkout/thankyou.php:39
+#: swift-framework/core/sf-header.php:1344
+#: swift-framework/core/sf-header.php:1351 woocommerce/checkout/thankyou.php:39
 #: woocommerce/wishlist-view.php:89
 msgid "My Account"
 msgstr ""
@@ -5163,13 +5103,13 @@ msgstr ""
 #: includes/overrides/sf-theme-functions.php:1451
 #: swift-framework/core/sf-header.php:857
 #: swift-framework/core/sf-header.php:961
-#: swift-framework/core/sf-header.php:1346
+#: swift-framework/core/sf-header.php:1354
 #: woocommerce/myaccount/form-login.php:61
 msgid "Login"
 msgstr ""
 
 #: includes/overrides/sf-theme-functions.php:1452
-#: swift-framework/core/sf-header.php:1347
+#: swift-framework/core/sf-header.php:1355
 msgid "Sign Up"
 msgstr ""
 
@@ -5240,17 +5180,17 @@ msgid "Tags"
 msgstr ""
 
 #: includes/overrides/sf-theme-functions.php:1978
-#: swift-framework/core/sf-page-heading.php:493
+#: swift-framework/core/sf-page-heading.php:579
 msgid "Newer"
 msgstr ""
 
 #: includes/overrides/sf-theme-functions.php:1988
-#: swift-framework/core/sf-page-heading.php:458
+#: swift-framework/core/sf-page-heading.php:544
 msgid "View all posts"
 msgstr ""
 
 #: includes/overrides/sf-theme-functions.php:2002
-#: swift-framework/core/sf-page-heading.php:479
+#: swift-framework/core/sf-page-heading.php:565
 msgid "Older"
 msgstr ""
 
@@ -7188,786 +7128,808 @@ msgid "Choose the default state for the page heading, shown/hidden."
 msgstr ""
 
 #: includes/sf-options.php:2339
+msgid "Default Page Heading Style"
+msgstr ""
+
+#: includes/sf-options.php:2352
+msgid "Default Page Heading Text Align"
+msgstr ""
+
+#: includes/sf-options.php:2366
+msgid "Default Hero Heading Background Image"
+msgstr ""
+
+#: includes/sf-options.php:2367
+msgid ""
+"Upload the hero heading background image for meta options, plus 404 + other "
+"non-custom pages (Hero Heading Only)."
+msgstr ""
+
+#: includes/sf-options.php:2373
+msgid "Default Hero Heading Text Style"
+msgstr ""
+
+#: includes/sf-options.php:2385
 msgid "Default Page Sidebar Config"
 msgstr ""
 
-#: includes/sf-options.php:2353
+#: includes/sf-options.php:2399
 msgid "Default Page Left Sidebar"
 msgstr ""
 
-#: includes/sf-options.php:2362
+#: includes/sf-options.php:2408
 msgid "Default Page Right Sidebar"
 msgstr ""
 
-#: includes/sf-options.php:2375
+#: includes/sf-options.php:2421
 msgid "Default Post Sidebar Config"
 msgstr ""
 
-#: includes/sf-options.php:2388
+#: includes/sf-options.php:2434
 msgid "Default Post Left Sidebar"
 msgstr ""
 
-#: includes/sf-options.php:2397
+#: includes/sf-options.php:2443
 msgid "Default Post Right Sidebar"
 msgstr ""
 
-#: includes/sf-options.php:2406
+#: includes/sf-options.php:2452
 msgid "Default Include Author"
 msgstr ""
 
-#: includes/sf-options.php:2407
+#: includes/sf-options.php:2453
 msgid "Choose the default state for the post author box, shown/hidden."
 msgstr ""
 
-#: includes/sf-options.php:2415
+#: includes/sf-options.php:2461
 msgid "Default Include Social Sharing"
 msgstr ""
 
-#: includes/sf-options.php:2416
+#: includes/sf-options.php:2462
 msgid "Choose the default state for the post social sharing, shown/hidden."
 msgstr ""
 
-#: includes/sf-options.php:2424
+#: includes/sf-options.php:2470
 msgid "Default Include Related Articles"
 msgstr ""
 
-#: includes/sf-options.php:2425
+#: includes/sf-options.php:2471
 msgid "Choose the default state for the post related articles, shown/hidden."
 msgstr ""
 
-#: includes/sf-options.php:2433
+#: includes/sf-options.php:2479
 msgid "Default Thumbnail Media"
 msgstr ""
 
-#: includes/sf-options.php:2445
+#: includes/sf-options.php:2491
 msgid "Default Detail Media"
 msgstr ""
 
-#: includes/sf-options.php:2459
+#: includes/sf-options.php:2505
 msgid "Archive/Category Options"
 msgstr ""
 
-#: includes/sf-options.php:2464
+#: includes/sf-options.php:2510
 msgid "Sidebar Config"
 msgstr ""
 
-#: includes/sf-options.php:2496
+#: includes/sf-options.php:2542
 msgid "Display Type"
 msgstr ""
 
-#: includes/sf-options.php:2510
+#: includes/sf-options.php:2556
 msgid "Masonry Archive Columns"
 msgstr ""
 
-#: includes/sf-options.php:2525
+#: includes/sf-options.php:2571
 msgid "Archive Pagination"
 msgstr ""
 
-#: includes/sf-options.php:2539
+#: includes/sf-options.php:2585
 msgid "Archive Content Output"
 msgstr ""
 
-#: includes/sf-options.php:2555
+#: includes/sf-options.php:2601
 msgid "Portfolio Archive Display Type"
 msgstr ""
 
-#: includes/sf-options.php:2569
+#: includes/sf-options.php:2615
 msgid "Portfolio Archive Columns"
 msgstr ""
 
-#: includes/sf-options.php:2585
+#: includes/sf-options.php:2631
 msgid "BuddyPress & bbPress Options"
 msgstr ""
 
-#: includes/sf-options.php:2590
+#: includes/sf-options.php:2636
 msgid "BuddyPress Sidebar Config"
 msgstr ""
 
-#: includes/sf-options.php:2604
+#: includes/sf-options.php:2650
 msgid "BuddyPress Left Sidebar"
 msgstr ""
 
-#: includes/sf-options.php:2613
+#: includes/sf-options.php:2659
 msgid "BuddyPress Right Sidebar"
 msgstr ""
 
-#: includes/sf-options.php:2626
+#: includes/sf-options.php:2672
 msgid "bbPress Sidebar Config"
 msgstr ""
 
-#: includes/sf-options.php:2640
+#: includes/sf-options.php:2686
 msgid "bbPress Left Sidebar"
 msgstr ""
 
-#: includes/sf-options.php:2649
+#: includes/sf-options.php:2695
 msgid "bbPress Right Sidebar"
 msgstr ""
 
-#: includes/sf-options.php:2660
+#: includes/sf-options.php:2706
 msgid "Custom Post Type Options"
 msgstr ""
 
-#: includes/sf-options.php:2666
+#: includes/sf-options.php:2712
 msgid "Blog Page"
 msgstr ""
 
-#: includes/sf-options.php:2667
+#: includes/sf-options.php:2713
 msgid ""
 "Select the page that is your main blog index page. This is used to link to "
 "the page from the blog post detail page, and the page builder recent post "
 "asset."
 msgstr ""
 
-#: includes/sf-options.php:2675
+#: includes/sf-options.php:2721
 msgid "Single Author Blog"
 msgstr ""
 
-#: includes/sf-options.php:2676
+#: includes/sf-options.php:2722
 msgid ""
 "If enabled, the author name will be hidden from the blog/post details in the "
 "page builder assets and single details line."
 msgstr ""
 
-#: includes/sf-options.php:2684
+#: includes/sf-options.php:2730
 msgid "Remove Post Dates"
 msgstr ""
 
-#: includes/sf-options.php:2685
+#: includes/sf-options.php:2731
 msgid "If enabled, the date will not be included with the post details."
 msgstr ""
 
-#: includes/sf-options.php:2698
+#: includes/sf-options.php:2744
 msgid "Portfolio Page"
 msgstr ""
 
-#: includes/sf-options.php:2699
+#: includes/sf-options.php:2745
 msgid ""
 "Select the page that is your portfolio index page. This is used to link to "
 "the page from the portfolio detail page."
 msgstr ""
 
-#: includes/sf-options.php:2707
+#: includes/sf-options.php:2753
 msgid "Enable Category Navigation"
 msgstr ""
 
-#: includes/sf-options.php:2708
+#: includes/sf-options.php:2754
 msgid ""
 "Enable this if you would like to set it so that the single portfolio "
 "pagination only includes items within the same category."
 msgstr ""
 
-#: includes/sf-options.php:2716
+#: includes/sf-options.php:2762
 msgid "Full Width Related Projects Display"
 msgstr ""
 
-#: includes/sf-options.php:2717
+#: includes/sf-options.php:2763
 msgid ""
 "Enable this to make the related projects show full width on the portfolio "
 "detail page."
 msgstr ""
 
-#: includes/sf-options.php:2725
+#: includes/sf-options.php:2771
 msgid "Related Projects Columns"
 msgstr ""
 
-#: includes/sf-options.php:2726
+#: includes/sf-options.php:2772
 msgid ""
 "Choose between 3 and 4 columns for the related projects the portfolio detail "
 "page."
 msgstr ""
 
-#: includes/sf-options.php:2739
+#: includes/sf-options.php:2785
 msgid "Testimonial Page"
 msgstr ""
 
-#: includes/sf-options.php:2740
+#: includes/sf-options.php:2786
 msgid ""
 "Select the page that is your testimonial index page. This is used to link to "
 "the page from various places."
 msgstr ""
 
-#: includes/sf-options.php:2754
+#: includes/sf-options.php:2800
 msgid "WooCommerce Options"
 msgstr ""
 
-#: includes/sf-options.php:2759
+#: includes/sf-options.php:2805
 msgid "Shop Icon Style"
 msgstr ""
 
-#: includes/sf-options.php:2772
+#: includes/sf-options.php:2818
 msgid "Cart Notification Animation"
 msgstr ""
 
-#: includes/sf-options.php:2792
+#: includes/sf-options.php:2838
 msgid "Catalog Mode"
 msgstr ""
 
-#: includes/sf-options.php:2793
+#: includes/sf-options.php:2839
 msgid ""
 "Enable this setting to set the products into catalog mode, with no cart or "
 "checkout process."
 msgstr ""
 
-#: includes/sf-options.php:2801
+#: includes/sf-options.php:2847
 msgid "Products Per Page"
 msgstr ""
 
-#: includes/sf-options.php:2802 includes/sf-options.php:2811
+#: includes/sf-options.php:2848 includes/sf-options.php:2857
 msgid "Number value."
 msgstr ""
 
-#: includes/sf-options.php:2803
+#: includes/sf-options.php:2849
 msgid ""
 "The amount of products you would like to show per page on shop/category "
 "pages."
 msgstr ""
 
-#: includes/sf-options.php:2810 swift-framework/sf-megamenu/sf-megamenu.php:175
+#: includes/sf-options.php:2856 swift-framework/sf-megamenu/sf-megamenu.php:175
 msgid "New Badge"
 msgstr ""
 
-#: includes/sf-options.php:2812
+#: includes/sf-options.php:2858
 msgid ""
 "The amount of time in days that the \"New\" badge will display on products. "
 "Set this to 0 to disable the badge."
 msgstr ""
 
-#: includes/sf-options.php:2823
+#: includes/sf-options.php:2869
 msgid "Minimal Checkout Mode"
 msgstr ""
 
-#: includes/sf-options.php:2824
+#: includes/sf-options.php:2870
 msgid ""
 "Enable this setting to display the checkout in minimal mode - with no header "
 "or footer."
 msgstr ""
 
-#: includes/sf-options.php:2832
+#: includes/sf-options.php:2878
 msgid "New account text"
 msgstr ""
 
-#: includes/sf-options.php:2833
+#: includes/sf-options.php:2879
 msgid ""
 "This text appears in the sign in / sign up area of the checkout process."
 msgstr ""
 
-#: includes/sf-options.php:2840
+#: includes/sf-options.php:2886
 msgid "Disable Help Bar"
 msgstr ""
 
-#: includes/sf-options.php:2841
+#: includes/sf-options.php:2887
 msgid "Disable the help bar on checkout pages."
 msgstr ""
 
-#: includes/sf-options.php:2849
+#: includes/sf-options.php:2895
 msgid "Help Bar Text"
 msgstr ""
 
-#: includes/sf-options.php:2850
+#: includes/sf-options.php:2896
 msgid "This text appears in the help bar on checkout pages."
 msgstr ""
 
-#: includes/sf-options.php:2857
+#: includes/sf-options.php:2903
 msgid "Modal Link 1 Title"
 msgstr ""
 
-#: includes/sf-options.php:2858
+#: includes/sf-options.php:2904
 msgid "The first modal link title text. Leave blank to remove this."
 msgstr ""
 
-#: includes/sf-options.php:2866
+#: includes/sf-options.php:2912
 msgid "Modal 1 Content"
 msgstr ""
 
-#: includes/sf-options.php:2867
+#: includes/sf-options.php:2913
 msgid ""
 "The content that appears in the modal box for the email customer care help "
 "link."
 msgstr ""
 
-#: includes/sf-options.php:2874
+#: includes/sf-options.php:2920
 msgid "Modal Link 2 Title"
 msgstr ""
 
-#: includes/sf-options.php:2875 includes/sf-options.php:2892
-#: includes/sf-options.php:2909
+#: includes/sf-options.php:2921 includes/sf-options.php:2938
+#: includes/sf-options.php:2955
 msgid "The second modal link title text. Leave blank to remove this."
 msgstr ""
 
-#: includes/sf-options.php:2883
+#: includes/sf-options.php:2929
 msgid "Modal 2 Content"
 msgstr ""
 
-#: includes/sf-options.php:2884
+#: includes/sf-options.php:2930
 msgid "The content that appears in the modal box for the first modal link."
 msgstr ""
 
-#: includes/sf-options.php:2891
+#: includes/sf-options.php:2937
 msgid "Modal Link 3 Title"
 msgstr ""
 
-#: includes/sf-options.php:2900
+#: includes/sf-options.php:2946
 msgid "Modal 3 Content"
 msgstr ""
 
-#: includes/sf-options.php:2901
+#: includes/sf-options.php:2947
 msgid "The content that appears in the modal box for the second modal link."
 msgstr ""
 
-#: includes/sf-options.php:2908
+#: includes/sf-options.php:2954
 msgid "Modal Link 4 Title"
 msgstr ""
 
-#: includes/sf-options.php:2917
+#: includes/sf-options.php:2963
 msgid "Modal 4 Content"
 msgstr ""
 
-#: includes/sf-options.php:2918
+#: includes/sf-options.php:2964
 msgid "The content that appears in the modal box for the third modal link."
 msgstr ""
 
-#: includes/sf-options.php:2943
+#: includes/sf-options.php:2989
 msgid "Shop Options"
 msgstr ""
 
-#: includes/sf-options.php:2949
+#: includes/sf-options.php:2995
 msgid "Shop Pagination"
 msgstr ""
 
-#: includes/sf-options.php:2963
+#: includes/sf-options.php:3009
 msgid "Enable Mobile Filters Globally"
 msgstr ""
 
-#: includes/sf-options.php:2964
+#: includes/sf-options.php:3010
 msgid "Enable the shop mobile filers globally, for all viewport sizes."
 msgstr ""
 
-#: includes/sf-options.php:2972
+#: includes/sf-options.php:3018
 msgid "Product Display Type"
 msgstr ""
 
-#: includes/sf-options.php:2986
+#: includes/sf-options.php:3032
 msgid "Product Display Layout"
 msgstr ""
 
-#: includes/sf-options.php:2999
+#: includes/sf-options.php:3045
 msgid "Disable Product Hover"
 msgstr ""
 
-#: includes/sf-options.php:3000
+#: includes/sf-options.php:3046
 msgid ""
 "Choose if you would like to disable the product image transition on hover."
 msgstr ""
 
-#: includes/sf-options.php:3008
+#: includes/sf-options.php:3054
 msgid "Product Image Shadows"
 msgstr ""
 
-#: includes/sf-options.php:3009
+#: includes/sf-options.php:3055
 msgid "Choose if you would like to show shadows behind product images."
 msgstr ""
 
-#: includes/sf-options.php:3017
+#: includes/sf-options.php:3063
 msgid "Product Details Alignment"
 msgstr ""
 
-#: includes/sf-options.php:3018
+#: includes/sf-options.php:3064
 msgid "Choose the alignment of the product details on the shop index."
 msgstr ""
 
-#: includes/sf-options.php:3026
+#: includes/sf-options.php:3072
 msgid "Product Display Columns"
 msgstr ""
 
-#: includes/sf-options.php:3042
+#: includes/sf-options.php:3088
 msgid "Multi-Masonry Display"
 msgstr ""
 
-#: includes/sf-options.php:3043
+#: includes/sf-options.php:3089
 msgid ""
 "Choose if you would like to display products on shop/category pages in Multi-"
 "Masonry layout."
 msgstr ""
 
-#: includes/sf-options.php:3051
+#: includes/sf-options.php:3097
 msgid "Product Display Gutters"
 msgstr ""
 
-#: includes/sf-options.php:3052
+#: includes/sf-options.php:3098
 msgid ""
 "Choose if you would like spacing in between the products - Gallery modes "
 "only."
 msgstr ""
 
-#: includes/sf-options.php:3060
+#: includes/sf-options.php:3106
 msgid "Full Width Product Display"
 msgstr ""
 
-#: includes/sf-options.php:3061
+#: includes/sf-options.php:3107
 msgid ""
 "Choose if you would like the shop page to show full width, with a sidebar "
 "integrated into the masonry (Only Left/Right Sidebar Option is supported). "
 "NOTE: Sidebars will not show if you have the Multi-Masonry Display enabled."
 msgstr ""
 
-#: includes/sf-options.php:3069
+#: includes/sf-options.php:3115
 msgid "Quickview only on hover"
 msgstr ""
 
-#: includes/sf-options.php:3070
+#: includes/sf-options.php:3116
 msgid ""
 "Enable this if you would like the quickview to only show on hover. Note: You "
 "will need the quickview plugin installed and activated."
 msgstr ""
 
-#: includes/sf-options.php:3078
+#: includes/sf-options.php:3124
 msgid "Standard - Show rating"
 msgstr ""
 
-#: includes/sf-options.php:3079
+#: includes/sf-options.php:3125
 msgid ""
 "Enable this if you would like to show the product rating below the product "
 "image/details (standard display type only)."
 msgstr ""
 
-#: includes/sf-options.php:3087
+#: includes/sf-options.php:3133
 msgid "Standard - Show buy button"
 msgstr ""
 
-#: includes/sf-options.php:3088
+#: includes/sf-options.php:3134
 msgid ""
 "Enable this if you would like to show the buy button below the product image/"
 "details (standard display type only)."
 msgstr ""
 
-#: includes/sf-options.php:3096
+#: includes/sf-options.php:3142
 msgid "WooCommerce Sidebar Config"
 msgstr ""
 
-#: includes/sf-options.php:3110
+#: includes/sf-options.php:3156
 msgid "WooCommerce Left Sidebar"
 msgstr ""
 
-#: includes/sf-options.php:3119
+#: includes/sf-options.php:3165
 msgid "WooCommerce Right Sidebar"
 msgstr ""
 
-#: includes/sf-options.php:3132
+#: includes/sf-options.php:3178
 msgid "Shop Category / Page Header"
 msgstr ""
 
-#: includes/sf-options.php:3133
+#: includes/sf-options.php:3179
 msgid "Select the page header type on shop/category WooCommerce page."
 msgstr ""
 
-#: includes/sf-options.php:3146
+#: includes/sf-options.php:3192
 msgid "Shop Category / Page Heading"
 msgstr ""
 
-#: includes/sf-options.php:3147
+#: includes/sf-options.php:3193
 msgid "Show page title on shop/category WooCommerce page."
 msgstr ""
 
-#: includes/sf-options.php:3155
+#: includes/sf-options.php:3201
 msgid "WooCommerce Page Heading Style"
 msgstr ""
 
-#: includes/sf-options.php:3168
+#: includes/sf-options.php:3214
 msgid "WooCommerce Page Heading Text Align"
 msgstr ""
 
-#: includes/sf-options.php:3182
+#: includes/sf-options.php:3228
 msgid "WooCommerce Hero Heading Background Image"
 msgstr ""
 
-#: includes/sf-options.php:3183
+#: includes/sf-options.php:3229
 msgid ""
 "Upload the hero heading background image for WooCommerce page heading (Hero "
 "Heading Only)."
 msgstr ""
 
-#: includes/sf-options.php:3189
+#: includes/sf-options.php:3235
 msgid "WooCommerce Hero Heading Text Style"
 msgstr ""
 
-#: includes/sf-options.php:3205
+#: includes/sf-options.php:3251
 msgid "Shop Slider"
 msgstr ""
 
-#: includes/sf-options.php:3206
+#: includes/sf-options.php:3252
 msgid "Show slider on the shop page."
 msgstr ""
 
-#: includes/sf-options.php:3215
+#: includes/sf-options.php:3261
 msgid "Shop Slider Category"
 msgstr ""
 
-#: includes/sf-options.php:3227
+#: includes/sf-options.php:3273
 msgid "Shop Slider Slides"
 msgstr ""
 
-#: includes/sf-options.php:3236
+#: includes/sf-options.php:3282
 msgid "Shop Slider Max Height"
 msgstr ""
 
-#: includes/sf-options.php:3245
+#: includes/sf-options.php:3291
 msgid "Shop Slider Random"
 msgstr ""
 
-#: includes/sf-options.php:3255
+#: includes/sf-options.php:3301
 msgid "Shop Slider Autoplay"
 msgstr ""
 
-#: includes/sf-options.php:3256
+#: includes/sf-options.php:3302
 msgid ""
 "If you would like the slider to auto-rotate, then set the autoplay rotate "
 "time in ms here. I.e. you would enter \"5000\" for the slider to rotate "
 "every 5 seconds."
 msgstr ""
 
-#: includes/sf-options.php:3264
+#: includes/sf-options.php:3310
 msgid "Shop Slider Loop"
 msgstr ""
 
-#: includes/sf-options.php:3265
+#: includes/sf-options.php:3311
 msgid "Choose if you would like the slider to loop."
 msgstr ""
 
-#: includes/sf-options.php:3273
+#: includes/sf-options.php:3319
 msgid "Shop Slider Transition"
 msgstr ""
 
-#: includes/sf-options.php:3283
+#: includes/sf-options.php:3329
 msgid "Shop Slider Navigation"
 msgstr ""
 
-#: includes/sf-options.php:3284
+#: includes/sf-options.php:3330
 msgid ""
 "Choose if you would like to display the left/right arrows on the slider "
 "(only if slider type is set to \"Slider\")"
 msgstr ""
 
-#: includes/sf-options.php:3293
+#: includes/sf-options.php:3339
 msgid "Shop Slider Pagination"
 msgstr ""
 
-#: includes/sf-options.php:3304
+#: includes/sf-options.php:3350
 msgid "Product Options"
 msgstr ""
 
-#: includes/sf-options.php:3310
+#: includes/sf-options.php:3356
 msgid "Add to cart ajax"
 msgstr ""
 
-#: includes/sf-options.php:3311
+#: includes/sf-options.php:3357
 msgid ""
 "Disable the add to cart AJAX for simple products on the product page. This "
 "may be required for compatibility with 3rd party plugins."
 msgstr ""
 
-#: includes/sf-options.php:3319
+#: includes/sf-options.php:3365
 msgid "Disable product slider"
 msgstr ""
 
-#: includes/sf-options.php:3320
+#: includes/sf-options.php:3366
 msgid ""
 "Disable the slider if you would like the images to show one after another on "
 "the product detail page."
 msgstr ""
 
-#: includes/sf-options.php:3328
+#: includes/sf-options.php:3374
 msgid "Product slider thumbs position"
 msgstr ""
 
-#: includes/sf-options.php:3329
+#: includes/sf-options.php:3375
 msgid ""
 "Choose if you would like the product slider thumbs to appear below or to the "
 "side of the main image."
 msgstr ""
 
-#: includes/sf-options.php:3337
+#: includes/sf-options.php:3383
 msgid "Vertical Product Slider Height"
 msgstr ""
 
-#: includes/sf-options.php:3345
+#: includes/sf-options.php:3391
 msgid "Override Product Image Width"
 msgstr ""
 
-#: includes/sf-options.php:3346
+#: includes/sf-options.php:3392
 msgid ""
 "Enable this option to override the product image/summary width on the "
 "product detail page"
 msgstr ""
 
-#: includes/sf-options.php:3355
+#: includes/sf-options.php:3401
 msgid "Product Image Width"
 msgstr ""
 
-#: includes/sf-options.php:3356
+#: includes/sf-options.php:3402
 msgid ""
 "Set the width (in %) of the product image area, and the summary will be "
 "calculated to suit based on this. (Default is 60%)."
 msgstr ""
 
-#: includes/sf-options.php:3366
+#: includes/sf-options.php:3412
 msgid "Enable image zoom on product images"
 msgstr ""
 
-#: includes/sf-options.php:3367
+#: includes/sf-options.php:3413
 msgid ""
 "Choose whether you would like to enable product image zoom functionality on "
 "the product detail page images. NOTE: This only works when you have the "
 "product slider enabled."
 msgstr ""
 
-#: includes/sf-options.php:3376
+#: includes/sf-options.php:3422
 msgid "Image zoom type"
 msgstr ""
 
-#: includes/sf-options.php:3377
+#: includes/sf-options.php:3423
 msgid ""
 "Choose whether you would like to enable product image zoom functionality on "
 "the product detail page images."
 msgstr ""
 
-#: includes/sf-options.php:3385
+#: includes/sf-options.php:3431
 msgid "Product reviews position"
 msgstr ""
 
-#: includes/sf-options.php:3386
+#: includes/sf-options.php:3432
 msgid ""
 "Choose whether you would like to show the reviews within the tabs section, "
 "or standalone (default)."
 msgstr ""
 
-#: includes/sf-options.php:3394
+#: includes/sf-options.php:3440
 msgid "Product Page Builder content position"
 msgstr ""
 
-#: includes/sf-options.php:3395
+#: includes/sf-options.php:3441
 msgid ""
 "Choose whether you would like to show the page builder content above or "
 "below the tabs section."
 msgstr ""
 
-#: includes/sf-options.php:3403
+#: includes/sf-options.php:3449
 msgid "Upsell Heading Text"
 msgstr ""
 
-#: includes/sf-options.php:3411
+#: includes/sf-options.php:3457
 msgid "Related Heading Text"
 msgstr ""
 
-#: includes/sf-options.php:3419
+#: includes/sf-options.php:3465
 msgid "Related Product Display Type"
 msgstr ""
 
-#: includes/sf-options.php:3436
+#: includes/sf-options.php:3482
 msgid "Default Product Sidebar Config"
 msgstr ""
 
-#: includes/sf-options.php:3450
+#: includes/sf-options.php:3496
 msgid "Default Product Left Sidebar"
 msgstr ""
 
-#: includes/sf-options.php:3459
+#: includes/sf-options.php:3505
 msgid "Default Product Right Sidebar"
 msgstr ""
 
-#: includes/sf-options.php:3474
+#: includes/sf-options.php:3520
 msgid "Social Profiles"
 msgstr ""
 
-#: includes/sf-options.php:3504
+#: includes/sf-options.php:3550
 msgid "Vimeo"
 msgstr ""
 
-#: includes/sf-options.php:3512
+#: includes/sf-options.php:3558
 msgid "Tumblr"
 msgstr ""
 
-#: includes/sf-options.php:3544
+#: includes/sf-options.php:3590
 msgid "Flickr"
 msgstr ""
 
-#: includes/sf-options.php:3552
+#: includes/sf-options.php:3598
 msgid "YouTube"
 msgstr ""
 
-#: includes/sf-options.php:3560
+#: includes/sf-options.php:3606
 msgid "Pinterest"
 msgstr ""
 
-#: includes/sf-options.php:3568
+#: includes/sf-options.php:3614
 msgid "Foursquare"
 msgstr ""
 
-#: includes/sf-options.php:3584
+#: includes/sf-options.php:3630
 msgid "GitHub"
 msgstr ""
 
-#: includes/sf-options.php:3592
+#: includes/sf-options.php:3638
 msgid "Xing"
 msgstr ""
 
-#: includes/sf-options.php:3600
+#: includes/sf-options.php:3646
 msgid "Behance"
 msgstr ""
 
-#: includes/sf-options.php:3608
+#: includes/sf-options.php:3654
 msgid "Deviantart"
 msgstr ""
 
-#: includes/sf-options.php:3616
+#: includes/sf-options.php:3662
 msgid "SoundCloud"
 msgstr ""
 
-#: includes/sf-options.php:3624
+#: includes/sf-options.php:3670
 msgid "Yelp"
 msgstr ""
 
-#: includes/sf-options.php:3632
+#: includes/sf-options.php:3678
 msgid "VK"
 msgstr ""
 
-#: includes/sf-options.php:3640
+#: includes/sf-options.php:3686
 msgid "Twitch"
 msgstr ""
 
-#: includes/sf-options.php:3648
+#: includes/sf-options.php:3694
 msgid "Snapchat"
 msgstr ""
 
-#: includes/sf-options.php:3656
+#: includes/sf-options.php:3702
 msgid "WhatsApp"
 msgstr ""
 
-#: includes/sf-options.php:3664
+#: includes/sf-options.php:3710
 msgid "RSS Feed"
 msgstr ""
 
-#: includes/sf-options.php:3678
+#: includes/sf-options.php:3724
 msgid "Import and Export your Redux Framework settings from file, text or URL."
 msgstr ""
 
-#: includes/sf-options.php:3692
+#: includes/sf-options.php:3738
 msgid "<strong>Theme URL:</strong> "
 msgstr ""
 
-#: includes/sf-options.php:3693
+#: includes/sf-options.php:3739
 msgid "<strong>Author:</strong> "
 msgstr ""
 
-#: includes/sf-options.php:3694
+#: includes/sf-options.php:3740
 msgid "<strong>Version:</strong> "
 msgstr ""
 
-#: includes/sf-options.php:3698
+#: includes/sf-options.php:3744
 msgid "<strong>Tags:</strong> "
 msgstr ""
 
-#: includes/sf-options.php:3760 includes/sf-options.php:3764
-#: includes/sf-options.php:3765
+#: includes/sf-options.php:3806 includes/sf-options.php:3810
+#: includes/sf-options.php:3811
 msgid "Theme Options"
 msgstr ""
 
@@ -7994,7 +7956,7 @@ msgstr ""
 #: swift-framework/content/sf-campaign-detail.php:167
 #: swift-framework/content/sf-portfolio-detail.php:248
 #: swift-framework/content/sf-post-detail.php:400
-#: swift-framework/core/sf-woocommerce.php:996
+#: swift-framework/core/sf-woocommerce.php:1013
 #: swift-framework/layout/single-gallery.php:23
 msgid "Share this"
 msgstr ""
@@ -8287,6 +8249,7 @@ msgid "Rated %s out of 5"
 msgstr ""
 
 #: swift-framework/content/sf-products.php:185
+#: woocommerce/single-product/review.php:82
 msgid "out of 5"
 msgstr ""
 
@@ -8350,7 +8313,7 @@ msgstr ""
 msgid "All Locations"
 msgstr ""
 
-#: swift-framework/core/sf-directory.php:385
+#: swift-framework/core/sf-directory.php:379
 #: woocommerce/loop/add-to-cart.php:51 woocommerce/loop/add-to-cart.php:52
 #: woocommerce/loop/add-to-cart.php:64 woocommerce/loop/add-to-cart.php:65
 msgid "Read More"
@@ -8466,6 +8429,7 @@ msgid "Product Category"
 msgstr ""
 
 #: swift-framework/core/sf-functions.php:1681
+#: woocommerce/single-product/add-to-cart/grouped.php:26
 msgid "Price"
 msgstr ""
 
@@ -8541,9 +8505,9 @@ msgid "Please fill all the fields"
 msgstr ""
 
 #: swift-framework/core/sf-functions.php:3274
-#: swift-framework/widgets/widget-portfolio-grid.php:147
-#: swift-framework/widgets/widget-portfolio.php:149
-#: swift-framework/widgets/widget-posts.php:175
+#: swift-framework/widgets/widget-portfolio-grid.php:149
+#: swift-framework/widgets/widget-portfolio.php:152
+#: swift-framework/widgets/widget-posts.php:178
 msgid "Category"
 msgstr ""
 
@@ -8569,7 +8533,7 @@ msgstr ""
 
 #: swift-framework/core/sf-header.php:855
 #: swift-framework/core/sf-header.php:958
-#: swift-framework/core/sf-header.php:1344
+#: swift-framework/core/sf-header.php:1352
 msgid "Sign Out"
 msgstr ""
 
@@ -8589,71 +8553,82 @@ msgstr ""
 msgid "View your shopping cart"
 msgstr ""
 
+#: swift-framework/core/sf-header.php:1067
+#: swift-framework/core/sf-header.php:1132
+#: swift-framework/core/sf-woocommerce.php:616
+#: swift-framework/core/sf-woocommerce.php:717
+msgid "Your cart is empty."
+msgstr ""
+
+#: swift-framework/core/sf-header.php:1067
+#: swift-framework/core/sf-woocommerce.php:616
+msgid "item in the cart"
+msgstr ""
+
+#: swift-framework/core/sf-header.php:1067
+#: swift-framework/core/sf-woocommerce.php:616
+msgid "items in the cart"
+msgstr ""
+
 #: swift-framework/core/sf-header.php:1073
 #: swift-framework/core/sf-woocommerce.php:623
 msgid "in the cart"
 msgstr ""
 
-#: swift-framework/core/sf-header.php:1089
-#: swift-framework/core/sf-woocommerce.php:656
+#: swift-framework/core/sf-header.php:1092
+#: swift-framework/core/sf-woocommerce.php:665
 msgid "Unit Price:"
 msgstr ""
 
-#: swift-framework/core/sf-header.php:1091
-#: swift-framework/core/sf-woocommerce.php:658
+#: swift-framework/core/sf-header.php:1094
+#: swift-framework/core/sf-woocommerce.php:667
 msgid "Quantity:"
 msgstr ""
 
-#: swift-framework/core/sf-header.php:1093
-#: swift-framework/core/sf-woocommerce.php:661 woocommerce/cart/cart.php:111
+#: swift-framework/core/sf-header.php:1099
+#: swift-framework/core/sf-woocommerce.php:674 woocommerce/cart/cart.php:111
 msgid "Remove this item"
 msgstr ""
 
-#: swift-framework/core/sf-header.php:1105
-#: swift-framework/core/sf-woocommerce.php:675
+#: swift-framework/core/sf-header.php:1113
+#: swift-framework/core/sf-woocommerce.php:692
 msgid "Total incl. tax"
 msgstr ""
 
-#: swift-framework/core/sf-header.php:1107
-#: swift-framework/core/sf-woocommerce.php:677
+#: swift-framework/core/sf-header.php:1115
+#: swift-framework/core/sf-woocommerce.php:694
 #: woocommerce/cart/cart-totals.php:69
 msgid "Total"
 msgstr ""
 
-#: swift-framework/core/sf-header.php:1116
-#: swift-framework/core/sf-woocommerce.php:688
+#: swift-framework/core/sf-header.php:1124
+#: swift-framework/core/sf-woocommerce.php:705
 msgid "View cart"
 msgstr ""
 
-#: swift-framework/core/sf-header.php:1118
-#: swift-framework/core/sf-woocommerce.php:693
+#: swift-framework/core/sf-header.php:1126
+#: swift-framework/core/sf-woocommerce.php:710
 msgid "Checkout"
 msgstr ""
 
-#: swift-framework/core/sf-header.php:1124
-#: swift-framework/core/sf-woocommerce.php:616
-#: swift-framework/core/sf-woocommerce.php:700
-msgid "Your cart is empty."
-msgstr ""
-
-#: swift-framework/core/sf-header.php:1173
-#: swift-framework/core/sf-header.php:1175
+#: swift-framework/core/sf-header.php:1181
+#: swift-framework/core/sf-header.php:1183
 msgid "View your wishlist"
 msgstr ""
 
-#: swift-framework/core/sf-header.php:1173
+#: swift-framework/core/sf-header.php:1181
 msgid "Wishlist"
 msgstr ""
 
-#: swift-framework/core/sf-header.php:1250
+#: swift-framework/core/sf-header.php:1258
 msgid "Your wishlist is empty."
 msgstr ""
 
-#: swift-framework/core/sf-header.php:1260
+#: swift-framework/core/sf-header.php:1268
 msgid "View Wishlist"
 msgstr ""
 
-#: swift-framework/core/sf-header.php:1634
+#: swift-framework/core/sf-header.php:1642
 msgid ""
 "Please select a page for the Contact Slideout in Theme Options > Header "
 "Options"
@@ -9483,7 +9458,7 @@ msgstr ""
 msgid "Insert Shortcode"
 msgstr ""
 
-#: swift-framework/core/sf-media.php:98
+#: swift-framework/core/sf-media.php:100
 msgid "Video not found"
 msgstr ""
 
@@ -9523,44 +9498,62 @@ msgstr ""
 msgid "Split Nav Right"
 msgstr ""
 
-#: swift-framework/core/sf-page-heading.php:193
+#: swift-framework/core/sf-page-heading.php:214
 msgid "Return to cart"
 msgstr ""
 
-#: swift-framework/core/sf-page-heading.php:346
+#: swift-framework/core/sf-page-heading.php:279
+#, php-format
+msgid "<h1 class=\"entry-title\" %1$s>%2$s result for <span>%3$s</span></h1>"
+msgstr ""
+
+#: swift-framework/core/sf-page-heading.php:281
+#, php-format
+msgid "<h1 class=\"entry-title\" %1$s>%2$s results for <span>%3$s</span></h1>"
+msgstr ""
+
+#: swift-framework/core/sf-page-heading.php:298
+#: swift-framework/core/sf-page-heading.php:448
+msgid "Posts tagged with"
+msgstr ""
+
+#: swift-framework/core/sf-page-heading.php:302
+#: swift-framework/core/sf-page-heading.php:305
+#: swift-framework/core/sf-page-heading.php:308
+#: swift-framework/core/sf-page-heading.php:452
+#: swift-framework/core/sf-page-heading.php:455
+#: swift-framework/core/sf-page-heading.php:458
+msgid "Archive for"
+msgstr ""
+
+#: swift-framework/core/sf-page-heading.php:313
+#: swift-framework/core/sf-page-heading.php:463
+msgid "Projects by"
+msgstr ""
+
+#: swift-framework/core/sf-page-heading.php:315
+#: swift-framework/core/sf-page-heading.php:465
+msgid "Author archive for"
+msgstr ""
+
+#: swift-framework/core/sf-page-heading.php:319
+#: swift-framework/core/sf-page-heading.php:469
+msgid "Blog Archives"
+msgstr ""
+
+#: swift-framework/core/sf-page-heading.php:326
+#: swift-framework/core/sf-page-heading.php:476
+msgid "404"
+msgstr ""
+
+#: swift-framework/core/sf-page-heading.php:429
 #, php-format
 msgid "<h1>%1$s result for <span>%2$s</span></h1>"
 msgstr ""
 
-#: swift-framework/core/sf-page-heading.php:348
+#: swift-framework/core/sf-page-heading.php:431
 #, php-format
 msgid "<h1>%1$s results for <span>%2$s</span></h1>"
-msgstr ""
-
-#: swift-framework/core/sf-page-heading.php:365
-msgid "Posts tagged with"
-msgstr ""
-
-#: swift-framework/core/sf-page-heading.php:369
-#: swift-framework/core/sf-page-heading.php:372
-#: swift-framework/core/sf-page-heading.php:375
-msgid "Archive for"
-msgstr ""
-
-#: swift-framework/core/sf-page-heading.php:380
-msgid "Projects by"
-msgstr ""
-
-#: swift-framework/core/sf-page-heading.php:382
-msgid "Author archive for"
-msgstr ""
-
-#: swift-framework/core/sf-page-heading.php:386
-msgid "Blog Archives"
-msgstr ""
-
-#: swift-framework/core/sf-page-heading.php:393
-msgid "404"
 msgstr ""
 
 #: swift-framework/core/sf-pagination.php:38
@@ -9652,114 +9645,106 @@ msgstr ""
 msgid "1 item"
 msgstr ""
 
-#: swift-framework/core/sf-woocommerce.php:616
-msgid "item in the cart"
-msgstr ""
-
-#: swift-framework/core/sf-woocommerce.php:616
-msgid "items in the cart"
-msgstr ""
-
-#: swift-framework/core/sf-woocommerce.php:730
+#: swift-framework/core/sf-woocommerce.php:747
 msgid "Add to wishlist"
 msgstr ""
 
-#: swift-framework/core/sf-woocommerce.php:752
+#: swift-framework/core/sf-woocommerce.php:769
 msgid "View wishlist"
 msgstr ""
 
-#: swift-framework/core/sf-woocommerce.php:767
+#: swift-framework/core/sf-woocommerce.php:784
 msgid "Product added to wishlist."
 msgstr ""
 
-#: swift-framework/core/sf-woocommerce.php:828
+#: swift-framework/core/sf-woocommerce.php:845
 msgid "Standard Layout"
 msgstr ""
 
-#: swift-framework/core/sf-woocommerce.php:829
-#: swift-framework/core/sf-woocommerce.php:856
+#: swift-framework/core/sf-woocommerce.php:846
+#: swift-framework/core/sf-woocommerce.php:873
 msgid "List Layout"
 msgstr ""
 
-#: swift-framework/core/sf-woocommerce.php:830
-#: swift-framework/core/sf-woocommerce.php:857
+#: swift-framework/core/sf-woocommerce.php:847
+#: swift-framework/core/sf-woocommerce.php:874
 msgid "Grid Layout"
 msgstr ""
 
-#: swift-framework/core/sf-woocommerce.php:855
+#: swift-framework/core/sf-woocommerce.php:872
 msgid "Solo Layout"
 msgstr ""
 
-#: swift-framework/core/sf-woocommerce.php:869
+#: swift-framework/core/sf-woocommerce.php:886
 msgid "1 product"
 msgstr ""
 
-#: swift-framework/core/sf-woocommerce.php:871
+#: swift-framework/core/sf-woocommerce.php:888
 #, php-format
 msgid "%d products"
 msgstr ""
 
-#: swift-framework/core/sf-woocommerce.php:873
+#: swift-framework/core/sf-woocommerce.php:890
 #, php-format
 msgid "%1$d-%2$d of %3$d products"
 msgstr ""
 
-#: swift-framework/core/sf-woocommerce.php:890
+#: swift-framework/core/sf-woocommerce.php:907
 msgid "Filters"
 msgstr ""
 
-#: swift-framework/core/sf-woocommerce.php:907
+#: swift-framework/core/sf-woocommerce.php:924
 msgid ""
 "Please add widgets to the WooCommerce Filters widget area in Appearance > "
 "Widgets"
 msgstr ""
 
-#: swift-framework/core/sf-woocommerce.php:1025
+#: swift-framework/core/sf-woocommerce.php:1042
 msgid "Need Help?"
 msgstr ""
 
-#: swift-framework/core/sf-woocommerce.php:1027
-#: swift-framework/core/sf-woocommerce.php:1037
+#: swift-framework/core/sf-woocommerce.php:1044
+#: swift-framework/core/sf-woocommerce.php:1054
 msgid "Contact Us"
 msgstr ""
 
-#: swift-framework/core/sf-woocommerce.php:1029
-#: swift-framework/core/sf-woocommerce.php:1052
+#: swift-framework/core/sf-woocommerce.php:1046
+#: swift-framework/core/sf-woocommerce.php:1069
 msgid "Leave Feedback"
 msgstr ""
 
-#: swift-framework/core/sf-woocommerce.php:1087
-#: swift-framework/core/sf-woocommerce.php:1111
+#: swift-framework/core/sf-woocommerce.php:1104
+#: swift-framework/core/sf-woocommerce.php:1128
 msgid "Email customer care"
 msgstr ""
 
-#: swift-framework/core/sf-woocommerce.php:1091
-#: swift-framework/core/sf-woocommerce.php:1128
+#: swift-framework/core/sf-woocommerce.php:1108
+#: swift-framework/core/sf-woocommerce.php:1145
 msgid "Shipping information"
 msgstr ""
 
-#: swift-framework/core/sf-woocommerce.php:1095
-#: swift-framework/core/sf-woocommerce.php:1145
+#: swift-framework/core/sf-woocommerce.php:1112
+#: swift-framework/core/sf-woocommerce.php:1162
 msgid "Returns & exchange"
 msgstr ""
 
-#: swift-framework/core/sf-woocommerce.php:1099
-#: swift-framework/core/sf-woocommerce.php:1162
+#: swift-framework/core/sf-woocommerce.php:1116
+#: swift-framework/core/sf-woocommerce.php:1179
 msgid "F.A.Q.'s"
 msgstr ""
 
-#: swift-framework/core/sf-woocommerce.php:1225
+#: swift-framework/core/sf-woocommerce.php:1242
 msgid "Shipping Calculator"
 msgstr ""
 
-#: swift-framework/core/sf-woocommerce.php:1246
+#: swift-framework/core/sf-woocommerce.php:1263
 #: woocommerce/loop/add-to-cart.php:70
 #: woocommerce/single-product/add-to-cart/grouped.php:16
 #: woocommerce/single-product/add-to-cart/simple.php:14
 msgid "Adding..."
 msgstr ""
 
-#: swift-framework/core/sf-woocommerce.php:1247
+#: swift-framework/core/sf-woocommerce.php:1264
 #: woocommerce/loop/add-to-cart.php:71
 #: woocommerce/single-product/add-to-cart/grouped.php:17
 #: woocommerce/single-product/add-to-cart/simple.php:15
@@ -9987,15 +9972,15 @@ msgstr ""
 #: swift-framework/widgets/widget-comments.php:123
 #: swift-framework/widgets/widget-infocus.php:158
 #: swift-framework/widgets/widget-mostloved.php:86
-#: swift-framework/widgets/widget-portfolio-grid.php:133
-#: swift-framework/widgets/widget-portfolio.php:135
-#: swift-framework/widgets/widget-posts.php:161
+#: swift-framework/widgets/widget-portfolio-grid.php:135
+#: swift-framework/widgets/widget-portfolio.php:140
+#: swift-framework/widgets/widget-posts.php:164
 #: swift-framework/widgets/widget-twitter.php:131
 msgid "Title:"
 msgstr ""
 
 #: swift-framework/widgets/widget-comments.php:130
-#: swift-framework/widgets/widget-posts.php:168
+#: swift-framework/widgets/widget-posts.php:171
 msgid "Number of posts to show:"
 msgstr ""
 
@@ -10004,20 +9989,12 @@ msgid "Flickr ID"
 msgstr ""
 
 #: swift-framework/widgets/widget-flickr.php:61
-#: swift-framework/widgets/widget-instagram.php:66
+#: swift-framework/widgets/widget-instagram.php:49
 msgid "Number of Photos"
 msgstr ""
 
 #: swift-framework/widgets/widget-infocus.php:165
 msgid "Post ID:"
-msgstr ""
-
-#: swift-framework/widgets/widget-instagram.php:46
-msgid "Instagram ID"
-msgstr ""
-
-#: swift-framework/widgets/widget-instagram.php:56
-msgid "Instagram Token"
 msgstr ""
 
 #: swift-framework/widgets/widget-mostloved.php:10
@@ -10041,8 +10018,8 @@ msgstr ""
 msgid "Number to Show:"
 msgstr ""
 
-#: swift-framework/widgets/widget-portfolio-grid.php:140
-#: swift-framework/widgets/widget-portfolio.php:142
+#: swift-framework/widgets/widget-portfolio-grid.php:142
+#: swift-framework/widgets/widget-portfolio.php:146
 msgid "Number of items to show:"
 msgstr ""
 
@@ -10089,6 +10066,7 @@ msgid "Unit Price"
 msgstr ""
 
 #: woocommerce/cart/cart.php:37
+#: woocommerce/single-product/add-to-cart/grouped.php:27
 msgid "Quantity"
 msgstr ""
 
@@ -10205,11 +10183,11 @@ msgid "Added to cart"
 msgstr ""
 
 #: woocommerce/loop/pagination.php:41
-msgid "<i class=\"ss-navigateleft\"></i> Previous"
+msgid "&larr;"
 msgstr ""
 
 #: woocommerce/loop/pagination.php:42
-msgid "Next <i class=\"ss-navigateright\"></i>"
+msgid "&rarr;"
 msgstr ""
 
 #: woocommerce/loop/result-count.php:46
@@ -10313,8 +10291,39 @@ msgid ""
 "Only logged in customers who have purchased this product may leave a review."
 msgstr ""
 
+#: woocommerce/single-product/add-to-cart/grouped.php:25
+#: woocommerce/wishlist-view.php:120 woocommerce/wishlist-view.php:287
+msgid "Product Name"
+msgstr ""
+
+#: woocommerce/single-product/add-to-cart/variable.php:23
+msgid "This product is currently out of stock and unavailable."
+msgstr ""
+
+#: woocommerce/single-product/add-to-cart/variable.php:32
+#, php-format
+msgid "Choose a %s"
+msgstr ""
+
+#: woocommerce/single-product/add-to-cart/variable.php:35
+msgid "Clear selection"
+msgstr ""
+
 #: woocommerce/single-product/product-image.php:68
 msgid "Placeholder"
+msgstr ""
+
+#: woocommerce/single-product/review.php:81
+#, php-format
+msgid "Rated %d out of 5"
+msgstr ""
+
+#: woocommerce/single-product/review.php:98
+msgid "Your comment is awaiting approval"
+msgstr ""
+
+#: woocommerce/single-product/review.php:108
+msgid "verified owner"
 msgstr ""
 
 #: woocommerce/single-product/tabs/additional-information.php:14
@@ -10331,10 +10340,6 @@ msgstr ""
 
 #: woocommerce/wishlist-view.php:95
 msgid "Create Account / Login"
-msgstr ""
-
-#: woocommerce/wishlist-view.php:120 woocommerce/wishlist-view.php:287
-msgid "Product Name"
 msgstr ""
 
 #: woocommerce/wishlist-view.php:122 woocommerce/wishlist-view.php:301

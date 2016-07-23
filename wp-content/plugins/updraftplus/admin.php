@@ -441,7 +441,7 @@ class UpdraftPlus_Admin {
 		
 		wp_enqueue_script('jquery-blockui', UPDRAFTPLUS_URL.'/includes/jquery.blockUI.js', array('jquery'), '2.70.0');
 	
-		wp_enqueue_script('jquery-labelauty', UPDRAFTPLUS_URL.'/includes/labelauty/jquery-labelauty.js', array('jquery'), '20150925');
+		wp_enqueue_script('jquery-labelauty', UPDRAFTPLUS_URL.'/includes/labelauty/jquery-labelauty.js', array('jquery'), '20160622-ud');
 		wp_enqueue_style('jquery-labelauty', UPDRAFTPLUS_URL.'/includes/labelauty/jquery-labelauty.css', array(), '20150925'); 
 
 		do_action('updraftplus_admin_enqueue_scripts');
@@ -1218,7 +1218,7 @@ class UpdraftPlus_Admin {
 					echo json_encode(array('e' => htmlspecialchars($response->get_error_message())));
 					die;
 				}
-				echo json_encode(array('r' => $response['response']['code'].': '.htmlspecialchars(substr($response['body'], 0, 2048))));
+				echo json_encode(array('r' => wp_remote_retrieve_response_code($response).': '.htmlspecialchars(substr(wp_remote_retrieve_body($response), 0, 2048))));
 			}
 			die;
 		} elseif (isset($_REQUEST['subaction']) && 'dismissautobackup' == $_REQUEST['subaction']) {
@@ -1357,7 +1357,8 @@ class UpdraftPlus_Admin {
 				unset($info['label']);
 
 				if (!isset($info['created_by_version']) && !empty($backups[$timestamp]['created_by_version'])) $info['created_by_version'] = $backups[$timestamp]['created_by_version'];
-				if (empty($info['multisite']) && !empty($backups[$timestamp]['is_multisite'])) $info['multisite'] = $backups[$timestamp]['is_multisite'];
+
+				if (!isset($info['multisite']) && !empty($backups[$timestamp]['is_multisite'])) $info['multisite'] = $backups[$timestamp]['is_multisite'];
 				
 				do_action_ref_array('updraftplus_restore_all_downloaded_postscan', array($backups, $timestamp, $elements, &$info, &$mess, &$warn, &$err));
 
@@ -3789,7 +3790,9 @@ class UpdraftPlus_Admin {
 					$multi = apply_filters('updraftplus_storage_printoptions_multi', '');
 					
 					foreach($updraftplus->backup_methods as $method => $description) {
-						echo "<input name=\"updraft_service[]\" class=\"updraft_servicecheckbox $method $multi\" id=\"updraft_servicecheckbox_$method\" type=\"checkbox\" value=\"$method\"";
+						$backup_using = esc_attr(sprintf(__("Backup using %s?", 'updraftplus'), $description));
+						
+						echo "<input aria-label=\"$backup_using\" name=\"updraft_service[]\" class=\"updraft_servicecheckbox $method $multi\" id=\"updraft_servicecheckbox_$method\" type=\"checkbox\" value=\"$method\"";
 						if ($active_service === $method || (is_array($active_service) && in_array($method, $active_service))) echo ' checked="checked"';
 						echo " data-labelauty=\"".esc_attr($description)."\">";
 					}
@@ -4534,18 +4537,20 @@ ENDHERE;
 				if (!empty($backup['meta_foreign'])) {
 					$entities .= '/plugins=0//themes=0//uploads=0//others=0/';
 				}
-				$first_printed = true;
+				$printing_first = true;
 				foreach ($whatfiles as $findex => $bfile) {
-					$ide .= __('Press here to download', 'updraftplus').' '.strtolower($info['description']);
+					
 					$pdescrip = ($findex > 0) ? $sdescrip.' ('.($findex+1).')' : $sdescrip;
-					if (!$first_printed) {
+					if ($printing_first) {
+						$ide .= __('Press here to download', 'updraftplus').' '.strtolower($info['description']);
+					} else {
 						$ret .= '<div class="updraft-hidden" style="display:none;">';
 					}
 					if (count($backup[$type]) >0) {
-						$ide .= ' '.sprintf(__('(%d archive(s) in set).', 'updraftplus'), $howmanyinset);
+						if ($printing_first) $ide .= ' '.sprintf(__('(%d archive(s) in set).', 'updraftplus'), $howmanyinset);
 					}
 					if ($index_missing) {
-						$ide .= ' '.__('You appear to be missing one or more archives from this multi-archive set.', 'updraftplus');
+						if ($printing_first) $ide .= ' '.__('You appear to be missing one or more archives from this multi-archive set.', 'updraftplus');
 					}
 
 					if (!$first_entity) {
@@ -4556,10 +4561,10 @@ ENDHERE;
 
 					$ret .= $this->download_button($type, $key, $findex, $info, $ide, $pdescrip, $esc_pretty_date, $set_contents);
 
-					if (!$first_printed) {
+					if (!$printing_first) {
 						$ret .= '</div>';
 					} else {
-						$first_printed = false;
+						$printing_first = false;
 					}
 				}
 			} else {
@@ -4584,30 +4589,16 @@ ENDHERE;
 		return $ret;
 	}
 
-	private function download_button($type, $backup_timestamp, $findex, $info, $ide, $pdescrip, $esc_pretty_date, $set_contents) {
+	private function download_button($type, $backup_timestamp, $findex, $info, $title, $pdescrip, $esc_pretty_date, $set_contents) {
 	
 		$ret = '';
 
 		$wp_nonce = wp_create_nonce('updraftplus_download');
 		
 		// updraft_downloader(base, backup_timestamp, what, whicharea, set_contents, prettydate, async)
-		$ret .= '<button data-wp_nonce="'.esc_attr($wp_nonce).'" data-backup_timestamp="'.esc_attr($backup_timestamp).'" data-what="'.esc_attr($type).'" data-set_contents="'.esc_attr($set_contents).'" data-prettydate="'.esc_attr($esc_pretty_date).'" type="button" class="updraft_download_button '."uddownloadform_${type}_${backup_timestamp}_${findex}".'" title="'.$ide.'">'.$pdescrip.'</button>';
+		$ret .= '<button data-wp_nonce="'.esc_attr($wp_nonce).'" data-backup_timestamp="'.esc_attr($backup_timestamp).'" data-what="'.esc_attr($type).'" data-set_contents="'.esc_attr($set_contents).'" data-prettydate="'.esc_attr($esc_pretty_date).'" type="button" class="updraft_download_button '."uddownloadform_${type}_${backup_timestamp}_${findex}".'" title="'.$title.'">'.$pdescrip.'</button>';
 		// onclick="'."return updraft_downloader('uddlstatus_', '$backup_timestamp', '$type', '.ud_downloadstatus', '$set_contents', '$esc_pretty_date', true)".'"
 				
-				
-		// Pre 1.11.24
-// 		$nonce_field = wp_nonce_field('updraftplus_download', '_wpnonce', true, false);
-// 		$ret .= <<<ENDHERE
-// 				<form class="uddownloadform_${type}_${backup_timestamp}_${findex}" action="admin-ajax.php" onsubmit="return updraft_downloader('uddlstatus_', '$backup_timestamp', '$type', '.ud_downloadstatus', '$set_contents', '$esc_pretty_date', true)" method="post">
-// 					$nonce_field
-// 					<input type="hidden" name="action" value="updraft_download_backup" />
-// 					<input type="hidden" name="type" value="$type" />
-// 					<input type="hidden" name="timestamp" value="$backup_timestamp" />
-// 					<input type="hidden" name="findex" value="$findex" />
-// 					<input type="submit" class="updraft-backupentitybutton" title="$ide" value="$pdescrip" />
-// 				</form>
-// 			</div>
-// ENDHERE;
 		return $ret;
 	}
 

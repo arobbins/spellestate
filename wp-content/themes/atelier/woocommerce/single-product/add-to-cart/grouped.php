@@ -20,6 +20,13 @@ do_action( 'woocommerce_before_add_to_cart_form' ); ?>
 
 <form class="cart" method="post" enctype='multipart/form-data'>
 	<table cellspacing="0" class="group_table">
+		<thead>
+			<tr>
+				<th class="product-name"><?php _e( 'Product Name', 'swiftframework' ); ?></th>
+				<th class="product-price"><?php _e( 'Price', 'swiftframework' ); ?></th>
+				<th class="product-quantity"><?php _e( 'Quantity', 'swiftframework' ); ?></th>
+			</tr>
+		</thead>
 		<tbody>
 			<?php
 				foreach ( $grouped_products as $product_id ) :
@@ -28,17 +35,6 @@ do_action( 'woocommerce_before_add_to_cart_form' ); ?>
 					setup_postdata( $post );
 					?>
 					<tr>
-						<td>
-							<?php if ( $product->is_sold_individually() || ! $product->is_purchasable() ) : ?>
-								<?php woocommerce_template_loop_add_to_cart(); ?>
-							<?php else : ?>
-								<?php
-									$quantites_required = true;
-									woocommerce_quantity_input( array( 'input_name' => 'quantity[' . $product_id . ']', 'input_value' => '0' ) );
-								?>
-							<?php endif; ?>
-						</td>
-
 						<td class="label">
 							<label for="product-<?php echo $product_id; ?>">
 								<?php echo $product->is_visible() ? '<a href="' . get_permalink() . '">' . get_the_title() . '</a>' : get_the_title(); ?>
@@ -55,6 +51,17 @@ do_action( 'woocommerce_before_add_to_cart_form' ); ?>
 									echo apply_filters( 'woocommerce_stock_html', '<p class="stock ' . esc_attr( $availability['class'] ) . '">' . esc_html( $availability['availability'] ) . '</p>', $availability['availability'] );
 							?>
 						</td>
+						<td>
+							<?php if ( $product->is_sold_individually() || ! $product->is_purchasable() ) : ?>
+								<?php woocommerce_template_loop_add_to_cart(); ?>
+							<?php else : ?>
+								<?php
+									$quantites_required = true;
+									woocommerce_quantity_input( array( 'input_name' => 'quantity[' . $product_id . ']', 'input_value' => '0' ) );
+								?>
+							<?php endif; ?>
+						</td>
+						
 					</tr>
 					<?php
 				endforeach;

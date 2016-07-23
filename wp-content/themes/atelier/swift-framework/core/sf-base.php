@@ -5,7 +5,7 @@
     *	Swift Base Layout Functions
     *	------------------------------------------------
     *	Swift Framework v3.0
-    * 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+    * 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     *	sf_base_layout()
     *	sf_base_sidebar()

@@ -77,6 +77,8 @@ class WC_Subscriptions_Admin {
 		add_action( 'woocommerce_process_product_meta_variable-subscription', __CLASS__ . '::process_product_meta_variable_subscription' ); // WC < 2.4
 		add_action( 'woocommerce_ajax_save_product_variations', __CLASS__ . '::process_product_meta_variable_subscription' );
 
+		add_action( 'product_variation_linked', __CLASS__ . '::set_variation_meta_defaults_on_bulk_add' );
+
 		add_filter( 'woocommerce_settings_tabs_array', __CLASS__ . '::add_subscription_settings_tab', 50 );
 
 		add_action( 'woocommerce_settings_tabs_subscriptions', __CLASS__ . '::subscription_settings_page' );
@@ -266,7 +268,7 @@ class WC_Subscriptions_Admin {
 			// translators: placeholders are opening and closing link tags
 			'description' => sprintf( __( 'Only allow a customer to have one subscription to this product. %sLearn more%s.', 'woocommerce-subscriptions' ), '<a href="http://docs.woothemes.com/document/subscriptions/store-manager-guide/#limit-subscription">', '</a>' ),
 			'options'     => array(
-				'no'     => __( 'Do no limit', 'woocommerce-subscriptions' ),
+				'no'     => __( 'Do not limit', 'woocommerce-subscriptions' ),
 				'active' => __( 'Limit to one active subscription', 'woocommerce-subscriptions' ),
 				'any'    => __( 'Limit to one of any status', 'woocommerce-subscriptions' ),
 			),
@@ -298,11 +300,7 @@ class WC_Subscriptions_Admin {
 			$thepostid = $variation->post_parent;
 		}
 
-		if ( WC_Subscriptions::is_woocommerce_pre( '2.3' ) ) {
-			include( plugin_dir_path( WC_Subscriptions::$plugin_file ) . 'templates/admin/deprecated/html-variation-price.php' );
-		} else {
-			include( plugin_dir_path( WC_Subscriptions::$plugin_file ) . 'templates/admin/html-variation-price.php' );
-		}
+		include( plugin_dir_path( WC_Subscriptions::$plugin_file ) . 'templates/admin/html-variation-price.php' );
 
 		wp_nonce_field( 'wcs_subscription_variations', '_wcsnonce_save_variations', false );
 
@@ -342,7 +340,7 @@ class WC_Subscriptions_Admin {
 			return;
 		}
 
-		$subscription_price = wc_format_decimal( $_REQUEST['_subscription_price'] );
+		$subscription_price = isset( $_REQUEST['_subscription_price'] ) ? wc_format_decimal( $_REQUEST['_subscription_price'] ) : '';
 		$sale_price         = wc_format_decimal( $_REQUEST['_sale_price'] );
 
 		update_post_meta( $post_id, '_subscription_price', $subscription_price );
@@ -399,7 +397,9 @@ class WC_Subscriptions_Admin {
 		);
 
 		foreach ( $subscription_fields as $field_name ) {
-			update_post_meta( $post_id, $field_name, stripslashes( $_REQUEST[ $field_name ] ) );
+			if ( isset( $_REQUEST[ $field_name ] ) ) {
+				update_post_meta( $post_id, $field_name, stripslashes( $_REQUEST[ $field_name ] ) );
+			}
 		}
 
 	}
@@ -621,6 +621,22 @@ class WC_Subscriptions_Admin {
 	}
 
 	/**
+	 * Set default values for subscription dropdown fields when bulk adding variations to fix issue #1342
+	 *
+	 * @param int $variation_id ID the post_id of the variation being added
+	 * @return null
+	 */
+	public static function set_variation_meta_defaults_on_bulk_add( $variation_id ) {
+
+		if ( ! empty( $variation_id ) ) {
+			update_post_meta( $variation_id, '_subscription_period', 'month' );
+			update_post_meta( $variation_id, '_subscription_period_interval', '1' );
+			update_post_meta( $variation_id, '_subscription_length', '0' );
+			update_post_meta( $variation_id, '_subscription_trial_period', 'month' );
+		}
+	}
+
+	/**
 	 * Adds all necessary admin styles.
 	 *
 	 * @param array Array of Product types & their labels, excluding the Subscription product type.
@@ -664,7 +680,10 @@ class WC_Subscriptions_Admin {
 			} else if ( 'shop_order' == $screen->id ) {
 				$dependencies[] = $woocommerce_admin_script_handle;
 				$dependencies[] = 'wc-admin-order-meta-boxes';
-				$dependencies[] = 'wc-admin-order-meta-boxes-modal';
+
+				if ( WC_Subscriptions::is_woocommerce_pre( '2.6' ) ) {
+					$dependencies[] = 'wc-admin-order-meta-boxes-modal';
+				}
 
 				$script_params = array(
 					'bulkTrashWarning'  => __( 'Trashing this order will also trash the subscription purchased with the order.', 'woocommerce-subscriptions' ),
@@ -682,7 +701,6 @@ class WC_Subscriptions_Admin {
 
 			$script_params['ajaxLoaderImage'] = WC()->plugin_url() . '/assets/images/ajax-loader.gif';
 			$script_params['ajaxUrl']         = admin_url( 'admin-ajax.php' );
-			$script_params['isWCPre23']       = var_export( WC_Subscriptions::is_woocommerce_pre( '2.3' ), true );
 			$script_params['isWCPre24']       = var_export( WC_Subscriptions::is_woocommerce_pre( '2.4' ), true );
 
 			wp_enqueue_script( 'woocommerce_subscriptions_admin', plugin_dir_url( WC_Subscriptions::$plugin_file ) . 'assets/js/admin/admin.js', $dependencies, filemtime( plugin_dir_path( WC_Subscriptions::$plugin_file ) . 'assets/js/admin/admin.js' ) );
@@ -1334,7 +1352,7 @@ class WC_Subscriptions_Admin {
 
 		if ( empty( $subscriptions ) ) {
 			return '<ul class="user-subscriptions no-user-subscriptions">
-						<li>No subscriptions found.</li>
+						<li>' . esc_html_x( 'No subscriptions found.', 'in [subscriptions] shortcode', 'woocommerce-subscriptions' ) . '</li>
 					</ul>';
 		}
 
@@ -1342,7 +1360,9 @@ class WC_Subscriptions_Admin {
 
 		foreach ( $subscriptions as $subscription ) {
 			if ( 'all' == $attributes['status'] || $subscription->has_status( $attributes['status'] ) ) {
-				$list .= sprintf( '<li><a href="%s">Subscription %s</a></li>', $subscription->get_view_order_url(), $subscription->get_order_number() );
+				// translators: order number
+				$shortcode_translate = sprintf( esc_html_x( 'Subscription %s', 'in [subscriptions] shortcode', 'woocommerce-subscriptions' ), $subscription->get_order_number() );
+				$list .= sprintf( '<li><a href="%s">%s</a></li>', $subscription->get_view_order_url(), $shortcode_translate );
 			}
 		}
 		$list .= '</ul>';

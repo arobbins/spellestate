@@ -4,7 +4,7 @@
     *	Head Tag Functions
     *	------------------------------------------------
     *	Swift Framework
-    * 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+    * 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     *	sf_head_meta()
     *	sf_page_classes()

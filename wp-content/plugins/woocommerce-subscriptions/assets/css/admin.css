@@ -204,6 +204,24 @@ p._subscription_trial_length_field input,
 	margin-left: 5px;
 }
 
+#woocommerce-product-data .woocommerce_options_panel p._subscription_trial_length_field,
+#woocommerce-product-data .woocommerce_options_panel p._subscription_sign_up_fee_field,
+#woocommerce-product-data .woocommerce_options_panel p._subscription_payment_sync_date_day_field {
+    clear: left;
+    padding-right: 0px !important;
+}
+.woocommerce_options_panel p._subscription_trial_length_field,
+.woocommerce_options_panel p._subscription_trial_period_field,
+.woocommerce_options_panel p._subscription_sign_up_fee_field {
+    margin-top: 0;
+}
+.woocommerce_options_panel p._subscription_trial_period_field img,
+.woocommerce_options_panel p._subscription_sign_up_fee_field img,
+.woocommerce_options_panel p._subscription_payment_sync_date_field img,
+.woocommerce_options_panel p._subscription_payment_sync_date_month_field img {
+    padding-top: 0.7em;
+}
+
 .subscription_sync_week_month select.wc_input_subscription_payment_sync {
 	min-width: 180px;
 }
@@ -230,7 +248,7 @@ p._subscription_trial_length_field input,
 }
 .variable_subscription_pricing_2_3 .wc_input_subscription_period_interval {
 	max-width: 41%;
-	float: right;
+	float: left;
 }
 .variable_subscription_pricing_2_3 .wc_input_subscription_period {
 	max-width: 32%;
@@ -277,255 +295,6 @@ p._subscription_trial_length_field input,
 	}
 }
 
-/* Edit Order Page */
-#subscription_renewal_orders p,
-#subscription_renewal_orders ul {
-	margin: 0.6em 0 0;
-}
-ul.renewal-orders,
-ul.renewal-orders li,
-p.renewal-subtitle {
-	display: inline-block;
-}
-ul.renewal-orders li {
-	margin-left: 0.6em;
-}
-#woocommerce-product-data .woocommerce_options_panel p._subscription_trial_length_field,
-#woocommerce-product-data .woocommerce_options_panel p._subscription_sign_up_fee_field,
-#woocommerce-product-data .woocommerce_options_panel p._subscription_payment_sync_date_day_field {
-	clear: left;
-	padding-right: 0px !important;
-}
-.woocommerce_options_panel p._subscription_trial_length_field,
-.woocommerce_options_panel p._subscription_trial_period_field,
-.woocommerce_options_panel p._subscription_sign_up_fee_field {
-	margin-top: 0;
-}
-.woocommerce_options_panel p._subscription_trial_period_field img,
-.woocommerce_options_panel p._subscription_sign_up_fee_field img,
-.woocommerce_options_panel p._subscription_payment_sync_date_field img,
-.woocommerce_options_panel p._subscription_payment_sync_date_month_field img {
-	padding-top: 0.7em;
-}
-#recurring_order_totals h3 {
-	cursor: default;
-}
-a.delete_recurring_tax_row {
-	padding:0;
-	text-decoration: none;
-	font-size: 11px;
-	line-height: 16px;
-	width: 16px;
-	height: 16px;
-	text-align: center;
-	color:#999;
-	float: right;
-	background: #ddd;
-	border: 1px solid #eee;
-	-webkit-box-shadow: 0 0 0 1px #ccc;
-	-webkit-border-radius:8px;
-	-moz-border-radius:8px;
-	-o-border-radius:8px;
-	border-radius:8px;
-	position: absolute;
-	top: 0;
-	right: 0;
-	margin: -8px -8px 0 0;
-	display: none;
-}
-.tax_row:hover a.delete_recurring_tax_row,
-.tax_row:focus a.delete_recurring_tax_row {
-	display: block;
-}
-
-/* WC 2.2 Edit Order screen */
-#poststuff #woocommerce-order-totals .inside {
-	margin: 0;
-	padding: 0;
-}
-#poststuff #woocommerce-order-totals h4 {
-	margin: 0!important;
-}
-#poststuff #woocommerce-order-totals h4 a.add_tax_row, #poststuff #woocommerce-order-totals h4 a.add_total_row {
-	display: inline-block;
-	padding-bottom: 10px;
-}
-#poststuff #woocommerce-order-totals h4 .inline_total {
-	float: right;
-	color: #999;
-}
-#poststuff #woocommerce-order-totals .totals_group {
-	border-top: 1px solid #fff;
-	border-bottom: 1px solid #DDD;
-	padding: 10px 12px 0;
-}
-#poststuff #woocommerce-order-totals .totals_group:first-child {
-	border-top: 0;
-}
-#poststuff #woocommerce-order-totals .totals_group input, #poststuff #woocommerce-order-totals .totals_group select {
-	width: 100%;
-	vertical-align: top;
-	margin: 0;
-	font-weight: 400;
-	line-height: 1em;
-}
-#poststuff #woocommerce-order-totals .totals_group select {
-	height: 30px!important;
-}
-#poststuff #woocommerce-order-totals .totals_group input {
-	padding: 4px 6px;
-}
-#poststuff #woocommerce-order-totals .totals_group ::-webkit-input-placeholder {
-	line-height: 1.4em;
-}
-#poststuff #woocommerce-order-totals .totals_group ::-moz-placeholder {
-	line-height: 1.4em;
-}
-#poststuff #woocommerce-order-totals .totals_group :-ms-input-placeholder {
-	line-height: 1.4em;
-}
-#poststuff #woocommerce-order-totals .totals_group input:-moz-placeholder {
-	line-height: 1.4em;
-}
-#poststuff #woocommerce-order-totals .totals_group #_order_discount, #poststuff #woocommerce-order-totals .totals_group #_order_total {
-	margin: 6px 0 10px;
-}
-#poststuff #woocommerce-order-totals .buttons {
-	border-top: 1px solid #fff;
-	padding: 1em 10px;
-	margin: 0;
-	text-align: right;
-}
-#poststuff #woocommerce-order-totals .buttons .calc_line_taxes {
-	float: left;
-}
-#poststuff #woocommerce-order-totals ul.totals {
-	margin: 6px 0 0;
-	float: left;
-}
-#poststuff #woocommerce-order-totals ul.totals li {
-	float: left;
-	clear: both;
-	width: 100%;
-	font-size: 1.2em;
-	font-weight: 700;
-	line-height: 1.2em;
-	margin: 0;
-	padding: 0 0 10px;
-}
-#poststuff #woocommerce-order-totals ul.totals li label {
-	font-weight: 400;
-	display: block;
-	font-size: .8em;
-	color: #333;
-}
-#poststuff #woocommerce-order-totals ul.totals li.left {
-	float: left;
-	width: 49%;
-	clear: left;
-}
-#poststuff #woocommerce-order-totals ul.totals li.left input {
-	width: 100%}
-#poststuff #woocommerce-order-totals ul.totals li.right {
-	float: right;
-	width: 49%;
-	clear: none;
-}
-#poststuff #woocommerce-order-totals ul.totals li.right input {
-	width: 100%}
-#poststuff #woocommerce-order-totals ul.totals li.wide {
-	float: left;
-	width: 100%;
-	clear: left;
-}
-#poststuff #woocommerce-order-totals ul.totals li.wide input {
-	width: 100%}
-#poststuff #woocommerce-order-totals ul.totals .calculated {
-	border-color: #ae8ca2;
-	border-style: dotted;
-}
-#poststuff #woocommerce-order-totals .total_rows {
-	margin: 6px 0 0;
-}
-#poststuff #woocommerce-order-totals .total_rows .total_row:first-child {
-	border-top: 1px solid #dfdfdf;
-}
-#poststuff #woocommerce-order-totals .total_rows .total_row:last-child {
-	margin-bottom: 9px;
-}
-#poststuff #woocommerce-order-totals .total_row {
-	margin: 0 -12px;
-	border-bottom: 1px solid #DFDFDF;
-	padding: 12px 12px 3px;
-	background: #f8f8f8;
-	position: relative;
-}
-#poststuff #woocommerce-order-totals .total_row p {
-	margin: 0 0 9px;
-}
-#poststuff #woocommerce-order-totals .total_row label {
-	color: #999;
-	display: block;
-	margin: 0 0 3px;
-}
-#poststuff #woocommerce-order-totals .total_row p.first {
-	float: left;
-	width: 49%;
-	clear: left;
-}
-#poststuff #woocommerce-order-totals .total_row p.first input, #poststuff #woocommerce-order-totals .total_row p.first select {
-	width: 100%}
-#poststuff #woocommerce-order-totals .total_row p.last {
-	float: right;
-	width: 49%;
-	clear: none;
-}
-#poststuff #woocommerce-order-totals .total_row p.last input, #poststuff #woocommerce-order-totals .total_row p.last select {
-	width: 100%}
-#poststuff #woocommerce-order-totals .total_row p.wide {
-	clear: both;
-}
-#poststuff #woocommerce-order-totals .total_row p.wide input, #poststuff #woocommerce-order-totals .total_row p.wide select {
-	width: 100%}
-#poststuff #woocommerce-order-totals .total_row a.delete_tax_row, #poststuff #woocommerce-order-totals .total_row a.delete_total_row {
-	text-indent: -9999px;
-	height: 1em;
-	width: 1em;
-	display: none;
-	position: absolute;
-	top: -.5em;
-	right: -.5em;
-	font-size: 1.4em;
-}
-#poststuff #woocommerce-order-totals .total_row a.delete_tax_row:before, #poststuff #woocommerce-order-totals .total_row a.delete_total_row:before {
-	font-family: WooCommerce;
-	speak: none;
-	font-weight: 400;
-	font-variant: normal;
-	text-transform: none;
-	line-height: 1;
-	-webkit-font-smoothing: antialiased;
-	margin: 0;
-	text-indent: 0;
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	text-align: center;
-	content: "\e013";
-	color: #fff;
-	background-color: #000;
-	-webkit-border-radius: 100%;
-	border-radius: 100%;
-	box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
-}
-#poststuff #woocommerce-order-totals .total_row a.delete_tax_row:hover:before, #poststuff #woocommerce-order-totals .total_row a.delete_total_row:hover:before {
-	background-color: #a00;
-}
-#poststuff #woocommerce-order-totals .total_row:focus a.delete_tax_row, #poststuff #woocommerce-order-totals .total_row:focus a.delete_total_row, #poststuff #woocommerce-order-totals .total_row:hover a.delete_tax_row, #poststuff #woocommerce-order-totals .total_row:hover a.delete_total_row {
-	display: block;
-}
 /* Users Administration Screen */
 .woocommerce_active_subscriber .active-subscriber:before {
 	content: "\f147";
@@ -643,17 +412,104 @@ a.delete_recurring_tax_row {
 #woocommerce-subscription-schedule .wcs-delete-date:hover:before {
 	color: #AA0000;
 }
+
+/* Related Orders Metabox on Edit Subscription/Order Admin Screen */
+#subscription_renewal_orders .inside {
+	margin: 0;
+	padding: 0;
+}
+
+.woocommerce_subscriptions_related_orders {
+	margin: 0;
+	overflow: auto;
+}
+
+.woocommerce_subscriptions_related_orders table {
+	width: 100%;
+	background: #fff;
+	border-collapse: collapse;
+}
+
+.woocommerce_subscriptions_related_orders table thead th {
+	background: #f8f8f8;
+	padding: 8px;
+	font-size: 11px;
+	text-align: left;
+	color: #555;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.woocommerce_subscriptions_related_orders table thead th:last-child {
+	padding-right: 12px;
+}
+
+.woocommerce_subscriptions_related_orders table thead th:first-child {
+	padding-left: 12px;
+}
+
+.woocommerce_subscriptions_related_orders table thead th:last-of-type,
+.woocommerce_subscriptions_related_orders table td:last-of-type {
+	text-align: right;
+}
+
+.woocommerce_subscriptions_related_orders table tbody th,
+.woocommerce_subscriptions_related_orders table td {
+	padding: 8px;
+	text-align: left;
+	line-height: 26px;
+	vertical-align: top;
+	border-bottom: 1px dotted #ececec;
+}
+
+.woocommerce_subscriptions_related_orders table tbody th:last-child,
+.woocommerce_subscriptions_related_orders table td:last-child {
+	padding-right: 12px;
+}
+
+.woocommerce_subscriptions_related_orders table tbody th:first-child,
+.woocommerce_subscriptions_related_orders table td:first-child {
+	padding-left: 12px;
+}
+
+.woocommerce_subscriptions_related_orders table tbody tr:last-child td {
+	border-bottom: none;
+}
+
 /* Hide irrelevant sections on Edit Subscription screen */
 body.post-type-shop_subscription .order_actions #actions optgroup[label='Resend order emails'],
 body.post-type-shop_subscription .add-items .description.tips,
 body.post-type-shop_subscription .add-items .button.refund-items {
 	display: none;
 }
-@media screen and (max-width: 782px) {
+@media only screen and (max-width: 782px) {
 	#woocommerce-subscription-schedule .wcs-date-input input[type="text"]:first-of-type {
 		width: 45%;
 	}
 	#woocommerce-subscription-schedule .wcs-date-input input[type="text"]:not(:first-of-type) {
 		width: 19%;
 	}
+
+	.post-type-shop_subscription .wp-list-table .column-status {
+		display: none;
+		text-align: left;
+		padding-bottom: 0;
+	}
+
+	.post-type-shop_subscription .wp-list-table .column-status mark {
+		margin: 0;
+	}
+
+	.post-type-shop_subscription .wp-list-table .column-status:before {
+		display: none !important;
+	}
+
+	.post-type-shop_subscription .wp-list-table .column-orders {
+		text-align: left !important;
+	}
+
 }

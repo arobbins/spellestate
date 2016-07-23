@@ -5,7 +5,7 @@
     *	Page Heading
     *	------------------------------------------------
     *	Swift Framework v3.0
-    * 	Copyright Swift Ideas 2015 - http://www.swiftideas.com
+    * 	Copyright Swift Ideas 2016 - http://www.swiftideas.com
     *
     *	sf_page_heading()
     *
@@ -28,6 +28,7 @@
             if ( isset( $sf_options['breadcrumb_in_heading'] ) ) {
             	$breadcrumb_in_heading = $sf_options['breadcrumb_in_heading'];
             }
+            $portfolio_page 			= $sf_options['portfolio_page'];
             $page_title_height  = 300;
             $heading_img_width = 0;
             $heading_img_height = 0;
@@ -35,7 +36,8 @@
 			$page_title_text_align = "center";
             $next_icon = apply_filters( 'sf_next_icon', '<i class="ss-navigateright"></i>' );
             $prev_icon = apply_filters( 'sf_prev_icon', '<i class="ss-navigateleft"></i>' );
-
+			$index_icon = apply_filters( 'sf_index_icon', '<i class="fa-th"></i>' );
+			
 			// Shop page check
             if ( ( function_exists( 'is_shop' ) && is_shop() ) || ( function_exists( 'is_product_category' ) && is_product_category() ) ) {
                 $shop_page = true;
@@ -46,6 +48,25 @@
             $pagination_style          = "standard";
             if ( isset( $sf_options['pagination_style'] ) ) {
                 $pagination_style = $sf_options['pagination_style'];
+            }
+            if ( isset( $sf_options['default_page_title_style'] ) ) {
+                $page_title_style = $sf_options['default_page_title_style'];
+            }
+            if ( isset( $sf_options['default_page_heading_style'] ) ) {
+            	$page_title_style      = $sf_options['default_page_heading_style'];
+            }
+            if ( isset( $sf_options['default_page_heading_image'] ) ) {
+            	$fancy_title_image     = $sf_options['default_page_heading_image'];
+            }
+            if ( isset( $sf_options['default_page_heading_text_style'] ) ) {
+            	$page_title_text_style = $sf_options['default_page_heading_text_style'];
+            }
+            if ( isset( $sf_options['default_page_heading_text_align'] ) ) {
+            	$page_title_text_align = $sf_options['default_page_heading_text_align'];
+            }
+
+            if ( isset( $fancy_title_image ) && isset( $fancy_title_image['url'] ) ) {
+                $fancy_title_image_url = $fancy_title_image['url'];
             }
 
             // Post meta
@@ -245,7 +266,69 @@
                                 <h1 class="entry-title" <?php echo $article_heading_text; ?>><?php woocommerce_page_title(); ?></h1>
 
                             <?php } ?>
+						
+						<?php } else if ( is_search() ) { ?>
+						
+                            <?php
+                            $s         = get_search_query();
+                            $allsearch = new WP_Query( "s=$s&showposts=-1" );
+                            $key       = esc_html( $s, 1 );
+                            $count     = $allsearch->post_count;
+                            wp_reset_query(); ?>
+                            <?php if ( $count == 1 ) : ?>
+                                <?php printf( __( '<h1 class="entry-title" %1$s>%2$s result for <span>%3$s</span></h1>', 'swiftframework' ), $article_heading_text, $count, get_search_query() ); ?>
+                            <?php else : ?>
+                                <?php printf( __( '<h1 class="entry-title" %1$s>%2$s results for <span>%3$s</span></h1>', 'swiftframework' ), $article_heading_text, $count, get_search_query() ); ?>
+                            <?php endif; ?>
+                        
+                        <?php } else if ( is_category() ) { ?>
+                        
+                            <h1 class="entry-title" <?php echo $article_heading_text; ?>><?php single_cat_title(); ?></h1>
+						
+						<?php } else if ( is_tax() ) {	
+							global $wp_query;
+							$term = $wp_query->get_queried_object();
+						?>
+							<h1 class="entry-title" <?php echo $article_heading_text; ?>><?php echo $term->name; ?></h1>
+							
+                        <?php } else if ( is_archive() ) { ?>
 
+                            <?php /* If this is a tag archive */
+                            if ( is_tag() ) { ?>
+                                <h1 class="entry-title" <?php echo $article_heading_text; ?>><?php _e( "Posts tagged with", "swiftframework" ); ?>
+                                    &#8216;<?php single_tag_title(); ?>&#8217;</h1>
+                                <?php /* If this is a daily archive */
+                            } elseif ( is_day() ) { ?>
+                                <h1 class="entry-title" <?php echo $article_heading_text; ?>><?php _e( "Archive for", "swiftframework" ); ?> <?php the_time( 'F jS, Y' ); ?></h1>
+                                <?php /* If this is a monthly archive */
+                            } elseif ( is_month() ) { ?>
+                                <h1 class="entry-title" <?php echo $article_heading_text; ?>><?php _e( "Archive for", "swiftframework" ); ?> <?php the_time( 'F, Y' ); ?></h1>
+                                <?php /* If this is a yearly archive */
+                            } elseif ( is_year() ) { ?>
+                                <h1 class="entry-title" <?php echo $article_heading_text; ?>><?php _e( "Archive for", "swiftframework" ); ?> <?php the_time( 'Y' ); ?></h1>
+                                <?php /* If this is an author archive */
+                            } elseif ( is_author() ) { ?>
+                                <?php $author = get_userdata( get_query_var( 'author' ) ); ?>
+                                <?php if ( class_exists( 'ATCF_Campaigns' ) ) { ?>
+                                    <h1 class="entry-title" <?php echo $article_heading_text; ?>><?php _e( "Projects by", "swiftframework" ); ?> <?php echo esc_attr($author->display_name); ?></h1>
+                                <?php } else { ?>
+                                    <h1 class="entry-title" <?php echo $article_heading_text; ?>><?php _e( "Author archive for", "swiftframework" ); ?> <?php echo esc_attr($author->display_name); ?></h1>
+                                <?php } ?>
+                                <?php /* If this is a paged archive */
+                            } elseif ( isset( $_GET['paged'] ) && ! empty( $_GET['paged'] ) ) { ?>
+                                <h1 class="entry-title" <?php echo $article_heading_text; ?>><?php _e( "Blog Archives", "swiftframework" ); ?></h1>
+                            <?php } else { ?>
+                                <h1 class="entry-title" <?php echo $article_heading_text; ?>><?php post_type_archive_title(); ?></h1>
+                            <?php } ?>
+
+                        <?php } else if ( is_404() ) { ?>
+
+                            <h1 class="entry-title" <?php echo $article_heading_text; ?>><?php _e( "404", "swiftframework" ); ?></h1>
+						
+						<?php } else if ( is_home() && get_option('page_for_posts') ) { ?>
+						
+						     <h1 class="entry-title" <?php echo $article_heading_text; ?>><?php echo apply_filters('the_title',get_page( get_option('page_for_posts') )->post_title); ?></h1>
+                        							     
                         <?php } else { ?>
 
                             <h1 class="entry-title" <?php echo $article_heading_text; ?>><?php echo $page_title; ?></h1>
@@ -406,6 +489,9 @@
 
                         <?php if ( is_singular( 'portfolio' ) && ! ( sf_theme_opts_name() == "sf_joyn_options" && $pagination_style == "fs-arrow" ) && sf_theme_opts_name() != "sf_uplift_options" ) { ?>
 	                    	<div class="next-item" <?php echo $article_heading_text; ?>><?php previous_post_link( '%link', $next_icon, $enable_category_navigation, '', 'portfolio-category' ); ?></div>
+	                    	<?php if (sf_theme_opts_name() == "sf_atelier_options" && isset($portfolio_page) ) { ?>
+	                    		<div class="view-all" <?php echo $article_heading_text; ?>><a href="<?php echo get_permalink($portfolio_page); ?>"><?php echo $index_icon; ?></a></div>
+	                    	<?php } ?>
 	                        <div class="prev-item" <?php echo $article_heading_text; ?>><?php next_post_link( '%link', $prev_icon, $enable_category_navigation, '', 'portfolio-category' ); ?></div>
                         <?php } ?>
 

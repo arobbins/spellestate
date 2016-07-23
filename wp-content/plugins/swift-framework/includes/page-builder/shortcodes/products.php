@@ -147,6 +147,10 @@
                 'el_class'       => ''
             ), $atts ) );
 
+            if ( isset($atts['display_layout']) && $atts['display_layout'] == "grid" ) {
+                $atts['display_layout'] = "standard";
+            }
+
             $view_all_icon = apply_filters( 'sf_view_all_icon' , '<i class="ss-layergroup"></i>' );
 
 
@@ -166,6 +170,9 @@
 
             /* PRODUCT ITEMS
             ================================================== */
+            if ( $asset_type == "categories" ) {
+                $atts['multi_masonry'] = "no";
+            }
             if ( sf_woocommerce_activated() ) {
                 $items = sf_product_items( $atts );
             } else {
@@ -255,7 +262,6 @@
 
     $product_display_layout = array(
                 __( 'Standard', 'swift-framework-plugin' )  => "standard",
-                __( 'Grid', 'swift-framework-plugin' )   => "grid",
                 __( 'List', 'swift-framework-plugin' )   => "list",
             );
 
@@ -280,8 +286,8 @@
                 __( 'Sale Products', 'swift-framework-plugin' )     => "sale-products",
                 __( 'Recently Viewed', 'swift-framework-plugin' )   => "recently-viewed",
                 __( 'Featured Products', 'swift-framework-plugin' ) => "featured-products",
-                __( 'Categories', 'swift-framework-plugin' )		   => "categories",
-                __( 'Selected Products', 'swift-framework-plugin' )   => "selected-products"
+                __( 'Categories', 'swift-framework-plugin' )		=> "categories",
+                __( 'Selected Products', 'swift-framework-plugin' ) => "selected-products"
             ),
         ),
         array(
@@ -328,6 +334,7 @@
     		        __( 'Yes', 'swift-framework-plugin' ) => "yes",
                     __( 'No', 'swift-framework-plugin' )  => "no"
     		    ),
+                "std"         => "no",
                 "required"       => array("asset_type", "!=", "categories"),
                 "buttonset_on"  => "yes",
     		    "description" => __( "Select if you'd like the asset to show products in a Multi-Masonry layout. NOTE: Not supported with Preview Slider display type.", 'swift-framework-plugin' )
@@ -361,6 +368,7 @@
     	    "param_name"  => "columns",
     	    "value"       => array( "1", "2", "3", "4", "5", "6" ),
     	    "std"         => "4",
+            "required"    => array("multi_masonry", "=", "no"),
     	);
    $params[] = array(
     	    "type"        => "textfield",

@@ -18,11 +18,11 @@
  *
  * @package     WC-Customer-Order-CSV-Export/Export-Methods/SFTP
  * @author      SkyVerge
- * @copyright   Copyright (c) 2012-2015, SkyVerge, Inc.
+ * @copyright   Copyright (c) 2012-2016, SkyVerge, Inc.
  * @license     http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+defined( 'ABSPATH' ) or exit;
 
 /**
  * Customer/Order CSV Export SFTP Class
@@ -52,7 +52,7 @@ class WC_Customer_Order_CSV_Export_Method_SFTP extends WC_Customer_Order_CSV_Exp
 		// check if ssh2 extension is installed
 		if ( ! function_exists( 'ssh2_connect' ) ) {
 
-			throw new Exception( __( 'SSH2 Extension is not installed, cannot connect via SFTP.', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ) );
+			throw new Exception( __( 'SSH2 Extension is not installed, cannot connect via SFTP.', 'woocommerce-customer-order-csv-export' ) );
 		}
 
 		// setup connection
@@ -61,13 +61,13 @@ class WC_Customer_Order_CSV_Export_Method_SFTP extends WC_Customer_Order_CSV_Exp
 		// check for successful connection
 		if ( ! $this->ssh_link ) {
 
-			throw new Exception( __( "Could not connect via SSH to {$this->server} on port {$this->port}, check server address and port.", WC_Customer_Order_CSV_Export::TEXT_DOMAIN ) );
+			throw new Exception( __( "Could not connect via SSH to {$this->server} on port {$this->port}, check server address and port.", 'woocommerce-customer-order-csv-export' ) );
 		}
 
 		// authenticate via password and check for successful authentication
 		if ( ! ssh2_auth_password( $this->ssh_link, $this->username, $this->password ) ) {
 
-			throw new Exception( __( "Could not authenticate via SSH with username {$this->username} and password. Check username and password.", WC_Customer_Order_CSV_Export::TEXT_DOMAIN ) );
+			throw new Exception( __( "Could not authenticate via SSH with username {$this->username} and password. Check username and password.", 'woocommerce-customer-order-csv-export' ) );
 		}
 
 		// setup SFTP link
@@ -76,7 +76,7 @@ class WC_Customer_Order_CSV_Export_Method_SFTP extends WC_Customer_Order_CSV_Exp
 		// check for successful SFTP link
 		if ( ! $this->sftp_link ) {
 
-			throw new Exception( __( 'Could not setup SFTP link', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ) );
+			throw new Exception( __( 'Could not setup SFTP link', 'woocommerce-customer-order-csv-export' ) );
 		}
 	}
 
@@ -97,13 +97,13 @@ class WC_Customer_Order_CSV_Export_Method_SFTP extends WC_Customer_Order_CSV_Exp
 		// check for fopen failure
 		if ( ! $stream ) {
 
-			throw new Exception( __( "Could not open remote file: {$filename}.", WC_Customer_Order_CSV_Export::TEXT_DOMAIN ) );
+			throw new Exception( __( "Could not open remote file: {$filename}.", 'woocommerce-customer-order-csv-export' ) );
 		}
 
 		// write CSV to opened remote file
 		if ( false === fwrite( $stream, $csv ) ) {
 
-			throw new Exception( __( 'Could not write data from CSV.', WC_Customer_Order_CSV_Export::TEXT_DOMAIN ) );
+			throw new Exception( __( 'Could not write data from CSV.', 'woocommerce-customer-order-csv-export' ) );
 		}
 
 		// close file

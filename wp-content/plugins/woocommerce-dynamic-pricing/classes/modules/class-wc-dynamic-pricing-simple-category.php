@@ -48,9 +48,9 @@ class WC_Dynamic_Pricing_Simple_Category extends WC_Dynamic_Pricing_Simple_Base 
 		$pricing_rule_sets = get_option( '_a_category_pricing_rules', array() );
 		if ( is_array( $pricing_rule_sets ) && sizeof( $pricing_rule_sets ) > 0 ) {
 			foreach ( $pricing_rule_sets as $set_id => $pricing_rule_set ) {
-				
-				
-				
+
+
+
 				$execute_rules = false;
 				$conditions_met = 0;
 				$pricing_conditions = $pricing_rule_set['conditions'];
@@ -66,6 +66,21 @@ class WC_Dynamic_Pricing_Simple_Category extends WC_Dynamic_Pricing_Simple_Base 
 				} else {
 					//empty conditions - default match, process price adjustment rules
 					$execute_rules = true;
+				}
+
+				if ( isset( $pricing_rule_set['date_from'] ) && isset( $pricing_rule_set['date_to'] ) ) {
+					// Check date range
+					$from_date = strtotime( $pricing_rule_set['date_from'] );
+					$to_date = strtotime( $pricing_rule_set['date_to'] );
+					$now = current_time( 'timestamp' );
+
+					if ( $from_date && $to_date && !( $now >= $from_date && $now <= $to_date ) ) {
+						$execute_rules = false;
+					} elseif ( $from_date && !$to_date && !( $now >= $from_date ) ) {
+						$execute_rules = false;
+					} elseif ( $to_date && !$from_date && !( $now <= $to_date ) ) {
+						$execute_rules = false;
+					}
 				}
 
 				if ( $execute_rules && isset( $pricing_rule_set['collector']['args']['cats'][0] ) ) {
@@ -153,9 +168,8 @@ class WC_Dynamic_Pricing_Simple_Category extends WC_Dynamic_Pricing_Simple_Base 
 				break;
 			case 'percentage_discount':
 			case 'percent_product':
-				if ( $amount > 1 ) {
-					$amount = $amount / 100;
-				}
+				$amount = $amount / 100;
+				
 				$result = round( floatval( $price ) - ( floatval( $amount ) * $price), (int) $num_decimals );
 				break;
 			case 'fixed_price':

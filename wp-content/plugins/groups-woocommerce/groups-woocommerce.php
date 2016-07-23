@@ -22,12 +22,12 @@
  * Plugin Name: Groups WooCommerce
  * Plugin URI: http://www.itthinx.com/plugins/groups-woocommerce
  * Description: Memberships with Groups and WooCommerce. Integrates Groups with WooCommerce and WooCommerce Subscriptions for group membership management based on product purchases and subscriptions. <a href="http://www.itthinx.com/documentation/groups-woocommerce/">Documentation</a> | <a href="http://www.itthinx.com/plugins/groups-woocommerce/">Plugin page</a>
- * Version: 1.9.5
+ * Version: 1.9.6
  * Author: itthinx
  * Author URI: http://www.itthinx.com
  */
 
-define( 'GROUPS_WS_VERSION', '1.9.5' );
+define( 'GROUPS_WS_VERSION', '1.9.6' );
 
 /**
  * Required functions
