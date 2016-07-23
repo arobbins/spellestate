@@ -2921,8 +2921,14 @@ a.menu-bars-link span {
 
 .single,
 .archive,
-.page {
+.page,
+.home {
   .user-account {
     display: block;
   }
+}
+
+/* Need to fix, temp fix */
+.blog .aux-cart-wishlist {
+  margin-top: 31px;
 }
